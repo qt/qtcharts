@@ -135,15 +135,15 @@ void LineChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 void LineChartItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
     emit XYChart::hovered(domain()->calculateDomainPoint(event->pos()), true);
-    event->accept();
-    //QGraphicsItem::hoverEnterEvent(event);
+//    event->accept();
+    QGraphicsItem::hoverEnterEvent(event);
 }
 
 void LineChartItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
     emit XYChart::hovered(domain()->calculateDomainPoint(event->pos()), false);
-    event->accept();
-    //QGraphicsItem::hoverEnterEvent(event);
+//    event->accept();
+    QGraphicsItem::hoverEnterEvent(event);
 }
 
 #include "moc_linechartitem_p.cpp"

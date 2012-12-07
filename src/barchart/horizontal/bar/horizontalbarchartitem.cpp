@@ -43,12 +43,15 @@ void HorizontalBarChartItem::initializeLayout()
             QPointF topLeft;
             QPointF bottomRight;
             if (domain()->type() == AbstractDomain::LogXYDomain || domain()->type() == AbstractDomain::LogXLogYDomain) {
-                topLeft = domain()->calculateGeometryPoint(QPointF(domain()->minX(), category - barWidth / 2 + set/setCount * barWidth));
-                bottomRight = domain()->calculateGeometryPoint(QPointF(domain()->minX(), category + barWidth / 2 + (set + 1)/setCount * barWidth));
+                topLeft = domain()->calculateGeometryPoint(QPointF(domain()->minX(), category - barWidth / 2 + set/setCount * barWidth), m_validData);
+                bottomRight = domain()->calculateGeometryPoint(QPointF(domain()->minX(), category + barWidth / 2 + (set + 1)/setCount * barWidth), m_validData);
             } else {
-                topLeft = domain()->calculateGeometryPoint(QPointF(0, category - barWidth / 2 + set/setCount * barWidth));
-                bottomRight = domain()->calculateGeometryPoint(QPointF(0, category - barWidth / 2 + (set + 1)/setCount * barWidth));
+                topLeft = domain()->calculateGeometryPoint(QPointF(0, category - barWidth / 2 + set/setCount * barWidth), m_validData);
+                bottomRight = domain()->calculateGeometryPoint(QPointF(0, category - barWidth / 2 + (set + 1)/setCount * barWidth), m_validData);
             }
+
+            if (!m_validData)
+                 return;
 
             rect.setTopLeft(topLeft);
             rect.setBottomRight(bottomRight);
@@ -72,11 +75,15 @@ QVector<QRectF> HorizontalBarChartItem::calculateLayout()
             QRectF rect;
             QPointF topLeft;
             if (domain()->type() == AbstractDomain::LogXYDomain || domain()->type() == AbstractDomain::LogXLogYDomain)
-                topLeft = domain()->calculateGeometryPoint(QPointF(domain()->minX(), category - barWidth / 2 + set/setCount * barWidth));
+                topLeft = domain()->calculateGeometryPoint(QPointF(domain()->minX(), category - barWidth / 2 + set/setCount * barWidth), m_validData);
             else
-                topLeft = domain()->calculateGeometryPoint(QPointF(0, category - barWidth / 2 + set/setCount * barWidth));
+                topLeft = domain()->calculateGeometryPoint(QPointF(0, category - barWidth / 2 + set/setCount * barWidth), m_validData);
 
-            QPointF bottomRight = domain()->calculateGeometryPoint(QPointF(value, category - barWidth / 2 + (set + 1)/setCount * barWidth));
+            QPointF bottomRight = domain()->calculateGeometryPoint(QPointF(value, category - barWidth / 2 + (set + 1)/setCount * barWidth), m_validData);
+
+            if (!m_validData)
+                return QVector<QRectF>();
+
             rect.setTopLeft(topLeft);
             rect.setBottomRight(bottomRight);
             layout.append(rect.normalized());

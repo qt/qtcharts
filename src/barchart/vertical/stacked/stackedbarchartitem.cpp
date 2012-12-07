@@ -45,12 +45,15 @@ void StackedBarChartItem::initializeLayout()
             QPointF bottomRight;
 
             if (domain()->type() == AbstractDomain::XLogYDomain || domain()->type() == AbstractDomain::LogXLogYDomain) {
-                topLeft = domain()->calculateGeometryPoint(QPointF(category - barWidth / 2, domain()->minY()));
-                bottomRight = domain()->calculateGeometryPoint(QPointF(category + barWidth / 2, domain()->minY()));
+                topLeft = domain()->calculateGeometryPoint(QPointF(category - barWidth / 2, domain()->minY()), m_validData);
+                bottomRight = domain()->calculateGeometryPoint(QPointF(category + barWidth / 2, domain()->minY()), m_validData);
             } else {
-                topLeft = domain()->calculateGeometryPoint(QPointF(category - barWidth / 2, 0));
-                bottomRight = domain()->calculateGeometryPoint(QPointF(category + barWidth / 2, 0));
+                topLeft = domain()->calculateGeometryPoint(QPointF(category - barWidth / 2, 0), m_validData);
+                bottomRight = domain()->calculateGeometryPoint(QPointF(category + barWidth / 2, 0), m_validData);
             }
+
+            if (!m_validData)
+                 return;
 
             rect.setTopLeft(topLeft);
             rect.setBottomRight(bottomRight);
@@ -76,20 +79,22 @@ QVector<QRectF> StackedBarChartItem::calculateLayout()
             QPointF topLeft;
             QPointF bottomRight;
             if (value < 0) {
-                bottomRight = domain()->calculateGeometryPoint(QPointF(category - barWidth / 2, value + negativeSum));
+                bottomRight = domain()->calculateGeometryPoint(QPointF(category - barWidth / 2, value + negativeSum), m_validData);
                 if (domain()->type() == AbstractDomain::XLogYDomain || domain()->type() == AbstractDomain::LogXLogYDomain)
-                    topLeft = domain()->calculateGeometryPoint(QPointF(category + barWidth / 2, set ? negativeSum : domain()->minY()));
+                    topLeft = domain()->calculateGeometryPoint(QPointF(category + barWidth / 2, set ? negativeSum : domain()->minY()), m_validData);
                 else
-                    topLeft = domain()->calculateGeometryPoint(QPointF(category + barWidth / 2, set ? negativeSum : 0));
+                    topLeft = domain()->calculateGeometryPoint(QPointF(category + barWidth / 2, set ? negativeSum : 0), m_validData);
                 negativeSum += value;
             } else {
-                topLeft = domain()->calculateGeometryPoint(QPointF(category - barWidth / 2, value + positiveSum));
+                topLeft = domain()->calculateGeometryPoint(QPointF(category - barWidth / 2, value + positiveSum), m_validData);
                 if (domain()->type() == AbstractDomain::XLogYDomain || domain()->type() == AbstractDomain::LogXLogYDomain)
-                    bottomRight = domain()->calculateGeometryPoint(QPointF(category + barWidth / 2, set ? positiveSum : domain()->minY()));
+                    bottomRight = domain()->calculateGeometryPoint(QPointF(category + barWidth / 2, set ? positiveSum : domain()->minY()), m_validData);
                 else
-                    bottomRight = domain()->calculateGeometryPoint(QPointF(category + barWidth / 2, set ? positiveSum : 0));
+                    bottomRight = domain()->calculateGeometryPoint(QPointF(category + barWidth / 2, set ? positiveSum : 0), m_validData);
                 positiveSum += value;
             }
+            if (!m_validData)
+                 return QVector<QRectF>();
             rect.setTopLeft(topLeft);
             rect.setBottomRight(bottomRight);
             layout.append(rect.normalized());

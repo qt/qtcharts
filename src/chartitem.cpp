@@ -26,6 +26,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 ChartItem::ChartItem(QAbstractSeriesPrivate *series,QGraphicsItem* item):
       ChartElement(item),
+      m_validData(true),
       m_series(series)
 {
 

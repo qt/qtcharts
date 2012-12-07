@@ -116,12 +116,13 @@ void XYDomain::move(qreal dx, qreal dy)
     setRange(minX, maxX, minY, maxY);
 }
 
-QPointF XYDomain::calculateGeometryPoint(const QPointF &point) const
+QPointF XYDomain::calculateGeometryPoint(const QPointF &point, bool &ok) const
 {
     const qreal deltaX = m_size.width() / (m_maxX - m_minX);
     const qreal deltaY = m_size.height() / (m_maxY - m_minY);
     qreal x = (point.x() - m_minX) * deltaX;
     qreal y = (point.y() - m_minY) * -deltaY + m_size.height();
+    ok = true;
     return QPointF(x, y);
 }
 

@@ -54,7 +54,7 @@ public:
     void zoomOut(const QRectF &rect);
     void move(qreal dx, qreal dy);
 
-    QPointF calculateGeometryPoint(const QPointF &point) const;
+    QPointF calculateGeometryPoint(const QPointF &point, bool &ok) const;
     QPointF calculateDomainPoint(const QPointF &point) const;
     QVector<QPointF> calculateGeometryPoints(const QList<QPointF>& vector) const;
 };

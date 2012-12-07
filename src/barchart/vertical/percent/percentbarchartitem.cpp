@@ -45,12 +45,15 @@ void PercentBarChartItem::initializeLayout()
             QPointF bottomRight;
 
             if (domain()->type() == AbstractDomain::XLogYDomain || domain()->type() == AbstractDomain::LogXLogYDomain) {
-                topLeft = domain()->calculateGeometryPoint(QPointF(category - barWidth / 2, domain()->minY()));
-                bottomRight = domain()->calculateGeometryPoint(QPointF(category + barWidth / 2, domain()->minY()));
+                topLeft = domain()->calculateGeometryPoint(QPointF(category - barWidth / 2, domain()->minY()), m_validData);
+                bottomRight = domain()->calculateGeometryPoint(QPointF(category + barWidth / 2, domain()->minY()), m_validData);
             } else {
-                topLeft = domain()->calculateGeometryPoint(QPointF(category - barWidth / 2, 0));
-                bottomRight = domain()->calculateGeometryPoint(QPointF(category + barWidth / 2, 0));
+                topLeft = domain()->calculateGeometryPoint(QPointF(category - barWidth / 2, 0), m_validData);
+                bottomRight = domain()->calculateGeometryPoint(QPointF(category + barWidth / 2, 0), m_validData);
             }
+
+            if (!m_validData)
+                 return;
 
             rect.setTopLeft(topLeft);
             rect.setBottomRight(bottomRight);
@@ -74,12 +77,15 @@ QVector<QRectF> PercentBarChartItem::calculateLayout()
         for (int set = 0; set < setCount; set++) {
             qreal value = m_series->barSets().at(set)->at(category);
             QRectF rect;
-            QPointF topLeft = domain()->calculateGeometryPoint(QPointF(category - barWidth/2, 100 * (value + sum)/categorySum));
+            QPointF topLeft = domain()->calculateGeometryPoint(QPointF(category - barWidth/2, 100 * (value + sum)/categorySum), m_validData);
             QPointF bottomRight;
             if (domain()->type() == AbstractDomain::XLogYDomain || domain()->type() == AbstractDomain::LogXLogYDomain)
-                bottomRight = domain()->calculateGeometryPoint(QPointF(category + barWidth/2, set ? 100 * sum/categorySum : domain()->minY()));
+                bottomRight = domain()->calculateGeometryPoint(QPointF(category + barWidth/2, set ? 100 * sum/categorySum : domain()->minY()), m_validData);
             else
-                bottomRight = domain()->calculateGeometryPoint(QPointF(category + barWidth/2, set ? 100 * sum/categorySum : 0));
+                bottomRight = domain()->calculateGeometryPoint(QPointF(category + barWidth/2, set ? 100 * sum/categorySum : 0), m_validData);
+
+            if (!m_validData)
+                 return QVector<QRectF>();
             rect.setTopLeft(topLeft);
             rect.setBottomRight(bottomRight);
             layout.append(rect.normalized());

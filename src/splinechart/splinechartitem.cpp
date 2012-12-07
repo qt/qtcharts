@@ -101,7 +101,8 @@ void SplineChartItem::updateChart(QVector<QPointF> &oldPoints, QVector<QPointF> 
 
 QPointF SplineChartItem::calculateGeometryControlPoint(int index) const
 {
-    return domain()->calculateGeometryPoint(m_series->d_func()->controlPoint(index));
+    bool ok;
+    return domain()->calculateGeometryPoint(m_series->d_func()->controlPoint(index), ok);
 }
 
 void SplineChartItem::updateGeometry()
@@ -176,13 +177,13 @@ void SplineChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 void SplineChartItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
     emit XYChart::hovered(domain()->calculateDomainPoint(event->pos()), true);
-    event->accept();
+    QGraphicsItem::hoverEnterEvent(event);
 }
 
 void SplineChartItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
     emit XYChart::hovered(domain()->calculateDomainPoint(event->pos()), false);
-    event->accept();
+    QGraphicsItem::hoverLeaveEvent(event);
 }
 
 #include "moc_splinechartitem_p.cpp"

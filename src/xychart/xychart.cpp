@@ -88,7 +88,11 @@ void XYChart::handlePointAdded(int index)
         points = domain()->calculateGeometryPoints(m_series->points());
     } else {
         points = m_points;
-        QPointF point = domain()->calculateGeometryPoint(m_series->points()[index]);
+        QPointF point = domain()->calculateGeometryPoint(m_series->points()[index], m_validData);
+        if (!m_validData) {
+            m_points.clear();
+            return;
+        }
         points.insert(index, point);
     }
 
@@ -122,7 +126,11 @@ void XYChart::handlePointReplaced(int index)
     if (m_dirty) {
         points = domain()->calculateGeometryPoints(m_series->points());
     } else {
-        QPointF point = domain()->calculateGeometryPoint(m_series->points()[index]);
+        QPointF point = domain()->calculateGeometryPoint(m_series->points()[index], m_validData);
+        if (!m_validData) {
+            m_points.clear();
+            return;
+        }
         points = m_points;
         points.replace(index, point);
     }

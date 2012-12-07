@@ -47,7 +47,7 @@ void XLogYDomain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY)
         m_maxX = maxX;
         axisXChanged = true;
         if(!m_signalsBlocked)
-        emit rangeHorizontalChanged(m_minX, m_maxX);
+            emit rangeHorizontalChanged(m_minX, m_maxX);
     }
 
     if (!qFuzzyIsNull(m_minY - minY) || !qFuzzyIsNull(m_maxY - maxY)) {
@@ -59,7 +59,7 @@ void XLogYDomain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY)
         m_logLeftY = logMinY < logMaxY ? logMinY : logMaxY;
         m_logRightY = logMinY > logMaxY ? logMinY : logMaxY;
         if(!m_signalsBlocked)
-        emit rangeVerticalChanged(m_minY, m_maxY);
+            emit rangeVerticalChanged(m_minY, m_maxY);
     }
 
     if (axisXChanged || axisYChanged)
@@ -125,14 +125,21 @@ void XLogYDomain::move(qreal dx, qreal dy)
     setRange(minX, maxX, minY, maxY);
 }
 
-QPointF XLogYDomain::calculateGeometryPoint(const QPointF &point) const
+QPointF XLogYDomain::calculateGeometryPoint(const QPointF &point, bool &ok) const
 {
-    const qreal deltaX = m_size.width() / (m_maxX - m_minX);
-    const qreal deltaY = m_size.height() / qAbs(m_logRightY - m_logLeftY);
+    if (point.y() > 0) {
+        const qreal deltaX = m_size.width() / (m_maxX - m_minX);
+        const qreal deltaY = m_size.height() / qAbs(m_logRightY - m_logLeftY);
 
-    qreal x = (point.x() - m_minX) * deltaX;
-    qreal y = (log10(point.y()) / log10(m_logBaseY)) * -deltaY - m_logLeftY * -deltaY + m_size.height();
-    return QPointF(x, y);
+        qreal x = (point.x() - m_minX) * deltaX;
+        qreal y = (log10(point.y()) / log10(m_logBaseY)) * -deltaY - m_logLeftY * -deltaY + m_size.height();
+        ok = true;
+        return QPointF(x, y);
+    } else {
+        qWarning() << "Logarithm of negative value is undefined. Empty layout returned";
+        ok = false;
+        return QPointF();
+    }
 }
 
 QVector<QPointF> XLogYDomain::calculateGeometryPoints(const QList<QPointF>& vector) const
@@ -144,10 +151,15 @@ QVector<QPointF> XLogYDomain::calculateGeometryPoints(const QList<QPointF>& vect
     result.resize(vector.count());
 
     for (int i = 0; i < vector.count(); ++i) {
-        qreal x = (vector[i].x() - m_minX) * deltaX;
-        qreal y = (log10(vector[i].y()) / log10(m_logBaseY)) * -deltaY - m_logLeftY * -deltaY + m_size.height();
-        result[i].setX(x);
-        result[i].setY(y);
+        if (vector[i].y() > 0) {
+            qreal x = (vector[i].x() - m_minX) * deltaX;
+            qreal y = (log10(vector[i].y()) / log10(m_logBaseY)) * -deltaY - m_logLeftY * -deltaY + m_size.height();
+            result[i].setX(x);
+            result[i].setY(y);
+        } else {
+            qWarning() << "Logarithm of negative value is undefined. Empty layout returned";
+            return QVector<QPointF>();
+        }
     }
     return result;
 }
@@ -168,7 +180,7 @@ bool XLogYDomain::attachAxis(QAbstractAxis* axis)
     if(logAxis && logAxis->orientation()==Qt::Vertical){
         QObject::connect(logAxis, SIGNAL(baseChanged(qreal)), this, SLOT(handleVerticalAxisBaseChanged(qreal)));
         handleVerticalAxisBaseChanged(logAxis->base());
-}
+    }
     return  AbstractDomain::attachAxis(axis);
 }
 

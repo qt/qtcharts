@@ -408,8 +408,9 @@ QPointF ChartDataSet::mapToPosition(const QPointF &value, QAbstractSeries *serie
     if (series && series->type() == QAbstractSeries::SeriesTypePie)
         return QPoint(0, 0);
 
+    bool ok;
     if (series && m_seriesList.contains(series))
-        point += series->d_ptr->m_domain->calculateGeometryPoint(value);
+        point += series->d_ptr->m_domain->calculateGeometryPoint(value, ok);
     return point;
 }
 

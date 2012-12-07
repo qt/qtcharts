@@ -45,8 +45,11 @@ public:
     AbstractDomain*  domain() const;
 public Q_SLOTS:
 	virtual void handleDomainUpdated();
+
+protected:
+    bool m_validData;
 private:
-    QAbstractSeriesPrivate* m_series;
+    QAbstractSeriesPrivate* m_series;    
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

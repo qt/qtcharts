@@ -80,7 +80,7 @@ public:
     virtual void zoomOut(const QRectF &rect) = 0;
     virtual void move(qreal dx, qreal dy) = 0;
 
-    virtual QPointF calculateGeometryPoint(const QPointF &point) const = 0;
+    virtual QPointF calculateGeometryPoint(const QPointF &point, bool &ok) const = 0;
     virtual QPointF calculateDomainPoint(const QPointF &point) const = 0;
     virtual QVector<QPointF> calculateGeometryPoints(const QList<QPointF>& vector) const = 0;
 
