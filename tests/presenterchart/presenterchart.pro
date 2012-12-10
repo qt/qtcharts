@@ -1,4 +1,4 @@
-!include( ../examples.pri ) {
+!include( ../tests.pri ) {
  error( "Couldn't find the examples.pri file!" )
 }
 TARGET = presenterchart

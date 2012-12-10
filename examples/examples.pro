@@ -11,7 +11,6 @@ SUBDIRS += \
            percentbarchart \
            piechart \
            piechartdrilldown \
-           presenterchart \
            scatterchart \
            scatterinteractions \
            splinechart \
