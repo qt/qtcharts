@@ -111,26 +111,23 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
   \qmlproperty real ChartView::topMargin
-  Deprecated. Use minimumMargins and plotArea instead.
 */
 
 /*!
   \qmlproperty real ChartView::bottomMargin
-  Deprecated. Use minimumMargins and plotArea instead.
 */
 
 /*!
   \qmlproperty real ChartView::leftMargin
-  Deprecated. Use minimumMargins and plotArea instead.
 */
 
 /*!
   \qmlproperty real ChartView::rightMargin
-  Deprecated. Use minimumMargins and plotArea instead.
 */
 
 /*!
   \qmlproperty Margins ChartView::minimumMargins
+  Deprecated; use margins instead.
   The minimum margins allowed between the outer bounds and the plotArea of the ChartView. Margins
   area of ChartView is used for drawing title, axes and legend. Please note that setting the
   properties of minimumMargins may be bigger than the defined value, depending on other ChartView
@@ -143,6 +140,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   The area on the ChartView that is used for drawing series. This is the ChartView rect without the
   margins.
   \sa ChartView::minimumMargins
+*/
+
+/*!
+  \qmlproperty Margins ChartView::margins
+  The minimum margins allowed between the outer bounds and the plotArea of the ChartView. Margins
+  area of ChartView is used for drawing title, axes and legend.
 */
 
 /*!
@@ -489,27 +492,26 @@ bool DeclarativeChart::dropShadowEnabled()
 
 qreal DeclarativeChart::topMargin()
 {
-    qWarning() << "ChartView.topMargin is deprecated. Use minimumMargins and plotArea instead.";
-    return m_chart->plotArea().top();
+    qWarning() << "ChartView.topMargin is deprecated. Use margins instead.";
+    return m_chart->margins().top();
 }
 
 qreal DeclarativeChart::bottomMargin()
 {
-
-    qWarning() << "ChartView.bottomMargin is deprecated. Use minimumMargins and plotArea instead.";
-    return m_chart->plotArea().bottom();
+    qWarning() << "ChartView.bottomMargin is deprecated. Use margins instead.";
+    return m_chart->margins().bottom();
 }
 
 qreal DeclarativeChart::leftMargin()
 {
-    qWarning() << "ChartView.leftMargin is deprecated. Use minimumMargins and plotArea instead.";
-    return m_chart->plotArea().left();
+    qWarning() << "ChartView.leftMargin is deprecated. Use margins instead.";
+    return m_chart->margins().left();
 }
 
 qreal DeclarativeChart::rightMargin()
 {
-    qWarning() << "ChartView.rightMargin is deprecated. Use minimumMargins and plotArea instead.";
-    return m_chart->plotArea().right();
+    qWarning() << "ChartView.rightMargin is deprecated. Use margins instead.";
+    return m_chart->margins().right();
 }
 
 void DeclarativeChart::zoom(qreal factor)
