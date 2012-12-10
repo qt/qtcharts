@@ -32,7 +32,11 @@ private Q_SLOTS:
 
 void tst_Domain::skip()
 {
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+    QSKIP("This test requires the debug version of library");
+#else
     QSKIP("This test requires the debug version of library", SkipAll);
+#endif
 }
 
 QTEST_MAIN(tst_Domain)
