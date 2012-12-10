@@ -84,12 +84,27 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+  \property QAbstractAxis::linePen
+  The pen of the line.
+*/
+
+/*!
   \property QAbstractAxis::labelsVisible
   Defines if axis labels are visible.
 */
 /*!
   \qmlproperty bool AbstractAxis::labelsVisible
   Defines if axis labels are visible.
+*/
+
+/*!
+  \property QAbstractAxis::labelsPen
+  The pen of the labels.
+*/
+
+/*!
+  \property QAbstractAxis::labelsBrush
+  The brush of the labels.
 */
 
 /*!
@@ -117,6 +132,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
   \qmlproperty color AbstractAxis::color
   The color of the axis and ticks.
+*/
+
+/*!
+  \property QAbstractAxis::gridLinePen
+  The pen of the grid line.
 */
 
 /*!
@@ -177,6 +197,16 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+  \property QAbstractAxis::shadesPen
+  The pen of the axis shades (area between grid lines).
+*/
+
+/*!
+  \property QAbstractAxis::shadesBrush
+  The brush of the axis shades (area between grid lines).
+*/
+
+/*!
   \property QAbstractAxis::titleVisible
   The visibility of the axis title. By default the value is true.
 */
@@ -186,21 +216,40 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+  \property QAbstractAxis::titleText
+  The title of the axis. Empty by default.
+*/
+/*!
+  \qmlproperty String AbstractAxis::titleText
+  The title of the axis. Empty by default.
+*/
+
+/*!
+  \property QAbstractAxis::titlePen
+  The pen of the title text.
+*/
+
+/*!
+  \property QAbstractAxis::titleBrush
+  The brush of the title text.
+*/
+
+/*!
   \property QAbstractAxis::titleFont
   The font of the title of the axis.
 */
 /*!
-  \qmlproperty Font AbstractAxis::title
+  \qmlproperty Font AbstractAxis::titleFont
   The font of the title of the axis.
 */
 
 /*!
-  \property QAbstractAxis::title
-  The title of the axis. Empty by default.
+  \property QAbstractAxis::orientation
+  The orientation of the axis. Fixed to either Qt::Horizontal or Qt::Vertical when you add the axis to a chart.
 */
 /*!
-  \qmlproperty string AbstractAxis::title
-  The title of the axis. Empty string by default.
+  \qmlproperty Qt.Orientation AbstractAxis::orientation
+  The orientation of the axis. Fixed to either Qt.Horizontal or Qt.Vertical when the axis is set to a Chart/Series.
 */
 
 /*!
@@ -222,6 +271,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+  \fn void QAbstractAxis::linePenChanged(const QPen& pen)
+  The pen of the line of the axis has changed to \a pen.
+*/
+
+/*!
   \fn void QAbstractAxis::lineVisibleChanged(bool visible)
   Visibility of the axis line has changed to \a visible.
 */
@@ -240,12 +294,45 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+  \fn void QAbstractAxis::labelsFontChanged(const QFont& font)
+  The font of the axis labels has changed to \a font.
+*/
+/*!
+  \qmlsignal AbstractAxis::onLabelsFontChanged(Font font)
+  The font of the axis labels has changed to \a font.
+*/
+
+/*!
+  \fn void QAbstractAxis::labelsPenChanged(const QPen& pen)
+  The pen of the axis labels has changed to \a pen.
+*/
+
+/*!
+  \fn void QAbstractAxis::labelsBrushChanged(const QBrush& brush)
+  The brush of the axis labels has changed to \a brush.
+*/
+
+/*!
+  \fn void QAbstractAxis::labelsAngleChanged(int angle)
+  The angle of the axis labels has changed to \a angle.
+*/
+/*!
+  \qmlsignal AbstractAxis::onLabelsAngleChanged(int angle)
+  The angle of the axis labels has changed to \a angle.
+*/
+
+/*!
   \fn void QAbstractAxis::gridVisibleChanged(bool visible)
   Visibility of the grid lines of the axis has changed to \a visible.
 */
 /*!
   \qmlsignal AbstractAxis::onGridVisibleChanged(bool visible)
   Visibility of the grid lines of the axis has changed to \a visible.
+*/
+
+/*!
+  \fn void QAbstractAxis::gridLinePenChanged(const QPen& pen)
+  The pen of the grid line has changed to \a pen.
 */
 
 /*!
@@ -264,6 +351,43 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
   \qmlsignal AbstractAxis::onLabelsColorChanged(QColor color)
   Emitted if the \a color of the axis labels is changed.
+*/
+
+/*!
+  \fn void QAbstractAxis::titleVisibleChanged(bool visible)
+  Visibility of the title text of the axis has changed to \a visible.
+*/
+/*!
+  \qmlsignal AbstractAxis::onTitleVisibleChanged(bool visible)
+  Visibility of the title text of the axis has changed to \a visible.
+*/
+
+/*!
+  \fn void QAbstractAxis::titleTextChanged(const QString& text)
+  The text of the axis title has changed to \a text.
+*/
+/*!
+  \qmlsignal AbstractAxis::onTitleTextChanged(String text)
+  The text of the axis title has changed to \a text.
+*/
+
+/*!
+  \fn void QAbstractAxis::titlePenChanged(const QPen& pen)
+  The pen of the axis shades has changed to \a pen.
+*/
+
+/*!
+  \fn void QAbstractAxis::titleBrushChanged(const QBrush& brush)
+  The brush of the axis title has changed to \a brush.
+*/
+
+/*!
+  \fn void QAbstractAxis::titleFontChanged(const QFont& font)
+  The font of the axis title has changed to \a font.
+*/
+/*!
+  \qmlsignal AbstractAxis::onTitleFontChanged(Font font)
+  The font of the axis title has changed to \a font.
 */
 
 /*!
@@ -291,6 +415,16 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
   \qmlsignal AbstractAxis::onBorderColorChanged(QColor color)
   Emitted if the border \a color of the axis shades is changed.
+*/
+
+/*!
+  \fn void QAbstractAxis::shadesBrushChanged(const QBrush& brush)
+  The brush of the axis shades has changed to \a brush.
+*/
+
+/*!
+  \fn void QAbstractAxis::shadesPenChanged(const QPen& pen)
+  The pen of the axis shades has changed to \a pen.
 */
 
 /*!

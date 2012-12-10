@@ -38,23 +38,20 @@ class QTCOMMERCIALCHART_EXPORT QAbstractAxis : public QObject
     //arrow
     Q_PROPERTY(bool lineVisible READ isLineVisible WRITE setLineVisible NOTIFY lineVisibleChanged)
     Q_PROPERTY(QPen linePen READ linePen WRITE setLinePen NOTIFY linePenChanged)
-    //TODO: make wrapping of color for qml
     Q_PROPERTY(QColor color READ linePenColor WRITE setLinePenColor NOTIFY colorChanged)
     //labels
     Q_PROPERTY(bool labelsVisible READ labelsVisible WRITE setLabelsVisible NOTIFY labelsVisibleChanged)
-    Q_PROPERTY(QPen lablesPen READ labelsPen WRITE setLabelsPen NOTIFY labelsPenChanged)
-    Q_PROPERTY(QBrush lablesBrush READ labelsBrush WRITE setLabelsBrush NOTIFY labelsBrushChanged)
+    Q_PROPERTY(QPen labelsPen READ labelsPen WRITE setLabelsPen NOTIFY labelsPenChanged)
+    Q_PROPERTY(QBrush labelsBrush READ labelsBrush WRITE setLabelsBrush NOTIFY labelsBrushChanged)
     //TODO: fix labels angles to work with layout
     Q_PROPERTY(int labelsAngle READ labelsAngle WRITE setLabelsAngle NOTIFY labelsAngleChanged)
     Q_PROPERTY(QFont labelsFont READ labelsFont WRITE setLabelsFont NOTIFY labelsFontChanged)
-    //TODO: make wrapping of color for qml
     Q_PROPERTY(QColor labelsColor READ labelsColor WRITE setLabelsColor NOTIFY labelsColorChanged)
     //grid
     Q_PROPERTY(bool gridVisible READ isGridLineVisible WRITE setGridLineVisible NOTIFY gridVisibleChanged)
-    Q_PROPERTY(QPen girdLinePen READ gridLinePen WRITE setGridLinePen NOTIFY gridLinePenChanged)
+    Q_PROPERTY(QPen gridLinePen READ gridLinePen WRITE setGridLinePen NOTIFY gridLinePenChanged)
     //shades
     Q_PROPERTY(bool shadesVisible READ shadesVisible WRITE setShadesVisible NOTIFY shadesVisibleChanged)
-    //TODO: make wrapping of color for qml
     Q_PROPERTY(QColor shadesColor READ shadesColor WRITE setShadesColor NOTIFY shadesColorChanged)
     //TODO: make wrapping of border for qml
     Q_PROPERTY(QColor shadesBorderColor READ shadesBorderColor WRITE setShadesBorderColor NOTIFY shadesBorderColorChanged)
@@ -173,14 +170,14 @@ Q_SIGNALS:
     void labelsColorChanged(QColor color);
     void titleTextChanged(const QString& title);
     void titlePenChanged(const QPen& pen);
-    void titleBrushChanged(const QBrush brush);
+    void titleBrushChanged(const QBrush& brush);
     void titleVisibleChanged(bool visible);
     void titleFontChanged(const QFont& font);
     void shadesVisibleChanged(bool visible);
     void shadesColorChanged(QColor color);
     void shadesBorderColorChanged(QColor color);
     void shadesPenChanged(const QPen& pen);
-    void shadesBrushChanged(const QBrush brush);
+    void shadesBrushChanged(const QBrush& brush);
 
 protected:
     QScopedPointer<QAbstractAxisPrivate> d_ptr;

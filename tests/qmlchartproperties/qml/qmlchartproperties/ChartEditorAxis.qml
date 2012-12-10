@@ -28,22 +28,23 @@ Row {
     Flow {
         spacing: 5
         flow: Flow.TopToBottom
+        height: parent.height
 
         Button {
             text: "axis visible"
             onClicked: axis.visible = !axis.visible;
         }
         Button {
-            text: "axis grid visible"
-            onClicked: axis.gridVisible = !axis.gridVisible;
+            text: "axis line visible"
+            onClicked: axis.lineVisible = !axis.lineVisible;
         }
         Button {
             text: "axis color"
             onClicked: axis.color = main.nextColor();
         }
         Button {
-            text: "axis labels color"
-            onClicked: axis.labelsColor = main.nextColor();
+            text: "axis labels visible"
+            onClicked: axis.labelsVisible = !axis.labelsVisible;
         }
         Button {
             text: "axis labels angle +"
@@ -52,6 +53,14 @@ Row {
         Button {
             text: "axis labels angle -"
             onClicked: axis.labelsAngle -= 5;
+        }
+        Button {
+            text: "axis labels color"
+            onClicked: axis.labelsColor = main.nextColor();
+        }
+        Button {
+            text: "axis grid visible"
+            onClicked: axis.gridVisible = !axis.gridVisible;
         }
         Button {
             text: "axis shades visible"
@@ -64,6 +73,14 @@ Row {
         Button {
             text: "axis shades bcolor"
             onClicked: axis.shadesBorderColor = main.nextColor();
+        }
+        Button {
+            text: "axis title text"
+            onClicked: axis.titleText = axis.titleText + "X";
+        }
+        Button {
+            text: "axis title visible"
+            onClicked: axis.titleVisible = !axis.titleVisible;
         }
         Button {
             text: "axis max +"
@@ -94,13 +111,21 @@ Row {
             text: "axis nice nmb"
             onClicked: axis.niceNumbersEnabled = !axis.niceNumbersEnabled;
         }
-    }
 
-    FontEditor {
-        id: fontEditor
-        fontDescription: "axis"
-        function editedFont() {
-            return axis.labelsFont;
+        FontEditor {
+            id: fontEditor
+            fontDescription: "axis"
+            function editedFont() {
+                return axis.labelsFont;
+            }
+        }
+
+        FontEditor {
+            id: titleFontEditor
+            fontDescription: "title"
+            function editedFont() {
+                return axis.titleFont;
+            }
         }
     }
 }
