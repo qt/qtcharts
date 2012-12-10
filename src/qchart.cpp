@@ -581,11 +581,17 @@ void QChart::removeAxis(QAbstractAxis *axis)
     d_ptr->m_dataset->removeAxis(axis);
 }
 
+/*!
+  Returns the value in the \a series domain that coresponds to the charts widget point defines by \a position.
+*/
 QPointF QChart::mapToValue(const QPointF &position, QAbstractSeries *series)
 {
     return d_ptr->m_dataset->mapToValue(position, series);
 }
 
+/*!
+  Returns the position on the charts widget that coresponds to the \a value in the \a series domain.
+*/
 QPointF QChart::mapToPosition(const QPointF &value, QAbstractSeries *series)
 {
     return d_ptr->m_dataset->mapToPosition(value, series);
