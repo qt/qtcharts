@@ -92,6 +92,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
  */
 
 /*!
+ \property QChart::margins
+ Minimum between the plot area (axes) and the edge of the chart widget.
+ */
+
+/*!
  \property QChart::theme
  Theme is a built-in collection of UI style related settings applied for all visual elements of a chart, like colors,
  pens, brushes and fonts of series, axes, title and legend. \l {Chart themes demo} shows an example with a few
@@ -358,6 +363,10 @@ QAbstractAxis *QChart::axisY(QAbstractSeries *series) const
     return left?left:right;
 }
 
+/*!
+ Returns the axes added for the \a series with \a orientation
+ \sa addAxis(), createDefaultAxes()
+ */
 QList<QAbstractAxis *> QChart::axes(Qt::Orientations orientation, QAbstractSeries *series) const
 {
     QList<QAbstractAxis *> result ;
@@ -571,11 +580,19 @@ void QChart::setAxisY(QAbstractAxis *axis , QAbstractSeries *series)
     d_ptr->m_dataset->attachAxis(series,axis);
 }
 
-void QChart::addAxis(QAbstractAxis *axis,Qt::Alignment aligment)
+/*!
+  Adds \a axis to the chart with \a alignment. The chart takes the ownership of the axis.
+  \sa removeAxis(), createDefaultAxes(), QAbstractSeries::attachAxis()
+*/
+void QChart::addAxis(QAbstractAxis *axis, Qt::Alignment alignment)
 {
-    d_ptr->m_dataset->addAxis(axis,aligment);
+    d_ptr->m_dataset->addAxis(axis, alignment);
 }
 
+/*!
+  Removes \a axis from the chart. The ownership is returned to the caller.
+  \sa addAxis(), createDefaultAxes(), QAbstractSeries::detachAxis()
+*/
 void QChart::removeAxis(QAbstractAxis *axis)
 {
     d_ptr->m_dataset->removeAxis(axis);

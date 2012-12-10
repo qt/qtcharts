@@ -76,15 +76,14 @@ public:
     void removeAllSeries();
     QList<QAbstractSeries *> series() const;
 
-    //depreciated shit//////////////////////////////////////////////////.
+    // *** deprecated ***
     void setAxisX(QAbstractAxis *axis, QAbstractSeries *series = 0);
     void setAxisY(QAbstractAxis *axis, QAbstractSeries *series = 0);
-
     QAbstractAxis *axisX(QAbstractSeries *series = 0) const;
     QAbstractAxis *axisY(QAbstractSeries *series = 0) const;
-    /////////////////////////////////////////////////////////////////////
+    // ******************
 
-    void addAxis(QAbstractAxis *axis,Qt::Alignment aligment);
+    void addAxis(QAbstractAxis *axis,Qt::Alignment alignment);
     void removeAxis(QAbstractAxis *axis);
     QList<QAbstractAxis*> axes(Qt::Orientations orientation = Qt::Horizontal|Qt::Vertical, QAbstractSeries *series = 0) const;
 
