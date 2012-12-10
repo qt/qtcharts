@@ -14,7 +14,8 @@ SUBDIRS += piechartcustomization \
            qmlcustommodel \
            chartinteractions \
            qmlaxes \
-           qmlcustomlegend
+           qmlcustomlegend \
+           callout
 
 contains(QT_CONFIG, opengl) {
         SUBDIRS +=  chartthemes \

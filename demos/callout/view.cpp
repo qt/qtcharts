@@ -89,6 +89,8 @@ void View::resizeEvent(QResizeEvent *event)
          m_chart->resize(event->size());
          m_coordX->setPos(m_chart->size().width()/2 - 50, m_chart->size().height() - 20);
          m_coordY->setPos(m_chart->size().width()/2 + 50, m_chart->size().height() - 20);
+//         for (int i = 0; i < children().count(); i++)
+//             if ()
     }
     QGraphicsView::resizeEvent(event);
 }

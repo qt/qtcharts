@@ -59,6 +59,14 @@
             <td><a href="demos-qmlweather.html"><img src="images/demos_qmlweather.png" width="300" alt="Qml Weather" /></a></td>
             <td><a href="demos-qmlcustomlegend.html"><img src="images/demos-qmlcustomlegend1.png" width="300" alt="Qml Custom Legend" /></a></td>
         </tr>
+        <tr>
+            <td><a href="demos-callout.html">Callout</a></td>
+            <td><a href="demos-audio.html">Audio</a></td>
+        </tr>
+        <tr>
+            <td><a href="demos-callout.html"><img src="images/demos_callout.png" width="300" alt="Callout" /></a></td>
+            <td><a href="demos-audio.html"><img src="images/demos_audio.png" width="300" alt="Audio" /></a></td>
+        </tr>
 
     </table>
     </div>

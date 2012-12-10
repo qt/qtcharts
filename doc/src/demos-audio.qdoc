@@ -1,0 +1,8 @@
+/*!
+     \example demos/audio
+     \title Audio demo
+     \subtitle
+
+     This demos shows drawing of the dynamic data (microphon input)
+     \image demos_audio.png
+*/

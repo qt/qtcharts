@@ -31,7 +31,6 @@ SUBDIRS += \
            temperaturerecords \
            donutchart \
            multiaxis \
-           callout \
            legendmarkers
 
 !linux-arm*: {
