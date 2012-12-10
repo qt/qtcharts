@@ -229,20 +229,30 @@ void QAbstractSeries::hide()
     setVisible(false);
 }
 
+/*!
+ Attach \a axis to the series.
+ \return true if the axis was attached successfully, false otherwise.
+ \sa QChart::addAxis(), QChart::createDefaultAxes()
+ */
 bool QAbstractSeries::attachAxis(QAbstractAxis* axis)
 {
     if(d_ptr->m_chart) {
-        return d_ptr->m_chart->d_ptr->m_dataset->attachAxis(this,axis);
+        return d_ptr->m_chart->d_ptr->m_dataset->attachAxis(this, axis);
     } else {
         qWarning()<<"Series not in the chart. Please addSeries to chart first.";
         return false;
     }
 }
 
+/*!
+ Detach \a axis from the series.
+ \return true if the axis was detached successfully, false otherwise.
+ \sa QChart::removeAxis()
+ */
 bool QAbstractSeries::detachAxis(QAbstractAxis* axis)
 {
     if(d_ptr->m_chart) {
-        return d_ptr->m_chart->d_ptr->m_dataset->detachAxis(this,axis);
+        return d_ptr->m_chart->d_ptr->m_dataset->detachAxis(this, axis);
     }
     else {
         qWarning()<<"Series not in the chart. Please addSeries to chart first.";
@@ -250,6 +260,11 @@ bool QAbstractSeries::detachAxis(QAbstractAxis* axis)
     }
 }
 
+/*!
+ Returns the list of axes attached to the series. Usually there is an x-axis and a y-axis attached to a series, except
+ in case of a QPieSeries, which does not have any axes attached.
+ \sa attachAxis(), detachAxis()
+ */
 QList<QAbstractAxis*> QAbstractSeries::attachedAxes()
 {
     return d_ptr->m_axes;
