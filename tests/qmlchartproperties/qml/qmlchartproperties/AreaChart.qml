@@ -31,7 +31,7 @@ ChartView {
     AreaSeries {
         id: areaSeries
         name: "area 1"
-       
+
         upperSeries: LineSeries {
             XYPoint { x: 0; y: 1 }
             XYPoint { x: 1; y: 1 }
@@ -70,6 +70,7 @@ ChartView {
         onBorderColorChanged:       console.log(name + ".onBorderColorChanged: " + borderColor);
         onBorderWidthChanged:       console.log(name + ".onBorderChanged: " + borderWidth);
 //        onCountChanged:             console.log(name + ".onCountChanged: " + count);
+        onHovered:                  console.log("lineSeries.onHovered:" + point.x + "," + point.y + " " + state);
     }
 
     AreaSeries {

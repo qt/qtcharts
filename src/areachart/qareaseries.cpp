@@ -142,6 +142,19 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QAreaSeries::hovered(const QPointF &point, bool state)
+    This signal is emitted when user has hovered over or away from the series. \a point shows the origin (coordinate)
+    of the hover event. \a state is true when user has hovered over the series and false when hover has moved away from
+    the series.
+*/
+/*!
+    \qmlsignal AreaSeries::onHovered(point point, bool state)
+    This signal is emitted when user has hovered over or away from the series. \a point shows the origin (coordinate)
+    of the hover event. \a state is true when user has hovered over the series and false when hover has moved away from
+    the series.
+*/
+
+/*!
     \fn void QAreaSeries::selected()
     The signal is emitted if the user selects/deselects the XY series. The logic for maintaining selections should be
     implemented by the user of QAreaSeries API.

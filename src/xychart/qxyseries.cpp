@@ -117,6 +117,19 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QXYSeries::hovered(const QPointF &point, bool state)
+    This signal is emitted when user has hovered over or away from the series. \a point shows the origin (coordinate)
+    of the hover event. \a state is true when user has hovered over the series and false when hover has moved away from
+    the series.
+*/
+/*!
+    \qmlsignal XYSeries::onHovered(point point, bool state)
+    This signal is emitted when user has hovered over or away from the series. \a point shows the origin (coordinate)
+    of the hover event. \a state is true when user has hovered over the series and false when hover has moved away from
+    the series.
+*/
+
+/*!
     \fn void QXYSeries::pointReplaced(int index)
     Signal is emitted when a point has been replaced at \a index.
     \sa replace()

@@ -51,6 +51,7 @@ ChartView {
         onStyleChanged:             console.log("lineSeries.onStyleChanged: " + style);
         onCapStyleChanged:          console.log("lineSeries.onCapStyleChanged: " + capStyle);
         onCountChanged:             console.log("lineSeries.onCountChanged: " + count);
+        onHovered:                  console.log("lineSeries.onHovered:" + point.x + "," + point.y + " " + state);
     }
 
     LineSeries {
