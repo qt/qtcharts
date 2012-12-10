@@ -33,13 +33,14 @@ int main(int argc, char *argv[])
 
     //![1]
     QLineSeries *series = new QLineSeries();
-    *series << QPointF(1, 7) << QPointF(2, 73) << QPointF(3, 268) << QPointF(4, 17) << QPointF(5, 4325) << QPointF(6, 723);
+    *series << QPointF(1, 1) << QPointF(2, 73) << QPointF(3, 268) << QPointF(4, 17) << QPointF(5, 4325) << QPointF(6, 723);
     //![1]
 
     //![3]
     QChart *chart = new QChart();
     chart->addSeries(series);
     chart->legend()->hide();
+    chart->setTitle("QLogValueAxis chart example");
     //![3]
 
     //![4]
@@ -51,7 +52,7 @@ int main(int argc, char *argv[])
     series->attachAxis(axisX);
 
     QLogValueAxis *axisY = new QLogValueAxis;
-    axisY->setBase(2);
+    axisY->setLabelFormat("%g");
     axisY->setTitleText("Values");
     chart->addAxis(axisY, Qt::AlignLeft);
     series->attachAxis(axisY);
@@ -65,7 +66,7 @@ int main(int argc, char *argv[])
     //![6]
     QMainWindow window;
     window.setCentralWidget(chartView);
-    window.resize(800, 600);
+    window.resize(400, 300);
     window.show();
     //![6]
 

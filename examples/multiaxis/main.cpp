@@ -22,9 +22,9 @@
 #include <QMainWindow>
 #include <QChartView>
 #include <QLineSeries>
+#include <QSplineSeries>
 #include <QValueAxis>
-#include <QTime>
-#include <QValueAxis>
+#include <QCategoryAxis>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -32,38 +32,44 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
-
     //![1]
-    QLineSeries *series;
-    QValueAxis *axisX;
-    QValueAxis *axisY;
     QChart *chart = new QChart();
-    for (int i = 0; i < 5; i++) {
-        series = new QLineSeries;
-        for (int k(0); k < 8; k++)
-            series->append(i + k, qrand() % 20);
-        chart->addSeries(series);
+    QValueAxis *axisX = new QValueAxis;
+    axisX->setTickCount(10);
 
-        axisX = new QValueAxis;
-        axisX->setTickCount(7 + i);
-        axisX->setLinePenColor(series->pen().color());
+    QSplineSeries *series = new QSplineSeries;
+    *series << QPointF(1, 5) << QPointF(3.5, 18) << QPointF(4.8, 7.5) << QPointF(10, 2.5);
+    chart->addSeries(series);
 
-        axisY = new QValueAxis;
-        axisY->setTickCount(7 + i);
-        axisY->setLinePenColor(series->pen().color());
+    QValueAxis *axisY = new QValueAxis;
+    axisY->setLinePenColor(series->pen().color());
 
-        chart->addAxis(axisX,i % 2?Qt::AlignTop:Qt::AlignBottom);
-        chart->addAxis(axisY,i % 2?Qt::AlignRight:Qt::AlignLeft);
-        series->attachAxis(axisX);
-        series->attachAxis(axisY);
-    }
+    chart->addAxis(axisX, Qt::AlignBottom);
+    chart->addAxis(axisY, Qt::AlignLeft);
+    series->attachAxis(axisX);
+    series->attachAxis(axisY);
+
+    series = new QSplineSeries;
+    *series << QPointF(1, 0.5) << QPointF(1.5, 4.5) << QPointF(2.4, 2.5) << QPointF(4.3, 12.5)
+            << QPointF(5.2, 3.5) << QPointF(7.4, 16.5) << QPointF(8.3, 7.5) << QPointF(10, 17);
+    chart->addSeries(series);
+
+    QCategoryAxis *axisY3 = new QCategoryAxis;
+    axisY3->append("Low", 5);
+    axisY3->append("Medium", 12);
+    axisY3->append("High", 17);
+    axisY3->setLinePenColor(series->pen().color());
+    axisY3->setGridLinePen((series->pen()));
+
+    chart->addAxis(axisY3, Qt::AlignRight);
+    series->attachAxis(axisX);
+    series->attachAxis(axisY3);
+
     //![2]
 
     //![3]
     chart->legend()->hide();
-
-    chart->setTitle("Simple line chart example");
+    chart->setTitle("Multiaxis chart example");
     //![3]
 
     //![4]
@@ -81,3 +87,4 @@ int main(int argc, char *argv[])
 
     return a.exec();
 }
+
