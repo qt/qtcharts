@@ -30,7 +30,8 @@ SUBDIRS += \
            temperaturerecords \
            donutchart \
            multiaxis \
-           legendmarkers
+           legendmarkers \
+           logvalueaxis
 
 !linux-arm*: {
 SUBDIRS += \
