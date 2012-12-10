@@ -95,9 +95,7 @@ QSizeF ChartLogValueAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint
     QStringList ticksList;
     qreal logMax = log10(m_axis->max()) / log10(m_axis->base());
     qreal logMin = log10(m_axis->min()) / log10(m_axis->base());
-    int tickCount = qAbs(qRound(logMax - logMin));
-    tickCount++;
-
+    int tickCount = qAbs(ceil(logMax) - ceil(logMin));
     if (m_axis->max() > m_axis->min() && tickCount > 1)
         ticksList = createLogValueLabels(m_axis->min(), m_axis->max(), m_axis->base(), tickCount, m_axis->labelFormat());
     else

@@ -25,6 +25,7 @@
 #include <QGraphicsLayout>
 #include <QFontMetrics>
 #include <qmath.h>
+#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -94,12 +95,13 @@ QSizeF ChartLogValueAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint
     QStringList ticksList;
     qreal logMax = log10(m_axis->max()) / log10(m_axis->base());
     qreal logMin = log10(m_axis->min()) / log10(m_axis->base());
-    int tickCount = qAbs(qRound(logMax - logMin));
-    tickCount++;
+    int tickCount = qAbs(ceil(logMax) - ceil(logMin));
     if (m_axis->max() > m_axis->min() && tickCount > 1)
         ticksList = createLogValueLabels(m_axis->min(), m_axis->max(), m_axis->base(), tickCount, m_axis->labelFormat());
     else
         ticksList.append(QString(" "));
+    qDebug() << ticksList;
+    qDebug() << tickCount;
     qreal width = 0;
     qreal height = 0;
 
@@ -113,7 +115,7 @@ QSizeF ChartLogValueAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint
         break;
     }
     case Qt::PreferredSize: {
-        int count = qMax(ticksList.first().count() , ticksList.last().count());
+        int count = qMax(ticksList.first().count(), ticksList.last().count());
         width = count*fn.averageCharWidth() + labelPadding() + 2; //two pixels of tolerance
         width += base.width();
         height = fn.height() * ticksList.count();
