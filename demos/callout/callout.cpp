@@ -13,10 +13,10 @@ QRectF Callout::boundingRect() const
 {
     QPointF anchor = mapFromParent(m_anchor);
     QRectF rect;
-    rect.setLeft(qMin(m_textRect.left(), anchor.x()));
-    rect.setRight(qMax(m_textRect.right() + 8, anchor.x()));
-    rect.setTop(qMin(m_textRect.top(), anchor.y()));
-    rect.setBottom(qMax(m_textRect.bottom() + 8, anchor.y()));
+    rect.setLeft(qMin(m_rect.left(), anchor.x()));
+    rect.setRight(qMax(m_rect.right(), anchor.x()));
+    rect.setTop(qMin(m_rect.top(), anchor.y()));
+    rect.setBottom(qMax(m_rect.bottom(), anchor.y()));
     return rect;
 }
 
@@ -25,26 +25,26 @@ void Callout::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     Q_UNUSED(option)
     Q_UNUSED(widget)
     QPainterPath path;
-    path.addRoundedRect(m_textRect, 5, 5);
+    path.addRoundedRect(m_rect, 5, 5);
 
     QPointF anchor = mapFromParent(m_anchor);
-    if (!m_textRect.contains(anchor)) {
+    if (!m_rect.contains(anchor)) {
         QPointF point1, point2;
 
         // establish the position of the anchor point in relation to m_textRect
-        bool above = anchor.y() <= m_textRect.top();
-        bool aboveCenter = anchor.y() > m_textRect.top() && anchor.y() <= m_textRect.center().y();
-        bool belowCenter = anchor.y() > m_textRect.center().y() && anchor.y() <= m_textRect.bottom();
-        bool below = anchor.y() > m_textRect.bottom();
+        bool above = anchor.y() <= m_rect.top();
+        bool aboveCenter = anchor.y() > m_rect.top() && anchor.y() <= m_rect.center().y();
+        bool belowCenter = anchor.y() > m_rect.center().y() && anchor.y() <= m_rect.bottom();
+        bool below = anchor.y() > m_rect.bottom();
 
-        bool onLeft = anchor.x() <= m_textRect.left();
-        bool leftOfCenter = anchor.x() > m_textRect.left() && anchor.x() <= m_textRect.center().x();
-        bool rightOfCenter = anchor.x() > m_textRect.center().x() && anchor.x() <= m_textRect.right();
-        bool onRight = anchor.x() > m_textRect.right();
+        bool onLeft = anchor.x() <= m_rect.left();
+        bool leftOfCenter = anchor.x() > m_rect.left() && anchor.x() <= m_rect.center().x();
+        bool rightOfCenter = anchor.x() > m_rect.center().x() && anchor.x() <= m_rect.right();
+        bool onRight = anchor.x() > m_rect.right();
 
         // get the nearest m_textRect corner.
-        qreal x = (onRight + rightOfCenter) * m_textRect.width();
-        qreal y = (below + belowCenter) * m_textRect.height();
+        qreal x = (onRight + rightOfCenter) * m_rect.width();
+        qreal y = (below + belowCenter) * m_rect.height();
         bool cornerCase = (above && onLeft) || (above && onRight) || (below && onLeft) || (below && onRight);
         bool vertical = qAbs(anchor.x() - x) > qAbs(anchor.y() - y);
 
@@ -65,12 +65,12 @@ void Callout::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     }
     painter->setBrush(QColor(255, 255, 255));
     painter->drawPath(path);
-    painter->drawText(m_textRect.adjusted(4, 4, 0, 0), m_text);
+    painter->drawText(m_textRect, m_text);
 }
 
 void Callout::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    if (m_textRect.contains(event->pos())) {
+    if (m_rect.contains(event->pos())) {
         m_clickOffset = event->pos();
         event->setAccepted(true);
     } else {
@@ -80,7 +80,7 @@ void Callout::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void Callout::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-    if (m_textRect.contains(event->pos())){
+    if (event->buttons() & Qt::LeftButton){
         setPos(mapToParent(event->pos() - m_clickOffset));
         event->setAccepted(true);
     } else {
@@ -92,8 +92,10 @@ void Callout::setText(const QString &text)
 {
     m_text = text;
     QFontMetrics metrics(m_font);
-    prepareGeometryChange();
-    m_textRect = metrics.boundingRect(QRect(0, 0, 150, 150), Qt::AlignLeft, m_text).adjusted(0, 0, 4, 4);
+    m_textRect = metrics.boundingRect(QRect(0, 0, 150, 150), Qt::AlignLeft, m_text);
+    m_textRect.translate(5, 5);
+    prepareGeometryChange();    
+    m_rect = m_textRect.adjusted(-5, -5, 5, 5);
 }
 
 void Callout::setAnchor(QPointF point)

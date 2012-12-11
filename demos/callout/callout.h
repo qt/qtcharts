@@ -24,6 +24,7 @@ protected:
 private:
     QString m_text;
     QRectF m_textRect;
+    QRectF m_rect;
     QPointF m_anchor;
     QFont m_font;
     QPointF m_clickOffset;
