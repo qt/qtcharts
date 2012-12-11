@@ -27,7 +27,6 @@ private:
     QRectF m_rect;
     QPointF m_anchor;
     QFont m_font;
-    QPointF m_clickOffset;
 };
 
 #endif // CALLOUT_H

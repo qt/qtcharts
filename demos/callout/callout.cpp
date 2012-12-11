@@ -70,18 +70,13 @@ void Callout::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 
 void Callout::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    if (m_rect.contains(event->pos())) {
-        m_clickOffset = event->pos();
-        event->setAccepted(true);
-    } else {
-        event->setAccepted(false);
-    }
+    event->setAccepted(true);
 }
 
 void Callout::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     if (event->buttons() & Qt::LeftButton){
-        setPos(mapToParent(event->pos() - m_clickOffset));
+        setPos(mapToParent(event->pos() - event->buttonDownPos(Qt::LeftButton)));
         event->setAccepted(true);
     } else {
         event->setAccepted(false);
@@ -94,7 +89,7 @@ void Callout::setText(const QString &text)
     QFontMetrics metrics(m_font);
     m_textRect = metrics.boundingRect(QRect(0, 0, 150, 150), Qt::AlignLeft, m_text);
     m_textRect.translate(5, 5);
-    prepareGeometryChange();    
+    prepareGeometryChange();
     m_rect = m_textRect.adjusted(-5, -5, 5, 5);
 }
 
