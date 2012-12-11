@@ -186,7 +186,9 @@ bool ChartDataSet::attachAxis(QAbstractSeries* series,QAbstractAxis *axis)
     if(type == AbstractDomain::UndefinedDomain) return false;
 
     if(domain->type()!=type){
+        AbstractDomain *old = domain;
         domain =  createDomain(type);
+        domain->setRange(old->minX(), old->maxX(), old->minY(), old->maxY());
     }
 
     if(!domain) return false;
