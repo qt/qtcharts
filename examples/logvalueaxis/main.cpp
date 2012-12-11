@@ -64,12 +64,12 @@ int main(int argc, char *argv[])
     chartView->setRenderHint(QPainter::Antialiasing);
     //![4]
 
-    //![6]
+    //![5]
     QMainWindow window;
     window.setCentralWidget(chartView);
     window.resize(400, 300);
     window.show();
-    //![6]
+    //![5]
 
     return a.exec();
 }
