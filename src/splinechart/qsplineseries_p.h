@@ -45,17 +45,6 @@ public:
     void initializeGraphics(QGraphicsItem* parent);
     void initializeAnimations(QtCommercialChart::QChart::AnimationOptions options);
 
-    QPointF controlPoint(int index) const;
-
-public Q_SLOTS:
-    void updateControlPoints();
-
-private:
-    void calculateControlPoints();
-    QVector<qreal> firstControlPoints(const QVector<qreal>& vector);
-
-public:
-    QVector<QPointF> m_controlPoints;
 private:
     Q_DECLARE_PUBLIC(QSplineSeries)
 };

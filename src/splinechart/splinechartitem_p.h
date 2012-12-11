@@ -60,13 +60,12 @@ public Q_SLOTS:
 
 protected:
     void updateGeometry();
+    QVector<QPointF> calculateControlPoints(const QVector<QPointF> &points);
+    QVector<qreal> firstControlPoints(const QVector<qreal>& vector);
     void updateChart(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints, int index);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
-
-private:
-    QPointF calculateGeometryControlPoint(int index) const;
 
 private:
     QSplineSeries *m_series;
