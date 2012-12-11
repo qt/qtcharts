@@ -70,11 +70,20 @@
         </tr>
 
         <tr>
+            <td><a href="examples-logvalueaxis.html">Logarythmic axis</a></td>
             <td><a href="examples-modeldata.html">Model Data</a></td>
+        </tr>
+        <tr>
+            <td><a href="examples-logvalueaxis.html"><img src="images/examples_logvalueaxis.png" width="300" alt="Logarythmix axis" /></a></td>
+            <td><a href="examples-modeldata.html"><img src="images/examples_modeldata.png" width="300" alt="Model Data" /></a></td>
+        </tr>
+
+        <tr>
+            <td><a href="examples-multiaxis.html">Multiple axes</a></td>
             <td><a href="examples-percentbarchart.html">Percent Bar Chart</a></td>
         </tr>
         <tr>
-            <td><a href="examples-modeldata.html"><img src="images/examples_modeldata.png" width="300" alt="Model Data" /></a></td>
+            <td><a href="examples-multiaxis.html"><img src="images/examples_multiaxis.png" width="300" alt="Multiple axes" /></a></td>
             <td><a href="examples-percentbarchart.html"><img src="images/examples_percentbarchart.png" width="300" alt="Percent Bar Chart" /></a></td>
         </tr>
 

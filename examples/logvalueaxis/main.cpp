@@ -36,14 +36,14 @@ int main(int argc, char *argv[])
     *series << QPointF(1, 1) << QPointF(2, 73) << QPointF(3, 268) << QPointF(4, 17) << QPointF(5, 4325) << QPointF(6, 723);
     //![1]
 
-    //![3]
+    //![2]
     QChart *chart = new QChart();
     chart->addSeries(series);
     chart->legend()->hide();
-    chart->setTitle("QLogValueAxis chart example");
-    //![3]
+    chart->setTitle("Logarithmic axis example");
+    //![2]
 
-    //![4]
+    //![3]
     QValueAxis *axisX = new QValueAxis;
     axisX->setTitleText("Data point");
     axisX->setTickCount(6);
@@ -54,14 +54,15 @@ int main(int argc, char *argv[])
     QLogValueAxis *axisY = new QLogValueAxis;
     axisY->setLabelFormat("%g");
     axisY->setTitleText("Values");
+    axisY->setBase(8);
     chart->addAxis(axisY, Qt::AlignLeft);
     series->attachAxis(axisY);
-    //![4]
+    //![3]
 
-    //![5]
+    //![4]
     QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
-    //![5]
+    //![4]
 
     //![6]
     QMainWindow window;
