@@ -576,7 +576,7 @@ void tst_QAbstractAxis::orientation()
     QCOMPARE(spy5.count(), 0);
     QCOMPARE(spy6.count(), 0);
     QCOMPARE(spy7.count(), 0);
-    QCOMPARE(spy8.count(), 1);
+    QCOMPARE(spy8.count(), 0);
 
     m_view->show();
     QTest::qWaitForWindowShown(m_view);
