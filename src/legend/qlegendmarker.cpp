@@ -260,6 +260,7 @@ QLegendMarkerPrivate::QLegendMarkerPrivate(QLegendMarker *q, QLegend *legend) :
 
 QLegendMarkerPrivate::~QLegendMarkerPrivate()
 {
+    delete m_item;
 }
 
 void QLegendMarkerPrivate::invalidateLegend()
