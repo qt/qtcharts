@@ -34,8 +34,8 @@ public slots:
     void cleanup();
 
 private slots:
-//    void qlogvalueaxis_data();
-//    void qlogvalueaxis();
+    void qlogvalueaxis_data();
+    void qlogvalueaxis();
 //    void max_raw_data();
 //    void max_raw();
 //    void max_data();
@@ -54,12 +54,11 @@ private slots:
 //    void range();
 //    void range_animation_data();
 //    void range_animation();
-//    void noautoscale_data();
-//    void noautoscale();
-//    void autoscale_data();
-//    void autoscale();
-    void zoomIn();
-//    void zoomOut();
+    void noautoscale_data();
+    void noautoscale();
+    void autoscale_data();
+    void autoscale();
+    void zoom();
 
 private:
     QLogValueAxis* m_logvaluesaxis;
@@ -93,25 +92,25 @@ void tst_QLogValueAxis::cleanup()
     tst_QAbstractAxis::cleanup();
 }
 
-//void tst_QLogValueAxis::qlogvalueaxis_data()
-//{
-//}
+void tst_QLogValueAxis::qlogvalueaxis_data()
+{
+}
 
-//void tst_QLogValueAxis::qlogvalueaxis()
-//{
-//    qabstractaxis();
+void tst_QLogValueAxis::qlogvalueaxis()
+{
+    qabstractaxis();
 
-//    QVERIFY(qFuzzyCompare(m_logvaluesaxis->max(), 1));
-//    QVERIFY(qFuzzyCompare(m_logvaluesaxis->min(), 1));
-//    QCOMPARE(m_logvaluesaxis->type(), QAbstractAxis::AxisTypeLogValue);
+    QCOMPARE(m_logvaluesaxis->max(), (qreal)1);
+    QCOMPARE(m_logvaluesaxis->min(), (qreal)1);
+    QCOMPARE(m_logvaluesaxis->type(), QAbstractAxis::AxisTypeLogValue);
 
-//    m_chart->setAxisX(m_logvaluesaxis, m_series);
-//    m_view->show();
-//    QTest::qWaitForWindowShown(m_view);
+    m_chart->setAxisX(m_logvaluesaxis, m_series);
+    m_view->show();
+    QTest::qWaitForWindowShown(m_view);
 
-//    QVERIFY(!qFuzzyCompare(m_logvaluesaxis->max(), 100));
-//    QVERIFY(!qFuzzyCompare(m_logvaluesaxis->min(), 0.1));
-//}
+    QCOMPARE(m_logvaluesaxis->max(), (qreal)100);
+    QCOMPARE(m_logvaluesaxis->min(), (qreal)1);
+}
 
 //void tst_QLogValueAxis::max_raw_data()
 //{
@@ -275,65 +274,65 @@ void tst_QLogValueAxis::min_animation()
 //    range();
 //}
 
-//void tst_QLogValueAxis::noautoscale_data()
-//{
-//    QTest::addColumn<qreal>("min");
-//    QTest::addColumn<qreal>("max");
-//    QTest::newRow("1.0 - 101.0") << (qreal)-1.0 << (qreal)101.0;
-//    QTest::newRow("25.0 - 75.0") << (qreal)25.0 << (qreal)75.0;
+void tst_QLogValueAxis::noautoscale_data()
+{
+    QTest::addColumn<qreal>("min");
+    QTest::addColumn<qreal>("max");
+    QTest::newRow("0.1 - 101.0") << (qreal)0.1 << (qreal)101.0;
+    QTest::newRow("25.0 - 75.0") << (qreal)25.0 << (qreal)75.0;
 //    QTest::newRow("101.0") << (qreal)40.0 << (qreal)60.0;
-//}
+}
 
-//void tst_QLogValueAxis::noautoscale()
-//{
-//    QFETCH(qreal, min);
-//    QFETCH(qreal, max);
+void tst_QLogValueAxis::noautoscale()
+{
+    QFETCH(qreal, min);
+    QFETCH(qreal, max);
 
-//    QSignalSpy spy0(m_logvaluesaxis, SIGNAL(maxChanged(qreal)));
-//    QSignalSpy spy1(m_logvaluesaxis, SIGNAL(minChanged(qreal)));
-//    QSignalSpy spy2(m_logvaluesaxis, SIGNAL(rangeChanged(qreal,qreal)));
+    QSignalSpy spy0(m_logvaluesaxis, SIGNAL(maxChanged(qreal)));
+    QSignalSpy spy1(m_logvaluesaxis, SIGNAL(minChanged(qreal)));
+    QSignalSpy spy2(m_logvaluesaxis, SIGNAL(rangeChanged(qreal,qreal)));
 
-//    m_logvaluesaxis->setRange(min, max);
-//    QVERIFY2(qFuzzyCompare(m_logvaluesaxis->min(), min), "Min not equal");
-//    QVERIFY2(qFuzzyCompare(m_logvaluesaxis->max(), max), "Max not equal");
+    m_logvaluesaxis->setRange(min, max);
+    QCOMPARE(m_logvaluesaxis->min(), min);
+    QCOMPARE(m_logvaluesaxis->max(), max);
 
-//    QCOMPARE(spy0.count(), 1);
-//    QCOMPARE(spy1.count(), 1);
-//    QCOMPARE(spy2.count(), 1);
+    QCOMPARE(spy0.count(), 1);
+    QCOMPARE(spy1.count(), 1);
+    QCOMPARE(spy2.count(), 1);
 
-//    m_chart->setAxisX(m_logvaluesaxis, m_series);
-//    m_view->show();
-//    QTest::qWaitForWindowShown(m_view);
-//    QVERIFY2(qFuzzyCompare(m_logvaluesaxis->min(), min), "Min not equal");
-//    QVERIFY2(qFuzzyCompare(m_logvaluesaxis->max(), max), "Max not equal");
-//}
+    m_chart->setAxisX(m_logvaluesaxis, m_series);
+    m_view->show();
+    QTest::qWaitForWindowShown(m_view);
+    QCOMPARE(m_logvaluesaxis->min(), min);
+    QCOMPARE(m_logvaluesaxis->max(), max);
+}
 
-//void tst_QLogValueAxis::autoscale_data()
-//{
+void tst_QLogValueAxis::autoscale_data()
+{
 
-//}
+}
 
-//void tst_QLogValueAxis::autoscale()
-//{
-//    QSignalSpy spy0(m_logvaluesaxis, SIGNAL(maxChanged(qreal)));
-//    QSignalSpy spy1(m_logvaluesaxis, SIGNAL(minChanged(qreal)));
-//    QSignalSpy spy2(m_logvaluesaxis, SIGNAL(rangeChanged(qreal,qreal)));
+void tst_QLogValueAxis::autoscale()
+{
+    QSignalSpy spy0(m_logvaluesaxis, SIGNAL(maxChanged(qreal)));
+    QSignalSpy spy1(m_logvaluesaxis, SIGNAL(minChanged(qreal)));
+    QSignalSpy spy2(m_logvaluesaxis, SIGNAL(rangeChanged(qreal,qreal)));
 
-//    QVERIFY2(qFuzzyCompare(m_logvaluesaxis->min(), 0), "Min not equal");
-//    QVERIFY2(qFuzzyCompare(m_logvaluesaxis->max(), 0), "Max not equal");
-//    m_chart->setAxisX(m_logvaluesaxis, m_series);
+    QCOMPARE(m_logvaluesaxis->min(), (qreal)1);
+    QCOMPARE(m_logvaluesaxis->max(), (qreal)1);
+    m_chart->setAxisX(m_logvaluesaxis, m_series);
 
-//    QCOMPARE(spy0.count(), 1);
-//    QCOMPARE(spy1.count(), 1);
-//    QCOMPARE(spy2.count(), 1);
+    QCOMPARE(spy0.count(), 1);
+    QCOMPARE(spy1.count(), 0);
+    QCOMPARE(spy2.count(), 1);
 
-//    m_view->show();
-//    QTest::qWaitForWindowShown(m_view);
-//    QVERIFY2(qFuzzyCompare(m_logvaluesaxis->min(), -100), "Min not equal");
-//    QVERIFY2(qFuzzyCompare(m_logvaluesaxis->max(), 100), "Max not equal");
-//}
+    m_view->show();
+    QTest::qWaitForWindowShown(m_view);
+    QCOMPARE(m_logvaluesaxis->min(), (qreal)1);
+    QCOMPARE(m_logvaluesaxis->max(), (qreal)100);
+}
 
-void tst_QLogValueAxis::zoomIn()
+void tst_QLogValueAxis::zoom()
 {
     m_chart->setAxisX(m_logvaluesaxis, m_series);
     m_view->show();
@@ -367,11 +366,6 @@ void tst_QLogValueAxis::zoomIn()
     QCOMPARE(m_logvaluesaxis->max(), (qreal)256.0);
 
 }
-
-//void tst_QLogValueAxis::zoomOut()
-//{
-
-//}
 
 QTEST_MAIN(tst_QLogValueAxis)
 #include "tst_qlogvalueaxis.moc"
