@@ -313,25 +313,10 @@ void QChart::zoom(qreal factor)
  */
 QAbstractAxis *QChart::axisX(QAbstractSeries *series) const
 {
-    if(!series && d_ptr->m_dataset->series().size()>0){
-        series = d_ptr->m_dataset->series().first();
-    }
-
-    QList<QAbstractAxis*> axes = series->attachedAxes();
-    QAbstractAxis* bottom=0;
-    QAbstractAxis* top=0;
-
-    foreach(QAbstractAxis* axis, axes){
-
-        if(axis->alignment()==Qt::AlignTop){
-            top=axis;
-        }
-
-        if(axis->alignment()==Qt::AlignBottom){
-            bottom=axis;
-        }
-    }
-    return bottom?bottom:top;
+    QList<QAbstractAxis *> axisList = axes(Qt::Horizontal, series);
+    if (axisList.count())
+        return axisList[0];
+    return 0;
 }
 
 /*!
@@ -340,31 +325,15 @@ QAbstractAxis *QChart::axisX(QAbstractSeries *series) const
  */
 QAbstractAxis *QChart::axisY(QAbstractSeries *series) const
 {
-    if(!series && d_ptr->m_dataset->series().size()>0) {
-        series = d_ptr->m_dataset->series().first();
-    }
-
-    QList<QAbstractAxis*> axes = series->attachedAxes();
-
-    QAbstractAxis* left=0;
-    QAbstractAxis* right=0;
-
-    foreach(QAbstractAxis* axis, axes){
-
-        if(axis->alignment()==Qt::AlignLeft){
-            left=axis;
-        }
-
-        if(axis->alignment()==Qt::AlignRight){
-            right=axis;
-        }
-    }
-
-    return left?left:right;
+    QList<QAbstractAxis *> axisList = axes(Qt::Vertical, series);
+    if (axisList.count())
+        return axisList[0];
+    return 0;
 }
 
 /*!
- Returns the axes added for the \a series with \a orientation
+ Returns the axes added for the \a series with \a orientation. If no series is provided, then all axes with the
+ specified orientation are returned.
  \sa addAxis(), createDefaultAxes()
  */
 QList<QAbstractAxis *> QChart::axes(Qt::Orientations orientation, QAbstractSeries *series) const
@@ -377,11 +346,9 @@ QList<QAbstractAxis *> QChart::axes(Qt::Orientations orientation, QAbstractSerie
                 result << axis;
         }
     } else {
-        foreach (QAbstractSeries *s, QChart::series()) {
-            foreach (QAbstractAxis *axis, s->attachedAxes()){
-                if (orientation.testFlag(axis->orientation()) && !result.contains(axis))
-                    result << axis;
-            }
+        foreach (QAbstractAxis *axis, d_ptr->m_dataset->axes()){
+            if (orientation.testFlag(axis->orientation()) && !result.contains(axis))
+                result << axis;
         }
     }
 

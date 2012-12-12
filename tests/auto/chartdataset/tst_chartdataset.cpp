@@ -264,6 +264,7 @@ void tst_ChartDataSet::removeAxis()
 
     m_dataset->removeAxis(axis);
 
+    QCOMPARE(m_dataset->axes().count(),0);
     QCOMPARE(m_dataset->series().count(),0);
     TRY_COMPARE(spy0.count(), 0);
     TRY_COMPARE(spy1.count(), 1);

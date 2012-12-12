@@ -431,14 +431,15 @@ void tst_QChart::removeAllSeries()
     m_view->show();
     QTest::qWaitForWindowShown(m_view);
     m_chart->createDefaultAxes();
+    QCOMPARE(m_chart->axes().count(), 2);
     QVERIFY(m_chart->axisY(series0)!=0);
     QVERIFY(m_chart->axisY(series1)!=0);
     QVERIFY(m_chart->axisY(series2)!=0);
 
     m_chart->removeAllSeries();
-    QVERIFY(m_chart->axisY(series0)==0);
-    QVERIFY(m_chart->axisY(series1)==0);
-    QVERIFY(m_chart->axisY(series2)==0);
+    QCOMPARE(m_chart->axes().count(), 2);
+    QVERIFY(m_chart->axisX() != 0);
+    QVERIFY(m_chart->axisY() != 0);
     QCOMPARE(deleteSpy1.count(), 1);
     QCOMPARE(deleteSpy2.count(), 1);
     QCOMPARE(deleteSpy3.count(), 1);
@@ -461,6 +462,8 @@ void tst_QChart::removeSeries()
     m_chart->setAxisY(axis,series);
     QCOMPARE(m_chart->axisY(series),axis);
     m_chart->removeSeries(series);
+    QCOMPARE(m_chart->axes().count(), 1);
+    QVERIFY(m_chart->axisY() != 0);
     QVERIFY(m_chart->axisY(series)==0);
     QCOMPARE(deleteSpy.count(), 0);
 }
