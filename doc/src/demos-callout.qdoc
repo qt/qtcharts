@@ -6,7 +6,9 @@
      This demo shows how to draw an additional element (a callout) on top of the chart.
      \image demos_callout.png
 
-     QChart class provides two methods that map between the scene coordinates and the series' domain (defines by the axes ranges).
+     QChart class provides two methods that map between the scene coordinates and the series' domain (defined by the axes ranges).
+
      QPointF QChart::mapToPosition(const QPointF &value, QAbstractSeries *series)
+
      QPointF QChart::mapToValue(const QPointF &position, QAbstractSeries *series)
 */

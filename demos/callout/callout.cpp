@@ -31,7 +31,7 @@ void Callout::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     if (!m_rect.contains(anchor)) {
         QPointF point1, point2;
 
-        // establish the position of the anchor point in relation to m_textRect
+        // establish the position of the anchor point in relation to m_rect
         bool above = anchor.y() <= m_rect.top();
         bool aboveCenter = anchor.y() > m_rect.top() && anchor.y() <= m_rect.center().y();
         bool belowCenter = anchor.y() > m_rect.center().y() && anchor.y() <= m_rect.bottom();
@@ -42,7 +42,7 @@ void Callout::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
         bool rightOfCenter = anchor.x() > m_rect.center().x() && anchor.x() <= m_rect.right();
         bool onRight = anchor.x() > m_rect.right();
 
-        // get the nearest m_textRect corner.
+        // get the nearest m_rect corner.
         qreal x = (onRight + rightOfCenter) * m_rect.width();
         qreal y = (below + belowCenter) * m_rect.height();
         bool cornerCase = (above && onLeft) || (above && onRight) || (below && onLeft) || (below && onRight);
