@@ -46,7 +46,7 @@ void BarChartItem::initializeLayout()
 
             if (domain()->type() == AbstractDomain::XLogYDomain || domain()->type() == AbstractDomain::LogXLogYDomain) {
                 topLeft = domain()->calculateGeometryPoint(QPointF(category - barWidth / 2 + set/setCount * barWidth, domain()->minY()), m_validData);
-                bottomRight = domain()->calculateGeometryPoint(QPointF(category + barWidth / 2 + (set + 1)/setCount * barWidth, domain()->minY()), m_validData);
+                bottomRight = domain()->calculateGeometryPoint(QPointF(category - barWidth / 2 + (set + 1)/setCount * barWidth, domain()->minY()), m_validData);
             } else {
                 topLeft = domain()->calculateGeometryPoint(QPointF(category - barWidth / 2 + set/setCount * barWidth, 0), m_validData);
                 bottomRight = domain()->calculateGeometryPoint(QPointF(category - barWidth / 2 + (set + 1)/setCount * barWidth, 0), m_validData);

@@ -44,7 +44,7 @@ void HorizontalBarChartItem::initializeLayout()
             QPointF bottomRight;
             if (domain()->type() == AbstractDomain::LogXYDomain || domain()->type() == AbstractDomain::LogXLogYDomain) {
                 topLeft = domain()->calculateGeometryPoint(QPointF(domain()->minX(), category - barWidth / 2 + set/setCount * barWidth), m_validData);
-                bottomRight = domain()->calculateGeometryPoint(QPointF(domain()->minX(), category + barWidth / 2 + (set + 1)/setCount * barWidth), m_validData);
+                bottomRight = domain()->calculateGeometryPoint(QPointF(domain()->minX(), category - barWidth / 2 + (set + 1)/setCount * barWidth), m_validData);
             } else {
                 topLeft = domain()->calculateGeometryPoint(QPointF(0, category - barWidth / 2 + set/setCount * barWidth), m_validData);
                 bottomRight = domain()->calculateGeometryPoint(QPointF(0, category - barWidth / 2 + (set + 1)/setCount * barWidth), m_validData);
