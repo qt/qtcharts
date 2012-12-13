@@ -61,7 +61,7 @@ Q_DECLARE_METATYPE(QList<QAbstractAxis *>)
 // NOTE: Hackish fixes for Qt5 (beta2).
 // These should not be needed or at least they are not needed in Qt4.
 
-Q_DECLARE_METATYPE(DeclarativeChart::SeriesType)
+Q_DECLARE_METATYPE(DeclarativeChart *)
 Q_DECLARE_METATYPE(DeclarativeMargins *)
 Q_DECLARE_METATYPE(DeclarativeAreaSeries *)
 Q_DECLARE_METATYPE(DeclarativeBarSeries *)
@@ -130,9 +130,6 @@ public:
         qRegisterMetaType<QList<QPieSlice *> >();
         qRegisterMetaType<QList<QBarSet *> >();
         qRegisterMetaType<QList<QAbstractAxis *> >();
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
-        qRegisterMetaType<DeclarativeChart::SeriesType>();
-#endif
 
         // QtCommercial.Chart 1.0
         qmlRegisterType<DeclarativeChart>(uri, 1, 0, "ChartView");

@@ -590,12 +590,7 @@ QAbstractSeries *DeclarativeChart::series(QString seriesName)
     return 0;
 }
 
-QAbstractSeries *DeclarativeChart::createSeries(DeclarativeChart::SeriesType type, QString name)
-{
-    return createSeries(type, name, 0, 0);
-}
-
-QAbstractSeries *DeclarativeChart::createSeries(DeclarativeChart::SeriesType type, QString name, QAbstractAxis *axisX, QAbstractAxis *axisY)
+QAbstractSeries *DeclarativeChart::createSeries(int type, QString name, QAbstractAxis *axisX, QAbstractAxis *axisY)
 {
     QAbstractSeries *series = 0;
 
