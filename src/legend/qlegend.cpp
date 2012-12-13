@@ -339,7 +339,8 @@ Qt::Alignment QLegend::alignment() const
 void QLegend::detachFromChart()
 {
     d_ptr->m_attachedToChart = false;
-    layout()->invalidate();
+//    layout()->invalidate();
+    d_ptr->m_chart->layout()->invalidate();
     setParent(0);
 
 }
@@ -350,7 +351,8 @@ void QLegend::detachFromChart()
 void QLegend::attachToChart()
 {
     d_ptr->m_attachedToChart = true;
-    layout()->invalidate();
+//    layout()->invalidate();
+    d_ptr->m_chart->layout()->invalidate();
     setParent(d_ptr->m_chart);
 }
 
