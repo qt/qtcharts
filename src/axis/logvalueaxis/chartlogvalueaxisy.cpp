@@ -102,6 +102,14 @@ QSizeF ChartLogValueAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint
     qreal width = 0;
     qreal height = 0;
 
+
+     int labelWidth = 0;
+
+    foreach(const QString& s, ticksList)
+    {
+        labelWidth=qMax(fn.width(s),labelWidth);
+    }
+
     switch (which) {
     case Qt::MinimumSize: {
         width = fn.boundingRect("...").width() + labelPadding();
@@ -112,8 +120,7 @@ QSizeF ChartLogValueAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint
         break;
     }
     case Qt::PreferredSize: {
-        int count = qMax(ticksList.first().count(), ticksList.last().count());
-        width = count*fn.averageCharWidth() + labelPadding() + 2; //two pixels of tolerance
+        width = labelWidth + labelPadding() + 2; //two pixels of tolerance
         width += base.width();
         height = fn.height() * ticksList.count();
         height = qMax(height,base.height());
