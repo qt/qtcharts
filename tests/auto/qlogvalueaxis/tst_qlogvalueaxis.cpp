@@ -36,24 +36,24 @@ public slots:
 private slots:
     void qlogvalueaxis_data();
     void qlogvalueaxis();
-//    void max_raw_data();
-//    void max_raw();
-//    void max_data();
-//    void max();
-//    void max_animation_data();
-//    void max_animation();
+    void max_raw_data();
+    void max_raw();
+    void max_data();
+    void max();
+    void max_animation_data();
+    void max_animation();
     void min_raw_data();
     void min_raw();
     void min_data();
     void min();
     void min_animation_data();
     void min_animation();
-//    void range_raw_data();
-//    void range_raw();
-//    void range_data();
-//    void range();
-//    void range_animation_data();
-//    void range_animation();
+    void range_raw_data();
+    void range_raw();
+    void range_data();
+    void range();
+    void range_animation_data();
+    void range_animation();
     void noautoscale_data();
     void noautoscale();
     void autoscale_data();
@@ -112,61 +112,65 @@ void tst_QLogValueAxis::qlogvalueaxis()
     QCOMPARE(m_logvaluesaxis->min(), (qreal)1);
 }
 
-//void tst_QLogValueAxis::max_raw_data()
-//{
-//    QTest::addColumn<qreal>("max");
-//    QTest::addColumn<qreal>("expected");
-//    QTest::addColumn<bool>("minChanged");
-//    QTest::addColumn<bool>("maxChanged");
-//    QTest::newRow("-1.0") << (qreal)-1.0 << (qreal)1.0 << false << false;
-//    QTest::newRow("0.0") << (qreal)0.0 << (qreal)1.0 << false << false;
-//    QTest::newRow("0.5") << (qreal)0.5 << (qreal)0.5 << true << true;
-//    QTest::newRow("101.0") << (qreal)101.0 << (qreal)101.0 << false << true;
-//}
+void tst_QLogValueAxis::max_raw_data()
+{
+    QTest::addColumn<qreal>("max");
+    QTest::addColumn<qreal>("expected");
+    QTest::addColumn<bool>("minChanged");
+    QTest::addColumn<bool>("maxChanged");
+    QTest::newRow("-1.0") << (qreal)-1.0 << (qreal)1.0 << false << false;
+    QTest::newRow("0.0") << (qreal)0.0 << (qreal)1.0 << false << false;
+    QTest::newRow("0.5") << (qreal)0.5 << (qreal)0.5 << true << true;
+    QTest::newRow("101.0") << (qreal)101.0 << (qreal)101.0 << false << true;
+}
 
-//void tst_QLogValueAxis::max_raw()
-//{
-//    QFETCH(qreal, max);
-//    QFETCH(qreal, expected);
-//    QFETCH(bool, minChanged);
-//    QFETCH(bool, maxChanged);
+void tst_QLogValueAxis::max_raw()
+{
+    QFETCH(qreal, max);
+    QFETCH(qreal, expected);
+    QFETCH(bool, minChanged);
+    QFETCH(bool, maxChanged);
 
-//    QSignalSpy spy0(m_logvaluesaxis, SIGNAL(maxChanged(qreal)));
-//    QSignalSpy spy1(m_logvaluesaxis, SIGNAL(minChanged(qreal)));
-//    QSignalSpy spy2(m_logvaluesaxis, SIGNAL(rangeChanged(qreal,qreal)));
+    // setting the axis in max() changes the max to value other than 1
+    // set it back to 1
+    m_logvaluesaxis->setMax((qreal)1);
 
-//    m_logvaluesaxis->setMax(max);
-//    QCOMPARE(m_logvaluesaxis->max(), expected);
+    QSignalSpy spy0(m_logvaluesaxis, SIGNAL(maxChanged(qreal)));
+    QSignalSpy spy1(m_logvaluesaxis, SIGNAL(minChanged(qreal)));
+    QSignalSpy spy2(m_logvaluesaxis, SIGNAL(rangeChanged(qreal,qreal)));
 
-//    QCOMPARE(spy0.count(), (int)maxChanged);
-//    QCOMPARE(spy1.count(), (int)minChanged);
-//    QCOMPARE(spy2.count(), (int)maxChanged);
+    m_logvaluesaxis->setMax(max);
+    QCOMPARE(m_logvaluesaxis->max(), expected);
 
-//}
+    QCOMPARE(spy0.count(), (int)maxChanged);
+    QCOMPARE(spy1.count(), (int)minChanged);
+    QCOMPARE(spy2.count(), (int)maxChanged);
 
-//void tst_QLogValueAxis::max_data()
-//{
-//    max_raw_data();
-//}
+}
 
-//void tst_QLogValueAxis::max()
-//{
-//    m_chart->setAxisX(m_logvaluesaxis, m_series);
-//    m_view->show();
-//    QTest::qWaitForWindowShown(m_view);
-//    max_raw();
-//}
+void tst_QLogValueAxis::max_data()
+{
+    max_raw_data();
+}
 
-//void tst_QLogValueAxis::max_animation_data()
-//{
-//    max_data();
-//}
+void tst_QLogValueAxis::max()
+{
+    m_chart->setAxisX(m_logvaluesaxis, m_series);
+    m_view->show();
+    QTest::qWaitForWindowShown(m_view);
+    max_raw();
+}
 
-//void tst_QLogValueAxis::max_animation()
-//{
-//    m_chart->setAnimationOptions(QChart::GridAxisAnimations);
-//    max();
-//}
+void tst_QLogValueAxis::max_animation_data()
+{
+    max_data();
+}
+
+void tst_QLogValueAxis::max_animation()
+{
+    m_chart->setAnimationOptions(QChart::GridAxisAnimations);
+    max();
+}
 
 void tst_QLogValueAxis::min_raw_data()
 {
@@ -223,56 +227,68 @@ void tst_QLogValueAxis::min_animation()
     min();
 }
 
-//void tst_QLogValueAxis::range_raw_data()
-//{
-//    QTest::addColumn<qreal>("min");
-//    QTest::addColumn<qreal>("max");
-//    QTest::newRow("1.0 - 101.0") << (qreal)1.0 << (qreal)101.0;
-//    QTest::newRow("25.0 - 75.0") << (qreal)25.0 << (qreal)75.0;
-//    QTest::newRow("101.0") << (qreal)40.0 << (qreal)60.0;
-//}
+void tst_QLogValueAxis::range_raw_data()
+{
+    QTest::addColumn<qreal>("min");
+    QTest::addColumn<qreal>("max");
+    QTest::addColumn<qreal>("expectedMin");
+    QTest::addColumn<qreal>("expectedMax");
+    QTest::addColumn<bool>("minChanged");
+    QTest::addColumn<bool>("maxChanged");
+    QTest::newRow("-1.0 - 101.0") << (qreal)-1.0 << (qreal)101.0 << (qreal)1.0 << (qreal)1.0 << false << false;
+    QTest::newRow("1.0 - 101.0") << (qreal)1.0 << (qreal)101.0 << (qreal)1.0 << (qreal)101.0 << false << true;
+    QTest::newRow("0.1 - 1.0") << (qreal)0.1 << (qreal)1.0 << (qreal)0.1 << (qreal)1.0 << true << false;
+    QTest::newRow("25.0 - 75.0") << (qreal)25.0 << (qreal)75.0 << (qreal)25.0 << (qreal)75.0 << true << true;
+    QTest::newRow("10.0 - 5.0") << (qreal)10.0 << (qreal)5.0 << (qreal)1.0 << (qreal)1.0 << false << false;
+}
 
-//void tst_QLogValueAxis::range_raw()
-//{
-//    QFETCH(qreal, min);
-//    QFETCH(qreal, max);
+void tst_QLogValueAxis::range_raw()
+{
+    QFETCH(qreal, min);
+    QFETCH(qreal, max);
+    QFETCH(qreal, expectedMin);
+    QFETCH(qreal, expectedMax);
+    QFETCH(bool, minChanged);
+    QFETCH(bool, maxChanged);
 
-//    QSignalSpy spy0(m_logvaluesaxis, SIGNAL(maxChanged(qreal)));
-//    QSignalSpy spy1(m_logvaluesaxis, SIGNAL(minChanged(qreal)));
-//    QSignalSpy spy2(m_logvaluesaxis, SIGNAL(rangeChanged(qreal,qreal)));
+    m_logvaluesaxis->setRange((qreal)1, (qreal)1);
 
-//    m_logvaluesaxis->setRange(min, max);
-//    QVERIFY2(qFuzzyCompare(m_logvaluesaxis->min(), min), "Min not equal");
-//    QVERIFY2(qFuzzyCompare(m_logvaluesaxis->max(), max), "Max not equal");
+    QSignalSpy spy0(m_logvaluesaxis, SIGNAL(maxChanged(qreal)));
+    QSignalSpy spy1(m_logvaluesaxis, SIGNAL(minChanged(qreal)));
+    QSignalSpy spy2(m_logvaluesaxis, SIGNAL(rangeChanged(qreal,qreal)));
 
-//    QCOMPARE(spy0.count(), 1);
-//    QCOMPARE(spy1.count(), 1);
-//    QCOMPARE(spy2.count(), 1);
-//}
+    m_logvaluesaxis->setRange(min, max);
+    QCOMPARE(m_logvaluesaxis->min(), expectedMin);
+    QCOMPARE(m_logvaluesaxis->max(), expectedMax);
 
-//void tst_QLogValueAxis::range_data()
-//{
-//    range_raw_data();
-//}
+    QCOMPARE(spy0.count(), (int)maxChanged);
+    QCOMPARE(spy1.count(), (int)minChanged);
+    QCOMPARE(spy2.count(), (int)(minChanged || maxChanged));
+}
 
-//void tst_QLogValueAxis::range()
-//{
-//    m_chart->setAxisX(m_logvaluesaxis, m_series);
-//    m_view->show();
-//    QTest::qWaitForWindowShown(m_view);
-//    range_raw();
-//}
+void tst_QLogValueAxis::range_data()
+{
+    range_raw_data();
+}
 
-//void tst_QLogValueAxis::range_animation_data()
-//{
-//    range_data();
-//}
+void tst_QLogValueAxis::range()
+{
+    m_chart->setAxisX(m_logvaluesaxis, m_series);
+    m_view->show();
+    QTest::qWaitForWindowShown(m_view);
+    range_raw();
+}
 
-//void tst_QLogValueAxis::range_animation()
-//{
-//    m_chart->setAnimationOptions(QChart::GridAxisAnimations);
-//    range();
-//}
+void tst_QLogValueAxis::range_animation_data()
+{
+    range_data();
+}
+
+void tst_QLogValueAxis::range_animation()
+{
+    m_chart->setAnimationOptions(QChart::GridAxisAnimations);
+    range();
+}
 
 void tst_QLogValueAxis::noautoscale_data()
 {
@@ -280,7 +296,6 @@ void tst_QLogValueAxis::noautoscale_data()
     QTest::addColumn<qreal>("max");
     QTest::newRow("0.1 - 101.0") << (qreal)0.1 << (qreal)101.0;
     QTest::newRow("25.0 - 75.0") << (qreal)25.0 << (qreal)75.0;
-//    QTest::newRow("101.0") << (qreal)40.0 << (qreal)60.0;
 }
 
 void tst_QLogValueAxis::noautoscale()
