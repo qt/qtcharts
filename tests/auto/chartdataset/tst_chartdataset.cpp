@@ -48,7 +48,9 @@ QTEST_MAIN(tst_ChartDataSet)
 #include <qvalueaxis.h>
 #include <qbarcategoryaxis.h>
 #include <qcategoryaxis.h>
-#include <qdatetimeaxis.h>
+#ifndef QT_ON_ARM
+#include "qdatetimeaxis.h"
+#endif
 #include <qlineseries.h>
 #include <qareaseries.h>
 #include <qscatterseries.h>
@@ -219,12 +221,16 @@ void tst_ChartDataSet::addAxis_data()
     QAbstractAxis* value = new QValueAxis(this);
     QAbstractAxis* category = new QCategoryAxis(this);
     QAbstractAxis* barcategory = new QBarCategoryAxis(this);
+#ifndef Q_WS_QWS
     QAbstractAxis* datetime = new QDateTimeAxis(this);
+#endif
 
     QTest::newRow("value") << value;
     QTest::newRow("category") << category;
     QTest::newRow("barcategory") << barcategory;
+#ifndef Q_WS_QWS
     QTest::newRow("datetime") << datetime;
+#endif
 }
 
 void tst_ChartDataSet::addAxis()
@@ -292,8 +298,9 @@ void tst_ChartDataSet::attachAxis_data()
 
     QAbstractAxis* category = new QCategoryAxis(this);
     QAbstractAxis* barcategory = new QBarCategoryAxis(this);
+#ifndef Q_WS_QWS
     QAbstractAxis* datetime = new QDateTimeAxis(this);
-
+#endif
     {
      QList<QAbstractSeries*> series;
      QList<QAbstractAxis*> axes;
