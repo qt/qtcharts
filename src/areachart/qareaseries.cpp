@@ -213,8 +213,7 @@ void QAreaSeries::setUpperSeries(QLineSeries *series)
 {
     Q_D(QAreaSeries);
     if(d->m_upperSeries!=series){
-    	d->m_upperSeries = series;
-    	//TODO:
+    	d->m_upperSeries = series;    	
     }
 }
 

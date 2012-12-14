@@ -74,8 +74,7 @@ void ChartCategoryAxisY::updateGeometry()
 
 void ChartCategoryAxisY::handleAxisUpdated()
 {
-    updateGeometry();
-    //TODO:: ChartAxis::handleAxisUpdated();
+    updateGeometry();    
 }
 
 QSizeF ChartCategoryAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const

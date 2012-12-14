@@ -57,11 +57,6 @@ void AxisAnimation::setValues(QVector<qreal> &oldLayout, QVector<qreal> &newLayo
 {
     if (state() != QAbstractAnimation::Stopped) stop();
 
-//  TODO: cannot return even if layout is empty
-//  New layout is not set properly without it (crash)
-//    if (newLayout.count() == 0)
-//        return;
-
     switch (m_type) {
     case ZoomOutAnimation: {
         QRectF rect = m_axis->gridGeometry();
@@ -130,7 +125,6 @@ void AxisAnimation::updateCurrentValue(const QVariant &value)
 {
     if (state() != QAbstractAnimation::Stopped) { //workaround
         QVector<qreal> vector = qvariant_cast<QVector<qreal> >(value);
-//        Q_ASSERT(vector.count() != 0);
         m_axis->setLayout(vector);
         m_axis->updateGeometry();
     }

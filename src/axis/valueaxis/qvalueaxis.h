@@ -60,7 +60,7 @@ public:
     void setLabelFormat(const QString &format);
     QString labelFormat() const;
 
-    //TODO: depreciated !
+
     void setNiceNumbersEnabled(bool enable = true);
     bool niceNumbersEnabled() const;
 
