@@ -11,7 +11,8 @@ SUBDIRS += \
 
 contains(QT_CONFIG, opengl) {
     SUBDIRS +=  chartwidgettest \
-                wavechart
+                wavechart \
+                chartviewer
 } else {
     message("OpenGL not available. Some test apps are disabled")
 }
