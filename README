@@ -106,3 +106,7 @@ Known Issues
   issues (qreals are floats)
 - Declarative plugin is available from Qt 4.7.4 onwards because of missing
   Q_REVISION macro in the earlier Qt releases
+- Defining axis min-max values sometimes affects other axes with the same orientation
+  - See for example the secondary y-axis of QML Weather demo application
+  - The work-around is to set axis range dynamically instead of initializing min and
+    max properties to certain values
