@@ -29,7 +29,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Model mappers allow you to use QAbstractItemModel derived models as a data source for a chart series.
     Horizontal model mapper is used to create a connection between QPieSeries and QAbstractItemModel derived model object that keeps the consecutive pie slices data in rows.
     It is possible to use both QAbstractItemModel and QPieSeries model API. QHPieModelMapper makes sure that Pie and the model are kept in sync.
-    NOTE: used model has to support adding/removing rows/columns and modifying the data of the cells.
+    Note: used model has to support adding/removing rows/columns and modifying the data of the cells.
 */
 /*!
     \qmlclass HPieModelMapper QHPieModelMapper
@@ -73,7 +73,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \qmlproperty SomeModel HPieModelMapper::model
     The QAbstractItemModel based model that is used by the mapper. You need to implement the model and expose it to
-    QML as shown in \l {QML Custom Model} demo application. NOTE: the model has to support adding/removing rows/columns
+    QML as shown in \l {QML Custom Model} demo application. Note: the model has to support adding/removing rows/columns
     and modifying the data of the cells.
 */
 
