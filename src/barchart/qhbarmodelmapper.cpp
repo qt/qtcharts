@@ -31,7 +31,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Horizontal model mapper is used to create a connection between QAbstractBarSeries and QAbstractItemModel derived model object.
     Model mapper maintains equal size of all the BarSets.
     Adding/removing value from the BarSet causes the the same change in the rest of the BarSets added to the same series.
-    NOTE: used model has to support adding/removing rows/columns and modifying the data of the cells.
+    Note: used model has to support adding/removing rows/columns and modifying the data of the cells.
 */
 /*!
     \qmlclass HBarModelMapper QHBarModelMapper
@@ -75,7 +75,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \qmlproperty SomeModel HBarModelMapper::model
     The QAbstractItemModel based model that is used by the mapper. You need to implement the model and expose it to
-    QML as shown in \l {QML Custom Model} demo application. NOTE: the model has to support adding/removing rows/columns
+    QML as shown in \l {QML Custom Model} demo application. Note: the model has to support adding/removing rows/columns
     and modifying the data of the cells.
 */
 
