@@ -28,12 +28,15 @@
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
+Q_DECLARE_METATYPE(QAbstractSeries *)
+
 DataSource::DataSource(QDeclarativeView *appViewer, QObject *parent) :
     QObject(parent),
     m_appViewer(appViewer),
     m_index(-1)
 {
-    // generate
+    qRegisterMetaType<QAbstractSeries*>();
+
     generateData(0, 5, 1024);
 }
 
