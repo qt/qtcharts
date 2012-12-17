@@ -53,16 +53,6 @@ Rectangle {
             titleText: "Rainfall [mm]"
         }
     
-        BarSeries {
-            id: myBarSeries
-            axisX: barCategoriesAxis
-            axisYRight: valueAxisY2
-            BarSet {
-                id: rainfallSet
-                label: "Rainfall"
-            }
-        }
-     
         ValueAxis {
             id: valueAxisX
             // Hide the value axis; it is only used to map the line series to bar categories axis
@@ -90,6 +80,16 @@ Rectangle {
             axisX: valueAxisX
             axisY: valueAxisY
             name: "Min. temperature"
+        }
+
+        BarSeries {
+            id: myBarSeries
+            axisX: barCategoriesAxis
+            axisYRight: valueAxisY2
+            BarSet {
+                id: rainfallSet
+                label: "Rainfall"
+            }
         }
     //![2]
     }
