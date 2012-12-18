@@ -29,7 +29,7 @@ Column {
     signal antialiasingEnabled(bool enabled)
 
     Text {
-        text: "Scope-PAS2"
+        text: "Scope"
         font.pointSize: 18
         color: "white"
     }
