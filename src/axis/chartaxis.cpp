@@ -122,6 +122,7 @@ void ChartAxis::createItems(int count)
         label->setFont(m_axis->labelsFont());
         label->setPen(m_axis->labelsPen());
         label->setBrush(m_axis->labelsBrush());
+        label->setRotation(m_labelsAngle);
         m_arrow->addToGroup(arrow);
         m_grid->addToGroup(grid);
         m_labels->addToGroup(label);
