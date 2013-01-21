@@ -303,11 +303,13 @@ void ChartDataSet::createAxes(QAbstractAxis::AxisTypes type, Qt::Orientation ori
         //create one axis for all
 
         addAxis(axis,orientation==Qt::Horizontal?Qt::AlignBottom:Qt::AlignLeft);
-
+        qreal min = 0;
+        qreal max = 0;
+        findMinMaxForSeries(m_seriesList,orientation,min,max);
         foreach(QAbstractSeries *s, m_seriesList) {
             attachAxis(s,axis);
         }
-
+        axis->setRange(min,max);
     }
     else if (!type.testFlag(QAbstractAxis::AxisTypeNoAxis)) {
         //create separate axis
@@ -319,6 +321,21 @@ void ChartDataSet::createAxes(QAbstractAxis::AxisTypes type, Qt::Orientation ori
             }
         }
     }
+}
+
+void ChartDataSet::findMinMaxForSeries(QList<QAbstractSeries *> series,Qt::Orientations orientation, qreal &min, qreal &max)
+{
+	Q_ASSERT(!series.isEmpty());
+
+	AbstractDomain* domain = series.first()->d_ptr->domain();
+	min = (orientation == Qt::Vertical) ? domain->minY() : domain->minX();
+	max = (orientation == Qt::Vertical) ? domain->maxY() : domain->maxX();
+
+	for(int i = 1; i< series.size(); i++) {
+		AbstractDomain* domain = series[i]->d_ptr->domain();
+		min = qMin((orientation == Qt::Vertical) ? domain->minY() : domain->minX(), min);
+		max = qMax((orientation == Qt::Vertical) ? domain->maxY() : domain->maxX(), max);
+	}
 }
 
 void ChartDataSet::deleteAllSeries()

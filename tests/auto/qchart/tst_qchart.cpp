@@ -99,7 +99,8 @@ private slots:
     void zoomIn();
     void zoomOut_data();
     void zoomOut();
-
+    void createDefaultAxesForLineSeries_data();
+    void createDefaultAxesForLineSeries();
 private:
     void createTestData();
 
@@ -790,6 +791,83 @@ void tst_QChart::zoomOut()
 
     QVERIFY(maxX == axisX->max());
     QVERIFY(maxY == axisY->max());
+
+}
+
+void tst_QChart::createDefaultAxesForLineSeries_data()
+{
+    QTest::addColumn<qreal>("series1minX");
+    QTest::addColumn<qreal>("series1midX");
+    QTest::addColumn<qreal>("series1maxX");
+    QTest::addColumn<qreal>("series2minX");
+    QTest::addColumn<qreal>("series2midX");
+    QTest::addColumn<qreal>("series2maxX");
+    QTest::addColumn<qreal>("overallminX");
+    QTest::addColumn<qreal>("overallmaxX");
+    QTest::addColumn<qreal>("series1minY");
+    QTest::addColumn<qreal>("series1midY");
+    QTest::addColumn<qreal>("series1maxY");
+    QTest::addColumn<qreal>("series2minY");
+    QTest::addColumn<qreal>("series2midY");
+    QTest::addColumn<qreal>("series2maxY");
+    QTest::addColumn<qreal>("overallminY");
+    QTest::addColumn<qreal>("overallmaxY");
+    QTest::newRow("series1hasMinAndMax") << (qreal)1.0 << (qreal)2.0 << (qreal)3.0 << (qreal)1.1 << (qreal)1.7 << (qreal)2.9 << (qreal)1.0 << (qreal)3.0
+                                         << (qreal)1.0 << (qreal)2.0 << (qreal)3.0 << (qreal)1.1 << (qreal)1.7 << (qreal)2.9 << (qreal)1.0 << (qreal)3.0;
+    QTest::newRow("series2hasMinAndMax") << (qreal)1.1 << (qreal)2.0 << (qreal)2.9 << (qreal)1.0 << (qreal)1.7 << (qreal)3.0 << (qreal)1.0 << (qreal)3.0
+                                         << (qreal)1.1 << (qreal)2.0 << (qreal)2.9 << (qreal)1.0 << (qreal)1.7 << (qreal)3.0 << (qreal)1.0 << (qreal)3.0;
+    QTest::newRow("series1hasMinAndMaxX_series2hasMinAndMaxY") << (qreal)1.0 << (qreal)2.0 << (qreal)3.0 << (qreal)1.1 << (qreal)1.7 << (qreal)2.9 << (qreal)1.0 << (qreal)3.0
+                                                               << (qreal)1.1 << (qreal)2.0 << (qreal)2.9 << (qreal)1.0 << (qreal)2.0 << (qreal)3.0 << (qreal)1.0 << (qreal)3.0;
+    QTest::newRow("series1hasMin_series2hasMax") << (qreal)1.0 << (qreal)2.0 << (qreal)2.9 << (qreal)1.1 << (qreal)1.7 << (qreal)3.0 << (qreal)1.0 << (qreal)3.0
+                                                 << (qreal)1.0 << (qreal)2.0 << (qreal)2.9 << (qreal)1.1 << (qreal)1.7 << (qreal)3.0 << (qreal)1.0 << (qreal)3.0;
+}
+
+void tst_QChart::createDefaultAxesForLineSeries()
+{
+    QFETCH(qreal, series1minX);
+    QFETCH(qreal, series1midX);
+    QFETCH(qreal, series1maxX);
+    QFETCH(qreal, series2minX);
+    QFETCH(qreal, series2midX);
+    QFETCH(qreal, series2maxX);
+    QFETCH(qreal, series1minY);
+    QFETCH(qreal, series1midY);
+    QFETCH(qreal, series1maxY);
+    QFETCH(qreal, series2minY);
+    QFETCH(qreal, series2midY);
+    QFETCH(qreal, series2maxY);
+    QFETCH(qreal, overallminX);
+    QFETCH(qreal, overallmaxX);
+    QFETCH(qreal, overallminY);
+    QFETCH(qreal, overallmaxY);
+    QLineSeries* series1 = new QLineSeries(this);
+    series1->append(series1minX, series1minY);
+    series1->append(series1midX, series1midY);
+    series1->append(series1maxX, series1maxY);
+    QLineSeries* series2 = new QLineSeries(this);
+    series2->append(series2minX, series2minY);
+    series2->append(series2midX, series2midY);
+    series2->append(series2maxX, series2maxY);
+    QChart chart;
+    chart.addSeries(series1);
+    chart.addSeries(series2);
+    chart.createDefaultAxes();
+    QValueAxis *xAxis = (QValueAxis *)chart.axisX();
+    QCOMPARE(xAxis->min(), overallminX);
+    QCOMPARE(xAxis->max(), overallmaxX);
+    QValueAxis *yAxis = (QValueAxis *)chart.axisY();
+    QCOMPARE(yAxis->min(), overallminY);
+    QCOMPARE(yAxis->max(), overallmaxY);
+    QLineSeries *series3 = new QLineSeries(this);
+    // Numbers clearly out of existing range
+    series3->append(0, 0);
+    series3->append(100, 100);
+    // Adding a new series should not change the axes as they have not been told to update
+    chart.addSeries(series3);
+    QCOMPARE(xAxis->min(), overallminX);
+    QCOMPARE(xAxis->max(), overallmaxX);
+    QCOMPARE(yAxis->min(), overallminY);
+    QCOMPARE(yAxis->max(), overallmaxY);
 
 }
 

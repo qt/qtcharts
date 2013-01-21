@@ -80,6 +80,7 @@ private:
     AbstractDomain* createDomain(AbstractDomain::DomainType type);
     void deleteAllAxes();
     void deleteAllSeries();
+    void findMinMaxForSeries(QList<QAbstractSeries *> series,Qt::Orientations orientation, qreal &min, qreal &max);
 private:
     QList<QAbstractSeries *> m_seriesList;
     QList<QAbstractAxis *> m_axisList;
