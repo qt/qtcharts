@@ -468,6 +468,7 @@ QPen QAbstractAxis::linePen() const
     return d_ptr->m_axisPen;
 }
 
+//TODO: remove me
 void QAbstractAxis::setLinePenColor(QColor color)
 {
     QPen p = d_ptr->m_axisPen;
@@ -613,7 +614,7 @@ int QAbstractAxis::labelsAngle() const
 {
     return d_ptr->m_labelsAngle;
 }
-
+//TODO: remove me
 void QAbstractAxis::setLabelsColor(QColor color)
 {
     QBrush b = d_ptr->m_labelsBrush;
@@ -862,6 +863,8 @@ void QAbstractAxis::setRange(const QVariant &min, const QVariant &max)
 /*!
   Returns the orientation in which the axis is being used (Vertical or Horizontal)
 */
+// NOTE: should have const but it breaks BC:
+// http://techbase.kde.org/Policies/Binary_Compatibility_Examples#Change_the_CV-qualifiers_of_a_member_function
 Qt::Orientation QAbstractAxis::orientation()
 {
     return d_ptr->orientation();
@@ -928,7 +931,7 @@ void QAbstractAxisPrivate::initializeTheme(ChartTheme* theme, bool forced)
         if (forced || brush == m_labelsBrush){
             q_ptr->setLabelsBrush(theme->labelBrush());
         }
-
+        //TODO: introduce axis brush
         if (forced || brush == m_titleBrush){
             q_ptr->setTitleBrush(theme->labelBrush());
         }
@@ -964,7 +967,7 @@ void QAbstractAxisPrivate::initializeTheme(ChartTheme* theme, bool forced)
         if (forced || font == m_labelsFont){
         	q_ptr->setLabelsFont(theme->labelFont());
         }
-
+        //TODO: discuss with Tero
         if (forced || font == m_titleFont){
             QFont font(m_labelsFont);
             font.setBold(true);

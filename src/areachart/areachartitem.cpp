@@ -31,8 +31,10 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+//TODO: optimize : remove points which are not visible
+
 AreaChartItem::AreaChartItem(QAreaSeries *areaSeries, QGraphicsItem* item)
-    : ChartItem(areaSeries->d_func(),item),
+    : ChartItem(areaSeries->d_func(),item), //TODO: fix me
       m_series(areaSeries),
       m_upper(0),
       m_lower(0),
