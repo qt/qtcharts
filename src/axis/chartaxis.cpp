@@ -36,7 +36,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 ChartAxis::ChartAxis(QAbstractAxis *axis, QGraphicsItem* item , bool intervalAxis)
     : ChartElement(item),
       m_axis(axis),
-      m_labelsAngle(0),
+      m_labelsAngle(axis->labelsAngle()),
       m_grid(new QGraphicsItemGroup(item)),
       m_arrow(new QGraphicsItemGroup(item)),
       m_shades(new QGraphicsItemGroup(item)),
