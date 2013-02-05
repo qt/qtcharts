@@ -109,6 +109,7 @@ protected:
     QFont font() const;
     qreal min() const;
     qreal max() const;
+    QRect labelBoundingRect(const QFontMetrics &fn, const QString &label) const;
 
 //handlers
 public Q_SLOTS:

@@ -99,21 +99,24 @@ QSizeF ChartDateTimeAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint
 
     switch (which) {
     case Qt::MinimumSize:{
-        int count = qMax(ticksList.last().count(),ticksList.first().count());
-        width = fn.averageCharWidth() * count;
-        height = fn.height() + labelPadding();
-        width = qMax(width,base.width());
+        QRectF boundingRect = labelBoundingRect(fn, "...");
+        width = qMax(boundingRect.width(), base.width());
+        height = boundingRect.height() + labelPadding();
         height += base.height();
-        sh = QSizeF(width,height);
+        sh = QSizeF(width, height);
         break;
     }
     case Qt::PreferredSize: {
-        int count = qMax(ticksList.last().count(),ticksList.first().count());
-        width=fn.averageCharWidth() * count;
-        height=fn.height()+labelPadding();
-        width=qMax(width,base.width());
-        height+=base.height();
-        sh = QSizeF(width,height);
+        int labelHeight = 0;
+        foreach (const QString& s, ticksList) {
+            QRect rect = labelBoundingRect(fn, s);
+            labelHeight = qMax(rect.height(), labelHeight);
+            width += rect.width();
+        }
+        height = labelHeight + labelPadding();
+        height += base.height();
+        width = qMax(width, base.width());
+        sh = QSizeF(width, height);
         break;
     }
     default:

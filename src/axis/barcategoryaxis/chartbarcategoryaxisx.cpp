@@ -111,31 +111,32 @@ QSizeF ChartBarCategoryAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constra
     qreal width=0;
     qreal height=0;
 
-      switch (which) {
-        case Qt::MinimumSize:
-            width = fn.boundingRect("...").width();
-            height = fn.height()+labelPadding();
-            width=qMax(width,base.width());
+    switch (which) {
+        case Qt::MinimumSize: {
+            QRectF boundingRect = labelBoundingRect(fn, "...");
+            width = qMax(boundingRect.width(), base.width());
+            height = boundingRect.height() + labelPadding();
             height += base.height();
-            sh = QSizeF(width,height);
+            sh = QSizeF(width, height);
             break;
+        }
         case Qt::PreferredSize:{
-
-            for (int i = 0; i < ticksList.size(); ++i)
-            {
-                QRectF rect = fn.boundingRect(ticksList.at(i));
+            int labelHeight = 0;
+            foreach (const QString& s, ticksList) {
+                QRect rect = labelBoundingRect(fn, s);
+                labelHeight = qMax(rect.height(), labelHeight);
                 width += rect.width();
             }
-            height = fn.height()+labelPadding();
-            width = qMax(width,base.width());
+            height = labelHeight + labelPadding();
             height += base.height();
-            sh = QSizeF(width,height);
+            width = qMax(width, base.width());
+            sh = QSizeF(width, height);
             break;
         }
         default:
           break;
-      }
-      return sh;
+    }
+    return sh;
 }
 
 #include "moc_chartbarcategoryaxisx_p.cpp"

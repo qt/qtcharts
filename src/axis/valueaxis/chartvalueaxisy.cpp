@@ -95,29 +95,26 @@ QSizeF ChartValueAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint) c
     qreal width = 0;
     qreal height = 0;
 
-    int labelWidth = 0;
-
-    foreach(const QString& s, ticksList)
-    {
-        labelWidth=qMax(fn.width(s),labelWidth);
-    }
-
     switch (which) {
     case Qt::MinimumSize: {
-        width = fn.boundingRect("...").width() + labelPadding();
+        QRectF boundingRect = labelBoundingRect(fn, "...");
+        width = boundingRect.width() + labelPadding();
         width += base.width();
-        height = fn.height();
-        height = qMax(height,base.height());
-        sh = QSizeF(width,height);
+        height = qMax(boundingRect.height(), base.height());
+        sh = QSizeF(width, height);
         break;
     }
-    case Qt::PreferredSize:
-    {
+    case Qt::PreferredSize: {
+        int labelWidth = 0;
+        foreach (const QString& s, ticksList) {
+            QRect rect = labelBoundingRect(fn, s);
+            labelWidth = qMax(rect.width(), labelWidth);
+            height += rect.height();
+        }
         width = labelWidth + labelPadding() + 2; //two pixels of tolerance
         width += base.width();
-        height = fn.height() * ticksList.count();
-        height = qMax(height,base.height());
-        sh = QSizeF(width,height);
+        height = qMax(height, base.height());
+        sh = QSizeF(width, height);
         break;
     }
     default:

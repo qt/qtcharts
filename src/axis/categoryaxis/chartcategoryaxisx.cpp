@@ -90,22 +90,24 @@ QSizeF ChartCategoryAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint
     qreal height = 0;
 
     switch (which) {
-    case Qt::MinimumSize:
-        width = fn.boundingRect("...").width();
-        height = fn.height() + labelPadding();
-        width = qMax(width, base.width());
+    case Qt::MinimumSize: {
+        QRectF boundingRect = labelBoundingRect(fn, "...");
+        width = qMax(boundingRect.width(), base.width());
+        height = boundingRect.height() + labelPadding();
         height += base.height();
         sh = QSizeF(width, height);
         break;
+    }
     case Qt::PreferredSize: {
-
-        for (int i = 0; i < ticksList.size(); ++i) {
-            QRectF rect = fn.boundingRect(ticksList.at(i));
+        int labelHeight = 0;
+        foreach (const QString& s, ticksList) {
+            QRect rect = labelBoundingRect(fn, s);
+            labelHeight = qMax(rect.height(), labelHeight);
             width += rect.width();
-            height = qMax(rect.height() + labelPadding(), height);
         }
-        width = qMax(width, base.width());
+        height = labelHeight + labelPadding();
         height += base.height();
+        width = qMax(width, base.width());
         sh = QSizeF(width, height);
         break;
     }

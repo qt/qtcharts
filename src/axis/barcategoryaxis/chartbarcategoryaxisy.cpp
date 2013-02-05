@@ -109,27 +109,30 @@ QSizeF ChartBarCategoryAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constra
     qreal width=0;
     qreal height=0;
 
-      switch (which) {
-        case Qt::MinimumSize:
-            width = fn.boundingRect("...").width() + labelPadding();
-            height = fn.height();
-            width+=base.width();
-            if(base.width()>0) width+=labelPadding();
-            height=qMax(height,base.height());
-            sh = QSizeF(width,height);
+    switch (which) {
+        case Qt::MinimumSize: {
+            QRectF boundingRect = labelBoundingRect(fn, "...");
+            width = boundingRect.width() + labelPadding();
+            width += base.width();
+            if (base.width() > 0)
+                width += labelPadding();
+            height = qMax(boundingRect.height(), base.height());
+            sh = QSizeF(width, height);
             break;
+        }
         case Qt::PreferredSize:{
-
-            for (int i = 0; i < ticksList.size(); ++i)
-            {
-                QRectF rect = fn.boundingRect(ticksList.at(i));
-                height+=rect.height();
-                width=qMax(rect.width()+labelPadding(),width); //one pixel torelance
+            int labelWidth = 0;
+            foreach (const QString& s, ticksList) {
+                QRect rect = labelBoundingRect(fn, s);
+                labelWidth = qMax(rect.width(), labelWidth);
+                height += rect.height();
             }
-            height=qMax(height,base.height());
-            width+=base.width();
-            if(base.width()>0) width+=labelPadding();
-            sh = QSizeF(width,height);
+            width = labelWidth + labelPadding() + 1;
+            width += base.width();
+            if (base.width() > 0)
+                width += labelPadding();
+            height = qMax(height, base.height());
+            sh = QSizeF(width, height);
             break;
         }
         default:

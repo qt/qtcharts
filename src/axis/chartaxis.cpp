@@ -527,6 +527,20 @@ QStringList ChartAxis::createDateTimeLabels(qreal min, qreal max,int ticks,const
     return labels;
 }
 
+QRect ChartAxis::labelBoundingRect(const QFontMetrics &fn, const QString &label) const
+{
+    QRect boundingRect = fn.boundingRect(label);
+
+    // Take label rotation into account
+    if (m_labelsAngle) {
+        QTransform transform;
+        transform.rotate(m_labelsAngle);
+        boundingRect = transform.mapRect(boundingRect);
+    }
+
+    return boundingRect;
+}
+
 #include "moc_chartaxis_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

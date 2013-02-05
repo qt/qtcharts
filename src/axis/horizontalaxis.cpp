@@ -105,35 +105,32 @@ void HorizontalAxis::updateGeometry()
         gridItem->setLine(layout[i], gridRect.top(), layout[i], gridRect.bottom());
 
         //label text wrapping
-        if(intervalAxis()&& i+1!=layout.size()) {
-            //wrapping in case of interval axis
-            const qreal delta = layout[i+1] - layout[i];
-            QString text = labelList.at(i);
-            if (fn.boundingRect(text).width() + 1 > delta )
-            {
-                QString label = text + "...";
-                while (fn.boundingRect(label).width() >= delta && label.length() > 3)
+        QString text = labelList.at(i);
+        QRectF boundingRect = labelBoundingRect(fn, text);
+        qreal size = axisRect.bottom() - axisRect.top() - labelPadding() - title->boundingRect().height();
+        if (boundingRect.height() > size) {
+            QString label = text + "...";
+            while (boundingRect.height() >= size && label.length() > 3) {
                 label.remove(label.length() - 4, 1);
-                labelItem->setText(label);
+                boundingRect = labelBoundingRect(fn, label);
             }
-            else {
-                labelItem->setText(text);
-            }
-        }else{
-            labelItem->setText(labelList.at(i));
+            labelItem->setText(label);
+        } else {
+            labelItem->setText(text);
         }
 
         //label transformation origin point
         const QRectF& rect = labelItem->boundingRect();
         QPointF center = rect.center();
         labelItem->setTransformOriginPoint(center.x(), center.y());
+        int heightDiff = rect.height() - boundingRect.height();
 
         //ticks and label position
         if (alignment() == Qt::AlignTop) {
-            labelItem->setPos(layout[i] - center.x(), axisRect.bottom() - rect.height() - labelPadding());
+            labelItem->setPos(layout[i] - center.x(), axisRect.bottom() - rect.height() + (heightDiff / 2) - labelPadding());
             tickItem->setLine(layout[i], axisRect.bottom(), layout[i], axisRect.bottom() - labelPadding());
         } else if (alignment() == Qt::AlignBottom) {
-            labelItem->setPos(layout[i] - center.x(), axisRect.top() + labelPadding());
+            labelItem->setPos(layout[i] - center.x(), axisRect.top() - (heightDiff / 2) + labelPadding());
             tickItem->setLine(layout[i], axisRect.top(), layout[i], axisRect.top() + labelPadding());
         }
 
@@ -146,11 +143,11 @@ void HorizontalAxis::updateGeometry()
         //label overlap detection
         if(labelItem->pos().x() < width ||
             labelItem->pos().x() < axisRect.left()  ||
-            labelItem->pos().x() + rect.width() -1 > axisRect.right()){
+            labelItem->pos().x() + boundingRect.width() -1 > axisRect.right()){
             labelItem->setVisible(false);
         } else {
             labelItem->setVisible(true);
-            width=rect.width()+labelItem->pos().x();
+            width = boundingRect.width() + labelItem->pos().x();
         }
 
         //shades

@@ -113,27 +113,33 @@ void VerticalAxis::updateGeometry()
 
         //label text wrapping
         QString text = labelList.at(i);
+        QRectF boundingRect = labelBoundingRect(fn, text);
+
         qreal size = axisRect.right() - axisRect.left() - labelPadding() - title->boundingRect().height();
-        if (fn.boundingRect(text).width() > size) {
+        if (boundingRect.width() > size) {
             QString label = text + "...";
-            while (fn.boundingRect(label).width() > size && label.length() > 3)
+            while (boundingRect.width() > size && label.length() > 3) {
                 label.remove(label.length() - 4, 1);
+                boundingRect = labelBoundingRect(fn, label);
+            }
             labelItem->setText(label);
         } else {
             labelItem->setText(text);
         }
+
         //label transformation origin point
         const QRectF &rect = labelItem->boundingRect();
 
         QPointF center = rect.center();
         labelItem->setTransformOriginPoint(center.x(), center.y());
+        int widthDiff = rect.width() - boundingRect.width();
 
         //ticks and label position
         if (alignment() == Qt::AlignLeft) {
-            labelItem->setPos(axisRect.right() - rect.width() - labelPadding() , layout[i] - center.y());
+            labelItem->setPos(axisRect.right() - rect.width() + (widthDiff / 2) - labelPadding(), layout[i] - center.y());
             tickItem->setLine(axisRect.right() - labelPadding(), layout[i], axisRect.right(), layout[i]);
         } else if (alignment() == Qt::AlignRight) {
-            labelItem->setPos(axisRect.left() + labelPadding() , layout[i] - center.y());
+            labelItem->setPos(axisRect.left() + labelPadding() - (widthDiff / 2), layout[i] - center.y());
             tickItem->setLine(axisRect.left(), layout[i], axisRect.left() + labelPadding(), layout[i]);
         }
 
@@ -144,9 +150,9 @@ void VerticalAxis::updateGeometry()
         }
 
         //label overlap detection
-        if(labelItem->pos().y() + rect.height() > height ||
-            labelItem->pos().y() + rect.height()/2 > gridRect.bottom() ||
-            labelItem->pos().y() + rect.height()/2 < gridRect.top()) {
+        if(labelItem->pos().y() + boundingRect.height() > height ||
+            labelItem->pos().y() + boundingRect.height()/2 > gridRect.bottom() ||
+            labelItem->pos().y() + boundingRect.height()/2 < gridRect.top()) {
             labelItem->setVisible(false);
         }
         else {
