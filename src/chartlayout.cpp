@@ -28,7 +28,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-static const qreal golden_ratio = 0.4;
+static const qreal maxAxisPortion = 0.4;
 
 ChartLayout::ChartLayout(ChartPresenter *presenter)
     : m_presenter(presenter),
@@ -159,15 +159,51 @@ QRectF ChartLayout::calculateAxisGeometry(const QRectF &geometry, const QList<Ch
         }
     }
 
-    int horizontal = leftCount + rightCount;
-    qreal hratio = 0 ;
-    if(horizontal>0)
-        hratio = (golden_ratio*geometry.width())/horizontal;
+    int totalVerticalAxes = leftCount + rightCount;
+    qreal leftSqueezeRatio = 1.0;
+    qreal rightSqueezeRatio = 1.0;
+    qreal vratio = 0;
 
-    if(leftCount>0)
-        left.setWidth(qMin(left.width(),hratio*leftCount));
-    if(rightCount>0)
-        right.setWidth(qMin(right.width(),hratio*rightCount));
+    if (totalVerticalAxes > 0)
+        vratio = (maxAxisPortion * geometry.width()) / totalVerticalAxes;
+
+    if (leftCount > 0) {
+        int maxWidth = vratio * leftCount;
+        if (left.width() > maxWidth) {
+            leftSqueezeRatio = maxWidth / left.width();
+            left.setWidth(maxWidth);
+        }
+    }
+    if (rightCount > 0) {
+        int maxWidth = vratio * rightCount;
+        if (right.width() > maxWidth) {
+            rightSqueezeRatio = maxWidth / right.width();
+            right.setWidth(maxWidth);
+        }
+    }
+
+    int totalHorizontalAxes = topCount + bottomCount;
+    qreal topSqueezeRatio = 1.0;
+    qreal bottomSqueezeRatio = 1.0;
+    qreal hratio = 0;
+
+    if (totalHorizontalAxes > 0)
+        hratio = (maxAxisPortion * geometry.height()) / totalHorizontalAxes;
+
+    if (topCount > 0) {
+        int maxHeight = hratio * topCount;
+        if (top.height() > maxHeight) {
+            topSqueezeRatio = maxHeight / top.height();
+            top.setHeight(maxHeight);
+        }
+    }
+    if (bottomCount > 0) {
+        int maxHeight = hratio * bottomCount;
+        if (bottom.height() > maxHeight) {
+            bottomSqueezeRatio = maxHeight / bottom.height();
+            bottom.setHeight(maxHeight);
+        }
+    }
 
     qreal minHeight = qMax(minLeft.height(),minRight.height()) + 1;
     qreal minWidth = qMax(minTop.width(),minBottom.width()) + 1;
@@ -191,24 +227,35 @@ QRectF ChartLayout::calculateAxisGeometry(const QRectF &geometry, const QList<Ch
 
         switch(axis->alignment()){
         case Qt::AlignLeft:{
-            qreal width =  qMin(size.width(),(left.width()/leftCount));
+            qreal width = size.width();
+            if (leftSqueezeRatio < 1.0)
+                width *= leftSqueezeRatio;
             leftOffset+=width;
             axis->setGeometry(QRect(chartRect.left()-leftOffset, geometry.top(),width, geometry.bottom()),chartRect);
             break;
         }
         case Qt::AlignRight:{
-            qreal width = qMin(size.width(),(right.width()/rightCount));
+            qreal width = size.width();
+            if (rightSqueezeRatio < 1.0)
+                width *= rightSqueezeRatio;
             axis->setGeometry(QRect(chartRect.right()+rightOffset,geometry.top(),width,geometry.bottom()),chartRect);
             rightOffset+=width;
             break;
         }
-        case Qt::AlignTop:
-            axis->setGeometry(QRect(geometry.left(), chartRect.top() - topOffset - size.height(), geometry.width(), size.height()), chartRect);
-            topOffset += size.height();
+        case Qt::AlignTop: {
+            qreal height = size.height();
+            if (topSqueezeRatio < 1.0)
+                height *= topSqueezeRatio;
+            axis->setGeometry(QRect(geometry.left(), chartRect.top() - topOffset - height, geometry.width(), height), chartRect);
+            topOffset += height;
             break;
+        }
         case Qt::AlignBottom:
-            axis->setGeometry(QRect(geometry.left(), chartRect.bottom() + bottomOffset, geometry.width(), size.height()), chartRect);
-            bottomOffset += size.height();
+            qreal height = size.height();
+            if (bottomSqueezeRatio < 1.0)
+                height *= bottomSqueezeRatio;
+            axis->setGeometry(QRect(geometry.left(), chartRect.bottom() + bottomOffset, geometry.width(), height), chartRect);
+            bottomOffset += height;
             break;
         }
     }
@@ -270,13 +317,13 @@ QRectF ChartLayout::calculateLegendGeometry(const QRectF &geometry, QLegend *leg
         break;
     }
     case Qt::AlignLeft: {
-        qreal width = qMin(size.width(), geometry.width() * golden_ratio);
+        qreal width = qMin(size.width(), geometry.width() * maxAxisPortion);
         legendRect = QRectF(geometry.topLeft(), QSizeF(width, geometry.height()));
         result = geometry.adjusted(width, 0, 0, 0);
         break;
     }
     case Qt::AlignRight: {
-        qreal width = qMin(size.width(), geometry.width() * golden_ratio);
+        qreal width = qMin(size.width(), geometry.width() * maxAxisPortion);
         legendRect = QRectF(QPointF(geometry.right() - width, geometry.top()), QSizeF(width, geometry.height()));
         result = geometry.adjusted(0, 0, -width, 0);
         break;
