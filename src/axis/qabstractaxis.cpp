@@ -926,23 +926,44 @@ void QAbstractAxisPrivate::initializeTheme(ChartTheme* theme, bool forced)
 
     bool axisX = m_orientation == Qt::Horizontal;
 
-    if (m_arrowVisible) {
-
-        if (forced || brush == m_labelsBrush){
-            q_ptr->setLabelsBrush(theme->labelBrush());
+    //TODO: introduce axis brush
+    if (m_visible) {
+        if (m_arrowVisible) {
+            if (forced || pen == m_axisPen) {
+                q_ptr->setLinePen(theme->axisLinePen());
+            }
         }
-        //TODO: introduce axis brush
-        if (forced || brush == m_titleBrush){
-            q_ptr->setTitleBrush(theme->labelBrush());
+        if (m_gridLineVisible) {
+            if (forced || pen == m_gridLinePen) {
+                q_ptr->setGridLinePen(theme->girdLinePen());
+            }
         }
-        if (forced || pen == m_labelsPen){
-            q_ptr->setLabelsPen(Qt::NoPen);// NoPen for performance reasons
+        if (m_labelsVisible) {
+            if (forced || brush == m_labelsBrush){
+                q_ptr->setLabelsBrush(theme->labelBrush());
+            }
+            if (forced || pen == m_labelsPen){
+                q_ptr->setLabelsPen(Qt::NoPen);// NoPen for performance reasons
+            }
+            if (forced || font == m_labelsFont){
+                q_ptr->setLabelsFont(theme->labelFont());
+            }
         }
-        if (forced || pen == m_titlePen){
-            q_ptr->setTitlePen(Qt::NoPen);// Noen for performance reasons
+        if (m_titleVisible) {
+            if (forced || brush == m_titleBrush){
+                q_ptr->setTitleBrush(theme->labelBrush());
+            }
+            if (forced || pen == m_titlePen){
+                q_ptr->setTitlePen(Qt::NoPen);// Noen for performance reasons
+            }
+            //TODO: discuss with Tero
+            if (forced || font == m_titleFont){
+                QFont font(m_labelsFont);
+                font.setBold(true);
+                q_ptr->setTitleFont(font);
+            }
         }
         if (forced || m_shadesVisible) {
-
             if (forced || brush == m_shadesBrush){
                 q_ptr->setShadesBrush(theme->backgroundShadesBrush());
             }
@@ -952,26 +973,8 @@ void QAbstractAxisPrivate::initializeTheme(ChartTheme* theme, bool forced)
             if (forced && (theme->backgroundShades() == ChartTheme::BackgroundShadesBoth
                     || (theme->backgroundShades() == ChartTheme::BackgroundShadesVertical && axisX)
                     || (theme->backgroundShades() == ChartTheme::BackgroundShadesHorizontal && !axisX))) {
-            	 q_ptr->setShadesVisible(true);
+                 q_ptr->setShadesVisible(true);
             }
-        }
-
-		if (forced || pen == m_axisPen) {
-			q_ptr->setLinePen(theme->axisLinePen());
-		}
-
-		if (forced || pen == m_gridLinePen) {
-			q_ptr->setGridLinePen(theme->girdLinePen());
-		}
-
-        if (forced || font == m_labelsFont){
-        	q_ptr->setLabelsFont(theme->labelFont());
-        }
-        //TODO: discuss with Tero
-        if (forced || font == m_titleFont){
-            QFont font(m_labelsFont);
-            font.setBold(true);
-            q_ptr->setTitleFont(font);
         }
     }
 }
