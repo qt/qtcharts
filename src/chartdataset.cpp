@@ -336,6 +336,10 @@ void ChartDataSet::findMinMaxForSeries(QList<QAbstractSeries *> series,Qt::Orien
 		min = qMin((orientation == Qt::Vertical) ? domain->minY() : domain->minX(), min);
 		max = qMax((orientation == Qt::Vertical) ? domain->maxY() : domain->maxX(), max);
 	}
+    if (min == max) {
+        min -= 0.5;
+        max += 0.5;
+    }
 }
 
 void ChartDataSet::deleteAllSeries()

@@ -31,21 +31,34 @@ int main(int argc, char *argv[])
 
 //![1]
     QLineSeries *series = new QLineSeries();
+    QLineSeries *series2 = new QLineSeries();
 //![1]
 
 //![2]
-    series->append(0, 6);
-    series->append(2, 4);
-    series->append(3, 8);
-    series->append(7, 4);
-    series->append(10, 5);
-    *series << QPointF(11, 1) << QPointF(13, 3) << QPointF(17, 6) << QPointF(18, 3) << QPointF(20, 2);
+    *series << QPointF(0.06197, 0.16)
+            << QPointF(0.18694, 0.16)
+            << QPointF(0.3119, 0.16)
+            << QPointF(0.43687, 0.16)
+            << QPointF(0.56183, 0.16)
+            << QPointF(0.68678, 0.16)
+            << QPointF(0.81173, 0.16)
+            << QPointF(0.93667, 0.16);
+
+   *series2 << QPointF(0.06197, 0.16)
+            << QPointF(0.18694, 0.16)
+            << QPointF(0.3119, 0.16)
+            << QPointF(0.43687, 0.16)
+            << QPointF(0.56183, 0.16)
+            << QPointF(0.68678, 0.16)
+            << QPointF(0.81173, 0.16)
+            << QPointF(0.93667, 0.16);
 //![2]
 
 //![3]
     QChart *chart = new QChart();
     chart->legend()->hide();
     chart->addSeries(series);
+    chart->addSeries(series2);
     chart->createDefaultAxes();
     chart->setTitle("Simple line chart example");
 //![3]

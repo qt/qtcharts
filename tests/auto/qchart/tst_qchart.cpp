@@ -820,6 +820,8 @@ void tst_QChart::createDefaultAxesForLineSeries_data()
                                                                << (qreal)1.1 << (qreal)2.0 << (qreal)2.9 << (qreal)1.0 << (qreal)2.0 << (qreal)3.0 << (qreal)1.0 << (qreal)3.0;
     QTest::newRow("series1hasMin_series2hasMax") << (qreal)1.0 << (qreal)2.0 << (qreal)2.9 << (qreal)1.1 << (qreal)1.7 << (qreal)3.0 << (qreal)1.0 << (qreal)3.0
                                                  << (qreal)1.0 << (qreal)2.0 << (qreal)2.9 << (qreal)1.1 << (qreal)1.7 << (qreal)3.0 << (qreal)1.0 << (qreal)3.0;
+    QTest::newRow("bothSeriesHaveSameMinAndMax") << (qreal)1.0 << (qreal)2.0 << (qreal)2.9 << (qreal)1.1 << (qreal)1.7 << (qreal)3.0 << (qreal)1.0 << (qreal)3.0
+                                                 << (qreal)1.1 << (qreal)1.1 << (qreal)1.1 << (qreal)1.1 << (qreal)1.1 << (qreal)1.1 << (qreal)0.6 << (qreal)1.6;
 }
 
 void tst_QChart::createDefaultAxesForLineSeries()
