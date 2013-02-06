@@ -56,6 +56,9 @@ public:
     void setLabelPadding(int padding);
     int labelPadding() const { return m_labelPadding;};
 
+    void setTitlePadding(int padding);
+    int titlePadding() const { return m_titlePadding;};
+
     QFont titleFont() const;
     QString titleText() const;
 
@@ -159,6 +162,7 @@ private:
     int m_labelPadding;
     QStringList m_labelsList;
     bool m_intervalAxis;
+    int m_titlePadding;
 
     friend class AxisAnimation;
     friend class ArrowItem;

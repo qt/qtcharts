@@ -92,10 +92,10 @@ void VerticalAxis::updateGeometry()
 
         QPointF center = gridRect.center() - title->boundingRect().center();
         if (alignment() == Qt::AlignLeft) {
-            title->setPos(axisRect.left() - title->boundingRect().width()/2 + title->boundingRect().height()/2 , center.y());
+            title->setPos(axisRect.left() - title->boundingRect().width() / 2 + title->boundingRect().height() / 2 + titlePadding(), center.y());
         }
         else if (alignment() == Qt::AlignRight) {
-            title->setPos(axisRect.right()- title->boundingRect().width()/2 - title->boundingRect().height()/2, center.y());
+            title->setPos(axisRect.right() - title->boundingRect().width() / 2 - title->boundingRect().height() / 2 - titlePadding(), center.y());
         }
         title->setTransformOriginPoint(title->boundingRect().center());
         title->setRotation(270);
@@ -115,7 +115,7 @@ void VerticalAxis::updateGeometry()
         QString text = labelList.at(i);
         QRectF boundingRect = labelBoundingRect(fn, text);
 
-        qreal size = axisRect.right() - axisRect.left() - labelPadding() - title->boundingRect().height();
+        qreal size = axisRect.right() - axisRect.left() - labelPadding() - title->boundingRect().height() - (titlePadding() * 2);
         if (boundingRect.width() > size) {
             QString label = text + "...";
             while (boundingRect.width() > size && label.length() > 3) {
@@ -202,11 +202,11 @@ QSizeF VerticalAxis::sizeHint(Qt::SizeHint which, const QSizeF &constraint) cons
 
     switch (which) {
     case Qt::MinimumSize:
-            sh = QSizeF(fn.height(), fn.boundingRect("...").width());
+            sh = QSizeF(fn.height() + (titlePadding() * 2), fn.boundingRect("...").width());
         break;
     case Qt::MaximumSize:
     case Qt::PreferredSize:
-            sh = QSizeF(fn.height(), fn.boundingRect(axis()->titleText()).width());
+            sh = QSizeF(fn.height() + (titlePadding() * 2), fn.boundingRect(axis()->titleText()).width());
         break;
     default:
         break;

@@ -44,7 +44,8 @@ ChartAxis::ChartAxis(QAbstractAxis *axis, QGraphicsItem* item , bool intervalAxi
       m_title(new QGraphicsSimpleTextItem(item)),
       m_animation(0),
       m_labelPadding(5),
-      m_intervalAxis(intervalAxis)
+      m_intervalAxis(intervalAxis),
+      m_titlePadding(3)
 {
     Q_ASSERT(item);
     //initial initialization    
@@ -195,6 +196,11 @@ void ChartAxis::updateLayout(QVector<qreal> &layout)
 void ChartAxis::setLabelPadding(int padding)
 {
     m_labelPadding = padding;
+}
+
+void ChartAxis::setTitlePadding(int padding)
+{
+    m_titlePadding = padding;
 }
 
 bool ChartAxis::isEmpty()

@@ -88,9 +88,9 @@ void HorizontalAxis::updateGeometry()
 
         QPointF center = gridRect.center() - title->boundingRect().center();
         if (alignment() == Qt::AlignTop) {
-            title->setPos(center.x(), axisRect.top());
+            title->setPos(center.x(), axisRect.top() + titlePadding());
         } else  if (alignment() == Qt::AlignBottom) {
-            title->setPos(center.x(), axisRect.bottom() - title->boundingRect().height());
+            title->setPos(center.x(), axisRect.bottom() - title->boundingRect().height() - titlePadding());
         }
     }
 
@@ -107,7 +107,7 @@ void HorizontalAxis::updateGeometry()
         //label text wrapping
         QString text = labelList.at(i);
         QRectF boundingRect = labelBoundingRect(fn, text);
-        qreal size = axisRect.bottom() - axisRect.top() - labelPadding() - title->boundingRect().height();
+        qreal size = axisRect.bottom() - axisRect.top() - labelPadding() - title->boundingRect().height() - (titlePadding() * 2);
         if (boundingRect.height() > size) {
             QString label = text + "...";
             while (boundingRect.height() >= size && label.length() > 3) {
@@ -191,11 +191,11 @@ QSizeF HorizontalAxis::sizeHint(Qt::SizeHint which, const QSizeF &constraint) co
 
     switch (which) {
     case Qt::MinimumSize:
-            sh = QSizeF(fn.boundingRect("...").width(), fn.height());
+            sh = QSizeF(fn.boundingRect("...").width(), fn.height() + (titlePadding() * 2));
         break;
     case Qt::MaximumSize:
     case Qt::PreferredSize:
-            sh = QSizeF(fn.boundingRect(axis()->titleText()).width(), fn.height());
+            sh = QSizeF(fn.boundingRect(axis()->titleText()).width(), fn.height() + (titlePadding() * 2));
         break;
     default:
         break;
