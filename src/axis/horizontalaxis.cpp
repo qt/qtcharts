@@ -68,12 +68,11 @@ void HorizontalAxis::updateGeometry()
     QFontMetrics fn(font());
 
     //title
-
-    if (!titleText().isNull()) {
+    int titlePad = 0;
+    QRectF titleBoundingRect;
+    if (!titleText().isEmpty() && titleItem()->isVisible()) {
         QFontMetrics fn(title->font());
-
         int size(0);
-
         size = gridRect.width();
         QString titleText = this->titleText();
 
@@ -86,11 +85,14 @@ void HorizontalAxis::updateGeometry()
             title->setText(titleText);
         }
 
-        QPointF center = gridRect.center() - title->boundingRect().center();
+        titlePad = titlePadding();
+        titleBoundingRect = title->boundingRect();
+
+        QPointF center = gridRect.center() - titleBoundingRect.center();
         if (alignment() == Qt::AlignTop) {
-            title->setPos(center.x(), axisRect.top() + titlePadding());
+            title->setPos(center.x(), axisRect.top() + titlePad);
         } else  if (alignment() == Qt::AlignBottom) {
-            title->setPos(center.x(), axisRect.bottom() - title->boundingRect().height() - titlePadding());
+            title->setPos(center.x(), axisRect.bottom() - titleBoundingRect.height() - titlePad);
         }
     }
 
@@ -107,7 +109,7 @@ void HorizontalAxis::updateGeometry()
         //label text wrapping
         QString text = labelList.at(i);
         QRectF boundingRect = labelBoundingRect(fn, text);
-        qreal size = axisRect.bottom() - axisRect.top() - labelPadding() - title->boundingRect().height() - (titlePadding() * 2);
+        qreal size = axisRect.bottom() - axisRect.top() - labelPadding() - titleBoundingRect.height() - (titlePad * 2);
         if (boundingRect.height() > size) {
             QString label = text + "...";
             while (boundingRect.height() >= size && label.length() > 3) {
@@ -186,7 +188,7 @@ QSizeF HorizontalAxis::sizeHint(Qt::SizeHint which, const QSizeF &constraint) co
     QFontMetrics fn(titleFont());
     QSizeF sh(0,0);
 
-    if (titleText().isNull() || !titleItem()->isVisible())
+    if (titleText().isEmpty() || !titleItem()->isVisible())
         return sh;
 
     switch (which) {

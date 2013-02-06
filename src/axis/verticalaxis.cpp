@@ -72,10 +72,10 @@ void VerticalAxis::updateGeometry()
     QFontMetrics fn(font());
 
     //title
-
-    if (!titleText().isNull()) {
+    int titlePad = 0;
+    QRectF titleBoundingRect;
+    if (!titleText().isEmpty() && titleItem()->isVisible()) {
         QFontMetrics fn(title->font());
-
         int size(0);
         size = gridRect.height();
         QString titleText = this->titleText();
@@ -90,14 +90,17 @@ void VerticalAxis::updateGeometry()
             title->setText(titleText);
         }
 
-        QPointF center = gridRect.center() - title->boundingRect().center();
+        titlePad = titlePadding();
+        titleBoundingRect = title->boundingRect();
+
+        QPointF center = gridRect.center() - titleBoundingRect.center();
         if (alignment() == Qt::AlignLeft) {
-            title->setPos(axisRect.left() - title->boundingRect().width() / 2 + title->boundingRect().height() / 2 + titlePadding(), center.y());
+            title->setPos(axisRect.left() - titleBoundingRect.width() / 2 + titleBoundingRect.height() / 2 + titlePad, center.y());
         }
         else if (alignment() == Qt::AlignRight) {
-            title->setPos(axisRect.right() - title->boundingRect().width() / 2 - title->boundingRect().height() / 2 - titlePadding(), center.y());
+            title->setPos(axisRect.right() - titleBoundingRect.width() / 2 - titleBoundingRect.height() / 2 - titlePad, center.y());
         }
-        title->setTransformOriginPoint(title->boundingRect().center());
+        title->setTransformOriginPoint(titleBoundingRect.center());
         title->setRotation(270);
     }
 
@@ -115,7 +118,7 @@ void VerticalAxis::updateGeometry()
         QString text = labelList.at(i);
         QRectF boundingRect = labelBoundingRect(fn, text);
 
-        qreal size = axisRect.right() - axisRect.left() - labelPadding() - title->boundingRect().height() - (titlePadding() * 2);
+        qreal size = axisRect.right() - axisRect.left() - labelPadding() - titleBoundingRect.height() - (titlePad * 2);
         if (boundingRect.width() > size) {
             QString label = text + "...";
             while (boundingRect.width() > size && label.length() > 3) {
@@ -197,7 +200,7 @@ QSizeF VerticalAxis::sizeHint(Qt::SizeHint which, const QSizeF &constraint) cons
     QFontMetrics fn(titleFont());
     QSizeF sh(0,0);
 
-    if (titleText().isNull() || !titleItem()->isVisible())
+    if (titleText().isEmpty() || !titleItem()->isVisible())
         return sh;
 
     switch (which) {

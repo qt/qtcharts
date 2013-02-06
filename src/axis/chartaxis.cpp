@@ -296,8 +296,9 @@ void ChartAxis::handleShadesVisibleChanged(bool visible)
 
 void ChartAxis::handleTitleVisibleChanged(bool visible)
 {
-    m_title->setVisible(visible);
+    QGraphicsLayoutItem::updateGeometry();
     presenter()->layout()->invalidate();
+    m_title->setVisible(visible);
 }
 
 void ChartAxis::handleLabelsAngleChanged(int angle)
@@ -354,9 +355,9 @@ void ChartAxis::handleGridPenChanged(const QPen &pen)
 
 void ChartAxis::handleTitleTextChanged(const QString &title)
 {
-    Q_UNUSED(title)
     QGraphicsLayoutItem::updateGeometry();
     presenter()->layout()->invalidate();
+    m_title->setText(title);
 }
 
 
