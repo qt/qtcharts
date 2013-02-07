@@ -180,7 +180,17 @@ void QChartView::mouseReleaseEvent(QMouseEvent *event)
     if (d_ptr->m_rubberBand) {
         if (event->button() == Qt::LeftButton && d_ptr->m_rubberBand->isVisible()) {
             d_ptr->m_rubberBand->hide();
-            QRect rect = d_ptr->m_rubberBand->geometry();
+            QRectF rect = d_ptr->m_rubberBand->geometry();
+            // Since plotArea uses QRectF and rubberband uses QRect, we can't just blindly use
+            // rubberband's dimensions for vertical and horizontal rubberbands, where one
+            // dimension must match the corresponding plotArea dimension exactly.
+            if (d_ptr->m_rubberBandFlags == VerticalRubberBand) {
+                rect.setX(d_ptr->m_chart->plotArea().x());
+                rect.setWidth(d_ptr->m_chart->plotArea().width());
+            } else if (d_ptr->m_rubberBandFlags == HorizonalRubberBand) {
+                rect.setY(d_ptr->m_chart->plotArea().y());
+                rect.setHeight(d_ptr->m_chart->plotArea().height());
+            }
             d_ptr->m_chart->zoomIn(rect);
             event->accept();
         }
