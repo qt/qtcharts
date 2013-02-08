@@ -1,6 +1,7 @@
 include(compat.qdocconf)
 include(macros.qdocconf)
 include(qchart-html-template.qdocconf)
+include(qchart-qch.qdocconf)
 
 project = QtCommercialCharts
 description = Library for creating charts

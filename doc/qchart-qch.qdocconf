@@ -1,0 +1,27 @@
+qhp.projects                            = QtCommercialCharts
+qhp.QtCommercialCharts.file             = qtcommercialcharts.qhp
+qhp.QtCommercialCharts.namespace        = com.digia.qtcommercialcharts.$QT_CHARTS_VERSION_TAG
+qhp.QtCommercialCharts.virtualFolder    = doc
+qhp.QtCommercialCharts.indexTitle       = QtCommercial Charts Reference $QT_CHARTS_VERSION
+qhp.QtCommercialCharts.filterAttributes = qtcommercialcharts $QT_CHARTS_VERSION
+qhp.QtCommercialCharts.customFilters.QtCommercialCharts.name = QtCommercial Charts $QT_CHARTS_VERSION
+qhp.QtCommercialCharts.customFilters.QtCommercialCharts.filterAttributes = qtcommercialcharts $QT_CHARTS_VERSION
+qhp.QtCommercialCharts.indexRoot        =
+
+# Files not referenced in any qdoc file.
+# See also extraimages.HTML
+qhp.QtCommercialCharts.extraFiles = index.html \
+                                    examples.html \
+                                    demos.html \
+                                    images/arrow_down.png \
+                                    images/bg.png \
+                                    images/breadcrumb.png \
+                                    images/bullet_gt.png \
+                                    images/bullet_dn.png \
+                                    images/bullet_sq.png \
+                                    images/bullet_up.png \
+                                    images/digia_logo.png \
+                                    images/horBar.png \
+                                    images/qcharts.png \
+                                    images/qt_commercial_logo.png \
+                                    style/offline.css

@@ -44,16 +44,3 @@ HTML.footer = \
     "  <p>\n" \
     "     <img src=\"images/digia_logo.png\" alt=\"digia\" /></p>\n" \
     "</div>\n" \
-
-# Files not referenced in any qdoc file.
-# See also extraimages.HTML
-qhp.QDoc.extraFiles = index.html \
-                      images/arrow_down.png \
-                      images/breadcrumb.png \
-                      images/bullet_gt.png \
-                      images/bullet_dn.png \
-                      images/bullet_sq.png \
-                      images/bullet_up.png \
-                      images/horBar.png \
-                      images/qcharts.png \
-                      style/offline.css

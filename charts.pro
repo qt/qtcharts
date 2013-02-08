@@ -18,22 +18,41 @@ feature.files = $$PWD/features/qtcommercialchart.prf
 INSTALLS += feature
 
 # docs
+CHARTS_VERSION = 1.2.1
+CHARTS_VERSION_TAG = 121
+
 win32: {
     QDOC_CONF = $$CHART_BUILD_DOC_DIR\\qcharts.qdocconf
+    VERSION_SETTINGS = \
+        set QT_CHARTS_VERSION=$$CHARTS_VERSION $$escape_expand(\\n\\t) \
+        set QT_CHARTS_VERSION_TAG=$$CHARTS_VERSION_TAG $$escape_expand(\\n\\t)
 } else {
     QDOC_CONF = $$CHART_BUILD_DOC_DIR/qcharts.qdocconf
+    VERSION_SETTINGS = \
+        QT_CHARTS_VERSION=$$CHARTS_VERSION QT_CHARTS_VERSION_TAG=$$CHARTS_VERSION_TAG
 }
 
 contains(QT_MAJOR_VERSION, 5) {
     QDOC_CMD = qdoc
+    HELPGENERATOR_CMD = qhelpgenerator -platform minimal
 } else {
     QDOC_CMD = qdoc3
+    HELPGENERATOR_CMD = qhelpgenerator
 }
 
+QHP_FILE = doc/html/qtcommercialcharts.qhp
+QCH_FILE = doc/qch/qtcommercialcharts.qch
+
 docs.target = docs
-docs.commands = $$QDOC_CMD $$QDOC_CONF
-docs.depends = FORCE
-QMAKE_EXTRA_TARGETS += docs
+docs.depends = qch_docs FORCE
+qch_docs.target = qch_docs
+qch_docs.commands = $$HELPGENERATOR_CMD $$QHP_FILE -o $$QCH_FILE
+qch_docs.depends = html_docs FORCE
+html_docs.target = html_docs
+html_docs.commands = $$VERSION_SETTINGS $$QDOC_CMD $$QDOC_CONF
+html_docs.depends = FORCE
+
+QMAKE_EXTRA_TARGETS += docs qch_docs html_docs
 
 # coverage
 unix:coverage:{
