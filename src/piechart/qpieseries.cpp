@@ -51,7 +51,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \table 100%
     \row
     \o \image examples_piechart.png
-    \o \image examples_donut.png
+    \o \image examples_donutchart.png
     \endtable
 */
 /*!
