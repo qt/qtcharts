@@ -8,6 +8,23 @@ qhp.QtCommercialCharts.customFilters.QtCommercialCharts.name = QtCommercial Char
 qhp.QtCommercialCharts.customFilters.QtCommercialCharts.filterAttributes = qtcommercialcharts $QT_CHARTS_VERSION
 qhp.QtCommercialCharts.indexRoot        =
 
+qhp.QtCommercialCharts.subprojects = gettingstarted classes qmlclasses examples demos
+
+qhp.QtCommercialCharts.subprojects.gettingstarted.title      = Getting Started
+qhp.QtCommercialCharts.subprojects.gettingstarted.indexTitle = QtCommercial Charts getting started
+
+qhp.QtCommercialCharts.subprojects.classes.title      = API Classes
+qhp.QtCommercialCharts.subprojects.classes.indexTitle = QtCommercial Charts API
+
+qhp.QtCommercialCharts.subprojects.qmlclasses.title      = QML API
+qhp.QtCommercialCharts.subprojects.qmlclasses.indexTitle = QtCommercial Charts QML API
+
+qhp.QtCommercialCharts.subprojects.examples.title      = Examples
+qhp.QtCommercialCharts.subprojects.examples.indexTitle = QtCommercial Charts Examples
+
+qhp.QtCommercialCharts.subprojects.demos.title      = Demos
+qhp.QtCommercialCharts.subprojects.demos.indexTitle = QtCommercial Charts Demos
+
 # Files not referenced in any qdoc file.
 # See also extraimages.HTML
 qhp.QtCommercialCharts.extraFiles = index.html \
