@@ -23,9 +23,14 @@ CHARTS_VERSION_TAG = 121
 
 win32: {
     QDOC_CONF = $$CHART_BUILD_DOC_DIR\\qcharts.qdocconf
-    VERSION_SETTINGS = \
-        set QT_CHARTS_VERSION=$$CHARTS_VERSION $$escape_expand(\\n\\t) \
-        set QT_CHARTS_VERSION_TAG=$$CHARTS_VERSION_TAG $$escape_expand(\\n\\t)
+    win32-g++: {
+        VERSION_SETTINGS = \
+            set QT_CHARTS_VERSION=$$CHARTS_VERSION&& set QT_CHARTS_VERSION_TAG=$$CHARTS_VERSION_TAG&&
+    } else {
+        VERSION_SETTINGS = \
+            set QT_CHARTS_VERSION=$$CHARTS_VERSION $$escape_expand(\\n\\t) \
+            set QT_CHARTS_VERSION_TAG=$$CHARTS_VERSION_TAG $$escape_expand(\\n\\t)
+    }
 } else {
     QDOC_CONF = $$CHART_BUILD_DOC_DIR/qcharts.qdocconf
     VERSION_SETTINGS = \
