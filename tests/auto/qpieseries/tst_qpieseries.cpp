@@ -581,7 +581,8 @@ void tst_qpieseries::hoverSignal()
     QTest::mouseMove(m_view->viewport(), points.at(2), 100);
     QTest::mouseMove(m_view->viewport(), points.at(3), 100);
     QTest::mouseMove(m_view->viewport(), pieRect.topLeft().toPoint(), 100);
-    QApplication::processEvents();
+    // Final hoverevent can take few milliseconds to appear in some environments, so wait a bit
+    QTest::qWait(100);
 
     // check
     QCOMPARE(hoverSpy.count(), 8);
