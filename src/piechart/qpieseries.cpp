@@ -27,6 +27,7 @@
 #include "charttheme_p.h"
 #include "qabstractaxis.h"
 #include "pieanimation_p.h"
+#include "charthelpers_p.h"
 
 #include "qpielegendmarker.h"
 
@@ -400,6 +401,8 @@ bool QPieSeries::append(QList<QPieSlice *> slices)
             return false;
         if (s->series()) // already added to some series
             return false;
+        if (!isValidValue(s->value()))
+            return false;
     }
 
     foreach (QPieSlice *s, slices) {
@@ -436,12 +439,17 @@ QPieSeries &QPieSeries::operator << (QPieSlice *slice)
 /*!
     Appends a single slice to the series with give \a value and \a label.
     Slice ownership is passed to the series.
+    Returns NULL if value is NaN, Inf or -Inf and no slice is added to the series.
 */
 QPieSlice *QPieSeries::append(QString label, qreal value)
 {
-    QPieSlice *slice = new QPieSlice(label, value);
-    append(slice);
-    return slice;
+    if (isValidValue(value)) {
+        QPieSlice *slice = new QPieSlice(label, value);
+        append(slice);
+        return slice;
+    } else {
+        return 0;
+    }
 }
 
 /*!
@@ -461,6 +469,9 @@ bool QPieSeries::insert(int index, QPieSlice *slice)
         return false;
 
     if (slice->series()) // already added to some series
+        return false;
+
+    if (!isValidValue(slice->value()))
         return false;
 
     slice->setParent(this);

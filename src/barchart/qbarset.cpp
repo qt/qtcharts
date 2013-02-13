@@ -555,14 +555,18 @@ QBarSetPrivate::~QBarSetPrivate()
 
 void QBarSetPrivate::append(QPointF value)
 {
-    m_values.append(value);
-    emit restructuredBars();
+    if (isValidValue(value)) {
+        m_values.append(value);
+        emit restructuredBars();
+    }
 }
 
 void QBarSetPrivate::append(QList<QPointF> values)
 {
-    for (int i = 0; i < values.count(); i++)
-        m_values.append(values.at(i));
+    for (int i = 0; i < values.count(); i++) {
+        if (isValidValue(values.at(i)))
+            m_values.append(values.at(i));
+    }
     emit restructuredBars();
 }
 
@@ -570,8 +574,10 @@ void QBarSetPrivate::append(QList<qreal> values)
 {
     int index = m_values.count();
     for (int i = 0; i < values.count(); i++) {
-        m_values.append(QPointF(index, values.at(i)));
-        index++;
+        if (isValidValue(values.at(i))) {
+            m_values.append(QPointF(index, values.at(i)));
+            index++;
+        }
     }
     emit restructuredBars();
 }

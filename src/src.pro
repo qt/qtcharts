@@ -54,7 +54,8 @@ PRIVATE_HEADERS += \
     $$PWD/scroller_p.h \
     $$PWD/qabstractseries_p.h \
     $$PWD/chartlayout_p.h \
-    $$PWD/charttitle_p.h
+    $$PWD/charttitle_p.h \
+    $$PWD/charthelpers_p.h
 PUBLIC_HEADERS += \
     $$PWD/qchart.h \
     $$PWD/qchartglobal.h \

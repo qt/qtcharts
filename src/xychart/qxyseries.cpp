@@ -24,6 +24,7 @@
 #include "qvalueaxis.h"
 #include "xychart_p.h"
 #include "qxylegendmarker.h"
+#include "charthelpers_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -243,8 +244,11 @@ void QXYSeries::append(qreal x, qreal y)
 void QXYSeries::append(const QPointF &point)
 {
     Q_D(QXYSeries);
-    d->m_points << point;
-    emit pointAdded(d->m_points.count() - 1);
+
+    if (isValidValue(point)) {
+        d->m_points << point;
+        emit pointAdded(d->m_points.count() - 1);
+    }
 }
 
 /*!
@@ -276,8 +280,10 @@ void QXYSeries::replace(const QPointF &oldPoint, const QPointF &newPoint)
     int index = d->m_points.indexOf(oldPoint);
     if (index == -1)
         return;
-    d->m_points[index] = newPoint;
-    emit pointReplaced(index);
+    if (isValidValue(newPoint)) {
+        d->m_points[index] = newPoint;
+        emit pointReplaced(index);
+    }
 }
 
 /*!
@@ -322,8 +328,10 @@ void QXYSeries::remove(const QPointF &point)
 void QXYSeries::insert(int index, const QPointF &point)
 {
     Q_D(QXYSeries);
-    d->m_points.insert(index, point);
-    emit pointAdded(index);
+    if (isValidValue(point)) {
+        d->m_points.insert(index, point);
+        emit pointAdded(index);
+    }
 }
 
 /*!
