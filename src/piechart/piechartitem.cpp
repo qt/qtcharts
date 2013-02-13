@@ -58,6 +58,14 @@ PieChartItem::PieChartItem(QPieSeries *series, QGraphicsItem* item)
 PieChartItem::~PieChartItem()
 {
     // slices deleted automatically through QGraphicsItem
+    if (m_series) {
+        m_series->disconnect(this);
+        QPieSeriesPrivate::fromSeries(m_series)->disconnect(this);
+    }
+    foreach (QPieSlice *slice, m_sliceItems.keys()) {
+        slice->disconnect(this);
+        QPieSlicePrivate::fromSlice(slice)->disconnect(this);
+    }
 }
 
 void PieChartItem::setAnimation(PieAnimation *animation)
