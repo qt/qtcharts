@@ -25,7 +25,6 @@
 #include <QPen>
 #include <QBrush>
 #include <QFont>
-#include "charthelpers_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QBarSetPrivate;

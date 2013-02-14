@@ -20,6 +20,7 @@
 
 #include "qbarset.h"
 #include "qbarset_p.h"
+#include "charthelpers_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
