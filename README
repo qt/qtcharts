@@ -1,5 +1,5 @@
 --------------------------------
-Commercial Charts Add-on 1.2.0
+Commercial Charts Add-on 1.2.1
 --------------------------------
 
 What's in Qt Commercial Charts
@@ -64,40 +64,19 @@ Documentation can be found from doc/html directory. The documentation
 can also be generated with:
     make docs
 
-Main Changes between 1.1.0 and 1.2.0
+Main Changes between 1.2.0 and 1.2.1
 ===================================
-- Multiple axis support and possibility to define the location of the Axis on chart
-- New axis type: QLogValueAxis for creating Logarithmic Axes
-- Axis titles added
-- Axis management improvements
-    - QChart::addAxis
-    - QAbstractSeries::attachAxis
-- Legend marker API added
--
-- Hovered signal added to XYSeries (Line, Spline, Area and Scatter)
-- Mapping between chart coordinates and pixel coordinates added
-    - QChart::mapToValue
-    - QChart::mapToPosition
-- Several new examples and demos:
-  - Legend Markers
-  - Log Value Axis
-  - Multiaxis
-  - Audio - Visualizes mic input
-  - Callout - Example how to add additional information on top of chart
-  - QML Custom Legend - Example how to build your custom legend in QML
-- ChartView margins can be configured via Margins property
-- QML API version number changed to 1.2
-- Layout management has been improved
-- Qt 5 Compatibility tested with Qt 5.0.0RC2
+
+- Commercial Charts documentation also as *.qch file
 
 Bug Fixes
 ==========
-- Fixed: Axis label format errors with several formatters
-- Fixed: QLegend update issues
-- Fixed: XYModelMapper incompatibility with QDate and QDateTime data
-- Fixed: The declaration order of QML CategoryRange objects should not affect CategoryAxis
-- Fixed: Changing axis tick count does not trigger repaint
-- Fixed: Charts layout is not calculated correctly after the change in the text of legend marker
+- Fixed: Crash with NaN, inf, -inf values (values are ignored)
+- Fixed: Axis label truncated with multiple axis
+- Fixed: Using setLineVisible(false) on a QBarCategoryAxis gives blurry text
+- Fixed: Set the range to min and max for default axes from previously added series
+- Fixed: Axes use incorrect bounding rectangle to calculate sizeHint when labels are in non-default angle
+- Fixes: Axis titles can slightly overlap with axis labels and axis lines
 
 Known Issues
 ============
