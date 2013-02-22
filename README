@@ -76,7 +76,8 @@ Bug Fixes
 - Fixed: Using setLineVisible(false) on a QBarCategoryAxis gives blurry text
 - Fixed: Set the range to min and max for default axes from previously added series
 - Fixed: Axes use incorrect bounding rectangle to calculate sizeHint when labels are in non-default angle
-- Fixes: Axis titles can slightly overlap with axis labels and axis lines
+- Fixed: Axis titles can slightly overlap with axis labels and axis lines
+- Fixed: Charts crashes when changing the values to empty model with logarithmic axis
 
 Known Issues
 ============

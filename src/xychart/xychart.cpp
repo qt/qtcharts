@@ -84,16 +84,15 @@ void XYChart::handlePointAdded(int index)
 
     QVector<QPointF> points;
 
-    if (m_dirty) {
+    if (m_dirty || m_points.isEmpty()) {
         points = domain()->calculateGeometryPoints(m_series->points());
     } else {
         points = m_points;
         QPointF point = domain()->calculateGeometryPoint(m_series->points()[index], m_validData);
-        if (!m_validData) {
+        if (!m_validData)
             m_points.clear();
-            return;
-        }
-        points.insert(index, point);
+        else
+            points.insert(index, point);
     }
 
     updateChart(m_points, points, index);
@@ -106,7 +105,7 @@ void XYChart::handlePointRemoved(int index)
 
     QVector<QPointF> points;
 
-    if (m_dirty) {
+    if (m_dirty || m_points.isEmpty()) {
         points = domain()->calculateGeometryPoints(m_series->points());
     } else {
         points = m_points;
@@ -123,16 +122,15 @@ void XYChart::handlePointReplaced(int index)
 
     QVector<QPointF> points;
 
-    if (m_dirty) {
+    if (m_dirty || m_points.isEmpty()) {
         points = domain()->calculateGeometryPoints(m_series->points());
     } else {
         QPointF point = domain()->calculateGeometryPoint(m_series->points()[index], m_validData);
-        if (!m_validData) {
+        if (!m_validData)
             m_points.clear();
-            return;
-        }
         points = m_points;
-        points.replace(index, point);
+        if (m_validData)
+            points.replace(index, point);
     }
 
     updateChart(m_points, points, index);
