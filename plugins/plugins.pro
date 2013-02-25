@@ -10,7 +10,7 @@ contains(QT_VERSION, ^4\\.[0-7]\\.[0-3]\\s*$) | contains(QT_VERSION, ^4\\.[0-6]\
     SUBDIRS += declarative
 }
 
-!linux-arm*: {
+!linux-arm*:!qnx:!vxworks:!wince*: {
     SUBDIRS += \
             designer
 }
