@@ -116,15 +116,15 @@ void QBarLegendMarkerPrivate::updated()
     bool brushChanged = false;
     bool penChanged = false;
 
-    if (m_item->pen() != m_barset->pen()) {
+    if (!m_customPen && (m_item->pen() != m_barset->pen())) {
         m_item->setPen(m_barset->pen());
         penChanged = true;
     }
-    if (m_item->brush() != m_barset->brush()) {
+    if (!m_customBrush && (m_item->brush() != m_barset->brush())) {
         m_item->setBrush(m_barset->brush());
         brushChanged = true;
     }
-    if (m_item->label() != m_barset->label()) {
+    if (!m_customLabel && (m_item->label() != m_barset->label())) {
         m_item->setLabel(m_barset->label());
         labelChanged = true;
     }

@@ -73,6 +73,9 @@ public Q_SLOTS:
 protected:
     LegendMarkerItem *m_item;
     QLegend *m_legend;
+    bool m_customLabel;
+    bool m_customBrush;
+    bool m_customPen;
 
 private:
     QLegendMarker *q_ptr;

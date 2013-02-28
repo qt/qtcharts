@@ -115,15 +115,15 @@ void QPieLegendMarkerPrivate::updated()
     bool brushChanged = false;
     bool penChanged = false;
 
-    if (m_item->pen() != m_slice->pen()) {
+    if (!m_customPen && (m_item->pen() != m_slice->pen())) {
         m_item->setPen(m_slice->pen());
         penChanged = true;
     }
-    if (m_item->brush() != m_slice->brush()) {
+    if (!m_customBrush && (m_item->brush() != m_slice->brush())) {
         m_item->setBrush(m_slice->brush());
         brushChanged = true;
     }
-    if (m_item->label() != m_slice->label()) {
+    if (!m_customLabel && (m_item->label() != m_slice->label())) {
         m_item->setLabel(m_slice->label());
         labelChanged = true;
     }

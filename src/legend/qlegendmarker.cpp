@@ -168,7 +168,12 @@ QString QLegendMarker::label() const
 */
 void QLegendMarker::setLabel(const QString &label)
 {
-    d_ptr->m_item->setLabel(label);
+    if (label.isEmpty()) {
+        d_ptr->m_customLabel = false;
+    } else {
+        d_ptr->m_customLabel = true;
+        d_ptr->m_item->setLabel(label);
+    }
 }
 /*!
   Returns the brush which is used to draw label.
@@ -215,7 +220,12 @@ QPen QLegendMarker::pen() const
 */
 void QLegendMarker::setPen(const QPen &pen)
 {
-    d_ptr->m_item->setPen(pen);
+    if (pen == QPen(Qt::NoPen)) {
+        d_ptr->m_customPen = false;
+    } else {
+        d_ptr->m_customPen = true;
+        d_ptr->m_item->setPen(pen);
+    }
 }
 
 /*!
@@ -231,7 +241,12 @@ QBrush QLegendMarker::brush() const
 */
 void QLegendMarker::setBrush(const QBrush &brush)
 {
-    d_ptr->m_item->setBrush(brush);
+    if (brush == QBrush(Qt::NoBrush)) {
+        d_ptr->m_customBrush = false;
+    } else {
+        d_ptr->m_customBrush = true;
+        d_ptr->m_item->setBrush(brush);
+    }
 }
 
 /*!
@@ -253,6 +268,9 @@ void QLegendMarker::setVisible(bool visible)
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 QLegendMarkerPrivate::QLegendMarkerPrivate(QLegendMarker *q, QLegend *legend) :
     m_legend(legend),
+    m_customLabel(false),
+    m_customBrush(false),
+    m_customPen(false),
     q_ptr(q)
 {
     m_item = new LegendMarkerItem(this);

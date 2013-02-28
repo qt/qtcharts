@@ -103,18 +103,18 @@ void QXYLegendMarkerPrivate::updated()
     bool labelChanged = false;
     bool brushChanged = false;
 
-    if (m_item->label() != m_series->name()) {
+    if (!m_customLabel && (m_item->label() != m_series->name())) {
         m_item->setLabel(m_series->name());
         labelChanged = true;
     }
 
     if (m_series->type()== QAbstractSeries::SeriesTypeScatter)  {
-        if (m_item->brush() != m_series->brush()) {
+        if (!m_customBrush && (m_item->brush() != m_series->brush())) {
             m_item->setBrush(m_series->brush());
             brushChanged = true;
         }
     } else {
-        if (m_item->brush().color() != m_series->pen().color()) {
+        if (!m_customBrush && (m_item->brush().color() != m_series->pen().color())) {
             m_item->setBrush(QBrush(m_series->pen().color()));
             brushChanged = true;
         }
