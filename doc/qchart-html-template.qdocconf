@@ -31,7 +31,7 @@ HTML.footer = \
     "</div> \n" \
     "<div class=\"footer\">\n" \
     "  <p>\n" \
-    "     <acronym title=\"Copyright\">&copy;</acronym> 2012 Digia ." \
+    "     <acronym title=\"Copyright\">&copy;</acronym> 2013 Digia ." \
     "     Qt and Qt logos are trademarks of of Digia Corporation \n" \
     "     in Finland and/or other countries worldwide.</p>\n" \
     "  <p>\n" \
