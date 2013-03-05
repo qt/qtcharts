@@ -78,6 +78,7 @@ Bug Fixes
 - Fixed: Axes use incorrect bounding rectangle to calculate sizeHint when labels are in non-default angle
 - Fixed: Axis titles can slightly overlap with axis labels and axis lines
 - Fixed: Charts crashes when changing the values to empty model with logarithmic axis
+- Fixed: The legend marker for main series in breakdown series piechart couldnt be updated with custom value
 
 Known Issues
 ============
