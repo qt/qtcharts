@@ -54,10 +54,10 @@ QVector<qreal> ChartCategoryAxisY::calculateLayout() const
         qreal scale = gridRect.height() / range;
         for (int i = 0; i < tickCount; ++i) {
             if (i < tickCount - 1) {
-                int y = -(m_axis->startValue(m_axis->categoriesLabels().at(i)) - min()) * scale + gridRect.bottom();
+                qreal y = -(m_axis->startValue(m_axis->categoriesLabels().at(i)) - min()) * scale + gridRect.bottom();
                 points[i] = y;
             } else {
-                int y = -(m_axis->endValue(m_axis->categoriesLabels().at(i - 1)) - min())  * scale + gridRect.bottom();
+                qreal y = -(m_axis->endValue(m_axis->categoriesLabels().at(i - 1)) - min())  * scale + gridRect.bottom();
                 points[i] = y;
             }
         }

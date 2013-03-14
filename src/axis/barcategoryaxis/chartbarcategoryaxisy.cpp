@@ -45,21 +45,22 @@ QVector<qreal> ChartBarCategoryAxisY::calculateLayout() const
     QVector<qreal> points;
     const QRectF& gridRect = gridGeometry();
     qreal range = max() - min();
-    const qreal delta = gridRect.height()/range;
+    const qreal delta = gridRect.height() / range;
 
-    if(delta<2) return points;
+    if (delta < 2)
+        return points;
 
-    qreal offset = - min() - 0.5;
-    offset = int(offset * delta)%int(delta);
+    qreal adjustedMin = min() + 0.5;
+    qreal offset = (ceil(adjustedMin) - adjustedMin) * delta;
 
     int count = qFloor(range);
-    if(count < 1 ) return points;
+    if (count < 1)
+        return points;
 
-    points.resize(count+2);
+    points.resize(count + 2);
 
-    for (int i = 0; i < count+2; ++i) {
-        points[i] =  gridRect.bottom() - i * delta -offset;
-    }
+    for (int i = 0; i < count + 2; ++i)
+        points[i] =  gridRect.bottom() - (i * delta) - offset;
 
     return points;
 }
