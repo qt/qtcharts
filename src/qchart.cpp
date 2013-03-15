@@ -118,8 +118,6 @@ QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags)
 {
     d_ptr->m_legend = new LegendScroller(this);
     setTheme(QChart::ChartThemeLight);
-    //TODO: what is that ?
-    //connect(d_ptr->m_presenter, SIGNAL(marginsChanged(QRectF)), this, SIGNAL(marginsChanged(QRectF)));
     setLayout(d_ptr->m_presenter->layout());
 }
 
@@ -451,7 +449,7 @@ QRectF QChart::plotArea() const
 
 ///*!
 //    TODO: Dummy.
-//    Adjest the ranges of the axes so that all the data of the specified \a series is visible
+//    Adjust the ranges of the axes so that all the data of the specified \a series is visible
 // */
 //void QChart::adjustViewToSeries(QAbstractSeries* series)
 //{

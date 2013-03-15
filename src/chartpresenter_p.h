@@ -31,7 +31,7 @@
 #define CHARTPRESENTER_H
 
 #include "qchartglobal.h"
-#include "qchart.h" //becouse of QChart::ChartThemeId //TODO
+#include "qchart.h" //because of QChart::ChartThemeId
 #include <QRectF>
 #include <QMargins>
 

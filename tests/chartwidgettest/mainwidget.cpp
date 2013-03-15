@@ -202,7 +202,6 @@ void MainWidget::addSeries()
 
 QList<RealList> MainWidget::generateTestData(int columnCount, int rowCount, QString dataCharacteristics)
 {
-    // TODO: dataCharacteristics
     QList<RealList> testData;
     for (int j(0); j < columnCount; j++) {
         QList <qreal> newColumn;

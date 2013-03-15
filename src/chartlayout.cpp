@@ -216,8 +216,6 @@ QRectF ChartLayout::calculateAxisGeometry(const QRectF &geometry, const QList<Ch
     qreal bottomOffset = 0;
 
     foreach(ChartElement *axisElement , axes) {
-
-        //TODO fixme
         ChartAxis* axis = qobject_cast<ChartAxis*>(axisElement);
 
         if (!axis->isVisible())

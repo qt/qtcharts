@@ -468,7 +468,7 @@ QPen QAbstractAxis::linePen() const
     return d_ptr->m_axisPen;
 }
 
-//TODO: remove me
+//TODO: remove me 2.0
 void QAbstractAxis::setLinePenColor(QColor color)
 {
     QPen p = d_ptr->m_axisPen;
@@ -614,7 +614,7 @@ int QAbstractAxis::labelsAngle() const
 {
     return d_ptr->m_labelsAngle;
 }
-//TODO: remove me
+//TODO: remove me 2.0
 void QAbstractAxis::setLabelsColor(QColor color)
 {
     QBrush b = d_ptr->m_labelsBrush;
@@ -956,7 +956,6 @@ void QAbstractAxisPrivate::initializeTheme(ChartTheme* theme, bool forced)
             if (forced || pen == m_titlePen){
                 q_ptr->setTitlePen(Qt::NoPen);// Noen for performance reasons
             }
-            //TODO: discuss with Tero
             if (forced || font == m_titleFont){
                 QFont font(m_labelsFont);
                 font.setBold(true);

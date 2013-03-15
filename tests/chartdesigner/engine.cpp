@@ -118,7 +118,6 @@ QList<QAbstractSeries*> Engine::addSeries(QAbstractSeries::SeriesType type)
     }
     case QAbstractSeries::SeriesTypeBar:
     {
-        //TODO: fix me
         QBarSeries *bar = new QBarSeries();
         setupBarSeries(bar,keys,minRow,maxRow);
         result << bar;

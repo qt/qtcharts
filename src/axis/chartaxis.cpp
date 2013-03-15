@@ -427,14 +427,10 @@ void ChartAxis::handleRangeChanged(qreal min, qreal max)
 
 QStringList ChartAxis::createValueLabels(qreal min, qreal max, int ticks,const QString& format)
 {
-    //TODO: Q_ASSERT(m_max > m_min);
-    //TODO: Q_ASSERT(ticks > 1);
-
     QStringList labels;
 
-    if(max <= min || ticks < 1){
+    if (max <= min || ticks < 1)
         return labels;
-    }
 
     int n = qMax(int(-qFloor(log10((max - min) / (ticks - 1)))), 0);
     n++;
@@ -517,11 +513,9 @@ QStringList ChartAxis::createLogValueLabels(qreal min, qreal max, qreal base, in
 
 QStringList ChartAxis::createDateTimeLabels(qreal min, qreal max,int ticks,const QString& format)
 {
-    //TODO: Q_ASSERT(m_max > m_min);
-    //TODO: Q_ASSERT(ticks > 1);
     QStringList labels;
 
-    if(max <= min || ticks < 1) {
+    if (max <= min || ticks < 1) {
         return labels;
     }
 

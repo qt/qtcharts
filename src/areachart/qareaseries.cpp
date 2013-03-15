@@ -212,10 +212,8 @@ QAbstractSeries::SeriesType QAreaSeries::type() const
 void QAreaSeries::setUpperSeries(QLineSeries *series)
 {
     Q_D(QAreaSeries);
-    if(d->m_upperSeries!=series){
+    if (d->m_upperSeries != series)
     	d->m_upperSeries = series;
-    	//TODO:
-    }
 }
 
 QLineSeries *QAreaSeries::upperSeries() const

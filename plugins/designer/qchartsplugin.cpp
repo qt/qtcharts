@@ -27,12 +27,10 @@ QTCOMMERCIALCHART_USE_NAMESPACE
 QChartsPlugin::QChartsPlugin(QObject *parent) :
     QObject(parent)
 {
-    // TODO Auto-generated constructor stub
 }
 
 QChartsPlugin::~QChartsPlugin()
 {
-    // TODO Auto-generated destructor stub
 }
 
 QString QChartsPlugin::name() const

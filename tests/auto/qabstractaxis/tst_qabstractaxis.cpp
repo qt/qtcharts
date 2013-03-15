@@ -50,14 +50,12 @@ void tst_QAbstractAxis::cleanup()
 void tst_QAbstractAxis::qabstractaxis()
 {
     QCOMPARE(m_axis->linePen(), QPen());
-    //TODO QCOMPARE(m_axis->axisPenColor(), QColor());
     QCOMPARE(m_axis->gridLinePen(), QPen());
     QCOMPARE(m_axis->isLineVisible(), true);
     QCOMPARE(m_axis->isGridLineVisible(), true);
     QCOMPARE(m_axis->isVisible(), true);
     QCOMPARE(m_axis->labelsAngle(), 0);
     QCOMPARE(m_axis->labelsBrush(), QBrush());
-    //TODO QCOMPARE(m_axis->labelsColor(), QColor());
     QCOMPARE(m_axis->labelsFont(), QFont());
     QCOMPARE(m_axis->labelsPen(), QPen());
     QCOMPARE(m_axis->labelsVisible(), true);
@@ -82,9 +80,7 @@ void tst_QAbstractAxis::qabstractaxis()
     m_axis->setShadesPen(QPen());
     m_axis->setShadesVisible(false);
     m_axis->setVisible(false);
-    //TODO QCOMPARE(m_axis->shadesBorderColor(), QColor());
     //TODO QCOMPARE(m_axis->shadesBrush(), QBrush());
-    //TODO QCOMPARE(m_axis->shadesColor(), QColor());
     QCOMPARE(m_axis->shadesPen(), QPen());
     QCOMPARE(m_axis->shadesVisible(), false);
     m_axis->show();
