@@ -60,7 +60,7 @@ The same as above applies you will just have to add staticlib to the CONFIG:
 
 Documentation
 =============
-Documentation can be found from doc/html directory. The documentation
+Documentation can be found from doc/html and doc/qch directories. The documentation
 can also be generated with:
     make docs
 
