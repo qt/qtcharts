@@ -39,7 +39,6 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-// TODO: check these
 class QAbstractSeries;
 class QAreaSeries;
 class QXYSeries;

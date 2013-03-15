@@ -61,7 +61,7 @@ private:
     int m_tickCount;
     QString m_format;
     bool m_applying;
-    bool m_niceNumbersEnabled; //TODO: this deprecated (2.0)
+    bool m_niceNumbersEnabled;
     Q_DECLARE_PUBLIC(QValueAxis)
 };
 

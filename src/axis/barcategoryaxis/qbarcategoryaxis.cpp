@@ -248,7 +248,6 @@ void QBarCategoryAxis::remove(const QString &category)
                 setRange(d->m_minCategory, d->m_categories.last());
             } else {
                 d->updateCategoryDomain();
-                //TODO:: d->emitUpdated();
             }
         } else {
             setRange(QString::null, QString::null);
@@ -282,7 +281,6 @@ void QBarCategoryAxis::insert(int index, const QString &category)
         setRange(d->m_minCategory, d->m_categories.last());
     } else {
         d->updateCategoryDomain();
-        //TODO:: d->emitUpdated();
     }
 
     emit categoriesChanged();
@@ -306,8 +304,6 @@ void QBarCategoryAxis::replace(const QString &oldCategory, const QString &newCat
             setRange(newCategory, d->m_maxCategory);
         } else if (d->m_maxCategory == oldCategory) {
             setRange(d->m_minCategory, newCategory);
-        } else {
-            //TODO:: d->emitUpdated();
         }
         emit categoriesChanged();
         emit countChanged();

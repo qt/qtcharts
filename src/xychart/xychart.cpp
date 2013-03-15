@@ -30,8 +30,6 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-//TODO: optimize : remove points which are not visible
-
 XYChart::XYChart(QXYSeries *series,QGraphicsItem* item):
       ChartItem(series->d_func(),item),
       m_series(series),
