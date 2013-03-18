@@ -9,7 +9,7 @@
         \row
             \o  \br
                 We begin with a chart that has a line series and a scatter series with random
-                data. Both series' use the same axes.
+                data. Both series use the same axes.
                 \br
                 \br
                 \snippet ../demos/qmlaxes/qml/qmlaxes/View1.qml 1

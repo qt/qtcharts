@@ -25,7 +25,7 @@
     
     \snippet ../examples/multiaxis/main.cpp 4
 
-    Create a QChartView object with QChart as a parameter. Enanle Antialiasing to have the rendered splines look nicer. 
+    Create a QChartView object with QChart as a parameter. Enable Antialiasing to have the rendered splines look nicer.
     
     \snippet ../examples/multiaxis/main.cpp 5
 

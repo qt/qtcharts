@@ -57,7 +57,7 @@
 
     Add an import line to your *.qml file:
     \code
-    import QtCommercial.Chart 1.1
+    import QtCommercial.Chart 1.2
     \endcode
 
     \raw HTML

@@ -13,7 +13,7 @@
 
     \snippet ../examples/legendmarkers/mainwidget.cpp 1
 
-    Here we connect the markers in legend to our handler. To avoid conncecting same marker more than once, we first disconnect it.
+    Here we connect the markers in legend to our handler. To avoid connecting same marker more than once, we first disconnect it.
 
     \snippet ../examples/legendmarkers/mainwidget.cpp 2
 
