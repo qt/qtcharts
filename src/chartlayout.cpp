@@ -109,6 +109,7 @@ QRectF ChartLayout::calculateAxisGeometry(const QRectF &geometry, const QList<Ch
     QSizeF minBottom(0,0);
     QSizeF top(0,0);
     QSizeF minTop(0,0);
+    QSizeF labelExtents(0,0);
     int leftCount = 0;
     int rightCount = 0;
     int topCount = 0;
@@ -118,7 +119,6 @@ QRectF ChartLayout::calculateAxisGeometry(const QRectF &geometry, const QList<Ch
 
         if (!axis->isVisible())
             continue;
-
 
         QSizeF size = axis->effectiveSizeHint(Qt::PreferredSize);
         //this is used to get single thick font size
@@ -130,6 +130,7 @@ QRectF ChartLayout::calculateAxisGeometry(const QRectF &geometry, const QList<Ch
            left.setHeight(qMax(left.height(),size.height()));
            minLeft.setWidth(minLeft.width()+minSize.width());
            minLeft.setHeight(qMax(minLeft.height(),minSize.height()));
+           labelExtents.setHeight(qMax(size.height(), labelExtents.height()));
            leftCount++;
            break;
         case Qt::AlignRight:
@@ -137,6 +138,7 @@ QRectF ChartLayout::calculateAxisGeometry(const QRectF &geometry, const QList<Ch
             right.setHeight(qMax(right.height(),size.height()));
             minRight.setWidth(minRight.width()+minSize.width());
             minRight.setHeight(qMax(minRight.height(),minSize.height()));
+            labelExtents.setHeight(qMax(size.height(), labelExtents.height()));
             rightCount++;
             break;
         case Qt::AlignTop:
@@ -144,6 +146,7 @@ QRectF ChartLayout::calculateAxisGeometry(const QRectF &geometry, const QList<Ch
             top.setHeight(top.height()+size.height());
             minTop.setWidth(qMax(minTop.width(),minSize.width()));
             minTop.setHeight(minTop.height()+minSize.height());
+            labelExtents.setWidth(qMax(size.width(), labelExtents.width()));
             topCount++;
             break;
         case Qt::AlignBottom:
@@ -151,6 +154,7 @@ QRectF ChartLayout::calculateAxisGeometry(const QRectF &geometry, const QList<Ch
             bottom.setHeight(bottom.height() + size.height());
             minBottom.setWidth(qMax(minBottom.width(),minSize.width()));
             minBottom.setHeight(minBottom.height() + minSize.height());
+            labelExtents.setWidth(qMax(size.width(), labelExtents.width()));
             bottomCount++;
             break;
         default:
@@ -207,6 +211,12 @@ QRectF ChartLayout::calculateAxisGeometry(const QRectF &geometry, const QList<Ch
 
     qreal minHeight = qMax(minLeft.height(),minRight.height()) + 1;
     qreal minWidth = qMax(minTop.width(),minBottom.width()) + 1;
+
+    // Ensure that there is enough space for first and last tick labels.
+    left.setWidth(qMax(labelExtents.width(), left.width()));
+    right.setWidth(qMax(labelExtents.width(), right.width()));
+    top.setHeight(qMax(labelExtents.height(), top.height()));
+    bottom.setHeight(qMax(labelExtents.height(), bottom.height()));
 
     QRectF chartRect = geometry.adjusted(qMax(left.width(),minWidth/2), qMax(top.height(), minHeight/2),-qMax(right.width(),minWidth/2),-qMax(bottom.height(),minHeight/2));
 

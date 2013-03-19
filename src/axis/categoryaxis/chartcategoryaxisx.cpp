@@ -84,13 +84,12 @@ QSizeF ChartCategoryAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint
     QSizeF sh;
     QSizeF base = HorizontalAxis::sizeHint(which, constraint);
     QStringList ticksList = m_axis->categoriesLabels();
-    qreal width = 0;
+    qreal width = 0; // Width is irrelevant for X axes with interval labels
     qreal height = 0;
 
     switch (which) {
     case Qt::MinimumSize: {
         QRectF boundingRect = labelBoundingRect(fn, "...");
-        width = qMax(boundingRect.width(), base.width());
         height = boundingRect.height() + labelPadding();
         height += base.height();
         sh = QSizeF(width, height);
@@ -101,11 +100,9 @@ QSizeF ChartCategoryAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint
         foreach (const QString& s, ticksList) {
             QRect rect = labelBoundingRect(fn, s);
             labelHeight = qMax(rect.height(), labelHeight);
-            width += rect.width();
         }
         height = labelHeight + labelPadding();
         height += base.height();
-        width = qMax(width, base.width());
         sh = QSizeF(width, height);
         break;
     }

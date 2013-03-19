@@ -154,8 +154,8 @@ void VerticalAxis::updateGeometry()
 
         //label overlap detection
         if(labelItem->pos().y() + boundingRect.height() > height ||
-            labelItem->pos().y() + boundingRect.height()/2 > gridRect.bottom() ||
-            labelItem->pos().y() + boundingRect.height()/2 < gridRect.top()) {
+            labelItem->pos().y() + boundingRect.height()/2 > axisRect.bottom() ||
+            labelItem->pos().y() + boundingRect.height()/2 < axisRect.top()) {
             labelItem->setVisible(false);
         }
         else {

@@ -90,17 +90,18 @@ QSizeF ChartDateTimeAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint
 
     QSizeF base = HorizontalAxis::sizeHint(which, constraint);
     QStringList ticksList = createDateTimeLabels(min(),max(),m_axis->tickCount(),m_axis->format());
+    // Width of horizontal axis sizeHint indicates the maximum distance labels can extend past
+    // first and last ticks. Base width is irrelevant.
     qreal width = 0;
     qreal height = 0;
 
-    if(ticksList.empty()){
+    if (ticksList.empty())
         return sh;
-    }
 
     switch (which) {
     case Qt::MinimumSize:{
         QRectF boundingRect = labelBoundingRect(fn, "...");
-        width = qMax(boundingRect.width(), base.width());
+        width = boundingRect.width() / 2.0;
         height = boundingRect.height() + labelPadding();
         height += base.height();
         sh = QSizeF(width, height);
@@ -108,14 +109,17 @@ QSizeF ChartDateTimeAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint
     }
     case Qt::PreferredSize: {
         int labelHeight = 0;
+        int firstWidth = -1;
         foreach (const QString& s, ticksList) {
             QRect rect = labelBoundingRect(fn, s);
             labelHeight = qMax(rect.height(), labelHeight);
-            width += rect.width();
+            width = rect.width();
+            if (firstWidth < 0)
+                firstWidth = width;
         }
         height = labelHeight + labelPadding();
         height += base.height();
-        width = qMax(width, base.width());
+        width = qMax(width, qreal(firstWidth)) / 2.0;
         sh = QSizeF(width, height);
         break;
     }

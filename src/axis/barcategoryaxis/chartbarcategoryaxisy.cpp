@@ -107,8 +107,8 @@ QSizeF ChartBarCategoryAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constra
     QSizeF sh;
     QSizeF base = VerticalAxis::sizeHint(which, constraint);
     QStringList ticksList = m_categoriesAxis->categories();
-    qreal width=0;
-    qreal height=0;
+    qreal width = 0;
+    qreal height = 0; // Height is irrelevant for Y axes with interval labels
 
     switch (which) {
         case Qt::MinimumSize: {
@@ -117,7 +117,6 @@ QSizeF ChartBarCategoryAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constra
             width += base.width();
             if (base.width() > 0)
                 width += labelPadding();
-            height = qMax(boundingRect.height(), base.height());
             sh = QSizeF(width, height);
             break;
         }
@@ -126,13 +125,11 @@ QSizeF ChartBarCategoryAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constra
             foreach (const QString& s, ticksList) {
                 QRect rect = labelBoundingRect(fn, s);
                 labelWidth = qMax(rect.width(), labelWidth);
-                height += rect.height();
             }
             width = labelWidth + labelPadding() + 1;
             width += base.width();
             if (base.width() > 0)
                 width += labelPadding();
-            height = qMax(height, base.height());
             sh = QSizeF(width, height);
             break;
         }

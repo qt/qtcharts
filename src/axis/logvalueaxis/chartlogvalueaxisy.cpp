@@ -100,6 +100,8 @@ QSizeF ChartLogValueAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint
     else
         ticksList.append(QString(" "));
     qreal width = 0;
+    // Height of vertical axis sizeHint indicates the maximum distance labels can extend past
+    // first and last ticks. Base height is irrelevant.
     qreal height = 0;
 
     switch (which) {
@@ -107,20 +109,23 @@ QSizeF ChartLogValueAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint
         QRectF boundingRect = labelBoundingRect(fn, "...");
         width = boundingRect.width() + labelPadding();
         width += base.width();
-        height = qMax(boundingRect.height(), base.height());
+        height = boundingRect.height() / 2.0;
         sh = QSizeF(width, height);
         break;
     }
     case Qt::PreferredSize: {
         int labelWidth = 0;
+        int firstHeight = -1;
         foreach (const QString& s, ticksList) {
             QRect rect = labelBoundingRect(fn, s);
             labelWidth = qMax(rect.width(), labelWidth);
-            height += rect.height();
+            height = rect.height();
+            if (firstHeight < 0)
+                firstHeight = height;
         }
         width = labelWidth + labelPadding() + 2; //two pixels of tolerance
         width += base.width();
-        height = qMax(height, base.height());
+        height = qMax(height, qreal(firstHeight)) / 2.0;
         sh = QSizeF(width, height);
         break;
     }
