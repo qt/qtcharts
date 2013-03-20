@@ -136,14 +136,23 @@ void HorizontalAxis::updateGeometry()
             tickItem->setLine(layout[i], axisRect.top(), layout[i], axisRect.top() + labelPadding());
         }
 
-        //label in beetwen
-        if(intervalAxis()&& i+1!=layout.size()) {
-            const qreal delta = (layout[i+1] - layout[i])/2;
-            labelItem->setPos(layout[i] + delta - center.x(), labelItem->pos().y());
+        //label in between
+        bool forceHide = false;
+        if (intervalAxis() && (i + 1) != layout.size()) {
+            qreal leftBound = qMax(layout[i], gridRect.left());
+            qreal rightBound = qMin(layout[i + 1], gridRect.right());
+            const qreal delta = rightBound - leftBound;
+            // Hide label in case visible part of the category at the grid edge is too narrow
+            if (delta < boundingRect.width()
+                && (leftBound == gridRect.left() || rightBound == gridRect.right())) {
+                forceHide = true;
+            } else {
+                labelItem->setPos(leftBound + (delta / 2.0) - center.x(), labelItem->pos().y());
+            }
         }
 
         //label overlap detection - compensate one pixel for rounding errors
-        if(labelItem->pos().x() < width ||
+        if (labelItem->pos().x() < width || forceHide ||
             labelItem->pos().x() < (axisRect.left() - 1.0) ||
             (labelItem->pos().x() + boundingRect.width() - 1.0) > axisRect.right()){
             labelItem->setVisible(false);
