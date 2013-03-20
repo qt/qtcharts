@@ -152,10 +152,10 @@ void VerticalAxis::updateGeometry()
             labelItem->setPos(labelItem->pos().x() , layout[i] + delta - center.y());
         }
 
-        //label overlap detection
-        if(labelItem->pos().y() + boundingRect.height() > height ||
-            labelItem->pos().y() + boundingRect.height()/2 > axisRect.bottom() ||
-            labelItem->pos().y() + boundingRect.height()/2 < axisRect.top()) {
+        //label overlap detection - compensate one pixel for rounding errors
+        if (labelItem->pos().y() + boundingRect.height() > height ||
+            (labelItem->pos().y() + (boundingRect.height() / 2.0) - 1.0) > axisRect.bottom() ||
+            labelItem->pos().y() + (boundingRect.height() / 2.0) < (axisRect.top() - 1.0)) {
             labelItem->setVisible(false);
         }
         else {

@@ -142,10 +142,10 @@ void HorizontalAxis::updateGeometry()
             labelItem->setPos(layout[i] + delta - center.x(), labelItem->pos().y());
         }
 
-        //label overlap detection
+        //label overlap detection - compensate one pixel for rounding errors
         if(labelItem->pos().x() < width ||
-            labelItem->pos().x() < axisRect.left()  ||
-            labelItem->pos().x() + boundingRect.width() -1 > axisRect.right()){
+            labelItem->pos().x() < (axisRect.left() - 1.0) ||
+            (labelItem->pos().x() + boundingRect.width() - 1.0) > axisRect.right()){
             labelItem->setVisible(false);
         } else {
             labelItem->setVisible(true);
