@@ -62,6 +62,7 @@ protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
+    void suppressPoints() { m_pointsVisible = false; }
 
 private:
     QLineSeries *m_series;

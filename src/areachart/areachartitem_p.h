@@ -94,6 +94,9 @@ public:
 
     void updateGeometry()
     {
+        // Turn off points drawing from component line chart item, as that
+        // messes up the fill for area series.
+        suppressPoints();
         LineChartItem::updateGeometry();
         m_item->updatePath();
     }
