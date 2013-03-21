@@ -192,6 +192,11 @@ void PieSliceItem::updateGeometry()
         m_boundingRect = m_slicePath.boundingRect().united(m_labelArmPath.boundingRect()).united(m_labelTextRect);
     else
         m_boundingRect = m_slicePath.boundingRect();
+
+    // Inflate bounding rect by 2/3 pen width to make sure it encompasses whole slice also for thick pens
+    // and miter joins.
+    int penWidth = (m_data.m_slicePen.width() * 2) / 3;
+    m_boundingRect = m_boundingRect.adjusted(-penWidth, -penWidth, penWidth, penWidth);
 }
 
 QPointF PieSliceItem::sliceCenter(QPointF point, qreal radius, QPieSlice *slice)
