@@ -53,10 +53,9 @@ QVector<qreal> ChartValueAxisX::calculateLayout() const
     points.resize(tickCount);
 
     const QRectF &gridRect = gridGeometry();
-    const qreal deltaX = gridRect.width() / (tickCount - 1);
-    for (int i = 0; i < tickCount; ++i) {
-        points[i] = i * deltaX + gridRect.left();
-    }
+    const qreal deltaX = gridRect.width() / (qreal(tickCount) - 1.0);
+    for (int i = 0; i < tickCount; ++i)
+        points[i] = qreal(i) * deltaX + gridRect.left();
     return points;
 }
 

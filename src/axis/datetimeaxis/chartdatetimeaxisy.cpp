@@ -50,11 +50,9 @@ QVector<qreal> ChartDateTimeAxisY::calculateLayout() const
     QVector<qreal> points;
     points.resize(tickCount);
     const QRectF &gridRect = gridGeometry();
-    const qreal deltaY = gridRect.height() / (tickCount - 1);
-    for (int i = 0; i < tickCount; ++i) {
-        int y = i * -deltaY + gridRect.bottom();
-        points[i] = y;
-    }
+    const qreal deltaY = gridRect.height() / (qreal(tickCount) - 1.0);
+    for (int i = 0; i < tickCount; ++i)
+        points[i] =  qreal(i) * -deltaY + gridRect.bottom();
 
     return points;
 }

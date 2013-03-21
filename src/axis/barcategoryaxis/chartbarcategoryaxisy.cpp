@@ -60,7 +60,7 @@ QVector<qreal> ChartBarCategoryAxisY::calculateLayout() const
     points.resize(count + 2);
 
     for (int i = 0; i < count + 2; ++i)
-        points[i] =  gridRect.bottom() - (i * delta) - offset;
+        points[i] =  gridRect.bottom() - (qreal(i) * delta) - offset;
 
     return points;
 }
