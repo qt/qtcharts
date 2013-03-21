@@ -60,6 +60,7 @@ void LineChartItem::updateGeometry()
     if (m_points.size() == 0) {
         prepareGeometryChange();
         m_path = QPainterPath();
+        m_linePath = QPainterPath();
         m_rect = QRect();
         return;
     }
@@ -70,6 +71,7 @@ void LineChartItem::updateGeometry()
 
         int size = m_linePen.width();
         linePath.addEllipse(m_points.at(0), size, size);
+        linePath.moveTo(m_points.at(0));
         for (int i = 1; i < m_points.size(); i++) {
             linePath.lineTo(m_points.at(i));
             linePath.addEllipse(m_points.at(i), size, size);
@@ -100,10 +102,17 @@ void LineChartItem::updateGeometry()
 
 void LineChartItem::handleUpdated()
 {
+    // If points visiblity has changed, a geometry update is needed.
+    // Also, if pen changes when points are visible, geometry update is needed.
+    bool doGeometryUpdate =
+        (m_pointsVisible != m_series->pointsVisible())
+        || (m_series->pointsVisible() && (m_linePen != m_series->pen()));
     setVisible(m_series->isVisible());
     setOpacity(m_series->opacity());
     m_pointsVisible = m_series->pointsVisible();
     m_linePen = m_series->pen();
+    if (doGeometryUpdate)
+        updateGeometry();
     update();
 }
 
