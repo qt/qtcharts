@@ -175,7 +175,13 @@ void VerticalAxis::updateGeometry()
         //shades
         if ((i + 1) % 2 && i > 1) {
             QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem *>(shades.at(i / 2 - 1));
-            rectItem->setRect(gridRect.left(), layout[i], gridRect.width(), layout[i - 1] - layout[i]);
+            qreal lowerBound = qMin(layout[i - 1], gridRect.bottom());
+            qreal upperBound = qMax(layout[i], gridRect.top());
+            rectItem->setRect(gridRect.left(), upperBound, gridRect.width(), lowerBound - upperBound);
+            if (rectItem->rect().height() <= 0.0)
+                rectItem->setVisible(false);
+            else
+                rectItem->setVisible(true);
         }
 
         // check if the grid line and the axis tick should be shown
