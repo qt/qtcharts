@@ -16,7 +16,7 @@ win32-msvc*: {
 #    QMAKE_CXXFLAGS += -Werror
 }
 
-unix:{
+unix:!qnx {
   QMAKE_CXXFLAGS += -fvisibility=hidden -fvisibility-inlines-hidden
 }
 
@@ -92,7 +92,7 @@ RCC_DIR = $$CHART_BUILD_DIR/lib
 !exists($$CHART_BUILD_PUBLIC_HEADER_DIR/QChartGlobal)
 {
     system($$QMAKE_MKDIR $$CHART_BUILD_PUBLIC_HEADER_DIR)
-     win32:{
+     contains(QMAKE_HOST.os, Windows) {
         command = "echo $${LITERAL_HASH}include \"qchartglobal.h\" > $$CHART_BUILD_PUBLIC_HEADER_DIR/QChartGlobal"
     }else{
         command = "echo \"$${LITERAL_HASH}include \\\"qchartglobal.h\\\"\" > $$CHART_BUILD_PUBLIC_HEADER_DIR/QChartGlobal"
@@ -112,7 +112,7 @@ for(file, PUBLIC_HEADERS) {
     class = $$split(class,' ')
     class = $$replace(class,' ','')
     class = $$member(class,0)
-    win32:{
+    contains(QMAKE_HOST.os, Windows) {
         command = "echo $${LITERAL_HASH}include \"$$name\" > $$CHART_BUILD_PUBLIC_HEADER_DIR/$$class"
     }else{
         command = "echo \"$${LITERAL_HASH}include \\\"$$name\\\"\" > $$CHART_BUILD_PUBLIC_HEADER_DIR/$$class"

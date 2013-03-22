@@ -21,9 +21,9 @@ INSTALLS += feature
 CHARTS_VERSION = 1.2.1
 CHARTS_VERSION_TAG = 121
 
-win32: {
+contains(QMAKE_HOST.os, Windows) {
     QDOC_CONF = $$CHART_BUILD_DOC_DIR\\qcharts.qdocconf
-    win32-g++: {
+    win32-g++|qnx {
         VERSION_SETTINGS = \
             set QT_CHARTS_VERSION=$$CHARTS_VERSION&& set QT_CHARTS_VERSION_TAG=$$CHARTS_VERSION_TAG&&
     } else {
