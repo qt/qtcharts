@@ -63,7 +63,7 @@ CONFIG(debug, debug|release):CHART_BUILD_DIR = $$join(CHART_BUILD_DIR,,,/debug)
 CONFIG(release, debug|release): CHART_BUILD_DIR = $$join(CHART_BUILD_DIR,,,/release)
 
 
-win32:{
+contains(QMAKE_HOST.os, Windows) {
     CHART_BUILD_PUBLIC_HEADER_DIR = $$replace(CHART_BUILD_PUBLIC_HEADER_DIR, "/","\\")
     CHART_BUILD_PRIVATE_HEADER_DIR = $$replace(CHART_BUILD_PRIVATE_HEADER_DIR, "/","\\")
     CHART_BUILD_BUILD_DIR = $$replace(CHART_BUILD_BUILD_DIR, "/","\\")
