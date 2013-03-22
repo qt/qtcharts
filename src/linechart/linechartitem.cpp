@@ -123,15 +123,23 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 
     painter->save();
     painter->setPen(m_linePen);
-    painter->setBrush(m_linePen.color());
     painter->setClipRect(QRectF(QPointF(0,0),domain()->size()));
 
     if (m_pointsVisible) {
+        painter->setBrush(m_linePen.color());
         painter->drawPath(m_linePath);
     } else {
-        for (int i(1); i < m_points.size(); i++)
-            painter->drawLine(m_points.at(i - 1), m_points.at(i));
+        painter->setBrush(QBrush(Qt::NoBrush));
+        if (m_linePen.style() != Qt::SolidLine) {
+            // If pen style is not solid line, always fall back to path painting
+            // to ensure proper continuity of the pattern
+            painter->drawPath(m_linePath);
+        } else {
+            for (int i(1); i < m_points.size(); i++)
+                painter->drawLine(m_points.at(i - 1), m_points.at(i));
+        }
     }
+
     painter->restore();
 }
 
