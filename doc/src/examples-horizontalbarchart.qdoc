@@ -32,7 +32,7 @@
 
     \snippet ../examples/horizontalbarchart/main.cpp 4
 
-    We also want to show the legend. To do that, we get the legend pointer from chart and set it to visible. We also place the legend to bottom of the chart by setting it's alignment
+    We also want to show the legend. To do that, we get the legend pointer from chart and set it to visible. We also place the legend to bottom of the chart by setting its alignment
 	to Qt::AlignBottom.
 
     \snippet ../examples/horizontalbarchart/main.cpp 5

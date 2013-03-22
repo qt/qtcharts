@@ -31,7 +31,7 @@
 
      \snippet ../examples/modeldata/tablewidget.cpp 4
 
-     To show in QTableView which data coresponds with which series this example uses table coloring.
+     To show in QTableView which data corresponds with which series this example uses table coloring.
      When series is added to the chart it is assigned a color based on the currently selected theme.
      Code below extracts that color from the series and uses it to create colored QTableView.
      Coloring of the view is not a part of the QChart functionality.

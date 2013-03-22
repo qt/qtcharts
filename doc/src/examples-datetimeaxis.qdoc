@@ -16,13 +16,13 @@
 
     \snippet ../examples/datetimeaxis/main.cpp 2
 
-    To present the data on the char we need QChart instance. We add the series to it, hide the legend, create the default axes and set the title of the chart.
+    To present the data on the chart we need QChart instance. We add the series to it, hide the legend, create the default axes and set the title of the chart.
 
     \snippet ../examples/datetimeaxis/main.cpp 3
 
-    Becasue we use QLineSeries calling createDefaultAxes will create QValueAxis both as X and Y axis. To use QDateTimeAxis we need to set it manually to the chart.
-    First the instance of QDateTimeAxis is created, then the number of ticks that are to be shown is set. The number of sun spots is provided as an average for the month therfore we don't need the axis labels to contain the information about the time and the day. This is achived by setting a custom label format.
-    Please refer to QDateTime::toString() method documntation to learn about the avaiable format options.
+    Because we use QLineSeries calling createDefaultAxes will create QValueAxis both as X and Y axis. To use QDateTimeAxis we need to set it manually to the chart.
+    First the instance of QDateTimeAxis is created, then the number of ticks that are to be shown is set. The number of sun spots is provided as an average for the month therefore we don't need the axis labels to contain the information about the time and the day. This is achieved by setting a custom label format.
+    Please refer to QDateTime::toString() method documentation to learn about the available format options.
 
     \snippet ../examples/datetimeaxis/main.cpp 4
 

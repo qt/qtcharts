@@ -11,7 +11,7 @@
 
     \snippet ../examples/logvalueaxis/main.cpp 1
 
-    To present the data on the char we need QChart instance. Add the series to it, hide the legend and set the title of the chart.
+    To present the data on the chart we need QChart instance. Add the series to it, hide the legend and set the title of the chart.
 
     \snippet ../examples/logvalueaxis/main.cpp 2
 

@@ -13,7 +13,7 @@
     \snippet ../examples/lineandbar/main.cpp 1
 
     We create the barseries and append the sets to it.
-	First value of each set are gropuped together at first category second value to second category and so on.
+    First values of each set are grouped together at first category second value to second category and so on.
 
     \snippet ../examples/lineandbar/main.cpp 2
 

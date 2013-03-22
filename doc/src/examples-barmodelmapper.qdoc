@@ -32,8 +32,8 @@
 
      \snippet ../examples/barmodelmapper/tablewidget.cpp 4
 
-     To show in QTableView which data coresponds with which bar set this example uses table coloring.
-     When series is added to the chart it is assigned a color beased on the currently selected theme.
+     To show in QTableView which data corresponds with which bar set this example uses table coloring.
+     When series is added to the chart it is assigned a color based on the currently selected theme.
      Code below extracts that color from the series and uses it to create colored QTableView.
      Coloring of the view is not a part of the QChart functionality.
 

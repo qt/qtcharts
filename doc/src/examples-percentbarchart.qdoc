@@ -21,7 +21,7 @@
     \snippet ../examples/percentbarchart/main.cpp 1
 
     We create the series and append the barsets to it. The series takes ownership of the barsets. The series groups the data from sets to categories.
-	First value of each set are gropuped together at first category second value to second category and so on.
+    First values of each set are grouped together at first category second value to second category and so on.
 
     \snippet ../examples/percentbarchart/main.cpp 2
 
@@ -37,7 +37,7 @@
 
     \snippet ../examples/percentbarchart/main.cpp 4
 
-    We also want to show the legend. To do that, we get the legend pointer from chart and set it to visible. We also place the legend to bottom of the chart by setting it's alignment
+    We also want to show the legend. To do that, we get the legend pointer from chart and set it to visible. We also place the legend to bottom of the chart by setting its alignment
 	to Qt::AlignBottom.
 
     \snippet ../examples/percentbarchart/main.cpp 5
