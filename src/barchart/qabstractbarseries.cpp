@@ -786,6 +786,7 @@ void QAbstractBarSeriesPrivate::initializeAxes()
                 case QAbstractSeries::SeriesTypeBar:
                 case QAbstractSeries::SeriesTypePercentBar:
                 case QAbstractSeries::SeriesTypeStackedBar:
+                case QAbstractSeries::SeriesTypeBoxPlot:
                 if (axis->orientation() == Qt::Horizontal)
                 populateCategories(qobject_cast<QBarCategoryAxis *>(axis));
                 break;
@@ -811,6 +812,7 @@ QAbstractAxis::AxisType QAbstractBarSeriesPrivate::defaultAxisType(Qt::Orientati
     case QAbstractSeries::SeriesTypeBar:
     case QAbstractSeries::SeriesTypePercentBar:
     case QAbstractSeries::SeriesTypeStackedBar:
+    case QAbstractSeries::SeriesTypeBoxPlot:
         if (orientation == Qt::Horizontal)
             return QAbstractAxis::AxisTypeBarCategory;
         break;
