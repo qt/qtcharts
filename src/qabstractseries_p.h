@@ -48,6 +48,7 @@ class QLegendMarker;
 class ChartTheme;
 class ChartAnimation;
 class ChartItem;
+class BoxPlotChartItem;
 
 class QAbstractSeriesPrivate : public QObject
 {
@@ -78,6 +79,7 @@ Q_SIGNALS:
     void countChanged();
 
 protected:
+    friend class BoxPlotChartItem;
     QAbstractSeries *q_ptr;
     QChart *m_chart;
     QScopedPointer<ChartItem> m_item;
