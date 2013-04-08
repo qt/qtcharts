@@ -7,7 +7,8 @@ SUBDIRS += \
     auto \    
     qmlchartproperties \
     qmlchartaxis \
-    presenterchart
+    presenterchart \
+    boxplottester
 
 contains(QT_CONFIG, opengl) {
     SUBDIRS +=  chartwidgettest \
