@@ -72,6 +72,7 @@ protected:
     friend class AbstractBarChartItem;
     friend class PercentBarChartItem;
     friend class StackedBarChartItem;
+    friend class BoxPlotChartItem;
     friend class BarChartItem;
     friend class HorizontalBarChartItem;
     friend class HorizontalStackedBarChartItem;
