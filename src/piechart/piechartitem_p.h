@@ -33,6 +33,7 @@
 #include "qpieseries.h"
 #include "chartitem_p.h"
 #include "piesliceitem_p.h"
+#include <QPointer>
 
 class QGraphicsItem;
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -71,7 +72,7 @@ private:
 
 private:
     QHash<QPieSlice *, PieSliceItem *> m_sliceItems;
-    QPieSeries *m_series;
+    QPointer<QPieSeries> m_series;
     QRectF m_rect;
     QPointF m_pieCenter;
     qreal m_pieRadius;

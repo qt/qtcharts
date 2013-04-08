@@ -362,6 +362,7 @@ QPieSeries::QPieSeries(QObject *parent)
 QPieSeries::~QPieSeries()
 {
     // NOTE: d_prt destroyed by QObject
+    clear();
 }
 
 /*!
