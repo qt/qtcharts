@@ -75,6 +75,7 @@ include(scatterchart/scatter.pri)
 include(splinechart/splinechart.pri)
 include(themes/themes.pri)
 include(xychart/xychart.pri)
+include(boxplotchart/boxplotchart.pri)
 
 HEADERS += $$PUBLIC_HEADERS
 HEADERS += $$PRIVATE_HEADERS
