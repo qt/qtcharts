@@ -9,7 +9,7 @@ SOURCES += \
     $$PWD/splineanimation.cpp \
     $$PWD/baranimation.cpp \
     $$PWD/boxplotanimation.cpp \
-    animations/boxwhiskersanimation.cpp
+    $$PWD/boxwhiskersanimation.cpp
 
 PRIVATE_HEADERS += \
     $$PWD/axisanimation_p.h \
