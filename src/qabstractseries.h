@@ -52,7 +52,8 @@ public:
         SeriesTypeSpline,
         SeriesTypeHorizontalBar,
         SeriesTypeHorizontalStackedBar,
-        SeriesTypeHorizontalPercentBar
+        SeriesTypeHorizontalPercentBar,
+        SeriesTypeBoxPlot
     };
 
 protected:
