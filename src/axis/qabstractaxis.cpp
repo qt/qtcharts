@@ -968,8 +968,6 @@ void QAbstractAxisPrivate::initializeTheme(ChartTheme* theme, bool forced)
                     || (theme->backgroundShades() == ChartTheme::BackgroundShadesVertical && axisX)
                     || (theme->backgroundShades() == ChartTheme::BackgroundShadesHorizontal && !axisX))) {
                  q_ptr->setShadesVisible(true);
-            } else {
-                q_ptr->setShadesVisible(false);
             }
         }
     }
