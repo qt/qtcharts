@@ -52,6 +52,7 @@ public: // from QVariantAnimation
     virtual void updateCurrentValue(const QVariant &value);
 
     void setup(const BoxWhiskersData &startData, const BoxWhiskersData &endData);
+    void setEndData(const BoxWhiskersData &endData);
 
 protected:
     BoxPlotChartItem *m_item;

@@ -22,20 +22,14 @@
 #include "boxplotchartitem_p.h"
 #include "boxwhiskersdata_p.h"
 #include "boxwhiskersanimation_p.h"
+#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 BoxPlotAnimation::BoxPlotAnimation(BoxPlotChartItem *item)
-   // : ChartAnimation(item),
       : m_item(item)
 {
 }
-
-//BoxPlotAnimation::BoxPlotAnimation(BoxWhiskers *box)
-//    : ChartAnimation(box),
-//      m_box(box)
-//{
-//}
 
 BoxPlotAnimation::~BoxPlotAnimation()
 {
@@ -43,12 +37,17 @@ BoxPlotAnimation::~BoxPlotAnimation()
 
 void BoxPlotAnimation::addBox(BoxWhiskers *box)
 {
-    BoxWhiskersAnimation *animation = new BoxWhiskersAnimation(box);
-    m_animations.insert(box, animation);
-
-    BoxWhiskersData start;
-    start.m_median = box->m_data.m_median;
-    animation->setup(start, box->m_data);
+    BoxWhiskersAnimation *animation = m_animations.value(box);
+    if (!animation) {
+        animation = new BoxWhiskersAnimation(box);
+        m_animations.insert(box, animation);
+        BoxWhiskersData start;
+        start.m_median = box->m_data.m_median;
+        animation->setup(start, box->m_data);
+    } else {
+        animation->stop();
+        animation->setEndData(box->m_data);
+    }
 }
 
 ChartAnimation *BoxPlotAnimation::boxAnimation(BoxWhiskers *box)
@@ -56,7 +55,6 @@ ChartAnimation *BoxPlotAnimation::boxAnimation(BoxWhiskers *box)
     // TODO: Check for missing animation
     return m_animations.value(box);
 }
-
 
 //#include "moc_boxplotanimation_p.cpp"
 

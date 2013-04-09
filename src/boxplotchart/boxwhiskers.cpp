@@ -73,7 +73,6 @@ void BoxWhiskers::setLayout(const BoxWhiskersData &data)
 //    if (m_data.m_index == 1)
 //        qDebug() << "BoxWhiskers::setLayout";
     updateGeometry();
-    //update(0.0, 0.0, m_data.m_domainSize.width(), m_data.m_domainSize.height());
     update();
 }
 
@@ -129,9 +128,6 @@ void BoxWhiskers::updateGeometry()
     prepareGeometryChange();
 
     QPainterPath path;
-
-    // TODO: Dirty hack
-    if (m_data.m_seriesCount == 0) m_data.m_seriesCount = 1;
 
     qreal columnWidth = 1.0 / m_data.m_seriesCount;
     qreal left = 0.25 * columnWidth + columnWidth * m_data.m_seriesIndex;

@@ -22,6 +22,7 @@
 #include "boxplotanimation_p.h"
 #include "boxplotchartitem_p.h"
 #include "boxwhiskersdata_p.h"
+#include <QDebug>
 
 Q_DECLARE_METATYPE(QVector<QRectF>)
 Q_DECLARE_METATYPE(QTCOMMERCIALCHART_NAMESPACE::BoxWhiskersData)
@@ -80,7 +81,8 @@ QVariant BoxWhiskersAnimation::interpolated(const QVariant &from, const QVariant
     result.m_minX = endData.m_minX;
     result.m_maxY = endData.m_maxY;
     result.m_minY = endData.m_minY;
-    //result.m_domainSize = endData.m_domainSize;
+    result.m_seriesIndex = endData.m_seriesIndex;
+    result.m_seriesCount = endData.m_seriesCount;
 
     return qVariantFromValue(result);
 }
@@ -93,11 +95,16 @@ void BoxWhiskersAnimation::updateCurrentValue(const QVariant &value)
 
 void BoxWhiskersAnimation::setup(const BoxWhiskersData &startData, const BoxWhiskersData &endData)
 {
-    if (endData.m_index == 0) {
-        qDebug() << "BoxPlotAnimation::setup m_upperExtreme" << endData.m_upperExtreme;
-    }
     setKeyValueAt(0.0, qVariantFromValue(startData));
     setKeyValueAt(1.0, qVariantFromValue(endData));
+}
+
+void BoxWhiskersAnimation::setEndData(const BoxWhiskersData &endData)
+{
+    if (state() != QAbstractAnimation::Stopped)
+        stop();
+
+    setEndValue(qVariantFromValue(endData));
 }
 
 #include "moc_boxwhiskersanimation_p.cpp"
