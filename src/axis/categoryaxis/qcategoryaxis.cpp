@@ -227,6 +227,7 @@ void QCategoryAxis::remove(const QString &categoryLabel)
                 d->m_categoriesMap.insert(label, range);
             }
         }
+        //TODO:: d->emitUpdated();
     }
 }
 
@@ -250,6 +251,7 @@ void QCategoryAxis::replaceLabel(const QString &oldLabel, const QString &newLabe
         Range range = d->m_categoriesMap.value(oldLabel);
         d->m_categoriesMap.remove(oldLabel);
         d->m_categoriesMap.insert(newLabel, range);
+        //TODO:: d->emitUpdated();
     }
 }
 

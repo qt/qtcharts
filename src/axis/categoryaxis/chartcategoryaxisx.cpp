@@ -67,6 +67,7 @@ QVector<qreal> ChartCategoryAxisX::calculateLayout() const
 
 void ChartCategoryAxisX::updateGeometry()
 {
+    //TODO: this is not optimal when many categories :( , create only visible lables
     setLabels(m_axis->categoriesLabels() << "");
     HorizontalAxis::updateGeometry();
 }

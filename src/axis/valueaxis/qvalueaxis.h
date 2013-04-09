@@ -60,6 +60,7 @@ public:
     void setLabelFormat(const QString &format);
     QString labelFormat() const;
 
+    //TODO: deprecated! (2.0)
     void setNiceNumbersEnabled(bool enable = true);
     bool niceNumbersEnabled() const;
 

@@ -177,6 +177,7 @@ void ScatterChartItem::handleUpdated()
     setOpacity(m_series->opacity());
 
     if (recreate) {
+        // TODO: optimize handleUpdate to recreate points only in case shape changed
         deletePoints(count);
         createPoints(count);
 
