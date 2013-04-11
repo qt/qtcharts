@@ -38,8 +38,6 @@ public:
 
     QAbstractSeries::SeriesType type() const;
 
-    void mika();
-
     void setBrush(const QBrush &brush);
     QBrush brush() const;
     void setPen(const QPen &pen);

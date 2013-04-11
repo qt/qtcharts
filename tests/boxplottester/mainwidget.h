@@ -26,6 +26,7 @@
 #include "qchartview.h"
 #include <QWidget>
 #include <QBoxPlotSeries>
+#include <QBarCategoryAxis>
 
 class QGridLayout;
 
@@ -56,8 +57,10 @@ private:
     QChart *m_chart;
     QChartView *m_chartView;
     QGridLayout *m_scatterLayout;
+    QBarCategoryAxis *m_axis;
     int rowPos;
     int nSeries;
+    int nNewBoxes;
     QBoxPlotSeries *m_series[10];
 };
 

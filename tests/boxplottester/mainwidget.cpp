@@ -43,11 +43,14 @@
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
+QString addCategories[] = {"Jul", "Aug", "Sep", "Nov", "Dec"};
+
 MainWidget::MainWidget(QWidget *parent) :
     QWidget(parent),
     m_chart(0),
     rowPos(0),
-    nSeries(0)
+    nSeries(0),
+    nNewBoxes(0)
 {
     m_chart = new QChart();
 
@@ -164,12 +167,14 @@ void MainWidget::addSeries()
 
     m_chart->addSeries(m_series[nSeries]);
 
-    QStringList categories;
-    categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun";
-    QBarCategoryAxis *axis = new QBarCategoryAxis();
-    axis->append(categories);
-    m_chart->createDefaultAxes();
-    m_chart->setAxisX(axis, m_series[nSeries]);
+    if (nSeries == 0) {
+        QStringList categories;
+        categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun";
+        m_axis = new QBarCategoryAxis();
+        m_axis->append(categories);
+        m_chart->createDefaultAxes();
+        m_chart->setAxisX(m_axis, m_series[nSeries]);
+    }
 
     nSeries++;
 }
@@ -191,6 +196,10 @@ void MainWidget::addBox()
     *newSet << 5 << 6 << 6.8 << 7 << 8;
 
     m_series[0]->append(newSet);
+
+    m_axis->append(addCategories[nNewBoxes]);
+
+    nNewBoxes++;
 }
 
 void MainWidget::animationToggled(bool enabled)
@@ -223,5 +232,8 @@ void MainWidget::titleToggled(bool enabled)
 void MainWidget::changeChartTheme(int themeIndex)
 {
     qDebug() << "BoxPlotTester::changeChartTheme: " << themeIndex;
-    m_chart->setTheme((QChart::ChartTheme) themeIndex);
+    if (themeIndex == 0)
+        m_chart->setTheme(QChart::ChartThemeLight);
+    else
+        m_chart->setTheme((QChart::ChartTheme) (themeIndex - 1));
 }

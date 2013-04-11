@@ -188,19 +188,24 @@ void QBoxPlotSeriesPrivate::initializeGraphics(QGraphicsItem* parent)
 void QBoxPlotSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bool forced)
 {
     Q_Q(QBoxPlotSeries);
+    qDebug() << "QBoxPlotSeriesPrivate::initializeTheme";
 
     const QList<QGradient> gradients = theme->seriesGradients();
 
     if (forced || m_brush == QBrush(Qt::NoBrush)) {
-        QColor brushColor = ChartThemeManager::colorAt(gradients.at(index % gradients.size()), 0.1);
+        QColor brushColor = ChartThemeManager::colorAt(gradients.at(index % gradients.size()), 0.5);
         q->setBrush(brushColor);
     }
 
     if (forced || m_pen == QPen(Qt::NoPen)) {
-        QPen pen;
-        pen.setColor(ChartThemeManager::colorAt(gradients.at(index % gradients.size()), 1.0));
-        pen.setWidthF(1.0);
+        QPen pen = theme->outlinePen();
         pen.setCosmetic(true);
+
+//        QPen pen;
+//        pen.setColor(ChartThemeManager::colorAt(gradients.at(index % gradients.size()), 1.0));
+//        pen.setWidthF(2.0);
+//        pen.setCosmetic(true);
+
         q->setPen(pen);
     }
 }
