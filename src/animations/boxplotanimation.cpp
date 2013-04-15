@@ -53,7 +53,25 @@ void BoxPlotAnimation::addBox(BoxWhiskers *box)
 ChartAnimation *BoxPlotAnimation::boxAnimation(BoxWhiskers *box)
 {
     // TODO: Check for missing animation
-    return m_animations.value(box);
+    BoxWhiskersAnimation *animation = m_animations.value(box);
+    animation->m_moveMedianLine = false;
+
+    return animation;
+}
+
+ChartAnimation *BoxPlotAnimation::boxChangeAnimation(BoxWhiskers *box)
+{
+    BoxWhiskersAnimation *animation = m_animations.value(box);
+    animation->m_moveMedianLine = true;
+    animation->setEndData(box->m_data);
+
+    return animation;
+}
+
+void BoxPlotAnimation::setAnimationStart(BoxWhiskers *box)
+{
+    BoxWhiskersAnimation *animation = m_animations.value(box);
+    animation->setStartData(box->m_data);
 }
 
 //#include "moc_boxplotanimation_p.cpp"

@@ -10,7 +10,9 @@ contains(QT_MAJOR_VERSION, 5) {
 }
 
 SOURCES += main.cpp \
-    mainwidget.cpp
+    mainwidget.cpp \
+    customtablemodel.cpp
 
 HEADERS += \
-    mainwidget.h
+    mainwidget.h \
+    customtablemodel.h

@@ -30,14 +30,6 @@ Q_DECLARE_METATYPE(qreal)
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-BoxWhiskersAnimation::BoxWhiskersAnimation(BoxPlotChartItem *item)
-    : ChartAnimation(item),
-      m_item(item)
-{
-    setDuration(ChartAnimationDuration);
-    setEasingCurve(QEasingCurve::OutQuart);
-}
-
 BoxWhiskersAnimation::BoxWhiskersAnimation(BoxWhiskers *box)
     : ChartAnimation(box),
       m_box(box)
@@ -61,21 +53,22 @@ QVariant BoxWhiskersAnimation::interpolated(const QVariant &from, const QVariant
         //qDebug() << "endData.m_median = " << endData.m_median;
     }
 
-    result.m_lowerExtreme = endData.m_median + progress * (endData.m_lowerExtreme - endData.m_median);
-    result.m_lowerQuartile = endData.m_median + progress * (endData.m_lowerQuartile - endData.m_median);
-    result.m_median = endData.m_median;
-    result.m_upperQuartile = endData.m_median + progress * (endData.m_upperQuartile - endData.m_median);
-    result.m_upperExtreme = endData.m_median + progress * (endData.m_upperExtreme - endData.m_median);
+    if (m_moveMedianLine) {
+        result.m_lowerExtreme = startData.m_lowerExtreme + progress * (endData.m_lowerExtreme - startData.m_lowerExtreme);
+        result.m_lowerQuartile = startData.m_lowerQuartile + progress * (endData.m_lowerQuartile - startData.m_lowerQuartile);
+        result.m_median = startData.m_median + progress * (endData.m_median - startData.m_median);
+        result.m_upperQuartile = startData.m_upperQuartile + progress * (endData.m_upperQuartile - startData.m_upperQuartile);
+        result.m_upperExtreme = startData.m_upperExtreme + progress * (endData.m_upperExtreme - startData.m_upperExtreme);
+    } else {
+        result.m_lowerExtreme = endData.m_median + progress * (endData.m_lowerExtreme - endData.m_median);
+        result.m_lowerQuartile = endData.m_median + progress * (endData.m_lowerQuartile - endData.m_median);
+        result.m_median = endData.m_median;
+        result.m_upperQuartile = endData.m_median + progress * (endData.m_upperQuartile - endData.m_median);
+        result.m_upperExtreme = endData.m_median + progress * (endData.m_upperExtreme - endData.m_median);
+    }
     result.m_index = endData.m_index;
     result.m_boxItems = endData.m_boxItems;
 
-//    result.m_lowerExtreme = endData.m_lowerExtreme;
-//    result.m_lowerQuartile = endData.m_lowerQuartile;
-//    result.m_median = endData.m_median;
-//    result.m_upperQuartile = endData.m_upperQuartile;
-//    result.m_upperExtreme = endData.m_upperExtreme;
-//    result.m_index = endData.m_index;
-//    result.m_boxItems = endData.m_boxItems;
 
     result.m_maxX = endData.m_maxX;
     result.m_minX = endData.m_minX;
@@ -106,6 +99,15 @@ void BoxWhiskersAnimation::setEndData(const BoxWhiskersData &endData)
 
     setEndValue(qVariantFromValue(endData));
 }
+
+void BoxWhiskersAnimation::setStartData(const BoxWhiskersData &endData)
+{
+    if (state() != QAbstractAnimation::Stopped)
+        stop();
+
+    setStartValue(qVariantFromValue(endData));
+}
+
 
 #include "moc_boxwhiskersanimation_p.cpp"
 

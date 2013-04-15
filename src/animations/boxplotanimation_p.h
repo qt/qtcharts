@@ -48,6 +48,9 @@ public:
 
     void addBox(BoxWhiskers *box);
     ChartAnimation *boxAnimation(BoxWhiskers *box);
+    ChartAnimation *boxChangeAnimation(BoxWhiskers *box);
+
+    void setAnimationStart(BoxWhiskers *box);
 
 protected:
     BoxPlotChartItem *m_item;

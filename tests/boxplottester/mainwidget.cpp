@@ -19,6 +19,10 @@
 ****************************************************************************/
 
 #include "mainwidget.h"
+#include "customtablemodel.h"
+#include <QVBarModelMapper>
+#include <QTableView>
+#include <QHeaderView>
 #include <QChartView>
 #include <QBoxPlotSeries>
 #include <QBarSet>
@@ -76,6 +80,19 @@ MainWidget::MainWidget(QWidget *parent) :
     initThemeCombo(grid);
     initCheckboxes(grid);
 
+    m_model = new CustomTableModel;
+    QTableView *tableView = new QTableView;
+    tableView->setModel(m_model);
+    tableView->setMaximumWidth(200);
+    grid->addWidget(tableView, rowPos++, 0, 3, 2, Qt::AlignLeft);
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+    tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    tableView->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+#else
+    tableView->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
+    tableView->verticalHeader()->setResizeMode(QHeaderView::Stretch);
+#endif
+
     // add row with empty label to make all the other rows static
     grid->addWidget(new QLabel(""), grid->rowCount(), 0);
     grid->setRowStretch(grid->rowCount() - 1, 1);
@@ -129,6 +146,12 @@ void MainWidget::initCheckboxes(QGridLayout *grid)
     connect(titleCheckBox, SIGNAL(toggled(bool)), this, SLOT(titleToggled(bool)));
     titleCheckBox->setChecked(false);
     grid->addWidget(titleCheckBox, rowPos++, 0);
+
+    QCheckBox *modelMapperCheckBox = new QCheckBox("Use model mapper");
+    connect(modelMapperCheckBox, SIGNAL(toggled(bool)), this, SLOT(modelMapperToggled(bool)));
+    modelMapperCheckBox->setChecked(false);
+    grid->addWidget(modelMapperCheckBox, rowPos++, 0);
+
 }
 
 void MainWidget::addSeries()
@@ -228,6 +251,27 @@ void MainWidget::titleToggled(bool enabled)
         m_chart->setTitle("");
 }
 
+void MainWidget::modelMapperToggled(bool enabled)
+{
+    if (enabled) {
+        m_series[nSeries] = new QBoxPlotSeries();
+
+        int first = 0;
+        int count = 5;
+        QVBarModelMapper *mapper = new QVBarModelMapper(this);
+        mapper->setFirstBarSetColumn(0);
+        mapper->setLastBarSetColumn(5);
+        mapper->setFirstRow(first);
+        mapper->setRowCount(count);
+        mapper->setSeries(m_series[nSeries]);
+        mapper->setModel(m_model);
+        m_chart->addSeries(m_series[nSeries]);
+
+        nSeries++;
+    } else {
+        removeSeries();
+    }
+}
 
 void MainWidget::changeChartTheme(int themeIndex)
 {

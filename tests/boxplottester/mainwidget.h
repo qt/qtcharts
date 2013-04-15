@@ -24,6 +24,7 @@
 #include "qchartglobal.h"
 #include "qchart.h"
 #include "qchartview.h"
+#include "customtablemodel.h"
 #include <QWidget>
 #include <QBoxPlotSeries>
 #include <QBarCategoryAxis>
@@ -51,6 +52,7 @@ private slots:
     void animationToggled(bool enabled);
     void legendToggled(bool enabled);
     void titleToggled(bool enabled);
+    void modelMapperToggled(bool enabled);
     void changeChartTheme(int themeIndex);
 
 private:
@@ -58,6 +60,7 @@ private:
     QChartView *m_chartView;
     QGridLayout *m_scatterLayout;
     QBarCategoryAxis *m_axis;
+    CustomTableModel *m_model;
     int rowPos;
     int nSeries;
     int nNewBoxes;

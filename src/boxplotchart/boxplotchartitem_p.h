@@ -58,12 +58,11 @@ public Q_SLOTS:
     void handleDomainUpdated();
     void handleLayoutChanged();
     void handleUpdatedBars();
-    void handleSeriesRemove(QAbstractSeries *series);
 
 private:
     virtual QVector<QRectF> calculateLayout();
     void initializeLayout();
-    void updateBoxGeometry(BoxWhiskers *box, int index);
+    bool updateBoxGeometry(BoxWhiskers *box, int index);
 
 protected:
     friend class QBoxPlotSeriesPrivate;

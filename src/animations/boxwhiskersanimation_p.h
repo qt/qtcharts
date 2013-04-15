@@ -43,7 +43,6 @@ class BoxWhiskersAnimation : public ChartAnimation
     Q_OBJECT
 
 public:
-    BoxWhiskersAnimation(BoxPlotChartItem *item);
     BoxWhiskersAnimation(BoxWhiskers *box);
     ~BoxWhiskersAnimation();
 
@@ -53,11 +52,16 @@ public: // from QVariantAnimation
 
     void setup(const BoxWhiskersData &startData, const BoxWhiskersData &endData);
     void setEndData(const BoxWhiskersData &endData);
+    void setStartData(const BoxWhiskersData &endData);
+
+    void moveMedianLine(bool move);
 
 protected:
+    friend class BoxPlotAnimation;
     BoxPlotChartItem *m_item;
     BoxWhiskers *m_box;
     BoxWhiskersData *m_boxData;
+    bool    m_moveMedianLine;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

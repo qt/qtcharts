@@ -136,22 +136,16 @@ void BoxPlotChartItem::handleDomainUpdated()
 
 void BoxPlotChartItem::handleLayoutChanged()
 {
-    //qDebug() << "BoxPlotChartItem::handleLayoutChanged() domain()->size() = " << domain()->size();
-    //foreach (BoxWhiskers *boxWhiskersItem, m_boxes)
-    //    boxWhiskersItem->updateGeometry();
-}
+    foreach (BoxWhiskers *item, m_boxTable.values()) {
+        if (m_animation)
+            m_animation->setAnimationStart(item);
 
-void BoxPlotChartItem::handleSeriesRemove(QAbstractSeries *series)
-{
-    qDebug() << "BoxPlotChartItem::handleSeriesRemove " << m_seriesIndex;
-    QBoxPlotSeries *removedSeries = static_cast<QBoxPlotSeries *>(series);
-    if (m_series == removedSeries) {
-        return;
+        bool dirty = updateBoxGeometry(item, item->m_data.m_index);
+        if (dirty && m_animation)
+            presenter()->startAnimation(m_animation->boxChangeAnimation(item));
+        else
+            item->updateGeometry();
     }
-
-    m_seriesCount = m_seriesCount - 1;
-
-    handleDataStructureChanged();
 }
 
 QRectF BoxPlotChartItem::boundingRect() const
@@ -169,11 +163,17 @@ QVector<QRectF> BoxPlotChartItem::calculateLayout()
     return QVector<QRectF>();
 }
 
-void BoxPlotChartItem::updateBoxGeometry(BoxWhiskers *box, int index)
+bool BoxPlotChartItem::updateBoxGeometry(BoxWhiskers *box, int index)
 {
+    bool changed = false;
+
     QBarSet *set = m_series->d_func()->barsetAt(index);
-    //QBarSet *set = m_barSets.at(index);
     BoxWhiskersData &data = box->m_data;
+
+    if ((data.m_lowerExtreme != set->at(0)) || (data.m_lowerQuartile != set->at(1)) ||
+        (data.m_median != set->at(2)) || (data.m_upperQuartile != set->at(3)) || (data.m_upperExtreme != set->at(4)))
+        changed = true;
+
     data.m_lowerExtreme = set->at(0);
     data.m_lowerQuartile = set->at(1);
     data.m_median = set->at(2);
@@ -189,6 +189,8 @@ void BoxPlotChartItem::updateBoxGeometry(BoxWhiskers *box, int index)
 
     data.m_seriesIndex = m_seriesIndex;
     data.m_seriesCount = m_seriesCount;
+
+    return changed;
 }
 
 #include "moc_boxplotchartitem_p.cpp"
