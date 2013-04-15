@@ -22,6 +22,7 @@ SUBDIRS += \
            boxplotchart \
            legend \
            barmodelmapper \
+           qmlboxplot \
            qmlpiechart \
            lineandbar \
            horizontalbarchart \

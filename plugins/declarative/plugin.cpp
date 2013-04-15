@@ -30,6 +30,7 @@
 #include "declarativeareaseries.h"
 #include "declarativescatterseries.h"
 #include "declarativebarseries.h"
+#include "declarativeboxplotseries.h"
 #include "declarativepieseries.h"
 #include "declarativeaxes.h"
 #include "qvxymodelmapper.h"
@@ -65,6 +66,7 @@ Q_DECLARE_METATYPE(DeclarativeChart *)
 Q_DECLARE_METATYPE(DeclarativeMargins *)
 Q_DECLARE_METATYPE(DeclarativeAreaSeries *)
 Q_DECLARE_METATYPE(DeclarativeBarSeries *)
+Q_DECLARE_METATYPE(DeclarativeBoxPlotSeries *)
 Q_DECLARE_METATYPE(DeclarativeLineSeries *)
 Q_DECLARE_METATYPE(DeclarativePieSeries *)
 Q_DECLARE_METATYPE(DeclarativeScatterSeries *)
@@ -141,6 +143,7 @@ public:
         qmlRegisterType<DeclarativeBarSeries>(uri, 1, 0, "BarSeries");
         qmlRegisterType<DeclarativeStackedBarSeries>(uri, 1, 0, "StackedBarSeries");
         qmlRegisterType<DeclarativePercentBarSeries>(uri, 1, 0, "PercentBarSeries");
+        qmlRegisterType<DeclarativeBoxPlotSeries>(uri, 1, 0, "BoxPlotSeries");
         qmlRegisterType<DeclarativePieSeries>(uri, 1, 0, "PieSeries");
         qmlRegisterType<QPieSlice>(uri, 1, 0, "PieSlice");
         qmlRegisterType<DeclarativeBarSet>(uri, 1, 0, "BarSet");
@@ -186,6 +189,7 @@ public:
         qmlRegisterType<DeclarativeBarSeries, 1>(uri, 1, 1, "BarSeries");
         qmlRegisterType<DeclarativeStackedBarSeries, 1>(uri, 1, 1, "StackedBarSeries");
         qmlRegisterType<DeclarativePercentBarSeries, 1>(uri, 1, 1, "PercentBarSeries");
+        qmlRegisterType<DeclarativeBoxPlotSeries, 1>(uri, 1, 1, "BoxPlotSeries");
         qmlRegisterType<DeclarativeHorizontalBarSeries, 1>(uri, 1, 1, "HorizontalBarSeries");
         qmlRegisterType<DeclarativeHorizontalStackedBarSeries, 1>(uri, 1, 1, "HorizontalStackedBarSeries");
         qmlRegisterType<DeclarativeHorizontalPercentBarSeries, 1>(uri, 1, 1, "HorizontalPercentBarSeries");
@@ -210,6 +214,7 @@ public:
         qmlRegisterType<DeclarativeBarSeries, 2>(uri, 1, 2, "BarSeries");
         qmlRegisterType<DeclarativeStackedBarSeries, 2>(uri, 1, 2, "StackedBarSeries");
         qmlRegisterType<DeclarativePercentBarSeries, 2>(uri, 1, 2, "PercentBarSeries");
+        qmlRegisterType<DeclarativeBoxPlotSeries, 2>(uri, 1, 2, "BoxPlotSeries");
         qmlRegisterType<DeclarativeHorizontalBarSeries, 2>(uri, 1, 2, "HorizontalBarSeries");
         qmlRegisterType<DeclarativeHorizontalStackedBarSeries, 2>(uri, 1, 2, "HorizontalStackedBarSeries");
         qmlRegisterType<DeclarativeHorizontalPercentBarSeries, 2>(uri, 1, 2, "HorizontalPercentBarSeries");
