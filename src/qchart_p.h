@@ -31,10 +31,10 @@
 #define QCHART_P_H
 
 #include "qchartglobal.h"
+#include "qchart.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QChart;
 class ChartThemeManager;
 class ChartPresenter;
 class QLegend;
@@ -44,14 +44,16 @@ class QChartPrivate
 {
 
 public:
-    QChartPrivate(QChart *q);
+    QChartPrivate(QChart *q, QChart::ChartType type);
     ~QChartPrivate();
     QChart *q_ptr;
     QLegend *m_legend;
     ChartDataSet *m_dataset;
     ChartPresenter *m_presenter;
     ChartThemeManager *m_themeManager;
+    QChart::ChartType m_type;
 
+    void init();
     void zoomIn(qreal factor);
     void zoomOut(qreal factor);
     void zoomIn(const QRectF &rect);

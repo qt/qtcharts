@@ -21,7 +21,7 @@
 #include "legendlayout_p.h"
 #include "chartpresenter_p.h"
 #include "qlegend_p.h"
-#include "chartlayout_p.h"
+#include "abstractchartlayout_p.h"
 
 #include "qlegendmarker_p.h"
 #include "legendmarkeritem_p.h"

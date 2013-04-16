@@ -13,7 +13,8 @@ DEPENDPATH += $$PWD \
     $$PWD/logvalueaxis
 
 SOURCES += \
-    $$PWD/chartaxis.cpp \
+    $$PWD/chartaxiselement.cpp \
+    $$PWD/cartesianchartaxis.cpp \
     $$PWD/qabstractaxis.cpp \
     $$PWD/verticalaxis.cpp \
     $$PWD/horizontalaxis.cpp \
@@ -31,10 +32,12 @@ SOURCES += \
     $$PWD/logvalueaxis/qlogvalueaxis.cpp
 
 PRIVATE_HEADERS += \
-    $$PWD/chartaxis_p.h \
+    $$PWD/chartaxiselement_p.h \
+    $$PWD/cartesianchartaxis_p.h \
     $$PWD/qabstractaxis_p.h \
     $$PWD/verticalaxis_p.h \
     $$PWD/horizontalaxis_p.h \
+    $$PWD/linearrowitem_p.h \
     $$PWD/valueaxis/chartvalueaxisx_p.h \
     $$PWD/valueaxis/chartvalueaxisy_p.h \
     $$PWD/valueaxis/qvalueaxis_p.h \
@@ -55,6 +58,29 @@ PUBLIC_HEADERS += \
     $$PWD/categoryaxis/qcategoryaxis.h \
     $$PWD/logvalueaxis/qlogvalueaxis.h \
 
+# polar
+SOURCES += \
+    $$PWD/polarchartaxis.cpp \
+    $$PWD/polarchartaxisangular.cpp \
+    $$PWD/polarchartaxisradial.cpp \
+    $$PWD/valueaxis/polarchartvalueaxisangular.cpp \
+    $$PWD/valueaxis/polarchartvalueaxisradial.cpp \
+    $$PWD/logvalueaxis/polarchartlogvalueaxisangular.cpp \
+    $$PWD/logvalueaxis/polarchartlogvalueaxisradial.cpp \
+    $$PWD/categoryaxis/polarchartcategoryaxisangular.cpp \
+    $$PWD/categoryaxis/polarchartcategoryaxisradial.cpp
+
+PRIVATE_HEADERS += \
+    $$PWD/polarchartaxis_p.h \
+    $$PWD/polarchartaxisangular_p.h \
+    $$PWD/polarchartaxisradial_p.h \
+    $$PWD/valueaxis/polarchartvalueaxisangular_p.h \
+    $$PWD/valueaxis/polarchartvalueaxisradial_p.h \
+    $$PWD/logvalueaxis/polarchartlogvalueaxisangular_p.h \
+    $$PWD/logvalueaxis/polarchartlogvalueaxisradial_p.h \
+    $$PWD/categoryaxis/polarchartcategoryaxisangular_p.h \
+    $$PWD/categoryaxis/polarchartcategoryaxisradial_p.h
+
 !linux-arm*: {
 INCLUDEPATH += \
     $$PWD/datetimeaxis
@@ -65,12 +91,16 @@ DEPENDPATH += \
 SOURCES += \
     $$PWD/datetimeaxis/chartdatetimeaxisx.cpp \
     $$PWD/datetimeaxis/chartdatetimeaxisy.cpp \
-    $$PWD/datetimeaxis/qdatetimeaxis.cpp
+    $$PWD/datetimeaxis/qdatetimeaxis.cpp \
+    $$PWD/datetimeaxis/polarchartdatetimeaxisangular.cpp \
+    $$PWD/datetimeaxis/polarchartdatetimeaxisradial.cpp
 
 PRIVATE_HEADERS += \
     $$PWD/datetimeaxis/chartdatetimeaxisx_p.h \
     $$PWD/datetimeaxis/chartdatetimeaxisy_p.h \
-    $$PWD/datetimeaxis/qdatetimeaxis_p.h
+    $$PWD/datetimeaxis/qdatetimeaxis_p.h \
+    $$PWD/datetimeaxis/polarchartdatetimeaxisangular_p.h \
+    $$PWD/datetimeaxis/polarchartdatetimeaxisradial_p.h
 
 PUBLIC_HEADERS += \
     $$PWD/datetimeaxis/qdatetimeaxis.h

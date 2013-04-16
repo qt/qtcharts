@@ -30,14 +30,14 @@
 #ifndef VERTICALAXIS_P_H_
 #define VERTICALAXIS_P_H_
 
-#include "chartaxis_p.h"
+#include "cartesianchartaxis_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class VerticalAxis : public ChartAxis
+class VerticalAxis : public CartesianChartAxis
 {
 public:
-    VerticalAxis(QAbstractAxis *axis, QGraphicsItem* item = 0, bool intervalAxis = false);
+    VerticalAxis(QAbstractAxis *axis, QGraphicsItem *item = 0, bool intervalAxis = false);
     ~VerticalAxis();
     QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const;
 protected:

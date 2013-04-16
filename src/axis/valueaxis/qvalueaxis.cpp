@@ -23,6 +23,8 @@
 #include "chartvalueaxisx_p.h"
 #include "chartvalueaxisy_p.h"
 #include "abstractdomain_p.h"
+#include "polarchartvalueaxisangular_p.h"
+#include "polarchartvalueaxisradial_p.h"
 #include "chartdataset_p.h"
 #include "chartpresenter_p.h"
 #include "charttheme_p.h"
@@ -387,14 +389,24 @@ void QValueAxisPrivate::setRange(qreal min, qreal max)
     }
 }
 
-void QValueAxisPrivate::initializeGraphics(QGraphicsItem* parent)
+void QValueAxisPrivate::initializeGraphics(QGraphicsItem *parent)
 {
     Q_Q(QValueAxis);
-    ChartAxis* axis(0);
-    if (orientation() == Qt::Vertical)
-        axis = new ChartValueAxisY(q,parent);
-    if (orientation() == Qt::Horizontal)
-        axis = new ChartValueAxisX(q,parent);
+    ChartAxisElement *axis(0);
+
+    if (m_chart->chartType() == QChart::ChartTypeCartesian) {
+        if (orientation() == Qt::Vertical)
+            axis = new ChartValueAxisY(q,parent);
+        if (orientation() == Qt::Horizontal)
+            axis = new ChartValueAxisX(q,parent);
+    }
+
+    if (m_chart->chartType() == QChart::ChartTypePolar) {
+        if (orientation() == Qt::Vertical)
+            axis = new PolarChartValueAxisRadial(q, parent);
+        if (orientation() == Qt::Horizontal)
+            axis = new PolarChartValueAxisAngular(q, parent);
+    }
 
     m_item.reset(axis);
     QAbstractAxisPrivate::initializeGraphics(parent);
@@ -404,20 +416,16 @@ void QValueAxisPrivate::initializeGraphics(QGraphicsItem* parent)
 void QValueAxisPrivate::initializeDomain(AbstractDomain *domain)
 {
     if (orientation() == Qt::Vertical) {
-        if(!qFuzzyIsNull(m_max - m_min)) {
+        if (!qFuzzyIsNull(m_max - m_min))
             domain->setRangeY(m_min, m_max);
-        }
-        else {
+        else
             setRange(domain->minY(), domain->maxY());
-        }
     }
     if (orientation() == Qt::Horizontal) {
-        if(!qFuzzyIsNull(m_max - m_min)) {
+        if (!qFuzzyIsNull(m_max - m_min))
             domain->setRangeX(m_min, m_max);
-        }
-        else {
+        else
             setRange(domain->minX(), domain->maxX());
-        }
     }
 }
 

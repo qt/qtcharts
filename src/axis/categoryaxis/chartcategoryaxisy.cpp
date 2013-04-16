@@ -22,6 +22,7 @@
 #include "qcategoryaxis.h"
 #include "qabstractaxis.h"
 #include "chartpresenter_p.h"
+#include "abstractchartlayout_p.h"
 #include <QGraphicsLayout>
 #include <QFontMetrics>
 #include <qmath.h>
@@ -33,6 +34,7 @@ ChartCategoryAxisY::ChartCategoryAxisY(QCategoryAxis *axis, QGraphicsItem* item)
     : VerticalAxis(axis, item, true),
       m_axis(axis)
 {
+    QObject::connect(axis, SIGNAL(categoriesChanged()), this, SLOT(handleCategoriesChanged()));
 }
 
 ChartCategoryAxisY::~ChartCategoryAxisY()
@@ -72,16 +74,11 @@ void ChartCategoryAxisY::updateGeometry()
     VerticalAxis::updateGeometry();
 }
 
-void ChartCategoryAxisY::handleAxisUpdated()
-{
-    updateGeometry();
-}
-
 QSizeF ChartCategoryAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
 {
     Q_UNUSED(constraint)
 
-    QFontMetrics fn(font());
+    QFontMetrics fn(axis()->labelsFont());
     QSizeF sh;
     QSizeF base = VerticalAxis::sizeHint(which, constraint);
     QStringList ticksList = m_axis->categoriesLabels();
@@ -112,5 +109,13 @@ QSizeF ChartCategoryAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint
     }
     return sh;
 }
+
+void ChartCategoryAxisY::handleCategoriesChanged()
+{
+    QGraphicsLayoutItem::updateGeometry();
+    presenter()->layout()->invalidate();
+}
+
+#include "moc_chartcategoryaxisy_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -42,7 +42,7 @@ class SplineChartItem : public XYChart
     Q_OBJECT
     Q_INTERFACES(QGraphicsItem)
 public:
-    SplineChartItem(QSplineSeries *series, QGraphicsItem* item = 0);
+    SplineChartItem(QSplineSeries *series, QGraphicsItem *item = 0);
 
     //from QGraphicsItem
     QRectF boundingRect() const;
@@ -70,11 +70,15 @@ protected:
 private:
     QSplineSeries *m_series;
     QPainterPath m_path;
+    QPainterPath m_pathPolarRight;
+    QPainterPath m_pathPolarLeft;
+    QPainterPath m_fullPath;
     QRectF m_rect;
     QPen m_linePen;
     QPen m_pointPen;
     bool m_pointsVisible;
     QVector<QPointF> m_controlPoints;
+    QVector<QPointF> m_visiblePoints;
     SplineAnimation *m_animation;
 
     friend class SplineAnimation;

@@ -35,7 +35,6 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QDateTimeAxis;
-class ChartPresenter;
 
 class ChartDateTimeAxisY : public VerticalAxis
 {

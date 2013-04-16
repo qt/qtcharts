@@ -1,0 +1,929 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1207</width>
+    <height>905</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="ChartView" name="chartView"/>
+    </item>
+    <item>
+     <widget class="QGroupBox" name="settingsBox">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>200</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="title">
+       <string>Settings</string>
+      </property>
+      <widget class="QSpinBox" name="radialTicksSpin">
+       <property name="geometry">
+        <rect>
+         <x>110</x>
+         <y>90</y>
+         <width>71</width>
+         <height>22</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>90</y>
+         <width>101</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Radial Tick count</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>120</y>
+         <width>101</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Angular Tick count</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="angularTicksSpin">
+       <property name="geometry">
+        <rect>
+         <x>110</x>
+         <y>120</y>
+         <width>71</width>
+         <height>22</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="anglesSpin">
+       <property name="geometry">
+        <rect>
+         <x>110</x>
+         <y>150</y>
+         <width>71</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <number>-9999</number>
+       </property>
+       <property name="maximum">
+        <number>9999</number>
+       </property>
+       <property name="singleStep">
+        <number>5</number>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_3">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>150</y>
+         <width>101</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Label angles</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_4">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>180</y>
+         <width>101</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Angular min</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_5">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>210</y>
+         <width>101</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Angular max</string>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="angularMinSpin">
+       <property name="geometry">
+        <rect>
+         <x>90</x>
+         <y>180</y>
+         <width>91</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="decimals">
+        <number>5</number>
+       </property>
+       <property name="minimum">
+        <double>-999999999.000000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>999999999.000000000000000</double>
+       </property>
+       <property name="singleStep">
+        <double>10.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="angularMaxSpin">
+       <property name="geometry">
+        <rect>
+         <x>90</x>
+         <y>210</y>
+         <width>91</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="decimals">
+        <number>5</number>
+       </property>
+       <property name="minimum">
+        <double>-999999999.000000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>999999999.000000000000000</double>
+       </property>
+       <property name="singleStep">
+        <double>10.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="radialMaxSpin">
+       <property name="geometry">
+        <rect>
+         <x>90</x>
+         <y>270</y>
+         <width>91</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="decimals">
+        <number>5</number>
+       </property>
+       <property name="minimum">
+        <double>-999999999.000000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>999999999.000000000000000</double>
+       </property>
+       <property name="singleStep">
+        <double>10.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="radialMinSpin">
+       <property name="geometry">
+        <rect>
+         <x>90</x>
+         <y>240</y>
+         <width>91</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="decimals">
+        <number>5</number>
+       </property>
+       <property name="minimum">
+        <double>-999999999.000000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>999999999.000000000000000</double>
+       </property>
+       <property name="singleStep">
+        <double>10.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_11">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>270</y>
+         <width>101</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Radial max</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_12">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>240</y>
+         <width>101</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Radial min</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="angularShadesComboBox">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>300</y>
+         <width>171</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>No angular shades</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Gray angular shades</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Yellow ang. shades + custom pen</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QComboBox" name="radialShadesComboBox">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>330</y>
+         <width>171</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>No radial shades</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Green radial shades</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Blue rad. shades + custom pen</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QLabel" name="label_13">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>360</y>
+         <width>101</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Label format</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="labelFormatEdit">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>360</y>
+         <width>81</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_14">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>390</y>
+         <width>101</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Label font size</string>
+       </property>
+      </widget>
+      <widget class="QFontComboBox" name="labelFontComboBox">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>420</y>
+         <width>171</width>
+         <height>22</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="labelFontSizeSpin">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>390</y>
+         <width>81</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <number>-100000</number>
+       </property>
+       <property name="maximum">
+        <number>100000</number>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="animationsComboBox">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>480</y>
+         <width>171</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>No animations</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Series animation</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Grid animation</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>All animations</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QComboBox" name="labelComboBox">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>450</y>
+         <width>171</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="currentIndex">
+        <number>1</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>No labels</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Black label</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>White label + blue pen</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QSpinBox" name="titleFontSizeSpin">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>510</y>
+         <width>81</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <number>-100000</number>
+       </property>
+       <property name="maximum">
+        <number>100000</number>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="titleComboBox">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>570</y>
+         <width>171</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="currentIndex">
+        <number>3</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>Invisible empty title</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Visible empty title</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Invisible title</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Black title</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>White title + blue pen</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QFontComboBox" name="titleFontComboBox">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>540</y>
+         <width>171</width>
+         <height>22</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_15">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>510</y>
+         <width>101</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Title font size</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="gridComboBox">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>600</y>
+         <width>171</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="currentIndex">
+        <number>1</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>Invisible grid</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Black grid</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Custom grid pen</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QComboBox" name="arrowComboBox">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>630</y>
+         <width>171</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="currentIndex">
+        <number>1</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>Invisible arrow</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Black arrow</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Custom arrow pen</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QComboBox" name="angularAxisComboBox">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>171</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="currentIndex">
+        <number>1</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>No Angular Axis</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Angular Value Axis</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Angular Log Axis</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Angular DateTime Axis</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Angular Category Axis</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QComboBox" name="radialAxisComboBox">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>50</y>
+         <width>171</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="currentIndex">
+        <number>1</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>No Radial Axis</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Radial Value Axis</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Radial Log Axis</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Radial DateTime Axis</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Radial Category Axis</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QLabel" name="label_16">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>660</y>
+         <width>101</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Log Base</string>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="logBaseSpin">
+       <property name="geometry">
+        <rect>
+         <x>90</x>
+         <y>660</y>
+         <width>91</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="decimals">
+        <number>5</number>
+       </property>
+       <property name="minimum">
+        <double>-999999999.000000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>999999999.000000000000000</double>
+       </property>
+       <property name="value">
+        <double>8.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="niceNumbersCheckBox">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>690</y>
+         <width>91</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Nice Numbers</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="dateFormatEdit">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>710</y>
+         <width>81</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_17">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>710</y>
+         <width>101</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>DateTime format</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="moreCategoriesCheckBox">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>690</y>
+         <width>141</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>More Categories</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="series1checkBox">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>730</y>
+         <width>31</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>1</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="series2checkBox">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>730</y>
+         <width>31</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>2</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="series3checkBox">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>730</y>
+         <width>31</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>3</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="series4checkBox">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>750</y>
+         <width>31</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>4</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="series5checkBox">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>750</y>
+         <width>31</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>5</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="series6checkBox">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>750</y>
+         <width>31</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>6</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="series7checkBox">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>740</y>
+         <width>31</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>7</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="themeComboBox">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>770</y>
+         <width>171</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>Theme: Light</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Theme: Blue Cerulean</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Theme: Dark</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Theme: Brown Sand</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Theme: Blue Ncs</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Theme: High Contrast</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Theme: Blue Icy</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QLabel" name="hoverLabel">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>800</y>
+         <width>171</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Hover coordinates here!</string>
+       </property>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1207</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>ChartView</class>
+   <extends>QGraphicsView</extends>
+   <header>chartview.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

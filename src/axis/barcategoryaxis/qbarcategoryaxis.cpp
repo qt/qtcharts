@@ -111,7 +111,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
   \fn void QBarCategoryAxis::categoriesChanged()
-  Axis emits signal when the categories of the axis has changed.
+  Axis emits signal when the categories of the axis have changed.
 */
 
 /*!
@@ -550,7 +550,7 @@ void  QBarCategoryAxisPrivate::setRange(const QString &minCategory, const QStrin
 void QBarCategoryAxisPrivate::initializeGraphics(QGraphicsItem* parent)
 {
     Q_Q(QBarCategoryAxis);
-    ChartAxis* axis(0);
+    ChartAxisElement* axis(0);
     if (orientation() == Qt::Vertical)
         axis = new ChartBarCategoryAxisY(q,parent);
     if (orientation() == Qt::Horizontal)

@@ -33,9 +33,13 @@
 #include "qpieseries.h"
 #include "chartitem_p.h"
 #include "xydomain_p.h"
+#include "xypolardomain_p.h"
 #include "xlogydomain_p.h"
 #include "logxydomain_p.h"
 #include "logxlogydomain_p.h"
+#include "xlogypolardomain_p.h"
+#include "logxypolardomain_p.h"
+#include "logxlogypolardomain_p.h"
 
 #ifndef QT_ON_ARM
 #include "qdatetimeaxis.h"
@@ -66,6 +70,20 @@ void ChartDataSet::addSeries(QAbstractSeries *series)
         return;
     }
 
+    // Ignore unsupported series added to polar chart
+    if (m_chart && m_chart->chartType() == QChart::ChartTypePolar) {
+        if (!(series->type() == QAbstractSeries::SeriesTypeArea
+            || series->type() == QAbstractSeries::SeriesTypeLine
+            || series->type() == QAbstractSeries::SeriesTypeScatter
+            || series->type() == QAbstractSeries::SeriesTypeSpline)) {
+            qWarning() << QObject::tr("Can not add series. Series type is not supported by a polar chart.");
+            return;
+        }
+        series->d_ptr->setDomain(new XYPolarDomain());
+    } else {
+        series->d_ptr->setDomain(new XYDomain());
+    }
+
     series->d_ptr->initializeDomain();
     m_seriesList.append(series);
 
@@ -78,7 +96,7 @@ void ChartDataSet::addSeries(QAbstractSeries *series)
 /*
  * This method adds axis to chartdataset, axis ownership is taken from caller.
  */
-void ChartDataSet::addAxis(QAbstractAxis *axis,Qt::Alignment aligment)
+void ChartDataSet::addAxis(QAbstractAxis *axis, Qt::Alignment aligment)
 {
     if (m_axisList.contains(axis)) {
         qWarning() << QObject::tr("Can not add axis. Axis already on the chart.");
@@ -87,12 +105,25 @@ void ChartDataSet::addAxis(QAbstractAxis *axis,Qt::Alignment aligment)
 
     axis->d_ptr->setAlignment(aligment);
 
-    if(!axis->alignment()) {
-        qWarning()<< QObject::tr("No alignment specified !");
+    if (!axis->alignment()) {
+        qWarning() << QObject::tr("No alignment specified !");
         return;
     };
 
-    QSharedPointer<AbstractDomain> domain(new XYDomain());
+    AbstractDomain *newDomain;
+    if (m_chart && m_chart->chartType() == QChart::ChartTypePolar) {
+        foreach (QAbstractAxis *existingAxis, axes()) {
+            if (existingAxis->orientation() == axis->orientation()) {
+                qWarning() << QObject::tr("Cannot add multiple axes of same orientation to a polar chart!");
+                return;
+            }
+        }
+        newDomain = new XYPolarDomain();
+    } else {
+        newDomain = new XYDomain();
+    }
+
+    QSharedPointer<AbstractDomain> domain(newDomain);
     axis->d_ptr->initializeDomain(domain.data());
 
     axis->setParent(this);
@@ -122,6 +153,8 @@ void ChartDataSet::removeSeries(QAbstractSeries *series)
     emit seriesRemoved(series);
     m_seriesList.removeAll(series);
 
+    // Reset domain to default
+    series->d_ptr->setDomain(new XYDomain());
     series->setParent(0);
     series->d_ptr->m_chart = 0;
 }
@@ -152,13 +185,13 @@ void ChartDataSet::removeAxis(QAbstractAxis *axis)
 /*
  * This method attaches axis to series, return true if success.
  */
-bool ChartDataSet::attachAxis(QAbstractSeries* series,QAbstractAxis *axis)
+bool ChartDataSet::attachAxis(QAbstractSeries *series,QAbstractAxis *axis)
 {
     Q_ASSERT(series);
     Q_ASSERT(axis);
 
-    QList<QAbstractSeries* > attachedSeriesList = axis->d_ptr->m_series;
-    QList<QAbstractAxis* > attachedAxisList = series->d_ptr->m_axes;
+    QList<QAbstractSeries *> attachedSeriesList = axis->d_ptr->m_series;
+    QList<QAbstractAxis *> attachedAxisList = series->d_ptr->m_axes;
 
     if (!m_seriesList.contains(series)) {
         qWarning() << QObject::tr("Can not find series on the chart.");
@@ -180,25 +213,42 @@ bool ChartDataSet::attachAxis(QAbstractSeries* series,QAbstractAxis *axis)
         return false;
     }
 
-    AbstractDomain* domain = series->d_ptr->domain();
+    AbstractDomain *domain = series->d_ptr->domain();
     AbstractDomain::DomainType type = selectDomain(attachedAxisList<<axis);
 
-    if(type == AbstractDomain::UndefinedDomain) return false;
+    if (type == AbstractDomain::UndefinedDomain) return false;
 
-    if(domain->type()!=type){
+    if (domain->type() != type) {
         AbstractDomain *old = domain;
-        domain =  createDomain(type);
+        domain = createDomain(type);
         domain->setRange(old->minX(), old->maxX(), old->minY(), old->maxY());
+        // Initialize domain size to old domain size, as it won't get updated
+        // unless geometry changes.
+        domain->setSize(old->size());
     }
 
-    if(!domain) return false;
+    if (!domain)
+        return false;
 
-    if(!domain->attachAxis(axis)) return false;
+    if (!domain->attachAxis(axis))
+        return false;
 
-    if(domain!=series->d_ptr->domain()){
-        foreach(QAbstractAxis* axis,series->d_ptr->m_axes){
+    QList<AbstractDomain *> blockedDomains;
+    domain->blockRangeSignals(true);
+    blockedDomains << domain;
+
+    if (domain != series->d_ptr->domain()) {
+        foreach (QAbstractAxis *axis, series->d_ptr->m_axes) {
             series->d_ptr->domain()->detachAxis(axis);
             domain->attachAxis(axis);
+            foreach (QAbstractSeries *otherSeries, axis->d_ptr->m_series) {
+                if (otherSeries != series && otherSeries->d_ptr->domain()) {
+                    if (!otherSeries->d_ptr->domain()->rangeSignalsBlocked()) {
+                        otherSeries->d_ptr->domain()->blockRangeSignals(true);
+                        blockedDomains << otherSeries->d_ptr->domain();
+                    }
+                }
+            }
         }
         series->d_ptr->setDomain(domain);
         series->d_ptr->initializeDomain();
@@ -209,6 +259,9 @@ bool ChartDataSet::attachAxis(QAbstractSeries* series,QAbstractAxis *axis)
 
     series->d_ptr->initializeAxes();
     axis->d_ptr->initializeDomain(domain);
+
+    foreach (AbstractDomain *blockedDomain, blockedDomains)
+        blockedDomain->blockRangeSignals(false);
 
     return true;
 }
@@ -327,12 +380,12 @@ void ChartDataSet::findMinMaxForSeries(QList<QAbstractSeries *> series,Qt::Orien
 {
 	Q_ASSERT(!series.isEmpty());
 
-	AbstractDomain* domain = series.first()->d_ptr->domain();
+    AbstractDomain *domain = series.first()->d_ptr->domain();
 	min = (orientation == Qt::Vertical) ? domain->minY() : domain->minX();
 	max = (orientation == Qt::Vertical) ? domain->maxY() : domain->maxX();
 
-	for(int i = 1; i< series.size(); i++) {
-		AbstractDomain* domain = series[i]->d_ptr->domain();
+    for (int i = 1; i< series.size(); i++) {
+        AbstractDomain *domain = series[i]->d_ptr->domain();
 		min = qMin((orientation == Qt::Vertical) ? domain->minY() : domain->minX(), min);
 		max = qMax((orientation == Qt::Vertical) ? domain->maxY() : domain->maxX(), max);
 	}
@@ -437,7 +490,7 @@ QPointF ChartDataSet::mapToPosition(const QPointF &value, QAbstractSeries *serie
     return point;
 }
 
-QList<QAbstractAxis*> ChartDataSet::axes() const
+QList<QAbstractAxis *> ChartDataSet::axes() const
 {
    return m_axisList;
 }
@@ -447,7 +500,7 @@ QList<QAbstractSeries *> ChartDataSet::series() const
     return m_seriesList;
 }
 
-AbstractDomain::DomainType ChartDataSet::selectDomain(QList<QAbstractAxis*> axes)
+AbstractDomain::DomainType ChartDataSet::selectDomain(QList<QAbstractAxis *> axes)
 {
     enum Type {
         Undefined = 0,
@@ -458,75 +511,95 @@ AbstractDomain::DomainType ChartDataSet::selectDomain(QList<QAbstractAxis*> axes
     int horizontal(Undefined);
     int vertical(Undefined);
 
-    foreach(QAbstractAxis* axis, axes)
+    // Assume cartesian chart type, unless chart is set
+    QChart::ChartType chartType(QChart::ChartTypeCartesian);
+    if (m_chart)
+        chartType = m_chart->chartType();
+
+    foreach (QAbstractAxis *axis, axes)
     {
-        switch(axis->type()) {
-            case QAbstractAxis::AxisTypeLogValue:
-
-            if(axis->orientation()==Qt::Horizontal) {
-                horizontal|=LogType;
-            }
-            if(axis->orientation()==Qt::Vertical) {
-                vertical|=LogType;
-            }
-
+        switch (axis->type()) {
+        case QAbstractAxis::AxisTypeLogValue:
+            if (axis->orientation() == Qt::Horizontal)
+                horizontal |= LogType;
+            if (axis->orientation() == Qt::Vertical)
+                vertical |= LogType;
             break;
-            case QAbstractAxis::AxisTypeValue:
-            case QAbstractAxis::AxisTypeBarCategory:
-            case QAbstractAxis::AxisTypeCategory:
-            case QAbstractAxis::AxisTypeDateTime:
-            if(axis->orientation()==Qt::Horizontal) {
-                horizontal|=ValueType;
-            }
-            if(axis->orientation()==Qt::Vertical) {
-                vertical|=ValueType;
-            }
+        case QAbstractAxis::AxisTypeValue:
+        case QAbstractAxis::AxisTypeBarCategory:
+        case QAbstractAxis::AxisTypeCategory:
+        case QAbstractAxis::AxisTypeDateTime:
+            if (axis->orientation() == Qt::Horizontal)
+                horizontal |= ValueType;
+            if (axis->orientation() == Qt::Vertical)
+                vertical |= ValueType;
             break;
-            default:
-            qWarning()<<"Undefined type";
+        default:
+            qWarning() << "Undefined type";
             break;
         }
     }
 
-    if(vertical==Undefined) vertical=ValueType;
-    if(horizontal==Undefined) horizontal=ValueType;
+    if (vertical == Undefined)
+        vertical = ValueType;
+    if (horizontal == Undefined)
+        horizontal = ValueType;
 
-    if(vertical==ValueType && horizontal== ValueType) {
-        return AbstractDomain::XYDomain;
+    if (vertical == ValueType && horizontal == ValueType) {
+        if (chartType == QChart::ChartTypeCartesian)
+            return AbstractDomain::XYDomain;
+        else if (chartType == QChart::ChartTypePolar)
+            return AbstractDomain::XYPolarDomain;
     }
 
-    if(vertical==LogType && horizontal== ValueType) {
-        return AbstractDomain::XLogYDomain;
+    if (vertical == LogType && horizontal == ValueType) {
+        if (chartType == QChart::ChartTypeCartesian)
+            return AbstractDomain::XLogYDomain;
+        if (chartType == QChart::ChartTypePolar)
+            return AbstractDomain::XLogYPolarDomain;
     }
 
-    if(vertical==ValueType && horizontal== LogType) {
-        return AbstractDomain::LogXYDomain;
+    if (vertical == ValueType && horizontal == LogType) {
+        if (chartType == QChart::ChartTypeCartesian)
+            return AbstractDomain::LogXYDomain;
+        else if (chartType == QChart::ChartTypePolar)
+            return AbstractDomain::LogXYPolarDomain;
     }
 
-    if(vertical==LogType && horizontal== LogType) {
-        return AbstractDomain::LogXLogYDomain;
+    if (vertical == LogType && horizontal == LogType) {
+        if (chartType == QChart::ChartTypeCartesian)
+            return AbstractDomain::LogXLogYDomain;
+        else if (chartType == QChart::ChartTypePolar)
+            return AbstractDomain::LogXLogYPolarDomain;
     }
 
     return AbstractDomain::UndefinedDomain;
 }
 
-
 //refactor create factory
 AbstractDomain* ChartDataSet::createDomain(AbstractDomain::DomainType type)
 {
-	switch(type)
-	{
-		case AbstractDomain::LogXLogYDomain:
-			return new LogXLogYDomain();
-		case AbstractDomain::XYDomain:
-			return new XYDomain();
-		case AbstractDomain::XLogYDomain:
-			return new XLogYDomain();
-		case AbstractDomain::LogXYDomain:
-			return new LogXYDomain();
-		default:
-			return 0;
-	}
+    switch (type)
+    {
+    case AbstractDomain::LogXLogYDomain:
+        return new LogXLogYDomain();
+    case AbstractDomain::XYDomain:
+        return new XYDomain();
+    case AbstractDomain::XLogYDomain:
+        return new XLogYDomain();
+    case AbstractDomain::LogXYDomain:
+        return new LogXYDomain();
+    case AbstractDomain::XYPolarDomain:
+        return new XYPolarDomain();
+    case AbstractDomain::XLogYPolarDomain:
+        return new XLogYPolarDomain();
+    case AbstractDomain::LogXYPolarDomain:
+        return new LogXYPolarDomain();
+    case AbstractDomain::LogXLogYPolarDomain:
+        return new LogXLogYPolarDomain();
+    default:
+        return 0;
+    }
 }
 
 #include "moc_chartdataset_p.cpp"

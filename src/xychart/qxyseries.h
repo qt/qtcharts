@@ -56,6 +56,7 @@ public:
 
     int count() const;
     QList<QPointF> points() const;
+    const QPointF &pointAt(int index) const;
 
     QXYSeries &operator << (const QPointF &point);
     QXYSeries &operator << (const QList<QPointF> &points);

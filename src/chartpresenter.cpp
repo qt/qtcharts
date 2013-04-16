@@ -27,24 +27,28 @@
 #include "chartanimation_p.h"
 #include "qabstractseries_p.h"
 #include "qareaseries.h"
-#include "chartaxis_p.h"
+#include "chartaxiselement_p.h"
 #include "chartbackground_p.h"
-#include "chartlayout_p.h"
+#include "cartesianchartlayout_p.h"
+#include "polarchartlayout_p.h"
 #include "charttitle_p.h"
 #include <QTimer>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartPresenter::ChartPresenter(QChart *chart)
+ChartPresenter::ChartPresenter(QChart *chart, QChart::ChartType type)
     : QObject(chart),
       m_chart(chart),
       m_options(QChart::NoAnimation),
       m_state(ShowState),
-      m_layout(new ChartLayout(this)),
       m_background(0),
       m_title(0)
 {
-
+    if (type == QChart::ChartTypeCartesian)
+        m_layout = new CartesianChartLayout(this);
+    else if (type == QChart::ChartTypePolar)
+        m_layout = new PolarChartLayout(this);
+    Q_ASSERT(m_layout);
 }
 
 ChartPresenter::~ChartPresenter()
@@ -54,25 +58,25 @@ ChartPresenter::~ChartPresenter()
 
 void ChartPresenter::setGeometry(const QRectF rect)
 {
-	if(m_rect != rect) {
-		m_rect=rect;
-		foreach (ChartItem *chart, m_chartItems){
-			chart->domain()->setSize(rect.size());
-			chart->setPos(rect.topLeft());
-		}
-	}
+    if (m_rect != rect) {
+        m_rect = rect;
+        foreach (ChartItem *chart, m_chartItems) {
+            chart->domain()->setSize(rect.size());
+            chart->setPos(rect.topLeft());
+        }
+    }
 }
 
 QRectF ChartPresenter::geometry() const
 {
-	return m_rect;
+    return m_rect;
 }
 
 void ChartPresenter::handleAxisAdded(QAbstractAxis *axis)
 {
     axis->d_ptr->initializeGraphics(rootItem());
     axis->d_ptr->initializeAnimations(m_options);
-    ChartAxis *item = axis->d_ptr->axisItem();
+    ChartAxisElement *item = axis->d_ptr->axisItem();
     item->setPresenter(this);
     item->setThemeManager(m_chart->d_ptr->m_themeManager);
     m_axisItems<<item;
@@ -82,7 +86,7 @@ void ChartPresenter::handleAxisAdded(QAbstractAxis *axis)
 
 void ChartPresenter::handleAxisRemoved(QAbstractAxis *axis)
 {
-    ChartAxis *item  = axis->d_ptr->m_item.take();
+    ChartAxisElement *item  = axis->d_ptr->m_item.take();
     item->hide();
     item->disconnect();
     item->deleteLater();
@@ -275,7 +279,7 @@ bool ChartPresenter::isBackgroundDropShadowEnabled() const
 }
 
 
-ChartLayout *ChartPresenter::layout()
+AbstractChartLayout *ChartPresenter::layout()
 {
     return m_layout;
 }
@@ -295,7 +299,7 @@ ChartBackground *ChartPresenter::backgroundElement()
     return m_background;
 }
 
-QList<ChartAxis *>  ChartPresenter::axisItems() const
+QList<ChartAxisElement *>  ChartPresenter::axisItems() const
 {
     return m_axisItems;
 }

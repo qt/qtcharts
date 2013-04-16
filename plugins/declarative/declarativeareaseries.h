@@ -36,6 +36,8 @@ class DeclarativeAreaSeries : public QAreaSeries
     Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY NOTIFY axisYChanged REVISION 1)
     Q_PROPERTY(QAbstractAxis *axisXTop READ axisXTop WRITE setAxisXTop NOTIFY axisXTopChanged REVISION 2)
     Q_PROPERTY(QAbstractAxis *axisYRight READ axisYRight WRITE setAxisYRight NOTIFY axisYRightChanged REVISION 2)
+    Q_PROPERTY(QAbstractAxis *axisAngular READ axisAngular WRITE setAxisAngular NOTIFY axisAngularChanged REVISION 3)
+    Q_PROPERTY(QAbstractAxis *axisRadial READ axisRadial WRITE setAxisRadial NOTIFY axisRadialChanged REVISION 3)
     Q_PROPERTY(qreal borderWidth READ borderWidth WRITE setBorderWidth NOTIFY borderWidthChanged REVISION 1)
 
 public:
@@ -52,6 +54,10 @@ public:
     Q_REVISION(2) void setAxisXTop(QAbstractAxis *axis) { m_axes->setAxisXTop(axis); }
     Q_REVISION(2) QAbstractAxis *axisYRight() { return m_axes->axisYRight(); }
     Q_REVISION(2) void setAxisYRight(QAbstractAxis *axis) { m_axes->setAxisYRight(axis); }
+    Q_REVISION(3) QAbstractAxis *axisAngular() { return m_axes->axisX(); }
+    Q_REVISION(3) void setAxisAngular(QAbstractAxis *axis) { m_axes->setAxisX(axis); }
+    Q_REVISION(3) QAbstractAxis *axisRadial() { return m_axes->axisY(); }
+    Q_REVISION(3) void setAxisRadial(QAbstractAxis *axis) { m_axes->setAxisY(axis); }
     qreal borderWidth() const;
     void setBorderWidth(qreal borderWidth);
 
@@ -61,6 +67,8 @@ Q_SIGNALS:
     Q_REVISION(1) void borderWidthChanged(qreal width);
     Q_REVISION(2) void axisXTopChanged(QAbstractAxis *axis);
     Q_REVISION(2) void axisYRightChanged(QAbstractAxis *axis);
+    Q_REVISION(3) void axisAngularChanged(QAbstractAxis *axis);
+    Q_REVISION(3) void axisRadialChanged(QAbstractAxis *axis);
 
 public:
     DeclarativeAxes *m_axes;

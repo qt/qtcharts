@@ -88,12 +88,26 @@ void AreaChartItem::updatePath()
     path = m_upper->path();
 
     if (m_lower) {
+        // Note: Polarcharts always draw area correctly only when both series have equal width or are
+        // fully displayed. If one series is partally off-chart, the connecting line between
+        // the series does not attach to the end of the partially hidden series but to the point
+        // where it intersects the axis line. The problem is especially noticeable when one of the series
+        // is entirely off-chart, in which case the connecting line connects two ends of the
+        // visible series.
+        // This happens because we get the paths from linechart, which omits off-chart segments.
+        // To properly fix, linechart would need to provide true full path, in right, left, and the rest
+        // portions to enable proper clipping. However, combining those to single visually unified area
+        // would be a nightmare, since they would have to be painted separately.
         path.connectPath(m_lower->path().toReversed());
     } else {
         QPointF first = path.pointAtPercent(0);
         QPointF last =  path.pointAtPercent(1);
-        path.lineTo(last.x(), rect.bottom());
-        path.lineTo(first.x(), rect.bottom());
+        if (presenter()->chartType() == QChart::ChartTypeCartesian) {
+            path.lineTo(last.x(), rect.bottom());
+            path.lineTo(first.x(), rect.bottom());
+        } else { // polar
+            path.lineTo(rect.center());
+        }
     }
     path.closeSubpath();
     prepareGeometryChange();
@@ -137,7 +151,11 @@ void AreaChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     painter->save();
     painter->setPen(m_linePen);
     painter->setBrush(m_brush);
-    painter->setClipRect(QRectF(QPointF(0,0),domain()->size()));
+    QRectF clipRect = QRectF(QPointF(0, 0), domain()->size());
+    if (presenter()->chartType() == QChart::ChartTypePolar)
+        painter->setClipRegion(QRegion(clipRect.toRect(), QRegion::Ellipse));
+    else
+        painter->setClipRect(clipRect);
     painter->drawPath(m_path);
     if (m_pointsVisible) {
         painter->setPen(m_pointPen);

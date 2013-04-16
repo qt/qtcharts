@@ -25,31 +25,29 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-VerticalAxis::VerticalAxis(QAbstractAxis *axis, QGraphicsItem* item, bool intervalAxis)
-    : ChartAxis(axis, item, intervalAxis)
+VerticalAxis::VerticalAxis(QAbstractAxis *axis, QGraphicsItem *item, bool intervalAxis)
+    : CartesianChartAxis(axis, item, intervalAxis)
 {
-
 }
 
 VerticalAxis::~VerticalAxis()
 {
-
 }
 
 void VerticalAxis::updateGeometry()
 {
-    const QVector<qreal> &layout = ChartAxis::layout();
+    const QVector<qreal> &layout = ChartAxisElement::layout();
 
     if (layout.isEmpty())
         return;
 
     QStringList labelList = labels();
 
-    QList<QGraphicsItem *> lines = lineItems();
+    QList<QGraphicsItem *> lines = gridItems();
     QList<QGraphicsItem *> labels = labelItems();
     QList<QGraphicsItem *> shades = shadeItems();
-    QList<QGraphicsItem *> axis = arrowItems();
-    QGraphicsSimpleTextItem* title = titleItem();
+    QList<QGraphicsItem *> arrow = arrowItems();
+    QGraphicsSimpleTextItem *title = titleItem();
 
     Q_ASSERT(labels.size() == labelList.size());
     Q_ASSERT(layout.size() == labelList.size());
@@ -61,32 +59,31 @@ void VerticalAxis::updateGeometry()
 
 
     //arrow
-    QGraphicsLineItem *arrowItem = static_cast<QGraphicsLineItem*>(axis.at(0));
+    QGraphicsLineItem *arrowItem = static_cast<QGraphicsLineItem*>(arrow.at(0));
 
     //arrow position
-    if (alignment()==Qt::AlignLeft)
-        arrowItem->setLine( axisRect.right() , gridRect.top(), axisRect.right(), gridRect.bottom());
-    else if(alignment()==Qt::AlignRight)
-        arrowItem->setLine( axisRect.left() , gridRect.top(), axisRect.left(), gridRect.bottom());
+    if (axis()->alignment() == Qt::AlignLeft)
+        arrowItem->setLine(axisRect.right(), gridRect.top(), axisRect.right(), gridRect.bottom());
+    else if (axis()->alignment() == Qt::AlignRight)
+        arrowItem->setLine(axisRect.left(), gridRect.top(), axisRect.left(), gridRect.bottom());
 
-    QFontMetrics fn(font());
+    QFontMetrics fn(axis()->labelsFont());
 
     //title
     int titlePad = 0;
     QRectF titleBoundingRect;
-    if (!titleText().isEmpty() && titleItem()->isVisible()) {
+    QString titleText = axis()->titleText();
+    if (!titleText.isEmpty() && titleItem()->isVisible()) {
         QFontMetrics fn(title->font());
         int size(0);
         size = gridRect.height();
-        QString titleText = this->titleText();
 
         if (fn.boundingRect(titleText).width() > size) {
             QString string = titleText + "...";
             while (fn.boundingRect(string).width() > size && string.length() > 3)
-            string.remove(string.length() - 4, 1);
+                string.remove(string.length() - 4, 1);
             title->setText(string);
-        }
-        else {
+        } else {
             title->setText(titleText);
         }
 
@@ -94,10 +91,10 @@ void VerticalAxis::updateGeometry()
         titleBoundingRect = title->boundingRect();
 
         QPointF center = gridRect.center() - titleBoundingRect.center();
-        if (alignment() == Qt::AlignLeft) {
+        if (axis()->alignment() == Qt::AlignLeft) {
             title->setPos(axisRect.left() - titleBoundingRect.width() / 2 + titleBoundingRect.height() / 2 + titlePad, center.y());
         }
-        else if (alignment() == Qt::AlignRight) {
+        else if (axis()->alignment() == Qt::AlignRight) {
             title->setPos(axisRect.right() - titleBoundingRect.width() / 2 - titleBoundingRect.height() / 2 - titlePad, center.y());
         }
         title->setTransformOriginPoint(titleBoundingRect.center());
@@ -105,14 +102,13 @@ void VerticalAxis::updateGeometry()
     }
 
     for (int i = 0; i < layout.size(); ++i) {
-
         //items
         QGraphicsLineItem *gridItem = static_cast<QGraphicsLineItem *>(lines.at(i));
-        QGraphicsLineItem *tickItem = static_cast<QGraphicsLineItem *>(axis.at(i + 1));
+        QGraphicsLineItem *tickItem = static_cast<QGraphicsLineItem *>(arrow.at(i + 1));
         QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem *>(labels.at(i));
 
         //grid line
-        gridItem->setLine(gridRect.left() , layout[i], gridRect.right(), layout[i]);
+        gridItem->setLine(gridRect.left(), layout[i], gridRect.right(), layout[i]);
 
         //label text wrapping
         QString text = labelList.at(i);
@@ -138,10 +134,10 @@ void VerticalAxis::updateGeometry()
         int widthDiff = rect.width() - boundingRect.width();
 
         //ticks and label position
-        if (alignment() == Qt::AlignLeft) {
+        if (axis()->alignment() == Qt::AlignLeft) {
             labelItem->setPos(axisRect.right() - rect.width() + (widthDiff / 2) - labelPadding(), layout[i] - center.y());
             tickItem->setLine(axisRect.right() - labelPadding(), layout[i], axisRect.right(), layout[i]);
-        } else if (alignment() == Qt::AlignRight) {
+        } else if (axis()->alignment() == Qt::AlignRight) {
             labelItem->setPos(axisRect.left() + labelPadding() - (widthDiff / 2), layout[i] - center.y());
             tickItem->setLine(axisRect.left(), layout[i], axisRect.left() + labelPadding(), layout[i]);
         }
@@ -202,7 +198,7 @@ void VerticalAxis::updateGeometry()
         gridLine = static_cast<QGraphicsLineItem *>(lines.at(layout.size()));
         gridLine->setLine(gridRect.left(), gridRect.top(), gridRect.right(), gridRect.top());
         gridLine->setVisible(true);
-        gridLine = static_cast<QGraphicsLineItem*>(lines.at(layout.size()+1));
+        gridLine = static_cast<QGraphicsLineItem*>(lines.at(layout.size() + 1));
         gridLine->setLine(gridRect.left(), gridRect.bottom(), gridRect.right(), gridRect.bottom());
         gridLine->setVisible(true);
     }
@@ -212,10 +208,10 @@ QSizeF VerticalAxis::sizeHint(Qt::SizeHint which, const QSizeF &constraint) cons
 {
 
     Q_UNUSED(constraint);
-    QFontMetrics fn(titleFont());
-    QSizeF sh(0,0);
+    QFontMetrics fn(axis()->titleFont());
+    QSizeF sh(0, 0);
 
-    if (titleText().isEmpty() || !titleItem()->isVisible())
+    if (axis()->titleText().isEmpty() || !titleItem()->isVisible())
         return sh;
 
     switch (which) {

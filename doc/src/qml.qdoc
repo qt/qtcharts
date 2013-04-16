@@ -27,6 +27,7 @@
                 <td valign="top">
                     <ul>
                     <li><a href="qml-chartview.html">ChartView</a></li>
+                    <li><a href="qml-polarchartview.html">PolarChartView</a></li>
                     <li><a href="qml-abstractaxis.html">AbstractAxis</a></li>
                     <li><a href="qml-valueaxis.html">ValueAxis</a></li>
                     <li><a href="qml-categoryaxis.html">CategoryAxis</a></li>

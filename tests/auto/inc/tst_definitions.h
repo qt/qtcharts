@@ -21,6 +21,7 @@
 #ifndef TST_DEFINITIONS_H
 #define TST_DEFINITIONS_H
 
+#include "qpolarchart.h"
 #include <QtTest/QtTest>
 #include <QPushButton>
 
@@ -63,6 +64,16 @@ namespace QTest
                 QSKIP("Cannot test mouse events in this environment"); \
         } while (0); \
     }
+
+    #define SKIP_ON_POLAR() { \
+        if (isPolarTest()) \
+            QSKIP("Test not supported by polar chart"); \
+        }
+
+    #define SKIP_ON_CARTESIAN() { \
+        if (!isPolarTest()) \
+            QSKIP("Test not supported by cartesian chart"); \
+        }
 #else
     #define SKIP_IF_CANNOT_TEST_MOUSE_EVENTS() { \
         do { \
@@ -76,6 +87,39 @@ namespace QTest
                 QSKIP("Cannot test mouse events in this environment", SkipAll); \
         } while (0); \
     }
+
+    #define SKIP_ON_POLAR() { \
+        if (isPolarTest()) \
+            QSKIP("Test not supported by polar chart", SkipAll); \
+        }
+
+    #define SKIP_ON_CARTESIAN() { \
+        if (!isPolarTest()) \
+            QSKIP("Test not supported by cartesian chart", SkipAll); \
+        }
 #endif
+
+static inline bool isPolarTest()
+{
+    static bool isPolar = false;
+    static bool polarEnvChecked = false;
+    if (!polarEnvChecked) {
+        isPolar = !(qgetenv("TEST_POLAR_CHART").isEmpty());
+        polarEnvChecked = true;
+        if (isPolar)
+            qDebug() << "TEST_POLAR_CHART found -> Testing polar chart!";
+    }
+    return isPolar;
+}
+
+static inline QtCommercialChart::QChart *newQChartOrQPolarChart()
+{
+    if (isPolarTest())
+        return new QtCommercialChart::QPolarChart();
+    else
+        return new QtCommercialChart::QChart();
+}
+
+
 
 #endif // TST_DEFINITIONS_H

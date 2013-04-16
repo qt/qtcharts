@@ -23,7 +23,7 @@
 QTCOMMERCIALCHART_USE_NAMESPACE
 
 DrilldownChart::DrilldownChart(QGraphicsItem *parent, Qt::WindowFlags wFlags)
-    : QChart(parent, wFlags),
+    : QChart(QChart::ChartTypeCartesian, parent, wFlags),
       m_currentSeries(0)
 {
 

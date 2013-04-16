@@ -24,7 +24,7 @@
 #include <cmath>
 
 Chart::Chart(QGraphicsItem *parent, Qt::WindowFlags wFlags, QLineSeries *series)
-    : QChart(parent, wFlags), m_series(series)
+    : QChart(QChart::ChartTypeCartesian, parent, wFlags), m_series(series)
 {
     m_clicked = false;
 }

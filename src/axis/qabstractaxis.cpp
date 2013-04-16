@@ -254,11 +254,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
   \property QAbstractAxis::alignment
-  The alignment of the axis. Either Qt::AlignLeft or Qt::AlignBottom.
+  The alignment of the axis. Can be Qt::AlignLeft, Qt::AlignRight, Qt::AlignBottom, or Qt::AlignTop.
 */
 /*!
   \qmlproperty alignment AbstractAxis::alignment
-  The alignment of the axis. Either Qt.AlignLeft or Qt.AlignBottom.
+  The alignment of the axis. Can be Qt.AlignLeft, Qt.AlignRight, Qt.AlignBottom, or Qt.AlignTop.
 */
 
 /*!
@@ -990,11 +990,11 @@ void QAbstractAxisPrivate::initializeGraphics(QGraphicsItem* parent)
 
 void QAbstractAxisPrivate::initializeAnimations(QChart::AnimationOptions options)
 {
-    ChartAxis* axis = m_item.data();
+    ChartAxisElement *axis = m_item.data();
     Q_ASSERT(axis);
-    if(options.testFlag(QChart::GridAxisAnimations)) {
+    if (options.testFlag(QChart::GridAxisAnimations)) {
         axis->setAnimation(new AxisAnimation(axis));
-    }else{
+    } else {
         axis->setAnimation(0);
     }
 }

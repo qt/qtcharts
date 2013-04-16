@@ -56,10 +56,10 @@ public:
 
     QPointF calculateGeometryPoint(const QPointF &point, bool &ok) const;
     QPointF calculateDomainPoint(const QPointF &point) const;
-    QVector<QPointF> calculateGeometryPoints(const QList<QPointF>& vector) const;
+    QVector<QPointF> calculateGeometryPoints(const QList<QPointF> &vector) const;
 
-    bool attachAxis(QAbstractAxis* axis);
-    bool detachAxis(QAbstractAxis* axis);
+    bool attachAxis(QAbstractAxis *axis);
+    bool detachAxis(QAbstractAxis *axis);
 
 public Q_SLOTS:
     void handleHorizontalAxisBaseChanged(qreal baseX);

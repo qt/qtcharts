@@ -45,10 +45,10 @@ class XYChart :  public ChartItem
 {
     Q_OBJECT
 public:
-    explicit XYChart(QXYSeries *series,QGraphicsItem* item = 0);
+    explicit XYChart(QXYSeries *series,QGraphicsItem *item = 0);
     ~XYChart() {}
 
-    void setGeometryPoints(const QVector<QPointF>& points);
+    void setGeometryPoints(const QVector<QPointF> &points);
     QVector<QPointF> geometryPoints() const { return m_points; }
 
     void setAnimation(XYAnimation *animation);
@@ -57,6 +57,9 @@ public:
 
     bool isDirty() const { return m_dirty; }
     void setDirty(bool dirty);
+
+    void getSeriesRanges(qreal &minX, qreal &maxX, qreal &minY, qreal &maxY);
+    QVector<bool> offGridStatusVector();
 
 public Q_SLOTS:
     void handlePointAdded(int index);

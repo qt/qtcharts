@@ -57,6 +57,9 @@ public:
     QStringList categoriesLabels();
     int count() const;
 
+Q_SIGNALS:
+    void categoriesChanged();
+
 private:
     Q_DECLARE_PRIVATE(QCategoryAxis)
     Q_DISABLE_COPY(QCategoryAxis)

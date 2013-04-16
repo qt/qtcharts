@@ -39,8 +39,8 @@ SOURCES += \
     $$PWD/chartelement.cpp \
     $$PWD/chartitem.cpp \
     $$PWD/scroller.cpp \
-    $$PWD/chartlayout.cpp \
-    $$PWD/charttitle.cpp
+    $$PWD/charttitle.cpp \
+    $$PWD/qpolarchart.cpp
 PRIVATE_HEADERS += \
     $$PWD/chartdataset_p.h \
     $$PWD/chartitem_p.h \
@@ -53,7 +53,6 @@ PRIVATE_HEADERS += \
     $$PWD/qchartview_p.h \
     $$PWD/scroller_p.h \
     $$PWD/qabstractseries_p.h \
-    $$PWD/chartlayout_p.h \
     $$PWD/charttitle_p.h \
     $$PWD/charthelpers_p.h
 PUBLIC_HEADERS += \
@@ -61,7 +60,8 @@ PUBLIC_HEADERS += \
     $$PWD/qchartglobal.h \
     $$PWD/qabstractseries.h \
     $$PWD/qchartview.h \
-    $$PWD/chartsnamespace.h
+    $$PWD/chartsnamespace.h \
+    $$PWD/qpolarchart.h
     
 include(animations/animations.pri)
 include(areachart/areachart.pri)    
@@ -75,6 +75,7 @@ include(scatterchart/scatter.pri)
 include(splinechart/splinechart.pri)
 include(themes/themes.pri)
 include(xychart/xychart.pri)
+include(layout/layout.pri)
 
 HEADERS += $$PUBLIC_HEADERS
 HEADERS += $$PRIVATE_HEADERS

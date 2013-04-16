@@ -19,15 +19,15 @@
 ****************************************************************************/
 
 #include "horizontalaxis_p.h"
-#include "qabstractaxis.h"
+#include "qabstractaxis_p.h"
 #include <QFontMetrics>
 #include <qmath.h>
 #include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-HorizontalAxis::HorizontalAxis(QAbstractAxis *axis, QGraphicsItem* item , bool intervalAxis)
-    : ChartAxis(axis, item, intervalAxis)
+HorizontalAxis::HorizontalAxis(QAbstractAxis *axis, QGraphicsItem *item, bool intervalAxis)
+    : CartesianChartAxis(axis, item, intervalAxis)
 {
 }
 
@@ -37,18 +37,18 @@ HorizontalAxis::~HorizontalAxis()
 
 void HorizontalAxis::updateGeometry()
 {
-    const QVector<qreal>& layout = ChartAxis::layout();
+    const QVector<qreal> &layout = ChartAxisElement::layout();
 
     if (layout.isEmpty())
         return;
 
     QStringList labelList = labels();
 
-    QList<QGraphicsItem *> lines = lineItems();
+    QList<QGraphicsItem *> lines = gridItems();
     QList<QGraphicsItem *> labels = labelItems();
     QList<QGraphicsItem *> shades = shadeItems();
-    QList<QGraphicsItem *> axis = arrowItems();
-    QGraphicsSimpleTextItem* title = titleItem();
+    QList<QGraphicsItem *> arrow = arrowItems();
+    QGraphicsSimpleTextItem *title = titleItem();
 
     Q_ASSERT(labels.size() == labelList.size());
     Q_ASSERT(layout.size() == labelList.size());
@@ -57,24 +57,24 @@ void HorizontalAxis::updateGeometry()
     const QRectF &gridRect = gridGeometry();
 
     //arrow
-    QGraphicsLineItem *arrowItem = static_cast<QGraphicsLineItem *>(axis.at(0));
+    QGraphicsLineItem *arrowItem = static_cast<QGraphicsLineItem *>(arrow.at(0));
 
-    if (alignment() == Qt::AlignTop)
+    if (axis()->alignment() == Qt::AlignTop)
         arrowItem->setLine(gridRect.left(), axisRect.bottom(), gridRect.right(), axisRect.bottom());
-    else if (alignment() == Qt::AlignBottom)
+    else if (axis()->alignment() == Qt::AlignBottom)
         arrowItem->setLine(gridRect.left(), axisRect.top(), gridRect.right(), axisRect.top());
 
     qreal width = 0;
-    QFontMetrics fn(font());
+    QFontMetrics fn(axis()->labelsFont());
 
     //title
     int titlePad = 0;
     QRectF titleBoundingRect;
-    if (!titleText().isEmpty() && titleItem()->isVisible()) {
+    QString titleText = axis()->titleText();
+    if (!titleText.isEmpty() && titleItem()->isVisible()) {
         QFontMetrics fn(title->font());
         int size(0);
         size = gridRect.width();
-        QString titleText = this->titleText();
 
         if (fn.boundingRect(titleText).width() > size) {
             QString string = titleText + "...";
@@ -89,9 +89,9 @@ void HorizontalAxis::updateGeometry()
         titleBoundingRect = title->boundingRect();
 
         QPointF center = gridRect.center() - titleBoundingRect.center();
-        if (alignment() == Qt::AlignTop) {
+        if (axis()->alignment() == Qt::AlignTop) {
             title->setPos(center.x(), axisRect.top() + titlePad);
-        } else  if (alignment() == Qt::AlignBottom) {
+        } else  if (axis()->alignment() == Qt::AlignBottom) {
             title->setPos(center.x(), axisRect.bottom() - titleBoundingRect.height() - titlePad);
         }
     }
@@ -100,7 +100,7 @@ void HorizontalAxis::updateGeometry()
 
         //items
         QGraphicsLineItem *gridItem = static_cast<QGraphicsLineItem*>(lines.at(i));
-        QGraphicsLineItem *tickItem = static_cast<QGraphicsLineItem*>(axis.at(i + 1));
+        QGraphicsLineItem *tickItem = static_cast<QGraphicsLineItem*>(arrow.at(i + 1));
         QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem *>(labels.at(i));
 
         //grid line
@@ -128,10 +128,10 @@ void HorizontalAxis::updateGeometry()
         int heightDiff = rect.height() - boundingRect.height();
 
         //ticks and label position
-        if (alignment() == Qt::AlignTop) {
+        if (axis()->alignment() == Qt::AlignTop) {
             labelItem->setPos(layout[i] - center.x(), axisRect.bottom() - rect.height() + (heightDiff / 2) - labelPadding());
             tickItem->setLine(layout[i], axisRect.bottom(), layout[i], axisRect.bottom() - labelPadding());
-        } else if (alignment() == Qt::AlignBottom) {
+        } else if (axis()->alignment() == Qt::AlignBottom) {
             labelItem->setPos(layout[i] - center.x(), axisRect.top() - (heightDiff / 2) + labelPadding());
             tickItem->setLine(layout[i], axisRect.top(), layout[i], axisRect.top() + labelPadding());
         }
@@ -178,7 +178,7 @@ void HorizontalAxis::updateGeometry()
         if (x < gridRect.left() || x > gridRect.right()) {
             gridItem->setVisible(false);
             tickItem->setVisible(false);
-        }else{
+        } else {
             gridItem->setVisible(true);
             tickItem->setVisible(true);
         }
@@ -200,10 +200,10 @@ void HorizontalAxis::updateGeometry()
 QSizeF HorizontalAxis::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
 {
     Q_UNUSED(constraint);
-    QFontMetrics fn(titleFont());
+    QFontMetrics fn(axis()->titleFont());
     QSizeF sh(0,0);
 
-    if (titleText().isEmpty() || !titleItem()->isVisible())
+    if (axis()->titleText().isEmpty() || !titleItem()->isVisible())
         return sh;
 
     switch (which) {

@@ -32,6 +32,7 @@
 
 #include "qchartglobal.h"
 #include "xychart_p.h"
+#include "qchart.h"
 #include <QPen>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -44,7 +45,7 @@ class LineChartItem :  public XYChart
     Q_OBJECT
     Q_INTERFACES(QGraphicsItem)
 public:
-    explicit LineChartItem(QLineSeries *series, QGraphicsItem* item = 0);
+    explicit LineChartItem(QLineSeries *series, QGraphicsItem *item = 0);
     ~LineChartItem() {}
 
     //from QGraphicsItem
@@ -52,7 +53,7 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     QPainterPath shape() const;
 
-    QPainterPath path() const { return m_linePath; }
+    QPainterPath path() const { return m_fullPath; }
 
 public Q_SLOTS:
     void handleUpdated();
@@ -63,15 +64,21 @@ protected:
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
     void suppressPoints() { m_pointsVisible = false; }
+    void forceChartType(QChart::ChartType chartType) { m_chartType = chartType; }
 
 private:
     QLineSeries *m_series;
-    QPainterPath m_path;
     QPainterPath m_linePath;
+    QPainterPath m_linePathPolarRight;
+    QPainterPath m_linePathPolarLeft;
+    QPainterPath m_fullPath;
+    QPainterPath m_shapePath;
+
     QVector<QPointF> m_points;
     QRectF m_rect;
     QPen m_linePen;
     bool m_pointsVisible;
+    QChart::ChartType m_chartType;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

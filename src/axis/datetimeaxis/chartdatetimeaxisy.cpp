@@ -21,7 +21,7 @@
 #include "chartdatetimeaxisy_p.h"
 #include "chartpresenter_p.h"
 #include "qdatetimeaxis.h"
-#include "chartlayout_p.h"
+#include "abstractchartlayout_p.h"
 #include <QGraphicsLayout>
 #include <QFontMetrics>
 #include <QDateTime>
@@ -29,12 +29,12 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartDateTimeAxisY::ChartDateTimeAxisY(QDateTimeAxis *axis, QGraphicsItem* item)
+ChartDateTimeAxisY::ChartDateTimeAxisY(QDateTimeAxis *axis, QGraphicsItem *item)
     : VerticalAxis(axis, item),
       m_axis(axis)
 {
-    QObject::connect(m_axis,SIGNAL(tickCountChanged(int)),this, SLOT(handleTickCountChanged(int)));
-    QObject::connect(m_axis,SIGNAL(formatChanged(QString)),this, SLOT(handleFormatChanged(QString)));
+    QObject::connect(m_axis, SIGNAL(tickCountChanged(int)), this, SLOT(handleTickCountChanged(int)));
+    QObject::connect(m_axis, SIGNAL(formatChanged(QString)), this, SLOT(handleFormatChanged(QString)));
 }
 
 ChartDateTimeAxisY::~ChartDateTimeAxisY()
@@ -59,10 +59,10 @@ QVector<qreal> ChartDateTimeAxisY::calculateLayout() const
 
 void ChartDateTimeAxisY::updateGeometry()
 {
-    const QVector<qreal> &layout = ChartAxis::layout();
+    const QVector<qreal> &layout = ChartAxisElement::layout();
     if (layout.isEmpty())
         return;
-    setLabels(createDateTimeLabels(min(),max(), layout.size(),m_axis->format()));
+    setLabels(createDateTimeLabels(min(), max(), layout.size(), m_axis->format()));
     VerticalAxis::updateGeometry();
 }
 
@@ -70,25 +70,27 @@ void ChartDateTimeAxisY::handleTickCountChanged(int tick)
 {
     Q_UNUSED(tick)
     QGraphicsLayoutItem::updateGeometry();
-    if(presenter()) presenter()->layout()->invalidate();
+    if (presenter())
+        presenter()->layout()->invalidate();
 }
 
 void ChartDateTimeAxisY::handleFormatChanged(const QString &format)
 {
     Q_UNUSED(format);
     QGraphicsLayoutItem::updateGeometry();
-    if(presenter()) presenter()->layout()->invalidate();
+    if (presenter())
+        presenter()->layout()->invalidate();
 }
 
 QSizeF ChartDateTimeAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
 {
     Q_UNUSED(constraint)
 
-    QFontMetrics fn(font());
+    QFontMetrics fn(axis()->labelsFont());
     QSizeF sh;
 
     QSizeF base = VerticalAxis::sizeHint(which, constraint);
-    QStringList ticksList = createDateTimeLabels(min(),max(),m_axis->tickCount(),m_axis->format());
+    QStringList ticksList = createDateTimeLabels(min(), max(), m_axis->tickCount(), m_axis->format());
     qreal width = 0;
     // Height of vertical axis sizeHint indicates the maximum distance labels can extend past
     // first and last ticks. Base height is irrelevant.

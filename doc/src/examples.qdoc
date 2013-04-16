@@ -98,36 +98,38 @@
         </tr>
 
         <tr>
+            <td><a href="examples-polarchart.html">Polar chart</a></td>
             <td><a href="examples-scatterchart.html">Scatter chart</a></td>
-            <td><a href="examples-scatterinteractions.html">Scatter Interactions</a></td>
         </tr>
         <tr>
+            <td><a href="examples-polarchart.html"><img src="images/examples_polarchart.png" width="300" alt="Polar chart" /></a></td>
             <td><a href="examples-scatterchart.html"><img src="images/examples_scatterchart.png" width="300" alt="Scatter chart" /></a></td>
-            <td><a href="examples-scatterinteractions.html"><img src="images/examples_scatterinteractions.png" width="300" alt="Scatter Interactions" /></a></td>
         </tr>
 
         <tr>
+            <td><a href="examples-scatterinteractions.html">Scatter Interactions</a></td>
             <td><a href="examples-splinechart.html">Spline Chart</a></td>
-            <td><a href="examples-stackedbarchart.html">Stacked Bar Chart</a></td>
         </tr>
         <tr>
+            <td><a href="examples-scatterinteractions.html"><img src="images/examples_scatterinteractions.png" width="300" alt="Scatter Interactions" /></a></td>
             <td><a href="examples-splinechart.html"><img src="images/examples_splinechart.png" width="300" alt="Spline Chart" /></a></td>
-            <td><a href="examples-stackedbarchart.html"><img src="images/examples_stackedbarchart.png" width="300" alt="Stacked Bar Chart" /></a></td>
         </tr>
 
         <tr>
+            <td><a href="examples-stackedbarchart.html">Stacked Bar Chart</a></td>
             <td><a href="examples-stackedbarchartdrilldown.html">Stacked Bar Chart Drilldown</a></td>
-            <td><a href="examples-temperaturerecords.html">Temperature Records</a></td>
         </tr>
         <tr>            
+            <td><a href="examples-stackedbarchart.html"><img src="images/examples_stackedbarchart.png" width="300" alt="Stacked Bar Chart" /></a></td>
             <td><a href="examples-stackedbarchartdrilldown.html"><img src="images/examples_stackedbarchartdrilldown1.png" width="300" alt="Stacked Bar Chart Drilldown" /></a></td>
-            <td><a href="examples-temperaturerecords.html"><img src="images/examples_temperaturerecords.png" width="300" alt="Temperature Records" /></a></td>
         </tr>
 
         <tr>            
+            <td><a href="examples-temperaturerecords.html">Temperature Records</a></td>
             <td><a href="examples-zoomlinechart.html">Zoom Line</a></td>
         </tr>
         <tr>            
+            <td><a href="examples-temperaturerecords.html"><img src="images/examples_temperaturerecords.png" width="300" alt="Temperature Records" /></a></td>
             <td><a href="examples-zoomlinechart.html"><img src="images/examples_zoomlinechart1.png" width="300" alt="Zoom Line" /></a></td>
         </tr>
 

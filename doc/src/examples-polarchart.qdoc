@@ -1,0 +1,33 @@
+/*!
+    \example examples/polarchart
+    \title Polar chart example
+    \subtitle
+
+    The example shows how to create simple polar chart with multiple different series.
+    It also shows how to implement scrolling and zooming of the polar chart as well as
+    visually demonstrate how polar chart and cartesian chart relate to each other.
+
+    \image examples_polarchart.png
+
+    Creating polar chart is done via QPolarChart instance instead of QChart.
+
+    \snippet ../examples/polarchart/main.cpp 1
+
+    Axes are created similarly to cartesian charts, but when axes are added to the chart,
+    you can use polar orientations instead of alignments.
+
+    \snippet ../examples/polarchart/main.cpp 2
+
+    Zooming and scrolling of the polar chart is logically nearly identical to zooming and scrolling of cartesian chart.
+    The main difference is that when scrolling along X-axis (angular axis), angle is used instead of number of pixels.
+    Another difference is that zooming to a rectangle cannot be done.
+
+    \snippet ../examples/polarchart/chartview.cpp 1
+
+    Same axes and series can be used in both cartesian and polar charts, though not simultaneously.
+    To switch between chart types, you need to first remove series and axes from the old chart and then add
+    them to the new chart. If you want to preserve axis ranges, those need to be copied, too.
+
+    \snippet ../examples/polarchart/chartview.cpp 2
+
+*/

@@ -45,10 +45,18 @@ class QTCOMMERCIALCHART_EXPORT QChart : public QGraphicsWidget
     Q_PROPERTY(QChart::AnimationOptions animationOptions READ animationOptions WRITE setAnimationOptions)
     Q_PROPERTY(QMargins minimumMargins READ minimumMargins WRITE setMinimumMargins)
     Q_PROPERTY(QMargins margins READ margins WRITE setMargins)
+    Q_PROPERTY(QChart::ChartType chartType READ chartType)
     Q_ENUMS(ChartTheme)
     Q_ENUMS(AnimationOption)
+    Q_ENUMS(ChartType)
 
 public:
+    enum ChartType {
+        ChartTypeUndefined = 0,
+        ChartTypeCartesian,
+        ChartTypePolar
+    };
+
     enum ChartTheme {
         ChartThemeLight = 0,
         ChartThemeBlueCerulean,
@@ -84,7 +92,7 @@ public:
     QAbstractAxis *axisY(QAbstractSeries *series = 0) const;
     // ******************
 
-    void addAxis(QAbstractAxis *axis,Qt::Alignment alignment);
+    void addAxis(QAbstractAxis *axis, Qt::Alignment alignment);
     void removeAxis(QAbstractAxis *axis);
     QList<QAbstractAxis*> axes(Qt::Orientations orientation = Qt::Horizontal|Qt::Vertical, QAbstractSeries *series = 0) const;
 
@@ -133,7 +141,10 @@ public:
     QPointF mapToValue(const QPointF &position, QAbstractSeries *series = 0);
     QPointF mapToPosition(const QPointF &value, QAbstractSeries *series = 0);
 
+    ChartType chartType() const;
+
 protected:
+    explicit QChart(QChart::ChartType type, QGraphicsItem *parent, Qt::WindowFlags wFlags);
     QScopedPointer<QChartPrivate> d_ptr;
     friend class QLegend;
     friend class DeclarativeChart;

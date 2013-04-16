@@ -31,7 +31,7 @@
 #define QABSTRACTAXIS_P_H
 
 #include "qabstractaxis.h"
-#include "chartaxis_p.h"
+#include "chartaxiselement_p.h"
 #include "qchart.h"
 #include <QDebug>
 
@@ -59,7 +59,7 @@ public:
     void setAlignment( Qt::Alignment alignment);
 
     virtual void initializeDomain(AbstractDomain *domain) = 0;
-    virtual void initializeGraphics(QGraphicsItem* parent) = 0;
+    virtual void initializeGraphics(QGraphicsItem *parent) = 0;
     virtual void initializeTheme(ChartTheme* theme, bool forced = false);
     virtual void initializeAnimations(QChart::AnimationOptions options);
 
@@ -73,7 +73,7 @@ public:
     virtual qreal min() = 0;
     virtual qreal max() = 0;
 
-    ChartAxis* axisItem() { return m_item.data(); }
+    ChartAxisElement *axisItem() { return m_item.data(); }
 
 public Q_SLOTS:
     void handleRangeChanged(qreal min, qreal max);
@@ -84,7 +84,7 @@ Q_SIGNALS:
 protected:
     QAbstractAxis *q_ptr;
     QChart *m_chart;
-    QScopedPointer<ChartAxis> m_item;
+    QScopedPointer<ChartAxisElement> m_item;
 private:
     QList<QAbstractSeries*> m_series;
 

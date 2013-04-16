@@ -42,12 +42,12 @@ class AxisItem;
 class QAbstractSeries;
 class ChartDataSet;
 class AbstractDomain;
-class ChartAxis;
+class ChartAxisElement;
 class ChartAnimator;
 class ChartBackground;
 class ChartTitle;
 class ChartAnimation;
-class ChartLayout;
+class AbstractChartLayout;
 
 class ChartPresenter: public QObject
 {
@@ -78,7 +78,7 @@ public:
         ZoomOutState
     };
 
-    ChartPresenter(QChart *chart);
+    ChartPresenter(QChart *chart, QChart::ChartType type);
     virtual ~ChartPresenter();
 
 
@@ -88,11 +88,8 @@ public:
     QGraphicsItem *rootItem(){ return m_chart; }
     ChartBackground *backgroundElement();
     ChartTitle *titleElement();
-    QList<ChartAxis *> axisItems() const;
+    QList<ChartAxisElement *> axisItems() const;
     QList<ChartItem *> chartItems() const;
-
-    ChartItem* chartElement(QAbstractSeries* series) const;
-    ChartAxis* chartElement(QAbstractAxis* axis) const;
 
     QLegend *legend();
 
@@ -128,7 +125,9 @@ public:
     void setState(State state,QPointF point);
     State state() const { return m_state; }
     QPointF statePoint() const { return m_statePoint; }
-    ChartLayout *layout();
+    AbstractChartLayout *layout();
+
+    QChart::ChartType chartType() const { return m_chart->chartType(); }
 
 private:
     void createBackgroundItem();
@@ -149,14 +148,14 @@ Q_SIGNALS:
 private:
     QChart *m_chart;
     QList<ChartItem *> m_chartItems;
-    QList<ChartAxis *> m_axisItems;
+    QList<ChartAxisElement *> m_axisItems;
     QList<QAbstractSeries *> m_series;
     QList<QAbstractAxis *> m_axes;
     QChart::AnimationOptions m_options;
     State m_state;
     QPointF m_statePoint;
     QList<ChartAnimation *> m_animations;
-    ChartLayout *m_layout;
+    AbstractChartLayout *m_layout;
     ChartBackground *m_background;
     ChartTitle *m_title;
     QRectF m_rect;

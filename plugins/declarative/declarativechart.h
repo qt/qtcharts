@@ -170,7 +170,11 @@ private Q_SLOTS:
     void handleAxisYRightSet(QAbstractAxis *axis);
     void handleSeriesAdded(QAbstractSeries *series);
 
+protected:
+    explicit DeclarativeChart(QChart::ChartType type, QDeclarativeItem *parent);
+
 private:
+    void initChart(QChart::ChartType type);
     // Extending QChart with DeclarativeChart is not possible because QObject does not support
     // multi inheritance, so we now have a QChart as a member instead
     QChart *m_chart;

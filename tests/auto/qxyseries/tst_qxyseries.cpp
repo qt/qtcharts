@@ -32,7 +32,7 @@ void tst_QXYSeries::cleanupTestCase()
 
 void tst_QXYSeries::init()
 {
-    m_view = new QChartView(new QChart());
+    m_view = new QChartView(newQChartOrQPolarChart());
     m_chart = m_view->chart();
 }
 

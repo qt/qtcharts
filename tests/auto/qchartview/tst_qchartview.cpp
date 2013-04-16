@@ -67,7 +67,7 @@ void tst_QChartView::cleanupTestCase()
 
 void tst_QChartView::init()
 {
-    m_view = new QChartView(new QChart());
+    m_view = new QChartView(newQChartOrQPolarChart());
     m_view->chart()->legend()->setVisible(false);
 }
 
@@ -120,9 +120,15 @@ void tst_QChartView::rubberBand_data()
     QTest::addColumn<QPoint>("min");
     QTest::addColumn<QPoint>("max");
 
-    QTest::newRow("HorizonalRubberBand") << QChartView::RubberBands(QChartView::HorizonalRubberBand) << 0 << 1 << QPoint(5,5) << QPoint(5,5);
-    QTest::newRow("VerticalRubberBand") <<  QChartView::RubberBands(QChartView::VerticalRubberBand) << 1 << 0 << QPoint(5,5) << QPoint(5,5);
-    QTest::newRow("RectangleRubberBand") <<  QChartView::RubberBands(QChartView::RectangleRubberBand) << 1 << 1 << QPoint(5,5) << QPoint(5,5);
+    if (isPolarTest()) {
+        QTest::newRow("HorizonalRubberBand") << QChartView::RubberBands(QChartView::HorizonalRubberBand) << 0 << 0 << QPoint(5,5) << QPoint(5,5);
+        QTest::newRow("VerticalRubberBand") <<  QChartView::RubberBands(QChartView::VerticalRubberBand) << 0 << 0 << QPoint(5,5) << QPoint(5,5);
+        QTest::newRow("RectangleRubberBand") <<  QChartView::RubberBands(QChartView::RectangleRubberBand) << 0 << 0 << QPoint(5,5) << QPoint(5,5);
+    } else {
+        QTest::newRow("HorizonalRubberBand") << QChartView::RubberBands(QChartView::HorizonalRubberBand) << 0 << 1 << QPoint(5,5) << QPoint(5,5);
+        QTest::newRow("VerticalRubberBand") <<  QChartView::RubberBands(QChartView::VerticalRubberBand) << 1 << 0 << QPoint(5,5) << QPoint(5,5);
+        QTest::newRow("RectangleRubberBand") <<  QChartView::RubberBands(QChartView::RectangleRubberBand) << 1 << 1 << QPoint(5,5) << QPoint(5,5);
+    }
 }
 
 void tst_QChartView::rubberBand()
@@ -194,7 +200,8 @@ void tst_QChartView::setChart()
     series1->append(1,1);
     oldChart->addSeries(series1);
 
-    QPointer<QChart> newChart = new QChart();
+    QPointer<QChart> newChart = newQChartOrQPolarChart();
+
     QLineSeries *series2 = new QLineSeries();
     series2->append(0,1);
     series2->append(1,0);

@@ -35,13 +35,13 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class ChartAxis;
+class ChartAxisElement;
 
 class AxisAnimation: public ChartAnimation
 {
 public:
     enum Animation { DefaultAnimation, ZoomOutAnimation, ZoomInAnimation, MoveForwardAnimation, MoveBackwordAnimation};
-    AxisAnimation(ChartAxis *axis);
+    AxisAnimation(ChartAxisElement *axis);
     ~AxisAnimation();
     void setAnimationType(Animation type);
     void setAnimationPoint(const QPointF &point);
@@ -50,7 +50,7 @@ protected:
     QVariant interpolated(const QVariant &from, const QVariant &to, qreal progress) const;
     void updateCurrentValue(const QVariant &value);
 private:
-    ChartAxis *m_axis;
+    ChartAxisElement *m_axis;
     Animation m_type;
     QPointF m_point;
 };

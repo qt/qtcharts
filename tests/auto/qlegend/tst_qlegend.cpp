@@ -63,7 +63,6 @@ private slots:
 private:
 
     QChart *m_chart;
-    
 };
 
 void tst_QLegend::initTestCase()
@@ -76,7 +75,7 @@ void tst_QLegend::cleanupTestCase()
 
 void tst_QLegend::init()
 {
-    m_chart = new QChart();
+    m_chart = newQChartOrQPolarChart();
 }
 
 void tst_QLegend::cleanup()
@@ -98,6 +97,8 @@ void tst_QLegend::qlegend()
 
 void tst_QLegend::qpieLegendMarker()
 {
+    SKIP_ON_POLAR();
+
     QVERIFY(m_chart);
     QLegend *legend = m_chart->legend();
 
@@ -190,6 +191,8 @@ void tst_QLegend::qxyLegendMarker()
 
 void tst_QLegend::qbarLegendMarker()
 {
+    SKIP_ON_POLAR();
+
     QVERIFY(m_chart);
     QLegend *legend = m_chart->legend();
 
@@ -230,6 +233,8 @@ void tst_QLegend::qbarLegendMarker()
 
 void tst_QLegend::markers()
 {
+    SKIP_ON_POLAR();
+
     QVERIFY(m_chart);
     QLegend *legend = m_chart->legend();
 
@@ -270,6 +275,8 @@ void tst_QLegend::markers()
 
 void tst_QLegend::addAndRemoveSeries()
 {
+    SKIP_ON_POLAR();
+
     QVERIFY(m_chart);
     QLegend *legend = m_chart->legend();
 
@@ -291,6 +298,8 @@ void tst_QLegend::addAndRemoveSeries()
 
 void tst_QLegend::pieMarkerProperties()
 {
+    SKIP_ON_POLAR();
+
     QVERIFY(m_chart);
     QLegend *legend = m_chart->legend();
 
@@ -327,6 +336,8 @@ void tst_QLegend::pieMarkerProperties()
 
 void tst_QLegend::barMarkerProperties()
 {
+    SKIP_ON_POLAR();
+
     QVERIFY(m_chart);
     QLegend *legend = m_chart->legend();
 
@@ -482,8 +493,10 @@ void tst_QLegend::xyMarkerPropertiesScatter()
 
 void tst_QLegend::markerSignals()
 {
+    SKIP_ON_POLAR();
+
     SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
-    QChart *chart = new QChart();
+    QChart *chart = newQChartOrQPolarChart();
     QLegend *legend = chart->legend();
 
     QBarSeries *bar = new QBarSeries();

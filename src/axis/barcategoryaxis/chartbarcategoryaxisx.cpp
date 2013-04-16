@@ -21,7 +21,7 @@
 #include "chartbarcategoryaxisx_p.h"
 #include "chartpresenter_p.h"
 #include "qbarcategoryaxis_p.h"
-#include "chartlayout_p.h"
+#include "abstractchartlayout_p.h"
 #include <QFontMetrics>
 #include <QDebug>
 #include <qmath.h>
@@ -87,7 +87,7 @@ QStringList ChartBarCategoryAxisX::createCategoryLabels(const QVector<qreal>& la
 
 void ChartBarCategoryAxisX::updateGeometry()
 {
-    const QVector<qreal>& layout = ChartAxis::layout();
+    const QVector<qreal>& layout = ChartAxisElement::layout();
     if (layout.isEmpty())
         return;
     setLabels(createCategoryLabels(layout));
@@ -104,7 +104,7 @@ QSizeF ChartBarCategoryAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constra
 {
     Q_UNUSED(constraint)
 
-    QFontMetrics fn(font());
+    QFontMetrics fn(axis()->labelsFont());
     QSizeF sh;
     QSizeF base = HorizontalAxis::sizeHint(which, constraint);
     QStringList ticksList = m_categoriesAxis->categories();

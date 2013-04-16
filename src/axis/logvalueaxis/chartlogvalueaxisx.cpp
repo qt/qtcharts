@@ -21,7 +21,7 @@
 #include "chartlogvalueaxisx_p.h"
 #include "chartpresenter_p.h"
 #include "qlogvalueaxis.h"
-#include "chartlayout_p.h"
+#include "abstractchartlayout_p.h"
 #include <QGraphicsLayout>
 #include <QFontMetrics>
 #include <qmath.h>
@@ -29,12 +29,12 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartLogValueAxisX::ChartLogValueAxisX(QLogValueAxis *axis, QGraphicsItem* item)
+ChartLogValueAxisX::ChartLogValueAxisX(QLogValueAxis *axis, QGraphicsItem *item)
     : HorizontalAxis(axis, item),
       m_axis(axis)
 {
-    QObject::connect(m_axis,SIGNAL(baseChanged(qreal)),this, SLOT(handleBaseChanged(qreal)));
-    QObject::connect(m_axis,SIGNAL(labelFormatChanged(QString)),this, SLOT(handleLabelFormatChanged(QString)));
+    QObject::connect(m_axis, SIGNAL(baseChanged(qreal)), this, SLOT(handleBaseChanged(qreal)));
+    QObject::connect(m_axis, SIGNAL(labelFormatChanged(QString)), this, SLOT(handleLabelFormatChanged(QString)));
 }
 
 ChartLogValueAxisX::~ChartLogValueAxisX()
@@ -55,14 +55,14 @@ QVector<qreal> ChartLogValueAxisX::calculateLayout() const
     const QRectF &gridRect = gridGeometry();
     const qreal deltaX = gridRect.width() / qAbs(logMax - logMin);
     for (int i = 0; i < tickCount; ++i)
-        points[i] = (ceilEdge + i) * deltaX - leftEdge * deltaX + gridRect.left();
+        points[i] = (ceilEdge + qreal(i)) * deltaX - leftEdge * deltaX + gridRect.left();
 
     return points;
 }
 
 void ChartLogValueAxisX::updateGeometry()
 {
-    const QVector<qreal>& layout = ChartAxis::layout();
+    const QVector<qreal>& layout = ChartAxisElement::layout();
     if (layout.isEmpty())
         return;
     setLabels(createLogValueLabels(m_axis->min(), m_axis->max(), m_axis->base(), layout.size(), m_axis->labelFormat()));
@@ -87,7 +87,7 @@ QSizeF ChartLogValueAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint
 {
     Q_UNUSED(constraint)
 
-    QFontMetrics fn(font());
+    QFontMetrics fn(axis()->labelsFont());
     QSizeF sh;
 
     QSizeF base = HorizontalAxis::sizeHint(which, constraint);

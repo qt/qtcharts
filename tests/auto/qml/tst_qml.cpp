@@ -36,7 +36,8 @@ private slots:
     void checkPlugin();
 private:
     QString componentErrors(const QDeclarativeComponent* component) const;
-    QString imports();
+    QString imports_1_1();
+    QString imports_1_3();
 
 };
 
@@ -53,10 +54,16 @@ QString tst_QML::componentErrors(const QDeclarativeComponent* component) const
     return errors.join("\n");
 }
 
-QString tst_QML::imports()
+QString tst_QML::imports_1_1()
 {
     return "import QtQuick 1.0 \n"
            "import QtCommercial.Chart 1.1 \n";
+}
+
+QString tst_QML::imports_1_3()
+{
+    return "import QtQuick 1.0 \n"
+           "import QtCommercial.Chart 1.3 \n";
 }
 
 
@@ -82,34 +89,37 @@ void tst_QML::checkPlugin_data()
 {
     QTest::addColumn<QString>("source");
 
-    QTest::newRow("createChartView") <<  imports() + "ChartView{}";
-    QTest::newRow("XYPoint") << imports() + "XYPoint{}";
-    QTest::newRow("scatterSeries") <<  imports() + "ScatterSeries{}";
-    QTest::newRow("lineSeries") <<  imports() + "LineSeries{}";
-    QTest::newRow("splineSeries") <<  imports() + "SplineSeries{}";
-    QTest::newRow("areaSeries") <<  imports() + "AreaSeries{}";
-    QTest::newRow("barSeries") << imports() + "BarSeries{}";
-    QTest::newRow("stackedBarSeries") << imports() + "StackedBarSeries{}";
-    QTest::newRow("precentBarSeries") << imports() + "PercentBarSeries{}";
-    QTest::newRow("horizonatlBarSeries") << imports() + "HorizontalBarSeries{}";
-    QTest::newRow("horizonatlStackedBarSeries") << imports() + "HorizontalStackedBarSeries{}";
-    QTest::newRow("horizonatlstackedBarSeries") << imports() + "HorizontalPercentBarSeries{}";
-    QTest::newRow("pieSeries") << imports() + "PieSeries{}";
-    QTest::newRow("PieSlice") << imports() + "PieSlice{}";
-    QTest::newRow("BarSet") << imports() + "BarSet{}";
-    QTest::newRow("HXYModelMapper") << imports() + "HXYModelMapper{}";
-    QTest::newRow("VXYModelMapper") << imports() + "VXYModelMapper{}";
-    QTest::newRow("HPieModelMapper") << imports() + "HPieModelMapper{}";
-    QTest::newRow("HPieModelMapper") << imports() + "HPieModelMapper{}";
-    QTest::newRow("HBarModelMapper") << imports() + "HBarModelMapper{}";
-    QTest::newRow("VBarModelMapper") << imports() + "VBarModelMapper{}";
-    QTest::newRow("ValueAxis") << imports() + "ValueAxis{}";
+    QTest::newRow("createChartView") <<  imports_1_1() + "ChartView{}";
+    QTest::newRow("XYPoint") << imports_1_1() + "XYPoint{}";
+    QTest::newRow("scatterSeries") <<  imports_1_1() + "ScatterSeries{}";
+    QTest::newRow("lineSeries") <<  imports_1_1() + "LineSeries{}";
+    QTest::newRow("splineSeries") <<  imports_1_1() + "SplineSeries{}";
+    QTest::newRow("areaSeries") <<  imports_1_1() + "AreaSeries{}";
+    QTest::newRow("barSeries") << imports_1_1() + "BarSeries{}";
+    QTest::newRow("stackedBarSeries") << imports_1_1() + "StackedBarSeries{}";
+    QTest::newRow("precentBarSeries") << imports_1_1() + "PercentBarSeries{}";
+    QTest::newRow("horizonatlBarSeries") << imports_1_1() + "HorizontalBarSeries{}";
+    QTest::newRow("horizonatlStackedBarSeries") << imports_1_1() + "HorizontalStackedBarSeries{}";
+    QTest::newRow("horizonatlstackedBarSeries") << imports_1_1() + "HorizontalPercentBarSeries{}";
+    QTest::newRow("pieSeries") << imports_1_1() + "PieSeries{}";
+    QTest::newRow("PieSlice") << imports_1_1() + "PieSlice{}";
+    QTest::newRow("BarSet") << imports_1_1() + "BarSet{}";
+    QTest::newRow("HXYModelMapper") << imports_1_1() + "HXYModelMapper{}";
+    QTest::newRow("VXYModelMapper") << imports_1_1() + "VXYModelMapper{}";
+    QTest::newRow("HPieModelMapper") << imports_1_1() + "HPieModelMapper{}";
+    QTest::newRow("HPieModelMapper") << imports_1_1() + "HPieModelMapper{}";
+    QTest::newRow("HBarModelMapper") << imports_1_1() + "HBarModelMapper{}";
+    QTest::newRow("VBarModelMapper") << imports_1_1() + "VBarModelMapper{}";
+    QTest::newRow("ValueAxis") << imports_1_1() + "ValueAxis{}";
 #ifndef QT_ON_ARM
-    QTest::newRow("DateTimeAxis") << imports() + "DateTimeAxis{}";
+    QTest::newRow("DateTimeAxis") << imports_1_1() + "DateTimeAxis{}";
 #endif
-    QTest::newRow("CategoryAxis") << imports() + "CategoryAxis{}";
-    QTest::newRow("CategoryRange") << imports() + "CategoryRange{}";
-    QTest::newRow("BarCategoryAxis") << imports() + "BarCategoryAxis{}";
+    QTest::newRow("CategoryAxis") << imports_1_1() + "CategoryAxis{}";
+    QTest::newRow("CategoryRange") << imports_1_1() + "CategoryRange{}";
+    QTest::newRow("BarCategoryAxis") << imports_1_1() + "BarCategoryAxis{}";
+
+    QTest::newRow("createPolarChartView") <<  imports_1_3() + "PolarChartView{}";
+    //QTest::newRow("LogValueAxis") <<  imports_1_3() + "LogValueAxis{}";
 }
 
 void tst_QML::checkPlugin()

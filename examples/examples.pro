@@ -31,7 +31,8 @@ SUBDIRS += \
            donutchart \
            multiaxis \
            legendmarkers \
-           logvalueaxis
+           logvalueaxis \
+           polarchart
 
 !linux-arm*: {
 SUBDIRS += \

@@ -32,11 +32,11 @@
 
 #include "qchartglobal.h"
 #include "linechartitem_p.h"
+#include "qareaseries.h"
 #include <QPen>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QAreaSeries;
 class AreaChartItem;
 
 class AreaChartItem : public ChartItem
@@ -57,6 +57,8 @@ public:
     void updatePath();
 
     void setPresenter(ChartPresenter *presenter);
+    QAreaSeries *series() const { return m_series; }
+
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
@@ -89,6 +91,9 @@ public:
     AreaBoundItem(AreaChartItem *area, QLineSeries *lineSeries,QGraphicsItem* item = 0)
         : LineChartItem(lineSeries, item), m_item(area)
     {
+        // We do not actually want to draw anything from LineChartItem.
+        // Drawing is done in AreaChartItem only.
+        setVisible(false);
     }
     ~AreaBoundItem() {}
 
@@ -97,6 +102,9 @@ public:
         // Turn off points drawing from component line chart item, as that
         // messes up the fill for area series.
         suppressPoints();
+        // Component lineseries are not necessarily themselves on the chart,
+        // so get the chart type for them from area chart.
+        forceChartType(m_item->series()->chart()->chartType());
         LineChartItem::updateGeometry();
         m_item->updatePath();
     }

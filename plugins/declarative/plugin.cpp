@@ -24,6 +24,7 @@
 #include "declarativecategoryaxis.h"
 #include "qbarcategoryaxis.h"
 #include "declarativechart.h"
+#include "declarativepolarchart.h"
 #include "declarativexypoint.h"
 #include "declarativelineseries.h"
 #include "declarativesplineseries.h"
@@ -62,6 +63,7 @@ Q_DECLARE_METATYPE(QList<QAbstractAxis *>)
 // These should not be needed or at least they are not needed in Qt4.
 
 Q_DECLARE_METATYPE(DeclarativeChart *)
+Q_DECLARE_METATYPE(DeclarativePolarChart *)
 Q_DECLARE_METATYPE(DeclarativeMargins *)
 Q_DECLARE_METATYPE(DeclarativeAreaSeries *)
 Q_DECLARE_METATYPE(DeclarativeBarSeries *)
@@ -213,6 +215,13 @@ public:
         qmlRegisterType<DeclarativeHorizontalBarSeries, 2>(uri, 1, 2, "HorizontalBarSeries");
         qmlRegisterType<DeclarativeHorizontalStackedBarSeries, 2>(uri, 1, 2, "HorizontalStackedBarSeries");
         qmlRegisterType<DeclarativeHorizontalPercentBarSeries, 2>(uri, 1, 2, "HorizontalPercentBarSeries");
+
+        // QtCommercial.Chart 1.3
+        qmlRegisterType<DeclarativePolarChart, 1>(uri, 1, 3, "PolarChartView");
+        qmlRegisterType<DeclarativeSplineSeries, 3>(uri, 1, 3, "SplineSeries");
+        qmlRegisterType<DeclarativeScatterSeries, 3>(uri, 1, 3, "ScatterSeries");
+        qmlRegisterType<DeclarativeLineSeries, 3>(uri, 1, 3, "LineSeries");
+        qmlRegisterType<DeclarativeAreaSeries, 3>(uri, 1, 3, "AreaSeries");
     }
 };
 

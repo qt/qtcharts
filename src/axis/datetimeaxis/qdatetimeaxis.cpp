@@ -22,6 +22,8 @@
 #include "qdatetimeaxis_p.h"
 #include "chartdatetimeaxisx_p.h"
 #include "chartdatetimeaxisy_p.h"
+#include "polarchartdatetimeaxisangular_p.h"
+#include "polarchartdatetimeaxisradial_p.h"
 #include "abstractdomain_p.h"
 #include "qchart.h"
 #include <float.h>
@@ -342,11 +344,20 @@ void QDateTimeAxisPrivate::setRange(const QVariant &min, const QVariant &max)
 void QDateTimeAxisPrivate::initializeGraphics(QGraphicsItem* parent)
 {
     Q_Q(QDateTimeAxis);
-    ChartAxis* axis(0);
-    if (orientation() == Qt::Vertical)
-        axis = new ChartDateTimeAxisY(q,parent);
-    if (orientation() == Qt::Horizontal)
-        axis = new ChartDateTimeAxisX(q,parent);
+    ChartAxisElement *axis(0);
+    if (m_chart->chartType() == QChart::ChartTypeCartesian) {
+        if (orientation() == Qt::Vertical)
+            axis = new ChartDateTimeAxisY(q,parent);
+        if (orientation() == Qt::Horizontal)
+            axis = new ChartDateTimeAxisX(q,parent);
+    }
+
+    if (m_chart->chartType() == QChart::ChartTypePolar) {
+        if (orientation() == Qt::Vertical)
+            axis = new PolarChartDateTimeAxisRadial(q, parent);
+        if (orientation() == Qt::Horizontal)
+            axis = new PolarChartDateTimeAxisAngular(q, parent);
+    }
 
     m_item.reset(axis);
     QAbstractAxisPrivate::initializeGraphics(parent);

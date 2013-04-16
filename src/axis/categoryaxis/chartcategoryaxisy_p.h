@@ -35,22 +35,22 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QCategoryAxis;
-class ChartPresenter;
 
 class ChartCategoryAxisY : public VerticalAxis
 {
+    Q_OBJECT
 public:
     ChartCategoryAxisY(QCategoryAxis *axis, QGraphicsItem* item = 0);
     ~ChartCategoryAxisY();
 
     QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint) const;
 
+public Q_SLOTS:
+    void handleCategoriesChanged();
+
 protected:
     QVector<qreal> calculateLayout() const;
     void updateGeometry();
-
-public Q_SLOTS:
-    void handleAxisUpdated();
 
 private:
     QCategoryAxis *m_axis;

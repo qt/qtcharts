@@ -30,6 +30,7 @@
                 <td valign="top">
                     <ul>
                     <li><a href="qchart.html">QChart</a></li>
+                    <li><a href="qpolarchart.html">QPolarChart</a></li>
                     <li><a href="qchartview.html">QChartView</a></li>
                     <li><a href="qabstractaxis.html">QAbstractAxis</a></li>
                     <li><a href="qvalueaxis.html">QValueAxis</a></li>

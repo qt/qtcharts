@@ -8,6 +8,14 @@
 
     <table>
         <tr>
+            <td><a href="demos-audio.html">Audio</a></td>
+            <td><a href="demos-callout.html">Callout</a></td>
+        </tr>
+        <tr>
+            <td><a href="demos-audio.html"><img src="images/demos_audio.png" width="300" alt="Audio" /></a></td>
+            <td><a href="demos-callout.html"><img src="images/demos_callout.png" width="300" alt="Callout" /></a></td>
+        </tr>
+        <tr>
             <td><a href="demos-chartthemes.html">Chart Themes</a></td>
             <td><a href="demos-dynamicspline.html">Dynamic Spline Chart</a></td>
         </tr>
@@ -15,7 +23,6 @@
             <td><a href="demos-chartthemes.html"><img src="images/demo_chartthemes_blue_cerulean.png" width="300" alt="Chart Themes" /></a></td>
             <td><a href="demos-dynamicspline.html"><img src="images/demos_dynamicspline2.png" width="300" alt="Dynamic Spline" /></a></td>
         </tr>
-
         <tr>
             <td><a href="demos-nesteddonuts.html">Nested Donuts Chart</a></td>
             <td><a href="demos-piechartcustomization.html">Pie Chart Customization</a></td>
@@ -24,7 +31,6 @@
             <td><a href="demos-nesteddonuts.html"><img src="images/demos_nesteddonuts.png" width="300" alt="Nested Donuts Chart" /></a></td>
             <td><a href="demos-piechartcustomization.html"><img src="images/piechart_customization.png" width="300" alt="Pie Chart Customization" /></a></td>
         </tr>
-
         <tr>
             <td><a href="demos-qmlchart.html">Qml Basic Charts</a></td>
             <td><a href="demos-qmlaxes.html">Qml Axes</a></td>
@@ -33,7 +39,6 @@
             <td><a href="demos-qmlchart.html"><img src="images/demos_qmlchart1.png" width="300" alt="Qml Basic Charts" /></a></td>
             <td><a href="demos-qmlaxes.html"><img src="images/demos_qmlaxes1.png" width="300" alt="Qml Axes" /></a></td>
         </tr>
-
         <tr>
             <td><a href="demos-qmlcustomizations.html">Qml Customizations</a></td>
             <td><a href="demos-qmlcustommodel.html">Qml Custom Model</a></td>
@@ -42,7 +47,6 @@
             <td><a href="demos-qmlcustomizations.html"><img src="images/demos_qmlcustomizations.png" width="300" alt="Qml Customizations" /></a></td>
             <td><a href="demos-qmlcustommodel.html"><img src="images/demos_qmlcustommodel.png" width="300" alt="Qml Custom Model" /></a></td>
         </tr>
-
         <tr>
             <td><a href="demos-qmlf1legends.html">Qml F1 Legends</a></td>
             <td><a href="demos-qmloscilloscope.html">Qml Oscilloscope</a></td>
@@ -51,7 +55,6 @@
             <td><a href="demos-qmlf1legends.html"><img src="images/demos_qmlf1legends.png" width="300" alt="Qml F1 Legends" /></a></td>
             <td><a href="demos-qmloscilloscope.html"><img src="images/demos_qmloscilloscope.png" width="300" alt="Qml Oscilloscope" /></a></td>
         </tr>
-
         <tr>
             <td><a href="demos-qmlweather.html">Qml Weather</a></td>
             <td><a href="demos-qmlcustomlegend.html">Qml Custom Legend</a></td>
@@ -61,14 +64,11 @@
             <td><a href="demos-qmlcustomlegend.html"><img src="images/demos-qmlcustomlegend1.png" width="300" alt="Qml Custom Legend" /></a></td>
         </tr>
         <tr>
-            <td><a href="demos-callout.html">Callout</a></td>
-            <td><a href="demos-audio.html">Audio</a></td>
+            <td><a href="demos-qmlpolarchart.html">Qml Polar Chart</a></td>
         </tr>
         <tr>
-            <td><a href="demos-callout.html"><img src="images/demos_callout.png" width="300" alt="Callout" /></a></td>
-            <td><a href="demos-audio.html"><img src="images/demos_audio.png" width="300" alt="Audio" /></a></td>
+            <td><a href="demos-qmlpolarchart.html"><img src="images/demos_qmlpolarchart1.png" width="300" alt="Qml Polar Chart" /></a></td>
         </tr>
-
     </table>
     </div>
     \endraw

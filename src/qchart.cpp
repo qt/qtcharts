@@ -24,7 +24,7 @@
 #include "qlegend_p.h"
 #include "chartbackground_p.h"
 #include "qabstractaxis.h"
-#include "chartlayout_p.h"
+#include "abstractchartlayout_p.h"
 #include "charttheme_p.h"
 #include "chartpresenter_p.h"
 #include "chartdataset_p.h"
@@ -56,6 +56,16 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
  \value GridAxisAnimations
  \value SeriesAnimations
  \value AllAnimations
+ */
+
+/*!
+ \enum QChart::ChartType
+
+ This enum describes the chart type.
+
+ \value ChartTypeUndefined
+ \value ChartTypeCartesian
+ \value ChartTypePolar
  */
 
 /*!
@@ -110,15 +120,34 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
  */
 
 /*!
- Constructs a chart object which is a child of a\a parent. Parameter \a wFlags is passed to the QGraphicsWidget constructor.
+ \property QChart::chartType
+ Chart type indicates if the chart is a cartesian chart or a polar chart.
+ This property is set internally and is read only.
+ \sa QPolarChart
+ */
+
+/*!
+ \internal
+ Constructs a chart object of \a type which is a child of a \a parent.
+ Parameter \a wFlags is passed to the QGraphicsWidget constructor.
+ This constructor is called only by subclasses.
+*/
+QChart::QChart(QChart::ChartType type, QGraphicsItem *parent, Qt::WindowFlags wFlags)
+    : QGraphicsWidget(parent, wFlags),
+      d_ptr(new QChartPrivate(this, type))
+{
+    d_ptr->init();
+}
+
+/*!
+ Constructs a chart object which is a child of a \a parent.
+ Parameter \a wFlags is passed to the QGraphicsWidget constructor.
  */
 QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags)
     : QGraphicsWidget(parent, wFlags),
-      d_ptr(new QChartPrivate(this))
+      d_ptr(new QChartPrivate(this, ChartTypeCartesian))
 {
-    d_ptr->m_legend = new LegendScroller(this);
-    setTheme(QChart::ChartThemeLight);
-    setLayout(d_ptr->m_presenter->layout());
+    d_ptr->init();
 }
 
 /*!
@@ -269,9 +298,12 @@ void QChart::zoomIn()
 
 /*!
  Zooms in the view to a maximum level at which \a rect is still fully visible.
+ \note This is not supported for polar charts.
  */
 void QChart::zoomIn(const QRectF &rect)
 {
+    if (d_ptr->m_type == QChart::ChartTypePolar)
+        return;
     d_ptr->zoomIn(rect);
 }
 
@@ -306,8 +338,8 @@ void QChart::zoom(qreal factor)
 }
 
 /*!
- Returns the pointer to the x axis object of the chart asociated with the specified \a series
- If no series is provided then pointer to currently visible axis is provided
+ Returns the pointer to the x axis object of the chart associated with the specified \a series.
+ If no series is provided then pointer to currently visible axis is provided.
  */
 QAbstractAxis *QChart::axisX(QAbstractSeries *series) const
 {
@@ -318,8 +350,8 @@ QAbstractAxis *QChart::axisX(QAbstractSeries *series) const
 }
 
 /*!
- Returns the pointer to the y axis object of the chart asociated with the specified \a series
- If no series is provided then pointer to currently visible axis is provided
+ Returns the pointer to the y axis object of the chart associated with the specified \a series.
+ If no series is provided then pointer to currently visible axis is provided.
  */
 QAbstractAxis *QChart::axisY(QAbstractSeries *series) const
 {
@@ -438,6 +470,11 @@ QMargins QChart::margins() const
     return d_ptr->m_presenter->layout()->margins();
 }
 
+QChart::ChartType QChart::chartType() const
+{
+    return d_ptr->m_type;
+}
+
 /*!
     Returns the the rect within which the drawing of the chart is done.
     It does not include the area defines by margins.
@@ -471,6 +508,8 @@ QChart::AnimationOptions QChart::animationOptions() const
 
 /*!
     Scrolls the visible area of the chart by the distance defined in the \a dx and \a dy.
+
+    For polar charts, \a dx indicates the angle along angular axis instead of distance.
  */
 void QChart::scroll(qreal dx, qreal dy)
 {
@@ -581,11 +620,12 @@ QPointF QChart::mapToPosition(const QPointF &value, QAbstractSeries *series)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QChartPrivate::QChartPrivate(QChart *q):
+QChartPrivate::QChartPrivate(QChart *q, QChart::ChartType type):
     q_ptr(q),
+    m_type(type),
     m_legend(0),
     m_dataset(new ChartDataSet(q)),
-    m_presenter(new ChartPresenter(q)),
+    m_presenter(new ChartPresenter(q, type)),
     m_themeManager(new ChartThemeManager(q))
 {
     QObject::connect(m_dataset, SIGNAL(seriesAdded(QAbstractSeries*)), m_presenter, SLOT(handleSeriesAdded(QAbstractSeries*)));
@@ -601,6 +641,13 @@ QChartPrivate::QChartPrivate(QChart *q):
 QChartPrivate::~QChartPrivate()
 {
 
+}
+
+void QChartPrivate::init()
+{
+    m_legend = new LegendScroller(q_ptr);
+    q_ptr->setTheme(QChart::ChartThemeLight);
+    q_ptr->setLayout(m_presenter->layout());
 }
 
 void QChartPrivate::zoomIn(qreal factor)

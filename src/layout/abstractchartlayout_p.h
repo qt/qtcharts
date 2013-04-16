@@ -27,51 +27,50 @@
 //
 // We mean it.
 
-#ifndef CHARTLAYOUT_H
-#define CHARTLAYOUT_H
+#ifndef ABSTRACTCHARTLAYOUT_H
+#define ABSTRACTCHARTLAYOUT_H
+
 #include <QGraphicsLayout>
 #include <QMargins>
 #include "qchartglobal.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class ChartPresenter;
 class ChartTitle;
+class ChartAxisElement;
+class ChartPresenter;
 class QLegend;
-class ChartAxis;
 class ChartBackground;
 
-class ChartLayout : public QGraphicsLayout
+class AbstractChartLayout : public QGraphicsLayout
 {
 public:
+    AbstractChartLayout(ChartPresenter *presenter);
+    virtual ~AbstractChartLayout();
 
-    ChartLayout(ChartPresenter *presenter);
-    virtual ~ChartLayout();
-
-    void setMargins(const QMargins &margins);
-    QMargins margins() const;
-
-    void setGeometry(const QRectF &rect);
+    virtual void setMargins(const QMargins &margins);
+    virtual QMargins margins() const;
+    virtual void setGeometry(const QRectF &rect);
 
 protected:
+    virtual QRectF calculateBackgroundGeometry(const QRectF &geometry, ChartBackground *background) const;
+    virtual QRectF calculateBackgroundMinimum(const QRectF &minimum) const;
+    virtual QRectF calculateContentGeometry(const QRectF &geometry) const;
+    virtual QRectF calculateContentMinimum(const QRectF &minimum) const;
+    virtual QRectF calculateTitleGeometry(const QRectF &geometry, ChartTitle *title) const;
+    virtual QRectF calculateTitleMinimum(const QRectF &minimum, ChartTitle *title) const;
+    virtual QRectF calculateLegendGeometry(const QRectF &geometry, QLegend *legend) const;
+    virtual QRectF calculateLegendMinimum(const QRectF &minimum, QLegend *legend) const;
+
+    virtual QRectF calculateAxisGeometry(const QRectF &geometry, const QList<ChartAxisElement *>& axes) const = 0;
+    virtual QRectF calculateAxisMinimum(const QRectF &minimum, const QList<ChartAxisElement *>& axes) const = 0;
+
+    // from QGraphicsLayout
     QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const;
     int count() const { return 0; }
     QGraphicsLayoutItem *itemAt(int) const { return 0; };
     void removeAt(int) {};
 
-private:
-    QRectF calculateBackgroundGeometry(const QRectF &geometry, ChartBackground *background) const;
-    QRectF calculateContentGeometry(const QRectF &geometry) const;
-    QRectF calculateTitleGeometry(const QRectF &geometry, ChartTitle *title) const;
-    QRectF calculateLegendGeometry(const QRectF &geometry, QLegend *legend) const;
-    QRectF calculateAxisGeometry(const QRectF &geometry, const QList<ChartAxis *>& axes) const;
-    QRectF calculateBackgroundMinimum(const QRectF &minimum) const;
-    QRectF calculateContentMinimum(const QRectF &minimum) const;
-    QRectF calculateTitleMinimum(const QRectF &minimum, ChartTitle *title) const;
-    QRectF calculateAxisMinimum(const QRectF &minimum, const QList<ChartAxis *>& axes) const;
-    QRectF calculateLegendMinimum(const QRectF &minimum, QLegend *legend) const;
-
-private:
     ChartPresenter *m_presenter;
     QMargins m_margins;
     QRectF m_minChartRect;
@@ -80,4 +79,4 @@ private:
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif
+#endif // ABSTRACTCHARTLAYOUT_H

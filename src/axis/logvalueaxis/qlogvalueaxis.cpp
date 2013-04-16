@@ -22,6 +22,8 @@
 #include "qlogvalueaxis_p.h"
 #include "chartlogvalueaxisx_p.h"
 #include "chartlogvalueaxisy_p.h"
+#include "polarchartlogvalueaxisangular_p.h"
+#include "polarchartlogvalueaxisradial_p.h"
 #include "abstractdomain_p.h"
 #include <float.h>
 #include <cmath>
@@ -287,14 +289,24 @@ void QLogValueAxisPrivate::setRange(qreal min, qreal max)
     }
 }
 
-void QLogValueAxisPrivate::initializeGraphics(QGraphicsItem* parent)
+void QLogValueAxisPrivate::initializeGraphics(QGraphicsItem *parent)
 {
     Q_Q(QLogValueAxis);
-    ChartAxis* axis(0);
-    if (orientation() == Qt::Vertical)
-        axis = new ChartLogValueAxisY(q,parent);
-    if (orientation() == Qt::Horizontal)
-        axis = new ChartLogValueAxisX(q,parent);
+    ChartAxisElement *axis(0);
+
+    if (m_chart->chartType() == QChart::ChartTypeCartesian) {
+        if (orientation() == Qt::Vertical)
+            axis = new ChartLogValueAxisY(q,parent);
+        if (orientation() == Qt::Horizontal)
+            axis = new ChartLogValueAxisX(q,parent);
+    }
+
+    if (m_chart->chartType() == QChart::ChartTypePolar) {
+        if (orientation() == Qt::Vertical)
+            axis = new PolarChartLogValueAxisRadial(q, parent);
+        if (orientation() == Qt::Horizontal)
+            axis = new PolarChartLogValueAxisAngular(q, parent);
+    }
 
     m_item.reset(axis);
     QAbstractAxisPrivate::initializeGraphics(parent);
@@ -304,7 +316,7 @@ void QLogValueAxisPrivate::initializeGraphics(QGraphicsItem* parent)
 void QLogValueAxisPrivate::initializeDomain(AbstractDomain *domain)
 {
     if (orientation() == Qt::Vertical) {
-        if(!qFuzzyCompare(m_max, m_min)) {
+        if (!qFuzzyCompare(m_max, m_min)) {
             domain->setRangeY(m_min, m_max);
         } else if ( domain->minY() > 0) {
             setRange(domain->minY(), domain->maxY());
@@ -315,7 +327,7 @@ void QLogValueAxisPrivate::initializeDomain(AbstractDomain *domain)
         }
     }
     if (orientation() == Qt::Horizontal) {
-        if(!qFuzzyCompare(m_max, m_min)) {
+        if (!qFuzzyCompare(m_max, m_min)) {
             domain->setRangeX(m_min, m_max);
         } else if (domain->minX() > 0){
             setRange(domain->minX(), domain->maxX());

@@ -35,20 +35,18 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QLogValueAxis;
-class ChartPresenter;
 
 class ChartLogValueAxisX : public HorizontalAxis
 {
     Q_OBJECT
 
 public:
-    ChartLogValueAxisX(QLogValueAxis *axis, QGraphicsItem* item);
+    ChartLogValueAxisX(QLogValueAxis *axis, QGraphicsItem *item);
     ~ChartLogValueAxisX();
 
     QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint) const;
 
 protected:
-    void handleAxisUpdated();
     QVector<qreal> calculateLayout() const;
     void updateGeometry();
 

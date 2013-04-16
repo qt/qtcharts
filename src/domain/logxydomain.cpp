@@ -42,6 +42,8 @@ void LogXYDomain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY)
     bool axisXChanged = false;
     bool axisYChanged = false;
 
+    adjustLogDomainRanges(minX, maxX);
+
     if (!qFuzzyCompare(m_minX, minX) || !qFuzzyCompare(m_maxX, maxX)) {
         m_minX = minX;
         m_maxX = maxX;
@@ -58,7 +60,7 @@ void LogXYDomain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY)
         m_minY = minY;
         m_maxY = maxY;
         axisYChanged = true;
-        if(!m_signalsBlocked)
+        if (!m_signalsBlocked)
             emit rangeVerticalChanged(m_minY, m_maxY);
     }
 
@@ -137,13 +139,13 @@ QPointF LogXYDomain::calculateGeometryPoint(const QPointF &point, bool &ok) cons
         ok = true;
         return QPointF(x, y);
     } else {
-        qWarning() << "Logarithm of negative value is undefined. Empty layout returned";
+        qWarning() << "Logarithm of negative value is undefined. Empty layout returned.";
         ok = false;
         return QPointF();
     }
 }
 
-QVector<QPointF> LogXYDomain::calculateGeometryPoints(const QList<QPointF>& vector) const
+QVector<QPointF> LogXYDomain::calculateGeometryPoints(const QList<QPointF> &vector) const
 {
     const qreal deltaX = m_size.width() / (m_logRightX - m_logLeftX);
     const qreal deltaY = m_size.height() / (m_maxY - m_minY);
@@ -158,7 +160,7 @@ QVector<QPointF> LogXYDomain::calculateGeometryPoints(const QList<QPointF>& vect
             result[i].setX(x);
             result[i].setY(y);
         } else {
-            qWarning() << "Logarithm of negative value is undefined. Empty layout returned";
+            qWarning() << "Logarithm of negative value is undefined. Empty layout returned.";
             return QVector<QPointF>();
         }
     }
@@ -174,12 +176,12 @@ QPointF LogXYDomain::calculateDomainPoint(const QPointF &point) const
     return QPointF(x, y);
 }
 
-bool LogXYDomain::attachAxis(QAbstractAxis* axis)
+bool LogXYDomain::attachAxis(QAbstractAxis *axis)
 {
     AbstractDomain::attachAxis(axis);
     QLogValueAxis *logAxis = qobject_cast<QLogValueAxis *>(axis);
 
-    if(logAxis && logAxis->orientation()==Qt::Horizontal) {
+    if (logAxis && logAxis->orientation() == Qt::Horizontal) {
         QObject::connect(logAxis, SIGNAL(baseChanged(qreal)), this, SLOT(handleHorizontalAxisBaseChanged(qreal)));
         handleHorizontalAxisBaseChanged(logAxis->base());
     }
@@ -187,12 +189,12 @@ bool LogXYDomain::attachAxis(QAbstractAxis* axis)
     return true;
 }
 
-bool LogXYDomain::detachAxis(QAbstractAxis* axis)
+bool LogXYDomain::detachAxis(QAbstractAxis *axis)
 {
     AbstractDomain::detachAxis(axis);
     QLogValueAxis *logAxis = qobject_cast<QLogValueAxis *>(axis);
 
-    if(logAxis && logAxis->orientation()==Qt::Horizontal)
+    if (logAxis && logAxis->orientation() == Qt::Horizontal)
         QObject::disconnect(logAxis, SIGNAL(baseChanged(qreal)), this, SLOT(handleHorizontalAxisBaseChanged(qreal)));
 
     return true;
@@ -212,10 +214,10 @@ void LogXYDomain::handleHorizontalAxisBaseChanged(qreal baseX)
 
 bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator== (const LogXYDomain &domain1, const LogXYDomain &domain2)
 {
-    return (qFuzzyIsNull(domain1.m_maxX - domain2.m_maxX) &&
-            qFuzzyIsNull(domain1.m_maxY - domain2.m_maxY) &&
-            qFuzzyIsNull(domain1.m_minX - domain2.m_minX) &&
-            qFuzzyIsNull(domain1.m_minY - domain2.m_minY));
+    return (qFuzzyIsNull(domain1.m_maxX - domain2.m_maxX)
+            && qFuzzyIsNull(domain1.m_maxY - domain2.m_maxY)
+            && qFuzzyIsNull(domain1.m_minX - domain2.m_minX)
+            && qFuzzyIsNull(domain1.m_minY - domain2.m_minY));
 }
 
 

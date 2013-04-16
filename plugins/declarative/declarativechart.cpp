@@ -35,6 +35,7 @@
 #include "chartdataset_p.h"
 #include "declarativeaxes.h"
 #include "qchart_p.h"
+#include "qpolarchart.h"
 
 #ifndef QT_ON_ARM
     #include "qdatetimeaxis.h"
@@ -235,9 +236,24 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 DeclarativeChart::DeclarativeChart(QDeclarativeItem *parent)
-    : QDeclarativeItem(parent),
-      m_chart(new QChart(this))
+    : QDeclarativeItem(parent)
 {
+    initChart(QChart::ChartTypeCartesian);
+}
+
+DeclarativeChart::DeclarativeChart(QChart::ChartType type, QDeclarativeItem *parent)
+    : QDeclarativeItem(parent)
+{
+    initChart(type);
+}
+
+void DeclarativeChart::initChart(QChart::ChartType type)
+{
+    if (type == QChart::ChartTypePolar)
+        m_chart = new QPolarChart(this);
+    else
+        m_chart = new QChart(this);
+
     setFlag(QGraphicsItem::ItemHasNoContents, false);
     m_margins = new DeclarativeMargins(this);
     m_margins->setTop(m_chart->margins().top());

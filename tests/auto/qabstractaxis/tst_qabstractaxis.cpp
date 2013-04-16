@@ -35,7 +35,7 @@ void tst_QAbstractAxis::init(QAbstractAxis* axis, QAbstractSeries* series)
 {
     m_axis = axis;
     m_series = series;
-    m_view = new QChartView(new QChart());
+    m_view = new QChartView(newQChartOrQPolarChart());
     m_chart = m_view->chart();
 }
 

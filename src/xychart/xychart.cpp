@@ -24,6 +24,7 @@
 #include "chartpresenter_p.h"
 #include "abstractdomain_p.h"
 #include "qxymodelmapper.h"
+#include "qabstractaxis_p.h"
 #include <QPainter>
 #include <QAbstractItemModel>
 
@@ -32,7 +33,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 //TODO: optimize : remove points which are not visible
 
-XYChart::XYChart(QXYSeries *series,QGraphicsItem* item):
+XYChart::XYChart(QXYSeries *series, QGraphicsItem *item):
       ChartItem(series->d_func(),item),
       m_series(series),
       m_animation(0),
@@ -46,7 +47,7 @@ XYChart::XYChart(QXYSeries *series,QGraphicsItem* item):
     QObject::connect(this, SIGNAL(hovered(QPointF,bool)), series, SIGNAL(hovered(QPointF,bool)));
 }
 
-void XYChart::setGeometryPoints(const QVector<QPointF>& points)
+void XYChart::setGeometryPoints(const QVector<QPointF> &points)
 {
     m_points = points;
 }
@@ -59,6 +60,32 @@ void XYChart::setAnimation(XYAnimation *animation)
 void XYChart::setDirty(bool dirty)
 {
     m_dirty = dirty;
+}
+
+// Returns a vector with same size as geometryPoints vector, indicating
+// the off grid status of points.
+QVector<bool> XYChart::offGridStatusVector()
+{
+    qreal minX = domain()->minX();
+    qreal maxX = domain()->maxX();
+    qreal minY = domain()->minY();
+    qreal maxY = domain()->maxY();
+
+    QVector<bool> returnVector;
+    returnVector.resize(m_points.size());
+
+    for (int i = 0; i < m_points.size(); i++) {
+        const QPointF &seriesPoint = m_series->pointAt(i);
+        if (seriesPoint.x() < minX
+            || seriesPoint.x() > maxX
+            || seriesPoint.y() < minY
+            || seriesPoint.y() > maxY) {
+            returnVector[i] = true;
+        } else {
+            returnVector[i] = false;
+        }
+    }
+    return returnVector;
 }
 
 void XYChart::updateChart(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints, int index)

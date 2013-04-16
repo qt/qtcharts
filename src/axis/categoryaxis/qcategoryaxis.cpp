@@ -22,6 +22,8 @@
 #include "qcategoryaxis_p.h"
 #include "chartcategoryaxisx_p.h"
 #include "chartcategoryaxisy_p.h"
+#include "polarchartcategoryaxisangular_p.h"
+#include "polarchartcategoryaxisradial_p.h"
 #include "qchart.h"
 #include <qmath.h>
 #include <QDebug>
@@ -103,6 +105,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+  \fn void QCategoryAxis::categoriesChanged()
+  Axis emits signal when the categories of the axis have changed.
+*/
+
+
+/*!
     Constructs an axis object which is a child of \a parent.
 */
 QCategoryAxis::QCategoryAxis(QObject *parent):
@@ -151,10 +159,12 @@ void QCategoryAxis::append(const QString &categoryLabel, qreal categoryEndValue)
             Range range(d->m_categoryMinimum, categoryEndValue);
             d->m_categoriesMap.insert(categoryLabel, range);
             d->m_categories.append(categoryLabel);
+            emit categoriesChanged();
         } else if (categoryEndValue > endValue(d->m_categories.last())) {
             Range previousRange = d->m_categoriesMap.value(d->m_categories.last());
             d->m_categoriesMap.insert(categoryLabel, Range(previousRange.second, categoryEndValue));
             d->m_categories.append(categoryLabel);
+            emit categoriesChanged();
         }
     }
 }
@@ -169,10 +179,13 @@ void QCategoryAxis::setStartValue(qreal min)
     Q_D(QCategoryAxis);
     if (d->m_categories.isEmpty()) {
         d->m_categoryMinimum = min;
+        emit categoriesChanged();
     } else {
         Range range = d->m_categoriesMap.value(d->m_categories.first());
-        if (min < range.second)
+        if (min < range.second) {
             d->m_categoriesMap.insert(d->m_categories.first(), Range(min, range.second));
+            emit categoriesChanged();
+        }
     }
 }
 
@@ -227,7 +240,7 @@ void QCategoryAxis::remove(const QString &categoryLabel)
                 d->m_categoriesMap.insert(label, range);
             }
         }
-        //TODO:: d->emitUpdated();
+        emit categoriesChanged();
     }
 }
 
@@ -251,7 +264,7 @@ void QCategoryAxis::replaceLabel(const QString &oldLabel, const QString &newLabe
         Range range = d->m_categoriesMap.value(oldLabel);
         d->m_categoriesMap.remove(oldLabel);
         d->m_categoriesMap.insert(newLabel, range);
-        //TODO:: d->emitUpdated();
+        emit categoriesChanged();
     }
 }
 
@@ -300,14 +313,23 @@ int QCategoryAxisPrivate::ticksCount() const
     return m_categories.count() + 1;
 }
 
-void QCategoryAxisPrivate::initializeGraphics(QGraphicsItem* parent)
+void QCategoryAxisPrivate::initializeGraphics(QGraphicsItem *parent)
 {
     Q_Q(QCategoryAxis);
-    ChartAxis* axis(0);
-    if (orientation() == Qt::Vertical)
-        axis = new ChartCategoryAxisY(q,parent);
-    else if(orientation() == Qt::Horizontal)
-        axis = new ChartCategoryAxisX(q,parent);
+    ChartAxisElement *axis(0);
+    if (m_chart->chartType() == QChart::ChartTypeCartesian) {
+        if (orientation() == Qt::Vertical)
+            axis = new ChartCategoryAxisY(q,parent);
+        else if (orientation() == Qt::Horizontal)
+            axis = new ChartCategoryAxisX(q,parent);
+    }
+
+    if (m_chart->chartType() == QChart::ChartTypePolar) {
+        if (orientation() == Qt::Vertical)
+            axis = new PolarChartCategoryAxisRadial(q, parent);
+        if (orientation() == Qt::Horizontal)
+            axis = new PolarChartCategoryAxisAngular(q, parent);
+    }
 
     m_item.reset(axis);
     QAbstractAxisPrivate::initializeGraphics(parent);

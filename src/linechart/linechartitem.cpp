@@ -22,7 +22,7 @@
 #include "qlineseries.h"
 #include "qlineseries_p.h"
 #include "chartpresenter_p.h"
-#include "abstractdomain_p.h"
+#include "polardomain_p.h"
 #include <QPainter>
 #include <QGraphicsSceneMouseEvent>
 
@@ -30,10 +30,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 const qreal mouseEventMinWidth(12);
 
-LineChartItem::LineChartItem(QLineSeries *series,QGraphicsItem* item)
+LineChartItem::LineChartItem(QLineSeries *series, QGraphicsItem *item)
     : XYChart(series,item),
       m_series(series),
-      m_pointsVisible(false)
+      m_pointsVisible(false),
+      m_chartType(QChart::ChartTypeUndefined)
 {
     setAcceptHoverEvents(true);
     setZValue(ChartPresenter::LineChartZValue);
@@ -50,54 +51,235 @@ QRectF LineChartItem::boundingRect() const
 
 QPainterPath LineChartItem::shape() const
 {
-    return m_path;
+    return m_shapePath;
 }
 
 void LineChartItem::updateGeometry()
 {
     m_points = geometryPoints();
+    const QVector<QPointF> &points = m_points;
 
-    if (m_points.size() == 0) {
+    if (points.size() == 0) {
         prepareGeometryChange();
-        m_path = QPainterPath();
+        m_fullPath = QPainterPath();
         m_linePath = QPainterPath();
         m_rect = QRect();
         return;
     }
 
-    QPainterPath linePath(m_points.at(0));
+    QPainterPath linePath;
+    QPainterPath fullPath;
+    // Use worst case scenario to determine required margin.
+    qreal margin = m_linePen.width() * 1.42;
 
-    if (m_pointsVisible) {
+    // Area series use component line series that aren't necessarily added to the chart themselves,
+    // so check if chart type is forced before trying to obtain it from the chart.
+    QChart::ChartType chartType = m_chartType;
+    if (chartType == QChart::ChartTypeUndefined)
+        chartType = m_series->chart()->chartType();
 
+    // For polar charts, we need special handling for angular (horizontal)
+    // points that are off-grid.
+    if (chartType == QChart::ChartTypePolar) {
+        QPainterPath linePathLeft;
+        QPainterPath linePathRight;
+        QPainterPath *currentSegmentPath = 0;
+        QPainterPath *previousSegmentPath = 0;
+        qreal minX = domain()->minX();
+        qreal maxX = domain()->maxX();
+        qreal minY = domain()->minY();
+        QPointF currentSeriesPoint = m_series->pointAt(0);
+        QPointF currentGeometryPoint = points.at(0);
+        QPointF previousGeometryPoint = points.at(0);
         int size = m_linePen.width();
-        linePath.addEllipse(m_points.at(0), size, size);
-        linePath.moveTo(m_points.at(0));
-        for (int i = 1; i < m_points.size(); i++) {
-            linePath.lineTo(m_points.at(i));
-            linePath.addEllipse(m_points.at(i), size, size);
-            linePath.moveTo(m_points.at(i));
+        bool pointOffGrid = false;
+        bool previousPointWasOffGrid = (currentSeriesPoint.x() < minX || currentSeriesPoint.x() > maxX);
+
+        qreal domainRadius = domain()->size().height() / 2.0;
+        const QPointF centerPoint(domainRadius, domainRadius);
+
+        if (!previousPointWasOffGrid) {
+            fullPath.moveTo(points.at(0));
+            if (m_pointsVisible && currentSeriesPoint.y() >= minY) {
+                // Do not draw ellipses for points below minimum Y.
+                linePath.addEllipse(points.at(0), size, size);
+                fullPath.addEllipse(points.at(0), size, size);
+                linePath.moveTo(points.at(0));
+                fullPath.moveTo(points.at(0));
+            }
         }
 
-    } else {
-        for (int i = 1; i < m_points.size(); i++)
-            linePath.lineTo(m_points.at(i));
-    }
+        qreal leftMarginLine = centerPoint.x() - margin;
+        qreal rightMarginLine = centerPoint.x() + margin;
+        qreal horizontal = centerPoint.y();
 
-    m_linePath = linePath;
+        for (int i = 1; i < points.size(); i++) {
+            // Interpolating line fragments would be ugly when thick pen is used,
+            // so we work around it by utilizing three separate
+            // paths for line segments and clip those with custom regions at paint time.
+            // "Right" path contains segments that cross the axis line with visible point on the
+            // right side of the axis line, as well as segments that have one point within the margin
+            // on the right side of the axis line and another point on the right side of the chart.
+            // "Left" path contains points with similarly on the left side.
+            // "Full" path contains rest of the points.
+            // This doesn't yield perfect results always. E.g. when segment covers more than 90
+            // degrees and both of the points are within the margin, one in the top half and one in the
+            // bottom half of the chart, the bottom one gets clipped incorrectly.
+            // However, this should be rare occurrence in any sensible chart.
+            currentSeriesPoint = m_series->pointAt(i);
+            currentGeometryPoint = points.at(i);
+            pointOffGrid = (currentSeriesPoint.x() < minX || currentSeriesPoint.x() > maxX);
+
+            // Draw something unless both off-grid
+            if (!pointOffGrid || !previousPointWasOffGrid) {
+                QPointF intersectionPoint;
+                qreal y;
+                if (pointOffGrid != previousPointWasOffGrid) {
+                    if (currentGeometryPoint.x() == previousGeometryPoint.x()) {
+                        y = currentGeometryPoint.y() + (currentGeometryPoint.y() - previousGeometryPoint.y()) / 2.0;
+                    } else {
+                        qreal ratio = (centerPoint.x() - currentGeometryPoint.x()) / (currentGeometryPoint.x() - previousGeometryPoint.x());
+                        y = currentGeometryPoint.y() + (currentGeometryPoint.y() - previousGeometryPoint.y()) * ratio;
+                    }
+                    intersectionPoint = QPointF(centerPoint.x(), y);
+                }
+
+                bool dummyOk; // We know points are ok, but this is needed
+                qreal currentAngle = static_cast<PolarDomain *>(domain())->toAngularCoordinate(currentSeriesPoint.x(), dummyOk);
+                qreal previousAngle = static_cast<PolarDomain *>(domain())->toAngularCoordinate(m_series->pointAt(i - 1).x(), dummyOk);
+
+                if ((qAbs(currentAngle - previousAngle) > 180.0)) {
+                    // If the angle between two points is over 180 degrees (half X range),
+                    // any direct segment between them becomes meaningless.
+                    // In this case two line segments are drawn instead, from previous
+                    // point to the center and from center to current point.
+                    if ((previousAngle < 0.0 || (previousAngle <= 180.0 && previousGeometryPoint.x() < rightMarginLine))
+                        && previousGeometryPoint.y() < horizontal) {
+                        currentSegmentPath = &linePathRight;
+                    } else if ((previousAngle > 360.0 || (previousAngle > 180.0 && previousGeometryPoint.x() > leftMarginLine))
+                                && previousGeometryPoint.y() < horizontal) {
+                        currentSegmentPath = &linePathLeft;
+                    } else if (previousAngle > 0.0 && previousAngle < 360.0) {
+                        currentSegmentPath = &linePath;
+                    } else {
+                        currentSegmentPath = 0;
+                    }
+
+                    if (currentSegmentPath) {
+                        if (previousSegmentPath != currentSegmentPath)
+                            currentSegmentPath->moveTo(previousGeometryPoint);
+                        if (previousPointWasOffGrid)
+                            fullPath.moveTo(intersectionPoint);
+
+                        currentSegmentPath->lineTo(centerPoint);
+                        fullPath.lineTo(centerPoint);
+                    }
+
+                    previousSegmentPath = currentSegmentPath;
+
+                    if ((currentAngle < 0.0 || (currentAngle <= 180.0 && currentGeometryPoint.x() < rightMarginLine))
+                        && currentGeometryPoint.y() < horizontal) {
+                        currentSegmentPath = &linePathRight;
+                    } else if ((currentAngle > 360.0 || (currentAngle > 180.0 &&currentGeometryPoint.x() > leftMarginLine))
+                                && currentGeometryPoint.y() < horizontal) {
+                        currentSegmentPath = &linePathLeft;
+                    } else if (currentAngle > 0.0 && currentAngle < 360.0) {
+                        currentSegmentPath = &linePath;
+                    } else {
+                        currentSegmentPath = 0;
+                    }
+
+                    if (currentSegmentPath) {
+                        if (previousSegmentPath != currentSegmentPath)
+                            currentSegmentPath->moveTo(centerPoint);
+                        if (!previousSegmentPath)
+                            fullPath.moveTo(centerPoint);
+
+                        currentSegmentPath->lineTo(currentGeometryPoint);
+                        if (pointOffGrid)
+                            fullPath.lineTo(intersectionPoint);
+                        else
+                            fullPath.lineTo(currentGeometryPoint);
+                    }
+                } else {
+                    if (previousAngle < 0.0 || currentAngle < 0.0
+                        || ((previousAngle <= 180.0 && currentAngle <= 180.0)
+                            && ((previousGeometryPoint.x() < rightMarginLine && previousGeometryPoint.y() < horizontal)
+                                || (currentGeometryPoint.x() < rightMarginLine && currentGeometryPoint.y() < horizontal)))) {
+                        currentSegmentPath = &linePathRight;
+                    } else if (previousAngle > 360.0 || currentAngle > 360.0
+                               || ((previousAngle > 180.0 && currentAngle > 180.0)
+                                   && ((previousGeometryPoint.x() > leftMarginLine && previousGeometryPoint.y() < horizontal)
+                                       || (currentGeometryPoint.x() > leftMarginLine && currentGeometryPoint.y() < horizontal)))) {
+                        currentSegmentPath = &linePathLeft;
+                    } else {
+                        currentSegmentPath = &linePath;
+                    }
+
+                    if (currentSegmentPath != previousSegmentPath)
+                        currentSegmentPath->moveTo(previousGeometryPoint);
+                    if (previousPointWasOffGrid)
+                        fullPath.moveTo(intersectionPoint);
+
+                    if (pointOffGrid)
+                        fullPath.lineTo(intersectionPoint);
+                    else
+                        fullPath.lineTo(currentGeometryPoint);
+                    currentSegmentPath->lineTo(currentGeometryPoint);
+                }
+            } else {
+                currentSegmentPath = 0;
+            }
+
+            previousPointWasOffGrid = pointOffGrid;
+            if (m_pointsVisible && !pointOffGrid && currentSeriesPoint.y() >= minY) {
+                linePath.addEllipse(points.at(i), size, size);
+                fullPath.addEllipse(points.at(i), size, size);
+                linePath.moveTo(points.at(i));
+                fullPath.moveTo(points.at(i));
+            }
+            previousSegmentPath = currentSegmentPath;
+            previousGeometryPoint = currentGeometryPoint;
+        }
+        m_linePathPolarRight = linePathRight;
+        m_linePathPolarLeft = linePathLeft;
+        // Note: This construction of m_fullpath is not perfect. The partial segments that are
+        // outside left/right clip regions at axis boundary still generate hover/click events,
+        // because shape doesn't get clipped. It doesn't seem possible to do sensibly.
+    } else { // not polar
+        linePath.moveTo(points.at(0));
+        if (m_pointsVisible) {
+            int size = m_linePen.width();
+            linePath.addEllipse(points.at(0), size, size);
+            linePath.moveTo(points.at(0));
+            for (int i = 1; i < points.size(); i++) {
+                linePath.lineTo(points.at(i));
+                linePath.addEllipse(points.at(i), size, size);
+                linePath.moveTo(points.at(i));
+            }
+        } else {
+            for (int i = 1; i < points.size(); i++)
+                linePath.lineTo(points.at(i));
+        }
+        fullPath = linePath;
+    }
 
     QPainterPathStroker stroker;
     // QPainter::drawLine does not respect join styles, for example BevelJoin becomes MiterJoin.
     // This is why we are prepared for the "worst case" scenario, i.e. use always MiterJoin and
     // multiply line width with square root of two when defining shape and bounding rectangle.
-    stroker.setWidth(m_linePen.width() * 1.42);
+    stroker.setWidth(margin);
     stroker.setJoinStyle(Qt::MiterJoin);
     stroker.setCapStyle(Qt::SquareCap);
     stroker.setMiterLimit(m_linePen.miterLimit());
 
     prepareGeometryChange();
 
-    m_path = stroker.createStroke(linePath);
-    m_rect = m_path.boundingRect();
+    m_linePath = linePath;
+    m_fullPath = fullPath;
+    m_shapePath = stroker.createStroke(fullPath);
+
+    m_rect = m_shapePath.boundingRect();
 }
 
 void LineChartItem::handleUpdated()
@@ -121,16 +303,35 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     Q_UNUSED(widget)
     Q_UNUSED(option)
 
+    QRectF clipRect = QRectF(QPointF(0, 0), domain()->size());
+
     painter->save();
     painter->setPen(m_linePen);
-    painter->setClipRect(QRectF(QPointF(0,0),domain()->size()));
+    bool alwaysUsePath = false;
+
+    if (m_series->chart()->chartType() == QChart::ChartTypePolar) {
+        qreal halfWidth = domain()->size().width() / 2.0;
+        QRectF clipRectLeft = QRectF(0, 0, halfWidth, domain()->size().height());
+        QRectF clipRectRight = QRectF(halfWidth, 0, halfWidth, domain()->size().height());
+        QRegion fullPolarClipRegion(clipRect.toRect(), QRegion::Ellipse);
+        QRegion clipRegionLeft(fullPolarClipRegion.intersected(clipRectLeft.toRect()));
+        QRegion clipRegionRight(fullPolarClipRegion.intersected(clipRectRight.toRect()));
+        painter->setClipRegion(clipRegionLeft);
+        painter->drawPath(m_linePathPolarLeft);
+        painter->setClipRegion(clipRegionRight);
+        painter->drawPath(m_linePathPolarRight);
+        painter->setClipRegion(fullPolarClipRegion);
+        alwaysUsePath = true; // required for proper clipping
+    } else {
+        painter->setClipRect(clipRect);
+    }
 
     if (m_pointsVisible) {
         painter->setBrush(m_linePen.color());
         painter->drawPath(m_linePath);
     } else {
         painter->setBrush(QBrush(Qt::NoBrush));
-        if (m_linePen.style() != Qt::SolidLine) {
+        if (m_linePen.style() != Qt::SolidLine || alwaysUsePath) {
             // If pen style is not solid line, always fall back to path painting
             // to ensure proper continuity of the pattern
             painter->drawPath(m_linePath);

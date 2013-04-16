@@ -155,36 +155,37 @@ public:
 
 Q_SIGNALS:
     void visibleChanged(bool visible);
-    void linePenChanged(const QPen& pen);
+    void linePenChanged(const QPen &pen);
     void lineVisibleChanged(bool visible);
     void labelsVisibleChanged(bool visible);
-    void labelsPenChanged(const QPen& pen);
-    void labelsBrushChanged(const QBrush& brush);
-    void labelsFontChanged(const QFont& pen);
+    void labelsPenChanged(const QPen &pen);
+    void labelsBrushChanged(const QBrush &brush);
+    void labelsFontChanged(const QFont &pen);
     void labelsAngleChanged(int angle);
-    void gridLinePenChanged(const QPen& pen);
+    void gridLinePenChanged(const QPen &pen);
     void gridVisibleChanged(bool visible);
     void colorChanged(QColor color);
     void labelsColorChanged(QColor color);
-    void titleTextChanged(const QString& title);
-    void titlePenChanged(const QPen& pen);
-    void titleBrushChanged(const QBrush& brush);
+    void titleTextChanged(const QString &title);
+    void titlePenChanged(const QPen &pen);
+    void titleBrushChanged(const QBrush &brush);
     void titleVisibleChanged(bool visible);
-    void titleFontChanged(const QFont& font);
+    void titleFontChanged(const QFont &font);
     void shadesVisibleChanged(bool visible);
     void shadesColorChanged(QColor color);
     void shadesBorderColorChanged(QColor color);
-    void shadesPenChanged(const QPen& pen);
-    void shadesBrushChanged(const QBrush& brush);
+    void shadesPenChanged(const QPen &pen);
+    void shadesBrushChanged(const QBrush &brush);
 
 protected:
     QScopedPointer<QAbstractAxisPrivate> d_ptr;
     Q_DISABLE_COPY(QAbstractAxis)
     friend class ChartDataSet;
-    friend class ChartAxis;
     friend class ChartPresenter;
     friend class ChartThemeManager;
     friend class AbstractDomain;
+    friend class ChartAxisElement;
+    friend class XYChart;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

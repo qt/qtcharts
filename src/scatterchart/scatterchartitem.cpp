@@ -23,6 +23,7 @@
 #include "qscatterseries_p.h"
 #include "chartpresenter_p.h"
 #include "abstractdomain_p.h"
+#include "qchart.h"
 #include <QPainter>
 #include <QGraphicsScene>
 #include <QDebug>
@@ -30,7 +31,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ScatterChartItem::ScatterChartItem(QScatterSeries *series, QGraphicsItem* item)
+ScatterChartItem::ScatterChartItem(QScatterSeries *series, QGraphicsItem *item)
     : XYChart(series,item),
       m_series(series),
       m_items(this),
@@ -93,12 +94,12 @@ void ScatterChartItem::deletePoints(int count)
 
 void ScatterChartItem::markerSelected(QGraphicsItem *marker)
 {
-    emit XYChart::clicked(domain()->calculateDomainPoint(m_markerMap[marker]));
+    emit XYChart::clicked(m_markerMap[marker]);
 }
 
 void ScatterChartItem::markerHovered(QGraphicsItem *marker, bool state)
 {
-    emit XYChart::hovered(domain()->calculateDomainPoint(m_markerMap[marker]), state);
+    emit XYChart::hovered(m_markerMap[marker], state);
 }
 
 void ScatterChartItem::updateGeometry()
@@ -125,13 +126,16 @@ void ScatterChartItem::updateGeometry()
 
     QRectF clipRect(QPointF(0,0),domain()->size());
 
+    QVector<bool> offGridStatus = offGridStatusVector();
+
     for (int i = 0; i < points.size(); i++) {
         QGraphicsItem *item = items.at(i);
         const QPointF &point = points.at(i);
         const QRectF &rect = item->boundingRect();
-        m_markerMap[item] = point;
+        m_markerMap[item] = m_series->pointAt(i);
         item->setPos(point.x() - rect.width() / 2, point.y() - rect.height() / 2);
-        if (!m_visible || !clipRect.contains(point))
+
+        if (!m_visible || offGridStatus.at(i))
             item->setVisible(false);
         else
             item->setVisible(true);

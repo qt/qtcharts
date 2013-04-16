@@ -38,7 +38,7 @@ AbstractDomain::~AbstractDomain()
 {
 }
 
-void AbstractDomain::setSize(const QSizeF& size)
+void AbstractDomain::setSize(const QSizeF &size)
 {
 	if(m_size!=size)
 	{
@@ -122,9 +122,9 @@ void AbstractDomain::handleHorizontalAxisRangeChanged(qreal min, qreal max)
 
 void AbstractDomain::blockRangeSignals(bool block)
 {
-    if(m_signalsBlocked!=block){
+    if (m_signalsBlocked!=block) {
         m_signalsBlocked=block;
-        if(!block) {
+        if (!block) {
             emit rangeHorizontalChanged(m_minX,m_maxX);
             emit rangeVerticalChanged(m_minY,m_maxY);
         }
@@ -165,14 +165,14 @@ qreal AbstractDomain::niceNumber(qreal x, bool ceiling)
     return q * z;
 }
 
-bool AbstractDomain::attachAxis(QAbstractAxis* axis)
+bool AbstractDomain::attachAxis(QAbstractAxis *axis)
 {
-	if(axis->orientation()==Qt::Vertical) {
+    if (axis->orientation() == Qt::Vertical) {
 		QObject::connect(axis->d_ptr.data(), SIGNAL(rangeChanged(qreal,qreal)), this, SLOT(handleVerticalAxisRangeChanged(qreal,qreal)));
 		QObject::connect(this, SIGNAL(rangeVerticalChanged(qreal,qreal)), axis->d_ptr.data(), SLOT(handleRangeChanged(qreal,qreal)));
 	}
 
-	if(axis->orientation()==Qt::Horizontal) {
+    if (axis->orientation() == Qt::Horizontal) {
 		QObject::connect(axis->d_ptr.data(), SIGNAL(rangeChanged(qreal,qreal)), this, SLOT(handleHorizontalAxisRangeChanged(qreal,qreal)));
 		QObject::connect(this, SIGNAL(rangeHorizontalChanged(qreal,qreal)), axis->d_ptr.data(), SLOT(handleRangeChanged(qreal,qreal)));
 	}
@@ -180,14 +180,14 @@ bool AbstractDomain::attachAxis(QAbstractAxis* axis)
 	return true;
 }
 
-bool AbstractDomain::detachAxis(QAbstractAxis* axis)
+bool AbstractDomain::detachAxis(QAbstractAxis *axis)
 {
-	if(axis->orientation()==Qt::Vertical) {
+    if (axis->orientation() == Qt::Vertical) {
 		QObject::disconnect(axis->d_ptr.data(), SIGNAL(rangeChanged(qreal,qreal)), this, SLOT(handleVerticalAxisRangeChanged(qreal,qreal)));
 		QObject::disconnect(this, SIGNAL(rangeVerticalChanged(qreal,qreal)), axis->d_ptr.data(), SLOT(handleRangeChanged(qreal,qreal)));
 	}
 
-	if(axis->orientation()==Qt::Horizontal) {
+    if (axis->orientation() == Qt::Horizontal) {
 		QObject::disconnect(axis->d_ptr.data(), SIGNAL(rangeChanged(qreal,qreal)), this, SLOT(handleHorizontalAxisRangeChanged(qreal,qreal)));
 		QObject::disconnect(this, SIGNAL(rangeHorizontalChanged(qreal,qreal)), axis->d_ptr.data(), SLOT(handleRangeChanged(qreal,qreal)));
 	}
@@ -199,10 +199,10 @@ bool AbstractDomain::detachAxis(QAbstractAxis* axis)
 
 bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator== (const AbstractDomain &domain1, const AbstractDomain &domain2)
 {
-    return (qFuzzyIsNull(domain1.m_maxX - domain2.m_maxX) &&
-            qFuzzyIsNull(domain1.m_maxY - domain2.m_maxY) &&
-            qFuzzyIsNull(domain1.m_minX - domain2.m_minX) &&
-            qFuzzyIsNull(domain1.m_minY - domain2.m_minY));
+    return (qFuzzyIsNull(domain1.m_maxX - domain2.m_maxX)
+            && qFuzzyIsNull(domain1.m_maxY - domain2.m_maxY)
+            && qFuzzyIsNull(domain1.m_minX - domain2.m_minX)
+            && qFuzzyIsNull(domain1.m_minY - domain2.m_minY));
 }
 
 
@@ -217,6 +217,17 @@ QDebug QTCOMMERCIALCHART_AUTOTEST_EXPORT operator<<(QDebug dbg, const AbstractDo
     dbg.nospace() << "AbstractDomain(" << domain.m_minX << ',' << domain.m_maxX << ',' << domain.m_minY << ',' << domain.m_maxY << ')' << domain.m_size;
     return dbg.maybeSpace();
 }
+
+// This function adjusts min/max ranges to failsafe values if negative/zero values are attempted.
+void AbstractDomain::adjustLogDomainRanges(qreal &min, qreal &max)
+{
+    if (min <= 0) {
+       min = 1.0;
+       if (max <= min)
+           max = min + 1.0;
+    }
+}
+
 
 #include "moc_abstractdomain_p.cpp"
 

@@ -101,6 +101,7 @@ private slots:
     void zoomOut();
     void createDefaultAxesForLineSeries_data();
     void createDefaultAxesForLineSeries();
+    void axisPolarOrientation();
 private:
     void createTestData();
 
@@ -121,7 +122,7 @@ void tst_QChart::cleanupTestCase()
 
 void tst_QChart::init()
 {
-    m_view = new QChartView(new QChart());
+    m_view = new QChartView(newQChartOrQPolarChart());
     m_chart = m_view->chart();
 }
 
@@ -191,20 +192,22 @@ void tst_QChart::addSeries_data()
     QAbstractSeries* area = new QAreaSeries(static_cast<QLineSeries*>(line));
     QAbstractSeries* scatter = new QScatterSeries(this);
     QAbstractSeries* spline = new QSplineSeries(this);
-    QAbstractSeries* pie = new QPieSeries(this);
-    QAbstractSeries* bar = new QBarSeries(this);
-    QAbstractSeries* percent = new QPercentBarSeries(this);
-    QAbstractSeries* stacked = new QStackedBarSeries(this);
 
     QTest::newRow("lineSeries") << line;
     QTest::newRow("areaSeries") << area;
     QTest::newRow("scatterSeries") << scatter;
     QTest::newRow("splineSeries") << spline;
-    QTest::newRow("pieSeries") << pie;
-    QTest::newRow("barSeries") << bar;
-    QTest::newRow("percentBarSeries") << percent;
-    QTest::newRow("stackedBarSeries") << stacked;
 
+    if (!isPolarTest()) {
+        QAbstractSeries* pie = new QPieSeries(this);
+        QAbstractSeries* bar = new QBarSeries(this);
+        QAbstractSeries* percent = new QPercentBarSeries(this);
+        QAbstractSeries* stacked = new QStackedBarSeries(this);
+        QTest::newRow("pieSeries") << pie;
+        QTest::newRow("barSeries") << bar;
+        QTest::newRow("percentBarSeries") << percent;
+        QTest::newRow("stackedBarSeries") << stacked;
+    }
 }
 
 void tst_QChart::addSeries()
@@ -258,20 +261,23 @@ void tst_QChart::axisX_data()
     QTest::newRow("categories,areaSeries") <<  (QAbstractAxis*) new QBarCategoryAxis() << (QAbstractSeries*) new QAreaSeries(new QLineSeries(this));
     QTest::newRow("categories,scatterSeries") <<  (QAbstractAxis*) new QBarCategoryAxis() << (QAbstractSeries*) new QScatterSeries(this);
     QTest::newRow("categories,splineSeries") <<  (QAbstractAxis*) new QBarCategoryAxis() << (QAbstractSeries*) new QSplineSeries(this);
-    QTest::newRow("categories,pieSeries") <<  (QAbstractAxis*) new QBarCategoryAxis() << (QAbstractSeries*) new QPieSeries(this);
-    QTest::newRow("categories,barSeries") <<  (QAbstractAxis*) new QBarCategoryAxis() << (QAbstractSeries*) new QBarSeries(this);
-    QTest::newRow("categories,percentBarSeries") <<  (QAbstractAxis*) new QBarCategoryAxis() << (QAbstractSeries*) new QPercentBarSeries(this);
-    QTest::newRow("categories,stackedBarSeries") <<  (QAbstractAxis*) new QBarCategoryAxis() << (QAbstractSeries*) new QStackedBarSeries(this);
+    if (!isPolarTest()) {
+        QTest::newRow("categories,pieSeries") <<  (QAbstractAxis*) new QBarCategoryAxis() << (QAbstractSeries*) new QPieSeries(this);
+        QTest::newRow("categories,barSeries") <<  (QAbstractAxis*) new QBarCategoryAxis() << (QAbstractSeries*) new QBarSeries(this);
+        QTest::newRow("categories,percentBarSeries") <<  (QAbstractAxis*) new QBarCategoryAxis() << (QAbstractSeries*) new QPercentBarSeries(this);
+        QTest::newRow("categories,stackedBarSeries") <<  (QAbstractAxis*) new QBarCategoryAxis() << (QAbstractSeries*) new QStackedBarSeries(this);
+    }
 
     QTest::newRow("value,lineSeries") << (QAbstractAxis*) new QValueAxis() << (QAbstractSeries*) new QLineSeries(this);
     QTest::newRow("value,areaSeries") << (QAbstractAxis*) new QValueAxis() << (QAbstractSeries*) new QAreaSeries(new QLineSeries(this));
     QTest::newRow("value,scatterSeries") << (QAbstractAxis*) new QValueAxis() << (QAbstractSeries*) new QScatterSeries(this);
     QTest::newRow("value,splineSeries") << (QAbstractAxis*) new QValueAxis() <<  (QAbstractSeries*) new QSplineSeries(this);
-    QTest::newRow("value,pieSeries") << (QAbstractAxis*) new QValueAxis() << (QAbstractSeries*) new QPieSeries(this);
-    QTest::newRow("value,barSeries") << (QAbstractAxis*) new QValueAxis() <<   (QAbstractSeries*) new QBarSeries(this);
-    QTest::newRow("value,percentBarSeries") << (QAbstractAxis*) new QValueAxis() << (QAbstractSeries*) new QPercentBarSeries(this);
-    QTest::newRow("value,stackedBarSeries") << (QAbstractAxis*) new QValueAxis() << (QAbstractSeries*) new QStackedBarSeries(this);
-
+    if (!isPolarTest()) {
+        QTest::newRow("value,pieSeries") << (QAbstractAxis*) new QValueAxis() << (QAbstractSeries*) new QPieSeries(this);
+        QTest::newRow("value,barSeries") << (QAbstractAxis*) new QValueAxis() <<   (QAbstractSeries*) new QBarSeries(this);
+        QTest::newRow("value,percentBarSeries") << (QAbstractAxis*) new QValueAxis() << (QAbstractSeries*) new QPercentBarSeries(this);
+        QTest::newRow("value,stackedBarSeries") << (QAbstractAxis*) new QValueAxis() << (QAbstractSeries*) new QStackedBarSeries(this);
+    }
 }
 
 void tst_QChart::axisX()
@@ -850,14 +856,14 @@ void tst_QChart::createDefaultAxesForLineSeries()
     series2->append(series2minX, series2minY);
     series2->append(series2midX, series2midY);
     series2->append(series2maxX, series2maxY);
-    QChart chart;
-    chart.addSeries(series1);
-    chart.addSeries(series2);
-    chart.createDefaultAxes();
-    QValueAxis *xAxis = (QValueAxis *)chart.axisX();
+    QChart *chart = newQChartOrQPolarChart();
+    chart->addSeries(series1);
+    chart->addSeries(series2);
+    chart->createDefaultAxes();
+    QValueAxis *xAxis = (QValueAxis *)chart->axisX();
     QCOMPARE(xAxis->min(), overallminX);
     QCOMPARE(xAxis->max(), overallmaxX);
-    QValueAxis *yAxis = (QValueAxis *)chart.axisY();
+    QValueAxis *yAxis = (QValueAxis *)chart->axisY();
     QCOMPARE(yAxis->min(), overallminY);
     QCOMPARE(yAxis->max(), overallmaxY);
     QLineSeries *series3 = new QLineSeries(this);
@@ -865,12 +871,37 @@ void tst_QChart::createDefaultAxesForLineSeries()
     series3->append(0, 0);
     series3->append(100, 100);
     // Adding a new series should not change the axes as they have not been told to update
-    chart.addSeries(series3);
+    chart->addSeries(series3);
     QCOMPARE(xAxis->min(), overallminX);
     QCOMPARE(xAxis->max(), overallmaxX);
     QCOMPARE(yAxis->min(), overallminY);
     QCOMPARE(yAxis->max(), overallmaxY);
+}
 
+void tst_QChart::axisPolarOrientation()
+{
+    QLineSeries* series1 = new QLineSeries(this);
+    series1->append(1, 2);
+    series1->append(2, 4);
+    series1->append(3, 8);
+    QPolarChart chart;
+    chart.addSeries(series1);
+
+    QValueAxis *xAxis = new QValueAxis();
+    QValueAxis *yAxis = new QValueAxis();
+    chart.addAxis(xAxis, QPolarChart::PolarOrientationAngular);
+    chart.addAxis(yAxis, QPolarChart::PolarOrientationRadial);
+
+    QList<QAbstractAxis *> xAxes = chart.axes(QPolarChart::PolarOrientationAngular);
+    QList<QAbstractAxis *> yAxes = chart.axes(QPolarChart::PolarOrientationRadial);
+
+    QCOMPARE(xAxes.size(), 1);
+    QCOMPARE(yAxes.size(), 1);
+    QCOMPARE(xAxes[0], xAxis);
+    QCOMPARE(yAxes[0], yAxis);
+
+    QCOMPARE(chart.axisPolarOrientation(xAxes[0]), QPolarChart::PolarOrientationAngular);
+    QCOMPARE(chart.axisPolarOrientation(yAxes[0]), QPolarChart::PolarOrientationRadial);
 }
 
 QTEST_MAIN(tst_QChart)

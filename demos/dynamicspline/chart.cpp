@@ -26,7 +26,7 @@
 #include <QDebug>
 
 Chart::Chart(QGraphicsItem *parent, Qt::WindowFlags wFlags):
-    QChart(parent, wFlags),
+    QChart(QChart::ChartTypeCartesian, parent, wFlags),
     m_series(0),
     m_axis(new QValueAxis),
     m_step(0),

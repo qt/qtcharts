@@ -21,7 +21,7 @@
 #include "chartlogvalueaxisy_p.h"
 #include "chartpresenter_p.h"
 #include "qlogvalueaxis.h"
-#include "chartlayout_p.h"
+#include "abstractchartlayout_p.h"
 #include <QGraphicsLayout>
 #include <QFontMetrics>
 #include <qmath.h>
@@ -29,12 +29,12 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartLogValueAxisY::ChartLogValueAxisY(QLogValueAxis *axis, QGraphicsItem* item)
+ChartLogValueAxisY::ChartLogValueAxisY(QLogValueAxis *axis, QGraphicsItem *item)
     : VerticalAxis(axis, item),
       m_axis(axis)
 {
-    QObject::connect(m_axis, SIGNAL(baseChanged(qreal)),this, SLOT(handleBaseChanged(qreal)));
-    QObject::connect(m_axis,SIGNAL(labelFormatChanged(QString)),this, SLOT(handleLabelFormatChanged(QString)));
+    QObject::connect(m_axis, SIGNAL(baseChanged(qreal)), this, SLOT(handleBaseChanged(qreal)));
+    QObject::connect(m_axis, SIGNAL(labelFormatChanged(QString)), this, SLOT(handleLabelFormatChanged(QString)));
 }
 
 ChartLogValueAxisY::~ChartLogValueAxisY()
@@ -54,7 +54,7 @@ QVector<qreal> ChartLogValueAxisY::calculateLayout() const
     const QRectF &gridRect = gridGeometry();
     const qreal deltaY = gridRect.height() / qAbs(logMax - logMin);
     for (int i = 0; i < tickCount; ++i)
-        points[i] = (ceilEdge + i) * -deltaY - leftEdge * -deltaY + gridRect.bottom();
+        points[i] = (ceilEdge + qreal(i)) * -deltaY - leftEdge * -deltaY + gridRect.bottom();
 
     return points;
 }
@@ -62,7 +62,7 @@ QVector<qreal> ChartLogValueAxisY::calculateLayout() const
 
 void ChartLogValueAxisY::updateGeometry()
 {
-    const QVector<qreal> &layout = ChartAxis::layout();
+    const QVector<qreal> &layout = ChartAxisElement::layout();
     if (layout.isEmpty())
         return;
     setLabels(createLogValueLabels(m_axis->min(), m_axis->max(), m_axis->base(), layout.size(), m_axis->labelFormat()));
@@ -87,7 +87,7 @@ QSizeF ChartLogValueAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint
 {
     Q_UNUSED(constraint)
 
-    QFontMetrics fn(font());
+    QFontMetrics fn(axis()->labelsFont());
     QSizeF sh;
 
     QSizeF base = VerticalAxis::sizeHint(which, constraint);

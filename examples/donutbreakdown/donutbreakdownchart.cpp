@@ -26,7 +26,7 @@ QTCOMMERCIALCHART_USE_NAMESPACE
 
 //![1]
 DonutBreakdownChart::DonutBreakdownChart(QGraphicsItem *parent, Qt::WindowFlags wFlags)
-    : QChart(parent, wFlags)
+    : QChart(QChart::ChartTypeCartesian, parent, wFlags)
 {
     // create the series for main center pie
     m_mainSeries = new QPieSeries();

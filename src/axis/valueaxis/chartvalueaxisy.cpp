@@ -22,7 +22,7 @@
 #include "qabstractaxis.h"
 #include "chartpresenter_p.h"
 #include "qvalueaxis.h"
-#include "chartlayout_p.h"
+#include "abstractchartlayout_p.h"
 #include <QGraphicsLayout>
 #include <QFontMetrics>
 #include <qmath.h>
@@ -30,12 +30,12 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartValueAxisY::ChartValueAxisY(QValueAxis *axis, QGraphicsItem* item)
+ChartValueAxisY::ChartValueAxisY(QValueAxis *axis, QGraphicsItem *item)
     : VerticalAxis(axis, item),
       m_axis(axis)
 {
-	QObject::connect(m_axis,SIGNAL(tickCountChanged(int)),this, SLOT(handleTickCountChanged(int)));
-    QObject::connect(m_axis,SIGNAL(labelFormatChanged(QString)),this, SLOT(handleLabelFormatChanged(QString)));
+    QObject::connect(m_axis, SIGNAL(tickCountChanged(int)), this, SLOT(handleTickCountChanged(int)));
+    QObject::connect(m_axis, SIGNAL(labelFormatChanged(QString)), this, SLOT(handleLabelFormatChanged(QString)));
 }
 
 ChartValueAxisY::~ChartValueAxisY()
@@ -62,7 +62,7 @@ QVector<qreal> ChartValueAxisY::calculateLayout() const
 
 void ChartValueAxisY::updateGeometry()
 {
-    const QVector<qreal> &layout = ChartAxis::layout();
+    const QVector<qreal> &layout = ChartAxisElement::layout();
     if (layout.isEmpty())
         return;
     setLabels(createValueLabels(min(),max(),layout.size(),m_axis->labelFormat()));
@@ -87,7 +87,7 @@ QSizeF ChartValueAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint) c
 {
     Q_UNUSED(constraint)
 
-    QFontMetrics fn(font());
+    QFontMetrics fn(axis()->labelsFont());
     QSizeF sh;
     QSizeF base = VerticalAxis::sizeHint(which, constraint);
     QStringList ticksList = createValueLabels(min(),max(),m_axis->tickCount(),m_axis->labelFormat());

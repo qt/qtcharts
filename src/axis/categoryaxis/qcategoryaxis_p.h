@@ -48,9 +48,6 @@ public:
     void initializeGraphics(QGraphicsItem* parent);
     int ticksCount() const;
 
-Q_SIGNALS:
-    void changed(qreal min, qreal max, int tickCount, bool niceNumbers);
-
 private:
     QMap<QString , Range> m_categoriesMap;
     QStringList m_categories;

@@ -126,7 +126,7 @@ QPointF XYDomain::calculateGeometryPoint(const QPointF &point, bool &ok) const
     return QPointF(x, y);
 }
 
-QVector<QPointF> XYDomain::calculateGeometryPoints(const QList<QPointF>& vector) const
+QVector<QPointF> XYDomain::calculateGeometryPoints(const QList<QPointF> &vector) const
 {
     const qreal deltaX = m_size.width() / (m_maxX - m_minX);
     const qreal deltaY = m_size.height() / (m_maxY - m_minY);
@@ -156,10 +156,10 @@ QPointF XYDomain::calculateDomainPoint(const QPointF &point) const
 
 bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator== (const XYDomain &domain1, const XYDomain &domain2)
 {
-    return (qFuzzyCompare(domain1.m_maxX, domain2.m_maxX) &&
-            qFuzzyCompare(domain1.m_maxY, domain2.m_maxY) &&
-            qFuzzyCompare(domain1.m_minX, domain2.m_minX) &&
-            qFuzzyCompare(domain1.m_minY, domain2.m_minY));
+    return (qFuzzyCompare(domain1.m_maxX, domain2.m_maxX)
+            && qFuzzyCompare(domain1.m_maxY, domain2.m_maxY)
+            && qFuzzyCompare(domain1.m_minX, domain2.m_minX)
+            && qFuzzyCompare(domain1.m_minY, domain2.m_minY));
 }
 
 

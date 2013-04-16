@@ -44,7 +44,7 @@ class ScatterChartItem : public XYChart
     Q_OBJECT
     Q_INTERFACES(QGraphicsItem)
 public:
-    explicit ScatterChartItem(QScatterSeries *series, QGraphicsItem* item = 0);
+    explicit ScatterChartItem(QScatterSeries *series, QGraphicsItem *item = 0);
 
 public:
     //from QGraphicsItem

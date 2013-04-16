@@ -69,6 +69,18 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \qmlproperty AbstractAxis XYSeries::axisAngular
+    The angular axis used for the series, drawn around the polar chart view.
+    \sa axisX
+*/
+
+/*!
+    \qmlproperty AbstractAxis XYSeries::axisRadial
+    The radial axis used for the series, drawn inside the polar chart view.
+    \sa axisY
+*/
+
+/*!
     \property QXYSeries::pointsVisible
     Controls if the data points are visible and should be drawn.
 */
@@ -351,6 +363,15 @@ QList<QPointF> QXYSeries::points() const
 {
     Q_D(const QXYSeries);
     return d->m_points.toList();
+}
+
+/*!
+    Returns point at \a index in internal points vector.
+*/
+const QPointF &QXYSeries::pointAt(int index) const
+{
+    Q_D(const QXYSeries);
+    return d->m_points.at(index);
 }
 
 /*!

@@ -28,6 +28,7 @@
 #include <qvxymodelmapper.h>
 #include <qhxymodelmapper.h>
 #include <QStandardItemModel>
+#include "tst_definitions.h"
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -145,7 +146,7 @@ void tst_qxymodelmapper::cleanup()
 
 void tst_qxymodelmapper::initTestCase()
 {
-    m_chart = new QChart;
+    m_chart = newQChartOrQPolarChart();
     QChartView *chartView = new QChartView(m_chart);
     chartView->show();
 }

@@ -35,13 +35,12 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QValueAxis;
-class ChartPresenter;
 
 class ChartValueAxisY : public VerticalAxis
 {
 	Q_OBJECT
 public:
-    ChartValueAxisY(QValueAxis *axis, QGraphicsItem* item = 0);
+    ChartValueAxisY(QValueAxis *axis, QGraphicsItem *item = 0);
     ~ChartValueAxisY();
 
     QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint) const;
