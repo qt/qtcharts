@@ -71,11 +71,15 @@ MainWidget::MainWidget(QWidget *parent) :
     connect(removeSeriesButton, SIGNAL(clicked()), this, SLOT(removeSeries()));
     grid->addWidget(removeSeriesButton, rowPos++, 1);
 
-
     // Create add a single box button
     QPushButton *addBoxButton = new QPushButton("Add a box");
     connect(addBoxButton, SIGNAL(clicked()), this, SLOT(addBox()));
     grid->addWidget(addBoxButton, rowPos++, 1);
+
+    // Create add a single box button
+    QPushButton *removeBoxButton = new QPushButton("Remove a box");
+    connect(removeBoxButton, SIGNAL(clicked()), this, SLOT(removeBox()));
+    grid->addWidget(removeBoxButton, rowPos++, 1);
 
     initThemeCombo(grid);
     initCheckboxes(grid);
@@ -208,6 +212,8 @@ void MainWidget::removeSeries()
         nSeries--;
         m_chart->removeSeries(m_series[nSeries]);
         delete m_series[nSeries];
+    } else {
+        qDebug() << "Create a series first";
     }
 }
 
@@ -215,14 +221,28 @@ void MainWidget::addBox()
 {
     qDebug() << "BoxPlotTester::MainWidget::addBox()";
 
-    QBarSet *newSet = new QBarSet("New");
-    *newSet << 5 << 6 << 6.8 << 7 << 8;
+    if (nSeries > 0) {
+        QBarSet *newSet = new QBarSet("New");
+        *newSet << 5 << 6 << 6.8 << 7 << 8;
 
-    m_series[0]->append(newSet);
+        m_series[0]->append(newSet);
 
-    m_axis->append(addCategories[nNewBoxes]);
+        m_axis->append(addCategories[nNewBoxes]);
 
-    nNewBoxes++;
+        nNewBoxes++;
+    }
+}
+
+void MainWidget::removeBox()
+{
+    qDebug() << "MainWidget::removeBox";
+
+    if (nSeries > 0) {
+        QList<QBarSet *> sets = m_series[0]->barSets();
+        m_series[0]->remove(sets.at(m_series[0]->count() - 3));
+    } else {
+        qDebug() << "Create a series first";
+    }
 }
 
 void MainWidget::animationToggled(bool enabled)

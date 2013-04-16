@@ -29,6 +29,7 @@ BoxWhiskers::BoxWhiskers(AbstractDomain *domain, QGraphicsObject *parent) :
     QGraphicsObject(parent),
     m_domain(domain)
 {
+    //qDebug() << "BoxWhiskers::BoxWhiskers()";
 }
 
 BoxWhiskers::~BoxWhiskers()

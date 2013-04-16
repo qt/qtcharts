@@ -35,6 +35,7 @@
 #include "qboxplotseries.h"
 #include "chartitem_p.h"
 #include "boxplotanimation_p.h"
+#include "qbarset.h"
 #include <QGraphicsItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -58,6 +59,7 @@ public Q_SLOTS:
     void handleDomainUpdated();
     void handleLayoutChanged();
     void handleUpdatedBars();
+    void handleBarsetRemove(QList<QBarSet*> barSets);
 
 private:
     virtual QVector<QRectF> calculateLayout();

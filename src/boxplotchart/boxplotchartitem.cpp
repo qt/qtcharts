@@ -35,6 +35,7 @@ BoxPlotChartItem::BoxPlotChartItem(QBoxPlotSeries *series, QGraphicsItem* item) 
     m_animation(0),
     m_animate(0)
 {
+    connect(series, SIGNAL(barsetsRemoved(QList<QBarSet*>)), this, SLOT(handleBarsetRemove(QList<QBarSet*>)));
     connect(series->d_func(), SIGNAL(restructuredBars()), this, SLOT(handleDataStructureChanged()));
     connect(series->d_func(), SIGNAL(updatedLayout()), this, SLOT(handleLayoutChanged()));
     connect(series->d_func(), SIGNAL(updatedBars()), this, SLOT(handleUpdatedBars()));
@@ -76,7 +77,8 @@ void BoxPlotChartItem::setAnimation(BoxPlotAnimation *animation)
 
 void BoxPlotChartItem::handleDataStructureChanged()
 {
-    //qDebug() << "BoxPlotChartItem::handleDataStructureChanged()";
+    qDebug() << "BoxPlotChartItem::handleDataStructureChanged()";
+
     int setCount = m_series->count();
 
     for (int s = 0; s < setCount; s++) {
@@ -105,12 +107,25 @@ void BoxPlotChartItem::handleDataStructureChanged()
 
 void BoxPlotChartItem::handleUpdatedBars()
 {
-    //qDebug() << "BoxPlotChartItem::handleUpdatedBars()";
+    qDebug() << "BoxPlotChartItem::handleUpdatedBars()";
 
     foreach (BoxWhiskers *item, m_boxTable.values()) {
         item->setBrush(m_series->brush());
         item->setPen(m_series->pen());
     }
+}
+
+void BoxPlotChartItem::handleBarsetRemove(QList<QBarSet*> barSets)
+{
+    //qDebug() << "BoxPlotChartItem::handleBarsetRemove";
+
+    foreach (QBarSet *set, barSets) {
+        BoxWhiskers *boxItem = m_boxTable.value(set);
+        m_boxTable.remove(set);
+        delete boxItem;
+    }
+
+    // We trust that series emits the restructuredBars, which handles restructuring
 }
 
 void BoxPlotChartItem::handleDomainUpdated()
@@ -136,6 +151,8 @@ void BoxPlotChartItem::handleDomainUpdated()
 
 void BoxPlotChartItem::handleLayoutChanged()
 {
+    qDebug() << "BoxPlotChartItem::handleLayoutChanged";
+
     foreach (BoxWhiskers *item, m_boxTable.values()) {
         if (m_animation)
             m_animation->setAnimationStart(item);
