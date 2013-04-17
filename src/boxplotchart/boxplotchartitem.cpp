@@ -113,6 +113,13 @@ void BoxPlotChartItem::handleUpdatedBars()
         item->setBrush(m_series->brush());
         item->setPen(m_series->pen());
     }
+    // Override with QBarSet specific settings
+    foreach (QBarSet *set, m_boxTable.keys()) {
+        if (set->brush().style() != Qt::NoBrush)
+            m_boxTable.value(set)->setBrush(set->brush());
+        if (set->pen().style() != Qt::NoPen)
+            m_boxTable.value(set)->setPen(set->pen());
+    }
 }
 
 void BoxPlotChartItem::handleBarsetRemove(QList<QBarSet*> barSets)
@@ -177,6 +184,8 @@ void BoxPlotChartItem::initializeLayout()
 
 QVector<QRectF> BoxPlotChartItem::calculateLayout()
 {
+    qDebug() << "ALERT EMPTY: BoxPlotChartItem::calculateLayout()";
+
     return QVector<QRectF>();
 }
 

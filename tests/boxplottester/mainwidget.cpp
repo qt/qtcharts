@@ -76,10 +76,25 @@ MainWidget::MainWidget(QWidget *parent) :
     connect(addBoxButton, SIGNAL(clicked()), this, SLOT(addBox()));
     grid->addWidget(addBoxButton, rowPos++, 1);
 
+    // Create insert a box button
+    QPushButton *insertBoxButton = new QPushButton("Insert a box");
+    connect(insertBoxButton, SIGNAL(clicked()), this, SLOT(insertBox()));
+    grid->addWidget(insertBoxButton, rowPos++, 1);
+
     // Create add a single box button
     QPushButton *removeBoxButton = new QPushButton("Remove a box");
     connect(removeBoxButton, SIGNAL(clicked()), this, SLOT(removeBox()));
     grid->addWidget(removeBoxButton, rowPos++, 1);
+
+    // Create clear button
+    QPushButton *clearButton = new QPushButton("Clear");
+    connect(clearButton, SIGNAL(clicked()), this, SLOT(clear()));
+    grid->addWidget(clearButton, rowPos++, 1);
+
+    // Create set brush button
+    QPushButton *setBrushButton = new QPushButton("Set brush");
+    connect(setBrushButton, SIGNAL(clicked()), this, SLOT(setBrush()));
+    grid->addWidget(setBrushButton, rowPos++, 1);
 
     initThemeCombo(grid);
     initCheckboxes(grid);
@@ -208,6 +223,8 @@ void MainWidget::addSeries()
 
 void MainWidget::removeSeries()
 {
+    qDebug() << "BoxPlotTester::MainWidget::removeSeries()";
+
     if (nSeries > 0) {
         nSeries--;
         m_chart->removeSeries(m_series[nSeries]);
@@ -233,13 +250,52 @@ void MainWidget::addBox()
     }
 }
 
+void MainWidget::insertBox()
+{
+    qDebug() << "BoxPlotTester::MainWidget::insertBox()";
+
+    if (nSeries > 0) {
+        QBarSet *newSet = new QBarSet("New");
+        *newSet << 2 << 6 << 6.8 << 7 << 10;
+
+        m_series[0]->insert(1, newSet);
+
+        m_axis->append(addCategories[nNewBoxes]);
+
+        nNewBoxes++;
+    }
+}
+
 void MainWidget::removeBox()
 {
-    qDebug() << "MainWidget::removeBox";
+    qDebug() << "BoxPlotTester::MainWidget::removeBox";
 
     if (nSeries > 0) {
         QList<QBarSet *> sets = m_series[0]->barSets();
         m_series[0]->remove(sets.at(m_series[0]->count() - 3));
+    } else {
+        qDebug() << "Create a series first";
+    }
+}
+
+void MainWidget::clear()
+{
+    qDebug() << "BoxPlotTester::MainWidget::clear";
+
+    if (nSeries > 0) {
+        m_series[0]->clear();
+    } else {
+        qDebug() << "Create a series first";
+    }
+}
+
+void MainWidget::setBrush()
+{
+    qDebug() << "BoxPlotTester::MainWidget::setBrush";
+
+    if (nSeries > 0) {
+        QList<QBarSet *> sets = m_series[0]->barSets();
+        sets.at(1)->setBrush(QBrush(QColor(Qt::yellow)));
     } else {
         qDebug() << "Create a series first";
     }

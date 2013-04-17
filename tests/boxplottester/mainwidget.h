@@ -49,7 +49,10 @@ private slots:
     void addSeries();
     void removeSeries();
     void addBox();
+    void insertBox();
     void removeBox();
+    void clear();
+    void setBrush();
     void animationToggled(bool enabled);
     void legendToggled(bool enabled);
     void titleToggled(bool enabled);

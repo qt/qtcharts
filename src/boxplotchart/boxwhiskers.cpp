@@ -61,11 +61,13 @@ void BoxWhiskers::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 void BoxWhiskers::setBrush(const QBrush &brush)
 {
     m_brush = brush;
+    update();
 }
 
 void BoxWhiskers::setPen(const QPen &pen)
 {
     m_pen = pen;
+    update();
 }
 
 void BoxWhiskers::setLayout(const BoxWhiskersData &data)

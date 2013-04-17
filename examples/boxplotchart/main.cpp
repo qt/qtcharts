@@ -25,6 +25,7 @@
 #include <QBarSet>
 #include <QLegend>
 #include <QBarCategoryAxis>
+#include <QLineSeries>
 
 #include <QBrush>
 #include <QColor>
@@ -42,6 +43,12 @@ int main(int argc, char *argv[])
     QBarSet *set3 = new QBarSet("Apr");
     QBarSet *set4 = new QBarSet("May");
     QBarSet *set5 = new QBarSet("Jun");
+    QBarSet *set6 = new QBarSet("Jul");
+    QBarSet *set7 = new QBarSet("Aug");
+    QBarSet *set8 = new QBarSet("Sep");
+    QBarSet *set9 = new QBarSet("Oct");
+    QBarSet *set10 = new QBarSet("Nov");
+    QBarSet *set11 = new QBarSet("Dec");
 
     //      low  bot   med   top  upp
     *set0 << 3 << 4 << 4.4 << 6 << 7;
@@ -50,10 +57,13 @@ int main(int argc, char *argv[])
     *set3 << 5 << 6 << 6.8 << 7 << 8;
     *set4 << 4 << 5 << 5.2 << 6 << 7;
     *set5 << 4 << 7 << 8.2 << 9 << 10;
+    *set6 << 2.5 << 5 << 5.4 << 6 << 7;
+    *set7 << 5 << 6.3 << 7.5 << 8 << 12;
+    *set8 << 2.6 << 5.1 << 5.7 << 8 << 9;
+    *set9 << 3.1 << 5.8 << 6.8 << 7 << 8;
+    *set10 << 4.2 << 5 << 5.8 << 6 << 7;
+    *set11 << 4.7 << 7 << 8.2 << 9 << 10;
 
-    set0->setBrush(QBrush(QColor(Qt::yellow)));
-
-    //set0->setColor(QColor(Qt::darkRed));
 //![1]
 
 //![2]
@@ -64,21 +74,41 @@ int main(int argc, char *argv[])
     series->append(set3);
     series->append(set4);
     series->append(set5);
-    series->type();
+    series->append(set6);
+    series->append(set7);
+    series->append(set8);
+    series->append(set9);
+    series->append(set10);
+    series->append(set11);
     series->setName("Box & Whiskers");
-    //series->setBrush(QBrush(QColor(Qt::yellow)));
 //![2]
+
+    QLineSeries *lineSeries = new QLineSeries();
+    lineSeries->append(0, 4.4);
+    lineSeries->append(1, 7.5);
+    lineSeries->append(2, 5.7);
+    lineSeries->append(3, 6.8);
+    lineSeries->append(4, 5.2);
+    lineSeries->append(5, 8.2);
+    lineSeries->append(6, 5.4);
+    lineSeries->append(7, 7.5);
+    lineSeries->append(8, 5.7);
+    lineSeries->append(9, 6.8);
+    lineSeries->append(10, 5.2);
+    lineSeries->append(11, 8.2);
+    lineSeries->setName("Medians");
 
 //![3]
     QChart *chart = new QChart();
     chart->addSeries(series);
+    chart->addSeries(lineSeries);
     chart->setTitle("Simple boxplotchart example");
     chart->setAnimationOptions(QChart::SeriesAnimations);
 //![3]
 
 //![4]
     QStringList categories;
-    categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun";
+    categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
     QBarCategoryAxis *axis = new QBarCategoryAxis();
     axis->append(categories);
     chart->createDefaultAxes();

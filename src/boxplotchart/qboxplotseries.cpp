@@ -168,17 +168,19 @@ void QBoxPlotSeriesPrivate::initializeGraphics(QGraphicsItem* parent)
         connect(m_chart->d_ptr->m_dataset, SIGNAL(seriesRemoved(QAbstractSeries*)), this, SLOT(handleSeriesRemove(QAbstractSeries*)) );
 
         QList<QAbstractSeries *> serieses = m_chart->series();
-        boxPlot->m_seriesCount = serieses.count();
 
         // Tries to find this series from the Chart's list of serieses and deduce the index
         int index = 0;
         foreach (QAbstractSeries *s, serieses) {
-            if (q == static_cast<QBoxPlotSeries *>(s)) {
-                boxPlot->m_seriesIndex = index;
-                m_index = index;
+            if (s->type() == QAbstractSeries::SeriesTypeBoxPlot) {
+                if (q == static_cast<QBoxPlotSeries *>(s)) {
+                    boxPlot->m_seriesIndex = index;
+                    m_index = index;
+                }
+                index++;
             }
-            index++;
         }
+        boxPlot->m_seriesCount = index;
     }
 
     // Make BoxPlotChartItem to instantiate box & whisker items
@@ -200,12 +202,6 @@ void QBoxPlotSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bool f
     if (forced || m_pen == QPen(Qt::NoPen)) {
         QPen pen = theme->outlinePen();
         pen.setCosmetic(true);
-
-//        QPen pen;
-//        pen.setColor(ChartThemeManager::colorAt(gradients.at(index % gradients.size()), 1.0));
-//        pen.setWidthF(2.0);
-//        pen.setCosmetic(true);
-
         q->setPen(pen);
     }
 }
@@ -262,17 +258,19 @@ void QBoxPlotSeriesPrivate::handleSeriesChange(QAbstractSeries *series)
 
     if (m_chart) {
         QList<QAbstractSeries *> serieses = m_chart->series();
-        boxPlot->m_seriesCount = serieses.count();
 
         // Tries to find this series from the Chart's list of serieses and deduce the index
         int index = 0;
         foreach (QAbstractSeries *s, serieses) {
-            if (q == static_cast<QBoxPlotSeries *>(s)) {
-                boxPlot->m_seriesIndex = index;
-                m_index = index;
+            if (s->type() == QAbstractSeries::SeriesTypeBoxPlot) {
+                if (q == static_cast<QBoxPlotSeries *>(s)) {
+                    boxPlot->m_seriesIndex = index;
+                    m_index = index;
+                }
+                index++;
             }
-            index++;
         }
+        boxPlot->m_seriesCount = index;
     }
 
     boxPlot->handleDataStructureChanged();
