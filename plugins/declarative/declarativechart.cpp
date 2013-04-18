@@ -20,7 +20,6 @@
 
 #include "declarativechart.h"
 #include <QPainter>
-#include <QDeclarativeEngine>
 #include "declarativelineseries.h"
 #include "declarativeareaseries.h"
 #include "declarativebarseries.h"
@@ -235,26 +234,41 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   object after the signal handler has completed.
 */
 
-DeclarativeChart::DeclarativeChart(QDeclarativeItem *parent)
-    : QDeclarativeItem(parent)
+DeclarativeChart::DeclarativeChart(QDECLARATIVE_ITEM *parent)
+    : QDECLARATIVE_PAINTED_ITEM(parent)
 {
     initChart(QChart::ChartTypeCartesian);
 }
 
-DeclarativeChart::DeclarativeChart(QChart::ChartType type, QDeclarativeItem *parent)
-    : QDeclarativeItem(parent)
+DeclarativeChart::DeclarativeChart(QChart::ChartType type, QDECLARATIVE_ITEM *parent)
+    : QDECLARATIVE_PAINTED_ITEM(parent)
 {
     initChart(type);
 }
 
 void DeclarativeChart::initChart(QChart::ChartType type)
 {
+#ifdef CHARTS_FOR_QUICK2
+    if (type == QChart::ChartTypePolar)
+        m_chart = new QPolarChart();
+    else
+        m_chart = new QChart();
+
+    m_scene = new QGraphicsScene(this);
+    m_scene->addItem(m_chart);
+
+    setAntialiasing(QQuickItem::antialiasing());
+    connect(m_scene, SIGNAL(changed(QList<QRectF>)), this, SLOT(update()));
+    connect(this, SIGNAL(antialiasingChanged(bool)), this, SLOT(handleAntialiasingChanged(bool)));
+#else
     if (type == QChart::ChartTypePolar)
         m_chart = new QPolarChart(this);
     else
         m_chart = new QChart(this);
 
     setFlag(QGraphicsItem::ItemHasNoContents, false);
+#endif
+
     m_margins = new DeclarativeMargins(this);
     m_margins->setTop(m_chart->margins().top());
     m_margins->setLeft(m_chart->margins().left());
@@ -314,7 +328,7 @@ void DeclarativeChart::componentComplete()
         }
     }
 
-    QDeclarativeItem::componentComplete();
+    QDECLARATIVE_ITEM::componentComplete();
 }
 
 void DeclarativeChart::handleAxisXSet(QAbstractAxis *axis)
@@ -377,13 +391,26 @@ void DeclarativeChart::geometryChanged(const QRectF &newGeometry, const QRectF &
             m_chart->resize(newGeometry.width(), newGeometry.height());
         }
     }
-    QDeclarativeItem::geometryChanged(newGeometry, oldGeometry);
+    QDECLARATIVE_ITEM::geometryChanged(newGeometry, oldGeometry);
 
     // It would be better to trigger the plotAreaChanged signal from QChart::plotAreaChanged or
     // similar. Since that kind of a signal is not clearly needed in the C++ API the work-around is
     // to implement it here for the QML API purposes.
     emit plotAreaChanged(m_chart->plotArea());
 }
+
+#ifdef CHARTS_FOR_QUICK2
+void DeclarativeChart::paint(QPainter *painter)
+{
+    QRectF renderRect(QPointF(0, 0), m_chart->size());
+    m_scene->render(painter, renderRect, renderRect);
+}
+
+void DeclarativeChart::handleAntialiasingChanged(bool enable)
+{
+    setAntialiasing(enable);
+}
+#endif
 
 void DeclarativeChart::setTheme(DeclarativeChart::Theme theme)
 {
@@ -555,22 +582,27 @@ void DeclarativeChart::scrollDown(qreal pixels)
     m_chart->scroll(0, -pixels);
 }
 
-QDeclarativeListProperty<QAbstractAxis> DeclarativeChart::axes()
+QDECLARATIVE_LIST_PROPERTY<QAbstractAxis> DeclarativeChart::axes()
 {
-    return QDeclarativeListProperty<QAbstractAxis>(this, 0,
+    return QDECLARATIVE_LIST_PROPERTY<QAbstractAxis>(this, 0,
                 &DeclarativeChart::axesAppendFunc,
                 &DeclarativeChart::axesCountFunc,
+#ifdef CHARTS_FOR_QUICK2
+                &DeclarativeChart::axesAtFunc,
+                &DeclarativeChart::axesClearFunc);
+#else
                 &DeclarativeChart::axesAtFunc);
+#endif
 }
 
-void DeclarativeChart::axesAppendFunc(QDeclarativeListProperty<QAbstractAxis> *list, QAbstractAxis *element)
+void DeclarativeChart::axesAppendFunc(QDECLARATIVE_LIST_PROPERTY<QAbstractAxis> *list, QAbstractAxis *element)
 {
     // Empty implementation
     Q_UNUSED(list);
     Q_UNUSED(element);
 }
 
-int DeclarativeChart::axesCountFunc(QDeclarativeListProperty<QAbstractAxis> *list)
+int DeclarativeChart::axesCountFunc(QDECLARATIVE_LIST_PROPERTY<QAbstractAxis> *list)
 {
     if (qobject_cast<DeclarativeChart *>(list->object)) {
         DeclarativeChart *chart = qobject_cast<DeclarativeChart *>(list->object);
@@ -579,7 +611,7 @@ int DeclarativeChart::axesCountFunc(QDeclarativeListProperty<QAbstractAxis> *lis
     return 0;
 }
 
-QAbstractAxis *DeclarativeChart::axesAtFunc(QDeclarativeListProperty<QAbstractAxis> *list, int index)
+QAbstractAxis *DeclarativeChart::axesAtFunc(QDECLARATIVE_LIST_PROPERTY<QAbstractAxis> *list, int index)
 {
     if (qobject_cast<DeclarativeChart *>(list->object)) {
         DeclarativeChart *chart = qobject_cast<DeclarativeChart *>(list->object);
@@ -588,6 +620,13 @@ QAbstractAxis *DeclarativeChart::axesAtFunc(QDeclarativeListProperty<QAbstractAx
     }
     return 0;
 }
+
+void DeclarativeChart::axesClearFunc(QDECLARATIVE_LIST_PROPERTY<QAbstractAxis> *list)
+{
+    // Empty implementation
+    Q_UNUSED(list);
+}
+
 
 QAbstractSeries *DeclarativeChart::series(int index)
 {

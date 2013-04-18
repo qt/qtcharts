@@ -17,3 +17,7 @@ contains(QT_CONFIG, opengl) {
 } else {
     message("OpenGL not available. Some test apps are disabled")
 }
+
+contains(QT_VERSION, ^5\\..*\\..*$):qtHaveModule(quick) {
+    SUBDIRS += quick2chartproperties
+}

@@ -7,7 +7,7 @@ RESOURCES += resources.qrc
 SOURCES += main.cpp \
     datasource.cpp
 
-include(qmlapplicationviewer/qmlapplicationviewer.pri)
+include(../shared/qmlapplicationviewer/qmlapplicationviewer.pri)
 
 HEADERS += \
     datasource.h

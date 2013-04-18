@@ -1,5 +1,5 @@
 --------------------------------
-Commercial Charts Add-on 1.2.1
+Commercial Charts Add-on 1.3.0
 --------------------------------
 
 What's in Qt Commercial Charts
@@ -64,29 +64,15 @@ Documentation can be found from doc/html and doc/qch directories. The documentat
 can also be generated with:
     make docs
 
-Main Changes between 1.2.0 and 1.2.1
+Main Changes between 1.2.1 and 1.3.0
 ===================================
 
-- Commercial Charts documentation also as *.qch file
+- New chart type added: Polar chart
+- QtQuick 2 support added
 
 Bug Fixes
 ==========
-- Fixed: Crash with NaN, inf, -inf values (values are ignored)
-- Fixed: Axis label truncated with multiple axis
-- Fixed: Using setLineVisible(false) on a QBarCategoryAxis gives blurry text
-- Fixed: Set the range to min and max for default axes from previously added series
-- Fixed: Axes use incorrect bounding rectangle to calculate sizeHint when labels are in non-default angle
-- Fixed: Axis titles can slightly overlap with axis labels and axis lines
-- Fixed: Charts crashes when changing the values to empty model with logarithmic axis
-- Fixed: The legend marker for main series in breakdown series piechart couldnt be updated with custom value
-- Fixed: Positioning errors with category axis and bar category axis ticks
-- Fixed: Setting points visible for upper or lower line series of an area series causes the area series to fill incorrectly
-- Fixed: Changing from "High Contrast" theme to another theme draws some grid lines thicker than it is supposed to
-- Fixed: QCategoryAxis shading is drawn even if the shaded category is scrolled off-chart
-- Fixed: QBarCategoryAxis with odd number of categories and shading draws an additional shade on top of the chart
-- Fixed: Setting points visible for a line chart sometimes doesn't draw the points but instead draws a filled area
-- Fixed: Exploding a piechart slice with a thick pen causes rendering artifacts during the explosion animation
-- Fixed: Pen style pattern continuity for line series
+TODO
 
 Known Issues
 ============

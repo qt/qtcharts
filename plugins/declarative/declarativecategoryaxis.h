@@ -22,8 +22,15 @@
 #define DECLARATIVECATEGORYAXIS_H
 
 #include "qcategoryaxis.h"
+#include "shared_defines.h"
+
+#ifdef CHARTS_FOR_QUICK2
+#include <QtQml/QQmlListProperty>
+#include <QtQml/QQmlParserStatus>
+#else
 #include <QtDeclarative/QDeclarativeListProperty>
 #include <QtDeclarative/QDeclarativeParserStatus>
+#endif
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -45,16 +52,21 @@ private:
     QString m_label;
 };
 
-class DeclarativeCategoryAxis : public QCategoryAxis, public QDeclarativeParserStatus
+class DeclarativeCategoryAxis : public QCategoryAxis, public QDECLARATIVE_PARSER_STATUS
 {
     Q_OBJECT
+#ifdef CHARTS_FOR_QUICK2
+    Q_INTERFACES(QQmlParserStatus)
+    Q_PROPERTY(QQmlListProperty<QObject> axisChildren READ axisChildren)
+#else
     Q_INTERFACES(QDeclarativeParserStatus)
     Q_PROPERTY(QDeclarativeListProperty<QObject> axisChildren READ axisChildren)
+#endif
     Q_CLASSINFO("DefaultProperty", "axisChildren")
 
 public:
     explicit DeclarativeCategoryAxis(QObject *parent = 0);
-    QDeclarativeListProperty<QObject> axisChildren();
+    QDECLARATIVE_LIST_PROPERTY<QObject> axisChildren();
 
 public: // from QDeclarativeParserStatus
     void classBegin();
@@ -64,7 +76,7 @@ public Q_SLOTS:
     Q_INVOKABLE void append(const QString &label, qreal categoryEndValue);
     Q_INVOKABLE void remove(const QString &label);
     Q_INVOKABLE void replace(const QString &oldLabel, const QString &newLabel);
-    static void appendAxisChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
+    static void appendAxisChildren(QDECLARATIVE_LIST_PROPERTY<QObject> *list, QObject *element);
 
 private:
     static bool endValueLessThan(const QPair<QString, qreal> &value1, const QPair<QString, qreal> &value2);

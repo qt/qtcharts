@@ -9,4 +9,4 @@ SOURCES += main.cpp\
 HEADERS += customtablemodel.h \
            declarativemodel.h
 
-include(qmlapplicationviewer/qmlapplicationviewer.pri)
+include(../shared/qmlapplicationviewer/qmlapplicationviewer.pri)

@@ -65,9 +65,17 @@
         </tr>
         <tr>
             <td><a href="demos-qmlpolarchart.html">Qml Polar Chart</a></td>
+            <td><a href="demos-quick2chart.html">QtQuick 2 Basic Charts</a></td>
         </tr>
         <tr>
             <td><a href="demos-qmlpolarchart.html"><img src="images/demos_qmlpolarchart1.png" width="300" alt="Qml Polar Chart" /></a></td>
+            <td><a href="demos-quick2chart.html"><img src="images/demos_qmlchart1.png" width="300" alt="QtQuick 2 Basic Charts" /></a></td>
+        </tr>
+        <tr>
+            <td><a href="demos-quick2oscilloscope.html">QtQuick 2 Oscilloscope</a></td>
+        </tr>
+        <tr>
+            <td><a href="demos-quick2oscilloscope.html"><img src="images/demos_qmloscilloscope.png" width="300" alt="QtQuick 2 Oscilloscope" /></a></td>
         </tr>
     </table>
     </div>

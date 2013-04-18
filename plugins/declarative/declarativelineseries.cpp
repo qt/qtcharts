@@ -87,12 +87,12 @@ void DeclarativeLineSeries::setCapStyle(Qt::PenCapStyle capStyle)
     }
 }
 
-QDeclarativeListProperty<QObject> DeclarativeLineSeries::declarativeChildren()
+QDECLARATIVE_LIST_PROPERTY<QObject> DeclarativeLineSeries::declarativeChildren()
 {
-    return QDeclarativeListProperty<QObject>(this, 0, &appendDeclarativeChildren);
+    return QDECLARATIVE_LIST_PROPERTY<QObject>(this, 0, &appendDeclarativeChildren LIST_PROPERTY_PARAM_DEFAULTS);
 }
 
-void DeclarativeLineSeries::appendDeclarativeChildren(QDeclarativeListProperty<QObject> *list, QObject *element)
+void DeclarativeLineSeries::appendDeclarativeChildren(QDECLARATIVE_LIST_PROPERTY<QObject> *list, QObject *element)
 {
     Q_UNUSED(list)
     Q_UNUSED(element)

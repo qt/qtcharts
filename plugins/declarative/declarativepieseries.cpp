@@ -25,7 +25,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-DeclarativePieSeries::DeclarativePieSeries(QDeclarativeItem *parent) :
+DeclarativePieSeries::DeclarativePieSeries(QDECLARATIVE_ITEM *parent) :
     QPieSeries(parent)
 {
     connect(this, SIGNAL(added(QList<QPieSlice*>)), this, SLOT(handleAdded(QList<QPieSlice*>)));
@@ -51,12 +51,12 @@ void DeclarativePieSeries::componentComplete()
     }
 }
 
-QDeclarativeListProperty<QObject> DeclarativePieSeries::seriesChildren()
+QDECLARATIVE_LIST_PROPERTY<QObject> DeclarativePieSeries::seriesChildren()
 {
-    return QDeclarativeListProperty<QObject>(this, 0, &DeclarativePieSeries::appendSeriesChildren);
+    return QDECLARATIVE_LIST_PROPERTY<QObject>(this, 0, &DeclarativePieSeries::appendSeriesChildren LIST_PROPERTY_PARAM_DEFAULTS);
 }
 
-void DeclarativePieSeries::appendSeriesChildren(QDeclarativeListProperty<QObject> * list, QObject *element)
+void DeclarativePieSeries::appendSeriesChildren(QDECLARATIVE_LIST_PROPERTY<QObject> * list, QObject *element)
 {
     // Empty implementation; the children are parsed in componentComplete instead
     Q_UNUSED(list);

@@ -30,3 +30,8 @@ contains(QT_CONFIG, multimedia) {
 } else {
     message("QtMultimedia library not available. Some demos are disabled")
 }
+
+contains(QT_VERSION, ^5\\..*\\..*$):qtHaveModule(quick) {
+    SUBDIRS += quick2chart \
+    quick2oscilloscope
+}

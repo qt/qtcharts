@@ -5,4 +5,4 @@
 RESOURCES += resources.qrc
 SOURCES += main.cpp
 
-include(qmlapplicationviewer/qmlapplicationviewer.pri)
+include(../../demos/shared/qmlapplicationviewer/qmlapplicationviewer.pri)

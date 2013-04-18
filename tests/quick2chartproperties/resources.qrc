@@ -1,0 +1,31 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/quick2chartproperties/loader.qml</file>
+        <file>qml/quick2chartproperties/main.qml</file>
+        <file>qml/quick2chartproperties/Button.qml</file>
+        <file>qml/quick2chartproperties/PieChart.qml</file>
+        <file>qml/quick2chartproperties/PieEditor.qml</file>
+        <file>qml/quick2chartproperties/LineChart.qml</file>
+        <file>qml/quick2chartproperties/LineEditor.qml</file>
+        <file>qml/quick2chartproperties/SplineChart.qml</file>
+        <file>qml/quick2chartproperties/ScatterChart.qml</file>
+        <file>qml/quick2chartproperties/AreaChart.qml</file>
+        <file>qml/quick2chartproperties/BarChart.qml</file>
+        <file>qml/quick2chartproperties/BarEditor.qml</file>
+        <file>qml/quick2chartproperties/ScatterEditor.qml</file>
+        <file>qml/quick2chartproperties/AreaEditor.qml</file>
+        <file>qml/quick2chartproperties/StackedBarChart.qml</file>
+        <file>qml/quick2chartproperties/PercentBarChart.qml</file>
+        <file>qml/quick2chartproperties/Chart.qml</file>
+        <file>qml/quick2chartproperties/ChartEditor.qml</file>
+        <file>qml/quick2chartproperties/FontEditor.qml</file>
+        <file>qml/quick2chartproperties/HorizontalBarChart.qml</file>
+        <file>qml/quick2chartproperties/HorizontalPercentBarChart.qml</file>
+        <file>qml/quick2chartproperties/HorizontalStackedBarChart.qml</file>
+        <file>qml/quick2chartproperties/ChartEditorAxis.qml</file>
+        <file>qml/quick2chartproperties/ChartEditorLegend.qml</file>
+        <file>qml/quick2chartproperties/ChartEditorProperties.qml</file>
+        <file>qml/quick2chartproperties/ChartEditorTitle.qml</file>
+        <file>qml/quick2chartproperties/ChartEditorSeries.qml</file>
+    </qresource>
+</RCC>

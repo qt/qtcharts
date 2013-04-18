@@ -66,9 +66,9 @@ bool DeclarativeCategoryAxis::endValueLessThan(const QPair<QString, qreal> &valu
     return value1.second < value2.second;
 }
 
-QDeclarativeListProperty<QObject> DeclarativeCategoryAxis::axisChildren()
+QDECLARATIVE_LIST_PROPERTY<QObject> DeclarativeCategoryAxis::axisChildren()
 {
-    return QDeclarativeListProperty<QObject>(this, 0, &DeclarativeCategoryAxis::appendAxisChildren);
+    return QDECLARATIVE_LIST_PROPERTY<QObject>(this, 0, &DeclarativeCategoryAxis::appendAxisChildren LIST_PROPERTY_PARAM_DEFAULTS);
 }
 
 void DeclarativeCategoryAxis::append(const QString &label, qreal categoryEndValue)
@@ -86,7 +86,7 @@ void DeclarativeCategoryAxis::replace(const QString &oldLabel, const QString &ne
     QCategoryAxis::replaceLabel(oldLabel, newLabel);
 }
 
-void DeclarativeCategoryAxis::appendAxisChildren(QDeclarativeListProperty<QObject> *list, QObject *element)
+void DeclarativeCategoryAxis::appendAxisChildren(QDECLARATIVE_LIST_PROPERTY<QObject> *list, QObject *element)
 {
     // Empty implementation; the children are parsed in componentComplete instead
     Q_UNUSED(list)

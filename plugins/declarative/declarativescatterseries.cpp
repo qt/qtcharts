@@ -57,12 +57,12 @@ void DeclarativeScatterSeries::setBorderWidth(qreal width)
     }
 }
 
-QDeclarativeListProperty<QObject> DeclarativeScatterSeries::declarativeChildren()
+QDECLARATIVE_LIST_PROPERTY<QObject> DeclarativeScatterSeries::declarativeChildren()
 {
-    return QDeclarativeListProperty<QObject>(this, 0, &appendDeclarativeChildren);
+    return QDECLARATIVE_LIST_PROPERTY<QObject>(this, 0, &appendDeclarativeChildren LIST_PROPERTY_PARAM_DEFAULTS);
 }
 
-void DeclarativeScatterSeries::appendDeclarativeChildren(QDeclarativeListProperty<QObject> *list, QObject *element)
+void DeclarativeScatterSeries::appendDeclarativeChildren(QDECLARATIVE_LIST_PROPERTY<QObject> *list, QObject *element)
 {
     Q_UNUSED(list)
     Q_UNUSED(element)

@@ -18,6 +18,12 @@
             \o \inlineimage examples_qmlpiechart.png
     \endtable
 
+    \note Since QtCommercial Charts utilizes Qt Graphics View Framework for drawing, it works best
+    with QtQuick 1, which is based on the same framework.
+    As of release 1.3.0, QtCommercial Charts is also usable with QtQuick 2, though the performance
+    is slightly worse than with QtQuick 1. Also, hovered and clicked signals of series do not work
+    with QtQuick 2.
+
     \raw HTML
         <table cellpadding="2" cellspacing="1" border="0" width="95%" class="indextable">
             <tr>

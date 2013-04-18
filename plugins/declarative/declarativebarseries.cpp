@@ -74,7 +74,7 @@ void DeclarativeBarSet::setValues(QVariantList values)
 }
 
 // Declarative bar series ======================================================================================
-DeclarativeBarSeries::DeclarativeBarSeries(QDeclarativeItem *parent) :
+DeclarativeBarSeries::DeclarativeBarSeries(QDECLARATIVE_ITEM *parent) :
     QBarSeries(parent),
     m_axes(new DeclarativeAxes(this))
 {
@@ -103,12 +103,12 @@ void DeclarativeBarSeries::componentComplete()
     }
 }
 
-QDeclarativeListProperty<QObject> DeclarativeBarSeries::seriesChildren()
+QDECLARATIVE_LIST_PROPERTY<QObject> DeclarativeBarSeries::seriesChildren()
 {
-    return QDeclarativeListProperty<QObject>(this, 0, &DeclarativeBarSeries::appendSeriesChildren);
+    return QDECLARATIVE_LIST_PROPERTY<QObject>(this, 0, &DeclarativeBarSeries::appendSeriesChildren LIST_PROPERTY_PARAM_DEFAULTS);
 }
 
-void DeclarativeBarSeries::appendSeriesChildren(QDeclarativeListProperty<QObject> * list, QObject *element)
+void DeclarativeBarSeries::appendSeriesChildren(QDECLARATIVE_LIST_PROPERTY<QObject> *list, QObject *element)
 {
     // Empty implementation; the children are parsed in componentComplete instead
     Q_UNUSED(list);
@@ -136,7 +136,7 @@ DeclarativeBarSet *DeclarativeBarSeries::insert(int index, QString label, QVaria
 }
 
 // Declarative stacked bar series ==============================================================================
-DeclarativeStackedBarSeries::DeclarativeStackedBarSeries(QDeclarativeItem *parent) :
+DeclarativeStackedBarSeries::DeclarativeStackedBarSeries(QDECLARATIVE_ITEM *parent) :
     QStackedBarSeries(parent),
     m_axes(0)
 {
@@ -167,12 +167,12 @@ void DeclarativeStackedBarSeries::componentComplete()
 }
 
 
-QDeclarativeListProperty<QObject> DeclarativeStackedBarSeries::seriesChildren()
+QDECLARATIVE_LIST_PROPERTY<QObject> DeclarativeStackedBarSeries::seriesChildren()
 {
-    return QDeclarativeListProperty<QObject>(this, 0, &DeclarativeBarSeries::appendSeriesChildren);
+    return QDECLARATIVE_LIST_PROPERTY<QObject>(this, 0, &DeclarativeBarSeries::appendSeriesChildren LIST_PROPERTY_PARAM_DEFAULTS);
 }
 
-void DeclarativeStackedBarSeries::appendSeriesChildren(QDeclarativeListProperty<QObject> * list, QObject *element)
+void DeclarativeStackedBarSeries::appendSeriesChildren(QDECLARATIVE_LIST_PROPERTY<QObject> * list, QObject *element)
 {
     // Empty implementation; the children are parsed in componentComplete instead
     Q_UNUSED(list);
@@ -200,7 +200,7 @@ DeclarativeBarSet *DeclarativeStackedBarSeries::insert(int index, QString label,
 }
 
 // Declarative percent bar series ==============================================================================
-DeclarativePercentBarSeries::DeclarativePercentBarSeries(QDeclarativeItem *parent) :
+DeclarativePercentBarSeries::DeclarativePercentBarSeries(QDECLARATIVE_ITEM *parent) :
     QPercentBarSeries(parent),
     m_axes(0)
 {
@@ -230,12 +230,12 @@ void DeclarativePercentBarSeries::componentComplete()
     }
 }
 
-QDeclarativeListProperty<QObject> DeclarativePercentBarSeries::seriesChildren()
+QDECLARATIVE_LIST_PROPERTY<QObject> DeclarativePercentBarSeries::seriesChildren()
 {
-    return QDeclarativeListProperty<QObject>(this, 0, &DeclarativeBarSeries::appendSeriesChildren);
+    return QDECLARATIVE_LIST_PROPERTY<QObject>(this, 0, &DeclarativeBarSeries::appendSeriesChildren LIST_PROPERTY_PARAM_DEFAULTS);
 }
 
-void DeclarativePercentBarSeries::appendSeriesChildren(QDeclarativeListProperty<QObject> * list, QObject *element)
+void DeclarativePercentBarSeries::appendSeriesChildren(QDECLARATIVE_LIST_PROPERTY<QObject> * list, QObject *element)
 {
     // Empty implementation; the children are parsed in componentComplete instead
     Q_UNUSED(list);
@@ -263,7 +263,7 @@ DeclarativeBarSet *DeclarativePercentBarSeries::insert(int index, QString label,
 }
 
 // Declarative horizontal bar series ===========================================================================
-DeclarativeHorizontalBarSeries::DeclarativeHorizontalBarSeries(QDeclarativeItem *parent) :
+DeclarativeHorizontalBarSeries::DeclarativeHorizontalBarSeries(QDECLARATIVE_ITEM *parent) :
     QHorizontalBarSeries(parent),
     m_axes(0)
 {
@@ -293,12 +293,12 @@ void DeclarativeHorizontalBarSeries::componentComplete()
     }
 }
 
-QDeclarativeListProperty<QObject> DeclarativeHorizontalBarSeries::seriesChildren()
+QDECLARATIVE_LIST_PROPERTY<QObject> DeclarativeHorizontalBarSeries::seriesChildren()
 {
-    return QDeclarativeListProperty<QObject>(this, 0, &DeclarativeHorizontalBarSeries::appendSeriesChildren);
+    return QDECLARATIVE_LIST_PROPERTY<QObject>(this, 0, &DeclarativeHorizontalBarSeries::appendSeriesChildren LIST_PROPERTY_PARAM_DEFAULTS);
 }
 
-void DeclarativeHorizontalBarSeries::appendSeriesChildren(QDeclarativeListProperty<QObject> * list, QObject *element)
+void DeclarativeHorizontalBarSeries::appendSeriesChildren(QDECLARATIVE_LIST_PROPERTY<QObject> * list, QObject *element)
 {
     // Empty implementation; the children are parsed in componentComplete instead
     Q_UNUSED(list);
@@ -326,7 +326,7 @@ DeclarativeBarSet *DeclarativeHorizontalBarSeries::insert(int index, QString lab
 }
 
 // Declarative horizontal stacked bar series ===================================================================
-DeclarativeHorizontalStackedBarSeries::DeclarativeHorizontalStackedBarSeries(QDeclarativeItem *parent) :
+DeclarativeHorizontalStackedBarSeries::DeclarativeHorizontalStackedBarSeries(QDECLARATIVE_ITEM *parent) :
     QHorizontalStackedBarSeries(parent),
     m_axes(0)
 {
@@ -356,12 +356,12 @@ void DeclarativeHorizontalStackedBarSeries::componentComplete()
     }
 }
 
-QDeclarativeListProperty<QObject> DeclarativeHorizontalStackedBarSeries::seriesChildren()
+QDECLARATIVE_LIST_PROPERTY<QObject> DeclarativeHorizontalStackedBarSeries::seriesChildren()
 {
-    return QDeclarativeListProperty<QObject>(this, 0, &DeclarativeHorizontalStackedBarSeries::appendSeriesChildren);
+    return QDECLARATIVE_LIST_PROPERTY<QObject>(this, 0, &DeclarativeHorizontalStackedBarSeries::appendSeriesChildren LIST_PROPERTY_PARAM_DEFAULTS);
 }
 
-void DeclarativeHorizontalStackedBarSeries::appendSeriesChildren(QDeclarativeListProperty<QObject> * list, QObject *element)
+void DeclarativeHorizontalStackedBarSeries::appendSeriesChildren(QDECLARATIVE_LIST_PROPERTY<QObject> * list, QObject *element)
 {
     // Empty implementation; the children are parsed in componentComplete instead
     Q_UNUSED(list);
@@ -389,7 +389,7 @@ DeclarativeBarSet *DeclarativeHorizontalStackedBarSeries::insert(int index, QStr
 }
 
 // Declarative horizontal percent bar series ===================================================================
-DeclarativeHorizontalPercentBarSeries::DeclarativeHorizontalPercentBarSeries(QDeclarativeItem *parent) :
+DeclarativeHorizontalPercentBarSeries::DeclarativeHorizontalPercentBarSeries(QDECLARATIVE_ITEM *parent) :
     QHorizontalPercentBarSeries(parent),
     m_axes(0)
 {
@@ -419,12 +419,12 @@ void DeclarativeHorizontalPercentBarSeries::componentComplete()
     }
 }
 
-QDeclarativeListProperty<QObject> DeclarativeHorizontalPercentBarSeries::seriesChildren()
+QDECLARATIVE_LIST_PROPERTY<QObject> DeclarativeHorizontalPercentBarSeries::seriesChildren()
 {
-    return QDeclarativeListProperty<QObject>(this, 0, &DeclarativeHorizontalPercentBarSeries::appendSeriesChildren);
+    return QDECLARATIVE_LIST_PROPERTY<QObject>(this, 0, &DeclarativeHorizontalPercentBarSeries::appendSeriesChildren LIST_PROPERTY_PARAM_DEFAULTS);
 }
 
-void DeclarativeHorizontalPercentBarSeries::appendSeriesChildren(QDeclarativeListProperty<QObject> * list, QObject *element)
+void DeclarativeHorizontalPercentBarSeries::appendSeriesChildren(QDECLARATIVE_LIST_PROPERTY<QObject> * list, QObject *element)
 {
     // Empty implementation; the children are parsed in componentComplete instead
     Q_UNUSED(list);

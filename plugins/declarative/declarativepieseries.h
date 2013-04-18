@@ -22,22 +22,34 @@
 #define DECLARATIVEPIESERIES_H
 
 #include "qpieseries.h"
+#include "shared_defines.h"
+
+#ifdef CHARTS_FOR_QUICK2
+#include <QtQuick/QQuickItem>
+#include <QtQml/QQmlParserStatus>
+#else
 #include <QtDeclarative/QDeclarativeItem>
 #include <QtDeclarative/QDeclarativeParserStatus>
+#endif
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QPieSlice;
 
-class DeclarativePieSeries : public QPieSeries, public QDeclarativeParserStatus
+class DeclarativePieSeries : public QPieSeries, public QDECLARATIVE_PARSER_STATUS
 {
     Q_OBJECT
+#ifdef CHARTS_FOR_QUICK2
+    Q_INTERFACES(QQmlParserStatus)
+    Q_PROPERTY(QQmlListProperty<QObject> seriesChildren READ seriesChildren)
+#else
     Q_INTERFACES(QDeclarativeParserStatus)
     Q_PROPERTY(QDeclarativeListProperty<QObject> seriesChildren READ seriesChildren)
+#endif
     Q_CLASSINFO("DefaultProperty", "seriesChildren")
 
 public:
-    explicit DeclarativePieSeries(QDeclarativeItem *parent = 0);
-    QDeclarativeListProperty<QObject> seriesChildren();
+    explicit DeclarativePieSeries(QDECLARATIVE_ITEM *parent = 0);
+    QDECLARATIVE_LIST_PROPERTY<QObject> seriesChildren();
     Q_INVOKABLE QPieSlice *at(int index);
     Q_INVOKABLE QPieSlice *find(QString label);
     Q_INVOKABLE QPieSlice *append(QString label, qreal value);
@@ -53,7 +65,7 @@ Q_SIGNALS:
     void sliceRemoved(QPieSlice *slice);
 
 public Q_SLOTS:
-    static void appendSeriesChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
+    static void appendSeriesChildren(QDECLARATIVE_LIST_PROPERTY<QObject> *list, QObject *element);
     void handleAdded(QList<QPieSlice *> slices);
     void handleRemoved(QList<QPieSlice *> slices);
 };

@@ -47,9 +47,14 @@
 #ifndef QT_ON_ARM
     #include "qdatetimeaxis.h"
 #endif
+#include "shared_defines.h"
 #include <QAbstractItemModel>
+#ifdef CHARTS_FOR_QUICK2
+#include <QtQml/QQmlExtensionPlugin>
+#else
 #include <QtDeclarative/qdeclarativeextensionplugin.h>
 #include <QtDeclarative/qdeclarative.h>
+#endif
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -67,6 +72,7 @@ Q_DECLARE_METATYPE(DeclarativePolarChart *)
 Q_DECLARE_METATYPE(DeclarativeMargins *)
 Q_DECLARE_METATYPE(DeclarativeAreaSeries *)
 Q_DECLARE_METATYPE(DeclarativeBarSeries *)
+Q_DECLARE_METATYPE(DeclarativeBarSet *)
 Q_DECLARE_METATYPE(DeclarativeLineSeries *)
 Q_DECLARE_METATYPE(DeclarativePieSeries *)
 Q_DECLARE_METATYPE(DeclarativeScatterSeries *)
@@ -116,12 +122,16 @@ Q_DECLARE_METATYPE(QStackedBarSeries *)
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class ChartQmlPlugin : public QDeclarativeExtensionPlugin
+class ChartQmlPlugin : public QDECLARATIVE_EXTENSION_PLUGIN
 {
     Q_OBJECT
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+#ifdef CHARTS_FOR_QUICK2
+    Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QQmlExtensionInterface")
+#else
+# if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
     Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QDeclarativeExtensionInterface")
+# endif
 #endif
 
 public:

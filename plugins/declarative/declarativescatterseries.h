@@ -24,15 +24,26 @@
 #include "qscatterseries.h"
 #include "declarativexyseries.h"
 #include "declarativeaxes.h"
+#include "shared_defines.h"
+
+#ifdef CHARTS_FOR_QUICK2
+#include <QtQml/QQmlListProperty>
+#include <QtQml/QQmlParserStatus>
+#else
 #include <QtDeclarative/QDeclarativeListProperty>
 #include <QtDeclarative/QDeclarativeParserStatus>
+#endif
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class DeclarativeScatterSeries : public QScatterSeries, public DeclarativeXySeries, public QDeclarativeParserStatus
+class DeclarativeScatterSeries : public QScatterSeries, public DeclarativeXySeries, public QDECLARATIVE_PARSER_STATUS
 {
     Q_OBJECT
+#ifdef CHARTS_FOR_QUICK2
+    Q_INTERFACES(QQmlParserStatus)
+#else
     Q_INTERFACES(QDeclarativeParserStatus)
+#endif
     Q_PROPERTY(int count READ count NOTIFY countChanged)
     Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX NOTIFY axisXChanged REVISION 1)
     Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY NOTIFY axisYChanged REVISION 1)
@@ -41,7 +52,11 @@ class DeclarativeScatterSeries : public QScatterSeries, public DeclarativeXySeri
     Q_PROPERTY(QAbstractAxis *axisAngular READ axisAngular WRITE setAxisAngular NOTIFY axisAngularChanged REVISION 3)
     Q_PROPERTY(QAbstractAxis *axisRadial READ axisRadial WRITE setAxisRadial NOTIFY axisRadialChanged REVISION 3)
     Q_PROPERTY(qreal borderWidth READ borderWidth WRITE setBorderWidth NOTIFY borderWidthChanged REVISION 1)
+#ifdef CHARTS_FOR_QUICK2
+    Q_PROPERTY(QQmlListProperty<QObject> declarativeChildren READ declarativeChildren)
+#else
     Q_PROPERTY(QDeclarativeListProperty<QObject> declarativeChildren READ declarativeChildren)
+#endif
     Q_CLASSINFO("DefaultProperty", "declarativeChildren")
 
 public:
@@ -61,7 +76,7 @@ public:
     Q_REVISION(3) void setAxisRadial(QAbstractAxis *axis) { m_axes->setAxisY(axis); }
     qreal borderWidth() const;
     void setBorderWidth(qreal borderWidth);
-    QDeclarativeListProperty<QObject> declarativeChildren();
+    QDECLARATIVE_LIST_PROPERTY<QObject> declarativeChildren();
 
 public: // from QDeclarativeParserStatus
     void classBegin() { DeclarativeXySeries::classBegin(); }
@@ -86,7 +101,7 @@ Q_SIGNALS:
     Q_REVISION(3) void axisRadialChanged(QAbstractAxis *axis);
 
 public Q_SLOTS:
-    static void appendDeclarativeChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
+    static void appendDeclarativeChildren(QDECLARATIVE_LIST_PROPERTY<QObject> *list, QObject *element);
     void handleCountChanged(int index);
 
 public:

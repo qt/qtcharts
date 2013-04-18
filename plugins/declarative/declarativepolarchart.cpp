@@ -50,7 +50,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \clearfloat
 */
 
-DeclarativePolarChart::DeclarativePolarChart(QDeclarativeItem *parent)
+DeclarativePolarChart::DeclarativePolarChart(QDECLARATIVE_ITEM *parent)
     : DeclarativeChart(QChart::ChartTypePolar, parent)
 {
 }

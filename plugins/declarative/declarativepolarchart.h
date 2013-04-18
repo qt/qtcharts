@@ -22,7 +22,14 @@
 #define DECLARATIVEPOLARCHART_H
 
 #include <QtCore/QtGlobal>
+#include "shared_defines.h"
+
+#ifdef CHARTS_FOR_QUICK2
+#include <QtQuick/QQuickItem>
+#else
 #include <QtDeclarative/QDeclarativeItem>
+#endif
+
 #include "declarativechart.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -31,7 +38,7 @@ class DeclarativePolarChart : public DeclarativeChart
 {
     Q_OBJECT
 public:
-    DeclarativePolarChart(QDeclarativeItem *parent = 0);
+    DeclarativePolarChart(QDECLARATIVE_ITEM *parent = 0);
     ~DeclarativePolarChart();
 };
 

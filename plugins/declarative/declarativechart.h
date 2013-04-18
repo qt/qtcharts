@@ -22,7 +22,15 @@
 #define DECLARATIVECHART_H
 
 #include <QtCore/QtGlobal>
+#include "shared_defines.h"
+
+#ifdef CHARTS_FOR_QUICK2
+#include <QtQuick/QQuickItem>
+#include <QtQuick/QQuickPaintedItem>
+#include <QtWidgets/QGraphicsScene>
+#else
 #include <QtDeclarative/QDeclarativeItem>
+#endif
 
 #include "qchart.h"
 
@@ -32,7 +40,7 @@ class DeclarativeMargins;
 class Domain;
 class DeclarativeAxes;
 
-class DeclarativeChart : public QDeclarativeItem
+class DeclarativeChart : public QDECLARATIVE_PAINTED_ITEM
 {
     Q_OBJECT
     Q_PROPERTY(Theme theme READ theme WRITE setTheme)
@@ -51,7 +59,11 @@ class DeclarativeChart : public QDeclarativeItem
     Q_PROPERTY(DeclarativeMargins *minimumMargins READ minimumMargins NOTIFY minimumMarginsChanged REVISION 1)
     Q_PROPERTY(DeclarativeMargins *margins READ margins NOTIFY marginsChanged REVISION 2)
     Q_PROPERTY(QRectF plotArea READ plotArea NOTIFY plotAreaChanged REVISION 1)
+#ifdef CHARTS_FOR_QUICK2
+    Q_PROPERTY(QQmlListProperty<QAbstractAxis> axes READ axes REVISION 2)
+#else
     Q_PROPERTY(QDeclarativeListProperty<QAbstractAxis> axes READ axes REVISION 2)
+#endif
     Q_ENUMS(Animation)
     Q_ENUMS(Theme)
     Q_ENUMS(SeriesType)
@@ -90,13 +102,18 @@ public:
     };
 
 public:
-    DeclarativeChart(QDeclarativeItem *parent = 0);
+    DeclarativeChart(QDECLARATIVE_ITEM *parent = 0);
     ~DeclarativeChart();
 
-public: // From QDeclarativeItem/QGraphicsItem
+public: // From parent classes
     void childEvent(QChildEvent *event);
     void componentComplete();
     void geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry);
+#ifdef CHARTS_FOR_QUICK2
+    void paint(QPainter *painter);
+private Q_SLOTS:
+    void handleAntialiasingChanged(bool enable);
+#endif
 
 public:
     void setTheme(DeclarativeChart::Theme theme);
@@ -129,10 +146,11 @@ public:
     QAbstractAxis *defaultAxis(Qt::Orientation orientation, QAbstractSeries *series);
     void initializeAxes(QAbstractSeries *series);
     void doInitializeAxes(QAbstractSeries *series, DeclarativeAxes *axes);
-    QDeclarativeListProperty<QAbstractAxis> axes();
-    static void axesAppendFunc(QDeclarativeListProperty<QAbstractAxis> *list, QAbstractAxis *element);
-    static int axesCountFunc(QDeclarativeListProperty<QAbstractAxis> *list);
-    static QAbstractAxis *axesAtFunc(QDeclarativeListProperty<QAbstractAxis> *list, int index);
+    QDECLARATIVE_LIST_PROPERTY<QAbstractAxis> axes();
+    static void axesAppendFunc(QDECLARATIVE_LIST_PROPERTY<QAbstractAxis> *list, QAbstractAxis *element);
+    static int axesCountFunc(QDECLARATIVE_LIST_PROPERTY<QAbstractAxis> *list);
+    static QAbstractAxis *axesAtFunc(QDECLARATIVE_LIST_PROPERTY<QAbstractAxis> *list, int index);
+    static void axesClearFunc(QDECLARATIVE_LIST_PROPERTY<QAbstractAxis> *list);
 
 public:
     Q_INVOKABLE QAbstractSeries *series(int index);
@@ -171,14 +189,16 @@ private Q_SLOTS:
     void handleSeriesAdded(QAbstractSeries *series);
 
 protected:
-    explicit DeclarativeChart(QChart::ChartType type, QDeclarativeItem *parent);
+    explicit DeclarativeChart(QChart::ChartType type, QDECLARATIVE_ITEM *parent);
 
 private:
     void initChart(QChart::ChartType type);
     // Extending QChart with DeclarativeChart is not possible because QObject does not support
     // multi inheritance, so we now have a QChart as a member instead
     QChart *m_chart;
-    //QMargins m_chartMargins;
+#ifdef CHARTS_FOR_QUICK2
+    QGraphicsScene *m_scene;
+#endif
     DeclarativeMargins *m_margins;
 };
 

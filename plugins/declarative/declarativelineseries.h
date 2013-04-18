@@ -24,15 +24,26 @@
 #include "qlineseries.h"
 #include "declarativexyseries.h"
 #include "declarativeaxes.h"
+#include "shared_defines.h"
+
+#ifdef CHARTS_FOR_QUICK2
+#include <QtQml/QQmlListProperty>
+#include <QtQml/QQmlParserStatus>
+#else
 #include <QtDeclarative/QDeclarativeListProperty>
 #include <QtDeclarative/QDeclarativeParserStatus>
+#endif
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class DeclarativeLineSeries : public QLineSeries, public DeclarativeXySeries, public QDeclarativeParserStatus
+class DeclarativeLineSeries : public QLineSeries, public DeclarativeXySeries, public QDECLARATIVE_PARSER_STATUS
 {
     Q_OBJECT
+#ifdef CHARTS_FOR_QUICK2
+    Q_INTERFACES(QQmlParserStatus)
+#else
     Q_INTERFACES(QDeclarativeParserStatus)
+#endif
     Q_PROPERTY(int count READ count NOTIFY countChanged)
     Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX NOTIFY axisXChanged REVISION 1)
     Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY NOTIFY axisYChanged REVISION 1)
@@ -43,7 +54,11 @@ class DeclarativeLineSeries : public QLineSeries, public DeclarativeXySeries, pu
     Q_PROPERTY(qreal width READ width WRITE setWidth NOTIFY widthChanged REVISION 1)
     Q_PROPERTY(Qt::PenStyle style READ style WRITE setStyle NOTIFY styleChanged REVISION 1)
     Q_PROPERTY(Qt::PenCapStyle capStyle READ capStyle WRITE setCapStyle NOTIFY capStyleChanged REVISION 1)
+#ifdef CHARTS_FOR_QUICK2
+    Q_PROPERTY(QQmlListProperty<QObject> declarativeChildren READ declarativeChildren)
+#else
     Q_PROPERTY(QDeclarativeListProperty<QObject> declarativeChildren READ declarativeChildren)
+#endif
     Q_CLASSINFO("DefaultProperty", "declarativeChildren")
 
 public:
@@ -67,7 +82,7 @@ public:
     void setStyle(Qt::PenStyle style);
     Qt::PenCapStyle capStyle() const;
     void setCapStyle(Qt::PenCapStyle capStyle);
-    QDeclarativeListProperty<QObject> declarativeChildren();
+    QDECLARATIVE_LIST_PROPERTY<QObject> declarativeChildren();
 
 public: // from QDeclarativeParserStatus
     void classBegin() { DeclarativeXySeries::classBegin(); }
@@ -94,7 +109,7 @@ Q_SIGNALS:
     Q_REVISION(1) void capStyleChanged(Qt::PenCapStyle capStyle);
 
 public Q_SLOTS:
-    static void appendDeclarativeChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
+    static void appendDeclarativeChildren(QDECLARATIVE_LIST_PROPERTY<QObject> *list, QObject *element);
     void handleCountChanged(int index);
 
 public:
