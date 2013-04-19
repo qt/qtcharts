@@ -20,7 +20,7 @@
 
 #include "mainwidget.h"
 #include "customtablemodel.h"
-#include <QVBarModelMapper>
+#include <QVBoxPlotModelMapper>
 #include <QTableView>
 #include <QHeaderView>
 #include <QChartView>
@@ -214,7 +214,7 @@ void MainWidget::addSeries()
         m_axis = new QBarCategoryAxis();
         m_axis->append(categories);
         m_chart->createDefaultAxes();
-        //m_chart->setAxisX(m_axis, m_series[nSeries]);
+        m_chart->setAxisX(m_axis, m_series[nSeries]);
     }
 
     nSeries++;
@@ -333,12 +333,12 @@ void MainWidget::modelMapperToggled(bool enabled)
 
         int first = 0;
         int count = 5;
-        QVBarModelMapper *mapper = new QVBarModelMapper(this);
-        mapper->setFirstBarSetColumn(0);
-        mapper->setLastBarSetColumn(5);
+        QVBoxPlotModelMapper *mapper = new QVBoxPlotModelMapper(this);
+        mapper->setFirstBoxSetColumn(0);
+        mapper->setLastBoxSetColumn(5);
         mapper->setFirstRow(first);
         mapper->setRowCount(count);
-        //mapper->setSeries(m_series[nSeries]);
+        mapper->setSeries(m_series[nSeries]);
         mapper->setModel(m_model);
         m_chart->addSeries(m_series[nSeries]);
 
