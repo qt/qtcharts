@@ -77,7 +77,7 @@ void ChartView::switchChartType()
     // Move series and axes from old chart to new one
     QList<QAbstractSeries *> seriesList = oldChart->series();
     QList<QAbstractAxis *> axisList = oldChart->axes();
-    QList<QPair<qreal, qreal>> axisRanges;
+    QList<QPair<qreal, qreal> > axisRanges;
 
     foreach (QAbstractAxis *axis, axisList) {
         QValueAxis *valueAxis = static_cast<QValueAxis *>(axis);
