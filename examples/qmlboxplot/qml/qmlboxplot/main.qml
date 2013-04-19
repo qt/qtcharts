@@ -35,11 +35,11 @@ ChartView {
         id: plotSeries
         name: "Income"
         axisX: BarCategoryAxis { categories: ["Jan", "Feb", "Mar", "Apr", "May"] }
-        BarSet { label: "Jan"; values: [3, 4, 4.4, 6, 7] }
-        BarSet { label: "Feb"; values: [5, 6, 7.5, 8, 12] }
-        BarSet { label: "Mar"; values: [2, 5, 5.7, 8, 9] }
-        BarSet { label: "Apr"; values: [5, 6, 6.8, 7, 8] }
-        BarSet { label: "May"; values: [4, 5, 5.2, 6, 7] }
+        BoxSet { values: [3, 4, 4.4, 6, 7] }
+        BoxSet { values: [5, 6, 7.5, 8, 12] }
+        BoxSet { values: [2, 5, 5.7, 8, 9] }
+        BoxSet { values: [5, 6, 6.8, 7, 8] }
+        BoxSet { values: [4, 5, 5.2, 6, 7] }
     }
 //![2]
 

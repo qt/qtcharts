@@ -22,19 +22,33 @@
 #define QBOXPLOTSERIES_H
 
 #include <qchartglobal.h>
-#include <qabstractbarseries.h>
+#include <qboxset.h>
+//#include <qabstractbarseries.h>
+#include <qabstractseries.h>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QBoxPlotSeriesPrivate;
 //class QBarSet;
 
-class QTCOMMERCIALCHART_EXPORT QBoxPlotSeries : public QAbstractBarSeries
+class QTCOMMERCIALCHART_EXPORT QBoxPlotSeries : public QAbstractSeries
 {
     Q_OBJECT
 public:
     explicit QBoxPlotSeries(QObject *parent = 0);
     ~QBoxPlotSeries();
+
+    bool append(QBoxSet *box);
+    bool remove(QBoxSet *box);
+    bool take(QBoxSet *box);
+    bool append(QList<QBoxSet *> boxes);
+    bool insert(int index, QBoxSet *box);
+    int count() const;
+    QList<QBoxSet *> boxSets() const;
+    void clear();
+
+    void setLabelsVisible(bool visible = true);
+    bool isLabelsVisible() const;
 
     QAbstractSeries::SeriesType type() const;
 
@@ -42,6 +56,15 @@ public:
     QBrush brush() const;
     void setPen(const QPen &pen);
     QPen pen() const;
+
+Q_SIGNALS:
+    void clicked(int index, QBoxSet *boxset);
+    void hovered(bool status, QBoxSet *boxset);
+    void countChanged();
+    void labelsVisibleChanged();
+
+    void boxsetsAdded(QList<QBoxSet *> sets);
+    void boxsetsRemoved(QList<QBoxSet *> sets);
 
 private:
     Q_DECLARE_PRIVATE(QBoxPlotSeries)

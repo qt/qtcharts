@@ -20,11 +20,45 @@
 
 #include "declarativebarseries.h"
 #include "declarativeboxplotseries.h"
-#include "qbarset.h"
+#include "qboxset.h"
 #include "qvbarmodelmapper.h"
 #include "qhbarmodelmapper.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
+
+DeclarativeBoxSet::DeclarativeBoxSet(QObject *parent)
+    : QBoxSet(parent)
+{
+    connect(this, SIGNAL(valuesAdded(int,int)), this, SLOT(handleCountChanged(int,int)));
+    connect(this, SIGNAL(valuesRemoved(int,int)), this, SLOT(handleCountChanged(int,int)));
+}
+
+void DeclarativeBoxSet::handleCountChanged(int index, int count)
+{
+    Q_UNUSED(index)
+    Q_UNUSED(count)
+    emit countChanged(QBoxSet::count());
+}
+
+QVariantList DeclarativeBoxSet::values()
+{
+    QVariantList values;
+    for (int i(0); i < count(); i++)
+        values.append(QVariant(QBoxSet::at(i)));
+    return values;
+}
+
+void DeclarativeBoxSet::setValues(QVariantList values)
+{
+    while (count())
+        remove(count() - 1);
+
+    for (int i(0); i < values.count(); i++) {
+        if (values.at(i).canConvert(QVariant::Double))
+            QBoxSet::append(values[i].toDouble());
+    }
+}
+
 
 DeclarativeBoxPlotSeries::DeclarativeBoxPlotSeries(QDeclarativeItem *parent) :
     QBoxPlotSeries(parent),
@@ -43,14 +77,14 @@ void DeclarativeBoxPlotSeries::classBegin()
 void DeclarativeBoxPlotSeries::componentComplete()
 {
     foreach (QObject *child, children()) {
-        if (qobject_cast<DeclarativeBarSet *>(child)) {
-            QAbstractBarSeries::append(qobject_cast<DeclarativeBarSet *>(child));
+        if (qobject_cast<DeclarativeBoxSet *>(child)) {
+            QBoxPlotSeries::append(qobject_cast<DeclarativeBoxSet *>(child));
         } else if (qobject_cast<QVBarModelMapper *>(child)) {
             QVBarModelMapper *mapper = qobject_cast<QVBarModelMapper *>(child);
-            mapper->setSeries(this);
+            //mapper->setSeries(this);
         } else if (qobject_cast<QHBarModelMapper *>(child)) {
             QHBarModelMapper *mapper = qobject_cast<QHBarModelMapper *>(child);
-            mapper->setSeries(this);
+            //mapper->setSeries(this);
         }
     }
 }
@@ -67,19 +101,18 @@ void DeclarativeBoxPlotSeries::appendSeriesChildren(QDeclarativeListProperty<QOb
     Q_UNUSED(element);
 }
 
-DeclarativeBarSet *DeclarativeBoxPlotSeries::at(int index)
+DeclarativeBoxSet *DeclarativeBoxPlotSeries::at(int index)
 {
-    QList<QBarSet *> setList = barSets();
+    QList<QBoxSet *> setList = boxSets();
     if (index >= 0 && index < setList.count())
-        return qobject_cast<DeclarativeBarSet *>(setList[index]);
+        return qobject_cast<DeclarativeBoxSet *>(setList[index]);
 
     return 0;
 }
 
-DeclarativeBarSet *DeclarativeBoxPlotSeries::insert(int index, QString label, QVariantList values)
+DeclarativeBoxSet *DeclarativeBoxPlotSeries::insert(int index, QVariantList values)
 {
-    DeclarativeBarSet *barset = new DeclarativeBarSet(this);
-    barset->setLabel(label);
+    DeclarativeBoxSet *barset = new DeclarativeBoxSet(this);
     barset->setValues(values);
     if (QBoxPlotSeries::insert(index, barset))
         return barset;

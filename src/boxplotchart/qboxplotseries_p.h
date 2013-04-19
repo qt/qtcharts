@@ -37,7 +37,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QBoxPlotSeriesPrivate : public QAbstractBarSeriesPrivate
+class QBoxPlotSeriesPrivate : public QAbstractSeriesPrivate
 {
     Q_OBJECT
 
@@ -47,19 +47,41 @@ public:
 
     void initializeGraphics(QGraphicsItem* parent);
     void initializeDomain();
+    void initializeAxes();
     void initializeAnimations(QChart::AnimationOptions options);
     void initializeTheme(int index, ChartTheme* theme, bool forced = false);
 
     QList<QLegendMarker*> createLegendMarkers(QLegend *legend);
 
+    virtual QAbstractAxis::AxisType defaultAxisType(Qt::Orientation orientation) const;
+    QAbstractAxis* createDefaultAxis(Qt::Orientation orientation) const;
+
+    bool append(QBoxSet *set);
+    bool remove(QBoxSet *set);
+    bool append(QList<QBoxSet *> sets);
+    bool remove(QList<QBoxSet *> sets);
+    bool insert(int index, QBoxSet *set);
+    QBoxSet *boxsetAt(int index);
+
+    qreal max();
+    qreal bottom();
+
+private:
+    void populateCategories(QBarCategoryAxis *axis);
+
 Q_SIGNALS:
     void updated();
+    void clicked(int index, QBoxSet *barset);
+    void updatedBoxes();
+    void updatedLayout();
+    void restructuredBoxes();
 
 private slots:
     void handleSeriesChange(QAbstractSeries *series);
     void handleSeriesRemove(QAbstractSeries *series);
 
 protected:
+    QList<QBoxSet *> m_boxSets;
     QPen m_pen;
     QBrush m_brush;
     int m_index;

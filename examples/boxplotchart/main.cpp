@@ -22,10 +22,11 @@
 #include <QMainWindow>
 #include <QChartView>
 #include <QBoxPlotSeries>
-#include <QBarSet>
+#include <QBoxSet>
 #include <QLegend>
 #include <QBarCategoryAxis>
 #include <QLineSeries>
+#include <QScatterSeries>
 
 #include <QBrush>
 #include <QColor>
@@ -37,18 +38,18 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
 //![1]
-    QBarSet *set0 = new QBarSet("Jan");
-    QBarSet *set1 = new QBarSet("Feb");
-    QBarSet *set2 = new QBarSet("Mar");
-    QBarSet *set3 = new QBarSet("Apr");
-    QBarSet *set4 = new QBarSet("May");
-    QBarSet *set5 = new QBarSet("Jun");
-    QBarSet *set6 = new QBarSet("Jul");
-    QBarSet *set7 = new QBarSet("Aug");
-    QBarSet *set8 = new QBarSet("Sep");
-    QBarSet *set9 = new QBarSet("Oct");
-    QBarSet *set10 = new QBarSet("Nov");
-    QBarSet *set11 = new QBarSet("Dec");
+    QBoxSet *set0 = new QBoxSet();
+    QBoxSet *set1 = new QBoxSet();
+    QBoxSet *set2 = new QBoxSet();
+    QBoxSet *set3 = new QBoxSet();
+    QBoxSet *set4 = new QBoxSet();
+    QBoxSet *set5 = new QBoxSet();
+    QBoxSet *set6 = new QBoxSet();
+    QBoxSet *set7 = new QBoxSet();
+    QBoxSet *set8 = new QBoxSet();
+    QBoxSet *set9 = new QBoxSet();
+    QBoxSet *set10 = new QBoxSet();
+    QBoxSet *set11 = new QBoxSet();
 
     //      low  bot   med   top  upp
     *set0 << 3 << 4 << 4.4 << 6 << 7;
@@ -98,10 +99,23 @@ int main(int argc, char *argv[])
     lineSeries->append(11, 8.2);
     lineSeries->setName("Medians");
 
+    QScatterSeries *scatterSeries = new QScatterSeries();
+    scatterSeries->setName("Outliers");
+    scatterSeries->setMarkerShape(QScatterSeries::MarkerShapeCircle);
+    scatterSeries->setMarkerSize(7.0);
+    scatterSeries->setBrush(QBrush(Qt::white));
+    scatterSeries->setPen(QPen(Qt::black, 1.0));
+    scatterSeries->append(1, 4);
+    scatterSeries->append(1, 4.1);
+    scatterSeries->append(1, 4.2);
+    scatterSeries->append(1, 4.3);
+    *scatterSeries << QPointF(3, 8.5) << QPointF(3, 8.6);
+
 //![3]
     QChart *chart = new QChart();
     chart->addSeries(series);
     chart->addSeries(lineSeries);
+    chart->addSeries(scatterSeries);
     chart->setTitle("Simple boxplotchart example");
     chart->setAnimationOptions(QChart::SeriesAnimations);
 //![3]
@@ -128,7 +142,7 @@ int main(int argc, char *argv[])
 //![7]
     QMainWindow window;
     window.setCentralWidget(chartView);
-    window.resize(400, 300);
+    window.resize(600, 400);
     window.show();
 //![7]
 

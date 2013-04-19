@@ -25,7 +25,7 @@
 #include <QHeaderView>
 #include <QChartView>
 #include <QBoxPlotSeries>
-#include <QBarSet>
+#include <QBoxSet>
 #include <QLegend>
 #include <QBarCategoryAxis>
 #include <QBrush>
@@ -182,12 +182,12 @@ void MainWidget::addSeries()
 
     // Initial data
     //![1]
-    QBarSet *set0 = new QBarSet("Jan");
-    QBarSet *set1 = new QBarSet("Feb");
-    QBarSet *set2 = new QBarSet("Mar");
-    QBarSet *set3 = new QBarSet("Apr");
-    QBarSet *set4 = new QBarSet("May");
-    QBarSet *set5 = new QBarSet("Jun");
+    QBoxSet *set0 = new QBoxSet();
+    QBoxSet *set1 = new QBoxSet();
+    QBoxSet *set2 = new QBoxSet();
+    QBoxSet *set3 = new QBoxSet();
+    QBoxSet *set4 = new QBoxSet();
+    QBoxSet *set5 = new QBoxSet();
 
     //      low  bot   med   top  upp
     *set0 << 3 << 4 << 4.4 << 6 << 7;
@@ -204,7 +204,6 @@ void MainWidget::addSeries()
     m_series[nSeries]->append(set3);
     m_series[nSeries]->append(set4);
     m_series[nSeries]->append(set5);
-    m_series[nSeries]->type();
     m_series[nSeries]->setName("Box & Whiskers");
 
     m_chart->addSeries(m_series[nSeries]);
@@ -215,7 +214,7 @@ void MainWidget::addSeries()
         m_axis = new QBarCategoryAxis();
         m_axis->append(categories);
         m_chart->createDefaultAxes();
-        m_chart->setAxisX(m_axis, m_series[nSeries]);
+        //m_chart->setAxisX(m_axis, m_series[nSeries]);
     }
 
     nSeries++;
@@ -239,7 +238,7 @@ void MainWidget::addBox()
     qDebug() << "BoxPlotTester::MainWidget::addBox()";
 
     if (nSeries > 0) {
-        QBarSet *newSet = new QBarSet("New");
+        QBoxSet *newSet = new QBoxSet();
         *newSet << 5 << 6 << 6.8 << 7 << 8;
 
         m_series[0]->append(newSet);
@@ -255,7 +254,7 @@ void MainWidget::insertBox()
     qDebug() << "BoxPlotTester::MainWidget::insertBox()";
 
     if (nSeries > 0) {
-        QBarSet *newSet = new QBarSet("New");
+        QBoxSet *newSet = new QBoxSet();
         *newSet << 2 << 6 << 6.8 << 7 << 10;
 
         m_series[0]->insert(1, newSet);
@@ -271,7 +270,7 @@ void MainWidget::removeBox()
     qDebug() << "BoxPlotTester::MainWidget::removeBox";
 
     if (nSeries > 0) {
-        QList<QBarSet *> sets = m_series[0]->barSets();
+        QList<QBoxSet *> sets = m_series[0]->boxSets();
         m_series[0]->remove(sets.at(m_series[0]->count() - 3));
     } else {
         qDebug() << "Create a series first";
@@ -294,7 +293,7 @@ void MainWidget::setBrush()
     qDebug() << "BoxPlotTester::MainWidget::setBrush";
 
     if (nSeries > 0) {
-        QList<QBarSet *> sets = m_series[0]->barSets();
+        QList<QBoxSet *> sets = m_series[0]->boxSets();
         sets.at(1)->setBrush(QBrush(QColor(Qt::yellow)));
     } else {
         qDebug() << "Create a series first";
@@ -339,7 +338,7 @@ void MainWidget::modelMapperToggled(bool enabled)
         mapper->setLastBarSetColumn(5);
         mapper->setFirstRow(first);
         mapper->setRowCount(count);
-        mapper->setSeries(m_series[nSeries]);
+        //mapper->setSeries(m_series[nSeries]);
         mapper->setModel(m_model);
         m_chart->addSeries(m_series[nSeries]);
 

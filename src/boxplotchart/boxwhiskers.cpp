@@ -73,8 +73,7 @@ void BoxWhiskers::setPen(const QPen &pen)
 void BoxWhiskers::setLayout(const BoxWhiskersData &data)
 {
     m_data = data;
-//    if (m_data.m_index == 1)
-//        qDebug() << "BoxWhiskers::setLayout";
+
     updateGeometry();
     update();
 }

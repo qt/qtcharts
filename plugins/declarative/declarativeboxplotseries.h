@@ -21,13 +21,37 @@
 #ifndef DECLARATIVEBOXPLOT_H
 #define DECLARATIVEBOXPLOT_H
 
-#include "qbarset.h"
+#include "qboxset.h"
 #include "declarativeaxes.h"
 #include "qboxplotseries.h"
 #include <QtDeclarative/QDeclarativeItem>
 #include <QtDeclarative/QDeclarativeParserStatus>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
+
+class DeclarativeBoxSet : public QBoxSet
+{
+    Q_OBJECT
+    Q_PROPERTY(QVariantList values READ values WRITE setValues)
+    Q_PROPERTY(int count READ count NOTIFY countChanged)
+
+public:
+    explicit DeclarativeBoxSet(QObject *parent = 0);
+    QVariantList values();
+    void setValues(QVariantList values);
+
+public: // From QBoxSet
+    Q_INVOKABLE void append(qreal value) { QBoxSet::append(value); }
+    Q_INVOKABLE void remove(const int index, const int count = 1) { QBoxSet::remove(index, count); }
+    Q_INVOKABLE void replace(int index, qreal value) { QBoxSet::replace(index, value); }
+    Q_INVOKABLE qreal at(int index) { return QBoxSet::at(index); }
+
+Q_SIGNALS:
+    void countChanged(int count);
+
+private Q_SLOTS:
+    void handleCountChanged(int index, int count);
+};
 
 class DeclarativeBoxPlotSeries : public QBoxPlotSeries, public QDeclarativeParserStatus
 {
@@ -53,10 +77,10 @@ public:
     QDeclarativeListProperty<QObject> seriesChildren();
 
 public:
-    Q_INVOKABLE DeclarativeBarSet *at(int index);
-    Q_INVOKABLE DeclarativeBarSet *append(QString label, QVariantList values) { return insert(count(), label, values); }
-    Q_INVOKABLE DeclarativeBarSet *insert(int index, QString label, QVariantList values);
-    Q_INVOKABLE bool remove(QBarSet *barset) { return QBoxPlotSeries::remove(barset); }
+    Q_INVOKABLE DeclarativeBoxSet *at(int index);
+    Q_INVOKABLE DeclarativeBoxSet *append(QVariantList values) { return insert(count(), values); }
+    Q_INVOKABLE DeclarativeBoxSet *insert(int index, QVariantList values);
+    Q_INVOKABLE bool remove(QBoxSet *boxset) { return QBoxPlotSeries::remove(boxset); }
     Q_INVOKABLE void clear() { return QBoxPlotSeries::clear(); }
 
 public: // from QDeclarativeParserStatus

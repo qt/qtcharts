@@ -21,9 +21,9 @@
 #include "boxplotchartitem_p.h"
 #include "qboxplotseries_p.h"
 #include "bar_p.h"
-#include "qbarset_p.h"
+#include "qboxset_p.h"
 #include "qabstractbarseries_p.h"
-#include "qbarset.h"
+#include "qboxset.h"
 #include "boxwhiskers_p.h"
 #include <QPainter>
 
@@ -35,15 +35,13 @@ BoxPlotChartItem::BoxPlotChartItem(QBoxPlotSeries *series, QGraphicsItem* item) 
     m_animation(0),
     m_animate(0)
 {
-    connect(series, SIGNAL(barsetsRemoved(QList<QBarSet*>)), this, SLOT(handleBarsetRemove(QList<QBarSet*>)));
-    connect(series->d_func(), SIGNAL(restructuredBars()), this, SLOT(handleDataStructureChanged()));
+    connect(series, SIGNAL(boxsetsRemoved(QList<QBoxSet*>)), this, SLOT(handleBoxsetRemove(QList<QBoxSet*>)));
+    connect(series->d_func(), SIGNAL(restructuredBoxes()), this, SLOT(handleDataStructureChanged()));
     connect(series->d_func(), SIGNAL(updatedLayout()), this, SLOT(handleLayoutChanged()));
-    connect(series->d_func(), SIGNAL(updatedBars()), this, SLOT(handleUpdatedBars()));
+    connect(series->d_func(), SIGNAL(updatedBoxes()), this, SLOT(handleUpdatedBars()));
     connect(series->d_func(), SIGNAL(updated()), this, SLOT(handleUpdatedBars()));
     // QBoxPlotSeriesPrivate calls handleDataStructureChanged(), don't do it here
     setZValue(ChartPresenter::BoxPlotSeriesZValue);
-
-    m_barSets = m_series->barSets();
 }
 
 BoxPlotChartItem::~BoxPlotChartItem()
@@ -82,7 +80,7 @@ void BoxPlotChartItem::handleDataStructureChanged()
     int setCount = m_series->count();
 
     for (int s = 0; s < setCount; s++) {
-        QBarSet *set = m_series->d_func()->barsetAt(s);
+        QBoxSet *set = m_series->d_func()->boxsetAt(s);
 
         BoxWhiskers *boxWhiskersItem = m_boxTable.value(set);
         if (boxWhiskersItem == 0) {
@@ -90,6 +88,7 @@ void BoxPlotChartItem::handleDataStructureChanged()
             boxWhiskersItem = new BoxWhiskers(domain(), this);
             m_boxTable.insert(set, boxWhiskersItem);
 
+            // Set the decorative issues for the newly created box
             boxWhiskersItem->setBrush(m_series->brush());
             boxWhiskersItem->setPen(m_series->pen());
         }
@@ -113,8 +112,8 @@ void BoxPlotChartItem::handleUpdatedBars()
         item->setBrush(m_series->brush());
         item->setPen(m_series->pen());
     }
-    // Override with QBarSet specific settings
-    foreach (QBarSet *set, m_boxTable.keys()) {
+    // Override with QBoxSet specific settings
+    foreach (QBoxSet *set, m_boxTable.keys()) {
         if (set->brush().style() != Qt::NoBrush)
             m_boxTable.value(set)->setBrush(set->brush());
         if (set->pen().style() != Qt::NoPen)
@@ -122,11 +121,11 @@ void BoxPlotChartItem::handleUpdatedBars()
     }
 }
 
-void BoxPlotChartItem::handleBarsetRemove(QList<QBarSet*> barSets)
+void BoxPlotChartItem::handleBoxsetRemove(QList<QBoxSet*> barSets)
 {
     //qDebug() << "BoxPlotChartItem::handleBarsetRemove";
 
-    foreach (QBarSet *set, barSets) {
+    foreach (QBoxSet *set, barSets) {
         BoxWhiskers *boxItem = m_boxTable.value(set);
         m_boxTable.remove(set);
         delete boxItem;
@@ -193,7 +192,7 @@ bool BoxPlotChartItem::updateBoxGeometry(BoxWhiskers *box, int index)
 {
     bool changed = false;
 
-    QBarSet *set = m_series->d_func()->barsetAt(index);
+    QBoxSet *set = m_series->d_func()->boxsetAt(index);
     BoxWhiskersData &data = box->m_data;
 
     if ((data.m_lowerExtreme != set->at(0)) || (data.m_lowerQuartile != set->at(1)) ||
