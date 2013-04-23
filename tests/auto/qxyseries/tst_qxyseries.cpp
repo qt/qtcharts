@@ -84,8 +84,13 @@ void tst_QXYSeries::seriesOpacity()
 void tst_QXYSeries::append_data()
 {
     QTest::addColumn< QList<QPointF> >("points");
-    QTest::newRow("0,0 1,1 2,2 3,3") << (QList<QPointF>() << QPointF(0,0) << QPointF(1,1) << QPointF(2,2) << QPointF(3,3));
-    QTest::newRow("0,0 -1,-1 -2,-2 -3,-3") << (QList<QPointF>() << QPointF(0,0) << QPointF(-1,-1) << QPointF(-2,-2) << QPointF(-3,-3));
+    QTest::addColumn< QList<QPointF> >("otherPoints");
+    QTest::newRow("0,0 1,1 2,2 3,3")
+            << (QList<QPointF>() << QPointF(0,0) << QPointF(1,1) << QPointF(2,2) << QPointF(3,3))
+            << (QList<QPointF>() << QPointF(4,4) << QPointF(5,5) << QPointF(6,6) << QPointF(7,7));
+    QTest::newRow("0,0 -1,-1 -2,-2 -3,-3")
+            << (QList<QPointF>() << QPointF(0,0) << QPointF(-1,-1) << QPointF(-2,-2) << QPointF(-3,-3))
+            << (QList<QPointF>() << QPointF(-4,-4) << QPointF(-5,-5) << QPointF(-6,-6) << QPointF(-7,-7));
 }
 
 
@@ -97,12 +102,19 @@ void tst_QXYSeries::append_raw_data()
 void tst_QXYSeries::append_raw()
 {
     QFETCH(QList<QPointF>, points);
+    QFETCH(QList<QPointF>, otherPoints);
     QSignalSpy spy0(m_series, SIGNAL(clicked(QPointF)));
     QSignalSpy addedSpy(m_series, SIGNAL(pointAdded(int)));
     m_series->append(points);
     TRY_COMPARE(spy0.count(), 0);
     TRY_COMPARE(addedSpy.count(), points.count());
     QCOMPARE(m_series->points(), points);
+
+    // Process events between appends
+    foreach (const QPointF &point, otherPoints) {
+        m_series->append(point);
+        QApplication::processEvents();
+    }
 }
 
 void tst_QXYSeries::chart_append_data()
@@ -196,6 +208,29 @@ void tst_QXYSeries::remove_raw()
         m_series->remove(points[i]);
     }
     QCOMPARE(m_series->points().count(), 0);
+
+    QApplication::processEvents();
+
+    // Process events between removes
+    m_series->append(points);
+    QCOMPARE(m_series->points(), points);
+    foreach (const QPointF &point, points) {
+        m_series->remove(point);
+        QApplication::processEvents();
+    }
+
+    // Actual meaningful delay between removes, but still shorter than animation duration
+    // (simulate e.g. spamming a hypothetical "remove last point"-button)
+    QList<QPointF> bunchOfPoints;
+    for (int i = 0; i < 10; i++)
+        bunchOfPoints.append(QPointF(i, (qreal) rand() / (qreal) RAND_MAX));
+    m_series->replace(bunchOfPoints);
+    QCOMPARE(m_series->points(), bunchOfPoints);
+    QTest::qWait(1500); // Wait for append animations to be over
+    for (int i = bunchOfPoints.count() - 1; i >= 0; i--) {
+        m_series->remove(bunchOfPoints.at(i));
+        QTest::qWait(50);
+    }
 }
 
 void tst_QXYSeries::remove_chart_data()
@@ -238,6 +273,8 @@ void tst_QXYSeries::clear_raw()
     m_series->clear();
     TRY_COMPARE(spy0.count(), 0);
     QCOMPARE(m_series->points().count(), 0);
+
+    QApplication::processEvents();
 }
 
 void tst_QXYSeries::clear_chart_data()
@@ -272,6 +309,7 @@ void tst_QXYSeries::replace_raw_data()
 void tst_QXYSeries::replace_raw()
 {
     QFETCH(QList<QPointF>, points);
+    QFETCH(QList<QPointF>, otherPoints);
     QSignalSpy pointReplacedSpy(m_series, SIGNAL(pointReplaced(int)));
     QSignalSpy pointsReplacedSpy(m_series, SIGNAL(pointsReplaced()));
     m_series->append(points);
@@ -303,6 +341,31 @@ void tst_QXYSeries::replace_raw()
     m_series->replace(allPoints);
     TRY_COMPARE(pointReplacedSpy.count(), points.count());
     TRY_COMPARE(pointsReplacedSpy.count(), 1);
+
+    m_series->replace(points);
+    QApplication::processEvents();
+
+    // Process events between replaces
+    for (int i = 0; i < points.count(); ++i) {
+        m_series->replace(points.at(i), otherPoints.at(i));
+        QApplication::processEvents();
+    }
+
+    newPoints = m_series->points();
+    QCOMPARE(newPoints.count(), points.count());
+    for (int i = 0; i < points.count(); ++i) {
+        QCOMPARE(otherPoints.at(i).x(), newPoints.at(i).x());
+        QCOMPARE(otherPoints.at(i).y(), newPoints.at(i).y());
+    }
+
+    // Append followed by a replace shouldn't crash
+    m_series->clear();
+    m_series->append(QPointF(22,22));
+    m_series->append(QPointF(23,23));
+    QApplication::processEvents();
+    m_series->replace(QPointF(23,23), otherPoints.at(1));
+    QCOMPARE(m_series->points().at(1).x(), otherPoints.at(1).x());
+    QCOMPARE(m_series->points().at(1).y(), otherPoints.at(1).y());
 }
 
 

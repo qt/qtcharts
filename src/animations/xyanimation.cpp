@@ -59,15 +59,21 @@ void XYAnimation::setup(const QVector<QPointF> &oldPoints, const QVector<QPointF
 
     int x = m_oldPoints.count();
     int y = m_newPoints.count();
+    int diff = x - y;
+    int requestedDiff = oldPoints.count() - y;
 
-    if (x - y == 1  && index >= 0 && y > 0) {
+    // m_oldPoints can be whatever between 0 and actual points count if new animation setup
+    // interrupts a previous animation, so only do remove and add animations if both
+    // stored diff and requested diff indicate add or remove. Also ensure that index is not
+    // invalid.
+    if (diff == 1 && requestedDiff == 1 && index >= 0 && y > 0 && index <= y) {
         //remove point
         m_newPoints.insert(index, index > 0 ? newPoints[index - 1] : newPoints[index]);
         m_index = index;
         m_type = RemovePointAnimation;
     }
 
-    if (x - y == -1  && index >= 0) {
+    if (diff == -1 && requestedDiff == -1 && index >= 0 && index <= x) {
         //add point
         m_oldPoints.insert(index, index > 0 ? newPoints[index - 1] : newPoints[index]);
         m_index = index;

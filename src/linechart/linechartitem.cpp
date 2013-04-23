@@ -113,6 +113,9 @@ void LineChartItem::updateGeometry()
         qreal rightMarginLine = centerPoint.x() + margin;
         qreal horizontal = centerPoint.y();
 
+        // See ScatterChartItem::updateGeometry() for explanation why seriesLastIndex is needed
+        const int seriesLastIndex = m_series->count() - 1;
+
         for (int i = 1; i < points.size(); i++) {
             // Interpolating line fragments would be ugly when thick pen is used,
             // so we work around it by utilizing three separate
@@ -126,7 +129,7 @@ void LineChartItem::updateGeometry()
             // degrees and both of the points are within the margin, one in the top half and one in the
             // bottom half of the chart, the bottom one gets clipped incorrectly.
             // However, this should be rare occurrence in any sensible chart.
-            currentSeriesPoint = m_series->pointAt(i);
+            currentSeriesPoint = m_series->pointAt(qMin(seriesLastIndex, i));
             currentGeometryPoint = points.at(i);
             pointOffGrid = (currentSeriesPoint.x() < minX || currentSeriesPoint.x() > maxX);
 
