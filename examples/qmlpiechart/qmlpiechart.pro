@@ -4,5 +4,6 @@
 
 RESOURCES += resources.qrc
 SOURCES += main.cpp
+OTHER_FILES += qml/qmlpiechart/*
 
 include(../../demos/shared/qmlapplicationviewer/qmlapplicationviewer.pri)

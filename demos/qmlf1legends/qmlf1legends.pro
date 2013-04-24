@@ -4,5 +4,6 @@
 
 RESOURCES += resources.qrc
 SOURCES += main.cpp
+OTHER_FILES += qml/qmlf1legends/*
 
 include(../shared/qmlapplicationviewer/qmlapplicationviewer.pri)

@@ -6,6 +6,7 @@ QT += opengl
 RESOURCES += resources.qrc
 SOURCES += main.cpp \
     datasource.cpp
+OTHER_FILES += qml/qmloscilloscope/*
 
 include(../shared/qmlapplicationviewer/qmlapplicationviewer.pri)
 

@@ -8,5 +8,6 @@ SOURCES += main.cpp\
            declarativemodel.cpp
 HEADERS += customtablemodel.h \
            declarativemodel.h
+OTHER_FILES += qml/qmlcustommodel/*
 
 include(../shared/qmlapplicationviewer/qmlapplicationviewer.pri)
