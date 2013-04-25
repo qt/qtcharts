@@ -77,9 +77,9 @@ void SplineAnimation::setup(QVector<QPointF> &oldPoints, QVector<QPointF> &newPo
             m_newSpline.second.insert((index - 1) * 2, newPoints[index - 1]);
             m_newSpline.second.insert((index - 1) * 2 + 1, newPoints[index - 1]);
         } else {
-            m_newSpline.first.insert(index, newPoints[index]);
-            m_newSpline.second.insert(index * 2, newPoints[index]);
-            m_newSpline.second.insert(index * 2 + 1, newPoints[index]);
+            m_newSpline.first.insert(0, newPoints[index]);
+            m_newSpline.second.insert(0, newPoints[index]);
+            m_newSpline.second.insert(1, newPoints[index]);
         }
         m_index = index;
         m_type = RemovePointAnimation;
@@ -92,9 +92,9 @@ void SplineAnimation::setup(QVector<QPointF> &oldPoints, QVector<QPointF> &newPo
             m_oldSpline.second.insert((index - 1) * 2, newPoints[index - 1]);
             m_oldSpline.second.insert((index - 1) * 2 + 1, newPoints[index - 1]);
         } else {
-            m_oldSpline.first.insert(index, newPoints[index]);
-            m_oldSpline.second.insert((index - 1) * 2, newPoints[index]);
-            m_oldSpline.second.insert((index - 1) * 2 + 1, newPoints[index]);
+            m_oldSpline.first.insert(0, newPoints[index]);
+            m_oldSpline.second.insert(0, newPoints[index]);
+            m_oldSpline.second.insert(1, newPoints[index]);
         }
         m_index = index;
         m_type = AddPointAnimation;
@@ -186,9 +186,15 @@ void SplineAnimation::updateState(QAbstractAnimation::State newState, QAbstractA
     if (oldState == QAbstractAnimation::Running && newState == QAbstractAnimation::Stopped) {
         if (m_item->isDirty() && m_type == RemovePointAnimation) {
             if (!m_newSpline.first.isEmpty()) {
-                m_newSpline.first.remove(m_index);
-                m_newSpline.second.remove((m_index - 1) * 2);
-                m_newSpline.second.remove((m_index - 1) * 2);
+                if (m_index) {
+                    m_newSpline.first.remove(m_index);
+                    m_newSpline.second.remove((m_index - 1) * 2);
+                    m_newSpline.second.remove((m_index - 1) * 2);
+                } else {
+                    m_newSpline.first.remove(0);
+                    m_newSpline.second.remove(0);
+                    m_newSpline.second.remove(0);
+                }
             }
             m_item->setGeometryPoints(m_newSpline.first);
             m_item->setControlGeometryPoints(m_newSpline.second);

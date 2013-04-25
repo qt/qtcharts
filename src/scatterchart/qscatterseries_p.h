@@ -40,6 +40,7 @@ public:
     QScatterSeriesPrivate(QScatterSeries *q);
     void initializeGraphics(QGraphicsItem* parent);
     void initializeTheme(int index, ChartTheme* theme, bool forced = false);
+    void initializeAnimations(QtCommercialChart::QChart::AnimationOptions options);
 
 private:
     QScatterSeries::MarkerShape m_shape;

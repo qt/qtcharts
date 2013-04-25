@@ -73,7 +73,7 @@ QVector<bool> XYChart::offGridStatusVector()
 
     QVector<bool> returnVector;
     returnVector.resize(m_points.size());
-    // During remove/append animation series may have different number of points,
+    // During remove animation series may have different number of points,
     // so ensure we don't go over the index. No need to check for zero points, this
     // will not be called in such a situation.
     const int seriesLastIndex = m_series->count() - 1;

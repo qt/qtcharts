@@ -23,6 +23,7 @@
 #include "scatterchartitem_p.h"
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
+#include "scatteranimation_p.h"
 
 /*!
     \class QScatterSeries
@@ -280,6 +281,19 @@ void QScatterSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bool f
         QBrush brush(colors.at(index % colors.size()));
         q->setBrush(brush);
     }
+}
+
+void QScatterSeriesPrivate::initializeAnimations(QChart::AnimationOptions options)
+{
+    ScatterChartItem *item = static_cast<ScatterChartItem *>(m_item.data());
+    Q_ASSERT(item);
+
+    if (options.testFlag(QChart::SeriesAnimations))
+        item->setAnimation(new ScatterAnimation(item));
+    else
+        item->setAnimation(0);
+
+    QAbstractSeriesPrivate::initializeAnimations(options);
 }
 
 #include "moc_qscatterseries.cpp"

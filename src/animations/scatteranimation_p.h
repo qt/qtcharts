@@ -27,39 +27,22 @@
 //
 // We mean it.
 
-#ifndef XYANIMATION_P_H
-#define XYANIMATION_P_H
-
-#include "chartanimation_p.h"
-#include <QPointF>
+#ifndef SCATTERANIMATION_P_H
+#define SCATTERANIMATION_P_H
+#include "xyanimation_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class XYChart;
+class ScatterChartItem;
 
-class XYAnimation : public ChartAnimation
+class ScatterAnimation : public XYAnimation
 {
-protected:
-    enum Animation { AddPointAnimation, RemovePointAnimation, ReplacePointAnimation, NewAnimation };
 public:
-    XYAnimation(XYChart *item);
-    ~XYAnimation();
-    void setup(const QVector<QPointF> &oldPoints, const QVector<QPointF> &newPoints, int index = -1);
-    Animation animationType() const { return m_type; };
+    ScatterAnimation(ScatterChartItem *item);
+    ~ScatterAnimation();
 
 protected:
-    QVariant interpolated(const QVariant &start, const QVariant &end, qreal progress) const;
-    void updateCurrentValue(const QVariant &value);
     void updateState(QAbstractAnimation::State newState, QAbstractAnimation::State oldState);
-    XYChart *chartItem() { return m_item; }
-protected:
-    Animation m_type;
-    bool m_dirty;
-    int m_index;
-private:
-    XYChart *m_item;
-    QVector<QPointF> m_oldPoints;
-    QVector<QPointF> m_newPoints;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

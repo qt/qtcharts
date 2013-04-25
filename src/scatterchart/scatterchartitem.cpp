@@ -133,13 +133,13 @@ void ScatterChartItem::updateGeometry()
         QGraphicsItem *item = items.at(i);
         const QPointF &point = points.at(i);
         const QRectF &rect = item->boundingRect();
-        // During remove/append animation series may have different number of points,
+        // During remove animation series may have different number of points,
         // so ensure we don't go over the index. Animation handling itself ensures that
         // if there is actually no points in the series, then it won't generate a fake point,
         // so we can be assured there is always at least one point in m_series here.
         // Note that marker map values can be technically incorrect during the animation,
         // if it was caused by an insert, but this shouldn't be a problem as the points are
-        // fake anyway.
+        // fake anyway. After remove animation stops, geometry is updated to correct one.
         m_markerMap[item] = m_series->at(qMin(seriesLastIndex, i));
         item->setPos(point.x() - rect.width() / 2, point.y() - rect.height() / 2);
 
