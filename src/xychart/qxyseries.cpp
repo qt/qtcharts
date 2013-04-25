@@ -368,7 +368,7 @@ QList<QPointF> QXYSeries::points() const
 /*!
     Returns point at \a index in internal points vector.
 */
-const QPointF &QXYSeries::pointAt(int index) const
+const QPointF &QXYSeries::at(int index) const
 {
     Q_D(const QXYSeries);
     return d->m_points.at(index);

@@ -88,7 +88,7 @@ void LineChartItem::updateGeometry()
         qreal minX = domain()->minX();
         qreal maxX = domain()->maxX();
         qreal minY = domain()->minY();
-        QPointF currentSeriesPoint = m_series->pointAt(0);
+        QPointF currentSeriesPoint = m_series->at(0);
         QPointF currentGeometryPoint = points.at(0);
         QPointF previousGeometryPoint = points.at(0);
         int size = m_linePen.width();
@@ -129,7 +129,7 @@ void LineChartItem::updateGeometry()
             // degrees and both of the points are within the margin, one in the top half and one in the
             // bottom half of the chart, the bottom one gets clipped incorrectly.
             // However, this should be rare occurrence in any sensible chart.
-            currentSeriesPoint = m_series->pointAt(qMin(seriesLastIndex, i));
+            currentSeriesPoint = m_series->at(qMin(seriesLastIndex, i));
             currentGeometryPoint = points.at(i);
             pointOffGrid = (currentSeriesPoint.x() < minX || currentSeriesPoint.x() > maxX);
 
@@ -149,7 +149,7 @@ void LineChartItem::updateGeometry()
 
                 bool dummyOk; // We know points are ok, but this is needed
                 qreal currentAngle = static_cast<PolarDomain *>(domain())->toAngularCoordinate(currentSeriesPoint.x(), dummyOk);
-                qreal previousAngle = static_cast<PolarDomain *>(domain())->toAngularCoordinate(m_series->pointAt(i - 1).x(), dummyOk);
+                qreal previousAngle = static_cast<PolarDomain *>(domain())->toAngularCoordinate(m_series->at(i - 1).x(), dummyOk);
 
                 if ((qAbs(currentAngle - previousAngle) > 180.0)) {
                     // If the angle between two points is over 180 degrees (half X range),

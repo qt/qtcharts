@@ -79,7 +79,7 @@ QVector<bool> XYChart::offGridStatusVector()
     const int seriesLastIndex = m_series->count() - 1;
 
     for (int i = 0; i < m_points.size(); i++) {
-        const QPointF &seriesPoint = m_series->pointAt(qMin(seriesLastIndex, i));
+        const QPointF &seriesPoint = m_series->at(qMin(seriesLastIndex, i));
         if (seriesPoint.x() < minX
             || seriesPoint.x() > maxX
             || seriesPoint.y() < minY

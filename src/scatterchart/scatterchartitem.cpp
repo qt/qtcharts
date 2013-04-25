@@ -140,7 +140,7 @@ void ScatterChartItem::updateGeometry()
         // Note that marker map values can be technically incorrect during the animation,
         // if it was caused by an insert, but this shouldn't be a problem as the points are
         // fake anyway.
-        m_markerMap[item] = m_series->pointAt(qMin(seriesLastIndex, i));
+        m_markerMap[item] = m_series->at(qMin(seriesLastIndex, i));
         item->setPos(point.x() - rect.width() / 2, point.y() - rect.height() / 2);
 
         if (!m_visible || offGridStatus.at(i))
