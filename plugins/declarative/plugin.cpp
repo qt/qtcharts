@@ -21,6 +21,7 @@
 #include "qchart.h"
 #include "qabstractaxis.h"
 #include "qvalueaxis.h"
+#include "qlogvalueaxis.h"
 #include "declarativecategoryaxis.h"
 #include "qbarcategoryaxis.h"
 #include "declarativechart.h"
@@ -83,6 +84,7 @@ Q_DECLARE_METATYPE(QValueAxis *)
 Q_DECLARE_METATYPE(QBarCategoryAxis *)
 Q_DECLARE_METATYPE(QCategoryAxis *)
 Q_DECLARE_METATYPE(QDateTimeAxis *)
+Q_DECLARE_METATYPE(QLogValueAxis *)
 
 Q_DECLARE_METATYPE(QLegend *)
 Q_DECLARE_METATYPE(QLegendMarker *)
@@ -232,6 +234,7 @@ public:
         qmlRegisterType<DeclarativeScatterSeries, 3>(uri, 1, 3, "ScatterSeries");
         qmlRegisterType<DeclarativeLineSeries, 3>(uri, 1, 3, "LineSeries");
         qmlRegisterType<DeclarativeAreaSeries, 3>(uri, 1, 3, "AreaSeries");
+        qmlRegisterType<QLogValueAxis>(uri, 1, 3, "LogValueAxis");
     }
 };
 

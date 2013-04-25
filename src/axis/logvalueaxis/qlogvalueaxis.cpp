@@ -41,27 +41,62 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \qmlclass LogValuesAxis QLogValueAxis
+    \brief The LogValueAxis element is used for manipulating chart's axes
+    \inherits AbstractAxis
+
+    \note If a LogValueAxis is attached to a series with one or more points with
+    negative or zero values on the associated dimension, the series will not be
+    plotted at all. This is particularly relevant when XYModelMappers are used,
+    since empty cells in models typically contain zero values.
+*/
+
+/*!
   \property QLogValueAxis::min
   Defines the minimum value on the axis.
   When setting this property the max is adjusted if necessary, to ensure that the range remains valid.
-  Value has to be greater then 0.
+  Value has to be greater than 0.
+*/
+/*!
+  \qmlproperty real LogValuesAxis::min
+  Defines the minimum value on the axis.
+  When setting this property the max is adjusted if necessary, to ensure that the range remains valid.
+  Value has to be greater than 0.
 */
 
 /*!
   \property QLogValueAxis::max
   Defines the maximum value on the axis.
   When setting this property the min is adjusted if necessary, to ensure that the range remains valid.
-  Value has to be greater then 0.
+  Value has to be greater than 0.
+*/
+/*!
+  \qmlproperty real LogValuesAxis::max
+  Defines the maximum value on the axis.
+  When setting this property the min is adjusted if necessary, to ensure that the range remains valid.
+  Value has to be greater than 0.
 */
 
 /*!
   \property QLogValueAxis::base
   Defines the base of the logarithm.
-  Value has to be greater then 0 and not equal 1
+  Value has to be greater than 0 and not equal 1
+*/
+/*!
+  \qmlproperty real LogValuesAxis::base
+  Defines the maximum value on the axis.
+  Defines the base of the logarithm.
+  Value has to be greater than 0 and not equal 1
 */
 
 /*!
   \property QLogValueAxis::labelFormat
+  Defines the label format of the axis.
+  Supported specifiers are: d, i, o, x, X, f, F, e, E, g, G, c
+  See QString::sprintf() for additional details.
+*/
+/*!
+  \qmlproperty real LogValuesAxis::labelFormat
   Defines the label format of the axis.
   Supported specifiers are: d, i, o, x, X, f, F, e, E, g, G, c
   See QString::sprintf() for additional details.
@@ -71,9 +106,17 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   \fn void QLogValueAxis::minChanged(qreal min)
   Axis emits signal when \a min of axis has changed.
 */
+/*!
+  \qmlsignal LogValuesAxis::onMinChanged(qreal min)
+  Axis emits signal when \a min of axis has changed.
+*/
 
 /*!
   \fn void QLogValueAxis::maxChanged(qreal max)
+  Axis emits signal when \a max of axis has changed.
+*/
+/*!
+  \qmlsignal LogValuesAxis::onMaxChanged(qreal max)
   Axis emits signal when \a max of axis has changed.
 */
 
@@ -86,9 +129,17 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   \fn void QLogValueAxis::labelFormatChanged(const QString &format)
   Axis emits signal when \a format of axis labels has changed.
 */
+/*!
+  \qmlsignal LogValueAxis::labelFormatChanged(const QString &format)
+   Axis emits signal when \a format of axis labels has changed.
+*/
 
 /*!
   \fn void QLogValueAxis::baseChanged(qreal base)
+  Axis emits signal when \a base of logarithm of the axis has changed.
+*/
+/*!
+  \qmlsignal LogValuesAxis::baseChanged(qreal base)
   Axis emits signal when \a base of logarithm of the axis has changed.
 */
 

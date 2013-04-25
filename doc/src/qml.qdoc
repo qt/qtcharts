@@ -36,6 +36,7 @@
                     <li><a href="qml-polarchartview.html">PolarChartView</a></li>
                     <li><a href="qml-abstractaxis.html">AbstractAxis</a></li>
                     <li><a href="qml-valueaxis.html">ValueAxis</a></li>
+                    <li><a href="qml-logvaluesaxis.html">LogValueAxis</a></li>
                     <li><a href="qml-categoryaxis.html">CategoryAxis</a></li>
                     <li><a href="qml-categoryrange.html">CategoryRange</a></li>
                     <li><a href="qml-barcategoryaxis.html">BarCategoryAxis</a></li>

@@ -28,6 +28,7 @@
 #include "declarativescatterseries.h"
 #include "qbarcategoryaxis.h"
 #include "qvalueaxis.h"
+#include "qlogvalueaxis.h"
 #include "qcategoryaxis.h"
 #include "qabstractseries_p.h"
 #include "declarativemargins.h"
@@ -762,6 +763,8 @@ QAbstractAxis *DeclarativeChart::defaultAxis(Qt::Orientation orientation, QAbstr
     case QAbstractAxis::AxisTypeDateTime:
         return new QDateTimeAxis(this);
 #endif
+    case QAbstractAxis::AxisTypeLogValue:
+        return new QLogValueAxis(this);
     default:
         // assume AxisTypeNoAxis
         return 0;
