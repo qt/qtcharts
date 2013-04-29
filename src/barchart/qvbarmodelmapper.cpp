@@ -31,7 +31,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Vertical model mapper is used to create a connection between QAbstractBarSeries and QAbstractItemModel derived model object.
     Model mapper maintains equal size of all the BarSets.
     Adding/removing value from the BarSet causes the the same change in the rest of the BarSets added to the same series.
-    Note: used model has to support adding/removing rows/columns and modifying the data of the cells.
+    \note Used model has to support adding/removing rows/columns and modifying the data of the cells.
 */
 /*!
     \qmlclass VBarModelMapper

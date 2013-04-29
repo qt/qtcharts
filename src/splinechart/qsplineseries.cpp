@@ -83,7 +83,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     Constructs empty series object which is a child of \a parent.
-    When series object is added to QChartView or QChart instance then the ownerships is transferred.
+    When series object is added to a QChart instance then the ownerships is transferred.
   */
 
 QSplineSeries::QSplineSeries(QObject *parent)

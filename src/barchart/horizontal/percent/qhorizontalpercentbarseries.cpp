@@ -70,7 +70,7 @@ QAbstractSeries::SeriesType QHorizontalPercentBarSeries::type() const
 }
 
 /*!
-    Destructor
+    Destructor.
     Removes series from chart.
 */
 QHorizontalPercentBarSeries::~QHorizontalPercentBarSeries()

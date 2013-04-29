@@ -73,10 +73,10 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
  \brief QtCommercial chart API.
 
  QChart is a QGraphicsWidget that you can show in a QGraphicsScene. It manages the graphical
- representation of different types of series and other chart related objects like
- QAxis and QLegend. If you simply want to show a chart in a layout, you can use the
+ representation of different types of series and other chart related objects like legend and
+ axes. If you simply want to show a chart in a layout, you can use the
  convenience class QChartView instead of QChart.
- \sa QChartView
+ \sa QChartView, QPolarChart
  */
 
 /*!
@@ -86,7 +86,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
  \property QChart::backgroundVisible
- Whether the chart background is visible or not.
+ Specifies whether the chart background is visible or not.
  \sa setBackgroundBrush(), setBackgroundPen()
  */
 
@@ -99,19 +99,22 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
  \property QChart::minimumMargins
  Minimum margins between the plot area (axes) and the edge of the chart widget.
+ This property is deprecated; use margins property instead.
+
+ \sa margins
  */
 
 /*!
  \property QChart::margins
- Minimum between the plot area (axes) and the edge of the chart widget.
+ Margins between the plot area (axes) and the edge of the chart widget.
  */
 
 /*!
  \property QChart::theme
  Theme is a built-in collection of UI style related settings applied for all visual elements of a chart, like colors,
- pens, brushes and fonts of series, axes, title and legend. \l {Chart themes demo} shows an example with a few
+ pens, brushes, and fonts of series, axes, title, and legend. \l {Chart themes demo} shows an example with a few
  different themes.
- Note: changing the theme will overwrite all customizations previously applied to the series.
+ \note Changing the theme will overwrite all customizations previously applied to the series.
  */
 
 /*!
@@ -122,7 +125,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
  \property QChart::chartType
  Chart type indicates if the chart is a cartesian chart or a polar chart.
- This property is set internally and is read only.
+ This property is set internally and it is read only.
  \sa QPolarChart
  */
 
@@ -151,7 +154,7 @@ QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags)
 }
 
 /*!
- Destroys the object and it's children, like series and axis objects added to it.
+ Destroys the chart object and its children, like series and axis objects added to it.
  */
 QChart::~QChart()
 {
@@ -161,11 +164,16 @@ QChart::~QChart()
 }
 
 /*!
- Adds the \a series onto the chart and takes the ownership of the object.
- If auto scaling is enabled, re-scales the axes the series is bound to (both the x axis and
- the y axis).
+ Adds the \a series onto the chart and takes the ownership of it.
 
- \sa removeSeries(), removeAllSeries()
+ \note A newly added series is attached to no axes by default, including any axes that were created for the chart
+ using createDefaultAxes() before the series was added to the chart. If no axes are attached to
+ the newly added series before the chart is shown, the series will get drawn as if it had axes with ranges
+ that exactly fit the series to the plot area of the chart. This can be confusing if the same chart also displays other
+ series that have properly attached axes, so always make sure you either call createDefaultAxes() after
+ a series has been added or explicitly attach axes for the series.
+
+ \sa removeSeries(), removeAllSeries(), createDefaultAxes(), QAbstractSeries::attachAxis()
  */
 void QChart::addSeries(QAbstractSeries *series)
 {
@@ -174,9 +182,9 @@ void QChart::addSeries(QAbstractSeries *series)
 }
 
 /*!
- Removes the \a series specified in a perameter from the QChartView.
- It releses its ownership of the specified QChartSeries object.
- It does not delete the pointed QChartSeries data object
+ Removes the \a series from the chart.
+ The chart releases its ownership of the specified \a series object.
+
  \sa addSeries(), removeAllSeries()
  */
 void QChart::removeSeries(QAbstractSeries *series)
@@ -186,8 +194,8 @@ void QChart::removeSeries(QAbstractSeries *series)
 }
 
 /*!
- Removes all the QChartSeries that have been added to the QChartView
- It also deletes the pointed QChartSeries data objects
+ Removes and deletes all series objects that have been added to the chart.
+
  \sa addSeries(), removeSeries()
  */
 void QChart::removeAllSeries()
@@ -207,7 +215,7 @@ void QChart::setBackgroundBrush(const QBrush &brush)
 }
 
 /*!
-    Gets the brush that is used for painting the background of the chart area.
+ Gets the brush that is used for painting the background of the chart area.
  */
 QBrush QChart::backgroundBrush() const
 {
@@ -223,31 +231,25 @@ void QChart::setBackgroundPen(const QPen &pen)
 }
 
 /*!
-    Gets the pen that is used for painting the background of the chart area.
+ Gets the pen that is used for painting the background of the chart area.
  */
 QPen QChart::backgroundPen() const
 {
     return d_ptr->m_presenter->backgroundPen();
 }
 
-/*!
- Sets the chart \a title. The description text that is drawn above the chart.
- */
 void QChart::setTitle(const QString &title)
 {
     d_ptr->m_presenter->setTitle(title);
 }
 
-/*!
- Returns the chart title. The description text that is drawn above the chart.
- */
 QString QChart::title() const
 {
     return d_ptr->m_presenter->title();
 }
 
 /*!
- Sets the \a font that is used for drawing the chart description text that is rendered above the chart.
+ Sets the \a font that is used for drawing the chart title.
  */
 void QChart::setTitleFont(const QFont &font)
 {
@@ -255,7 +257,7 @@ void QChart::setTitleFont(const QFont &font)
 }
 
 /*!
-    Gets the font that is used for drawing the chart description text that is rendered above the chart.
+ Gets the font that is used for drawing the chart title.
  */
 QFont QChart::titleFont() const
 {
@@ -263,7 +265,7 @@ QFont QChart::titleFont() const
 }
 
 /*!
- Sets the \a brush used for rendering the title text.
+ Sets the \a brush used for drawing the title text.
  */
 void QChart::setTitleBrush(const QBrush &brush)
 {
@@ -271,7 +273,7 @@ void QChart::setTitleBrush(const QBrush &brush)
 }
 
 /*!
- Returns the brush used for rendering the title text.
+ Returns the brush used for drawing the title text.
  */
 QBrush QChart::titleBrush() const
 {
@@ -289,7 +291,7 @@ QChart::ChartTheme QChart::theme() const
 }
 
 /*!
- Zooms in the view by a factor of 2
+ Zooms in the view by a factor of two.
  */
 void QChart::zoomIn()
 {
@@ -308,7 +310,7 @@ void QChart::zoomIn(const QRectF &rect)
 }
 
 /*!
- Restores the view zoom level to the previous one.
+ Zooms out the view by a factor of two.
  */
 void QChart::zoomOut()
 {
@@ -316,7 +318,7 @@ void QChart::zoomOut()
 }
 
 /*!
- Zooms in the view by a \a factor.
+ Zooms in the view by a custom \a factor.
 
  A factor over 1.0 zooms the view in and factor between 0.0 and 1.0 zooms out.
  */
@@ -338,8 +340,10 @@ void QChart::zoom(qreal factor)
 }
 
 /*!
- Returns the pointer to the x axis object of the chart associated with the specified \a series.
- If no series is provided then pointer to currently visible axis is provided.
+ Returns a pointer to the horizontal axis attached to the specified \a series.
+ If no \a series is specified, the first horizontal axis added to the chart is returned.
+
+ \sa addAxis(), QAbstractSeries::attachAxis()
  */
 QAbstractAxis *QChart::axisX(QAbstractSeries *series) const
 {
@@ -350,8 +354,10 @@ QAbstractAxis *QChart::axisX(QAbstractSeries *series) const
 }
 
 /*!
- Returns the pointer to the y axis object of the chart associated with the specified \a series.
- If no series is provided then pointer to currently visible axis is provided.
+ Returns a pointer to the vertical axis attached to the specified \a series.
+ If no \a series is specified, the first vertical axis added to the chart is returned.
+
+ \sa addAxis(), QAbstractSeries::attachAxis()
  */
 QAbstractAxis *QChart::axisY(QAbstractSeries *series) const
 {
@@ -362,8 +368,8 @@ QAbstractAxis *QChart::axisY(QAbstractSeries *series) const
 }
 
 /*!
- Returns the axes added for the \a series with \a orientation. If no series is provided, then all axes with the
- specified orientation are returned.
+ Returns the axes attached to the \a series with \a orientation. If no \a series is provided,
+ then all axes added to the chart with the specified orientation are returned.
  \sa addAxis(), createDefaultAxes()
  */
 QList<QAbstractAxis *> QChart::axes(Qt::Orientations orientation, QAbstractSeries *series) const
@@ -386,11 +392,15 @@ QList<QAbstractAxis *> QChart::axes(Qt::Orientations orientation, QAbstractSerie
 }
 
 /*!
- NOTICE: This function has to be called after series has been added to the chart if no customized axes are set to the chart. Otherwise axisX(), axisY() calls return NULL.
+ Creates axes for the chart based on the series that have already been added to the chart. Any axes previously added to
+ the chart will be deleted.
 
- Creates the axes for the chart based on the series that has already been added to the chart.
+ \note This function has to be called after all series have been added to the chart. The axes created by this function
+ will NOT get automatically attached to any series added to the chart after this function has been called.
+ A series with no axes attached will by default scale to utilize the entire plot area of the chart, which can be confusing
+ if there are other series with properly attached axes also present.
 
-\table
+ \table
      \header
          \o Series type
          \o X-axis
@@ -407,17 +417,15 @@ QList<QAbstractAxis *> QChart::axes(Qt::Orientations orientation, QAbstractSerie
          \o QPieSeries
          \o None
          \o None
-     \endtable
+ \endtable
 
- If there are several QXYSeries derived series added to the chart and no other series type has been added then only one pair of axes is created.
- If there are sevaral series added of different types then each series gets its own axes pair.
+ If there are several QXYSeries derived series added to the chart and no series of other types have been added, then only one pair of axes is created.
+ If there are several series of different types added to the chart, then each series gets its own axes pair.
 
- NOTICE: if there is more than one x and y axes created then no axis is drawn by default and one needs to choose explicitly which axis should be shown.
-
- Axis specifix to the series can be later obtained from the chart by providing the series as the parameter of axisX(), axisY() function calls.
+ The axes specific to the series can be later obtained from the chart by providing the series as the parameter for axes() function call.
  QPieSeries does not create any axes.
 
- \sa axisX(), axisY(), setAxisX(), setAxisY()
+ \sa axisX(), axisY(), axes(), setAxisX(), setAxisY(), QAbstractSeries::attachAxis()
  */
 void QChart::createDefaultAxes()
 {
@@ -425,46 +433,30 @@ void QChart::createDefaultAxes()
 }
 
 /*!
- Returns the legend object of the chart. Ownership stays in chart.
+ Returns the legend object of the chart. Ownership stays with the chart.
  */
 QLegend *QChart::legend() const
 {
     return d_ptr->m_legend;
 }
 
-/*!
-  Sets the minimum \a margins between the plot area (axes) and the edge of the chart widget.
-  Deprecated. Use setMargins().
-*/
 void QChart::setMinimumMargins(const QMargins &margins)
 {
     qWarning() << "QChart::setMinimumMargins is deprecated. Use QChart::setMargins instead.";
     d_ptr->m_presenter->layout()->setMargins(margins);
 }
 
-/*!
-    Returns the rect that contains information about margins (distance between chart widget edge and axes).
-    Individual margins can be obtained by calling left, top, right, bottom on the returned rect.
-    Deprecated. Use margins().
- */
 QMargins QChart::minimumMargins() const
 {
     qWarning() << "QChart::minimumMargins is deprecated. Use QChart::margins instead.";
     return d_ptr->m_presenter->layout()->margins();
 }
 
-/*!
-  Sets the minimum \a margins between the plot area (axes) and the edge of the chart widget.
-*/
 void QChart::setMargins(const QMargins &margins)
 {
     d_ptr->m_presenter->layout()->setMargins(margins);
 }
 
-/*!
-    Returns the rect that contains information about margins (distance between chart widget edge and axes).
-    Individual margins can be obtained by calling left, top, right, bottom on the returned rect.
- */
 QMargins QChart::margins() const
 {
     return d_ptr->m_presenter->layout()->margins();
@@ -476,26 +468,14 @@ QChart::ChartType QChart::chartType() const
 }
 
 /*!
-    Returns the the rect within which the drawing of the chart is done.
-    It does not include the area defines by margins.
+    Returns the the rectangle within which the drawing of the chart is done.
+    It does not include the area defined by margins.
  */
 QRectF QChart::plotArea() const
 {
     return d_ptr->m_presenter->geometry();
 }
 
-///*!
-//    TODO: Dummy.
-//    Adjust the ranges of the axes so that all the data of the specified \a series is visible
-// */
-//void QChart::adjustViewToSeries(QAbstractSeries* series)
-//{
-//    //
-//}
-
-/*!
- Sets animation \a options for the chart
- */
 void QChart::setAnimationOptions(AnimationOptions options)
 {
     d_ptr->m_presenter->setAnimationOptions(options);
@@ -537,7 +517,7 @@ bool QChart::isDropShadowEnabled() const
 }
 
 /*!
-  Returns all the series that are added to the chart.
+  Returns all series that are added to the chart.
 
   \sa addSeries(), removeSeries(), removeAllSeries()
 */
@@ -547,45 +527,50 @@ QList<QAbstractSeries *> QChart::series() const
 }
 
 /*!
-  Sets \a axis to the chart, which will control the presentation of the \a series
+  Adds the \a axis to the chart and attaches it to the \a series as a bottom-aligned horizontal axis.
+  The chart takes ownership of both the \a axis and the \a series.
+  Any horizontal axes previously attached to the \a series are deleted.
 
-   \sa axisX(), axisY(), setAxisY(), createDefaultAxes()
+  \sa axisX(), axisY(), setAxisY(), createDefaultAxes(), QAbstractSeries::attachAxis()
 */
-void QChart::setAxisX(QAbstractAxis *axis , QAbstractSeries *series)
+void QChart::setAxisX(QAbstractAxis *axis ,QAbstractSeries *series)
 {
-    QList<QAbstractAxis*> list = axes(Qt::Horizontal,series);
+    QList<QAbstractAxis*> list = axes(Qt::Horizontal, series);
 
-    foreach(QAbstractAxis* a, list){
+    foreach (QAbstractAxis* a, list) {
         d_ptr->m_dataset->removeAxis(a);
         delete a;
     }
 
-    if(!d_ptr->m_dataset->axes().contains(axis))
-        d_ptr->m_dataset->addAxis(axis,Qt::AlignBottom);
-    d_ptr->m_dataset->attachAxis(series,axis);
+    if (!d_ptr->m_dataset->axes().contains(axis))
+        d_ptr->m_dataset->addAxis(axis, Qt::AlignBottom);
+    d_ptr->m_dataset->attachAxis(series, axis);
 }
 
 /*!
-  Sets \a axis to the chart, which will control the presentation of the \a series
+  Adds the \a axis to the chart and attaches it to the \a series as a left-aligned vertical axis.
+  The chart takes ownership of both the \a axis and the \a series.
+  Any vertical axes previously attached to the \a series are deleted.
 
-   \sa axisX(), axisY(), setAxisX(), createDefaultAxes()
+  \sa axisX(), axisY(), setAxisX(), createDefaultAxes(), QAbstractSeries::attachAxis()
 */
-void QChart::setAxisY(QAbstractAxis *axis , QAbstractSeries *series)
+void QChart::setAxisY(QAbstractAxis *axis ,QAbstractSeries *series)
 {
-    QList<QAbstractAxis*> list = axes(Qt::Vertical,series);
+    QList<QAbstractAxis*> list = axes(Qt::Vertical, series);
 
-    foreach(QAbstractAxis* a, list) {
+    foreach (QAbstractAxis* a, list) {
         d_ptr->m_dataset->removeAxis(a);
         delete a;
     }
 
-    if(!d_ptr->m_dataset->axes().contains(axis))
-        d_ptr->m_dataset->addAxis(axis,Qt::AlignLeft);
-    d_ptr->m_dataset->attachAxis(series,axis);
+    if (!d_ptr->m_dataset->axes().contains(axis))
+        d_ptr->m_dataset->addAxis(axis, Qt::AlignLeft);
+    d_ptr->m_dataset->attachAxis(series, axis);
 }
 
 /*!
-  Adds \a axis to the chart with \a alignment. The chart takes the ownership of the axis.
+  Adds the \a axis to the chart with \a alignment. The chart takes the ownership of the axis.
+
   \sa removeAxis(), createDefaultAxes(), QAbstractSeries::attachAxis()
 */
 void QChart::addAxis(QAbstractAxis *axis, Qt::Alignment alignment)
@@ -594,7 +579,9 @@ void QChart::addAxis(QAbstractAxis *axis, Qt::Alignment alignment)
 }
 
 /*!
-  Removes \a axis from the chart. The ownership is returned to the caller.
+  Removes the \a axis from the chart.
+  The chart releases its ownership of the specified \a axis object.
+
   \sa addAxis(), createDefaultAxes(), QAbstractSeries::detachAxis()
 */
 void QChart::removeAxis(QAbstractAxis *axis)
@@ -603,7 +590,7 @@ void QChart::removeAxis(QAbstractAxis *axis)
 }
 
 /*!
-  Returns the value in the \a series domain that corresponds to the charts widget point defines by \a position.
+  Returns the value in the \a series domain that corresponds to the \a position relative to chart widget.
 */
 QPointF QChart::mapToValue(const QPointF &position, QAbstractSeries *series)
 {
@@ -611,7 +598,7 @@ QPointF QChart::mapToValue(const QPointF &position, QAbstractSeries *series)
 }
 
 /*!
-  Returns the position on the charts widget that corresponds to the \a value in the \a series domain.
+  Returns the position on the chart widget that corresponds to the \a value in the \a series domain.
 */
 QPointF QChart::mapToPosition(const QPointF &value, QAbstractSeries *series)
 {
@@ -640,7 +627,6 @@ QChartPrivate::QChartPrivate(QChart *q, QChart::ChartType type):
 
 QChartPrivate::~QChartPrivate()
 {
-
 }
 
 void QChartPrivate::init()

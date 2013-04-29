@@ -131,7 +131,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \internal
-    \brief Constructs ChartSeries object with \a parent.
+    \brief Constructs QAbstractSeries object with \a parent.
 */
 QAbstractSeries::QAbstractSeries(QAbstractSeriesPrivate &d, QObject *parent) :
     QObject(parent),
@@ -145,7 +145,7 @@ QAbstractSeries::QAbstractSeries(QAbstractSeriesPrivate &d, QObject *parent) :
 QAbstractSeries::~QAbstractSeries()
 {
     if (d_ptr->m_chart)
-        qFatal("Still binded series detected !");
+        qFatal("Series still bound to a chart when destroyed!");
 }
 
 void QAbstractSeries::setName(const QString &name)
@@ -161,9 +161,6 @@ QString QAbstractSeries::name() const
     return d_ptr->m_name;
 }
 
-/*!
-    Sets the visibility of series to \a visible
-*/
 void QAbstractSeries::setVisible(bool visible)
 {
     if (visible != d_ptr->m_visible) {
@@ -172,9 +169,6 @@ void QAbstractSeries::setVisible(bool visible)
     }
 }
 
-/*!
-    Returns the visibility of series
-*/
 bool QAbstractSeries::isVisible() const
 {
     return d_ptr->m_visible;

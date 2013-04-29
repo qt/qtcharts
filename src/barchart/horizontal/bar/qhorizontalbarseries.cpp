@@ -65,7 +65,7 @@ QHorizontalBarSeries::QHorizontalBarSeries(QObject *parent)
 }
 
 /*!
-    Destructor
+    Destructor.
     Removes series from chart.
 */
 QHorizontalBarSeries::~QHorizontalBarSeries()

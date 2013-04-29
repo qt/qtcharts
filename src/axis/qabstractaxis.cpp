@@ -30,30 +30,22 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief The QAbstractAxis class is used for manipulating chart's axis.
     \mainclass
 
-    There is only one x Axis visible at the time, however there can be multiple y axes.
-    Each chart series can be bound to exactly one Y axis and the shared common X axis.
-    Axis can be setup to show axis line with tick marks, grid lines and shades.
+    Each series can be bound to one or more horizontal and vertical axes, but mixing axis types
+    that would result in different domains is not supported, such as specifying
+    QValueAxis and QLogValueAxis on the same orientation.
+
+    Properties and visibility of various axis elements such as axis line, title, labels, grid lines,
+    and shades can be individually controlled.
 */
 
 /*!
     \qmlclass AbstractAxis QAbstractAxis
-    \brief The Axis element is used for manipulating chart's axes
+    \brief The AbstractAxis is a base element used for specialized axis elements
 
-    There is only one x Axis visible at the time, however there can be multiple y axes on a ChartView.
-    Each chart series can be bound to exactly one Y axis and the shared common X axis.
-    Axis can be setup to show axis line with tick marks, grid lines and shades.
+    Each series can be bound to only one horizontal and vertical axis.
 
-    To access Axes you can use ChartView API. For example:
-    \code
-        ChartView {
-            axisX.min: 0
-            axisX.max: 3
-            axisX.ticksCount: 4
-            axisY.min: 0
-            axisY.max: 4
-            // Add a few series...
-        }
-    \endcode
+    Properties and visibility of various axis elements such as axis line, title, labels, grid lines,
+    and shades can be individually controlled.
 */
 
 /*!
@@ -249,7 +241,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 /*!
   \qmlproperty Qt.Orientation AbstractAxis::orientation
-  The orientation of the axis. Fixed to either Qt.Horizontal or Qt.Vertical when the axis is set to a Chart/Series.
+  The orientation of the axis. Fixed to either Qt.Horizontal or Qt.Vertical when the axis is set to a series.
 */
 
 /*!

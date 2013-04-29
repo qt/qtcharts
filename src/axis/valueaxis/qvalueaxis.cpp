@@ -62,7 +62,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     ValueAxis can be setup to show axis line with tick marks, grid lines and shades.
     Values of axis are drawn to position of ticks
 
-    To access Axes you can use ChartView API. For example:
+    Example about using ValueAxis:
     \code
         ChartView {
             ValueAxis {
@@ -105,7 +105,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
   \qmlproperty real ValueAxis::tickCount
    Defines the number of ticks on the axis. This indicates how many grid lines are draw on the chart.
-  The default value is 5, and it can not be below 2.
+   The default value is 5, and it can not be below 2.
 */
 
 /*!
@@ -141,11 +141,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
   \fn void QValueAxis::tickCountChanged(int tickCount)
-  Axis emits signal when \a tickCount number on axis have changed.
+  Axis emits signal when \a tickCount of axis has changed.
 */
 /*!
   \qmlsignal ValueAxis::tickCountChanged(int tickCount)
-  Axis emits signal when \a tickCount number on axis have changed.
+  Axis emits signal when \a tickCount of axis has changed.
 */
 
 /*!
@@ -159,7 +159,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 /*!
   \qmlsignal ValueAxis::labelFormatChanged(const QString &format)
-   Axis emits signal when \a format of axis labels has changed.
+  Axis emits signal when \a format of axis labels has changed.
 */
 
 /*!

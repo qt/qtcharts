@@ -69,12 +69,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \property QAreaSeries::lowerSeries
     The lower one of the two line series used to define are series boundaries. Note if
-    QAreaSeries was counstucted wihtout a\ lowerSeries this is null.
+    QAreaSeries was constructed without a\ lowerSeries this is null.
 */
 /*!
     \qmlproperty LineSeries AreaSeries::lowerSeries
     The lower one of the two line series used to define are series boundaries. Note if
-    AreaSeries was counstucted wihtout a\ lowerSeries this is null.
+    AreaSeries was constructed without a\ lowerSeries this is null.
 */
 
 /*!

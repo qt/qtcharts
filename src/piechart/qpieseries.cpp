@@ -41,7 +41,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     The slices can have any values as the QPieSeries will calculate its relative value to the sum of all slices.
     The actual slice size is determined by that relative value.
 
-    Pie size and position on the chart is controlled by using relative values which range from 0.0 to 1.0
+    Pie size and position on the chart is controlled by using relative values which range from 0.0 to 1.0.
     These relate to the actual chart rectangle.
 
     By default the pie is defined as a full pie but it can also be a partial pie.
@@ -519,7 +519,7 @@ bool QPieSeries::remove(QPieSlice *slice)
 /*!
     Takes a single \a slice from the series. Does not destroy the slice object.
 
-    NOTE: The series remains as the slice's parent object. You must set the
+    \note The series remains as the slice's parent object. You must set the
     parent object to take full ownership.
 
     Returns true if take was successful.

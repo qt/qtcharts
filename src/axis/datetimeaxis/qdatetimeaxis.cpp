@@ -36,15 +36,15 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \mainclass
 
     The labels can be configured by setting an appropriate DateTime format.
-    QDateTimeAxis works correctly with dates from 4714 BCE to 287396 CE
-    There are also other limitiation related to QDateTime . Please refer to QDateTime documentation.
+    QDateTimeAxis works correctly with dates from 4714 BCE to 287396 CE.
+    There are also other limitiation related to QDateTime. Please refer to QDateTime documentation.
     QDateTimeAxis can be setup to show axis line with tick marks, grid lines and shades.
 
     Note: QDateTimeAxis is disabled on ARM architecture.
 
     \image api_datatime_axis.png
 
-    QDateTimeAxis can be used with QLineSeries, QSplineSeries or QScatterSeries.
+    QDateTimeAxis can be used with any QXYSeries.
     To add a data point to the series QDateTime::toMSecsSinceEpoch() is used.
     \code
     QLineSeries *series = new QLineSeries;

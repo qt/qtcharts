@@ -26,7 +26,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \enum QPolarChart::PolarOrientation
 
-   This type is used to signify the polar orientation of an axis.
+   This type is used to specify the polar orientation of an axis.
 
     \value PolarOrientationRadial
     \value PolarOrientationAngular
@@ -46,7 +46,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
  \note If the angular distance between two consecutive points in a series is more than 180 degrees,
  any line connecting the two points becomes meaningless, so choose the axis ranges accordingly
- when displaying line, spline, or area series.
+ when displaying line, spline, or area series. In such case series don't draw a direct line between
+ the two points, but instead draw a line to and from the center of the chart.
 
  \note Polar charts do not support multiple axes of same orientation.
 
@@ -54,7 +55,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
  */
 
 /*!
- Constructs a polar chart as a child of a \a parent.
+ Constructs a polar chart as a child of the \a parent.
  Parameter \a wFlags is passed to the QChart constructor.
  */
 QPolarChart::QPolarChart(QGraphicsItem *parent, Qt::WindowFlags wFlags)
@@ -63,7 +64,7 @@ QPolarChart::QPolarChart(QGraphicsItem *parent, Qt::WindowFlags wFlags)
 }
 
 /*!
- Destroys the object and it's children, like series and axis objects added to it.
+ Destroys the polar chart object and its children, like series and axis objects added to it.
  */
 QPolarChart::~QPolarChart()
 {
@@ -72,6 +73,7 @@ QPolarChart::~QPolarChart()
 /*!
  Returns the axes added for the \a series with \a polarOrientation. If no series is provided, then any axis with the
  specified polar orientation is returned.
+
  \sa addAxis()
  */
 QList<QAbstractAxis *> QPolarChart::axes(PolarOrientations polarOrientation, QAbstractSeries *series) const
@@ -92,6 +94,7 @@ QList<QAbstractAxis *> QPolarChart::axes(PolarOrientations polarOrientation, QAb
   \note Axes can be added to a polar chart also with QChart::addAxis() instead of this method.
   The specified alignment determines the polar orientation: horizontal alignments indicate angular
   axis and vertical alignments indicate radial axis.
+
   \sa QChart::removeAxis(), QChart::createDefaultAxes(), QAbstractSeries::attachAxis(), QChart::addAxis()
 */
 void QPolarChart::addAxis(QAbstractAxis *axis, PolarOrientation polarOrientation)

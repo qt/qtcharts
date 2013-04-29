@@ -290,7 +290,7 @@ void QBarCategoryAxis::insert(int index, const QString &category)
 }
 
 /*!
-    Replaces \a oldCategory with \a newCategory. If \a oldCategory does not exits on the axis nothing is done.
+    Replaces \a oldCategory with \a newCategory. If \a oldCategory does not exist on the axis nothing is done.
     A \a newCategory has to be valid QStrings and can not be duplicated. In case of replacing minimum or maximum category,
     minimum and maximum of axis is updated accordingly.
 */

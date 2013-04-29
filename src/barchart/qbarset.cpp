@@ -195,14 +195,14 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \fn void QBarSet::valuesAdded(int index, int count)
     This signal is emitted when new values have been added to the set.
     Parameter \a index indicates the position of the first inserted value.
-    Parameter \a count is the number of iserted values.
+    Parameter \a count is the number of inserted values.
     \sa append(), insert()
 */
 /*!
     \qmlsignal BarSet::onValuesAdded(int index, int count)
     This signal is emitted when new values have been added to the set.
     Parameter \a index indicates the position of the first inserted value.
-    Parameter \a count is the number of iserted values.
+    Parameter \a count is the number of inserted values.
 */
 
 /*!
@@ -248,7 +248,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    Constructs QBarSet with a label of \a label and with parent of \a parent
+    Constructs QBarSet with a label of \a label and with parent of \a parent.
 */
 QBarSet::QBarSet(const QString label, QObject *parent)
     : QObject(parent),
@@ -257,7 +257,7 @@ QBarSet::QBarSet(const QString label, QObject *parent)
 }
 
 /*!
-    Destroys the barset
+    Destroys the barset.
 */
 QBarSet::~QBarSet()
 {
@@ -316,7 +316,7 @@ QBarSet &QBarSet::operator << (const qreal &value)
 
 /*!
     Inserts new \a value on the \a index position.
-    The value that is currently at this postion is moved to postion index + 1
+    The value that is currently at this postion is moved to position index + 1
     \sa remove()
 */
 void QBarSet::insert(const int index, const qreal value)
@@ -338,7 +338,7 @@ void QBarSet::remove(const int index, const int count)
 }
 
 /*!
-    Sets a new value \a value to set, indexed by \a index
+    Sets a new value \a value to set, indexed by \a index.
 */
 void QBarSet::replace(const int index, const qreal value)
 {

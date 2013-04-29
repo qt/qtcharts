@@ -154,7 +154,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \fn void QXYSeries::pointsReplaced()
-    Signal is emitted when all points have been replaced with another points.
+    Signal is emitted when all points have been replaced with other points.
     \sa replace()
 */
 /*!
@@ -226,7 +226,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \internal
 
     Constructs empty series object which is a child of \a parent.
-    When series object is added to QChartView or QChart instance ownerships is transferred.
+    When series object is added to QChart instance ownerships is transferred.
 */
 QXYSeries::QXYSeries(QXYSeriesPrivate &d, QObject *parent)
     : QAbstractSeries(d, parent)
@@ -234,15 +234,15 @@ QXYSeries::QXYSeries(QXYSeriesPrivate &d, QObject *parent)
 }
 
 /*!
-    Destroys the object. Series added to QChartView or QChart instances are owned by those,
-    and are deleted when mentioned object are destroyed.
+    Destroys the object. Series added to QChart instances are owned by those,
+    and are destroyed when QChart instances are destroyed.
 */
 QXYSeries::~QXYSeries()
 {
 }
 
 /*!
-    Adds data point \a x \a y to the series. Points are connected with lines on the chart.
+    Adds data point (\a x, \a y) to the series.
  */
 void QXYSeries::append(qreal x, qreal y)
 {
@@ -251,7 +251,7 @@ void QXYSeries::append(qreal x, qreal y)
 
 /*!
    This is an overloaded function.
-   Adds data \a point to the series. Points are connected with lines on the chart.
+   Adds data \a point to the series.
  */
 void QXYSeries::append(const QPointF &point)
 {
@@ -265,7 +265,7 @@ void QXYSeries::append(const QPointF &point)
 
 /*!
    This is an overloaded function.
-   Adds list of data \a points to the series. Points are connected with lines on the chart.
+   Adds list of data \a points to the series.
  */
 void QXYSeries::append(const QList<QPointF> &points)
 {
@@ -274,7 +274,7 @@ void QXYSeries::append(const QList<QPointF> &points)
 }
 
 /*!
-  Replaces data point \a oldX \a oldY with data point \a newX \a newY.
+  Replaces data point (\a oldX, \a oldY) with data point (\a newX, \a newY).
   \sa QXYSeries::pointReplaced()
 */
 void QXYSeries::replace(qreal oldX, qreal oldY, qreal newX, qreal newY)
@@ -299,7 +299,8 @@ void QXYSeries::replace(const QPointF &oldPoint, const QPointF &newPoint)
 }
 
 /*!
-  Replaces the current points with \a points. This is faster than replacing data points one by one,
+  Replaces the current points with \a points.
+  \note This is much faster than replacing data points one by one,
   or first clearing all data, and then appending the new data. Emits QXYSeries::pointsReplaced()
   when the points have been replaced.
   \sa QXYSeries::pointsReplaced()
@@ -312,7 +313,7 @@ void QXYSeries::replace(QList<QPointF> points)
 }
 
 /*!
-  Removes current \a x and \a y value.
+  Removes the point (\a x, \a y) from the series.
 */
 void QXYSeries::remove(qreal x, qreal y)
 {
@@ -320,9 +321,7 @@ void QXYSeries::remove(qreal x, qreal y)
 }
 
 /*!
-  Removes current \a point x value.
-
-  Note: point y value is ignored.
+  Removes the \a point from the series.
 */
 void QXYSeries::remove(const QPointF &point)
 {
