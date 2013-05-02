@@ -41,7 +41,9 @@ public:
 
     void append(qreal x, qreal y);
     void replace(qreal oldX, qreal oldY, qreal newX, qreal newY);
+    void replace(int index, qreal newX, qreal newY);
     void remove(qreal x, qreal y);
+    void remove(int index);
     void insert(int index, qreal x, qreal y);
     void clear();
     QPointF at(int index);

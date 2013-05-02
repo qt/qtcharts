@@ -231,6 +231,20 @@ void tst_QXYSeries::remove_raw()
         m_series->remove(bunchOfPoints.at(i));
         QTest::qWait(50);
     }
+    QCOMPARE(m_series->points().count(), 0);
+
+    // Removal using index
+    for (int i = 0; i < 10; i++)
+        bunchOfPoints.append(QPointF(i, (qreal) rand() / (qreal) RAND_MAX));
+    m_series->replace(bunchOfPoints);
+    m_series->remove(5);
+    m_series->remove(0);
+    QCOMPARE(m_series->points().count(), (bunchOfPoints.count() - 2));
+    for (int i = bunchOfPoints.count() - 3; i >= 0; i--) {
+        m_series->remove(i);
+        QCOMPARE(m_series->points().count(), i);
+    }
+    QCOMPARE(m_series->points().count(), 0);
 }
 
 void tst_QXYSeries::remove_chart_data()
@@ -366,6 +380,15 @@ void tst_QXYSeries::replace_raw()
     m_series->replace(QPointF(23,23), otherPoints.at(1));
     QCOMPARE(m_series->points().at(1).x(), otherPoints.at(1).x());
     QCOMPARE(m_series->points().at(1).y(), otherPoints.at(1).y());
+
+    // Replace using index
+    m_series->append(otherPoints);
+    m_series->replace(0, QPointF(333, 333));
+    m_series->replace(3, 444, 444);
+    m_series->replace(m_series->count() - 1, QPointF(555, 555));
+    QCOMPARE(m_series->points().at(0),  QPointF(333, 333));
+    QCOMPARE(m_series->points().at(3), QPointF(444, 444));
+    QCOMPARE(m_series->points().at(m_series->count() - 1), QPointF(555, 555));
 }
 
 

@@ -79,12 +79,12 @@ Flow {
         text: "replace point"
         onClicked: {
             var xyPoint = series.at(series.count - 1);
-            series.replace(xyPoint.x, xyPoint.y, xyPoint.x, xyPoint.y + 0.1);
+            series.replace(series.count - 1, xyPoint.x, xyPoint.y + 0.1);
         }
     }
     Button {
         text: "remove point"
-        onClicked: series.remove(series.at(series.count - 1).x, series.at(series.count - 1).y);
+        onClicked: series.remove(series.count - 1);
     }
     Button {
         text: "insert point"

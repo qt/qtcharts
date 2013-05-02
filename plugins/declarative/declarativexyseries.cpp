@@ -71,11 +71,25 @@ void DeclarativeXySeries::replace(qreal oldX, qreal oldY, qreal newX, qreal newY
     series->replace(oldX, oldY, newX, newY);
 }
 
+void DeclarativeXySeries::replace(int index, qreal newX, qreal newY)
+{
+    QXYSeries *series = qobject_cast<QXYSeries *>(xySeries());
+    Q_ASSERT(series);
+    series->replace(index, newX, newY);
+}
+
 void DeclarativeXySeries::remove(qreal x, qreal y)
 {
     QXYSeries *series = qobject_cast<QXYSeries *>(xySeries());
     Q_ASSERT(series);
     series->remove(x, y);
+}
+
+void DeclarativeXySeries::remove(int index)
+{
+    QXYSeries *series = qobject_cast<QXYSeries *>(xySeries());
+    Q_ASSERT(series);
+    series->remove(index);
 }
 
 void DeclarativeXySeries::insert(int index, qreal x, qreal y)

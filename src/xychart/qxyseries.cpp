@@ -292,6 +292,17 @@ void QXYSeries::replace(const QPointF &oldPoint, const QPointF &newPoint)
     int index = d->m_points.indexOf(oldPoint);
     if (index == -1)
         return;
+    replace(index, newPoint);
+}
+
+void QXYSeries::replace(int index, qreal newX, qreal newY)
+{
+    replace(index, QPointF(newX, newY));
+}
+
+void QXYSeries::replace(int index, const QPointF &newPoint)
+{
+    Q_D(QXYSeries);
     if (isValidValue(newPoint)) {
         d->m_points[index] = newPoint;
         emit pointReplaced(index);
@@ -329,6 +340,12 @@ void QXYSeries::remove(const QPointF &point)
     int index = d->m_points.indexOf(point);
     if (index == -1)
         return;
+    remove(index);
+}
+
+void QXYSeries::remove(int index)
+{
+    Q_D(QXYSeries);
     d->m_points.remove(index);
     emit pointRemoved(index);
 }
