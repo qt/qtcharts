@@ -41,6 +41,12 @@
     #include "qdatetimeaxis.h"
 #endif
 
+#ifdef CHARTS_FOR_QUICK2
+#include <QGraphicsSceneMouseEvent>
+#include <QGraphicsSceneHoverEvent>
+#include <QApplication>
+#endif
+
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
@@ -261,6 +267,9 @@ void DeclarativeChart::initChart(QChart::ChartType type)
     setAntialiasing(QQuickItem::antialiasing());
     connect(m_scene, SIGNAL(changed(QList<QRectF>)), this, SLOT(update()));
     connect(this, SIGNAL(antialiasingChanged(bool)), this, SLOT(handleAntialiasingChanged(bool)));
+
+    setAcceptedMouseButtons(Qt::AllButtons);
+    setAcceptHoverEvents(true);
 #else
     if (type == QChart::ChartTypePolar)
         m_chart = new QPolarChart(this);
@@ -386,7 +395,6 @@ void DeclarativeChart::handleAxisYRightSet(QAbstractAxis *axis)
 
 void DeclarativeChart::geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry)
 {
-//    qDebug() << "DeclarativeChart::geometryChanged" << newGeometry.width() << newGeometry.height();
     if (newGeometry.isValid()) {
         if (newGeometry.width() > 0 && newGeometry.height() > 0) {
             m_chart->resize(newGeometry.width(), newGeometry.height());
@@ -405,6 +413,78 @@ void DeclarativeChart::paint(QPainter *painter)
 {
     QRectF renderRect(QPointF(0, 0), m_chart->size());
     m_scene->render(painter, renderRect, renderRect);
+}
+
+void DeclarativeChart::mousePressEvent(QMouseEvent *event)
+{
+    m_mousePressScenePoint = event->pos();
+    m_mousePressScreenPoint = event->globalPos();
+    m_lastMouseMoveScenePoint = m_mousePressScenePoint;
+    m_lastMouseMoveScreenPoint = m_mousePressScreenPoint;
+    m_mousePressButton = event->button();
+    m_mousePressButtons = event->buttons();
+
+    QGraphicsSceneMouseEvent mouseEvent(QEvent::GraphicsSceneMousePress);
+    mouseEvent.setWidget(0);
+    mouseEvent.setButtonDownScenePos(m_mousePressButton, m_mousePressScenePoint);
+    mouseEvent.setButtonDownScreenPos(m_mousePressButton, m_mousePressScreenPoint);
+    mouseEvent.setScenePos(m_mousePressScenePoint);
+    mouseEvent.setScreenPos(m_mousePressScreenPoint);
+    mouseEvent.setLastScenePos(m_lastMouseMoveScenePoint);
+    mouseEvent.setLastScreenPos(m_lastMouseMoveScreenPoint);
+    mouseEvent.setButtons(m_mousePressButtons);
+    mouseEvent.setButton(m_mousePressButton);
+    mouseEvent.setModifiers(event->modifiers());
+    mouseEvent.setAccepted(false);
+
+    QApplication::sendEvent(m_scene, &mouseEvent);
+}
+
+void DeclarativeChart::mouseReleaseEvent(QMouseEvent *event)
+{
+    QGraphicsSceneMouseEvent mouseEvent(QEvent::GraphicsSceneMouseRelease);
+    mouseEvent.setWidget(0);
+    mouseEvent.setButtonDownScenePos(m_mousePressButton, m_mousePressScenePoint);
+    mouseEvent.setButtonDownScreenPos(m_mousePressButton, m_mousePressScreenPoint);
+    mouseEvent.setScenePos(event->pos());
+    mouseEvent.setScreenPos(event->globalPos());
+    mouseEvent.setLastScenePos(m_lastMouseMoveScenePoint);
+    mouseEvent.setLastScreenPos(m_lastMouseMoveScreenPoint);
+    mouseEvent.setButtons(event->buttons());
+    mouseEvent.setButton(event->button());
+    mouseEvent.setModifiers(event->modifiers());
+    mouseEvent.setAccepted(false);
+
+    QApplication::sendEvent(m_scene, &mouseEvent);
+
+    m_mousePressButtons = event->buttons();
+    m_mousePressButton = Qt::NoButton;
+}
+
+void DeclarativeChart::hoverMoveEvent(QHoverEvent *event)
+{
+    // Convert hover move to mouse move, since we don't seem to get actual mouse move events.
+    // QGraphicsScene generates hover events from mouse move events, so we don't need
+    // to pass hover events there.
+    QGraphicsSceneMouseEvent mouseEvent(QEvent::GraphicsSceneMouseMove);
+    mouseEvent.setWidget(0);
+    mouseEvent.setButtonDownScenePos(m_mousePressButton, m_mousePressScenePoint);
+    mouseEvent.setButtonDownScreenPos(m_mousePressButton, m_mousePressScreenPoint);
+    mouseEvent.setScenePos(event->pos());
+    // Hover events do not have global pos in them, and the screen position doesn't seem to
+    // matter anyway in this use case, so just pass event pos instead of trying to
+    // calculate the real screen position.
+    mouseEvent.setScreenPos(event->pos());
+    mouseEvent.setLastScenePos(m_lastMouseMoveScenePoint);
+    mouseEvent.setLastScreenPos(m_lastMouseMoveScreenPoint);
+    mouseEvent.setButtons(m_mousePressButtons);
+    mouseEvent.setButton(m_mousePressButton);
+    mouseEvent.setModifiers(event->modifiers());
+    m_lastMouseMoveScenePoint = mouseEvent.scenePos();
+    m_lastMouseMoveScreenPoint = mouseEvent.screenPos();
+    mouseEvent.setAccepted(false);
+
+    QApplication::sendEvent(m_scene, &mouseEvent);
 }
 
 void DeclarativeChart::handleAntialiasingChanged(bool enable)

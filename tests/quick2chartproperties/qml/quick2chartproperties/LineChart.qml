@@ -63,5 +63,6 @@ ChartView {
         XYPoint { x: 3.4; y: 2.0 }
         XYPoint { x: 4.1; y: 2.3 }
         onClicked:                  console.log(name + ".onClicked: " + point.x + ", " + point.y);
+        onHovered:                  console.log(name + ".onHovered: " + point.x + ", " + point.y);
     }
 }

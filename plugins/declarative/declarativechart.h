@@ -111,6 +111,10 @@ public: // From parent classes
     void geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry);
 #ifdef CHARTS_FOR_QUICK2
     void paint(QPainter *painter);
+protected:
+    void mousePressEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+    void hoverMoveEvent(QHoverEvent *event);
 private Q_SLOTS:
     void handleAntialiasingChanged(bool enable);
 #endif
@@ -198,6 +202,12 @@ private:
     QChart *m_chart;
 #ifdef CHARTS_FOR_QUICK2
     QGraphicsScene *m_scene;
+    QPointF m_mousePressScenePoint;
+    QPoint m_mousePressScreenPoint;
+    QPointF m_lastMouseMoveScenePoint;
+    QPoint m_lastMouseMoveScreenPoint;
+    Qt::MouseButton m_mousePressButton;
+    Qt::MouseButtons m_mousePressButtons;
 #endif
     DeclarativeMargins *m_margins;
 };
