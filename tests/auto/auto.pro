@@ -46,5 +46,9 @@ contains(QT_VERSION, ^4\\.[0-7]\\.[0-3]\\s*$) | contains(QT_VERSION, ^4\\.[0-6]\
            qdatetimeaxis
 }
 
+contains(QT_VERSION, ^5\\..*\\..*$):qtHaveModule(quick) {
+    SUBDIRS += quick2
+}
+
 
 

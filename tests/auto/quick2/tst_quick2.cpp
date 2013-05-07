@@ -18,11 +18,11 @@
 **
 ****************************************************************************/
 #include <QtTest/QtTest>
-#include <QDeclarativeEngine>
-#include <QDeclarativeComponent>
+#include <QtQml/QQmlEngine>
+#include <QtQml/QQmlComponent>
 #include "tst_definitions.h"
 
-class tst_QML : public QObject
+class tst_quick2 : public QObject
 {
     Q_OBJECT
 
@@ -35,57 +35,57 @@ private slots:
     void checkPlugin_data();
     void checkPlugin();
 private:
-    QString componentErrors(const QDeclarativeComponent* component) const;
+    QString componentErrors(const QQmlComponent* component) const;
     QString imports_1_1();
     QString imports_1_3();
 
 };
 
-QString tst_QML::componentErrors(const QDeclarativeComponent* component) const
+QString tst_quick2::componentErrors(const QQmlComponent* component) const
 {
     Q_ASSERT(component);
 
     QStringList errors;
 
-    foreach (QDeclarativeError const& error, component->errors()) {
+    foreach (QQmlError const& error, component->errors()) {
         errors  << error.toString();
     }
 
     return errors.join("\n");
 }
 
-QString tst_QML::imports_1_1()
+QString tst_quick2::imports_1_1()
 {
-    return "import QtQuick 1.0 \n"
+    return "import QtQuick 2.0 \n"
            "import QtCommercial.Chart 1.1 \n";
 }
 
-QString tst_QML::imports_1_3()
+QString tst_quick2::imports_1_3()
 {
-    return "import QtQuick 1.0 \n"
+    return "import QtQuick 2.0 \n"
            "import QtCommercial.Chart 1.3 \n";
 }
 
 
-void tst_QML::initTestCase()
+void tst_quick2::initTestCase()
 {
 }
 
-void tst_QML::cleanupTestCase()
+void tst_quick2::cleanupTestCase()
 {
 }
 
-void tst_QML::init()
-{
-
-}
-
-void tst_QML::cleanup()
+void tst_quick2::init()
 {
 
 }
 
-void tst_QML::checkPlugin_data()
+void tst_quick2::cleanup()
+{
+
+}
+
+void tst_quick2::checkPlugin_data()
 {
     QTest::addColumn<QString>("source");
 
@@ -122,26 +122,21 @@ void tst_QML::checkPlugin_data()
     QTest::newRow("LogValueAxis") <<  imports_1_3() + "LogValueAxis{}";
 }
 
-void tst_QML::checkPlugin()
+void tst_quick2::checkPlugin()
 {
     QFETCH(QString, source);
-    QDeclarativeEngine engine;
-    engine.addImportPath(QString::fromLatin1("%1/%2").arg(QCoreApplication::applicationDirPath(), QLatin1String("imports")));
-    QDeclarativeComponent component(&engine);
+    QQmlEngine engine;
+    engine.addImportPath(QString::fromLatin1("%1/%2").arg(QCoreApplication::applicationDirPath(), QLatin1String("qml")));
+    QQmlComponent component(&engine);
     component.setData(source.toLatin1(), QUrl());
     QVERIFY2(!component.isError(), qPrintable(componentErrors(&component)));
-    TRY_COMPARE(component.status(), QDeclarativeComponent::Ready);
+    TRY_COMPARE(component.status(), QQmlComponent::Ready);
     QObject *obj = component.create();
     QVERIFY(obj != 0);
-
-    //
-    //TODO:
-    //  QCOMPARE(obj->property("something").toInt(), 0);
-
     delete obj;
 }
 
-QTEST_MAIN(tst_QML)
+QTEST_MAIN(tst_quick2)
 
-#include "tst_qml.moc"
+#include "tst_quick2.moc"
 
