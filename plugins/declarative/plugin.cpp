@@ -229,6 +229,7 @@ public:
         qmlRegisterType<DeclarativeHorizontalPercentBarSeries, 2>(uri, 1, 2, "HorizontalPercentBarSeries");
 
         // QtCommercial.Chart 1.3
+        qmlRegisterType<DeclarativeChart, 3>(uri, 1, 3, "ChartView");
         qmlRegisterType<DeclarativePolarChart, 1>(uri, 1, 3, "PolarChartView");
         qmlRegisterType<DeclarativeSplineSeries, 3>(uri, 1, 3, "SplineSeries");
         qmlRegisterType<DeclarativeScatterSeries, 3>(uri, 1, 3, "ScatterSeries");

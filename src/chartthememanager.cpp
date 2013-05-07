@@ -92,6 +92,14 @@ void ChartThemeManager::decorateChart(QChart *chart,ChartTheme* theme,bool force
     if (force || brush == chart->backgroundBrush())
         chart->setBackgroundBrush(theme->chartBackgroundGradient());
 
+    if (force) {
+        // Always clear plotArea brush when forced update, do not touch otherwise
+        QPen pen(Qt::transparent);
+        chart->setPlotAreaBackgroundBrush(brush);
+        chart->setPlotAreaBackgroundPen(pen);
+        chart->setPlotAreaBackgroundVisible(false);
+    }
+
     chart->setTitleFont(theme->masterFont());
     chart->setTitleBrush(theme->labelBrush());
     chart->setDropShadowEnabled(theme->isBackgroundDropShadowEnabled());

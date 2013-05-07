@@ -112,6 +112,13 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+  \qmlproperty color ChartView::plotAreaColor
+  The color of the background of the chart's plot area. By default plot area background uses chart's
+  background color.
+  \sa ChartView::backgroundColor
+*/
+
+/*!
   \qmlproperty bool ChartView::dropShadowEnabled
   The chart's border drop shadow. Set to true to enable drop shadow.
 */
@@ -594,6 +601,23 @@ void DeclarativeChart::setBackgroundColor(QColor color)
 QColor DeclarativeChart::backgroundColor()
 {
     return m_chart->backgroundBrush().color();
+}
+
+void QtCommercialChart::DeclarativeChart::setPlotAreaColor(QColor color)
+{
+    QBrush b = m_chart->plotAreaBackgroundBrush();
+    if (b.style() != Qt::SolidPattern || color != b.color()) {
+        b.setStyle(Qt::SolidPattern);
+        b.setColor(color);
+        m_chart->setPlotAreaBackgroundBrush(b);
+        m_chart->setPlotAreaBackgroundVisible(true);
+        emit plotAreaColorChanged();
+    }
+}
+
+QColor QtCommercialChart::DeclarativeChart::plotAreaColor()
+{
+    return m_chart->plotAreaBackgroundBrush().color();
 }
 
 int DeclarativeChart::count()

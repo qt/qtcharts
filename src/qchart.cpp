@@ -87,7 +87,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
  \property QChart::backgroundVisible
  Specifies whether the chart background is visible or not.
- \sa setBackgroundBrush(), setBackgroundPen()
+ \sa setBackgroundBrush(), setBackgroundPen(), plotAreaBackgroundVisible
  */
 
 /*!
@@ -127,6 +127,14 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
  Chart type indicates if the chart is a cartesian chart or a polar chart.
  This property is set internally and it is read only.
  \sa QPolarChart
+ */
+
+/*!
+ \property QChart::plotAreaBackgroundVisible
+ Specifies whether the chart plot area background is visible or not.
+ \note By default the plot area background is not visible and the plot area uses
+ the general chart background.
+ \sa setPlotAreaBackgroundBrush(), setPlotAreaBackgroundPen(), backgroundVisible
  */
 
 /*!
@@ -474,6 +482,56 @@ QChart::ChartType QChart::chartType() const
 QRectF QChart::plotArea() const
 {
     return d_ptr->m_presenter->geometry();
+}
+
+/*!
+    Sets the \a brush for the background of the plot area of the chart.
+
+    \sa plotArea(), plotAreaBackgroundVisible, setPlotAreaBackgroundPen(), plotAreaBackgroundBrush()
+ */
+void QChart::setPlotAreaBackgroundBrush(const QBrush &brush)
+{
+    d_ptr->m_presenter->setPlotAreaBackgroundBrush(brush);
+}
+
+/*!
+    Returns the brush for the background of the plot area of the chart.
+
+    \sa plotArea(), plotAreaBackgroundVisible, plotAreaBackgroundPen(), setPlotAreaBackgroundBrush()
+ */
+QBrush QChart::plotAreaBackgroundBrush() const
+{
+    return d_ptr->m_presenter->plotAreaBackgroundBrush();
+}
+
+/*!
+    Sets the \a pen for the background of the plot area of the chart.
+
+    \sa plotArea(), plotAreaBackgroundVisible, setPlotAreaBackgroundBrush(), plotAreaBackgroundPen()
+ */
+void QChart::setPlotAreaBackgroundPen(const QPen &pen)
+{
+    d_ptr->m_presenter->setPlotAreaBackgroundPen(pen);
+}
+
+/*!
+    Returns the \a pen for the background of the plot area of the chart.
+
+    \sa plotArea(), plotAreaBackgroundVisible, plotAreaBackgroundBrush(), setPlotAreaBackgroundPen()
+ */
+QPen QChart::plotAreaBackgroundPen() const
+{
+    return d_ptr->m_presenter->plotAreaBackgroundPen();
+}
+
+void QChart::setPlotAreaBackgroundVisible(bool visible)
+{
+    d_ptr->m_presenter->setPlotAreaBackgroundVisible(visible);
+}
+
+bool QChart::isPlotAreaBackgroundVisible() const
+{
+    return d_ptr->m_presenter->isPlotAreaBackgroundVisible();
 }
 
 void QChart::setAnimationOptions(AnimationOptions options)

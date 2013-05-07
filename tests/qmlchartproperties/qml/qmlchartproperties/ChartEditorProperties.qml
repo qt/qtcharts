@@ -50,6 +50,10 @@ Flow {
         onClicked: chart.backgroundColor = main.nextColor();
     }
     Button {
+        text: "plot area color"
+        onClicked: chart.plotAreaColor = main.nextColor();
+    }
+    Button {
         text: "drop shadow enabled"
         onClicked: chart.dropShadowEnabled = !chart.dropShadowEnabled;
     }

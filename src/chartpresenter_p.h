@@ -55,7 +55,8 @@ class ChartPresenter: public QObject
 public:
     enum ZValues {
         BackgroundZValue = -1,
-        ShadesZValue ,
+        PlotAreaZValue,
+        ShadesZValue,
         GridZValue,
         AxisZValue,
         SeriesZValue,
@@ -87,6 +88,7 @@ public:
 
     QGraphicsItem *rootItem(){ return m_chart; }
     ChartBackground *backgroundElement();
+    QAbstractGraphicsShapeItem *plotAreaElement();
     ChartTitle *titleElement();
     QList<ChartAxisElement *> axisItems() const;
     QList<ChartItem *> chartItems() const;
@@ -99,6 +101,12 @@ public:
     void setBackgroundPen(const QPen &pen);
     QPen backgroundPen() const;
 
+    void setPlotAreaBackgroundBrush(const QBrush &brush);
+    QBrush plotAreaBackgroundBrush() const;
+
+    void setPlotAreaBackgroundPen(const QPen &pen);
+    QPen plotAreaBackgroundPen() const;
+
     void setTitle(const QString &title);
     QString title() const;
 
@@ -110,6 +118,9 @@ public:
 
     void setBackgroundVisible(bool visible);
     bool isBackgroundVisible() const;
+
+    void setPlotAreaBackgroundVisible(bool visible);
+    bool isPlotAreaBackgroundVisible() const;
 
     void setBackgroundDropShadowEnabled(bool enabled);
     bool isBackgroundDropShadowEnabled() const;
@@ -128,9 +139,11 @@ public:
     AbstractChartLayout *layout();
 
     QChart::ChartType chartType() const { return m_chart->chartType(); }
+    QChart *chart() { return m_chart; }
 
 private:
     void createBackgroundItem();
+    void createPlotAreaBackgroundItem();
     void createTitleItem();
 
 public Q_SLOTS:
@@ -157,6 +170,7 @@ private:
     QList<ChartAnimation *> m_animations;
     AbstractChartLayout *m_layout;
     ChartBackground *m_background;
+    QAbstractGraphicsShapeItem *m_plotAreaBackground;
     ChartTitle *m_title;
     QRectF m_rect;
 };

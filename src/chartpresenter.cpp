@@ -42,6 +42,7 @@ ChartPresenter::ChartPresenter(QChart *chart, QChart::ChartType type)
       m_options(QChart::NoAnimation),
       m_state(ShowState),
       m_background(0),
+      m_plotAreaBackground(0),
       m_title(0)
 {
     if (type == QChart::ChartTypeCartesian)
@@ -156,6 +157,22 @@ void ChartPresenter::createBackgroundItem()
     }
 }
 
+void ChartPresenter::createPlotAreaBackgroundItem()
+{
+    if (!m_plotAreaBackground) {
+        if (m_chart->chartType() == QChart::ChartTypeCartesian)
+            m_plotAreaBackground = new QGraphicsRectItem(rootItem());
+        else
+            m_plotAreaBackground = new QGraphicsEllipseItem(rootItem());
+        // Use transparent pen instead of Qt::NoPen, as Qt::NoPen causes
+        // antialising artifacts with axis lines for some reason.
+        m_plotAreaBackground->setPen(QPen(Qt::transparent));
+        m_plotAreaBackground->setBrush(Qt::NoBrush);
+        m_plotAreaBackground->setZValue(ChartPresenter::PlotAreaZValue);
+        m_plotAreaBackground->setVisible(false);
+    }
+}
+
 void ChartPresenter::createTitleItem()
 {
     if (!m_title) {
@@ -207,6 +224,34 @@ QPen ChartPresenter::backgroundPen() const
     if (!m_background)
         return QPen();
     return m_background->pen();
+}
+
+void ChartPresenter::setPlotAreaBackgroundBrush(const QBrush &brush)
+{
+    createPlotAreaBackgroundItem();
+    m_plotAreaBackground->setBrush(brush);
+    m_layout->invalidate();
+}
+
+QBrush ChartPresenter::plotAreaBackgroundBrush() const
+{
+    if (!m_plotAreaBackground)
+        return QBrush();
+    return m_plotAreaBackground->brush();
+}
+
+void ChartPresenter::setPlotAreaBackgroundPen(const QPen &pen)
+{
+    createPlotAreaBackgroundItem();
+    m_plotAreaBackground->setPen(pen);
+    m_layout->invalidate();
+}
+
+QPen ChartPresenter::plotAreaBackgroundPen() const
+{
+    if (!m_plotAreaBackground)
+        return QPen();
+    return m_plotAreaBackground->pen();
 }
 
 void ChartPresenter::setTitle(const QString &title)
@@ -265,6 +310,19 @@ bool ChartPresenter::isBackgroundVisible() const
     return m_background->isVisible();
 }
 
+void ChartPresenter::setPlotAreaBackgroundVisible(bool visible)
+{
+    createPlotAreaBackgroundItem();
+    m_plotAreaBackground->setVisible(visible);
+}
+
+bool ChartPresenter::isPlotAreaBackgroundVisible() const
+{
+    if (!m_plotAreaBackground)
+        return false;
+    return m_plotAreaBackground->isVisible();
+}
+
 void ChartPresenter::setBackgroundDropShadowEnabled(bool enabled)
 {
     createBackgroundItem();
@@ -297,6 +355,11 @@ void ChartPresenter::setVisible(bool visible)
 ChartBackground *ChartPresenter::backgroundElement()
 {
     return m_background;
+}
+
+QAbstractGraphicsShapeItem *ChartPresenter::plotAreaElement()
+{
+    return m_plotAreaBackground;
 }
 
 QList<ChartAxisElement *>  ChartPresenter::axisItems() const

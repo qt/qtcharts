@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 import QtQuick 2.0
-import QtCommercial.Chart 1.2
+import QtCommercial.Chart 1.3
 
 ChartView {
     id: chartView
@@ -44,6 +44,7 @@ ChartView {
     onDropShadowEnabledChanged:        console.log("chart.onDropShadowEnabledChanged: " + enabled);
     onSeriesAdded:                     console.log("chart.onSeriesAdded: " + series.name);
     onSeriesRemoved:                   console.log("chart.onSeriesRemoved: " + series.name);
+    onPlotAreaColorChanged:            console.log("chart.plotAreaColorChanged: " + chart.plotAreaColor);
 
     legend.onVisibleChanged:           console.log("legend.onVisibleChanged: " + chart.legend.visible);
     legend.onBackgroundVisibleChanged: console.log("legend.onBackgroundVisibleChanged: " + visible);

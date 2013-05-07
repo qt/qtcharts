@@ -71,6 +71,12 @@ private slots:
     void backgroundPen();
     void isBackgroundVisible_data();
     void isBackgroundVisible();
+    void plotAreaBackgroundBrush_data();
+    void plotAreaBackgroundBrush();
+    void plotAreaBackgroundPen_data();
+    void plotAreaBackgroundPen();
+    void isPlotAreaBackgroundVisible_data();
+    void isPlotAreaBackgroundVisible();
     void legend_data();
     void legend();
     void plotArea_data();
@@ -357,6 +363,52 @@ void tst_QChart::isBackgroundVisible()
     QCOMPARE(m_chart->isBackgroundVisible(), isBackgroundVisible);
 }
 
+void tst_QChart::plotAreaBackgroundBrush_data()
+{
+    QTest::addColumn<QBrush>("plotAreaBackgroundBrush");
+    QTest::newRow("null") << QBrush();
+    QTest::newRow("blue") << QBrush(Qt::blue);
+    QTest::newRow("white") << QBrush(Qt::white);
+    QTest::newRow("black") << QBrush(Qt::black);
+}
+
+void tst_QChart::plotAreaBackgroundBrush()
+{
+    QFETCH(QBrush, plotAreaBackgroundBrush);
+    m_chart->setPlotAreaBackgroundBrush(plotAreaBackgroundBrush);
+    QCOMPARE(m_chart->plotAreaBackgroundBrush(), plotAreaBackgroundBrush);
+}
+
+void tst_QChart::plotAreaBackgroundPen_data()
+{
+    QTest::addColumn<QPen>("plotAreaBackgroundPen");
+    QTest::newRow("null") << QPen();
+    QTest::newRow("blue") << QPen(Qt::blue);
+    QTest::newRow("white") << QPen(Qt::white);
+    QTest::newRow("black") << QPen(Qt::black);
+}
+
+
+void tst_QChart::plotAreaBackgroundPen()
+{
+    QFETCH(QPen, plotAreaBackgroundPen);
+    m_chart->setPlotAreaBackgroundPen(plotAreaBackgroundPen);
+    QCOMPARE(m_chart->plotAreaBackgroundPen(), plotAreaBackgroundPen);
+}
+
+void tst_QChart::isPlotAreaBackgroundVisible_data()
+{
+    QTest::addColumn<bool>("isPlotAreaBackgroundVisible");
+    QTest::newRow("true") << true;
+    QTest::newRow("false") << false;
+}
+
+void tst_QChart::isPlotAreaBackgroundVisible()
+{
+    QFETCH(bool, isPlotAreaBackgroundVisible);
+    m_chart->setPlotAreaBackgroundVisible(isPlotAreaBackgroundVisible);
+    QCOMPARE(m_chart->isPlotAreaBackgroundVisible(), isPlotAreaBackgroundVisible);
+}
 void tst_QChart::legend_data()
 {
 

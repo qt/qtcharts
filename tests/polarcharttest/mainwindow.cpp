@@ -58,12 +58,16 @@ MainWindow::MainWindow(QWidget *parent) :
     m_radialShadesBrush(new QBrush(Qt::NoBrush)),
     m_labelBrush(new QBrush(Qt::black)),
     m_titleBrush(new QBrush(Qt::black)),
+    m_backgroundBrush(new QBrush(Qt::white)),
+    m_plotAreaBackgroundBrush(new QBrush(Qt::NoBrush)),
     m_angularShadesPen(new QPen(Qt::NoPen)),
     m_radialShadesPen(new QPen(Qt::NoPen)),
     m_labelPen(new QPen(Qt::NoPen)),
     m_titlePen(new QPen(Qt::NoPen)),
     m_gridPen(new QPen(QRgb(0x010101))),  // Note: Pure black is default color, so it gets overridden by
     m_arrowPen(new QPen(QRgb(0x010101))), // default theme if set to that initially. This is an example of workaround.
+    m_backgroundPen(new QPen(Qt::NoPen)),
+    m_plotAreaBackgroundPen(new QPen(Qt::NoPen)),
     m_labelFormat(QString("%.2f")),
     m_animationOptions(QChart::NoAnimation),
     m_angularTitle(QString("Angular Title")),
@@ -157,6 +161,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->series6checkBox, SIGNAL(clicked()), this, SLOT(series6CheckBoxChecked()));
     connect(ui->series7checkBox, SIGNAL(clicked()), this, SLOT(series7CheckBoxChecked()));
     connect(ui->themeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(themeIndexChanged(int)));
+    connect(ui->backgroundComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(backgroundIndexChanged(int)));
+    connect(ui->plotAreaComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(plotAreaIndexChanged(int)));
 
     ui->chartView->setChart(m_chart);
     ui->chartView->setRenderHint(QPainter::Antialiasing);
@@ -379,6 +385,10 @@ void MainWindow::initXYValueChart()
     m_chart->setAnimationOptions(m_animationOptions);
     //m_chart->legend()->setVisible(false);
     m_chart->setAcceptHoverEvents(true);
+    m_chart->setBackgroundBrush(*m_backgroundBrush);
+    m_chart->setBackgroundPen(*m_backgroundPen);
+    m_chart->setPlotAreaBackgroundBrush(*m_plotAreaBackgroundBrush);
+    m_chart->setPlotAreaBackgroundPen(*m_plotAreaBackgroundPen);
 }
 
 void MainWindow::setAngularAxis(MainWindow::AxisMode mode)
@@ -1079,6 +1089,59 @@ void MainWindow::seriesClicked(const QPointF &point)
     } else {
         qDebug() << "seriesClicked -  invalid sender!";
     }
+}
+
+void MainWindow::backgroundIndexChanged(int index)
+{
+    delete m_backgroundBrush;
+    delete m_backgroundPen;
+
+    switch (index) {
+    case 0:
+        m_backgroundBrush = new QBrush(Qt::white);
+        m_backgroundPen = new QPen(Qt::NoPen);
+        break;
+    case 1:
+        m_backgroundBrush = new QBrush(Qt::blue);
+        m_backgroundPen = new QPen(Qt::NoPen);
+        break;
+    case 2:
+        m_backgroundBrush = new QBrush(Qt::yellow);
+        m_backgroundPen = new QPen(Qt::black, 2);
+        break;
+    default:
+        break;
+    }
+    m_chart->setBackgroundBrush(*m_backgroundBrush);
+    m_chart->setBackgroundPen(*m_backgroundPen);
+}
+
+void MainWindow::plotAreaIndexChanged(int index)
+{
+    delete m_plotAreaBackgroundBrush;
+    delete m_plotAreaBackgroundPen;
+
+    switch (index) {
+    case 0:
+        m_plotAreaBackgroundBrush = new QBrush(Qt::green);
+        m_plotAreaBackgroundPen = new QPen(Qt::green);
+        m_chart->setPlotAreaBackgroundVisible(false);
+        break;
+    case 1:
+        m_plotAreaBackgroundBrush = new QBrush(Qt::magenta);
+        m_plotAreaBackgroundPen = new QPen(Qt::NoPen);
+        m_chart->setPlotAreaBackgroundVisible(true);
+        break;
+    case 2:
+        m_plotAreaBackgroundBrush = new QBrush(Qt::lightGray);
+        m_plotAreaBackgroundPen = new QPen(Qt::red, 6);
+        m_chart->setPlotAreaBackgroundVisible(true);
+        break;
+    default:
+        break;
+    }
+    m_chart->setPlotAreaBackgroundBrush(*m_plotAreaBackgroundBrush);
+    m_chart->setPlotAreaBackgroundPen(*m_plotAreaBackgroundPen);
 }
 
 void MainWindow::applyCategories()

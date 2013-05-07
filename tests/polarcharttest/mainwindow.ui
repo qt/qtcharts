@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1207</width>
-    <height>905</height>
+    <width>1193</width>
+    <height>956</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -892,6 +892,74 @@
         <string>Hover coordinates here!</string>
        </property>
       </widget>
+      <widget class="QComboBox" name="backgroundComboBox">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>820</y>
+         <width>171</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>Background: White</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Background: Blue</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Background:  Yellow + Black Border</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QComboBox" name="plotAreaComboBox">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>850</y>
+         <width>171</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>PlotArea: Transparent</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>PlotArea: Magenta</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>PlotArea: Gray + Red Border</string>
+        </property>
+       </item>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -901,7 +969,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1207</width>
+     <width>1193</width>
      <height>21</height>
     </rect>
    </property>

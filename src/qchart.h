@@ -46,6 +46,7 @@ class QTCOMMERCIALCHART_EXPORT QChart : public QGraphicsWidget
     Q_PROPERTY(QMargins minimumMargins READ minimumMargins WRITE setMinimumMargins)
     Q_PROPERTY(QMargins margins READ margins WRITE setMargins)
     Q_PROPERTY(QChart::ChartType chartType READ chartType)
+    Q_PROPERTY(bool plotAreaBackgroundVisible READ isPlotAreaBackgroundVisible WRITE setPlotAreaBackgroundVisible)
     Q_ENUMS(ChartTheme)
     Q_ENUMS(AnimationOption)
     Q_ENUMS(ChartType)
@@ -137,6 +138,12 @@ public:
     QMargins margins() const;
 
     QRectF plotArea() const;
+    void setPlotAreaBackgroundBrush(const QBrush &brush);
+    QBrush plotAreaBackgroundBrush() const;
+    void setPlotAreaBackgroundPen(const QPen &pen);
+    QPen plotAreaBackgroundPen() const;
+    void setPlotAreaBackgroundVisible(bool visible = true);
+    bool isPlotAreaBackgroundVisible() const;
 
     QPointF mapToValue(const QPointF &position, QAbstractSeries *series = 0);
     QPointF mapToPosition(const QPointF &value, QAbstractSeries *series = 0);

@@ -59,6 +59,7 @@ class DeclarativeChart : public QDECLARATIVE_PAINTED_ITEM
     Q_PROPERTY(DeclarativeMargins *minimumMargins READ minimumMargins NOTIFY minimumMarginsChanged REVISION 1)
     Q_PROPERTY(DeclarativeMargins *margins READ margins NOTIFY marginsChanged REVISION 2)
     Q_PROPERTY(QRectF plotArea READ plotArea NOTIFY plotAreaChanged REVISION 1)
+    Q_PROPERTY(QColor plotAreaColor READ plotAreaColor WRITE setPlotAreaColor NOTIFY plotAreaColorChanged REVISION 3)
 #ifdef CHARTS_FOR_QUICK2
     Q_PROPERTY(QQmlListProperty<QAbstractAxis> axes READ axes REVISION 2)
 #else
@@ -133,6 +134,8 @@ public:
     QColor titleColor();
     void setBackgroundColor(QColor color);
     QColor backgroundColor();
+    Q_REVISION(3) void setPlotAreaColor(QColor color);
+    Q_REVISION(3) QColor plotAreaColor();
     int count();
     void setDropShadowEnabled(bool enabled);
     bool dropShadowEnabled();
@@ -183,6 +186,7 @@ Q_SIGNALS:
     void plotAreaChanged(QRectF plotArea);
     void seriesAdded(QAbstractSeries *series);
     void seriesRemoved(QAbstractSeries *series);
+    Q_REVISION(3) void plotAreaColorChanged();
 
 private Q_SLOTS:
     void changeMinimumMargins(int top, int bottom, int left, int right);

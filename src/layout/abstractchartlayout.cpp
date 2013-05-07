@@ -64,6 +64,10 @@ void AbstractChartLayout::setGeometry(const QRectF &rect)
     contentGeometry = calculateAxisGeometry(contentGeometry, axes);
 
     m_presenter->setGeometry(contentGeometry);
+    if (m_presenter->chart()->chartType() == QChart::ChartTypeCartesian)
+        static_cast<QGraphicsRectItem *>(m_presenter->plotAreaElement())->setRect(contentGeometry);
+    else
+        static_cast<QGraphicsEllipseItem *>(m_presenter->plotAreaElement())->setRect(contentGeometry);
 
     QGraphicsLayout::setGeometry(rect);
 }

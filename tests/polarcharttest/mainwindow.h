@@ -85,6 +85,8 @@ public slots:
     void themeIndexChanged(int index);
     void seriesHovered(QPointF point, bool state);
     void seriesClicked(const QPointF &point);
+    void backgroundIndexChanged(int index);
+    void plotAreaIndexChanged(int index);
 
 private:
     enum AxisMode {
@@ -121,12 +123,16 @@ private:
     QBrush *m_radialShadesBrush;
     QBrush *m_labelBrush;
     QBrush *m_titleBrush;
+    QBrush *m_backgroundBrush;
+    QBrush *m_plotAreaBackgroundBrush;
     QPen *m_angularShadesPen;
     QPen *m_radialShadesPen;
     QPen *m_labelPen;
     QPen *m_titlePen;
     QPen *m_gridPen;
     QPen *m_arrowPen;
+    QPen *m_backgroundPen;
+    QPen *m_plotAreaBackgroundPen;
     QString m_labelFormat;
     QFont m_currentLabelFont;
     QFont m_currentTitleFont;
