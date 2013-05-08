@@ -515,7 +515,7 @@ void QChart::setPlotAreaBackgroundPen(const QPen &pen)
 }
 
 /*!
-    Returns the \a pen for the background of the plot area of the chart.
+    Returns the pen for the background of the plot area of the chart.
 
     \sa plotArea(), plotAreaBackgroundVisible, plotAreaBackgroundBrush(), setPlotAreaBackgroundPen()
  */

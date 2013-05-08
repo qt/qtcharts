@@ -295,11 +295,19 @@ void QXYSeries::replace(const QPointF &oldPoint, const QPointF &newPoint)
     replace(index, newPoint);
 }
 
+/*!
+  Replaces the point at \a index with data point (\a newX, \a newY).
+  \sa QXYSeries::pointReplaced()
+*/
 void QXYSeries::replace(int index, qreal newX, qreal newY)
 {
     replace(index, QPointF(newX, newY));
 }
 
+/*!
+  Replaces the point at \a index with \a newPoint.
+  \sa QXYSeries::pointReplaced()
+*/
 void QXYSeries::replace(int index, const QPointF &newPoint)
 {
     Q_D(QXYSeries);
@@ -343,6 +351,9 @@ void QXYSeries::remove(const QPointF &point)
     remove(index);
 }
 
+/*!
+  Removes the point at \a index from the series.
+*/
 void QXYSeries::remove(int index)
 {
     Q_D(QXYSeries);
