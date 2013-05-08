@@ -257,9 +257,21 @@ void QChartViewPrivate::setChart(QChart *chart)
     resize();
 }
 
+const qreal rad2deg(57.2957795);
+
 void QChartViewPrivate::resize()
 {
-    m_chart->resize(q_ptr->size());
+    // Flip chart width and height if the view has been rotated
+    // more than 45 degrees from the horizontal so it fits better into the view.
+    qreal angle = acos(q_ptr->transform().m11()) * rad2deg;
+    QSize chartSize = q_ptr->size();
+
+    if (angle > 45.0 && angle < 135.0) {
+        chartSize.setHeight(q_ptr->size().width());
+        chartSize.setWidth(q_ptr->size().height());
+    }
+
+    m_chart->resize(chartSize);
     q_ptr->setMinimumSize(m_chart->minimumSize().toSize());
     q_ptr->setSceneRect(m_chart->geometry());
 }
