@@ -59,6 +59,16 @@ int main(int argc, char *argv[])
     backgroundGradient.setColorAt(1.0, QRgb(0x4c4547));
     backgroundGradient.setCoordinateMode(QGradient::ObjectBoundingMode);
     chart->setBackgroundBrush(backgroundGradient);
+
+    // Customize plot area background
+    QLinearGradient plotAreaGradient;
+    plotAreaGradient.setStart(QPointF(0, 1));
+    plotAreaGradient.setFinalStop(QPointF(1, 0));
+    plotAreaGradient.setColorAt(0.0, QRgb(0x555555));
+    plotAreaGradient.setColorAt(1.0, QRgb(0x55aa55));
+    plotAreaGradient.setCoordinateMode(QGradient::ObjectBoundingMode);
+    chart->setPlotAreaBackgroundBrush(plotAreaGradient);
+    chart->setPlotAreaBackgroundVisible(true);
 //![2]
 
 //![3]
@@ -86,7 +96,7 @@ int main(int argc, char *argv[])
     axisX->setGridLineVisible(false);
     axisY->setGridLineVisible(false);
     axisY->setShadesPen(Qt::NoPen);
-    axisY->setShadesBrush(QBrush(QRgb(0xa5a2a3)));
+    axisY->setShadesBrush(QBrush(QColor(0x99, 0xcc, 0xcc, 0x55)));
     axisY->setShadesVisible(true);
 //![3]
 
