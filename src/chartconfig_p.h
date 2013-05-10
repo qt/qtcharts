@@ -67,11 +67,11 @@ public:
     }
 
     QString compilationTime() {
-        return buildTime;
+        return QString(buildTime);
     }
 
     QString compilationHead() {
-        return gitHead;
+        return QString(gitHead);
     }
 
 private:

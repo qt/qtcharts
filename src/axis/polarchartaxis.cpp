@@ -57,6 +57,12 @@ void PolarChartAxis::updateLayout(QVector<qreal> &layout)
 
     if (animation()) {
         switch (presenter()->state()) {
+        case ChartPresenter::ZoomInState:
+        case ChartPresenter::ZoomOutState:
+        case ChartPresenter::ScrollUpState:
+        case ChartPresenter::ScrollLeftState:
+        case ChartPresenter::ScrollDownState:
+        case ChartPresenter::ScrollRightState:
         case ChartPresenter::ShowState:
             animation()->setAnimationType(AxisAnimation::DefaultAnimation);
             break;

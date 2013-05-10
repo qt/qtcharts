@@ -667,11 +667,11 @@ QPointF QChart::mapToPosition(const QPointF &value, QAbstractSeries *series)
 
 QChartPrivate::QChartPrivate(QChart *q, QChart::ChartType type):
     q_ptr(q),
-    m_type(type),
     m_legend(0),
     m_dataset(new ChartDataSet(q)),
     m_presenter(new ChartPresenter(q, type)),
-    m_themeManager(new ChartThemeManager(q))
+    m_themeManager(new ChartThemeManager(q)),
+    m_type(type)
 {
     QObject::connect(m_dataset, SIGNAL(seriesAdded(QAbstractSeries*)), m_presenter, SLOT(handleSeriesAdded(QAbstractSeries*)));
     QObject::connect(m_dataset, SIGNAL(seriesRemoved(QAbstractSeries*)), m_presenter, SLOT(handleSeriesRemoved(QAbstractSeries*)));

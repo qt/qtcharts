@@ -99,11 +99,11 @@ void PolarChartAxisAngular::updateGeometry()
             if (i == (layout.size() - 1))
                 farEdge = 360.0;
             else
-                farEdge = qMin(360.0, layout.at(i + 1));
+                farEdge = qMin(qreal(360.0), layout.at(i + 1));
 
             // Adjust the labelCoordinate to show it if next tick is visible
             if (nextTickVisible)
-                labelCoordinate = qMax(0.0, labelCoordinate);
+                labelCoordinate = qMax(qreal(0.0), labelCoordinate);
 
             labelCoordinate = (labelCoordinate + farEdge) / 2.0;
             // Don't display label once the category gets too small near the axis
@@ -316,8 +316,6 @@ qreal PolarChartAxisAngular::preferredAxisRadius(const QSizeF &maxSize)
     if (maxSize.width() < maxSize.height())
         radius = maxSize.width() / 2.0;
 
-    int labelHeight = 0;
-
     if (axis()->labelsVisible()) {
         QVector<qreal> layout = calculateLayout();
         if (layout.isEmpty())
@@ -353,11 +351,11 @@ qreal PolarChartAxisAngular::preferredAxisRadius(const QSizeF &maxSize)
                 if (i == (layout.size() - 1))
                     farEdge = 360.0;
                 else
-                    farEdge = qMin(360.0, layout.at(i + 1));
+                    farEdge = qMin(qreal(360.0), layout.at(i + 1));
 
                 // Adjust the labelCoordinate to show it if next tick is visible
                 if (nextTickVisible)
-                    labelCoordinate = qMax(0.0, labelCoordinate);
+                    labelCoordinate = qMax(qreal(0.0), labelCoordinate);
 
                 labelCoordinate = (labelCoordinate + farEdge) / 2.0;
             }
@@ -373,7 +371,6 @@ qreal PolarChartAxisAngular::preferredAxisRadius(const QSizeF &maxSize)
             }
 
             QRectF boundingRect = labelBoundingRect(fm, labelList.at(i));
-            labelHeight = boundingRect.height();
             QPointF labelPoint = QLineF::fromPolar(radius + tickWidth(), 90.0 - labelCoordinate).p2();
 
             boundingRect = moveLabelToPosition(labelCoordinate, labelPoint, boundingRect);

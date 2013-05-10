@@ -23,6 +23,7 @@
 #include "qchart_p.h"
 #include <QGraphicsScene>
 #include <QRubberBand>
+#include <qmath.h>
 
 /*!
     \enum QChartView::RubberBand
@@ -263,7 +264,7 @@ void QChartViewPrivate::resize()
 {
     // Flip chart width and height if the view has been rotated
     // more than 45 degrees from the horizontal so it fits better into the view.
-    qreal angle = acos(q_ptr->transform().m11()) * rad2deg;
+    qreal angle = qAcos(q_ptr->transform().m11()) * rad2deg;
     QSize chartSize = q_ptr->size();
 
     if (angle > 45.0 && angle < 135.0) {

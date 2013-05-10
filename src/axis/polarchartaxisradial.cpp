@@ -97,7 +97,7 @@ void PolarChartAxisRadial::updateGeometry()
 
             // Adjust the labelCoordinate to show it if next tick is visible
             if (nextTickVisible)
-                labelCoordinate = qMax(0.0, labelCoordinate);
+                labelCoordinate = qMax(qreal(0.0), labelCoordinate);
 
             labelCoordinate = (labelCoordinate + farEdge) / 2.0;
             if (labelCoordinate > 0.0 && labelCoordinate < radius)
