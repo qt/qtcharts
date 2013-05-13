@@ -28,6 +28,7 @@
 #include <QtQuick/QQuickItem>
 #include <QtQuick/QQuickPaintedItem>
 #include <QtWidgets/QGraphicsScene>
+#include <QtCore/QMutex>
 #else
 #include <QtDeclarative/QDeclarativeItem>
 #endif
@@ -118,6 +119,8 @@ protected:
     void hoverMoveEvent(QHoverEvent *event);
 private Q_SLOTS:
     void handleAntialiasingChanged(bool enable);
+    void sceneChanged(QList<QRectF> region);
+    void renderScene();
 #endif
 
 public:
@@ -212,6 +215,9 @@ private:
     QPoint m_lastMouseMoveScreenPoint;
     Qt::MouseButton m_mousePressButton;
     Qt::MouseButtons m_mousePressButtons;
+    QMutex m_sceneImageLock;
+    QImage *m_currentSceneImage;
+    bool m_updatePending;
 #endif
     DeclarativeMargins *m_margins;
 };

@@ -45,6 +45,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsSceneHoverEvent>
 #include <QApplication>
+#include <QTimer>
 #endif
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -263,6 +264,8 @@ DeclarativeChart::DeclarativeChart(QChart::ChartType type, QDECLARATIVE_ITEM *pa
 void DeclarativeChart::initChart(QChart::ChartType type)
 {
 #ifdef CHARTS_FOR_QUICK2
+    m_currentSceneImage = 0;
+
     if (type == QChart::ChartTypePolar)
         m_chart = new QPolarChart();
     else
@@ -272,7 +275,7 @@ void DeclarativeChart::initChart(QChart::ChartType type)
     m_scene->addItem(m_chart);
 
     setAntialiasing(QQuickItem::antialiasing());
-    connect(m_scene, SIGNAL(changed(QList<QRectF>)), this, SLOT(update()));
+    connect(m_scene, SIGNAL(changed(QList<QRectF>)), this, SLOT(sceneChanged(QList<QRectF>)));
     connect(this, SIGNAL(antialiasingChanged(bool)), this, SLOT(handleAntialiasingChanged(bool)));
 
     setAcceptedMouseButtons(Qt::AllButtons);
@@ -314,6 +317,12 @@ void DeclarativeChart::changeMinimumMargins(int top, int bottom, int left, int r
 DeclarativeChart::~DeclarativeChart()
 {
     delete m_chart;
+#ifdef CHARTS_FOR_QUICK2
+    m_sceneImageLock.lock();
+    delete m_currentSceneImage;
+    m_currentSceneImage = 0;
+    m_sceneImageLock.unlock();
+#endif
 }
 
 void DeclarativeChart::childEvent(QChildEvent *event)
@@ -416,10 +425,41 @@ void DeclarativeChart::geometryChanged(const QRectF &newGeometry, const QRectF &
 }
 
 #ifdef CHARTS_FOR_QUICK2
+void DeclarativeChart::sceneChanged(QList<QRectF> region)
+{
+    Q_UNUSED(region);
+
+    if (!m_updatePending) {
+        m_updatePending = true;
+        // Do async render to avoid some unnecessary renders.
+        QTimer::singleShot(0, this, SLOT(renderScene()));
+    }
+}
+
+void DeclarativeChart::renderScene()
+{
+    m_updatePending = false;
+    m_sceneImageLock.lock();
+    delete m_currentSceneImage;
+    m_currentSceneImage = new QImage(m_chart->size().toSize(), QImage::Format_ARGB32);
+    m_currentSceneImage->fill(Qt::transparent);
+    QPainter painter(m_currentSceneImage);
+    QRect renderRect(QPoint(0, 0), m_chart->size().toSize());
+    m_scene->render(&painter, renderRect, renderRect);
+    m_sceneImageLock.unlock();
+
+    update();
+}
+
 void DeclarativeChart::paint(QPainter *painter)
 {
-    QRectF renderRect(QPointF(0, 0), m_chart->size());
-    m_scene->render(painter, renderRect, renderRect);
+    m_sceneImageLock.lock();
+    if (m_currentSceneImage) {
+        QRect imageRect(QPoint(0, 0), m_currentSceneImage->size());
+        QRect itemRect(QPoint(0, 0), QSize(width(), height()));
+        painter->drawImage(itemRect, *m_currentSceneImage, imageRect);
+    }
+    m_sceneImageLock.unlock();
 }
 
 void DeclarativeChart::mousePressEvent(QMouseEvent *event)
