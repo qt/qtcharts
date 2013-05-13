@@ -23,7 +23,6 @@
 #include "qchart_p.h"
 #include <QGraphicsScene>
 #include <QRubberBand>
-#include <qmath.h>
 
 /*!
     \enum QChartView::RubberBand
@@ -258,18 +257,22 @@ void QChartViewPrivate::setChart(QChart *chart)
     resize();
 }
 
-const qreal rad2deg(57.2957795);
-
 void QChartViewPrivate::resize()
 {
-    // Flip chart width and height if the view has been rotated
-    // more than 45 degrees from the horizontal so it fits better into the view.
-    qreal angle = qAcos(q_ptr->transform().m11()) * rad2deg;
+    // Fit the chart into view if it has been rotated
+    qreal sinA = qAbs(q_ptr->transform().m21());
+    qreal cosA = qAbs(q_ptr->transform().m11());
     QSize chartSize = q_ptr->size();
 
-    if (angle > 45.0 && angle < 135.0) {
+    if (sinA == 1.0) {
         chartSize.setHeight(q_ptr->size().width());
         chartSize.setWidth(q_ptr->size().height());
+    } else if (sinA != 0.0) {
+        // Non-90 degree rotation, find largest square chart that can fit into the view.
+        qreal minDimension = qMin(q_ptr->size().width(), q_ptr->size().height());
+        qreal h = (minDimension - (minDimension / ((sinA / cosA) + 1.0))) / sinA;
+        chartSize.setHeight(h);
+        chartSize.setWidth(h);
     }
 
     m_chart->resize(chartSize);
