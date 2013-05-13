@@ -218,6 +218,8 @@ private:
     QMutex m_sceneImageLock;
     QImage *m_currentSceneImage;
     bool m_updatePending;
+    Qt::HANDLE m_paintThreadId;
+    Qt::HANDLE m_guiThreadId;
 #endif
     DeclarativeMargins *m_margins;
 };

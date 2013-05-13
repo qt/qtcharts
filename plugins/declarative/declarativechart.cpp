@@ -46,6 +46,7 @@
 #include <QGraphicsSceneHoverEvent>
 #include <QApplication>
 #include <QTimer>
+#include <QThread>
 #endif
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -265,6 +266,8 @@ void DeclarativeChart::initChart(QChart::ChartType type)
 {
 #ifdef CHARTS_FOR_QUICK2
     m_currentSceneImage = 0;
+    m_guiThreadId = QThread::currentThreadId();
+    m_paintThreadId = 0;
 
     if (type == QChart::ChartTypePolar)
         m_chart = new QPolarChart();
@@ -429,10 +432,16 @@ void DeclarativeChart::sceneChanged(QList<QRectF> region)
 {
     Q_UNUSED(region);
 
-    if (!m_updatePending) {
-        m_updatePending = true;
-        // Do async render to avoid some unnecessary renders.
-        QTimer::singleShot(0, this, SLOT(renderScene()));
+    if (m_guiThreadId == m_paintThreadId) {
+        // Rendering in gui thread, no need for shenannigans, just update
+        update();
+    } else {
+        // Multi-threaded rendering, need to ensure scene is actually rendered in gui thread
+        if (!m_updatePending) {
+            m_updatePending = true;
+            // Do async render to avoid some unnecessary renders.
+            QTimer::singleShot(0, this, SLOT(renderScene()));
+        }
     }
 }
 
@@ -444,6 +453,8 @@ void DeclarativeChart::renderScene()
     m_currentSceneImage = new QImage(m_chart->size().toSize(), QImage::Format_ARGB32);
     m_currentSceneImage->fill(Qt::transparent);
     QPainter painter(m_currentSceneImage);
+    if (antialiasing())
+        painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
     QRect renderRect(QPoint(0, 0), m_chart->size().toSize());
     m_scene->render(&painter, renderRect, renderRect);
     m_sceneImageLock.unlock();
@@ -453,13 +464,29 @@ void DeclarativeChart::renderScene()
 
 void DeclarativeChart::paint(QPainter *painter)
 {
-    m_sceneImageLock.lock();
-    if (m_currentSceneImage) {
-        QRect imageRect(QPoint(0, 0), m_currentSceneImage->size());
-        QRect itemRect(QPoint(0, 0), QSize(width(), height()));
-        painter->drawImage(itemRect, *m_currentSceneImage, imageRect);
+    if (!m_paintThreadId) {
+        m_paintThreadId = QThread::currentThreadId();
+        if (m_guiThreadId == m_paintThreadId) {
+            // No need for scene image in single threaded rendering, so delete
+            // the one that got made by default before the rendering type was
+            // detected.
+            delete m_currentSceneImage;
+            m_currentSceneImage = 0;
+        }
     }
-    m_sceneImageLock.unlock();
+
+    if (m_guiThreadId == m_paintThreadId) {
+        QRectF renderRect(QPointF(0, 0), m_chart->size());
+        m_scene->render(painter, renderRect, renderRect);
+    } else {
+        m_sceneImageLock.lock();
+        if (m_currentSceneImage) {
+            QRect imageRect(QPoint(0, 0), m_currentSceneImage->size());
+            QRect itemRect(QPoint(0, 0), QSize(width(), height()));
+            painter->drawImage(itemRect, *m_currentSceneImage, imageRect);
+        }
+        m_sceneImageLock.unlock();
+    }
 }
 
 void DeclarativeChart::mousePressEvent(QMouseEvent *event)
