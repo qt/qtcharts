@@ -3,4 +3,11 @@
 }
 
 TARGET = boxplotchart
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    boxdatareader.cpp
+
+RESOURCES += \
+    boxplotdata.qrc
+
+HEADERS += \
+    boxdatareader.h

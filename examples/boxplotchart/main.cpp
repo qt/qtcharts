@@ -27,104 +27,79 @@
 #include <QBarCategoryAxis>
 #include <QLineSeries>
 #include <QScatterSeries>
+#include <QTextStream>
 
 #include <QBrush>
 #include <QColor>
+
+#include "boxdatareader.h"
+
+#include <QDebug>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-
-//![1]
-    QBoxSet *set0 = new QBoxSet();
-    QBoxSet *set1 = new QBoxSet();
-    QBoxSet *set2 = new QBoxSet();
-    QBoxSet *set3 = new QBoxSet();
-    QBoxSet *set4 = new QBoxSet();
-    QBoxSet *set5 = new QBoxSet();
-    QBoxSet *set6 = new QBoxSet();
-    QBoxSet *set7 = new QBoxSet();
-    QBoxSet *set8 = new QBoxSet();
-    QBoxSet *set9 = new QBoxSet();
-    QBoxSet *set10 = new QBoxSet();
-    QBoxSet *set11 = new QBoxSet();
-
-    //      low  bot   med   top  upp
-    *set0 << 3 << 4 << 4.4 << 6 << 7;
-    *set1 << 5 << 6 << 7.5 << 8 << 12;
-    *set2 << 3 << 5 << 5.7 << 8 << 9;
-    *set3 << 5 << 6 << 6.8 << 7 << 8;
-    *set4 << 4 << 5 << 5.2 << 6 << 7;
-    *set5 << 4 << 7 << 8.2 << 9 << 10;
-    *set6 << 2.5 << 5 << 5.4 << 6 << 7;
-    *set7 << 5 << 6.3 << 7.5 << 8 << 12;
-    *set8 << 2.6 << 5.1 << 5.7 << 8 << 9;
-    *set9 << 3.1 << 5.8 << 6.8 << 7 << 8;
-    *set10 << 4.2 << 5 << 5.8 << 6 << 7;
-    *set11 << 4.7 << 7 << 8.2 << 9 << 10;
-
 //![1]
 
 //![2]
     QBoxPlotSeries *series = new QBoxPlotSeries();
-    series->append(set0);
-    series->append(set1);
-    series->append(set2);
-    series->append(set3);
-    series->append(set4);
-    series->append(set5);
-    series->append(set6);
-    series->append(set7);
-    series->append(set8);
-    series->append(set9);
-    series->append(set10);
-    series->append(set11);
     series->setName("Box & Whiskers");
 //![2]
 
-    QLineSeries *lineSeries = new QLineSeries();
-    lineSeries->append(0, 4.4);
-    lineSeries->append(1, 7.5);
-    lineSeries->append(2, 5.7);
-    lineSeries->append(3, 6.8);
-    lineSeries->append(4, 5.2);
-    lineSeries->append(5, 8.2);
-    lineSeries->append(6, 5.4);
-    lineSeries->append(7, 7.5);
-    lineSeries->append(8, 5.7);
-    lineSeries->append(9, 6.8);
-    lineSeries->append(10, 5.2);
-    lineSeries->append(11, 8.2);
-    lineSeries->setName("Medians");
+    QFile stockData(":stock");
+    if (!stockData.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        return 1;
+    }
 
-    QScatterSeries *scatterSeries = new QScatterSeries();
-    scatterSeries->setName("Outliers");
-    scatterSeries->setMarkerShape(QScatterSeries::MarkerShapeCircle);
-    scatterSeries->setMarkerSize(7.0);
-    scatterSeries->setBrush(QBrush(Qt::white));
-    scatterSeries->setPen(QPen(Qt::black, 1.0));
-    scatterSeries->append(1, 4);
-    scatterSeries->append(1, 4.1);
-    scatterSeries->append(1, 4.2);
-    scatterSeries->append(1, 4.3);
-    *scatterSeries << QPointF(3, 8.5) << QPointF(3, 8.6);
+    BoxDataReader dataReader(&stockData);
+    while (!dataReader.atEnd()) {
+        QBoxSet *set = dataReader.readBox();
+        if (set)
+            series->append(set);
+    }
+
+//    QTextStream stream(&stockData);
+//    while (!stream.atEnd()) {
+//        QString line = stream.readLine();
+//        if (line.startsWith("#"))
+//            continue;
+//        QStringList strList = line.split(" ", QString::SkipEmptyParts);
+//        QList<qreal> realList;
+//        foreach (QString str, strList) {
+//            realList.append(str.toDouble());
+//        }
+
+//        qSort(realList.begin(), realList.end());
+
+//        int count = realList.count();
+//        int median = (int)(count / 2);
+//        int lowerQ = (int)(median / 2);
+//        int upperQ = median + lowerQ + 1;
+//        QBoxSet *set = new QBoxSet();
+
+//        set->setLowerExtreme(realList.at(0));
+//        set->setLowerQuartile(realList.at(lowerQ));
+//        set->setMedian(realList.at(median));
+//        set->setUpperQuartile(realList.at(upperQ));
+//        set->setUpperExtreme(realList.last());
+
+//        series->append(set);
+//    }
 
 //![3]
     QChart *chart = new QChart();
     chart->addSeries(series);
-    chart->addSeries(lineSeries);
-    chart->addSeries(scatterSeries);
     chart->setTitle("Simple boxplotchart example");
     chart->setAnimationOptions(QChart::SeriesAnimations);
 //![3]
 
 //![4]
-    QStringList categories;
-    categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
+    //QStringList categories;
+    //categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
     QBarCategoryAxis *axis = new QBarCategoryAxis();
-    axis->append(categories);
+    //axis->append(categories);
     chart->createDefaultAxes();
     chart->setAxisX(axis, series);
 //![4]

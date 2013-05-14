@@ -73,7 +73,10 @@ Q_SIGNALS:
 public:
     QBoxSet * const q_ptr;
     //QString m_label;
-    QList<qreal> m_values;
+    //QList<qreal> m_values;
+    const int m_valuesCount;
+    qreal *m_values;
+    int m_appendCount;
     QPen m_pen;
     QBrush m_brush;
     QBrush m_labelBrush;

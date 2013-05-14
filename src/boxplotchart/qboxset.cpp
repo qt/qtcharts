@@ -22,6 +22,8 @@
 #include "qboxset_p.h"
 #include "charthelpers_p.h"
 
+#include <QDebug> //TODO: remove on release
+
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
@@ -57,10 +59,10 @@ QBoxSet::~QBoxSet()
 */
 void QBoxSet::append(const qreal value)
 {
-    int index = d_ptr->m_values.count();
+    //int index = d_ptr->m_values.count();
     d_ptr->append(value);
 
-    emit valuesAdded(index, 1);
+    emit valuesAdded(d_ptr->m_valuesCount, 1);
 }
 
 /*!
@@ -70,9 +72,9 @@ void QBoxSet::append(const qreal value)
 */
 void QBoxSet::append(const QList<qreal> &values)
 {
-    int index = d_ptr->m_values.count();
+    //int index = d_ptr->m_values.count();
     d_ptr->append(values);
-    emit valuesAdded(index, values.count());
+    emit valuesAdded(d_ptr->m_valuesCount, values.count());
 }
 
 /*!
@@ -81,6 +83,7 @@ void QBoxSet::append(const QList<qreal> &values)
 void QBoxSet::setLowerExtreme(const qreal value)
 {
     d_ptr->replace(QBoxSetPrivate::PosLowerExtreme, value);
+    emit d_ptr->restructuredBox();
     emit valueChanged(QBoxSetPrivate::PosLowerExtreme);
 }
 
@@ -89,7 +92,7 @@ void QBoxSet::setLowerExtreme(const qreal value)
 */
 qreal QBoxSet::lowerExtreme()
 {
-    return d_ptr->m_values.at(QBoxSetPrivate::PosLowerExtreme);
+    return d_ptr->m_values[QBoxSetPrivate::PosLowerExtreme];
 }
 
 /*!
@@ -98,6 +101,7 @@ qreal QBoxSet::lowerExtreme()
 void QBoxSet::setLowerQuartile(const qreal value)
 {
     d_ptr->replace(QBoxSetPrivate::PosLowerQuartile, value);
+    emit d_ptr->restructuredBox();
     emit valueChanged(QBoxSetPrivate::PosLowerQuartile);
 }
 
@@ -106,7 +110,7 @@ void QBoxSet::setLowerQuartile(const qreal value)
 */
 qreal QBoxSet::lowerQuartile()
 {
-    return d_ptr->m_values.at(QBoxSetPrivate::PosLowerQuartile);
+    return d_ptr->m_values[QBoxSetPrivate::PosLowerQuartile];
 }
 
 /*!
@@ -115,6 +119,7 @@ qreal QBoxSet::lowerQuartile()
 void QBoxSet::setMedian(const qreal value)
 {
     d_ptr->replace(QBoxSetPrivate::PosMedian, value);
+    emit d_ptr->restructuredBox();
     emit valueChanged(QBoxSetPrivate::PosMedian);
 }
 
@@ -123,7 +128,7 @@ void QBoxSet::setMedian(const qreal value)
 */
 qreal QBoxSet::median()
 {
-    return d_ptr->m_values.at(QBoxSetPrivate::PosMedian);
+    return d_ptr->m_values[QBoxSetPrivate::PosMedian];
 }
 
 /*!
@@ -132,6 +137,7 @@ qreal QBoxSet::median()
 void QBoxSet::setUpperQuartile(const qreal value)
 {
     d_ptr->replace(QBoxSetPrivate::PosUpperQuartile, value);
+    emit d_ptr->restructuredBox();
     emit valueChanged(QBoxSetPrivate::PosUpperQuartile);
 }
 
@@ -140,7 +146,7 @@ void QBoxSet::setUpperQuartile(const qreal value)
 */
 qreal QBoxSet::upperQuartile()
 {
-    return d_ptr->m_values.at(QBoxSetPrivate::PosUpperQuartile);
+    return d_ptr->m_values[QBoxSetPrivate::PosUpperQuartile];
 }
 
 /*!
@@ -148,8 +154,9 @@ qreal QBoxSet::upperQuartile()
 */
 void QBoxSet::setUpperExtreme(const qreal value)
 {
-    d_ptr->replace(QBoxSetPrivate::PosUpperQuartile, value);
-    emit valueChanged(QBoxSetPrivate::PosUpperQuartile);
+    d_ptr->replace(QBoxSetPrivate::PosUpperExtreme, value);
+    emit d_ptr->restructuredBox();
+    emit valueChanged(QBoxSetPrivate::PosUpperExtreme);
 }
 
 /*!
@@ -157,7 +164,7 @@ void QBoxSet::setUpperExtreme(const qreal value)
 */
 qreal QBoxSet::upperExtreme()
 {
-    return d_ptr->m_values.at(QBoxSetPrivate::PosUpperExtreme);
+    return d_ptr->m_values[QBoxSetPrivate::PosUpperExtreme];
 }
 
 /*!
@@ -173,7 +180,6 @@ QBoxSet &QBoxSet::operator << (const qreal &value)
 /*!
     Inserts new \a value on the \a index position.
     The value that is currently at this postion is moved to postion index + 1
-    \sa remove()
 */
 void QBoxSet::insert(const int index, const qreal value)
 {
@@ -182,23 +188,11 @@ void QBoxSet::insert(const int index, const qreal value)
 }
 
 /*!
-    Removes \a count number of values from the set starting at \a index.
-    \sa insert()
-*/
-void QBoxSet::remove(const int index, const int count)
-{
-    int removedCount = d_ptr->remove(index, count);
-    if (removedCount > 0)
-        emit valuesRemoved(index, removedCount);
-    return;
-}
-
-/*!
     Sets a new value \a value to set, indexed by \a index
 */
 void QBoxSet::replace(const int index, const qreal value)
 {
-    if (index >= 0 && index < d_ptr->m_values.count()) {
+    if (index >= 0 && index < 5) {
         d_ptr->replace(index, value);
         emit valueChanged(index);
     }
@@ -211,9 +205,9 @@ void QBoxSet::replace(const int index, const qreal value)
 */
 qreal QBoxSet::at(const int index) const
 {
-    if (index < 0 || index >= d_ptr->m_values.count())
+    if (index < 0 || index >= 5)
         return 0;
-    return d_ptr->m_values.at(index);
+    return d_ptr->m_values[index];
 }
 
 /*!
@@ -230,7 +224,7 @@ qreal QBoxSet::operator [](const int index) const
 */
 int QBoxSet::count() const
 {
-    return d_ptr->m_values.count();
+    return d_ptr->m_valuesCount;
 }
 
 /*!
@@ -326,9 +320,12 @@ void QBoxSet::setBorderColor(QColor color)
 
 QBoxSetPrivate::QBoxSetPrivate(QBoxSet *parent) : QObject(parent),
     q_ptr(parent),
+    m_valuesCount(5),
+    m_appendCount(0),
     m_pen(QPen(Qt::NoPen)),
     m_brush(QBrush(Qt::NoBrush))
 {
+    m_values = new qreal[m_valuesCount];
 }
 
 QBoxSetPrivate::~QBoxSetPrivate()
@@ -337,8 +334,8 @@ QBoxSetPrivate::~QBoxSetPrivate()
 
 void QBoxSetPrivate::append(qreal value)
 {
-    if (isValidValue(value)) {
-        m_values.append(value);
+    if (isValidValue(value) && m_appendCount < m_valuesCount) {
+        m_values[m_appendCount++] = value;
         emit restructuredBox();
     }
 }
@@ -346,8 +343,8 @@ void QBoxSetPrivate::append(qreal value)
 void QBoxSetPrivate::append(QList<qreal> values)
 {
     for (int i = 0; i < values.count(); i++) {
-        if (isValidValue(values.at(i)))
-            m_values.append(values.at(i));
+        if (isValidValue(values.at(i)) && m_appendCount < m_valuesCount)
+            m_values[m_appendCount++] = values.at(i);
     }
     emit restructuredBox();
 }
@@ -355,40 +352,24 @@ void QBoxSetPrivate::append(QList<qreal> values)
 void QBoxSetPrivate::insert(const int index, const qreal value)
 {
     if (isValidValue(value)) {
-        m_values.insert(index, value);
+        for (int i = 4; i > index; i--)
+            m_values[i] = m_values[i - 1];
+        m_values[index] = value;
         emit restructuredBox();
     }
 }
 
-int QBoxSetPrivate::remove(const int index, const int count)
-{
-    int removeCount = count;
-
-    if ((index < 0) || (m_values.count() == 0))
-        return 0; // Invalid index or not values in list, remove nothing.
-    else if ((index + count) > m_values.count())
-        removeCount = m_values.count() - index; // Trying to remove more items than list has. Limit amount to be removed.
-
-    int c = 0;
-    while (c < removeCount) {
-        m_values.removeAt(index);
-        c++;
-    }
-    emit restructuredBox();
-    return removeCount;
-}
-
 void QBoxSetPrivate::replace(const int index, const qreal value)
 {
-    m_values.replace(index, value);
+    m_values[index] = value;
     emit updatedLayout();
 }
 
 qreal QBoxSetPrivate::value(const int index)
 {
-    if (index < 0 || index >= m_values.count())
+    if (index < 0 || index >= m_valuesCount)
         return 0;
-    return m_values.at(index);
+    return m_values[index];
 }
 
 #include "moc_qboxset.cpp"
