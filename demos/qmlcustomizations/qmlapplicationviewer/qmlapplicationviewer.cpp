@@ -93,7 +93,6 @@ QmlApplicationViewer::QmlApplicationViewer(QWidget *parent)
     new QmlJSDebugger::QDeclarativeViewObserver(this, this);
 #endif
 #endif
-    addImportPath(QString::fromLatin1("%1/%2").arg(QCoreApplication::applicationDirPath(), QLatin1String("imports")));
 }
 
 QmlApplicationViewer::~QmlApplicationViewer()

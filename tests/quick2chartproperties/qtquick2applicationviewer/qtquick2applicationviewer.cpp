@@ -42,7 +42,6 @@ QtQuick2ApplicationViewer::QtQuick2ApplicationViewer(QWindow *parent)
 {
     connect(engine(), SIGNAL(quit()), SLOT(close()));
     setResizeMode(QQuickView::SizeRootObjectToView);
-    addImportPath(QString::fromLatin1("%1/%2").arg(QCoreApplication::applicationDirPath(), QString::fromLatin1("qml")));
 }
 
 QtQuick2ApplicationViewer::~QtQuick2ApplicationViewer()

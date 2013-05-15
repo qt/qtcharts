@@ -28,6 +28,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     QScopedPointer<QApplication> app(createApplication(argc, argv));
 
     QmlApplicationViewer viewer;
+    viewer.addImportPath(QString::fromLatin1("%1/%2").arg(QCoreApplication::applicationDirPath(), QLatin1String("imports")));
 //    viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
     QString appKey;
     if (argc > 1) {

@@ -27,6 +27,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     QtQuick2ApplicationViewer viewer;
+    viewer.addImportPath(QString::fromLatin1("%1/%2").arg(QCoreApplication::applicationDirPath(), QString::fromLatin1("qml")));
     viewer.setSource(QUrl("qrc:/qml/quick2chartproperties/main.qml"));
     viewer.showExpanded();
 
