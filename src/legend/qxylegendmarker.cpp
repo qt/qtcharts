@@ -114,7 +114,10 @@ void QXYLegendMarkerPrivate::updated()
             brushChanged = true;
         }
     } else {
-        if (!m_customBrush && (m_item->brush().color() != m_series->pen().color())) {
+        QBrush emptyBrush;
+        if (!m_customBrush
+            && (m_item->brush() == emptyBrush
+                || m_item->brush().color() != m_series->pen().color())) {
             m_item->setBrush(QBrush(m_series->pen().color()));
             brushChanged = true;
         }
