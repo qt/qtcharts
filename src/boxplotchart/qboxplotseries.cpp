@@ -320,8 +320,13 @@ void QBoxPlotSeriesPrivate::populateCategories(QBarCategoryAxis *axis)
 {
     QStringList categories;
     if (axis->categories().isEmpty()) {
-        for (int i(1); i < m_boxSets.count() + 1; i++)
-            categories << QString::number(i);
+        for (int i(1); i < m_boxSets.count() + 1; i++) {
+            QBoxSet *set = m_boxSets.at(i - 1);
+            if (set->label().isEmpty())
+                categories << QString::number(i);
+            else
+                categories << set->label();
+        }
         axis->append(categories);
     }
 }

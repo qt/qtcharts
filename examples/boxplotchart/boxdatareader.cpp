@@ -35,15 +35,16 @@ QBoxSet* BoxDataReader::readBox()
 
     QStringList strList = line.split(" ", QString::SkipEmptyParts);
     sortedList.clear();
-    foreach (QString str, strList) {
-        sortedList.append(str.toDouble());
+
+    for (int i = 1; i < strList.count(); i++) {
+        sortedList.append(strList.at(i).toDouble());
     }
 
     qSort(sortedList.begin(), sortedList.end());
 
     int count = sortedList.count();
 
-    QBoxSet *box = new QBoxSet();
+    QBoxSet *box = new QBoxSet(strList.first());
     box->setLowerExtreme(sortedList.first());
     box->setUpperExtreme(sortedList.last());
     box->setMedian(findMedian(0, count));

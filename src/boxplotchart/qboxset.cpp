@@ -29,15 +29,15 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     Constructs QBoxSet with parent of \a parent
 */
-QBoxSet::QBoxSet(QObject *parent)
+QBoxSet::QBoxSet(const QString label, QObject *parent)
     : QObject(parent),
-      d_ptr(new QBoxSetPrivate(this))
+      d_ptr(new QBoxSetPrivate(label, this))
 {
 }
 
-QBoxSet::QBoxSet(qreal value1, qreal value2, qreal value3, qreal value4, qreal value5, QObject *parent)
+QBoxSet::QBoxSet(qreal value1, qreal value2, qreal value3, qreal value4, qreal value5, const QString label, QObject *parent)
     : QObject(parent),
-      d_ptr(new QBoxSetPrivate(this))
+      d_ptr(new QBoxSetPrivate(label, this))
 {
     d_ptr->append(value1);
     d_ptr->append(value2);
@@ -165,6 +165,22 @@ void QBoxSet::setUpperExtreme(const qreal value)
 qreal QBoxSet::upperExtreme()
 {
     return d_ptr->m_values[QBoxSetPrivate::PosUpperExtreme];
+}
+
+/*!
+    Sets new \a label for set.
+*/
+void QBoxSet::setLabel(const QString label)
+{
+    d_ptr->m_label = label;
+}
+
+/*!
+    Returns label of the set.
+*/
+QString QBoxSet::label() const
+{
+    return d_ptr->m_label;
 }
 
 /*!
@@ -318,8 +334,9 @@ void QBoxSet::setBorderColor(QColor color)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QBoxSetPrivate::QBoxSetPrivate(QBoxSet *parent) : QObject(parent),
+QBoxSetPrivate::QBoxSetPrivate(const QString label, QBoxSet *parent) : QObject(parent),
     q_ptr(parent),
+    m_label(label),
     m_valuesCount(5),
     m_appendCount(0),
     m_pen(QPen(Qt::NoPen)),

@@ -38,8 +38,8 @@ class QTCOMMERCIALCHART_EXPORT QBoxSet : public QObject
     Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor NOTIFY borderColorChanged)
 
 public:
-    explicit QBoxSet(QObject *parent = 0);
-    explicit QBoxSet(qreal value1, qreal value2, qreal value3, qreal value4, qreal value5, QObject *parent = 0);
+    explicit QBoxSet(const QString label = "", QObject *parent = 0);
+    explicit QBoxSet(const qreal value1, const qreal value2, const qreal value3, const qreal value4, const qreal value5, const QString label = "", QObject *parent = 0);
     virtual ~QBoxSet();
 
     void append(const qreal value);
@@ -55,6 +55,9 @@ public:
     qreal upperQuartile();
     void setUpperExtreme(const qreal value);
     qreal upperExtreme();
+
+    void setLabel(const QString label);
+    QString label() const;
 
     QBoxSet &operator << (const qreal &value);
 

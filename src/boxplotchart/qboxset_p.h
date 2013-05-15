@@ -52,7 +52,7 @@ public:
     };
 
 public:
-    QBoxSetPrivate(QBoxSet *parent);
+    QBoxSetPrivate(const QString label, QBoxSet *parent);
     ~QBoxSetPrivate();
 
     void append(qreal value);
@@ -72,7 +72,7 @@ Q_SIGNALS:
 
 public:
     QBoxSet * const q_ptr;
-    //QString m_label;
+    QString m_label;
     //QList<qreal> m_values;
     const int m_valuesCount;
     qreal *m_values;
