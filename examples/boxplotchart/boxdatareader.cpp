@@ -20,8 +20,6 @@
 
 #include "boxdatareader.h"
 
-#include <QDebug>
-
 BoxDataReader::BoxDataReader(QIODevice *device) :
     QTextStream(device)
 {
@@ -53,9 +51,6 @@ QBoxSet* BoxDataReader::readBox()
         box->setUpperQuartile(findMedian(count / 2 + 1, count));
     else // even amount of numbers
         box->setUpperQuartile(findMedian(count / 2, count));
-
-    qDebug() << "Box = " << box->lowerExtreme() << ", " << box->lowerQuartile() << ", " <<
-                box->median() << ", " << box->upperQuartile() << ", " << box->upperExtreme();
 
     return box;
 }

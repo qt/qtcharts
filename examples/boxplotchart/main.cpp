@@ -28,8 +28,6 @@
 
 #include "boxdatareader.h"
 
-#include <QDebug>
-
 QTCOMMERCIALCHART_USE_NAMESPACE
 
 int main(int argc, char *argv[])
@@ -62,10 +60,7 @@ int main(int argc, char *argv[])
 //![3]
 
 //![4]
-    //QStringList categories;
-    //categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
     QBarCategoryAxis *axis = new QBarCategoryAxis();
-    //axis->append(categories);
     chart->createDefaultAxes();
     chart->setAxisX(axis, series);
 //![4]
