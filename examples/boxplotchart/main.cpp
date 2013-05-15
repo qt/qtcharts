@@ -25,12 +25,6 @@
 #include <QBoxSet>
 #include <QLegend>
 #include <QBarCategoryAxis>
-#include <QLineSeries>
-#include <QScatterSeries>
-#include <QTextStream>
-
-#include <QBrush>
-#include <QColor>
 
 #include "boxdatareader.h"
 
@@ -59,34 +53,6 @@ int main(int argc, char *argv[])
         if (set)
             series->append(set);
     }
-
-//    QTextStream stream(&stockData);
-//    while (!stream.atEnd()) {
-//        QString line = stream.readLine();
-//        if (line.startsWith("#"))
-//            continue;
-//        QStringList strList = line.split(" ", QString::SkipEmptyParts);
-//        QList<qreal> realList;
-//        foreach (QString str, strList) {
-//            realList.append(str.toDouble());
-//        }
-
-//        qSort(realList.begin(), realList.end());
-
-//        int count = realList.count();
-//        int median = (int)(count / 2);
-//        int lowerQ = (int)(median / 2);
-//        int upperQ = median + lowerQ + 1;
-//        QBoxSet *set = new QBoxSet();
-
-//        set->setLowerExtreme(realList.at(0));
-//        set->setLowerQuartile(realList.at(lowerQ));
-//        set->setMedian(realList.at(median));
-//        set->setUpperQuartile(realList.at(upperQ));
-//        set->setUpperExtreme(realList.last());
-
-//        series->append(set);
-//    }
 
 //![3]
     QChart *chart = new QChart();

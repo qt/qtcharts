@@ -22,8 +22,8 @@
 
 #include <QDebug>
 
-BoxDataReader::BoxDataReader(QIODevice *fileHandle) :
-    QTextStream(fileHandle)
+BoxDataReader::BoxDataReader(QIODevice *device) :
+    QTextStream(device)
 {
 }
 
@@ -34,26 +34,39 @@ QBoxSet* BoxDataReader::readBox()
         return 0;
 
     QStringList strList = line.split(" ", QString::SkipEmptyParts);
-    QList<qreal> sortedList;
+    sortedList.clear();
     foreach (QString str, strList) {
         sortedList.append(str.toDouble());
     }
 
     qSort(sortedList.begin(), sortedList.end());
-qDebug() << "sortedList = " << sortedList;
 
     int count = sortedList.count();
-    int median = (int)(count / 2);
-    int lowerQ = (int)(median / 2);
-    int upperQ = median + lowerQ + 1;
 
     QBoxSet *box = new QBoxSet();
-    box->setLowerExtreme(sortedList.at(0));
-    box->setLowerQuartile(sortedList.at(lowerQ));
-    box->setMedian(sortedList.at(median));
-    box->setUpperQuartile(sortedList.at(upperQ));
+    box->setLowerExtreme(sortedList.first());
     box->setUpperExtreme(sortedList.last());
+    box->setMedian(findMedian(0, count));
+    box->setLowerQuartile(findMedian(0, count / 2));
+    if (count % 2)
+        box->setUpperQuartile(findMedian(count / 2 + 1, count));
+    else // even amount of numbers
+        box->setUpperQuartile(findMedian(count / 2, count));
+
+    qDebug() << "Box = " << box->lowerExtreme() << ", " << box->lowerQuartile() << ", " <<
+                box->median() << ", " << box->upperQuartile() << ", " << box->upperExtreme();
 
     return box;
 }
 
+qreal BoxDataReader::findMedian(int begin, int end)
+{
+    int count = end - begin;
+    if (count % 2 ) {
+        return sortedList.at((int) (count/2) + begin);
+    } else {
+        qreal right = sortedList.at(count / 2 + begin);
+        qreal left = sortedList.at(count / 2 - 1 + begin);
+        return (right + left) / 2.0;
+    }
+}

@@ -29,13 +29,14 @@ QTCOMMERCIALCHART_USE_NAMESPACE
 class BoxDataReader : public QTextStream
 {
 public:
-    explicit BoxDataReader(QIODevice *fileHandle);
+    explicit BoxDataReader(QIODevice *device);
     QBoxSet* readBox();
 
 protected:
     qreal findMedian(int begin, int end);
 
 private:
+    QList<qreal> sortedList;
 };
 
 #endif // BOXDATAREADER_H
