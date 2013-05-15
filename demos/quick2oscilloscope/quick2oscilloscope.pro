@@ -8,7 +8,7 @@ SOURCES += main.cpp \
            datasource.cpp
 OTHER_FILES += qml/quick2oscilloscope/*
 
-include(../shared/qtquick2applicationviewer/qtquick2applicationviewer.pri)
+include(qtquick2applicationviewer/qtquick2applicationviewer.pri)
 
 HEADERS += \
     datasource.h

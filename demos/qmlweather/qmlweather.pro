@@ -6,5 +6,5 @@ RESOURCES += resources.qrc
 SOURCES += main.cpp
 OTHER_FILES += qml/qmlweather/*
 
-include(../shared/qmlapplicationviewer/qmlapplicationviewer.pri)
+include(qmlapplicationviewer/qmlapplicationviewer.pri)
 

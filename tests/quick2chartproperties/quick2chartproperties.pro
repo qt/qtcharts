@@ -6,4 +6,4 @@ RESOURCES += resources.qrc
 SOURCES += main.cpp
 OTHER_FILES += qml/quick2chartproperties/*
 
-include(../../demos/shared/qtquick2applicationviewer/qtquick2applicationviewer.pri)
+include(qtquick2applicationviewer/qtquick2applicationviewer.pri)

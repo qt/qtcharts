@@ -10,4 +10,4 @@ HEADERS += customtablemodel.h \
            declarativemodel.h
 OTHER_FILES += qml/qmlcustommodel/*
 
-include(../shared/qmlapplicationviewer/qmlapplicationviewer.pri)
+include(qmlapplicationviewer/qmlapplicationviewer.pri)

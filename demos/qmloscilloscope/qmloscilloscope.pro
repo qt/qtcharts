@@ -8,7 +8,7 @@ SOURCES += main.cpp \
     datasource.cpp
 OTHER_FILES += qml/qmloscilloscope/*
 
-include(../shared/qmlapplicationviewer/qmlapplicationviewer.pri)
+include(qmlapplicationviewer/qmlapplicationviewer.pri)
 
 HEADERS += \
     datasource.h

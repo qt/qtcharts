@@ -6,4 +6,4 @@ RESOURCES += resources.qrc
 SOURCES += main.cpp
 OTHER_FILES += qml/qmlchartproperties/*
 
-include(../../demos/shared/qmlapplicationviewer/qmlapplicationviewer.pri)
+include(qmlapplicationviewer/qmlapplicationviewer.pri)
