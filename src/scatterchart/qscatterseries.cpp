@@ -24,6 +24,7 @@
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
 #include "scatteranimation_p.h"
+#include "qchart_p.h"
 
 /*!
     \class QScatterSeries
@@ -266,18 +267,17 @@ void QScatterSeriesPrivate::initializeGraphics(QGraphicsItem* parent)
 void QScatterSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bool forced)
 {
     Q_Q(QScatterSeries);
-    QPen pen;
-    QBrush brush;
     const QList<QColor> colors = theme->seriesColors();
     const QList<QGradient> gradients = theme->seriesGradients();
 
-    if (forced || pen == m_pen) {
+    if (forced || QChartPrivate::defaultPen() == m_pen) {
+        QPen pen;
         pen.setColor(ChartThemeManager::colorAt(gradients.at(index % gradients.size()), 0.0));
         pen.setWidthF(2);
         q->setPen(pen);
     }
 
-    if (forced || brush == m_brush) {
+    if (forced || QChartPrivate::defaultBrush() == m_brush) {
         QBrush brush(colors.at(index % colors.size()));
         q->setBrush(brush);
     }

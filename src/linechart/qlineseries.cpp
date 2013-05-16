@@ -23,7 +23,7 @@
 #include "linechartitem_p.h"
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
-
+#include "qchart_p.h"
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
@@ -149,8 +149,8 @@ void QLineSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bool forc
     Q_Q(QLineSeries);
     const QList<QColor> colors = theme->seriesColors();
 
-    QPen pen;
-    if (forced || pen == m_pen) {
+    if (forced || QChartPrivate::defaultPen() == m_pen) {
+        QPen pen;
         pen.setColor(colors.at(index % colors.size()));
         pen.setWidthF(2);
         q->setPen(pen);

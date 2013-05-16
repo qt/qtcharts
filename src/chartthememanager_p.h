@@ -53,8 +53,8 @@ public:
     explicit ChartThemeManager(QChart* chart);
     void setTheme(QChart::ChartTheme theme);
     ChartTheme* theme() const { return m_theme.data(); }
-    void decorateChart(QChart *chart, ChartTheme* theme, bool force = false) const;
-    void decorateLegend(QLegend *legend, ChartTheme* theme, bool force = false) const;
+    void decorateChart(QChart *chart, ChartTheme* theme) const;
+    void decorateLegend(QLegend *legend, ChartTheme* theme) const;
     void updateSeries(QAbstractSeries *series);
 
 public:

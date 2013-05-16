@@ -24,6 +24,7 @@
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
 #include "splineanimation_p.h"
+#include "qchart_p.h"
 
 /*!
     \class QSplineSeries
@@ -126,8 +127,8 @@ void QSplineSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bool fo
     Q_Q(QSplineSeries);
     const QList<QColor> colors = theme->seriesColors();
 
-    QPen pen;
-    if (forced || pen == m_pen) {
+    if (forced || QChartPrivate::defaultPen() == m_pen) {
+        QPen pen;
         pen.setColor(colors.at(index % colors.size()));
         pen.setWidthF(2);
         q->setPen(pen);

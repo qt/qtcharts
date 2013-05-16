@@ -49,8 +49,10 @@ public:
 
 protected:
     explicit ChartTheme(QChart::ChartTheme id = QChart::ChartThemeLight):m_id(id),
-    m_backgroundShades(BackgroundShadesNone),
-    m_backgroundDropShadowEnabled(false){};
+        m_backgroundShades(BackgroundShadesNone),
+        m_backgroundShadesBrush(Qt::SolidPattern),
+        m_backgroundDropShadowEnabled(false)
+    {};
 public:
     QChart::ChartTheme id() const { return m_id; }
     QList<QGradient> seriesGradients() const { return m_seriesGradients; }

@@ -30,6 +30,7 @@
 #include "qbarlegendmarker.h"
 #include "baranimation_p.h"
 #include "abstractbarchartitem_p.h"
+#include "qchart_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -842,9 +843,6 @@ void QAbstractBarSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bo
 {
     const QList<QGradient> gradients = theme->seriesGradients();
 
-    QBrush brush;
-    QPen pen;
-
     qreal takeAtPos = 0.5;
     qreal step = 0.2;
     if (m_barSets.count() > 1) {
@@ -864,19 +862,19 @@ void QAbstractBarSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bo
             takeAtPos += step;
             takeAtPos -= (int) takeAtPos;
         }
-        if (forced || brush == m_barSets.at(i)->brush())
+        if (forced || QChartPrivate::defaultBrush() == m_barSets.at(i)->brush())
             m_barSets.at(i)->setBrush(ChartThemeManager::colorAt(gradients.at(colorIndex), takeAtPos));
 
         // Pick label color from the opposite end of the gradient.
         // 0.3 as a boundary seems to work well.
-        if (forced || brush == m_barSets.at(i)->labelBrush()) {
+        if (forced || QChartPrivate::defaultBrush() == m_barSets.at(i)->labelBrush()) {
             if (takeAtPos < 0.3)
                 m_barSets.at(i)->setLabelBrush(ChartThemeManager::colorAt(gradients.at(index % gradients.size()), 1));
             else
                 m_barSets.at(i)->setLabelBrush(ChartThemeManager::colorAt(gradients.at(index % gradients.size()), 0));
         }
 
-        if (forced || pen == m_barSets.at(i)->pen()) {
+        if (forced || QChartPrivate::defaultPen() == m_barSets.at(i)->pen()) {
             QColor c = ChartThemeManager::colorAt(gradients.at(index % gradients.size()), 0.0);
             m_barSets.at(i)->setPen(c);
         }

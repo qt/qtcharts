@@ -152,7 +152,8 @@ void ChartPresenter::createBackgroundItem()
 {
     if (!m_background) {
         m_background = new ChartBackground(rootItem());
-        m_background->setPen(Qt::NoPen);
+        m_background->setPen(Qt::NoPen); // Theme doesn't touch pen so don't use default
+        m_background->setBrush(QChartPrivate::defaultBrush());
         m_background->setZValue(ChartPresenter::BackgroundZValue);
     }
 }

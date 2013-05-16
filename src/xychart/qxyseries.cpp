@@ -25,6 +25,7 @@
 #include "xychart_p.h"
 #include "qxylegendmarker.h"
 #include "charthelpers_p.h"
+#include "qchart_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -511,6 +512,8 @@ QXYSeries &QXYSeries::operator<< (const QList<QPointF>& points)
 
 QXYSeriesPrivate::QXYSeriesPrivate(QXYSeries *q)
     : QAbstractSeriesPrivate(q),
+      m_pen(QChartPrivate::defaultPen()),
+      m_brush(QChartPrivate::defaultBrush()),
       m_pointsVisible(false)
 {
 }

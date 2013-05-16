@@ -22,6 +22,7 @@
 #include "qabstractaxis_p.h"
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
+#include "qchart_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -876,16 +877,25 @@ QAbstractAxisPrivate::QAbstractAxisPrivate(QAbstractAxis *q)
       m_orientation(Qt::Orientation(0)),
       m_visible(true),
       m_arrowVisible(true),
+      m_axisPen(QChartPrivate::defaultPen()),
+      m_axisBrush(QChartPrivate::defaultBrush()),
       m_gridLineVisible(true),
+      m_gridLinePen(QChartPrivate::defaultPen()),
       m_labelsVisible(true),
+      m_labelsPen(QChartPrivate::defaultPen()),
+      m_labelsBrush(QChartPrivate::defaultBrush()),
+      m_labelsFont(QChartPrivate::defaultFont()),
       m_labelsAngle(0),
       m_titleVisible(true),
+      m_titlePen(QChartPrivate::defaultPen()),
+      m_titleBrush(QChartPrivate::defaultBrush()),
+      m_titleFont(QChartPrivate::defaultFont()),
       m_shadesVisible(false),
-      m_shadesBrush(Qt::SolidPattern),
+      m_shadesBrush(QChartPrivate::defaultBrush()),
+      m_shadesPen(QChartPrivate::defaultPen()),
       m_shadesOpacity(1.0),
       m_dirty(false)
 {
-
 }
 
 QAbstractAxisPrivate::~QAbstractAxisPrivate()
@@ -912,61 +922,42 @@ void QAbstractAxisPrivate::setAlignment( Qt::Alignment alignment)
 
 void QAbstractAxisPrivate::initializeTheme(ChartTheme* theme, bool forced)
 {
-    QPen pen;
-    QBrush brush;
-    QFont font;
+    //TODO: introduce axis brush
+    if (forced || QChartPrivate::defaultPen() == m_axisPen)
+        q_ptr->setLinePen(theme->axisLinePen());
+
+    if (forced || QChartPrivate::defaultPen() == m_gridLinePen)
+        q_ptr->setGridLinePen(theme->girdLinePen());
+
+    if (forced || QChartPrivate::defaultBrush() == m_labelsBrush)
+        q_ptr->setLabelsBrush(theme->labelBrush());
+    if (forced || QChartPrivate::defaultPen() == m_labelsPen)
+        q_ptr->setLabelsPen(Qt::NoPen); // NoPen for performance reasons
+    if (forced || QChartPrivate::defaultFont() == m_labelsFont)
+        q_ptr->setLabelsFont(theme->labelFont());
+
+    if (forced || QChartPrivate::defaultBrush() == m_titleBrush)
+        q_ptr->setTitleBrush(theme->labelBrush());
+    if (forced || QChartPrivate::defaultPen() == m_titlePen)
+        q_ptr->setTitlePen(Qt::NoPen); // NoPen for performance reasons
+    if (forced || QChartPrivate::defaultFont() == m_titleFont) {
+        QFont font(m_labelsFont);
+        font.setBold(true);
+        q_ptr->setTitleFont(font);
+    }
+
+    if (forced || QChartPrivate::defaultBrush() == m_shadesBrush)
+        q_ptr->setShadesBrush(theme->backgroundShadesBrush());
+    if (forced || QChartPrivate::defaultPen() == m_shadesPen)
+        q_ptr->setShadesPen(theme->backgroundShadesPen());
 
     bool axisX = m_orientation == Qt::Horizontal;
-
-    //TODO: introduce axis brush
-    if (m_visible) {
-        if (m_arrowVisible) {
-            if (forced || pen == m_axisPen) {
-                q_ptr->setLinePen(theme->axisLinePen());
-            }
-        }
-        if (m_gridLineVisible) {
-            if (forced || pen == m_gridLinePen) {
-                q_ptr->setGridLinePen(theme->girdLinePen());
-            }
-        }
-        if (m_labelsVisible) {
-            if (forced || brush == m_labelsBrush){
-                q_ptr->setLabelsBrush(theme->labelBrush());
-            }
-            if (forced || pen == m_labelsPen){
-                q_ptr->setLabelsPen(Qt::NoPen);// NoPen for performance reasons
-            }
-            if (forced || font == m_labelsFont){
-                q_ptr->setLabelsFont(theme->labelFont());
-            }
-        }
-        if (m_titleVisible) {
-            if (forced || brush == m_titleBrush){
-                q_ptr->setTitleBrush(theme->labelBrush());
-            }
-            if (forced || pen == m_titlePen){
-                q_ptr->setTitlePen(Qt::NoPen);// Noen for performance reasons
-            }
-            if (forced || font == m_titleFont){
-                QFont font(m_labelsFont);
-                font.setBold(true);
-                q_ptr->setTitleFont(font);
-            }
-        }
-        if (forced || m_shadesVisible) {
-            if (forced || brush == m_shadesBrush){
-                q_ptr->setShadesBrush(theme->backgroundShadesBrush());
-            }
-            if (forced || pen == m_shadesPen){
-                q_ptr->setShadesPen(theme->backgroundShadesPen());
-            }
-            if (forced && (theme->backgroundShades() == ChartTheme::BackgroundShadesBoth
-                    || (theme->backgroundShades() == ChartTheme::BackgroundShadesVertical && axisX)
-                    || (theme->backgroundShades() == ChartTheme::BackgroundShadesHorizontal && !axisX))) {
-                 q_ptr->setShadesVisible(true);
-            }
-        }
+    if (forced && (theme->backgroundShades() == ChartTheme::BackgroundShadesBoth
+            || (theme->backgroundShades() == ChartTheme::BackgroundShadesVertical && axisX)
+            || (theme->backgroundShades() == ChartTheme::BackgroundShadesHorizontal && !axisX))) {
+         q_ptr->setShadesVisible(true);
+    } else if (forced) {
+        q_ptr->setShadesVisible(false);
     }
 }
 

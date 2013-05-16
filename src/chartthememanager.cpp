@@ -41,90 +41,71 @@ ChartThemeManager::ChartThemeManager(QChart* chart) :
 
 void ChartThemeManager::setTheme(QChart::ChartTheme theme)
 {
-    if(m_theme.isNull() || theme != m_theme->id())
-    {
+    if (m_theme.isNull() || theme != m_theme->id()) {
         switch (theme) {
-            case QChart::ChartThemeLight:
+        case QChart::ChartThemeLight:
             m_theme.reset(new ChartThemeLight());
             break;
-            case QChart::ChartThemeBlueCerulean:
+        case QChart::ChartThemeBlueCerulean:
             m_theme.reset(new ChartThemeBlueCerulean());
             break;
-            case QChart::ChartThemeDark:
+        case QChart::ChartThemeDark:
             m_theme.reset(new ChartThemeDark());
             break;
-            case QChart::ChartThemeBrownSand:
+        case QChart::ChartThemeBrownSand:
             m_theme.reset(new ChartThemeBrownSand());
             break;
-            case QChart::ChartThemeBlueNcs:
+        case QChart::ChartThemeBlueNcs:
             m_theme.reset(new ChartThemeBlueNcs());
             break;
-            case QChart::ChartThemeHighContrast:
+        case QChart::ChartThemeHighContrast:
             m_theme.reset(new ChartThemeHighContrast());
             break;
-            case QChart::ChartThemeBlueIcy:
+        case QChart::ChartThemeBlueIcy:
             m_theme.reset(new ChartThemeBlueIcy());
             break;
-            default:
+        default:
             m_theme.reset(new ChartThemeSystem());
             break;
         }
 
-        if(!m_theme.isNull())
-        {
-            decorateChart(m_chart,m_theme.data(),true);
-            decorateLegend(m_chart->legend(),m_theme.data(),true);
-            foreach(QAbstractAxis* axis, m_axisList) {
-                axis->d_ptr->initializeTheme(m_theme.data(),true);
-            }
-            foreach(QAbstractSeries* series, m_seriesMap.keys()) {
-                series->d_ptr->initializeTheme(m_seriesMap[series],m_theme.data(),true);
-            }
-
+        if (!m_theme.isNull()) {
+            decorateChart(m_chart,m_theme.data());
+            decorateLegend(m_chart->legend(),m_theme.data());
+            foreach (QAbstractAxis* axis, m_axisList)
+                axis->d_ptr->initializeTheme(m_theme.data(), true);
+            foreach (QAbstractSeries* series, m_seriesMap.keys())
+                series->d_ptr->initializeTheme(m_seriesMap[series], m_theme.data(), true);
         }
     }
 }
 
-void ChartThemeManager::decorateChart(QChart *chart,ChartTheme* theme,bool force) const
+// decorateChart is only called when theme is forcibly initialized
+void ChartThemeManager::decorateChart(QChart *chart, ChartTheme *theme) const
 {
+    chart->setBackgroundBrush(theme->chartBackgroundGradient());
+
+    QPen pen(Qt::transparent);
     QBrush brush;
-
-    if (force || brush == chart->backgroundBrush())
-        chart->setBackgroundBrush(theme->chartBackgroundGradient());
-
-    if (force) {
-        // Always clear plotArea brush when forced update, do not touch otherwise
-        QPen pen(Qt::transparent);
-        chart->setPlotAreaBackgroundBrush(brush);
-        chart->setPlotAreaBackgroundPen(pen);
-        chart->setPlotAreaBackgroundVisible(false);
-    }
+    chart->setPlotAreaBackgroundBrush(brush);
+    chart->setPlotAreaBackgroundPen(pen);
+    chart->setPlotAreaBackgroundVisible(false);
 
     chart->setTitleFont(theme->masterFont());
     chart->setTitleBrush(theme->labelBrush());
     chart->setDropShadowEnabled(theme->isBackgroundDropShadowEnabled());
 }
 
-void ChartThemeManager::decorateLegend(QLegend *legend, ChartTheme* theme, bool force) const
+// decorateLegend is only called when theme is forcibly initialized
+void ChartThemeManager::decorateLegend(QLegend *legend, ChartTheme *theme) const
 {
-    QPen pen;
-    QBrush brush;
-    QFont font;
-
-    if (force || pen == legend->pen())
-        legend->setPen(theme->axisLinePen());
-
-    if (force || brush == legend->brush())
-        legend->setBrush(theme->chartBackgroundGradient());
-
-    if (force || font == legend->font())
-        legend->setFont(theme->labelFont());
-
-    if (force || brush == legend->labelBrush())
-        legend->setLabelBrush(theme->labelBrush());
+    legend->setPen(theme->axisLinePen());
+    legend->setBrush(theme->chartBackgroundGradient());
+    legend->setFont(theme->labelFont());
+    legend->setLabelBrush(theme->labelBrush());
 }
 
-int  ChartThemeManager::createIndexKey(QList<int> keys) const
+int ChartThemeManager::createIndexKey(QList<int> keys) const
 {
     qSort(keys);
 

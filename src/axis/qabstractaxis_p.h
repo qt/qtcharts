@@ -85,6 +85,7 @@ protected:
     QAbstractAxis *q_ptr;
     QChart *m_chart;
     QScopedPointer<ChartAxisElement> m_item;
+
 private:
     QList<QAbstractSeries*> m_series;
 

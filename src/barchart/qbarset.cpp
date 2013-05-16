@@ -21,6 +21,7 @@
 #include "qbarset.h"
 #include "qbarset_p.h"
 #include "charthelpers_p.h"
+#include "qchart_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -546,7 +547,10 @@ void QBarSet::setLabelColor(QColor color)
 
 QBarSetPrivate::QBarSetPrivate(const QString label, QBarSet *parent) : QObject(parent),
     q_ptr(parent),
-    m_label(label)
+    m_label(label),
+    m_pen(QChartPrivate::defaultPen()),
+    m_brush(QChartPrivate::defaultBrush()),
+    m_labelBrush(QChartPrivate::defaultBrush())
 {
 }
 

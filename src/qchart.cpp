@@ -687,6 +687,36 @@ QChartPrivate::~QChartPrivate()
 {
 }
 
+// Hackish solution to the problem of explicitly assigning the default pen/brush/font
+// to a series or axis and having theme override it:
+// Initialize pens, brushes, and fonts to something nobody is likely to ever use,
+// so that default theme initialization will always set these properly.
+QPen &QChartPrivate::defaultPen()
+{
+    static QPen *defaultPen = 0;
+    if (!defaultPen)
+        defaultPen = new QPen(QColor(1, 2, 0), 0.93247536);
+    return *defaultPen;
+}
+
+QBrush &QChartPrivate::defaultBrush()
+{
+    static QBrush *defaultBrush = 0;
+    if (!defaultBrush)
+        defaultBrush = new QBrush(QColor(1, 2, 0), Qt::Dense7Pattern);
+    return *defaultBrush;
+}
+
+QFont &QChartPrivate::defaultFont()
+{
+    static QFont *defaultFont = 0;
+    if (!defaultFont) {
+        defaultFont = new QFont();
+        defaultFont->setPointSizeF(8.34563465);
+    }
+    return *defaultFont;
+}
+
 void QChartPrivate::init()
 {
     m_legend = new LegendScroller(q_ptr);

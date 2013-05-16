@@ -331,6 +331,8 @@ bool QAreaSeries::pointsVisible() const
 
 QAreaSeriesPrivate::QAreaSeriesPrivate(QLineSeries *upperSeries, QLineSeries *lowerSeries, QAreaSeries *q)
     : QAbstractSeriesPrivate(q),
+      m_brush(QChartPrivate::defaultBrush()),
+      m_pen(QChartPrivate::defaultPen()),
       m_upperSeries(upperSeries),
       m_lowerSeries(lowerSeries),
       m_pointsVisible(false)
@@ -427,19 +429,18 @@ QAbstractAxis* QAreaSeriesPrivate::createDefaultAxis(Qt::Orientation orientation
 void QAreaSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bool forced)
 {
     Q_Q(QAreaSeries);
-    QPen pen;
-    QBrush brush;
 
     const QList<QGradient> gradients = theme->seriesGradients();
     const QList<QColor> colors = theme->seriesColors();
 
-    if (forced || pen == m_pen) {
+    if (forced || QChartPrivate::defaultPen() == m_pen) {
+        QPen pen;
         pen.setColor(ChartThemeManager::colorAt(gradients.at(index % gradients.size()), 0.0));
         pen.setWidthF(2);
         q->setPen(pen);
     }
 
-    if (forced || brush == m_brush) {
+    if (forced || QChartPrivate::defaultBrush() == m_brush) {
         QBrush brush(colors.at(index % colors.size()));
         q->setBrush(brush);
     }

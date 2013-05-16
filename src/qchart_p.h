@@ -53,6 +53,10 @@ public:
     ChartThemeManager *m_themeManager;
     QChart::ChartType m_type;
 
+    static QPen &defaultPen();
+    static QBrush &defaultBrush();
+    static QFont &defaultFont();
+
     void init();
     void zoomIn(qreal factor);
     void zoomOut(qreal factor);
