@@ -133,7 +133,7 @@ QBoxSet::QBoxSet(const QString label, QObject *parent)
     Constructs QBoxSet with given ordered values. \a le for lower extreme, \a lq for lower quartile, \a m for median,
     \a uq for upper quartile and \a ue for upper quartile. \a label and \a parent are optional.
  */
-QBoxSet::QBoxSet(const qreal le, const qreal lq, const qreal m, const qreal uq, const qreal ue, const QString label = "", QObject *parent)
+QBoxSet::QBoxSet(const qreal le, const qreal lq, const qreal m, const qreal uq, const qreal ue, const QString label, QObject *parent)
     : QObject(parent),
       d_ptr(new QBoxSetPrivate(label, this))
 {
