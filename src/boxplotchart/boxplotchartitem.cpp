@@ -82,22 +82,26 @@ void BoxPlotChartItem::handleDataStructureChanged()
     for (int s = 0; s < setCount; s++) {
         QBoxSet *set = m_series->d_func()->boxsetAt(s);
 
-        BoxWhiskers *boxWhiskersItem = m_boxTable.value(set);
-        if (boxWhiskersItem == 0) {
+        BoxWhiskers *box = m_boxTable.value(set);
+        if (!box) {
             // Item is not yet created, make a box and add it to hash table
-            boxWhiskersItem = new BoxWhiskers(domain(), this);
-            m_boxTable.insert(set, boxWhiskersItem);
+            box = new BoxWhiskers(set, domain(), this);
+            m_boxTable.insert(set, box);
+            connect(box, SIGNAL(clicked(QBoxSet *)), m_series, SIGNAL(clicked(QBoxSet*)));
+            connect(box, SIGNAL(hovered(bool,QBoxSet*)), m_series, SIGNAL(hovered(bool,QBoxSet*)));
+            connect(box, SIGNAL(clicked(QBoxSet*)), set, SIGNAL(clicked()));
+            connect(box, SIGNAL(hovered(bool,QBoxSet*)), set, SIGNAL(hovered(bool)));
 
             // Set the decorative issues for the newly created box
-            boxWhiskersItem->setBrush(m_series->brush());
-            boxWhiskersItem->setPen(m_series->pen());
+            box->setBrush(m_series->brush());
+            box->setPen(m_series->pen());
         }
-        updateBoxGeometry(boxWhiskersItem, s);
+        updateBoxGeometry(box, s);
 
-        boxWhiskersItem->updateGeometry();
+        box->updateGeometry();
 
         if (m_animation)
-            m_animation->addBox(boxWhiskersItem);
+            m_animation->addBox(box);
     }
 
     //

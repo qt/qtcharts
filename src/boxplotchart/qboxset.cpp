@@ -27,7 +27,101 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
-    Constructs QBoxSet with parent of \a parent
+    \class QBoxSet
+    \brief Building block for box-and-whiskers chart
+
+    QBoxSet represents one box-and-whiskers item. It takes fives values to create a graphical representation
+    of range and three medians. There's two type of methods to give the values. The first one is with constructor
+    or append type of methods (append and operator <<). In these the values have to be given in order lower extreme,
+    lower quartile, median, upper quartile and upper extre. Second method is to create an empty QBoxSet instance and
+    give the values using own methods.
+
+    \mainclass
+
+    \sa QBoxPlotSeries
+*/
+/*!
+    \qmlclass BoxSet QBoxSet
+
+    BoxSet represents one box-and-whiskers item. It takes fives values to create a graphical representation
+    of range and three medians. There's two type of methods to give the values. The first one is with constructor
+    or append type of methods (append and operator <<). In these the values have to be given in order lower extreme,
+    lower quartile, median, upper quartile and upper extre. Second method is to create an empty BoxSet instance and
+    give the values using own methods.
+    \sa BoxPlotSeries
+*/
+
+/*!
+    \property QBoxSet::pen
+    \brief Defines the pen used by the box-and-whiskers set.
+*/
+
+/*!
+    \property QBoxSet::brush
+    \brief Defines the brush used by the box-and-whiskers set.
+*/
+
+/*!
+    \property QBoxSet::color
+    The fill (brush) color of the box-and-whiskers set.
+*/
+
+/*!
+    \property QBoxSet::borderColor
+    The line (pen) color of the box-and-whiskers set.
+*/
+
+/*!
+    \fn void QBoxSet::clicked()
+    The signal is emitted if the user clicks with a mouse on top of box-and-whisker item.
+*/
+
+/*!
+    \fn void QBoxSet::hovered(bool status)
+
+    The signal is emitted if mouse is hovered on top of box-and-whisker item.
+    Parameter \a status is true, if mouse entered on top of item, false if mouse left from top of item.
+*/
+
+/*!
+    \fn void QBoxSet::penChanged()
+    This signal is emitted when the pen of the box-and-whisker item has changed.
+    \sa pen
+*/
+
+/*!
+    \fn void QBoxSet::brushChanged()
+    This signal is emitted when the brush of the box-and-whisker item has changed.
+    \sa brush
+*/
+
+/*!
+    \fn void QBoxSet::colorChanged(QColor)
+    This signal is emitted when the fill (brush) color of the box-and-whisker item has changed to \a color.
+*/
+
+/*!
+    \fn void QBoxSet::valuesAdded(int index, int count)
+    This signal is emitted when new values have been added to the box-and-whisker item.
+    Parameter \a index indicates the position of the first inserted value.
+    Parameter \a count is the number of inserted values.
+    \sa append(), insert()
+*/
+
+/*!
+    \fn void QBoxSet::valueChanged(int index)
+    This signal is emitted values the value in the box-and-whisker item has been modified.
+    Parameter \a index indicates the position of the modified value.
+    \sa at()
+*/
+
+/*!
+    \fn void QBoxSet::borderColorChanged(QColor)
+    This signal is emitted when the line (pen) color of the box-and-whisker item has changed to \a color.
+*/
+
+/*!
+    Constructs QBoxSet with optional \a label and parent of \a parent
 */
 QBoxSet::QBoxSet(const QString label, QObject *parent)
     : QObject(parent),
@@ -35,15 +129,19 @@ QBoxSet::QBoxSet(const QString label, QObject *parent)
 {
 }
 
-QBoxSet::QBoxSet(qreal value1, qreal value2, qreal value3, qreal value4, qreal value5, const QString label, QObject *parent)
+/*!
+    Constructs QBoxSet with given ordered values. \a le for lower extreme, \a lq for lower quartile, \a m for median,
+    \a uq for upper quartile and \a ue for upper quartile. \a label and \a parent are optional.
+ */
+QBoxSet::QBoxSet(const qreal le, const qreal lq, const qreal m, const qreal uq, const qreal ue, const QString label = "", QObject *parent)
     : QObject(parent),
       d_ptr(new QBoxSetPrivate(label, this))
 {
-    d_ptr->append(value1);
-    d_ptr->append(value2);
-    d_ptr->append(value3);
-    d_ptr->append(value4);
-    d_ptr->append(value5);
+    d_ptr->append(le);
+    d_ptr->append(lq);
+    d_ptr->append(m);
+    d_ptr->append(uq);
+    d_ptr->append(ue);
 }
 
 /*!

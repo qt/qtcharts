@@ -32,8 +32,8 @@
 
 #include "boxwhiskersdata_p.h"
 #include "qchartglobal.h"
-#include "qbarset.h"
 #include "abstractdomain_p.h"
+#include <QBoxSet>
 #include <QGraphicsRectItem>
 #include <QGraphicsLineItem>
 #include <QGraphicsLayoutItem>
@@ -48,7 +48,7 @@ class BoxWhiskers : public QGraphicsObject/*, public QGraphicsLayoutItem*/
     Q_OBJECT
     //Q_INTERFACES(QGraphicsLayoutItem)
 public:
-    BoxWhiskers(AbstractDomain *domain, QGraphicsObject *parent);
+    BoxWhiskers(QBoxSet *set, AbstractDomain *domain, QGraphicsObject *parent);
     ~BoxWhiskers();
 
     void setBrush(const QBrush &brush);
@@ -73,13 +73,14 @@ private:
     void updateBoundingRect();
 
 Q_SIGNALS:
-    void clicked(int index, QBarSet *barset);
-    void hovered(bool status, QBarSet *barset);
+    void clicked(QBoxSet *boxset);
+    void hovered(bool status, QBoxSet *boxset);
 
 private:
     friend class BoxPlotChartItem;
     friend class BoxPlotAnimation;
 
+    QBoxSet *m_boxSet;
     AbstractDomain *m_domain;
     QPainterPath    m_boxPath;
     QRectF m_boundingRect;

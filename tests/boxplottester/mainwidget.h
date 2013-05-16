@@ -28,6 +28,7 @@
 #include <QWidget>
 #include <QBoxPlotSeries>
 #include <QBarCategoryAxis>
+#include <QBoxSet>
 
 class QGridLayout;
 
@@ -58,6 +59,10 @@ private slots:
     void titleToggled(bool enabled);
     void modelMapperToggled(bool enabled);
     void changeChartTheme(int themeIndex);
+    void boxClicked(QBoxSet *set);
+    void boxHovered(bool state, QBoxSet *set);
+    void singleBoxClicked();
+    void singleBoxHovered(bool state);
 
 private:
     QChart *m_chart;

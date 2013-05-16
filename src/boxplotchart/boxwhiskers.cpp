@@ -20,42 +20,41 @@
 
 #include "boxwhiskers_p.h"
 #include <QPainter>
-#include <QDebug>
 #include <QWidget>
+
+#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-BoxWhiskers::BoxWhiskers(AbstractDomain *domain, QGraphicsObject *parent) :
+BoxWhiskers::BoxWhiskers(QBoxSet *set, AbstractDomain *domain, QGraphicsObject *parent) :
     QGraphicsObject(parent),
+    m_boxSet(set),
     m_domain(domain)
 {
-    //qDebug() << "BoxWhiskers::BoxWhiskers()";
+    setAcceptHoverEvents(true);
+    setAcceptedMouseButtons(Qt::MouseButtonMask);
 }
 
 BoxWhiskers::~BoxWhiskers()
 {
-    //qDebug() << "BoxWhiskers::~BoxWhiskers()";
 }
 
 void BoxWhiskers::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     Q_UNUSED(event)
-
-    qDebug() << "BoxWhiskers::mousePressEvent";
+    emit clicked(m_boxSet);
 }
 
 void BoxWhiskers::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
     Q_UNUSED(event)
-
-    qDebug() << "BoxWhiskers::hoverEnterEvent";
+    emit hovered(true, m_boxSet);
 }
 
 void BoxWhiskers::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
     Q_UNUSED(event)
-
-    qDebug() << "BoxWhiskers::hoverLeaveEvent";
+    emit hovered(false, m_boxSet);
 }
 
 void BoxWhiskers::setBrush(const QBrush &brush)

@@ -39,7 +39,7 @@ class QTCOMMERCIALCHART_EXPORT QBoxSet : public QObject
 
 public:
     explicit QBoxSet(const QString label = "", QObject *parent = 0);
-    explicit QBoxSet(const qreal value1, const qreal value2, const qreal value3, const qreal value4, const qreal value5, const QString label = "", QObject *parent = 0);
+    explicit QBoxSet(const qreal le, const qreal lq, const qreal m, const qreal uq, const qreal ue, const QString label = "", QObject *parent = 0);
     virtual ~QBoxSet();
 
     void append(const qreal value);
@@ -62,7 +62,6 @@ public:
     QBoxSet &operator << (const qreal &value);
 
     void insert(const int index, const qreal value);
-    void remove(const int index, const int count = 1);
     void replace(const int index, const qreal value);
     qreal at(const int index) const;
     qreal operator [](const int index) const;
@@ -82,7 +81,7 @@ public:
 
 
 Q_SIGNALS:
-    void clicked(int index);
+    void clicked();
     void hovered(bool status);
     void penChanged();
     void brushChanged();
@@ -90,7 +89,6 @@ Q_SIGNALS:
     void borderColorChanged(QColor color);
 
     void valuesAdded(int index, int count);
-    void valuesRemoved(int index, int count);
     void valueChanged(int index);
 
 private:

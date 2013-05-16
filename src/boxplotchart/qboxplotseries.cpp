@@ -38,29 +38,54 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QBoxPlotSeries
-    \brief Series for creating stacked bar chart
+    \brief Series for creating box-and-whiskers chart
     \mainclass
 
-    QBoxPlotSeries represents a series of data shown as bars. The purpose of this class is to draw bars
-    as stacks, where bars in same category are stacked on top of each other.
-    QBoxPlotSeries groups the data from sets to categories, which are defined by QStringList.
+    QBoxPlotSeries represents a series of data shown as box-and-whisker bars. The purpose of this class is to act as
+    a container for single box-and-whisker items. Each item is drawn to own slot. If chart includes multiple QBoxPlotSeries
+    items with the same index are drawn to same slot.
 
-    See the \l {BoxPlotChart Example} {stacked bar chart example} to learn how to create a stacked bar chart.
+    See the \l {Box and Whiskers Example} {box-and-whiskers chart example} to learn how to create a box-and-whiskers chart.
     \image examples_boxplotchart.png
 
-    \sa QBoxSet, QPercentBarSeries, QAbstractBarSeries
+    \sa QBoxSet
 */
 
 /*!
     \qmlclass BoxPlotSeries QBoxPlotSeries
     \inherits AbstractBarSeries
 
-    The following QML shows how to create a simple stacked bar chart:
-    \snippet ../demos/qmlchart/qml/qmlchart/View7.qml 1
+    The following QML shows how to create a simple box-and-whiskers chart:
+    \snippet ../examples/qmlboxplot/qml/qmlboxplot/main.qml 1
     \beginfloatleft
     \image demos_qmlchart7.png
     \endfloat
     \clearfloat
+*/
+
+/*!
+    \fn QBoxPlotSeries::boxsetsAdded(QList<QBoxSet *> sets)
+    \brief Signal is emitted when a new \a sets of box-and-whiskers data is added to the series.
+*/
+
+/*!
+    \fn QBoxPlotSeries::boxsetsRemoved(QList<QBoxSet *> sets)
+    \brief Signal is emitted when \a sets of box-and-whiskers data is removed from the series.
+*/
+
+/*!
+    \fn QBoxPlotSeries::clicked(QBoxSet *boxset)
+    \brief Signal is emitted when the user clicks the \a boxset on the chart.
+*/
+
+/*!
+    \fn QBoxPlotSeries::hovered(bool status, QBoxSet *boxset)
+    \brief Signal is emitted when there is change in hover \a status over \a boxset.
+*/
+
+/*!
+    \fn QBoxPlotSeries::countChanged()
+    \brief Signal is emitted when there is change in count of box-and-whiskers items in the series.
 */
 
 /*!
@@ -85,7 +110,7 @@ QBoxPlotSeries::~QBoxPlotSeries()
 }
 
 /*!
-    Adds a single box and whiskers item to series. Takes ownership of \a the box. If the box is null or is already in series, it won't be appended.
+    Adds a single box and whiskers set to series. Takes ownership of the \a set. If the set is null or is already in series, it won't be appended.
     Returns true, if appending succeeded.
 */
 bool QBoxPlotSeries::append(QBoxSet *set)
@@ -223,6 +248,9 @@ QAbstractSeries::SeriesType QBoxPlotSeries::type() const
     return QAbstractSeries::SeriesTypeBoxPlot;
 }
 
+/*!
+    Sets brush for the series. Box-and-whiskers items are drawn using \a brush
+*/
 void QBoxPlotSeries::setBrush(const QBrush &brush)
 {
     Q_D(QBoxPlotSeries);
@@ -233,6 +261,9 @@ void QBoxPlotSeries::setBrush(const QBrush &brush)
     }
 }
 
+/*!
+    Returns brush of the series.
+*/
 QBrush QBoxPlotSeries::brush() const
 {
     Q_D(const QBoxPlotSeries);
@@ -240,6 +271,9 @@ QBrush QBoxPlotSeries::brush() const
     return d->m_brush;
 }
 
+/*!
+    Sets pen for the series. Box-and-whiskers items are drawn using \a pen
+*/
 void QBoxPlotSeries::setPen(const QPen &pen)
 {
     Q_D(QBoxPlotSeries);
@@ -250,6 +284,9 @@ void QBoxPlotSeries::setPen(const QPen &pen)
     }
 }
 
+/*!
+    Returns the pen of this series.
+*/
 QPen QBoxPlotSeries::pen() const
 {
     Q_D(const QBoxPlotSeries);

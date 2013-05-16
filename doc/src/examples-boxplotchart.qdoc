@@ -1,0 +1,38 @@
+/*!
+    \example examples/boxplotchart
+    \title Box and Whiskers Example
+    \subtitle
+
+    The example shows how to create a box-and-whiskers chart.
+
+    \image examples_barchart.png
+
+    Introduction here
+
+    \snippet ../examples/barchart/main.cpp 1
+
+    Ykköskohta
+
+    \snippet ../examples/barchart/main.cpp 2
+
+    Kakkoskohta
+
+    \snippet ../examples/barchart/main.cpp 3
+    
+    Kolmoskohta
+
+    \snippet ../examples/barchart/main.cpp 4
+
+    Neloskohta
+
+    \snippet ../examples/barchart/main.cpp 5
+
+    Tarkista numerointi. Finally we add the chart onto a view. We also turn on the antialiasing for the chartView.
+
+    \snippet ../examples/barchart/main.cpp 6
+
+    Tarkista numerointi. Chart is ready to be shown. We set the chart to be central widget of the window.
+	We also set the size for the chart window and show it.
+
+    \snippet ../examples/barchart/main.cpp 7
+*/

@@ -206,6 +206,11 @@ void MainWidget::addSeries()
     m_series[nSeries]->append(set5);
     m_series[nSeries]->setName("Box & Whiskers");
 
+    connect(m_series[nSeries], SIGNAL(clicked(QBoxSet*)), this, SLOT(boxClicked(QBoxSet*)));
+    connect(m_series[nSeries], SIGNAL(hovered(bool, QBoxSet*)), this, SLOT(boxHovered(bool, QBoxSet*)));
+    connect(set1, SIGNAL(clicked()), this, SLOT(singleBoxClicked()));
+    connect(set2, SIGNAL(hovered(bool)), this, SLOT(singleBoxHovered(bool)));
+
     m_chart->addSeries(m_series[nSeries]);
 
     if (nSeries == 0) {
@@ -355,4 +360,30 @@ void MainWidget::changeChartTheme(int themeIndex)
         m_chart->setTheme(QChart::ChartThemeLight);
     else
         m_chart->setTheme((QChart::ChartTheme) (themeIndex - 1));
+}
+
+void MainWidget::boxClicked(QBoxSet *set)
+{
+    qDebug() << "boxClicked, median = " << set->median();
+}
+
+void MainWidget::boxHovered(bool state, QBoxSet *set)
+{
+    if (state)
+        qDebug() << "box median " << set->median() << " hover started";
+    else
+        qDebug() << "box median " << set->median() << " hover ended";
+}
+
+void MainWidget::singleBoxClicked()
+{
+    qDebug() << "singleBoxClicked";
+}
+
+void MainWidget::singleBoxHovered(bool state)
+{
+    if (state)
+        qDebug() << "single box hover started";
+    else
+        qDebug() << "single box hover ended";
 }

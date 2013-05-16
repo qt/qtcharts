@@ -28,21 +28,21 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \mainclass
 
     Model mappers allow you to use QAbstractItemModel derived models as a data source for a chart series.
-    Vertical model mapper is used to create a connection between QAbstractBarSeries and QAbstractItemModel derived model object.
+    Vertical model mapper is used to create a connection between QBoxPlotSeries and QAbstractItemModel derived model object.
     Model mapper maintains equal size of all the BarSets.
-    Adding/removing value from the BarSet causes the the same change in the rest of the BarSets added to the same series.
     Note: used model has to support adding/removing rows/columns and modifying the data of the cells.
 */
 /*!
-    \qmlclass VBarModelMapper
+    \qmlclass VBoxPlotModelMapper
     \mainclass
 
-    VBarModelMapper allows you to use your own QAbstractItemModel derived model with data in columns as a data source
-    for any bar series. It is possible to use both QAbstractItemModel and bar series data API to manipulate data.
-    VBarModelMapper keeps the series and the model in sync.
+    VBoxPlotModelMapper allows you to use your own QAbstractItemModel derived model with data in columns as a data source
+    for any box-and-whiskers series. It is possible to use both QAbstractItemModel and box-and-whiskers series data API to
+    manipulate data.
+    VBoxPlotModelMapper keeps the series and the model in sync.
 
-    The following QML example would create a bar series with three bar sets (assuming the
-    model has at least four columns). Each bar set would contain data starting from row 1. The name of a set would be
+    The following QML example would create a box-and-whiskers series with three box sets (assuming the
+    model has at least four columns). Each box set would contain data starting from row 1. The name of a set would be
     defined by the horizontal header (of the column).
     \code
         BarSeries {
@@ -58,7 +58,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \property QVBoxPlotModelMapper::series
-    \brief Defines the QPieSeries object that is used by the mapper.
+    \brief Defines the QBoxPlotSeries object that is used by the mapper.
 
     All the data in the series is discarded when it is set to the mapper.
     When new series is specified the old series is disconnected (it preserves its data)
@@ -81,46 +81,46 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \property QVBoxPlotModelMapper::firstBarSetColumn
-    \brief Defines which column of the model is used as the data source for the first bar set
+    \property QVBoxPlotModelMapper::firstBoxSetColumn
+    \brief Defines which column of the model is used as the data source for the first box-and-whiskers set
     Default value is: -1 (invalid mapping)
 */
 /*!
-    \qmlproperty int VBarModelMapper::firstBarSetColumn
-    Defines which column of the model is used as the data source for the first bar set. Default value
+    \qmlproperty int VBarModelMapper::firstBoxSetColumn
+    Defines which column of the model is used as the data source for the first box-and-whiskers set. Default value
     is: -1 (invalid mapping).
 */
 
 /*!
-    \property QVBoxPlotModelMapper::lastBarSetColumn
-    \brief Defines which column of the model is used as the data source for the last bar set
+    \property QVBoxPlotModelMapper::lastBoxSetColumn
+    \brief Defines which column of the model is used as the data source for the last box-and-whiskers set
     Default value is: -1 (invalid mapping)
 */
 /*!
-    \qmlproperty int VBarModelMapper::lastBarSetColumn
-    Defines which column of the model is used as the data source for the last bar set. Default
+    \qmlproperty int VBarModelMapper::lastBoxSetColumn
+    Defines which column of the model is used as the data source for the last box-and-whiskers set. Default
     value is: -1 (invalid mapping).
 */
 
 /*!
     \property QVBoxPlotModelMapper::firstRow
-    \brief Defines which row of the model contains the first values of the QBarSets in the series.
+    \brief Defines which row of the model contains the first values of the QBoxSets in the series.
     Minimal and default value is: 0
 */
 /*!
-    \qmlproperty int VBarModelMapper::firstRow
-    Defines which row of the model contains the first values of the QBarSets in the series.
+    \qmlproperty int VBoxPlotModelMapper::firstRow
+    Defines which row of the model contains the first values of the QBoxSets in the series.
     The default value is 0.
 */
 
 /*!
     \property QVBoxPlotModelMapper::rowCount
-    \brief Defines the number of rows of the model that are mapped as the data for QAbstractBarSeries
+    \brief Defines the number of rows of the model that are mapped as the data for QBoxPlotSeries
     Minimal and default value is: -1 (count limited by the number of rows in the model)
 */
 /*!
-    \qmlproperty int VBarModelMapper::rowCount
-    Defines the number of rows of the model that are mapped as the data for QAbstractBarSeries. The default value is
+    \qmlproperty int VBoxModelMapper::rowCount
+    Defines the number of rows of the model that are mapped as the data for QBoxPlotSeries. The default value is
     -1 (count limited by the number of rows in the model)
 */
 
@@ -137,13 +137,13 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QVBoxPlotModelMapper::firstBarSetColumnChanged()
-    Emitted when the firstBarSetColumn has changed.
+    \fn void QVBoxPlotModelMapper::firstBoxSetColumnChanged()
+    Emitted when the firstBoxSetColumn has changed.
 */
 
 /*!
-    \fn void QVBoxPlotModelMapper::lastBarSetColumnChanged()
-    Emitted when the lastBarSetColumn has changed.
+    \fn void QVBoxPlotModelMapper::lastBoxSetColumnChanged()
+    Emitted when the lastBoxSetColumn has changed.
 */
 
 /*!
