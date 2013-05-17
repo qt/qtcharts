@@ -42,7 +42,6 @@ public:
 
 public: // From QBoxSet
     Q_INVOKABLE void append(qreal value) { QBoxSet::append(value); }
-    Q_INVOKABLE void remove(const int index, const int count = 1) { QBoxSet::remove(index, count); }
     Q_INVOKABLE void replace(int index, qreal value) { QBoxSet::replace(index, value); }
     Q_INVOKABLE qreal at(int index) { return QBoxSet::at(index); }
 

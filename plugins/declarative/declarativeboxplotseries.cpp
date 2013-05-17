@@ -27,7 +27,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 DeclarativeBoxSet::DeclarativeBoxSet(QObject *parent)
-    : QBoxSet(parent)
+    : QBoxSet("", parent)
 {
     connect(this, SIGNAL(valuesAdded(int,int)), this, SLOT(handleCountChanged(int,int)));
     connect(this, SIGNAL(valuesRemoved(int,int)), this, SLOT(handleCountChanged(int,int)));
@@ -50,9 +50,6 @@ QVariantList DeclarativeBoxSet::values()
 
 void DeclarativeBoxSet::setValues(QVariantList values)
 {
-    while (count())
-        remove(count() - 1);
-
     for (int i(0); i < values.count(); i++) {
         if (values.at(i).canConvert(QVariant::Double))
             QBoxSet::append(values[i].toDouble());
