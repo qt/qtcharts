@@ -249,10 +249,13 @@ void QAreaSeries::setPen(const QPen &pen)
     }
 }
 
-QPen  QAreaSeries::pen() const
+QPen QAreaSeries::pen() const
 {
     Q_D(const QAreaSeries);
-    return d->m_pen;
+    if (d->m_pen == QChartPrivate::defaultPen())
+        return QPen();
+    else
+        return d->m_pen;
 }
 
 /*!
@@ -273,7 +276,10 @@ void QAreaSeries::setBrush(const QBrush &brush)
 QBrush QAreaSeries::brush() const
 {
     Q_D(const QAreaSeries);
-    return d->m_brush;
+    if (d->m_brush == QChartPrivate::defaultBrush())
+        return QBrush();
+    else
+        return d->m_brush;
 }
 
 void QAreaSeries::setColor(const QColor &color)

@@ -476,7 +476,7 @@ void tst_QBarSet::customize()
     series->append(set2);
 
     QVERIFY(set1->brush() == brush);    // Should be customized
-    QVERIFY(set2->brush() != QBrush()); // Should be decorated by theme
+    QVERIFY(set2->brush() == QBrush()); // Setting empty brush doesn't reset to theme brush
 
     // Remove sets from series
     series->take(set1);
@@ -490,8 +490,8 @@ void tst_QBarSet::customize()
 
     series->append(set1);
     series->append(set2);
-    QVERIFY(set1->labelBrush() == brush);       // Should be customized
-    QVERIFY(set2->labelBrush() != QBrush());    // Should be decorated by theme
+    QVERIFY(set1->labelBrush() == brush);    // Should be customized
+    QVERIFY(set2->labelBrush() == QBrush()); // Setting empty brush doesn't reset to theme brush
 
     // Test label font
     // Note: QFont empty constructor creates font with application's default font, so the font may or may not be the

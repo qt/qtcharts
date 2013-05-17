@@ -458,7 +458,10 @@ void QAbstractAxis::setLinePen(const QPen &pen)
 */
 QPen QAbstractAxis::linePen() const
 {
-    return d_ptr->m_axisPen;
+    if (d_ptr->m_axisPen == QChartPrivate::defaultPen())
+        return QPen();
+    else
+        return d_ptr->m_axisPen;
 }
 
 //TODO: remove me 2.0
@@ -474,7 +477,7 @@ void QAbstractAxis::setLinePenColor(QColor color)
 
 QColor QAbstractAxis::linePenColor() const
 {
-    return d_ptr->m_axisPen.color();
+    return linePen().color();
 }
 
 /*!
@@ -522,7 +525,10 @@ void QAbstractAxis::setGridLinePen(const QPen &pen)
 */
 QPen QAbstractAxis::gridLinePen() const
 {
-    return d_ptr->m_gridLinePen;
+    if (d_ptr->m_gridLinePen == QChartPrivate::defaultPen())
+        return QPen();
+    else
+        return d_ptr->m_gridLinePen;
 }
 
 void QAbstractAxis::setLabelsVisible(bool visible)
@@ -554,7 +560,10 @@ void QAbstractAxis::setLabelsPen(const QPen &pen)
 */
 QPen QAbstractAxis::labelsPen() const
 {
-    return d_ptr->m_labelsPen;
+    if (d_ptr->m_labelsPen == QChartPrivate::defaultPen())
+        return QPen();
+    else
+        return d_ptr->m_labelsPen;
 }
 
 /*!
@@ -573,7 +582,10 @@ void QAbstractAxis::setLabelsBrush(const QBrush &brush)
 */
 QBrush  QAbstractAxis::labelsBrush() const
 {
-    return d_ptr->m_labelsBrush;
+    if (d_ptr->m_labelsBrush == QChartPrivate::defaultBrush())
+        return QBrush();
+    else
+        return d_ptr->m_labelsBrush;
 }
 
 /*!
@@ -592,7 +604,10 @@ void QAbstractAxis::setLabelsFont(const QFont &font)
 */
 QFont QAbstractAxis::labelsFont() const
 {
-    return d_ptr->m_labelsFont;
+    if (d_ptr->m_labelsFont == QChartPrivate::defaultFont())
+        return QFont();
+    else
+        return d_ptr->m_labelsFont;
 }
 
 void QAbstractAxis::setLabelsAngle(int angle)
@@ -620,7 +635,7 @@ void QAbstractAxis::setLabelsColor(QColor color)
 
 QColor QAbstractAxis::labelsColor() const
 {
-    return d_ptr->m_labelsBrush.color();
+    return labelsBrush().color();
 }
 
 void QAbstractAxis::setTitleVisible(bool visible)
@@ -652,7 +667,10 @@ void QAbstractAxis::setTitlePen(const QPen &pen)
 */
 QPen QAbstractAxis::titlePen() const
 {
-    return d_ptr->m_titlePen;
+    if (d_ptr->m_titlePen == QChartPrivate::defaultPen())
+        return QPen();
+    else
+        return d_ptr->m_titlePen;
 }
 
 /*!
@@ -669,9 +687,12 @@ void QAbstractAxis::setTitleBrush(const QBrush &brush)
 /*!
   Returns brush used to draw title.
 */
-QBrush  QAbstractAxis::titleBrush() const
+QBrush QAbstractAxis::titleBrush() const
 {
-    return d_ptr->m_titleBrush;
+    if (d_ptr->m_titleBrush == QChartPrivate::defaultBrush())
+        return QBrush();
+    else
+        return d_ptr->m_titleBrush;
 }
 
 /*!
@@ -690,7 +711,10 @@ void QAbstractAxis::setTitleFont(const QFont &font)
 */
 QFont QAbstractAxis::titleFont() const
 {
-    return d_ptr->m_titleFont;
+    if (d_ptr->m_titleFont == QChartPrivate::defaultFont())
+        return QFont();
+    else
+        return d_ptr->m_titleFont;
 }
 
 void QAbstractAxis::setTitleText(const QString &title)
@@ -736,7 +760,10 @@ void QAbstractAxis::setShadesPen(const QPen &pen)
 */
 QPen QAbstractAxis::shadesPen() const
 {
-    return d_ptr->m_shadesPen;
+    if (d_ptr->m_shadesPen == QChartPrivate::defaultPen())
+        return QPen();
+    else
+        return d_ptr->m_shadesPen;
 }
 
 /*!
@@ -755,7 +782,10 @@ void QAbstractAxis::setShadesBrush(const QBrush &brush)
 */
 QBrush QAbstractAxis::shadesBrush() const
 {
-    return d_ptr->m_shadesBrush;
+    if (d_ptr->m_shadesBrush == QChartPrivate::defaultBrush())
+        return QBrush(Qt::SolidPattern);
+    else
+        return d_ptr->m_shadesBrush;
 }
 
 void QAbstractAxis::setShadesColor(QColor color)
@@ -770,7 +800,7 @@ void QAbstractAxis::setShadesColor(QColor color)
 
 QColor QAbstractAxis::shadesColor() const
 {
-    return d_ptr->m_shadesBrush.color();
+    return shadesBrush().color();
 }
 
 void QAbstractAxis::setShadesBorderColor(QColor color)
@@ -785,7 +815,7 @@ void QAbstractAxis::setShadesBorderColor(QColor color)
 
 QColor QAbstractAxis::shadesBorderColor() const
 {
-    return d_ptr->m_shadesPen.color();
+    return shadesPen().color();
 }
 
 

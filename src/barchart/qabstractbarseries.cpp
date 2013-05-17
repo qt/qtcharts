@@ -862,19 +862,19 @@ void QAbstractBarSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bo
             takeAtPos += step;
             takeAtPos -= (int) takeAtPos;
         }
-        if (forced || QChartPrivate::defaultBrush() == m_barSets.at(i)->brush())
+        if (forced || QChartPrivate::defaultBrush() == m_barSets.at(i)->d_ptr->m_brush)
             m_barSets.at(i)->setBrush(ChartThemeManager::colorAt(gradients.at(colorIndex), takeAtPos));
 
         // Pick label color from the opposite end of the gradient.
         // 0.3 as a boundary seems to work well.
-        if (forced || QChartPrivate::defaultBrush() == m_barSets.at(i)->labelBrush()) {
+        if (forced || QChartPrivate::defaultBrush() == m_barSets.at(i)->d_ptr->m_labelBrush) {
             if (takeAtPos < 0.3)
                 m_barSets.at(i)->setLabelBrush(ChartThemeManager::colorAt(gradients.at(index % gradients.size()), 1));
             else
                 m_barSets.at(i)->setLabelBrush(ChartThemeManager::colorAt(gradients.at(index % gradients.size()), 0));
         }
 
-        if (forced || QChartPrivate::defaultPen() == m_barSets.at(i)->pen()) {
+        if (forced || QChartPrivate::defaultPen() == m_barSets.at(i)->d_ptr->m_pen) {
             QColor c = ChartThemeManager::colorAt(gradients.at(index % gradients.size()), 0.0);
             m_barSets.at(i)->setPen(c);
         }

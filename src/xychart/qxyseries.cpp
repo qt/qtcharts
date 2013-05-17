@@ -432,7 +432,10 @@ void QXYSeries::setPen(const QPen &pen)
 QPen QXYSeries::pen() const
 {
     Q_D(const QXYSeries);
-    return d->m_pen;
+    if (d->m_pen == QChartPrivate::defaultPen())
+        return QPen();
+    else
+        return d->m_pen;
 }
 
 /*!
@@ -452,7 +455,10 @@ void QXYSeries::setBrush(const QBrush &brush)
 QBrush QXYSeries::brush() const
 {
     Q_D(const QXYSeries);
-    return d->m_brush;
+    if (d->m_brush == QChartPrivate::defaultBrush())
+        return QBrush();
+    else
+        return d->m_brush;
 }
 
 void QXYSeries::setColor(const QColor &color)

@@ -406,7 +406,10 @@ void QBarSet::setPen(const QPen &pen)
 */
 QPen QBarSet::pen() const
 {
-    return d_ptr->m_pen;
+    if (d_ptr->m_pen == QChartPrivate::defaultPen())
+        return QPen();
+    else
+        return d_ptr->m_pen;
 }
 
 /*!
@@ -426,7 +429,10 @@ void QBarSet::setBrush(const QBrush &brush)
 */
 QBrush QBarSet::brush() const
 {
-    return d_ptr->m_brush;
+    if (d_ptr->m_brush == QChartPrivate::defaultBrush())
+        return QBrush();
+    else
+        return d_ptr->m_brush;
 }
 
 /*!
@@ -446,7 +452,10 @@ void QBarSet::setLabelBrush(const QBrush &brush)
 */
 QBrush QBarSet::labelBrush() const
 {
-    return d_ptr->m_labelBrush;
+    if (d_ptr->m_labelBrush == QChartPrivate::defaultBrush())
+        return QBrush();
+    else
+        return d_ptr->m_labelBrush;
 }
 
 /*!

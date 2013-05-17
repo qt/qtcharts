@@ -76,6 +76,7 @@ protected:
     friend class HorizontalBarChartItem;
     friend class HorizontalStackedBarChartItem;
     friend class HorizontalPercentBarChartItem;
+    friend class BarSet;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
