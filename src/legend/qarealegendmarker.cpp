@@ -27,7 +27,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QAreaLegendMarker
-    \brief QAreaLegendMarker object
+    \brief QAreaLegendMarker object.
     \mainclass
 
     QAreaLegendMarker is related to QAreaSeries. One QAreaSeries results in one marker.

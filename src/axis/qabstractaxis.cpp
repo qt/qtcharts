@@ -41,7 +41,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \qmlclass AbstractAxis QAbstractAxis
-    \brief The AbstractAxis is a base element used for specialized axis elements
+    \brief The AbstractAxis is a base element used for specialized axis elements.
 
     Each series can be bound to only one horizontal and vertical axis.
 

@@ -36,7 +36,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QAbstractBarSeries
-    \brief Series for creating a bar chart
+    \brief Series for creating a bar chart.
     \mainclass
 
     QAbstractBarSeries represents a series of data shown as bars. The purpose of this class is to draw bars to

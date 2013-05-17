@@ -30,7 +30,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QBarSeries
-    \brief Series for creating bar chart
+    \brief Series for creating bar chart.
     \mainclass
 
     QBarSeries represents a series of data shown as bars. The purpose of this class is to draw bars
@@ -65,7 +65,7 @@ QBarSeries::QBarSeries(QObject *parent)
 }
 
 /*!
-    Returns QChartSeries::SeriesTypeBar.
+    Returns QAbstractSeries::SeriesTypeBar.
 */
 QAbstractSeries::SeriesType QBarSeries::type() const
 {

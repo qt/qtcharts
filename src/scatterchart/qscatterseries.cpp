@@ -124,8 +124,8 @@
 */
 
 /*!
-    \fn QChartSeriesType QScatterSeries::type() const
-    Returns QChartSeries::SeriesTypeScatter.
+    \fn QAbstractSeries::SeriesType QScatterSeries::type() const
+    Returns QAbstractSeries::SeriesTypeScatter.
     \sa QAbstractSeries, SeriesType
 */
 

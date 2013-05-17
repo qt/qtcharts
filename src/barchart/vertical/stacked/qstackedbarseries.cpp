@@ -29,7 +29,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QStackedBarSeries
-    \brief Series for creating stacked bar chart
+    \brief Series for creating stacked bar chart.
     \mainclass
 
     QStackedBarSeries represents a series of data shown as bars. The purpose of this class is to draw bars
@@ -73,7 +73,7 @@ QStackedBarSeries::~QStackedBarSeries()
         d->m_chart->removeSeries(this);
 }
 /*!
-    Returns QChartSeries::SeriesTypeStackedBar.
+    Returns QAbstractSeries::SeriesTypeStackedBar.
 */
 QAbstractSeries::SeriesType QStackedBarSeries::type() const
 {

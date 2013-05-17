@@ -38,7 +38,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QLegend
-    \brief Legend object
+    \brief Legend object.
     \mainclass
 
     QLegend is a graphical object for displaying the legend of the chart. Legend state is updated by QChart, when

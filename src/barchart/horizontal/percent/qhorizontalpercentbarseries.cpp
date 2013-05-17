@@ -28,7 +28,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QHorizontalPercentBarSeries
-    \brief Series for creating horizontal percent bar chart
+    \brief Series for creating horizontal percent bar chart.
     \mainclass
 
     QHorizontalPercentBarSeries represents a series of data shown as bars. The purpose of this class is to draw bars
@@ -62,7 +62,7 @@ QHorizontalPercentBarSeries::QHorizontalPercentBarSeries(QObject *parent) :
 }
 
 /*!
-    Returns QChartSeries::SeriesTypeHorizontalPercentBar.
+    Returns QAbstractSeries::SeriesTypeHorizontalPercentBar.
 */
 QAbstractSeries::SeriesType QHorizontalPercentBarSeries::type() const
 {

@@ -32,7 +32,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QLegendMarker
-    \brief LegendMarker object
+    \brief LegendMarker object.
     \mainclass
 
     QLegendMarker is abstract object that can be used to access markers inside QLegend. Legend marker consists of two

@@ -75,7 +75,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \qmlclass DateTimeAxis QDateTimeAxis
-    \brief The DateTimeAxis element is used for manipulating chart's axes
+    \brief The DateTimeAxis element is used for manipulating chart's axes.
     \inherits AbstractAxis
 
     The labels can be configured by setting an appropriate DateTime format.

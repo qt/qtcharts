@@ -42,6 +42,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \property QHXYModelMapper::series
     \brief Defines the QXYSeries object that is used by the mapper.
+
     All the data in the series is discarded when it is set to the mapper.
     When new series is specified the old series is disconnected (it preserves its data)
 */
@@ -64,7 +65,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \property QHXYModelMapper::xRow
-    \brief Defines which row of the model is kept in sync with the x values of the QXYSeries
+    \brief Defines which row of the model is kept in sync with the x values of the QXYSeries.
+
     Default value is: -1 (invalid mapping)
 */
 /*!
@@ -75,7 +77,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \property QHXYModelMapper::yRow
-    \brief Defines which row of the model is kept in sync with the  y values of the QXYSeries
+    \brief Defines which row of the model is kept in sync with the  y values of the QXYSeries.
+
     Default value is: -1 (invalid mapping)
 */
 /*!
@@ -87,6 +90,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \property QHXYModelMapper::firstColumn
     \brief Defines which column of the model contains the data for the first point of the series.
+
     Minimal and default value is: 0
 */
 /*!
@@ -97,7 +101,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \property QHXYModelMapper::columnCount
-    \brief Defines the number of columns of the model that are mapped as the data for series
+    \brief Defines the number of columns of the model that are mapped as the data for series.
+
     Minimal and default value is: -1 (count limited by the number of columns in the model)
 */
 /*!

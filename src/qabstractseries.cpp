@@ -112,6 +112,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \property QAbstractSeries::opacity
     \brief The opacity of the series.
+
     By default the opacity is 1.0. The valid values range from 0.0 (transparent) to 1.0 (opaque).
 */
 /*!
@@ -199,7 +200,7 @@ QChart *QAbstractSeries::chart() const
 }
 
 /*!
-    \brief Sets the visibility of the series to true
+    \brief Sets the visibility of the series to true.
 
     \sa setVisible(), isVisible()
 */
@@ -209,7 +210,7 @@ void QAbstractSeries::show()
 }
 
 /*!
-    \brief Sets the visibility of the series to false
+    \brief Sets the visibility of the series to false.
 
     \sa setVisible(), isVisible()
 */

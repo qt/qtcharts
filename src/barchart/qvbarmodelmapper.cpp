@@ -24,7 +24,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QVBarModelMapper
-    \brief Vertical model mapper for bar series
+    \brief Vertical model mapper for bar series.
     \mainclass
 
     Model mappers allow you to use QAbstractItemModel derived models as a data source for a chart series.
@@ -82,7 +82,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \property QVBarModelMapper::firstBarSetColumn
-    \brief Defines which column of the model is used as the data source for the first bar set
+    \brief Defines which column of the model is used as the data source for the first bar set.
+
     Default value is: -1 (invalid mapping)
 */
 /*!
@@ -93,7 +94,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \property QVBarModelMapper::lastBarSetColumn
-    \brief Defines which column of the model is used as the data source for the last bar set
+    \brief Defines which column of the model is used as the data source for the last bar set.
+
     Default value is: -1 (invalid mapping)
 */
 /*!
@@ -105,6 +107,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \property QVBarModelMapper::firstRow
     \brief Defines which row of the model contains the first values of the QBarSets in the series.
+
     Minimal and default value is: 0
 */
 /*!
@@ -115,7 +118,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \property QVBarModelMapper::rowCount
-    \brief Defines the number of rows of the model that are mapped as the data for QAbstractBarSeries
+    \brief Defines the number of rows of the model that are mapped as the data for QAbstractBarSeries.
+
     Minimal and default value is: -1 (count limited by the number of rows in the model)
 */
 /*!

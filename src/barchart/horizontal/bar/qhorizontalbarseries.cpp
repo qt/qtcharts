@@ -31,7 +31,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QHorizontalBarSeries
-    \brief Series for creating horizontal bar chart
+    \brief Series for creating horizontal bar chart.
     \mainclass
 
     QHorizontalBarSeries represents a series of data shown as bars. The purpose of this class is to draw bars

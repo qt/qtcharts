@@ -27,7 +27,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QXYLegendMarker
-    \brief QXYLegendMarker object
+    \brief QXYLegendMarker object.
     \mainclass
 
     QXYLegendMarker is related to QXYSeries derived classes. Each marker is related to one series.

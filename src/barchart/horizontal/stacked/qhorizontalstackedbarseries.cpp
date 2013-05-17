@@ -27,7 +27,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \class QHorizontalStackedBarSeries
-    \brief Series for creating horizontal stacked bar chart
+    \brief Series for creating horizontal stacked bar chart.
     \mainclass
 
     QHorizontalStackedBarSeries represents a series of data shown as bars. The purpose of this class is to draw bars
@@ -72,7 +72,7 @@ QHorizontalStackedBarSeries::~QHorizontalStackedBarSeries()
 }
 
 /*!
-    Returns QChartSeries::SeriesTypeHorizontalStackedBar.
+    Returns QAbstractSeries::SeriesTypeHorizontalStackedBar.
 */
 QAbstractSeries::SeriesType QHorizontalStackedBarSeries::type() const
 {

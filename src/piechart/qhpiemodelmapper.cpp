@@ -79,7 +79,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \property QHPieModelMapper::valuesRow
-    \brief Defines which row of the model is kept in sync with the values of the pie's slices
+    \brief Defines which row of the model is kept in sync with the values of the pie's slices.
+
     Default value is: -1 (invalid mapping)
 */
 /*!
@@ -90,7 +91,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \property QHPieModelMapper::labelsRow
-    \brief Defines which row of the model is kept in sync with the labels of the pie's slices
+    \brief Defines which row of the model is kept in sync with the labels of the pie's slices.
+
     Default value is: -1 (invalid mapping)
 */
 /*!
@@ -102,6 +104,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \property QHPieModelMapper::firstColumn
     \brief Defines which column of the model contains the first slice value.
+
     Minimal and default value is: 0
 */
 /*!
@@ -112,7 +115,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \property QHPieModelMapper::columnCount
-    \brief Defines the number of columns of the model that are mapped as the data for QPieSeries
+    \brief Defines the number of columns of the model that are mapped as the data for QPieSeries.
+
     Minimal and default value is: -1 (count limited by the number of columns in the model)
 */
 /*!

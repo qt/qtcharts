@@ -199,7 +199,7 @@ QAreaSeries::~QAreaSeries()
 }
 
 /*!
-    Returns QChartSeries::SeriesTypeArea.
+    Returns QAbstractSeries::SeriesTypeArea.
 */
 QAbstractSeries::SeriesType QAreaSeries::type() const
 {

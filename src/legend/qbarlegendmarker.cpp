@@ -27,7 +27,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QBarLegendMarker
-    \brief QBarLegendMarker object
+    \brief QBarLegendMarker object.
     \mainclass
 
     QBarLegendMarker is related to QAbstractBarSeries derived classes. With bar series, each marker is related to one QBarSet.

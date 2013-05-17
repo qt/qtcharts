@@ -29,7 +29,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QPercentBarSeries
-    \brief Series for creating percent bar chart
+    \brief Series for creating percent bar chart.
     \mainclass
 
     QPercentBarSeries represents a series of data shown as bars. The purpose of this class is to draw bars
@@ -73,7 +73,7 @@ QPercentBarSeries::~QPercentBarSeries()
 }
 
 /*!
-    Returns QChartSeries::SeriesTypePercentBar.
+    Returns QAbstractSeries::SeriesTypePercentBar.
 */
 QAbstractSeries::SeriesType QPercentBarSeries::type() const
 {

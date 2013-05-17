@@ -27,7 +27,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QBarSet
-    \brief Building block for different bar charts
+    \brief Building block for different bar charts.
 
     QBarSet represents one set of bars. Set of bars contains one data value for each category.
     First value of set is assumed to belong to first category, second to second category and so on.
@@ -50,36 +50,36 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \property QBarSet::label
-    Defines the label of the barSet.
+    Defines the label of the bar set.
 */
 /*!
     \qmlproperty string BarSet::label
-    Defines the label of the barSet.
+    Defines the label of the bar set.
 */
 
 /*!
     \property QBarSet::pen
-    \brief Defines the pen used by the barSet.
+    \brief Defines the pen used by the bar set.
 */
 
 /*!
     \property QBarSet::brush
-    \brief Defines the brush used by the barSet.
+    \brief Defines the brush used by the bar set.
 */
 
 /*!
     \property QBarSet::labelBrush
-    \brief Defines the brush used by the barSet's label.
+    \brief Defines the brush used by the bar set's label.
 */
 
 /*!
     \property QBarSet::labelFont
-    \brief Defines the font used by the barSet's label.
+    \brief Defines the font used by the bar set's label.
 */
 
 /*!
     \qmlproperty Font BarSet::labelFont
-    Defines the font used by the barSet's label.
+    Defines the font used by the bar set's label.
 
     See the \l {Font} {QML Font Element} for detailed documentation.
 */
@@ -119,49 +119,49 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \fn void QBarSet::clicked(int index)
 
-    The signal is emitted if the user clicks with a mouse on top of barset.
+    The signal is emitted if the user clicks with a mouse on top of bar set.
     Clicked bar inside set is indexed by \a index
 */
 
 /*!
     \fn void QBarSet::hovered(bool status)
 
-    The signal is emitted if mouse is hovered on top of barset.
-    Parameter \a status is true, if mouse entered on top of barset, false if mouse left from top of barset.
+    The signal is emitted if mouse is hovered on top of bar set.
+    Parameter \a status is true, if mouse entered on top of bar set, false if mouse left from top of bar set.
 */
 
 
 /*!
     \fn void QBarSet::labelChanged()
-    This signal is emitted when the label of the barSet has changed.
+    This signal is emitted when the label of the bar set has changed.
     \sa label
 */
 /*!
     \qmlsignal BarSet::onLabelChanged()
-    This signal is emitted when the label of the barSet has changed.
+    This signal is emitted when the label of the bar set has changed.
 */
 
 /*!
     \fn void QBarSet::penChanged()
-    This signal is emitted when the pen of the barSet has changed.
+    This signal is emitted when the pen of the bar set has changed.
     \sa pen
 */
 
 /*!
     \fn void QBarSet::brushChanged()
-    This signal is emitted when the brush of the barSet has changed.
+    This signal is emitted when the brush of the bar set has changed.
     \sa brush
 */
 
 /*!
     \fn void QBarSet::labelBrushChanged()
-    This signal is emitted when the brush of the barSet's label has changed.
+    This signal is emitted when the brush of the bar set's label has changed.
     \sa labelBrush
 */
 
 /*!
     \fn void QBarSet::labelFontChanged()
-    This signal is emitted when the font of the barSet's label has changed.
+    This signal is emitted when the font of the bar set's label has changed.
     \sa labelBrush
 */
 
@@ -234,12 +234,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \qmlproperty int BarSet::count
-    The count of values on the barset
+    The count of values on the bar set
 */
 
 /*!
     \qmlproperty QVariantList BarSet::values
-    The values of the barset. You can set either a list of reals or a list of points as values. If you set a list of
+    The values of the bar set. You can set either a list of reals or a list of points as values. If you set a list of
     reals as values, the values are automatically completed to points by using the index of a value as it's
     x-coordinate. For example:
     \code
@@ -258,7 +258,7 @@ QBarSet::QBarSet(const QString label, QObject *parent)
 }
 
 /*!
-    Destroys the barset.
+    Destroys the bar set.
 */
 QBarSet::~QBarSet()
 {
@@ -295,7 +295,7 @@ void QBarSet::append(const qreal value)
 
 /*!
     Appends a list of reals to set. Works like append with single real value. The \a values in list
-    are appended to end of barset
+    are appended to end of bar set.
     \sa append()
 */
 void QBarSet::append(const QList<qreal> &values)
@@ -379,7 +379,7 @@ int QBarSet::count() const
 }
 
 /*!
-    Returns sum of all values in barset.
+    Returns sum of all values in the bar set.
 */
 qreal QBarSet::sum() const
 {
@@ -413,7 +413,7 @@ QPen QBarSet::pen() const
 }
 
 /*!
-    Sets brush for the set. Bars of this set are drawn using \a brush
+    Sets brush for the set. Bars of this set are drawn using \a brush.
 */
 void QBarSet::setBrush(const QBrush &brush)
 {
@@ -436,7 +436,7 @@ QBrush QBarSet::brush() const
 }
 
 /*!
-    Sets \a brush of the values that are drawn on top of this barset
+    Sets \a brush of the values that are drawn on top of this bar set.
 */
 void QBarSet::setLabelBrush(const QBrush &brush)
 {
@@ -448,7 +448,7 @@ void QBarSet::setLabelBrush(const QBrush &brush)
 }
 
 /*!
-    Returns brush of the values that are drawn on top of this barset
+    Returns brush of the values that are drawn on top of this bar set.
 */
 QBrush QBarSet::labelBrush() const
 {
@@ -459,7 +459,7 @@ QBrush QBarSet::labelBrush() const
 }
 
 /*!
-    Sets the \a font for values that are drawn on top of this barset
+    Sets the \a font for values that are drawn on top of this bar set.
 */
 void QBarSet::setLabelFont(const QFont &font)
 {
@@ -472,7 +472,7 @@ void QBarSet::setLabelFont(const QFont &font)
 }
 
 /*!
-    Returns the pen for values that are drawn on top of this barset
+    Returns the pen for values that are drawn on top of this bar set.
 */
 QFont QBarSet::labelFont() const
 {
@@ -480,7 +480,7 @@ QFont QBarSet::labelFont() const
 }
 
 /*!
-    Returns the color of the brush of barset.
+    Returns the color of the brush of bar set.
 */
 QColor QBarSet::color()
 {
@@ -488,7 +488,7 @@ QColor QBarSet::color()
 }
 
 /*!
-    Sets the \a color of brush for this barset
+    Sets the \a color of brush for this bar set.
 */
 void QBarSet::setColor(QColor color)
 {
@@ -508,7 +508,7 @@ void QBarSet::setColor(QColor color)
 }
 
 /*!
-    Returns the color of pen of this barset
+    Returns the color of pen of this bar set.
 */
 QColor QBarSet::borderColor()
 {
@@ -516,7 +516,7 @@ QColor QBarSet::borderColor()
 }
 
 /*!
-    Sets the color of pen for this barset
+    Sets the color of pen for this bar set.
 */
 void QBarSet::setBorderColor(QColor color)
 {
@@ -529,7 +529,7 @@ void QBarSet::setBorderColor(QColor color)
 }
 
 /*!
-    Returns the color of labels of this barset
+    Returns the color of labels of this bar set.
 */
 QColor QBarSet::labelColor()
 {
@@ -537,7 +537,7 @@ QColor QBarSet::labelColor()
 }
 
 /*!
-    Sets the color of labels for this barset
+    Sets the color of labels for this bar set.
 */
 void QBarSet::setLabelColor(QColor color)
 {

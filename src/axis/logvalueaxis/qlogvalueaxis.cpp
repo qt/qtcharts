@@ -42,7 +42,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \qmlclass LogValueAxis QLogValueAxis
-    \brief The LogValueAxis element is used for manipulating chart's axes
+    \brief The LogValueAxis element is used for manipulating chart's axes.
     \inherits AbstractAxis
 
     \note If a LogValueAxis is attached to a series with one or more points with
