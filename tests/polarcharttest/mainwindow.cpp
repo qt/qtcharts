@@ -73,20 +73,20 @@ MainWindow::MainWindow(QWidget *parent) :
     m_angularTitle(QString("Angular Title")),
     m_radialTitle(QString("Radial Title")),
     m_base(2.0),
+    m_dateFormat(QString("mm-ss-zzz")),
     m_chart(0),
     m_angularAxis(0),
     m_radialAxis(0),
     m_angularAxisMode(AxisModeNone),
     m_radialAxisMode(AxisModeNone),
+    m_moreCategories(false),
     m_series1(0),
     m_series2(0),
     m_series3(0),
     m_series4(0),
     m_series5(0),
     m_series6(0),
-    m_series7(0),
-    m_dateFormat(QString("mm-ss-zzz")),
-    m_moreCategories(false)
+    m_series7(0)
 {
     ui->setupUi(this);
 
@@ -913,17 +913,17 @@ void MainWindow::arrowIndexChanged(int index)
 
 void MainWindow::angularRangeChanged(qreal min, qreal max)
 {
-    if (!qFuzzyCompare(ui->angularMinSpin->value(), min))
+    if (!qFuzzyCompare(qreal(ui->angularMinSpin->value()), min))
         ui->angularMinSpin->setValue(min);
-    if (!qFuzzyCompare(ui->angularMaxSpin->value(), max))
+    if (!qFuzzyCompare(qreal(ui->angularMaxSpin->value()), max))
         ui->angularMaxSpin->setValue(max);
 }
 
 void MainWindow::radialRangeChanged(qreal min, qreal max)
 {
-    if (!qFuzzyCompare(ui->radialMinSpin->value(), min))
+    if (!qFuzzyCompare(qreal(ui->radialMinSpin->value()), min))
         ui->radialMinSpin->setValue(min);
-    if (!qFuzzyCompare(ui->radialMaxSpin->value(), max))
+    if (!qFuzzyCompare(qreal(ui->radialMaxSpin->value()), max))
         ui->radialMaxSpin->setValue(max);
 }
 

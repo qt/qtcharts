@@ -49,8 +49,8 @@ public:
 
 protected:
     explicit ChartTheme(QChart::ChartTheme id = QChart::ChartThemeLight):m_id(id),
-        m_backgroundShades(BackgroundShadesNone),
         m_backgroundShadesBrush(Qt::SolidPattern),
+        m_backgroundShades(BackgroundShadesNone),
         m_backgroundDropShadowEnabled(false)
     {};
 public:

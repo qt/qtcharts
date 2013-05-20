@@ -40,7 +40,12 @@
 #endif
 
 #ifndef DEVELOPMENT_BUILD
+#ifdef Q_OS_ANDROID
+// Android builds do not have __DATE__
+const char *buildTime =  __TIME__;
+#else
 const char *buildTime =  __TIME__" "__DATE__;
+#endif
 const char *gitHead = "unknown";
 #else
 #include "qchartversion_p.h"

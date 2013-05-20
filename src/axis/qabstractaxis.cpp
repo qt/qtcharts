@@ -921,8 +921,8 @@ QAbstractAxisPrivate::QAbstractAxisPrivate(QAbstractAxis *q)
       m_titleBrush(QChartPrivate::defaultBrush()),
       m_titleFont(QChartPrivate::defaultFont()),
       m_shadesVisible(false),
-      m_shadesBrush(QChartPrivate::defaultBrush()),
       m_shadesPen(QChartPrivate::defaultPen()),
+      m_shadesBrush(QChartPrivate::defaultBrush()),
       m_shadesOpacity(1.0),
       m_dirty(false)
 {
