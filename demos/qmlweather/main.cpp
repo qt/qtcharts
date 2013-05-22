@@ -20,7 +20,9 @@
 
 #include <QApplication>
 #include <QtDeclarative/QDeclarativeContext>
+#include <QtDeclarative/QDeclarativeEngine>
 #include <QDebug>
+#include <QDir>
 #include "qmlapplicationviewer.h"
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
@@ -28,7 +30,12 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     QScopedPointer<QApplication> app(createApplication(argc, argv));
 
     QmlApplicationViewer viewer;
-    viewer.addImportPath(QString::fromLatin1("%1/%2").arg(QCoreApplication::applicationDirPath(), QLatin1String("imports")));
+#ifdef Q_OS_ANDROID
+    viewer.addImportPath(QString::fromLatin1("assets:/imports"));
+    viewer.engine()->addPluginPath(QString::fromLatin1("%1/../%2").arg(QDir::homePath(), QString::fromLatin1("lib")));
+#else
+    viewer.addImportPath(QString::fromLatin1("%1/%2").arg(QCoreApplication::applicationDirPath(), QString::fromLatin1("imports")));
+#endif
 //    viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
     QString appKey;
     if (argc > 1) {

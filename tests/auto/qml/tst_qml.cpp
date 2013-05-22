@@ -20,6 +20,7 @@
 #include <QtTest/QtTest>
 #include <QDeclarativeEngine>
 #include <QDeclarativeComponent>
+#include <QDir>
 #include "tst_definitions.h"
 
 class tst_QML : public QObject
@@ -126,7 +127,12 @@ void tst_QML::checkPlugin()
 {
     QFETCH(QString, source);
     QDeclarativeEngine engine;
-    engine.addImportPath(QString::fromLatin1("%1/%2").arg(QCoreApplication::applicationDirPath(), QLatin1String("imports")));
+#ifdef Q_OS_ANDROID
+    engine.addImportPath(QString::fromLatin1("assets:/imports"));
+    engine.addPluginPath(QString::fromLatin1("%1/../%2").arg(QDir::homePath(), QString::fromLatin1("lib")));
+#else
+    engine.addImportPath(QString::fromLatin1("%1/%2").arg(QCoreApplication::applicationDirPath(), QString::fromLatin1("imports")));
+#endif
     QDeclarativeComponent component(&engine);
     component.setData(source.toLatin1(), QUrl());
     QVERIFY2(!component.isError(), qPrintable(componentErrors(&component)));

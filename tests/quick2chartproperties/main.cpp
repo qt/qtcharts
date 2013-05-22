@@ -20,6 +20,8 @@
 
 #include <QtWidgets/QApplication>
 #include <QtQuick/QQuickItem>
+#include <QDir>
+#include <QtQml/QQmlEngine>
 #include "qtquick2applicationviewer.h"
 
 int main(int argc, char *argv[])
@@ -27,7 +29,12 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     QtQuick2ApplicationViewer viewer;
+#ifdef Q_OS_ANDROID
+    viewer.addImportPath(QString::fromLatin1("assets:/qml"));
+    viewer.engine()->addPluginPath(QString::fromLatin1("%1/../%2").arg(QDir::homePath(), QString::fromLatin1("lib")));
+#else
     viewer.addImportPath(QString::fromLatin1("%1/%2").arg(QCoreApplication::applicationDirPath(), QString::fromLatin1("qml")));
+#endif
     viewer.setSource(QUrl("qrc:/qml/quick2chartproperties/main.qml"));
     viewer.showExpanded();
 
