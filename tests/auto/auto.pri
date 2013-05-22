@@ -9,6 +9,13 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 }
 !contains(TARGET, ^tst_.*):TARGET = $$join(TARGET,,"tst_")
 
+android {
+    # Workaround to fix android deployment, which seems to always look for target in
+    # OUT_PWD instead of DESTDIR. Need to override the QMAKE_POST_LINK setting done
+    # in tests.pri, as "tst_" was prepended to the target.
+    QMAKE_POST_LINK = $$QMAKE_COPY $$CHART_BUILD_BIN_DIR/lib$${TARGET}.so $$OUT_PWD/lib$${TARGET}.so
+}
+
 INCLUDEPATH += ../inc
 HEADERS += ../inc/tst_definitions.h
 
