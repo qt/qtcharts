@@ -23,7 +23,6 @@
 #include <QAreaSeries>
 #include <QtQuick/QQuickView>
 #include <QtQuick/QQuickItem>
-#include <QGLWidget>
 #include <QDebug>
 #include <cmath>
 

@@ -22,7 +22,6 @@
 #include <QXYSeries>
 #include <QAreaSeries>
 #include <QDeclarativeView>
-#include <QGLWidget>
 #include <QDebug>
 #include <cmath>
 

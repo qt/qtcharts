@@ -16,14 +16,9 @@ SUBDIRS += piechartcustomization \
            qmlaxes \
            qmlcustomlegend \
            callout \
-           qmlpolarchart
-
-contains(QT_CONFIG, opengl) {
-        SUBDIRS +=  chartthemes \
-                    qmloscilloscope
-} else {
-    message("OpenGL not available. Some demos are disabled")
-}
+           qmlpolarchart \
+           qmloscilloscope \
+           chartthemes
 
 contains(QT_CONFIG, multimedia) {
         SUBDIRS += audio
