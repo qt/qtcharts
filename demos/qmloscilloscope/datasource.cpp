@@ -41,16 +41,16 @@ DataSource::DataSource(QDeclarativeView *appViewer, QObject *parent) :
 
 void DataSource::update(QAbstractSeries *series)
 {
-    QXYSeries *xySeries = qobject_cast<QXYSeries *>(series);
-    Q_ASSERT(xySeries);
+    if (series) {
+        QXYSeries *xySeries = static_cast<QXYSeries *>(series);
+        m_index++;
+        if (m_index > m_data.count() - 1)
+            m_index = 0;
 
-    m_index++;
-    if (m_index > m_data.count() - 1)
-        m_index = 0;
-
-    QList<QPointF> points = m_data.at(m_index);
-    // Use replace instead of clear + append, it's optimized for performance
-    xySeries->replace(points);
+        QList<QPointF> points = m_data.at(m_index);
+        // Use replace instead of clear + append, it's optimized for performance
+        xySeries->replace(points);
+    }
 }
 
 void DataSource::generateData(int type, int rowCount, int colCount)
