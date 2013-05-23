@@ -33,10 +33,16 @@ class DeclarativeBoxSet : public QBoxSet
 {
     Q_OBJECT
     Q_PROPERTY(QVariantList values READ values WRITE setValues)
+    Q_PROPERTY(QString label READ label WRITE setLabel)
     Q_PROPERTY(int count READ count NOTIFY countChanged)
+    Q_PROPERTY(qreal lowerExtreme READ lowerExtreme WRITE setLowerExtreme)
+    Q_PROPERTY(qreal lowerQuartile READ lowerQuartile WRITE setLowerQuartile)
+    Q_PROPERTY(qreal median READ median WRITE setMedian)
+    Q_PROPERTY(qreal upperQuartile READ upperQuartile WRITE setUpperQuartile)
+    Q_PROPERTY(qreal upperExtreme READ upperExtreme WRITE setUpperExtreme)
 
 public:
-    explicit DeclarativeBoxSet(QObject *parent = 0);
+    explicit DeclarativeBoxSet(const QString label = "", QObject *parent = 0);
     QVariantList values();
     void setValues(QVariantList values);
 
@@ -77,8 +83,9 @@ public:
 
 public:
     Q_INVOKABLE DeclarativeBoxSet *at(int index);
-    Q_INVOKABLE DeclarativeBoxSet *append(QVariantList values) { return insert(count(), values); }
-    Q_INVOKABLE DeclarativeBoxSet *insert(int index, QVariantList values);
+    Q_INVOKABLE DeclarativeBoxSet *append(const QString label, QVariantList values) { return insert(count(), label, values); }
+    Q_INVOKABLE void append(DeclarativeBoxSet *box) { QBoxPlotSeries::append(box); }
+    Q_INVOKABLE DeclarativeBoxSet *insert(int index, const QString label, QVariantList values);
     Q_INVOKABLE bool remove(QBoxSet *boxset) { return QBoxPlotSeries::remove(boxset); }
     Q_INVOKABLE void clear() { return QBoxPlotSeries::clear(); }
 

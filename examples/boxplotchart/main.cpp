@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 
 //![2]
     QBoxPlotSeries *series = new QBoxPlotSeries();
-    series->setName("Box & Whiskers");
+    series->setName("Cargotec");
 //![2]
 
     QFile stockData(":stock");
@@ -55,14 +55,13 @@ int main(int argc, char *argv[])
 //![3]
     QChart *chart = new QChart();
     chart->addSeries(series);
-    chart->setTitle("Simple boxplotchart example");
+    chart->setTitle("Cargotec's share deviation 2012")
     chart->setAnimationOptions(QChart::SeriesAnimations);
 //![3]
 
 //![4]
-    QBarCategoryAxis *axis = new QBarCategoryAxis();
     chart->createDefaultAxes();
-    chart->setAxisX(axis, series);
+    chart->axisY()->setMin(15.0);
 //![4]
 
 //![5]

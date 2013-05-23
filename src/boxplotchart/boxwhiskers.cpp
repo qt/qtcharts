@@ -117,7 +117,8 @@ void BoxWhiskers::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
     //painter->setClipRect(parentItem()->boundingRect());
     painter->setPen(m_pen);
     painter->setBrush(m_brush);
-    qreal spanY = m_data.m_maxY - m_data.m_minY;
+    //qreal spanY = m_data.m_maxY - m_data.m_minY;
+    qreal spanY = m_domain->maxY() - m_domain->minY();
     //painter->setClipRect(parentItem()->boundingRect());
     painter->scale(m_domainSize.width() / m_data.m_boxItems, m_domainSize.height() / spanY);
     painter->drawPath(m_boxPath);
@@ -134,55 +135,71 @@ void BoxWhiskers::updateGeometry()
     qreal left = 0.25 * columnWidth + columnWidth * m_data.m_seriesIndex;
     qreal right = 0.75 * columnWidth + columnWidth * m_data.m_seriesIndex;
     qreal middle = 0.5 * columnWidth + columnWidth * m_data.m_seriesIndex;
+    qreal domainMaxY = m_domain->maxY();
+    qreal domainMinY = m_domain->minY();
+
+    qreal tmpUE = m_data.m_upperExtreme;
+    if (tmpUE > domainMaxY) tmpUE = domainMaxY;
+    if (tmpUE < domainMinY) tmpUE = domainMinY;
+    qreal tmpUQ = m_data.m_upperQuartile;
+    if (tmpUQ > domainMaxY) tmpUQ = domainMaxY;
+    if (tmpUQ < domainMinY) tmpUQ = domainMinY;
+    qreal tmpLQ = m_data.m_lowerQuartile;
+    if (tmpLQ > domainMaxY) tmpLQ = domainMaxY;
+    if (tmpLQ < domainMinY) tmpLQ = domainMinY;
+    qreal tmpLE = m_data.m_lowerExtreme;
+    if (tmpLE > domainMaxY) tmpLE = domainMaxY;
+    if (tmpLE < domainMinY) tmpLE = domainMinY;
 
     //whisker = 0.35 0.75
 
     // Upper whisker
-    path.moveTo(left + m_data.m_index, m_data.m_maxY - m_data.m_upperExtreme);
-    path.lineTo(right + m_data.m_index, m_data.m_maxY - m_data.m_upperExtreme);
-    path.moveTo(middle + m_data.m_index, m_data.m_maxY - m_data.m_upperExtreme);
-    path.lineTo(middle + m_data.m_index, m_data.m_maxY - m_data.m_upperQuartile);
-    path.closeSubpath();
+    if (m_data.m_upperExtreme <= domainMaxY && m_data.m_upperExtreme >= domainMinY) {
+        path.moveTo(left + m_data.m_index, domainMaxY - m_data.m_upperExtreme);
+        path.lineTo(right + m_data.m_index, domainMaxY - m_data.m_upperExtreme);
+    }
+    if ((tmpUE - tmpUQ) > 0.0) {
+        path.moveTo(middle + m_data.m_index, domainMaxY - tmpUE);
+        path.lineTo(middle + m_data.m_index, domainMaxY - tmpUQ);
+        path.closeSubpath();
+    }
 
     // Middle Box
-    path.addRect(left + m_data.m_index, m_data.m_maxY - m_data.m_upperQuartile,
-                 0.5 * columnWidth, m_data.m_upperQuartile - m_data.m_lowerQuartile);
+    if ((tmpUQ - tmpLQ) > 0.0)
+        path.addRect(left + m_data.m_index, domainMaxY - tmpUQ, 0.5 * columnWidth, tmpUQ - tmpLQ);
 
     // Median/mean line
-    path.moveTo(left + m_data.m_index, m_data.m_maxY - m_data.m_median);
-    path.lineTo(right + m_data.m_index, m_data.m_maxY - m_data.m_median);
+    if (m_data.m_median < domainMaxY && m_data.m_median > domainMinY) {
+        path.moveTo(left + m_data.m_index, domainMaxY - m_data.m_median);
+        path.lineTo(right + m_data.m_index, domainMaxY - m_data.m_median);
+    }
 
     // Lower whisker
-    path.moveTo(left + m_data.m_index, m_data.m_maxY - m_data.m_lowerExtreme);
-    path.lineTo(right + m_data.m_index, m_data.m_maxY - m_data.m_lowerExtreme);
-    path.moveTo(middle + m_data.m_index, m_data.m_maxY - m_data.m_lowerExtreme);
-    path.lineTo(middle + m_data.m_index, m_data.m_maxY - m_data.m_lowerQuartile);
+    if (m_data.m_lowerExtreme <= domainMaxY && m_data.m_lowerExtreme >= domainMinY) {
+        path.moveTo(left + m_data.m_index, domainMaxY - m_data.m_lowerExtreme);
+        path.lineTo(right + m_data.m_index, domainMaxY - m_data.m_lowerExtreme);
+    }
+    if ((tmpLQ - tmpLE) > 0.0) {
+        path.moveTo(middle + m_data.m_index, domainMaxY - tmpLE);
+        path.lineTo(middle + m_data.m_index, domainMaxY - tmpLQ);
+    }
+
     path.closeSubpath();
 
     m_boxPath = path;
 
     updateBoundingRect();
-
-//    qreal scaleY = m_domainSize.height() / (m_data.m_maxY - m_data.m_minY);
-//    qreal scaleX = m_domainSize.width() / m_data.m_boxItems;
-//    QRectF br = path.boundingRect();
-//    m_boundingRect = QRectF( br.x() * scaleX, br.y() * scaleY, br.width() * scaleX, br.height() * scaleY);
-
-    if (m_data.m_index == 5) {
-        //qDebug() << "myValue = " << myValue;
-        //qDebug() << "m_data.m_upperExtreme" << m_data.m_upperExtreme;
-        //qDebug() << "m_boundingRect = " << m_boundingRect;
-//        qDebug() << "x = " << m_boundingRect.x() << ", y = " << m_boundingRect.y() << ", width = "
-//                 << m_boundingRect.width() << ", height = " << m_boundingRect.height();
-    }
 }
 
 void BoxWhiskers::updateBoundingRect()
 {
-    qreal scaleY = m_domainSize.height() / (m_data.m_maxY - m_data.m_minY);
+    //qreal scaleY = m_domainSize.height() / (m_data.m_maxY - m_data.m_minY);
+    qreal scaleY = m_domainSize.height() / (m_domain->maxY() - m_domain->minY());
     qreal scaleX = m_domainSize.width() / m_data.m_boxItems;
     QRectF br = m_boxPath.boundingRect();
-    m_boundingRect = QRectF( br.x() * scaleX, br.y() * scaleY, br.width() * scaleX, br.height() * scaleY);
+
+    m_boundingRect = QRectF( br.x() * scaleX, br.y() * scaleY,
+                             br.width() * scaleX, br.height() * scaleY);
 }
 
 #include "moc_boxwhiskers_p.cpp"

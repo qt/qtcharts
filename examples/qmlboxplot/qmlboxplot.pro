@@ -8,4 +8,5 @@ SOURCES += main.cpp
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
 
 OTHER_FILES += \
-    qml/qmlboxplot/main.qml
+    qml/qmlboxplot/main.qml \
+    qml/qmlboxplot/box.qml

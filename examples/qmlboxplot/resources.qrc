@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>qml/qmlboxplot/main.qml</file>
+        <file>qml/qmlboxplot/box.qml</file>
     </qresource>
 </RCC>

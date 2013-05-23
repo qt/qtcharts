@@ -33,7 +33,9 @@ BoxPlotChartItem::BoxPlotChartItem(QBoxPlotSeries *series, QGraphicsItem* item) 
     ChartItem(series->d_func(), item),
     m_series(series),
     m_animation(0),
-    m_animate(0)
+    m_animate(0),
+    m_domainMaxY(0.0),
+    m_domainMinY(0.0)
 {
     connect(series, SIGNAL(boxsetsRemoved(QList<QBoxSet*>)), this, SLOT(handleBoxsetRemove(QList<QBoxSet*>)));
     connect(series->d_func(), SIGNAL(restructuredBoxes()), this, SLOT(handleDataStructureChanged()));
@@ -151,6 +153,12 @@ void BoxPlotChartItem::handleDomainUpdated()
     foreach (BoxWhiskers *item, m_boxTable.values()) {
         // Update the domain size for each BoxWhisker item
         item->setDomainSize(domain()->size());
+        if (domain()->minY() != m_domainMinY || domain()->maxY() != m_domainMaxY) {
+            item->updateGeometry();
+            m_domainMinY = domain()->minY();
+            m_domainMaxY = domain()->maxY();
+            qDebug() << "Updating";
+        }
 
         // If the animation is set, start the animation for each BoxWhisker item
         if (m_animation) {
