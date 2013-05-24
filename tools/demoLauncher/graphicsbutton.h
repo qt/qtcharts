@@ -32,7 +32,7 @@ class GraphicsButton : public QWidget
 public:
     explicit GraphicsButton(const QString &path, QDir appFolder, const QString &app, QWidget *parent = 0);
     ~GraphicsButton();
-q
+
 protected:
     void mousePressEvent(QMouseEvent *event);
     void paintEvent(QPaintEvent *event);
