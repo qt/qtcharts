@@ -72,14 +72,21 @@ void HorizontalAxis::updateGeometry()
     QRectF titleBoundingRect;
     QString titleText = axis()->titleText();
     if (!titleText.isEmpty() && titleItem()->isVisible()) {
-        QFontMetrics fn(title->font());
         int size(0);
         size = gridRect.width();
 
-        if (fn.boundingRect(titleText).width() > size) {
+        QGraphicsSimpleTextItem dummyTitle;
+        dummyTitle.setFont(axis()->titleFont());
+        dummyTitle.setText(axis()->titleText());
+        QRectF dummyRect = dummyTitle.boundingRect();
+
+        if (dummyRect.width() > size) {
             QString string = titleText + "...";
-            while (fn.boundingRect(string).width() > size && string.length() > 3)
+            while (dummyRect.width() > size && string.length() > 3) {
                 string.remove(string.length() - 4, 1);
+                dummyTitle.setText(string);
+                dummyRect = dummyTitle.boundingRect();
+            }
             title->setText(string);
         } else {
             title->setText(titleText);
@@ -200,20 +207,26 @@ void HorizontalAxis::updateGeometry()
 QSizeF HorizontalAxis::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
 {
     Q_UNUSED(constraint);
-    QFontMetrics fn(axis()->titleFont());
     QSizeF sh(0,0);
 
     if (axis()->titleText().isEmpty() || !titleItem()->isVisible())
         return sh;
 
     switch (which) {
-    case Qt::MinimumSize:
-            sh = QSizeF(fn.boundingRect("...").width(), fn.height() + (titlePadding() * 2));
+    case Qt::MinimumSize: {
+        QFontMetrics fn(axis()->titleFont());
+        sh = QSizeF(fn.boundingRect("...").width(), fn.height() + (titlePadding() * 2));
         break;
+    }
     case Qt::MaximumSize:
-    case Qt::PreferredSize:
-            sh = QSizeF(fn.boundingRect(axis()->titleText()).width(), fn.height() + (titlePadding() * 2));
+    case Qt::PreferredSize: {
+        QGraphicsSimpleTextItem dummyTitle;
+        dummyTitle.setFont(axis()->titleFont());
+        dummyTitle.setText(axis()->titleText());
+        QRectF titleRect = dummyTitle.boundingRect();
+        sh = QSizeF(titleRect.width(), titleRect.height() + (titlePadding() * 2));
         break;
+    }
     default:
         break;
     }

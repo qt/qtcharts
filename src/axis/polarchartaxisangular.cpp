@@ -224,11 +224,18 @@ void PolarChartAxisAngular::updateGeometry()
         int size(0);
         size = axisGeometry().width();
 
-        QFontMetrics titleMetrics(axis()->titleFont());
-        if (titleMetrics.boundingRect(titleText).width() > size) {
+        QGraphicsSimpleTextItem dummyTitle;
+        dummyTitle.setFont(axis()->titleFont());
+        dummyTitle.setText(titleText);
+        QRectF dummyRect = dummyTitle.boundingRect();
+
+        if (dummyRect.width() > size) {
             QString string = titleText + "...";
-            while (titleMetrics.boundingRect(string).width() > size && string.length() > 3)
+            while (dummyRect.width() > size && string.length() > 3) {
                 string.remove(string.length() - 4, 1);
+                dummyTitle.setText(string);
+                dummyRect = dummyTitle.boundingRect();
+            }
             title->setText(string);
         } else {
             title->setText(titleText);
@@ -385,9 +392,12 @@ qreal PolarChartAxisAngular::preferredAxisRadius(const QSizeF &maxSize)
     }
 
     if (!axis()->titleText().isEmpty() && axis()->isTitleVisible()) {
-        QFontMetrics titleMetrics(axis()->titleFont());
-        int titleHeight = titleMetrics.boundingRect(axis()->titleText()).height();
-        radius -= titlePadding() + (titleHeight / 2);
+        QGraphicsSimpleTextItem dummyTitle;
+        dummyTitle.setFont(axis()->titleFont());
+        dummyTitle.setText(axis()->titleText());
+        QRectF dummyRect = dummyTitle.boundingRect();
+
+        radius -= titlePadding() + (dummyRect.height() / 2.0);
         if (radius < 1.0) // safeguard
             return 1.0;
     }

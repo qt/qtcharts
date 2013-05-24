@@ -205,11 +205,18 @@ void PolarChartAxisRadial::updateGeometry()
     // Title, along the 0 axis
     QString titleText = axis()->titleText();
     if (!titleText.isEmpty() && axis()->isTitleVisible()) {
-        QFontMetrics titleMetrics(axis()->titleFont());
-        if (titleMetrics.boundingRect(titleText).width() > radius) {
+        QGraphicsSimpleTextItem dummyTitle;
+        dummyTitle.setFont(axis()->titleFont());
+        dummyTitle.setText(titleText);
+        QRectF dummyRect = dummyTitle.boundingRect();
+
+        if (dummyRect.width() > radius) {
             QString string = titleText + "...";
-            while (titleMetrics.boundingRect(string).width() > radius && string.length() > 3)
+            while (dummyRect.width() > radius && string.length() > 3) {
                 string.remove(string.length() - 4, 1);
+                dummyTitle.setText(string);
+                dummyRect = dummyTitle.boundingRect();
+            }
             title->setText(string);
         } else {
             title->setText(titleText);
