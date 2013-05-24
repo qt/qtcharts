@@ -42,8 +42,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \mainclass
 
     QBoxPlotSeries represents a series of data shown as box-and-whisker bars. The purpose of this class is to act as
-    a container for single box-and-whisker items. Each item is drawn to own slot. If chart includes multiple QBoxPlotSeries
-    items with the same index are drawn to same slot.
+    a container for single box-and-whisker items. Each item is drawn to own slot. If chart includes multiple instances of
+    QBoxPlotSeries then box-and-whiskers items with the same index are drawn to same slot.
 
     See the \l {Box and Whiskers Example} {box-and-whiskers chart example} to learn how to create a box-and-whiskers chart.
     \image examples_boxplotchart.png
@@ -53,12 +53,16 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \qmlclass BoxPlotSeries QBoxPlotSeries
-    \inherits AbstractBarSeries
+    \inherits QAbstractSeries
+
+    BoxPlotSeries represents a series of data shown as box-and-whisker bars. The purpose of this class is to act as
+    a container for single box-and-whisker items. Each item is drawn to own slot. If chart includes multiple instances of
+    BoxPlotSeries then box-and-whiskers items with the same index are drawn to same slot.
 
     The following QML shows how to create a simple box-and-whiskers chart:
     \snippet ../examples/qmlboxplot/qml/qmlboxplot/main.qml 1
     \beginfloatleft
-    \image demos_qmlchart7.png
+    \image TODO_CREATE_IMAGE.png
     \endfloat
     \clearfloat
 */
@@ -86,6 +90,45 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \fn QBoxPlotSeries::countChanged()
     \brief Signal is emitted when there is change in count of box-and-whiskers items in the series.
+*/
+/*!
+    \qmlmethod BoxPlotSeries::append(const QString label, QVariantList values)
+    Appends a new box-and-whiskers set with \a label and \a values to the series.
+ */
+/*!
+    \qmlmethod BoxPlotSeries::append(BoxSet *box)
+    Appends the \a box to the series.
+*/
+/*!
+    \qmlmethod BoxPlotSeries::insert(int index, const QString label, QVariantList values)
+    Inserts a new box-and-whiskers set with \a label and \a values at the \a index position.
+*/
+/*!
+    \qmlmethod BoxPlotSeries::remove(QBoxSet *boxset)
+    Removes the \a boxset from the series.
+*/
+/*!
+    \qmlmethod BoxPlotSeries::clear()
+    Removes all boxsets from the series. Deletes removed sets.
+*/
+
+/*!
+    \qmlsignal BoxPlotSeries::onClicked(BoxSet boxset);
+    Signal is emitted when the user clicks the \a boxset on the chart.
+*/
+/*!
+    \qmlsignal BoxPlotSeries::onHovered(bool status, BoxSet boxset);
+    Signal is emitted when there is change in hover \a status over \a boxset.
+*/
+/*!
+    \qmlsignal BoxPlotSeries::onCountChanged();
+    Signal is emitted when there is change in count of box-and-whiskers items in the series.
+*/
+/*
+    void boxsetsAdded(QList<QBoxSet *> sets);
+*/
+/*
+    void boxsetsRemoved(QList<QBoxSet *> sets);
 */
 
 /*!

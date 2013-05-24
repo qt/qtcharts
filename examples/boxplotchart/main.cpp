@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
 //![3]
     QChart *chart = new QChart();
     chart->addSeries(series);
-    chart->setTitle("Cargotec's share deviation 2012")
+    chart->setTitle("Cargotec's share deviation in 2012");
     chart->setAnimationOptions(QChart::SeriesAnimations);
 //![3]
 

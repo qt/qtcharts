@@ -55,7 +55,7 @@ void DeclarativeBoxSet::setValues(QVariantList values)
     }
 }
 
-// Declarative box&whiskers series =====================================================
+// =====================================================
 
 DeclarativeBoxPlotSeries::DeclarativeBoxPlotSeries(QDeclarativeItem *parent) :
     QBoxPlotSeries(parent),
@@ -65,6 +65,8 @@ DeclarativeBoxPlotSeries::DeclarativeBoxPlotSeries(QDeclarativeItem *parent) :
     connect(m_axes, SIGNAL(axisYChanged(QAbstractAxis*)), this, SIGNAL(axisYChanged(QAbstractAxis*)));
     connect(m_axes, SIGNAL(axisXTopChanged(QAbstractAxis*)), this, SIGNAL(axisXTopChanged(QAbstractAxis*)));
     connect(m_axes, SIGNAL(axisYRightChanged(QAbstractAxis*)), this, SIGNAL(axisYRightChanged(QAbstractAxis*)));
+    connect(this, SIGNAL(hovered(bool, QBoxSet*)), this, SLOT(onHovered(bool, QBoxSet*)));
+    connect(this, SIGNAL(clicked(QBoxSet*)), this, SLOT(onClicked(QBoxSet*)));
 }
 
 void DeclarativeBoxPlotSeries::classBegin()
@@ -100,7 +102,6 @@ void DeclarativeBoxPlotSeries::appendSeriesChildren(QDeclarativeListProperty<QOb
 
 DeclarativeBoxSet *DeclarativeBoxPlotSeries::at(int index)
 {
-    qDebug() << "DeclarativeBoxPlotSeries::at";
     QList<QBoxSet *> setList = boxSets();
     if (index >= 0 && index < setList.count())
         return qobject_cast<DeclarativeBoxSet *>(setList[index]);
@@ -118,6 +119,15 @@ DeclarativeBoxSet *DeclarativeBoxPlotSeries::insert(int index, const QString lab
     return 0;
 }
 
+void DeclarativeBoxPlotSeries::onHovered(bool status, QBoxSet *boxset)
+{
+    emit hovered(status, qobject_cast<DeclarativeBoxSet *>(boxset));
+}
+
+void DeclarativeBoxPlotSeries::onClicked(QBoxSet *boxset)
+{
+    emit clicked(qobject_cast<DeclarativeBoxSet *>(boxset));
+}
 
 #include "moc_declarativeboxplotseries.cpp"
 

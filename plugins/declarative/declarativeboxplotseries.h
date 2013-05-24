@@ -98,9 +98,13 @@ Q_SIGNALS:
     Q_REVISION(1) void axisYChanged(QAbstractAxis *axis);
     Q_REVISION(2) void axisXTopChanged(QAbstractAxis *axis);
     Q_REVISION(2) void axisYRightChanged(QAbstractAxis *axis);
+    void clicked(DeclarativeBoxSet *boxset);
+    void hovered(bool status, DeclarativeBoxSet *boxset);
 
 public Q_SLOTS:
     static void appendSeriesChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
+    void onHovered(bool status, QBoxSet *boxset);
+    void onClicked(QBoxSet *boxset);
 
 public:
     DeclarativeAxes *m_axes;

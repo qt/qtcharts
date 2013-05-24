@@ -38,8 +38,17 @@ ChartView {
         BoxSet { values: [3, 4, 4.4, 6, 7] }
         BoxSet { label: "Tok"; values: [5, 6, 7.5, 8, 12] }
         BoxSet { label: "Kol"; values: [2, 5, 5.7, 8, 9] }
-        BoxSet { label: "Nel"; values: [5, 6, 6.8, 7, 8] }
-        BoxSet { label: "Vii"; values: [4, 5, 5.2, 6, 7] }
+        BoxSet { id: nelBox
+                 label: "Nel"
+                 values: [5, 6, 6.8, 7, 8];
+                 onColorChanged: {
+                    console.log("onColorChanged")
+                 }
+        }
+        BoxSet { label: "Vii"; values: [4, 5, 5.2, 6, 7]; color: "#aa0000" }
+        //onClicked: console.log("series onClicked " + boxset.median)
+        //onHovered: console.log("series onHovered " + status + "median = " + boxset.median)
+        onCountChanged: console.log("onCountChanged")
     }
 //![2]
 
@@ -51,6 +60,7 @@ ChartView {
         MouseArea {
             anchors.fill: parent
             onClicked: {
+                nelBox.color = "#0000aa"
                 var com = Qt.createComponent("box.qml")
                 if (com.status == Component.Ready) {
                     var obj = com.createObject(moreButton)
@@ -67,9 +77,12 @@ ChartView {
                     obj.label = "mik"
                     console.log("label = " + obj.label)
                     plotSeries.append(obj)
+                    obj.color = "#aa0000"
+                    console.log("color = " + obj.color)
+                    obj.borderColor = "#00aa00"
                 } else {
                     console.log(com.errorString())
-                 }
+                }
             }
         }
     }

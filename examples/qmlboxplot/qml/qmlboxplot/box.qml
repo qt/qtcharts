@@ -25,6 +25,12 @@ BoxSet {
     id: myNewBox
     label: "Foo"
     values: [5, 6, 7, 8, 9]
+    onPenChanged: {
+        console.log("onPenChanged")
+    }
+    onColorChanged: {
+        console.log("onColorChanged")
+    }
     Component.onCompleted: {
         console.log("BoxSet completed")
     }

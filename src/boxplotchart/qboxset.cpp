@@ -32,9 +32,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
     QBoxSet represents one box-and-whiskers item. It takes fives values to create a graphical representation
     of range and three medians. There's two type of methods to give the values. The first one is with constructor
-    or append type of methods (append and operator <<). In these the values have to be given in order lower extreme,
+    or append type of methods (append and operator <<). The values have to be given in order lower extreme,
     lower quartile, median, upper quartile and upper extre. Second method is to create an empty QBoxSet instance and
-    give the values using own methods.
+    give the values using value specific methods.
 
     \mainclass
 
@@ -45,10 +45,18 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
     BoxSet represents one box-and-whiskers item. It takes fives values to create a graphical representation
     of range and three medians. There's two type of methods to give the values. The first one is with constructor
-    or append type of methods (append and operator <<). In these the values have to be given in order lower extreme,
-    lower quartile, median, upper quartile and upper extre. Second method is to create an empty BoxSet instance and
-    give the values using own methods.
+    or with append method. In these the values have to be given in order lower extreme, lower quartile, median,
+    upper quartile and upper extre. Second method is to create an empty QBoxSet instance and
+    give the values using value specific methods.
     \sa BoxPlotSeries
+*/
+/*!
+    \qmlproperty string BoxSet::label
+    Defines the label of the boxSet.
+*/
+/*!
+    \qmlproperty int BoxSet::count
+    The count of values on the box-and-whiskers set
 */
 
 /*!
@@ -65,19 +73,61 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \property QBoxSet::color
     The fill (brush) color of the box-and-whiskers set.
 */
-
+/*!
+    \qmlproperty color BoxSet::color
+    Defines the fill (brush) color of the box-and-whiskers set.
+*/
 /*!
     \property QBoxSet::borderColor
     The line (pen) color of the box-and-whiskers set.
+*/
+/*!
+    \qmlproperty color BoxSet::borderColor
+    Defines the outline color of the box-and-whiskers set.
+*/
+
+/*!
+    \qmlproperty qreal BoxSet::lowerExtreme
+    The lower extreme value of the box-and-whiskers set
+*/
+
+/*!
+    \qmlproperty qreal BoxSet::lowerQuartile
+    The lower quartile value of the box-and-whiskers set
+*/
+
+/*!
+    \qmlproperty qreal BoxSet::median
+    The median value of the box-and-whiskers set
+*/
+
+/*!
+    \qmlproperty qreal BoxSet::upperQuartile
+    The upper quartile value of the box-and-whiskers set
+*/
+
+/*!
+    \qmlproperty qreal BoxSet::upperExtreme
+    The upper extreme value of the box-and-whiskers set
 */
 
 /*!
     \fn void QBoxSet::clicked()
     The signal is emitted if the user clicks with a mouse on top of box-and-whisker item.
 */
+/*!
+    \qmlsignal BoxSet::onClicked()
+    This signal is emitted when the user clicks with a mouse on top of box-and-whisker item.
+*/
 
 /*!
     \fn void QBoxSet::hovered(bool status)
+
+    The signal is emitted if mouse is hovered on top of box-and-whisker item.
+    Parameter \a status is true, if mouse entered on top of item, false if mouse left from top of item.
+*/
+/*!
+    \qmlsignal BoxSet::onHovered(bool status)
 
     The signal is emitted if mouse is hovered on top of box-and-whisker item.
     Parameter \a status is true, if mouse entered on top of item, false if mouse left from top of item.
@@ -88,15 +138,26 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     This signal is emitted when the pen of the box-and-whisker item has changed.
     \sa pen
 */
-
+/*!
+    \qmlsignal BoxSet::onPenChanged()
+    This signal is emitted when the pen of the box-and-whisker item has changed.
+*/
 /*!
     \fn void QBoxSet::brushChanged()
     This signal is emitted when the brush of the box-and-whisker item has changed.
     \sa brush
 */
+/*!
+    \qmlsignal BoxSet::onBrushChanged()
+    This signal is emitted when the brush of the box-and-whisker item has changed.
+*/
 
 /*!
     \fn void QBoxSet::colorChanged(QColor)
+    This signal is emitted when the fill (brush) color of the box-and-whisker item has changed to \a color.
+*/
+/*!
+    \qmlsignal BoxSet::onColorChanged(QColor color)
     This signal is emitted when the fill (brush) color of the box-and-whisker item has changed to \a color.
 */
 
@@ -107,6 +168,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Parameter \a count is the number of inserted values.
     \sa append(), insert()
 */
+/*!
+    \qmlsignal BoxSet::onValuesAdded(int index, int count)
+    This signal is emitted when new values have been added to the box-and-whisker item.
+    Parameter \a index indicates the position of the first inserted value.
+    Parameter \a count is the number of inserted values.
+*/
 
 /*!
     \fn void QBoxSet::valueChanged(int index)
@@ -114,9 +181,17 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Parameter \a index indicates the position of the modified value.
     \sa at()
 */
-
+/*!
+    \qmlsignal BoxSet::onValueChanged(int index)
+    This signal is emitted values the value in the box-and-whisker item has been modified.
+    Parameter \a index indicates the position of the modified value.
+*/
 /*!
     \fn void QBoxSet::borderColorChanged(QColor)
+    This signal is emitted when the line (pen) color of the box-and-whisker item has changed to \a color.
+*/
+/*!
+    \qmlsignal BoxSet::onBorderColorChanged(QColor color)
     This signal is emitted when the line (pen) color of the box-and-whisker item has changed to \a color.
 */
 
@@ -425,6 +500,7 @@ void QBoxSet::setBorderColor(QColor color)
     QPen p = pen();
     if (p.color() != color) {
         p.setColor(color);
+        p.setStyle(Qt::SolidLine);
         setPen(p);
         emit borderColorChanged(color);
     }

@@ -112,8 +112,6 @@ void BoxPlotChartItem::handleDataStructureChanged()
 
 void BoxPlotChartItem::handleUpdatedBars()
 {
-    qDebug() << "BoxPlotChartItem::handleUpdatedBars()";
-
     foreach (BoxWhiskers *item, m_boxTable.values()) {
         item->setBrush(m_series->brush());
         item->setPen(m_series->pen());
