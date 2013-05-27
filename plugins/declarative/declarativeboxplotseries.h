@@ -86,7 +86,7 @@ public:
     Q_INVOKABLE DeclarativeBoxSet *append(const QString label, QVariantList values) { return insert(count(), label, values); }
     Q_INVOKABLE void append(DeclarativeBoxSet *box) { QBoxPlotSeries::append(box); }
     Q_INVOKABLE DeclarativeBoxSet *insert(int index, const QString label, QVariantList values);
-    Q_INVOKABLE bool remove(QBoxSet *boxset) { return QBoxPlotSeries::remove(boxset); }
+    Q_INVOKABLE bool remove(DeclarativeBoxSet *box) { return QBoxPlotSeries::remove(qobject_cast<QBoxSet *>(box)); }
     Q_INVOKABLE void clear() { return QBoxPlotSeries::clear(); }
 
 public: // from QDeclarativeParserStatus

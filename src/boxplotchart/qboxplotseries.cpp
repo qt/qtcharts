@@ -74,17 +74,17 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
         BoxPlotSeries {
             id: plotSeries
             name: "Income"
-            BoxSet { label: "Jan"; values: [3, 4, 4.4, 6, 7] }
-            BoxSet { label: "Feb"; values: [5, 6, 7.5, 8, 12] }
-            BoxSet { label: "Mar"; values: [2, 5, 5.7, 8, 9] }
-            BoxSet { label: "Apr"; values: [5, 6, 6.8, 7, 8] }
+            BoxSet { label: "Jan"; values: [3, 4, 5.1, 6.2, 8.5] }
+            BoxSet { label: "Feb"; values: [5, 6, 7.5, 8.6, 11.8] }
+            BoxSet { label: "Mar"; values: [3.2, 5, 5.7, 8, 9.2] }
+            BoxSet { label: "Apr"; values: [3.8, 5, 6.4, 7, 8] }
             BoxSet { label: "May"; values: [4, 5, 5.2, 6, 7] }
         }
     }
     \endcode
 
     \beginfloatleft
-    \image TODO_CREATE_IMAGE.png
+    \image examples_qmlboxplot.png
     \endfloat
     \clearfloat
 */
@@ -146,12 +146,14 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \qmlsignal BoxPlotSeries::onCountChanged();
     Signal is emitted when there is change in count of box-and-whiskers items in the series.
 */
-/*
-    void boxsetsAdded(QList<QBoxSet *> sets);
-*/
-/*
-    void boxsetsRemoved(QList<QBoxSet *> sets);
-*/
+/*!
+    \qmlsignal BoxPlotSeries::onBoxsetsAdded()
+    Signal is emitted when new box-and-whiskers sets are added to the series.
+ */
+/*!
+    \qmlsignal BoxPlotSeries::boxsetsRemoved()
+    Signal is emitted when new box-and-whiskers sets are removed from the series.
+ */
 
 /*!
     Constructs empty QBoxPlotSeries.

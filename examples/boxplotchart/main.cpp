@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 
 //![2]
     QBoxPlotSeries *series = new QBoxPlotSeries();
-    series->setName("Cargotec");
+    series->setName("Acme Ltd");
 //![2]
 
     QFile stockData(":stock");
@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
 //![3]
     QChart *chart = new QChart();
     chart->addSeries(series);
-    chart->setTitle("Cargotec's share deviation in 2012");
+    chart->setTitle("Acme's share deviation in 2012");
     chart->setAnimationOptions(QChart::SeriesAnimations);
 //![3]
 
