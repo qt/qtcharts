@@ -60,7 +60,29 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     BoxPlotSeries then box-and-whiskers items with the same index are drawn to same slot.
 
     The following QML shows how to create a simple box-and-whiskers chart:
-    \snippet ../examples/qmlboxplot/qml/qmlboxplot/main.qml 1
+    \code
+    import QtQuick 1.0
+    import QtCommercial.Chart 1.1
+
+    ChartView {
+        title: "Box Plot series"
+        width: 400
+        height: 300
+        theme: ChartView.ChartThemeBrownSand
+        legend.alignment: Qt.AlignBottom
+
+        BoxPlotSeries {
+            id: plotSeries
+            name: "Income"
+            BoxSet { label: "Jan"; values: [3, 4, 4.4, 6, 7] }
+            BoxSet { label: "Feb"; values: [5, 6, 7.5, 8, 12] }
+            BoxSet { label: "Mar"; values: [2, 5, 5.7, 8, 9] }
+            BoxSet { label: "Apr"; values: [5, 6, 6.8, 7, 8] }
+            BoxSet { label: "May"; values: [4, 5, 5.2, 6, 7] }
+        }
+    }
+    \endcode
+
     \beginfloatleft
     \image TODO_CREATE_IMAGE.png
     \endfloat

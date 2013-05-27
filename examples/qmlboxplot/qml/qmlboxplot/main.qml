@@ -29,63 +29,50 @@ ChartView {
     theme: ChartView.ChartThemeBrownSand
     legend.alignment: Qt.AlignBottom
 
-//![1]
-//![2]
     BoxPlotSeries {
         id: plotSeries
         name: "Income"
-        //axisX: BarCategoryAxis { categories: ["Jan", "Feb", "Mar", "Apr", "May"] }
-        BoxSet { values: [3, 4, 4.4, 6, 7] }
-        BoxSet { label: "Tok"; values: [5, 6, 7.5, 8, 12] }
-        BoxSet { label: "Kol"; values: [2, 5, 5.7, 8, 9] }
-        BoxSet { id: nelBox
-                 label: "Nel"
-                 values: [5, 6, 6.8, 7, 8];
-                 onColorChanged: {
-                    console.log("onColorChanged")
-                 }
-        }
-        BoxSet { label: "Vii"; values: [4, 5, 5.2, 6, 7]; color: "#aa0000" }
-        //onClicked: console.log("series onClicked " + boxset.median)
-        //onHovered: console.log("series onHovered " + status + "median = " + boxset.median)
-        onCountChanged: console.log("onCountChanged")
+        BoxSet { label: "Jan"; values: [3, 4, 4.4, 6, 7] }
+        BoxSet { label: "Feb"; values: [5, 6, 7.5, 8, 12] }
+        BoxSet { label: "Mar"; values: [2, 5, 5.7, 8, 9] }
+        BoxSet { label: "Apr"; values: [5, 6, 6.8, 7, 8] }
+        BoxSet { label: "May"; values: [4, 5, 5.2, 6, 7] }
     }
-//![2]
 
-    Rectangle {
-        id: moreButton
-        width: 50
-        height: 50
-        color: "gray"
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                nelBox.color = "#0000aa"
-                var com = Qt.createComponent("box.qml")
-                if (com.status == Component.Ready) {
-                    var obj = com.createObject(moreButton)
-                    obj.lowerExtreme = 1.2
-                    console.log("lowerExtreme = " + obj.lowerExtreme)
-                    obj.lowerQuartile = 2.2
-                    console.log("lowerQuartile = " + obj.lowerQuartile)
-                    obj.median = 3.2
-                    console.log("median = " + obj.median)
-                    obj.upperQuartile = 4.2
-                    console.log("upperQuartile = " + obj.upperQuartile)
-                    obj.upperExtreme = 5.2
-                    console.log("upperExtreme = " + obj.upperExtreme)
-                    obj.label = "mik"
-                    console.log("label = " + obj.label)
-                    plotSeries.append(obj)
-                    obj.color = "#aa0000"
-                    console.log("color = " + obj.color)
-                    obj.borderColor = "#00aa00"
-                } else {
-                    console.log(com.errorString())
-                }
-            }
-        }
-    }
+//    Rectangle {
+//        id: moreButton
+//        width: 50
+//        height: 50
+//        color: "gray"
+//        MouseArea {
+//            anchors.fill: parent
+//            onClicked: {
+//                nelBox.color = "#0000aa"
+//                var com = Qt.createComponent("box.qml")
+//                if (com.status == Component.Ready) {
+//                    var obj = com.createObject(moreButton)
+//                    obj.lowerExtreme = 1.2
+//                    console.log("lowerExtreme = " + obj.lowerExtreme)
+//                    obj.lowerQuartile = 2.2
+//                    console.log("lowerQuartile = " + obj.lowerQuartile)
+//                    obj.median = 3.2
+//                    console.log("median = " + obj.median)
+//                    obj.upperQuartile = 4.2
+//                    console.log("upperQuartile = " + obj.upperQuartile)
+//                    obj.upperExtreme = 5.2
+//                    console.log("upperExtreme = " + obj.upperExtreme)
+//                    obj.label = "mik"
+//                    console.log("label = " + obj.label)
+//                    plotSeries.append(obj)
+//                    obj.color = "#aa0000"
+//                    console.log("color = " + obj.color)
+//                    obj.borderColor = "#00aa00"
+//                } else {
+//                    console.log(com.errorString())
+//                }
+//            }
+//        }
+//    }
 
 //![3]
 }
