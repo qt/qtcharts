@@ -23,7 +23,6 @@
 #include "abstractchartlayout_p.h"
 #include "qabstractaxis.h"
 #include "qabstractaxis_p.h"
-#include <QFontMetrics>
 #include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -59,7 +58,6 @@ void PolarChartAxisAngular::updateGeometry()
 
     qreal radius = axisGeometry().height() / 2.0;
 
-    QFontMetrics fn(axis()->labelsFont());
     QRectF previousLabelRect;
     QRectF firstLabelRect;
 
@@ -124,7 +122,7 @@ void PolarChartAxisAngular::updateGeometry()
             const QRectF &rect = labelItem->boundingRect();
             QPointF labelCenter = rect.center();
             labelItem->setTransformOriginPoint(labelCenter.x(), labelCenter.y());
-            QRectF boundingRect = labelBoundingRect(fn, labelList.at(i));
+            QRectF boundingRect = textBoundingRect(axis()->labelsFont(), labelList.at(i), axis()->labelsAngle());
             boundingRect.moveCenter(labelCenter);
             QPointF positionDiff(rect.topLeft() - boundingRect.topLeft());
 
@@ -221,28 +219,9 @@ void PolarChartAxisAngular::updateGeometry()
     // Title, centered above the chart
     QString titleText = axis()->titleText();
     if (!titleText.isEmpty() && axis()->isTitleVisible()) {
-        int size(0);
-        size = axisGeometry().width();
+        title->setText(truncatedText(axis()->titleFont(), titleText, 0.0, axisGeometry().width(), Qt::Horizontal, QRectF()));
 
-        QGraphicsSimpleTextItem dummyTitle;
-        dummyTitle.setFont(axis()->titleFont());
-        dummyTitle.setText(titleText);
-        QRectF dummyRect = dummyTitle.boundingRect();
-
-        if (dummyRect.width() > size) {
-            QString string = titleText + "...";
-            while (dummyRect.width() > size && string.length() > 3) {
-                string.remove(string.length() - 4, 1);
-                dummyTitle.setText(string);
-                dummyRect = dummyTitle.boundingRect();
-            }
-            title->setText(string);
-        } else {
-            title->setText(titleText);
-        }
-
-        QRectF titleBoundingRect;
-        titleBoundingRect = title->boundingRect();
+        QRectF titleBoundingRect = title->boundingRect();
         QPointF titleCenter = center - titleBoundingRect.center();
         title->setPos(titleCenter.x(), axisGeometry().top() - qreal(titlePadding()) * 2.0 - titleBoundingRect.height() - labelHeight);
     }
@@ -339,7 +318,6 @@ qreal PolarChartAxisAngular::preferredAxisRadius(const QSizeF &maxSize)
         // This is a horrible way to find out the maximum radius for angular axis and its labels.
         // It just increments the radius down until everyhing fits the constraint size.
         // Proper way would be to actually calculate it but this seems to work reasonably fast as it is.
-        QFontMetrics fm(font);
         bool nextTickVisible = false;
         for (int i = 0; i < layout.size(); ) {
             if ((i == layout.size() - 1)
@@ -377,7 +355,7 @@ qreal PolarChartAxisAngular::preferredAxisRadius(const QSizeF &maxSize)
                 continue;
             }
 
-            QRectF boundingRect = labelBoundingRect(fm, labelList.at(i));
+            QRectF boundingRect = textBoundingRect(axis()->labelsFont(), labelList.at(i), axis()->labelsAngle());
             QPointF labelPoint = QLineF::fromPolar(radius + tickWidth(), 90.0 - labelCoordinate).p2();
 
             boundingRect = moveLabelToPosition(labelCoordinate, labelPoint, boundingRect);
@@ -392,12 +370,9 @@ qreal PolarChartAxisAngular::preferredAxisRadius(const QSizeF &maxSize)
     }
 
     if (!axis()->titleText().isEmpty() && axis()->isTitleVisible()) {
-        QGraphicsSimpleTextItem dummyTitle;
-        dummyTitle.setFont(axis()->titleFont());
-        dummyTitle.setText(axis()->titleText());
-        QRectF dummyRect = dummyTitle.boundingRect();
+        QRectF titleRect = textBoundingRect(axis()->titleFont(), axis()->titleText());
 
-        radius -= titlePadding() + (dummyRect.height() / 2.0);
+        radius -= titlePadding() + (titleRect.height() / 2.0);
         if (radius < 1.0) // safeguard
             return 1.0;
     }

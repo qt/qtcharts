@@ -23,7 +23,6 @@
 #include "qlogvalueaxis.h"
 #include "abstractchartlayout_p.h"
 #include <QGraphicsLayout>
-#include <QFontMetrics>
 #include <qmath.h>
 #include <QDebug>
 
@@ -87,7 +86,6 @@ QSizeF ChartLogValueAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint
 {
     Q_UNUSED(constraint)
 
-    QFontMetrics fn(axis()->labelsFont());
     QSizeF sh;
 
     QSizeF base = VerticalAxis::sizeHint(which, constraint);
@@ -106,26 +104,24 @@ QSizeF ChartLogValueAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint
 
     switch (which) {
     case Qt::MinimumSize: {
-        QRectF boundingRect = labelBoundingRect(fn, "...");
-        width = boundingRect.width() + labelPadding();
-        width += base.width();
+        QRectF boundingRect = textBoundingRect(axis()->labelsFont(), "...", axis()->labelsAngle());
+        width = boundingRect.width() + labelPadding() + base.width() + 1.0;
         height = boundingRect.height() / 2.0;
         sh = QSizeF(width, height);
         break;
     }
     case Qt::PreferredSize: {
-        int labelWidth = 0;
-        int firstHeight = -1;
+        qreal labelWidth = 0.0;
+        qreal firstHeight = -1.0;
         foreach (const QString& s, ticksList) {
-            QRect rect = labelBoundingRect(fn, s);
+            QRectF rect = textBoundingRect(axis()->labelsFont(), s, axis()->labelsAngle());
             labelWidth = qMax(rect.width(), labelWidth);
             height = rect.height();
-            if (firstHeight < 0)
+            if (firstHeight < 0.0)
                 firstHeight = height;
         }
-        width = labelWidth + labelPadding() + 2; //two pixels of tolerance
-        width += base.width();
-        height = qMax(height, qreal(firstHeight)) / 2.0;
+        width = labelWidth + labelPadding() + base.width() + 2.0; //two pixels of tolerance
+        height = qMax(height, firstHeight) / 2.0;
         sh = QSizeF(width, height);
         break;
     }

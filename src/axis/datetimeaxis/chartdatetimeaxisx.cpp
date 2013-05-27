@@ -24,7 +24,6 @@
 #include "abstractchartlayout_p.h"
 #include <QGraphicsLayout>
 #include <QDateTime>
-#include <QFontMetrics>
 #include <qmath.h>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -85,7 +84,6 @@ QSizeF ChartDateTimeAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint
 {
     Q_UNUSED(constraint)
 
-    QFontMetrics fn(axis()->labelsFont());
     QSizeF sh;
 
     QSizeF base = HorizontalAxis::sizeHint(which, constraint);
@@ -100,26 +98,24 @@ QSizeF ChartDateTimeAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint
 
     switch (which) {
     case Qt::MinimumSize: {
-        QRectF boundingRect = labelBoundingRect(fn, "...");
+        QRectF boundingRect = textBoundingRect(axis()->labelsFont(), "...", axis()->labelsAngle());
         width = boundingRect.width() / 2.0;
-        height = boundingRect.height() + labelPadding();
-        height += base.height();
+        height = boundingRect.height() + labelPadding() + base.height() + 1.0;
         sh = QSizeF(width, height);
         break;
     }
     case Qt::PreferredSize: {
-        int labelHeight = 0;
-        int firstWidth = -1;
+        qreal labelHeight = 0.0;
+        qreal firstWidth = -1.0;
         foreach (const QString& s, ticksList) {
-            QRect rect = labelBoundingRect(fn, s);
+            QRectF rect = textBoundingRect(axis()->labelsFont(), s, axis()->labelsAngle());
             labelHeight = qMax(rect.height(), labelHeight);
             width = rect.width();
-            if (firstWidth < 0)
+            if (firstWidth < 0.0)
                 firstWidth = width;
         }
-        height = labelHeight + labelPadding();
-        height += base.height();
-        width = qMax(width, qreal(firstWidth)) / 2.0;
+        height = labelHeight + labelPadding() + base.height() + 1.0;
+        width = qMax(width, firstWidth) / 2.0;
         sh = QSizeF(width, height);
         break;
     }

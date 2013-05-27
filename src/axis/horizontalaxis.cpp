@@ -20,7 +20,6 @@
 
 #include "horizontalaxis_p.h"
 #include "qabstractaxis_p.h"
-#include <QFontMetrics>
 #include <qmath.h>
 #include <QDebug>
 
@@ -65,32 +64,13 @@ void HorizontalAxis::updateGeometry()
         arrowItem->setLine(gridRect.left(), axisRect.top(), gridRect.right(), axisRect.top());
 
     qreal width = 0;
-    QFontMetrics fn(axis()->labelsFont());
 
     //title
     int titlePad = 0;
     QRectF titleBoundingRect;
     QString titleText = axis()->titleText();
     if (!titleText.isEmpty() && titleItem()->isVisible()) {
-        int size(0);
-        size = gridRect.width();
-
-        QGraphicsSimpleTextItem dummyTitle;
-        dummyTitle.setFont(axis()->titleFont());
-        dummyTitle.setText(axis()->titleText());
-        QRectF dummyRect = dummyTitle.boundingRect();
-
-        if (dummyRect.width() > size) {
-            QString string = titleText + "...";
-            while (dummyRect.width() > size && string.length() > 3) {
-                string.remove(string.length() - 4, 1);
-                dummyTitle.setText(string);
-                dummyRect = dummyTitle.boundingRect();
-            }
-            title->setText(string);
-        } else {
-            title->setText(titleText);
-        }
+        title->setText(truncatedText(axis()->titleFont(), titleText, 0.0, gridRect.width(), Qt::Horizontal, QRectF()));
 
         titlePad = titlePadding();
         titleBoundingRect = title->boundingRect();
@@ -104,7 +84,6 @@ void HorizontalAxis::updateGeometry()
     }
 
     for (int i = 0; i < layout.size(); ++i) {
-
         //items
         QGraphicsLineItem *gridItem = static_cast<QGraphicsLineItem*>(lines.at(i));
         QGraphicsLineItem *tickItem = static_cast<QGraphicsLineItem*>(arrow.at(i + 1));
@@ -115,18 +94,10 @@ void HorizontalAxis::updateGeometry()
 
         //label text wrapping
         QString text = labelList.at(i);
-        QRectF boundingRect = labelBoundingRect(fn, text);
+        QRectF boundingRect;
         qreal size = axisRect.bottom() - axisRect.top() - labelPadding() - titleBoundingRect.height() - (titlePad * 2);
-        if (boundingRect.height() > size) {
-            QString label = text + "...";
-            while (boundingRect.height() >= size && label.length() > 3) {
-                label.remove(label.length() - 4, 1);
-                boundingRect = labelBoundingRect(fn, label);
-            }
-            labelItem->setText(label);
-        } else {
-            labelItem->setText(text);
-        }
+        labelItem->setText(truncatedText(axis()->labelsFont(), text, axis()->labelsAngle(),
+                                         size, Qt::Vertical, boundingRect));
 
         //label transformation origin point
         const QRectF& rect = labelItem->boundingRect();
@@ -214,16 +185,13 @@ QSizeF HorizontalAxis::sizeHint(Qt::SizeHint which, const QSizeF &constraint) co
 
     switch (which) {
     case Qt::MinimumSize: {
-        QFontMetrics fn(axis()->titleFont());
-        sh = QSizeF(fn.boundingRect("...").width(), fn.height() + (titlePadding() * 2));
+        QRectF titleRect = textBoundingRect(axis()->titleFont(), "...");
+        sh = QSizeF(titleRect.width(), titleRect.height() + (titlePadding() * 2));
         break;
     }
     case Qt::MaximumSize:
     case Qt::PreferredSize: {
-        QGraphicsSimpleTextItem dummyTitle;
-        dummyTitle.setFont(axis()->titleFont());
-        dummyTitle.setText(axis()->titleText());
-        QRectF titleRect = dummyTitle.boundingRect();
+        QRectF titleRect = textBoundingRect(axis()->titleFont(), axis()->titleText());
         sh = QSizeF(titleRect.width(), titleRect.height() + (titlePadding() * 2));
         break;
     }

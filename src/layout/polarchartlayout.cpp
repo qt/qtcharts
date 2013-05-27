@@ -22,7 +22,6 @@
 #include "chartpresenter_p.h"
 #include "polarchartaxis_p.h"
 #include <QDebug>
-#include <QFontMetrics>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -58,10 +57,7 @@ QRectF PolarChartLayout::calculateAxisGeometry(const QRectF &geometry, const QLi
             && chartAxis->axis()->isTitleVisible()
             && !chartAxis->axis()->titleText().isEmpty()) {
             // If axis has angular title, adjust geometry down by the space title takes
-            QGraphicsSimpleTextItem dummyTitle;
-            dummyTitle.setFont(chartAxis->axis()->titleFont());
-            dummyTitle.setText(chartAxis->axis()->titleText());
-            QRectF dummyRect = dummyTitle.boundingRect();
+            QRectF dummyRect = chartAxis->textBoundingRect(chartAxis->axis()->titleFont(), chartAxis->axis()->titleText());
             titleHeight = (dummyRect.height() / 2.0) + chartAxis->titlePadding();
         }
     }

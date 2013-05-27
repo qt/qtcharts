@@ -24,9 +24,17 @@
 #include "abstractchartlayout_p.h"
 #include <qmath.h>
 #include <QDateTime>
-#include <QFontMetrics>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
+
+QGraphicsSimpleTextItem *dummyTextItem = 0;
+class StaticDeleter
+{
+public:
+    StaticDeleter() {}
+    ~StaticDeleter() { delete dummyTextItem; }
+};
+StaticDeleter staticDeleter;
 
 ChartAxisElement::ChartAxisElement(QAbstractAxis *axis, QGraphicsItem *item, bool intervalAxis)
     : ChartElement(item),
@@ -41,6 +49,8 @@ ChartAxisElement::ChartAxisElement(QAbstractAxis *axis, QGraphicsItem *item, boo
 
 {
     //initial initialization
+    if (!dummyTextItem)
+        dummyTextItem = new QGraphicsSimpleTextItem;
     m_arrow->setHandlesChildEvents(false);
     m_arrow->setZValue(ChartPresenter::AxisZValue);
     m_labels->setZValue(ChartPresenter::AxisZValue);
@@ -184,17 +194,42 @@ void ChartAxisElement::handleVisibleChanged(bool visible)
     if (presenter()) presenter()->layout()->invalidate();
 }
 
-QRect ChartAxisElement::labelBoundingRect(const QFontMetrics &fn, const QString &label) const
+QRectF ChartAxisElement::textBoundingRect(const QFont &font, const QString &text, qreal angle) const
 {
-    QRect boundingRect = fn.boundingRect(label);
-    // Take label rotation into account
-    if (axis()->labelsAngle()) {
+    dummyTextItem->setFont(font);
+    dummyTextItem->setText(text);
+    QRectF boundingRect = dummyTextItem->boundingRect();
+
+    // Take rotation into account
+    if (angle) {
         QTransform transform;
-        transform.rotate(axis()->labelsAngle());
+        transform.rotate(angle);
         boundingRect = transform.mapRect(boundingRect);
     }
 
     return boundingRect;
+}
+
+// boundingRect parameter returns the rotated bounding rect of the text
+QString ChartAxisElement::truncatedText(const QFont &font, const QString &text, qreal angle,
+                                        qreal maxSize, Qt::Orientation constraintOrientation,
+                                        QRectF &boundingRect) const
+{
+    QString truncatedString(text);
+    boundingRect = textBoundingRect(font, truncatedString, angle);
+    qreal checkDimension = ((constraintOrientation == Qt::Horizontal)
+                           ? boundingRect.width() : boundingRect.height());
+    if (checkDimension > maxSize) {
+        truncatedString.append("...");
+        while (checkDimension > maxSize && truncatedString.length() > 3) {
+            truncatedString.remove(truncatedString.length() - 4, 1);
+            boundingRect = textBoundingRect(font, truncatedString, angle);
+            checkDimension = ((constraintOrientation == Qt::Horizontal)
+                             ? boundingRect.width() : boundingRect.height());
+        }
+    }
+
+    return truncatedString;
 }
 
 void ChartAxisElement::handleRangeChanged(qreal min, qreal max)

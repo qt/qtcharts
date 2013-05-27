@@ -70,7 +70,9 @@ public:
     QRectF axisGeometry() const { return m_axisRect; }
     void setAxisGeometry(const QRectF &axisGeometry) { m_axisRect = axisGeometry; }
 
-    QRect labelBoundingRect(const QFontMetrics &fn, const QString &label) const;
+    QRectF textBoundingRect(const QFont &font, const QString &text, qreal angle = 0.0) const;
+    QString truncatedText(const QFont &font, const QString &text, qreal angle, qreal maxSize,
+                          Qt::Orientation constraintOrientation, QRectF &boundingRect) const;
 
     void axisSelected();
 

@@ -24,7 +24,6 @@
 #include "chartpresenter_p.h"
 #include "abstractchartlayout_p.h"
 #include <QGraphicsLayout>
-#include <QFontMetrics>
 #include <qmath.h>
 #include <QDebug>
 
@@ -78,7 +77,6 @@ QSizeF ChartCategoryAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint
 {
     Q_UNUSED(constraint)
 
-    QFontMetrics fn(axis()->labelsFont());
     QSizeF sh;
     QSizeF base = VerticalAxis::sizeHint(which, constraint);
     QStringList ticksList = m_axis->categoriesLabels();
@@ -87,20 +85,18 @@ QSizeF ChartCategoryAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint
 
     switch (which) {
     case Qt::MinimumSize: {
-        QRectF boundingRect = labelBoundingRect(fn, "...");
-        width = boundingRect.width() + labelPadding();
-        width += base.width();
+        QRectF boundingRect = textBoundingRect(axis()->labelsFont(), "...", axis()->labelsAngle());
+        width = boundingRect.width() + labelPadding() + base.width() + 1.0;
         sh = QSizeF(width, height);
         break;
     }
     case Qt::PreferredSize: {
-        int labelWidth = 0;
+        qreal labelWidth = 0.0;
         foreach (const QString& s, ticksList) {
-            QRect rect = labelBoundingRect(fn, s);
+            QRectF rect = textBoundingRect(axis()->labelsFont(), s, axis()->labelsAngle());
             labelWidth = qMax(rect.width(), labelWidth);
         }
-        width = labelWidth + labelPadding() + 1;
-        width += base.width();
+        width = labelWidth + labelPadding() + base.width() + 1.0;
         sh = QSizeF(width, height);
         break;
     }

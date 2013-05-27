@@ -23,7 +23,6 @@
 #include "abstractchartlayout_p.h"
 #include "qabstractaxis_p.h"
 #include "linearrowitem_p.h"
-#include <QFontMetrics>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -56,7 +55,6 @@ void PolarChartAxisRadial::updateGeometry()
     QGraphicsLineItem *axisLine = static_cast<QGraphicsLineItem *>(arrowItemList.at(0));
     axisLine->setLine(line);
 
-    QFontMetrics fn(axis()->labelsFont());
     QRectF previousLabelRect;
     bool firstShade = true;
     bool nextTickVisible = false;
@@ -112,7 +110,7 @@ void PolarChartAxisRadial::updateGeometry()
             QRectF labelRect = labelItem->boundingRect();
             QPointF labelCenter = labelRect.center();
             labelItem->setTransformOriginPoint(labelCenter.x(), labelCenter.y());
-            QRectF boundingRect = labelBoundingRect(fn, labelList.at(i));
+            QRectF boundingRect = textBoundingRect(axis()->labelsFont(), labelList.at(i), axis()->labelsAngle());
             boundingRect.moveCenter(labelCenter);
             QPointF positionDiff(labelRect.topLeft() - boundingRect.topLeft());
             QPointF labelPoint = center;
@@ -205,25 +203,9 @@ void PolarChartAxisRadial::updateGeometry()
     // Title, along the 0 axis
     QString titleText = axis()->titleText();
     if (!titleText.isEmpty() && axis()->isTitleVisible()) {
-        QGraphicsSimpleTextItem dummyTitle;
-        dummyTitle.setFont(axis()->titleFont());
-        dummyTitle.setText(titleText);
-        QRectF dummyRect = dummyTitle.boundingRect();
+        title->setText(truncatedText(axis()->titleFont(), titleText, 0.0, radius, Qt::Horizontal, QRectF()));
 
-        if (dummyRect.width() > radius) {
-            QString string = titleText + "...";
-            while (dummyRect.width() > radius && string.length() > 3) {
-                string.remove(string.length() - 4, 1);
-                dummyTitle.setText(string);
-                dummyRect = dummyTitle.boundingRect();
-            }
-            title->setText(string);
-        } else {
-            title->setText(titleText);
-        }
-
-        QRectF titleBoundingRect;
-        titleBoundingRect = title->boundingRect();
+        QRectF titleBoundingRect = title->boundingRect();
         QPointF titleCenter = titleBoundingRect.center();
         QPointF arrowCenter = axisLine->boundingRect().center();
         QPointF titleCenterDiff = arrowCenter - titleCenter;
