@@ -20,6 +20,7 @@
 
 #include "horizontalaxis_p.h"
 #include "qabstractaxis_p.h"
+#include "chartpresenter_p.h"
 #include <qmath.h>
 #include <QDebug>
 
@@ -47,7 +48,7 @@ void HorizontalAxis::updateGeometry()
     QList<QGraphicsItem *> labels = labelItems();
     QList<QGraphicsItem *> shades = shadeItems();
     QList<QGraphicsItem *> arrow = arrowItems();
-    QGraphicsSimpleTextItem *title = titleItem();
+    QGraphicsTextItem *title = titleItem();
 
     Q_ASSERT(labels.size() == labelList.size());
     Q_ASSERT(layout.size() == labelList.size());
@@ -70,7 +71,7 @@ void HorizontalAxis::updateGeometry()
     QRectF titleBoundingRect;
     QString titleText = axis()->titleText();
     if (!titleText.isEmpty() && titleItem()->isVisible()) {
-        title->setText(truncatedText(axis()->titleFont(), titleText, 0.0, gridRect.width(), Qt::Horizontal, QRectF()));
+        title->setHtml(ChartPresenter::truncatedText(axis()->titleFont(), titleText, qreal(0.0), gridRect.width(), Qt::Horizontal, QRectF()));
 
         titlePad = titlePadding();
         titleBoundingRect = title->boundingRect();
@@ -87,7 +88,7 @@ void HorizontalAxis::updateGeometry()
         //items
         QGraphicsLineItem *gridItem = static_cast<QGraphicsLineItem*>(lines.at(i));
         QGraphicsLineItem *tickItem = static_cast<QGraphicsLineItem*>(arrow.at(i + 1));
-        QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem *>(labels.at(i));
+        QGraphicsTextItem *labelItem = static_cast<QGraphicsTextItem *>(labels.at(i));
 
         //grid line
         gridItem->setLine(layout[i], gridRect.top(), layout[i], gridRect.bottom());
@@ -96,8 +97,8 @@ void HorizontalAxis::updateGeometry()
         QString text = labelList.at(i);
         QRectF boundingRect;
         qreal size = axisRect.bottom() - axisRect.top() - labelPadding() - titleBoundingRect.height() - (titlePad * 2);
-        labelItem->setText(truncatedText(axis()->labelsFont(), text, axis()->labelsAngle(),
-                                         size, Qt::Vertical, boundingRect));
+        labelItem->setHtml(ChartPresenter::truncatedText(axis()->labelsFont(), text, axis()->labelsAngle(),
+                                                         size, Qt::Vertical, boundingRect));
 
         //label transformation origin point
         const QRectF& rect = labelItem->boundingRect();
@@ -185,13 +186,13 @@ QSizeF HorizontalAxis::sizeHint(Qt::SizeHint which, const QSizeF &constraint) co
 
     switch (which) {
     case Qt::MinimumSize: {
-        QRectF titleRect = textBoundingRect(axis()->titleFont(), "...");
+        QRectF titleRect = ChartPresenter::textBoundingRect(axis()->titleFont(), "...");
         sh = QSizeF(titleRect.width(), titleRect.height() + (titlePadding() * 2));
         break;
     }
     case Qt::MaximumSize:
     case Qt::PreferredSize: {
-        QRectF titleRect = textBoundingRect(axis()->titleFont(), axis()->titleText());
+        QRectF titleRect = ChartPresenter::textBoundingRect(axis()->titleFont(), axis()->titleText());
         sh = QSizeF(titleRect.width(), titleRect.height() + (titlePadding() * 2));
         break;
     }

@@ -141,6 +141,9 @@ public:
     QChart::ChartType chartType() const { return m_chart->chartType(); }
     QChart *chart() { return m_chart; }
 
+    static QRectF textBoundingRect(const QFont &font, const QString &text, qreal angle = 0.0);
+    static QString truncatedText(const QFont &font, const QString &text, qreal angle, qreal maxSize,
+                                 Qt::Orientation constraintOrientation, QRectF &boundingRect);
 private:
     void createBackgroundItem();
     void createPlotAreaBackgroundItem();

@@ -92,12 +92,13 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
   \property QAbstractAxis::labelsPen
+  \deprecated
   The pen of the labels.
 */
 
 /*!
   \property QAbstractAxis::labelsBrush
-  The brush of the labels.
+  The brush of the labels. Only the color of the brush is relevant.
 */
 
 /*!
@@ -210,21 +211,22 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
   \property QAbstractAxis::titleText
-  The title of the axis. Empty by default.
+  The title of the axis. Empty by default. Axis titles support html formatting.
 */
 /*!
   \qmlproperty String AbstractAxis::titleText
-  The title of the axis. Empty by default.
+  The title of the axis. Empty by default. Axis titles support html formatting.
 */
 
 /*!
   \property QAbstractAxis::titlePen
+  \deprecated
   The pen of the title text.
 */
 
 /*!
   \property QAbstractAxis::titleBrush
-  The brush of the title text.
+  The brush of the title text. Only the color of the brush is relevant.
 */
 
 /*!
@@ -297,6 +299,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
   \fn void QAbstractAxis::labelsPenChanged(const QPen& pen)
+  \deprecated
   The pen of the axis labels has changed to \a pen.
 */
 
@@ -366,6 +369,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
   \fn void QAbstractAxis::titlePenChanged(const QPen& pen)
+  \deprecated
   The pen of the axis shades has changed to \a pen.
 */
 
@@ -544,9 +548,6 @@ bool QAbstractAxis::labelsVisible() const
     return d_ptr->m_labelsVisible;
 }
 
-/*!
-  Sets \a pen used to draw labels.
-*/
 void QAbstractAxis::setLabelsPen(const QPen &pen)
 {
     if (d_ptr->m_labelsPen != pen) {
@@ -555,9 +556,6 @@ void QAbstractAxis::setLabelsPen(const QPen &pen)
     }
 }
 
-/*!
-  Returns the pen used to labels.
-*/
 QPen QAbstractAxis::labelsPen() const
 {
     if (d_ptr->m_labelsPen == QChartPrivate::defaultPen())
@@ -651,9 +649,6 @@ bool QAbstractAxis::isTitleVisible() const
     return d_ptr->m_titleVisible;
 }
 
-/*!
-  Sets \a pen used to draw title.
-*/
 void QAbstractAxis::setTitlePen(const QPen &pen)
 {
     if (d_ptr->m_titlePen != pen) {
@@ -662,9 +657,6 @@ void QAbstractAxis::setTitlePen(const QPen &pen)
     }
 }
 
-/*!
-  Returns the pen used to title.
-*/
 QPen QAbstractAxis::titlePen() const
 {
     if (d_ptr->m_titlePen == QChartPrivate::defaultPen())

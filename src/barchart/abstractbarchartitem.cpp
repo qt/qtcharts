@@ -100,7 +100,7 @@ void AbstractBarChartItem::setLayout(const QVector<QRectF> &layout)
 
     for (int i = 0; i < m_bars.count(); i++) {
         m_bars.at(i)->setRect(layout.at(i));
-        QGraphicsSimpleTextItem *label = m_labels.at(i);
+        QGraphicsTextItem *label = m_labels.at(i);
         label->setPos(layout.at(i).center() - label->boundingRect().center());
 
     }
@@ -135,7 +135,7 @@ void AbstractBarChartItem::handleLayoutChanged()
 
 void AbstractBarChartItem::handleLabelsVisibleChanged(bool visible)
 {
-    foreach (QGraphicsSimpleTextItem *label, m_labels)
+    foreach (QGraphicsTextItem *label, m_labels)
         label->setVisible(visible);
     update();
 }
@@ -164,7 +164,7 @@ void AbstractBarChartItem::handleDataStructureChanged()
             //            m_layout.append(QRectF(0, 0, 1, 1));
 
             // Labels
-            m_labels.append(new QGraphicsSimpleTextItem(this));
+            m_labels.append(new QGraphicsTextItem(this));
         }
     }
 
@@ -206,10 +206,10 @@ void AbstractBarChartItem::handleUpdatedBars()
             bar->setBrush(barSet->m_brush);
             bar->update();
 
-            QGraphicsSimpleTextItem *label = m_labels.at(itemIndex);
-            label->setText(QString("%1").arg(barSet->value(category)));
+            QGraphicsTextItem *label = m_labels.at(itemIndex);
+            label->setHtml(QString("%1").arg(barSet->value(category)));
             label->setFont(barSet->m_labelFont);
-            label->setBrush(barSet->m_labelBrush);
+            label->setDefaultTextColor(barSet->m_labelBrush.color());
             label->update();
             itemIndex++;
         }

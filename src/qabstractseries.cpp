@@ -75,11 +75,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \property QAbstractSeries::name
-    \brief name of the series property. The name is shown in legend for QXYSeries.
+    \brief name of the series property. The name is shown in legend for series and supports html formatting.
 */
 /*!
     \qmlproperty string AbstractSeries::name
-    Name of the series. The name is shown in legend for QXYSeries.
+    Name of the series. The name is shown in legend for series and supports html formatting.
 */
 
 /*!

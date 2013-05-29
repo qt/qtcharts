@@ -110,14 +110,14 @@ void PercentBarChartItem::handleUpdatedBars()
             bar->setBrush(barSet->m_brush);
             bar->update();
 
-            QGraphicsSimpleTextItem *label = m_labels.at(itemIndex);
+            QGraphicsTextItem *label = m_labels.at(itemIndex);
             int p = m_series->d_func()->percentageAt(set, category) * 100;
             QString vString(QString::number(p));
             vString.truncate(3);
             vString.append("%");
-            label->setText(vString);
+            label->setHtml(vString);
             label->setFont(barSet->m_labelFont);
-            label->setBrush(barSet->m_labelBrush);
+            label->setDefaultTextColor(barSet->m_labelBrush.color());
             label->update();
             itemIndex++;
         }

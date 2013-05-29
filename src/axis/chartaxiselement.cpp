@@ -27,14 +27,15 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-QGraphicsSimpleTextItem *dummyTextItem = 0;
-class StaticDeleter
+static const char *labelFormatMatchString = "%[\\-\\+#\\s\\d\\.lhjztL]*([dicuoxfegXFEG])";
+static QRegExp *labelFormatMatcher = 0;
+class StaticLabelFormatMatcherDeleter
 {
 public:
-    StaticDeleter() {}
-    ~StaticDeleter() { delete dummyTextItem; }
+    StaticLabelFormatMatcherDeleter() {}
+    ~StaticLabelFormatMatcherDeleter() { delete labelFormatMatcher; }
 };
-StaticDeleter staticDeleter;
+StaticLabelFormatMatcherDeleter staticLabelFormatMatcherDeleter;
 
 ChartAxisElement::ChartAxisElement(QAbstractAxis *axis, QGraphicsItem *item, bool intervalAxis)
     : ChartElement(item),
@@ -44,13 +45,11 @@ ChartAxisElement::ChartAxisElement(QAbstractAxis *axis, QGraphicsItem *item, boo
       m_arrow(new QGraphicsItemGroup(item)),
       m_shades(new QGraphicsItemGroup(item)),
       m_labels(new QGraphicsItemGroup(item)),
-      m_title(new QGraphicsSimpleTextItem(item)),
+      m_title(new QGraphicsTextItem(item)),
       m_intervalAxis(intervalAxis)
 
 {
     //initial initialization
-    if (!dummyTextItem)
-        dummyTextItem = new QGraphicsSimpleTextItem;
     m_arrow->setHandlesChildEvents(false);
     m_arrow->setZValue(ChartPresenter::AxisZValue);
     m_labels->setZValue(ChartPresenter::AxisZValue);
@@ -130,20 +129,19 @@ void ChartAxisElement::handleLabelsAngleChanged(int angle)
 
 void ChartAxisElement::handleLabelsPenChanged(const QPen &pen)
 {
-    foreach (QGraphicsItem *item, m_labels->childItems())
-        static_cast<QGraphicsSimpleTextItem *>(item)->setPen(pen);
+    Q_UNUSED(pen)
 }
 
 void ChartAxisElement::handleLabelsBrushChanged(const QBrush &brush)
 {
     foreach (QGraphicsItem *item, m_labels->childItems())
-        static_cast<QGraphicsSimpleTextItem *>(item)->setBrush(brush);
+        static_cast<QGraphicsTextItem *>(item)->setDefaultTextColor(brush.color());
 }
 
 void ChartAxisElement::handleLabelsFontChanged(const QFont &font)
 {
     foreach (QGraphicsItem *item, m_labels->childItems())
-        static_cast<QGraphicsSimpleTextItem *>(item)->setFont(font);
+        static_cast<QGraphicsTextItem *>(item)->setFont(font);
     QGraphicsLayoutItem::updateGeometry();
     presenter()->layout()->invalidate();
 }
@@ -152,17 +150,17 @@ void ChartAxisElement::handleTitleTextChanged(const QString &title)
 {
     QGraphicsLayoutItem::updateGeometry();
     presenter()->layout()->invalidate();
-    m_title->setText(title);
+    m_title->setHtml(title);
 }
 
 void ChartAxisElement::handleTitlePenChanged(const QPen &pen)
 {
-    m_title->setPen(pen);
+    Q_UNUSED(pen)
 }
 
 void ChartAxisElement::handleTitleBrushChanged(const QBrush &brush)
 {
-    m_title->setBrush(brush);
+    m_title->setDefaultTextColor(brush.color());
 }
 
 void ChartAxisElement::handleTitleFontChanged(const QFont &font)
@@ -192,44 +190,6 @@ void ChartAxisElement::handleVisibleChanged(bool visible)
     }
 
     if (presenter()) presenter()->layout()->invalidate();
-}
-
-QRectF ChartAxisElement::textBoundingRect(const QFont &font, const QString &text, qreal angle) const
-{
-    dummyTextItem->setFont(font);
-    dummyTextItem->setText(text);
-    QRectF boundingRect = dummyTextItem->boundingRect();
-
-    // Take rotation into account
-    if (angle) {
-        QTransform transform;
-        transform.rotate(angle);
-        boundingRect = transform.mapRect(boundingRect);
-    }
-
-    return boundingRect;
-}
-
-// boundingRect parameter returns the rotated bounding rect of the text
-QString ChartAxisElement::truncatedText(const QFont &font, const QString &text, qreal angle,
-                                        qreal maxSize, Qt::Orientation constraintOrientation,
-                                        QRectF &boundingRect) const
-{
-    QString truncatedString(text);
-    boundingRect = textBoundingRect(font, truncatedString, angle);
-    qreal checkDimension = ((constraintOrientation == Qt::Horizontal)
-                           ? boundingRect.width() : boundingRect.height());
-    if (checkDimension > maxSize) {
-        truncatedString.append("...");
-        while (checkDimension > maxSize && truncatedString.length() > 3) {
-            truncatedString.remove(truncatedString.length() - 4, 1);
-            boundingRect = textBoundingRect(font, truncatedString, angle);
-            checkDimension = ((constraintOrientation == Qt::Horizontal)
-                             ? boundingRect.width() : boundingRect.height());
-        }
-    }
-
-    return truncatedString;
 }
 
 void ChartAxisElement::handleRangeChanged(qreal min, qreal max)
@@ -270,6 +230,32 @@ qreal ChartAxisElement::max() const
     return m_axis->d_ptr->max();
 }
 
+static void appendFormattedLabel(const QString &capStr, const QByteArray &array,
+                                 QStringList &labels, qreal value)
+{
+    if (capStr.isEmpty()) {
+        labels << QString();
+    } else if (capStr.at(0) == QLatin1Char('d')
+        || capStr.at(0) == QLatin1Char('i')
+        || capStr.at(0) == QLatin1Char('c')) {
+        labels << QString().sprintf(array, (qint64)value);
+    } else if (capStr.at(0) == QLatin1Char('u')
+             || capStr.at(0) == QLatin1Char('o')
+             || capStr.at(0) == QLatin1Char('x')
+             || capStr.at(0) == QLatin1Char('X')) {
+        labels << QString().sprintf(array, (quint64)value);
+    } else if (capStr.at(0) == QLatin1Char('f')
+               || capStr.at(0) == QLatin1Char('F')
+               || capStr.at(0) == QLatin1Char('e')
+               || capStr.at(0) == QLatin1Char('E')
+               || capStr.at(0) == QLatin1Char('g')
+               || capStr.at(0) == QLatin1Char('G')) {
+        labels << QString().sprintf(array, value);
+    } else {
+        labels << QString();
+    }
+}
+
 QStringList ChartAxisElement::createValueLabels(qreal min, qreal max, int ticks, const QString &format)
 {
     QStringList labels;
@@ -287,23 +273,14 @@ QStringList ChartAxisElement::createValueLabels(qreal min, qreal max, int ticks,
         }
     } else {
         QByteArray array = format.toLatin1();
+        QString capStr;
+        if (!labelFormatMatcher)
+            labelFormatMatcher = new QRegExp(labelFormatMatchString);
+        if (labelFormatMatcher->indexIn(format, 0) != -1)
+            capStr = labelFormatMatcher->cap(1);
         for (int i = 0; i < ticks; i++) {
             qreal value = min + (i * (max - min) / (ticks - 1));
-            if (format.contains("d")
-                || format.contains("i")
-                || format.contains("c")) {
-                labels << QString().sprintf(array, (qint64)value);
-            } else if (format.contains("u")
-                     || format.contains("o")
-                     || format.contains("x", Qt::CaseInsensitive)) {
-                labels << QString().sprintf(array, (quint64)value);
-            } else if (format.contains("f", Qt::CaseInsensitive)
-                     || format.contains("e", Qt::CaseInsensitive)
-                     || format.contains("g", Qt::CaseInsensitive)) {
-                labels << QString().sprintf(array, value);
-            } else {
-                labels << QString();
-            }
+            appendFormattedLabel(capStr, array, labels, value);
         }
     }
 
@@ -335,23 +312,14 @@ QStringList ChartAxisElement::createLogValueLabels(qreal min, qreal max, qreal b
         }
     } else {
         QByteArray array = format.toLatin1();
+        QString capStr;
+        if (!labelFormatMatcher)
+            labelFormatMatcher = new QRegExp(labelFormatMatchString);
+        if (labelFormatMatcher->indexIn(format, 0) != -1)
+            capStr = labelFormatMatcher->cap(1);
         for (int i = firstTick; i < ticks + firstTick; i++) {
             qreal value = qPow(base, i);
-            if (format.contains("d")
-                || format.contains("i")
-                || format.contains("c")) {
-                labels << QString().sprintf(array, (qint64)value);
-            } else if (format.contains("u")
-                     || format.contains("o")
-                     || format.contains("x", Qt::CaseInsensitive)) {
-                labels << QString().sprintf(array, (quint64)value);
-            } else if (format.contains("f", Qt::CaseInsensitive)
-                     || format.contains("e", Qt::CaseInsensitive)
-                     || format.contains("g", Qt::CaseInsensitive)) {
-                labels << QString().sprintf(array, value);
-            } else {
-                labels << QString();
-            }
+            appendFormattedLabel(capStr, array, labels, value);
         }
     }
 

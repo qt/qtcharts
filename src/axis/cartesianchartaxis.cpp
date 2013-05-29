@@ -61,18 +61,16 @@ void CartesianChartAxis::createItems(int count)
     for (int i = 0; i < count; ++i) {
         QGraphicsLineItem *arrow = new QGraphicsLineItem(this);
         QGraphicsLineItem *grid = new QGraphicsLineItem(this);
-        QGraphicsSimpleTextItem *label = new QGraphicsSimpleTextItem(this);
-        QGraphicsSimpleTextItem *title = titleItem();
+        QGraphicsTextItem *label = new QGraphicsTextItem(this);
+        QGraphicsTextItem *title = titleItem();
         arrow->setPen(axis()->linePen());
         grid->setPen(axis()->gridLinePen());
         label->setFont(axis()->labelsFont());
-        label->setPen(axis()->labelsPen());
-        label->setBrush(axis()->labelsBrush());
+        label->setDefaultTextColor(axis()->labelsBrush().color());
         label->setRotation(axis()->labelsAngle());
         title->setFont(axis()->titleFont());
-        title->setPen(axis()->titlePen());
-        title->setBrush(axis()->titleBrush());
-        title->setText(axis()->titleText());
+        title->setDefaultTextColor(axis()->titleBrush().color());
+        title->setHtml(axis()->titleText());
         arrowGroup()->addToGroup(arrow);
         gridGroup()->addToGroup(grid);
         labelGroup()->addToGroup(label);

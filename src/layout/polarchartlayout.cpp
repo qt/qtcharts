@@ -57,7 +57,7 @@ QRectF PolarChartLayout::calculateAxisGeometry(const QRectF &geometry, const QLi
             && chartAxis->axis()->isTitleVisible()
             && !chartAxis->axis()->titleText().isEmpty()) {
             // If axis has angular title, adjust geometry down by the space title takes
-            QRectF dummyRect = chartAxis->textBoundingRect(chartAxis->axis()->titleFont(), chartAxis->axis()->titleText());
+            QRectF dummyRect = ChartPresenter::textBoundingRect(chartAxis->axis()->titleFont(), chartAxis->axis()->titleText());
             titleHeight = (dummyRect.height() / 2.0) + chartAxis->titlePadding();
         }
     }

@@ -119,7 +119,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
  \property QChart::title
- Title is the name (label) of a chart. It is shown as a headline on top of the chart.
+ Title is the name (label) of a chart. It is shown as a headline on top of the chart. Chart title supports html formatting.
  */
 
 /*!

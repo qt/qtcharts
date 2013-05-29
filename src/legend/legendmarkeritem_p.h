@@ -35,7 +35,7 @@
 #include <QFont>
 #include <QBrush>
 #include <QPen>
-#include <QGraphicsSimpleTextItem>
+#include <QGraphicsTextItem>
 #include <QGraphicsLayoutItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -78,7 +78,7 @@ protected:
     QLegendMarkerPrivate *m_marker; // Knows
     QRectF m_markerRect;
     QRectF m_boundingRect;
-    QGraphicsSimpleTextItem *m_textItem;
+    QGraphicsTextItem *m_textItem;
     QGraphicsRectItem *m_rectItem;
     qreal m_margin;
     qreal m_space;

@@ -104,7 +104,7 @@ QSizeF ChartLogValueAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint
 
     switch (which) {
     case Qt::MinimumSize: {
-        QRectF boundingRect = textBoundingRect(axis()->labelsFont(), "...", axis()->labelsAngle());
+        QRectF boundingRect = ChartPresenter::textBoundingRect(axis()->labelsFont(), "...", axis()->labelsAngle());
         width = boundingRect.width() + labelPadding() + base.width() + 1.0;
         height = boundingRect.height() / 2.0;
         sh = QSizeF(width, height);
@@ -114,7 +114,7 @@ QSizeF ChartLogValueAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint
         qreal labelWidth = 0.0;
         qreal firstHeight = -1.0;
         foreach (const QString& s, ticksList) {
-            QRectF rect = textBoundingRect(axis()->labelsFont(), s, axis()->labelsAngle());
+            QRectF rect = ChartPresenter::textBoundingRect(axis()->labelsFont(), s, axis()->labelsAngle());
             labelWidth = qMax(rect.width(), labelWidth);
             height = rect.height();
             if (firstHeight < 0.0)

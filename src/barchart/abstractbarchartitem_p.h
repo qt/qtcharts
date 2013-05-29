@@ -85,7 +85,7 @@ protected:
 
     QAbstractBarSeries *m_series; // Not owned.
     QList<Bar *> m_bars;
-    QList<QGraphicsSimpleTextItem *> m_labels;
+    QList<QGraphicsTextItem *> m_labels;
     QSizeF m_oldSize;
 };
 

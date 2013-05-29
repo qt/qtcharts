@@ -20,13 +20,14 @@
 
 #include <QPainter>
 #include <QGraphicsSceneEvent>
-#include <QGraphicsSimpleTextItem>
+#include <QGraphicsTextItem>
 
 #include "qlegend.h"
 #include "qlegend_p.h"
 #include "qlegendmarker.h"
 #include "qlegendmarker_p.h"
 #include "legendmarkeritem_p.h"
+#include "chartpresenter_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -35,7 +36,7 @@ LegendMarkerItem::LegendMarkerItem(QLegendMarkerPrivate *marker, QGraphicsObject
     m_marker(marker),
     m_markerRect(0,0,10.0,10.0),
     m_boundingRect(0,0,0,0),
-    m_textItem(new QGraphicsSimpleTextItem(this)),
+    m_textItem(new QGraphicsTextItem(this)),
     m_rectItem(new QGraphicsRectItem(this)),
     m_margin(4),
     m_space(4),
@@ -99,41 +100,32 @@ QString LegendMarkerItem::label() const
 
 void LegendMarkerItem::setLabelBrush(const QBrush &brush)
 {
-    m_textItem->setBrush(brush);
+    m_textItem->setDefaultTextColor(brush.color());
 }
 
 QBrush LegendMarkerItem::labelBrush() const
 {
-    return m_textItem->brush();
+    return QBrush(m_textItem->defaultTextColor());
 }
 
 void LegendMarkerItem::setGeometry(const QRectF &rect)
 {
-    QFontMetrics fn (m_font);
-
     int width = rect.width();
-    qreal x = m_margin + m_markerRect.width() +  m_space + m_margin;
-    qreal y = qMax(m_markerRect.height()+2*m_margin,fn.height()+2*m_margin);
+    qreal x = m_margin + m_markerRect.width() + m_space + m_margin;
+    QRectF truncatedRect;
 
-    if (fn.boundingRect(m_label).width() + x > width)
-    {
-        QString string = m_label + "...";
-        while(fn.boundingRect(string).width() + x > width && string.length() > 3)
-            string.remove(string.length() - 4, 1);
-        m_textItem->setText(string);
-    }
-    else
-        m_textItem->setText(m_label);
+    m_textItem->setHtml(ChartPresenter::truncatedText(m_font, m_label, qreal(0.0), width - x, Qt::Horizontal, truncatedRect));
+
+    qreal y = qMax(m_markerRect.height() + 2 * m_margin, truncatedRect.height() + 2 * m_margin);
 
     const QRectF &textRect = m_textItem->boundingRect();
 
-
-    m_textItem->setPos(x-m_margin,y/2 - textRect.height()/2);
+    m_textItem->setPos(x - m_margin, y / 2 - textRect.height() / 2);
     m_rectItem->setRect(m_markerRect);
-    m_rectItem->setPos(m_margin,y/2  - m_markerRect.height()/2);
+    m_rectItem->setPos(m_margin, y / 2  - m_markerRect.height() / 2);
 
     prepareGeometryChange();
-    m_boundingRect = QRectF(0,0,x+textRect.width()+m_margin,y);
+    m_boundingRect = QRectF(0, 0, x + textRect.width() + m_margin, y);
 }
 
 QRectF LegendMarkerItem::boundingRect() const

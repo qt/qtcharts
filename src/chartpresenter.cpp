@@ -36,6 +36,15 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+QGraphicsTextItem *dummyTextItem = 0;
+class StaticDummyTextDeleter
+{
+public:
+    StaticDummyTextDeleter() {}
+    ~StaticDummyTextDeleter() { delete dummyTextItem; }
+};
+StaticDummyTextDeleter staticDummyTextDeleter;
+
 ChartPresenter::ChartPresenter(QChart *chart, QChart::ChartType type)
     : QObject(chart),
       m_chart(chart),
@@ -286,7 +295,7 @@ QFont ChartPresenter::titleFont() const
 void ChartPresenter::setTitleBrush(const QBrush &brush)
 {
     createTitleItem();
-    m_title->setBrush(brush);
+    m_title->setDefaultTextColor(brush.color());
     m_layout->invalidate();
 }
 
@@ -294,7 +303,7 @@ QBrush ChartPresenter::titleBrush() const
 {
     if (!m_title)
         return QBrush();
-    return m_title->brush();
+    return QBrush(m_title->defaultTextColor());
 }
 
 void ChartPresenter::setBackgroundVisible(bool visible)
@@ -376,6 +385,58 @@ QList<ChartItem *> ChartPresenter::chartItems() const
 ChartTitle *ChartPresenter::titleElement()
 {
     return m_title;
+}
+
+QRectF ChartPresenter::textBoundingRect(const QFont &font, const QString &text, qreal angle)
+{
+    if (!dummyTextItem)
+        dummyTextItem = new QGraphicsTextItem;
+
+    dummyTextItem->setFont(font);
+    dummyTextItem->setHtml(text);
+    QRectF boundingRect = dummyTextItem->boundingRect();
+
+    // Take rotation into account
+    if (angle) {
+        QTransform transform;
+        transform.rotate(angle);
+        boundingRect = transform.mapRect(boundingRect);
+    }
+
+    return boundingRect;
+}
+
+// boundingRect parameter returns the rotated bounding rect of the text
+QString ChartPresenter::truncatedText(const QFont &font, const QString &text, qreal angle,
+                                      qreal maxSize, Qt::Orientation constraintOrientation,
+                                      QRectF &boundingRect)
+{
+    QString truncatedString(text);
+    boundingRect = textBoundingRect(font, truncatedString, angle);
+    qreal checkDimension = ((constraintOrientation == Qt::Horizontal)
+                           ? boundingRect.width() : boundingRect.height());
+    if (checkDimension > maxSize) {
+        truncatedString.append("...");
+        while (checkDimension > maxSize && truncatedString.length() > 3) {
+            // Crude truncation logic - simply remove any html tag completely
+            int removeIndex(-1);
+            int removeCount(1);
+            if (truncatedString.at(truncatedString.length() - 4) == QLatin1Char('>')) {
+                removeIndex = truncatedString.lastIndexOf(QLatin1Char('<'));
+                if (removeIndex != -1)
+                    removeCount = truncatedString.length() - 3 - removeIndex;
+            }
+            if (removeIndex == -1)
+                removeIndex = truncatedString.length() - 4;
+
+            truncatedString.remove(removeIndex, removeCount);
+            boundingRect = textBoundingRect(font, truncatedString, angle);
+            checkDimension = ((constraintOrientation == Qt::Horizontal)
+                             ? boundingRect.width() : boundingRect.height());
+        }
+    }
+
+    return truncatedString;
 }
 
 #include "moc_chartpresenter_p.cpp"

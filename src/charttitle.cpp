@@ -19,6 +19,7 @@
 ****************************************************************************/
 
 #include "charttitle_p.h"
+#include "chartpresenter_p.h"
 #include <QFont>
 #include <QFontMetrics>
 #include <QDebug>
@@ -26,7 +27,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 ChartTitle::ChartTitle(QGraphicsItem *parent)
-    : QGraphicsSimpleTextItem(parent)
+    : QGraphicsTextItem(parent)
 {
 
 }
@@ -48,19 +49,7 @@ QString ChartTitle::text() const
 
 void ChartTitle::setGeometry(const QRectF &rect)
 {
-    QFontMetrics fn(font());
-
-    int width = rect.width();
-
-    if (fn.boundingRect(m_text).width() > width) {
-        QString string = m_text + "...";
-        while (fn.boundingRect(string).width() > width && string.length() > 3)
-            string.remove(string.length() - 4, 1);
-        QGraphicsSimpleTextItem::setText(string);
-    } else {
-        QGraphicsSimpleTextItem::setText(m_text);
-    }
-
+    QGraphicsTextItem::setHtml(ChartPresenter::truncatedText(font(), m_text, qreal(0.0), rect.width(), Qt::Horizontal, QRectF()));
     setPos(rect.topLeft());
 }
 
@@ -68,22 +57,25 @@ void ChartTitle::setGeometry(const QRectF &rect)
 QSizeF ChartTitle::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
 {
     Q_UNUSED(constraint);
-    QFontMetrics fn(font());
     QSizeF sh;
 
     switch (which) {
-    case Qt::MinimumSize:
-        sh = QSizeF(fn.boundingRect("...").width(), fn.height());
+    case Qt::MinimumSize: {
+        QRectF titleRect = ChartPresenter::textBoundingRect(font(), "...");
+        sh = QSizeF(titleRect.width(), titleRect.height());
         break;
+    }
     case Qt::PreferredSize:
-        sh = fn.boundingRect(m_text).size();
+    case Qt::MaximumSize: {
+        QRectF titleRect = ChartPresenter::textBoundingRect(font(), m_text);
+        sh = QSizeF(titleRect.width(), titleRect.height());
         break;
-    case Qt::MaximumSize:
-        sh = fn.boundingRect(m_text).size();
-        break;
-    case Qt::MinimumDescent:
+    }
+    case Qt::MinimumDescent: {
+        QFontMetrics fn(font());
         sh = QSizeF(0, fn.descent());
         break;
+    }
     default:
         break;
     }

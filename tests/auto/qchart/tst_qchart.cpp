@@ -754,7 +754,7 @@ void tst_QChart::titleBrush()
 {
     QFETCH(QBrush, titleBrush);
     m_chart->setTitleBrush(titleBrush);
-    QCOMPARE(m_chart->titleBrush(), titleBrush);
+    QCOMPARE(m_chart->titleBrush().color(), titleBrush.color());
 }
 
 void tst_QChart::titleFont_data()

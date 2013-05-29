@@ -85,7 +85,7 @@ QSizeF ChartCategoryAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint
 
     switch (which) {
     case Qt::MinimumSize: {
-        QRectF boundingRect = textBoundingRect(axis()->labelsFont(), "...", axis()->labelsAngle());
+        QRectF boundingRect = ChartPresenter::textBoundingRect(axis()->labelsFont(), "...", axis()->labelsAngle());
         width = boundingRect.width() + labelPadding() + base.width() + 1.0;
         sh = QSizeF(width, height);
         break;
@@ -93,7 +93,7 @@ QSizeF ChartCategoryAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint
     case Qt::PreferredSize: {
         qreal labelWidth = 0.0;
         foreach (const QString& s, ticksList) {
-            QRectF rect = textBoundingRect(axis()->labelsFont(), s, axis()->labelsAngle());
+            QRectF rect = ChartPresenter::textBoundingRect(axis()->labelsFont(), s, axis()->labelsAngle());
             labelWidth = qMax(rect.width(), labelWidth);
         }
         width = labelWidth + labelPadding() + base.width() + 1.0;

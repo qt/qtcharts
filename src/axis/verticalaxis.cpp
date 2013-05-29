@@ -20,6 +20,7 @@
 
 #include "verticalaxis_p.h"
 #include "qabstractaxis.h"
+#include "chartpresenter_p.h"
 #include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -46,7 +47,7 @@ void VerticalAxis::updateGeometry()
     QList<QGraphicsItem *> labels = labelItems();
     QList<QGraphicsItem *> shades = shadeItems();
     QList<QGraphicsItem *> arrow = arrowItems();
-    QGraphicsSimpleTextItem *title = titleItem();
+    QGraphicsTextItem *title = titleItem();
 
     Q_ASSERT(labels.size() == labelList.size());
     Q_ASSERT(layout.size() == labelList.size());
@@ -71,7 +72,7 @@ void VerticalAxis::updateGeometry()
     QRectF titleBoundingRect;
     QString titleText = axis()->titleText();
     if (!titleText.isEmpty() && titleItem()->isVisible()) {
-        title->setText(truncatedText(axis()->titleFont(), titleText, 0.0, gridRect.height(), Qt::Horizontal, QRectF()));
+        title->setHtml(ChartPresenter::truncatedText(axis()->titleFont(), titleText, qreal(0.0), gridRect.height(), Qt::Horizontal, QRectF()));
 
         titlePad = titlePadding();
         titleBoundingRect = title->boundingRect();
@@ -91,7 +92,7 @@ void VerticalAxis::updateGeometry()
         //items
         QGraphicsLineItem *gridItem = static_cast<QGraphicsLineItem *>(lines.at(i));
         QGraphicsLineItem *tickItem = static_cast<QGraphicsLineItem *>(arrow.at(i + 1));
-        QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem *>(labels.at(i));
+        QGraphicsTextItem *labelItem = static_cast<QGraphicsTextItem *>(labels.at(i));
 
         //grid line
         gridItem->setLine(gridRect.left(), layout[i], gridRect.right(), layout[i]);
@@ -100,7 +101,7 @@ void VerticalAxis::updateGeometry()
         QString text = labelList.at(i);
         QRectF boundingRect;
         qreal size = axisRect.right() - axisRect.left() - labelPadding() - titleBoundingRect.height() - (titlePad * 2);
-        labelItem->setText(truncatedText(axis()->labelsFont(), text, axis()->labelsAngle(),
+        labelItem->setHtml(ChartPresenter::truncatedText(axis()->labelsFont(), text, axis()->labelsAngle(),
                                          size, Qt::Horizontal, boundingRect));
 
         //label transformation origin point
@@ -190,13 +191,13 @@ QSizeF VerticalAxis::sizeHint(Qt::SizeHint which, const QSizeF &constraint) cons
 
     switch (which) {
     case Qt::MinimumSize: {
-        QRectF titleRect = textBoundingRect(axis()->titleFont(), "...");
+        QRectF titleRect = ChartPresenter::textBoundingRect(axis()->titleFont(), "...");
         sh = QSizeF(titleRect.height() + (titlePadding() * 2), titleRect.width());
         break;
     }
     case Qt::MaximumSize:
     case Qt::PreferredSize: {
-        QRectF titleRect = textBoundingRect(axis()->titleFont(), axis()->titleText());
+        QRectF titleRect = ChartPresenter::textBoundingRect(axis()->titleFont(), axis()->titleText());
         sh = QSizeF(titleRect.height() + (titlePadding() * 2), titleRect.width());
         break;
     }

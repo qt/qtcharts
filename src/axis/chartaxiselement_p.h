@@ -70,10 +70,6 @@ public:
     QRectF axisGeometry() const { return m_axisRect; }
     void setAxisGeometry(const QRectF &axisGeometry) { m_axisRect = axisGeometry; }
 
-    QRectF textBoundingRect(const QFont &font, const QString &text, qreal angle = 0.0) const;
-    QString truncatedText(const QFont &font, const QString &text, qreal angle, qreal maxSize,
-                          Qt::Orientation constraintOrientation, QRectF &boundingRect) const;
-
     void axisSelected();
 
     //this flag indicates that axis is used to show intervals it means labels are in between ticks
@@ -102,7 +98,7 @@ protected:
     QList<QGraphicsItem *> labelItems() { return m_labels->childItems(); }
     QList<QGraphicsItem *> shadeItems() { return m_shades->childItems(); }
     QList<QGraphicsItem *> arrowItems() { return m_arrow->childItems(); }
-    QGraphicsSimpleTextItem *titleItem() const { return m_title.data(); }
+    QGraphicsTextItem *titleItem() const { return m_title.data(); }
     QGraphicsItemGroup *gridGroup() { return m_grid.data(); }
     QGraphicsItemGroup *labelGroup() { return m_labels.data(); }
     QGraphicsItemGroup *shadeGroup() { return m_shades.data(); }
@@ -144,7 +140,7 @@ private:
     QScopedPointer<QGraphicsItemGroup> m_arrow;
     QScopedPointer<QGraphicsItemGroup> m_shades;
     QScopedPointer<QGraphicsItemGroup> m_labels;
-    QScopedPointer<QGraphicsSimpleTextItem> m_title;
+    QScopedPointer<QGraphicsTextItem> m_title;
     bool m_intervalAxis;
 };
 

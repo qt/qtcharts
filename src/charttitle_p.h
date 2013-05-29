@@ -31,11 +31,11 @@
 #define CHARTTITLE_P_H_
 
 #include "qchartglobal.h"
-#include <QGraphicsSimpleTextItem>
+#include <QGraphicsTextItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class ChartTitle : public QGraphicsSimpleTextItem
+class ChartTitle : public QGraphicsTextItem
 {
 public:
     ChartTitle(QGraphicsItem *parent = 0);

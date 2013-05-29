@@ -34,7 +34,6 @@
 #include <QGraphicsObject>
 #include <QBrush>
 #include <QPen>
-#include <QGraphicsSimpleTextItem>
 #include <QGraphicsLayoutItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE

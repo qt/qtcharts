@@ -51,7 +51,7 @@ void PolarChartAxisAngular::updateGeometry()
     QList<QGraphicsItem *> gridItemList = gridItems();
     QList<QGraphicsItem *> labelItemList = labelItems();
     QList<QGraphicsItem *> shadeItemList = shadeItems();
-    QGraphicsSimpleTextItem *title = titleItem();
+    QGraphicsTextItem *title = titleItem();
 
     QGraphicsEllipseItem *axisLine = static_cast<QGraphicsEllipseItem *>(arrowItemList.at(0));
     axisLine->setRect(axisGeometry());
@@ -73,7 +73,7 @@ void PolarChartAxisAngular::updateGeometry()
 
         QGraphicsLineItem *gridLineItem = static_cast<QGraphicsLineItem *>(gridItemList.at(i));
         QGraphicsLineItem *tickItem = static_cast<QGraphicsLineItem *>(arrowItemList.at(i + 1));
-        QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem *>(labelItemList.at(i));
+        QGraphicsTextItem *labelItem = static_cast<QGraphicsTextItem *>(labelItemList.at(i));
         QGraphicsPathItem *shadeItem = 0;
         if (i == 0)
             shadeItem = static_cast<QGraphicsPathItem *>(shadeItemList.at(0));
@@ -118,11 +118,11 @@ void PolarChartAxisAngular::updateGeometry()
 
         // Angular axis label
         if (axis()->labelsVisible() && labelVisible) {
-            labelItem->setText(labelList.at(i));
+            labelItem->setHtml(labelList.at(i));
             const QRectF &rect = labelItem->boundingRect();
             QPointF labelCenter = rect.center();
             labelItem->setTransformOriginPoint(labelCenter.x(), labelCenter.y());
-            QRectF boundingRect = textBoundingRect(axis()->labelsFont(), labelList.at(i), axis()->labelsAngle());
+            QRectF boundingRect = ChartPresenter::textBoundingRect(axis()->labelsFont(), labelList.at(i), axis()->labelsAngle());
             boundingRect.moveCenter(labelCenter);
             QPointF positionDiff(rect.topLeft() - boundingRect.topLeft());
 
@@ -219,7 +219,7 @@ void PolarChartAxisAngular::updateGeometry()
     // Title, centered above the chart
     QString titleText = axis()->titleText();
     if (!titleText.isEmpty() && axis()->isTitleVisible()) {
-        title->setText(truncatedText(axis()->titleFont(), titleText, 0.0, axisGeometry().width(), Qt::Horizontal, QRectF()));
+        title->setHtml(ChartPresenter::truncatedText(axis()->titleFont(), titleText, qreal(0.0), axisGeometry().width(), Qt::Horizontal, QRectF()));
 
         QRectF titleBoundingRect = title->boundingRect();
         QPointF titleCenter = center - titleBoundingRect.center();
@@ -245,18 +245,16 @@ void PolarChartAxisAngular::createItems(int count)
     for (int i = 0; i < count; ++i) {
         QGraphicsLineItem *arrow = new QGraphicsLineItem(presenter()->rootItem());
         QGraphicsLineItem *grid = new QGraphicsLineItem(presenter()->rootItem());
-        QGraphicsSimpleTextItem *label = new QGraphicsSimpleTextItem(presenter()->rootItem());
-        QGraphicsSimpleTextItem *title = titleItem();
+        QGraphicsTextItem *label = new QGraphicsTextItem(presenter()->rootItem());
+        QGraphicsTextItem *title = titleItem();
         arrow->setPen(axis()->linePen());
         grid->setPen(axis()->gridLinePen());
         label->setFont(axis()->labelsFont());
-        label->setPen(axis()->labelsPen());
-        label->setBrush(axis()->labelsBrush());
+        label->setDefaultTextColor(axis()->labelsBrush().color());
         label->setRotation(axis()->labelsAngle());
         title->setFont(axis()->titleFont());
-        title->setPen(axis()->titlePen());
-        title->setBrush(axis()->titleBrush());
-        title->setText(axis()->titleText());
+        title->setDefaultTextColor(axis()->titleBrush().color());
+        title->setHtml(axis()->titleText());
         arrowGroup()->addToGroup(arrow);
         gridGroup()->addToGroup(grid);
         labelGroup()->addToGroup(label);
@@ -355,7 +353,7 @@ qreal PolarChartAxisAngular::preferredAxisRadius(const QSizeF &maxSize)
                 continue;
             }
 
-            QRectF boundingRect = textBoundingRect(axis()->labelsFont(), labelList.at(i), axis()->labelsAngle());
+            QRectF boundingRect = ChartPresenter::textBoundingRect(axis()->labelsFont(), labelList.at(i), axis()->labelsAngle());
             QPointF labelPoint = QLineF::fromPolar(radius + tickWidth(), 90.0 - labelCoordinate).p2();
 
             boundingRect = moveLabelToPosition(labelCoordinate, labelPoint, boundingRect);
@@ -370,7 +368,7 @@ qreal PolarChartAxisAngular::preferredAxisRadius(const QSizeF &maxSize)
     }
 
     if (!axis()->titleText().isEmpty() && axis()->isTitleVisible()) {
-        QRectF titleRect = textBoundingRect(axis()->titleFont(), axis()->titleText());
+        QRectF titleRect = ChartPresenter::textBoundingRect(axis()->titleFont(), axis()->titleText());
 
         radius -= titlePadding() + (titleRect.height() / 2.0);
         if (radius < 1.0) // safeguard
