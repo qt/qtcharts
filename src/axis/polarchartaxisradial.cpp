@@ -209,7 +209,7 @@ void PolarChartAxisRadial::updateGeometry()
         QPointF titleCenter = titleBoundingRect.center();
         QPointF arrowCenter = axisLine->boundingRect().center();
         QPointF titleCenterDiff = arrowCenter - titleCenter;
-        title->setPos(titleCenterDiff.x() - qreal(titlePadding()) - (titleBoundingRect.height() / 2.0), titleCenterDiff.y());
+        title->setPos(titleCenterDiff.x() - titlePadding() - (titleBoundingRect.height() / 2.0), titleCenterDiff.y());
         title->setTransformOriginPoint(titleCenter);
         title->setRotation(270.0);
     }

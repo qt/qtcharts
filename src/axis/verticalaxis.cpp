@@ -68,24 +68,42 @@ void VerticalAxis::updateGeometry()
         arrowItem->setLine(axisRect.left(), gridRect.top(), axisRect.left(), gridRect.bottom());
 
     //title
-    int titlePad = 0;
     QRectF titleBoundingRect;
     QString titleText = axis()->titleText();
+    qreal availableSpace = axisRect.width() - labelPadding();
     if (!titleText.isEmpty() && titleItem()->isVisible()) {
-        title->setHtml(ChartPresenter::truncatedText(axis()->titleFont(), titleText, qreal(0.0), gridRect.height(), Qt::Horizontal, QRectF()));
+        availableSpace -= titlePadding() * 2.0;
+        qreal minimumLabelWidth = ChartPresenter::textBoundingRect(axis()->labelsFont(), "...").width();
+        QString truncatedTitle = ChartPresenter::truncatedText(axis()->titleFont(), titleText, qreal(0.0),
+                                                               gridRect.height(), Qt::Horizontal, titleBoundingRect);
+        qreal titleSpace = availableSpace - minimumLabelWidth;
+        if (titleSpace < titleBoundingRect.width()) {
+            // Need to also truncate title vertically (multiline title)
+            bool skip = false;
+            if (truncatedTitle.endsWith("...")) {
+                if (truncatedTitle.size() == 3)
+                    skip = true; // Already truncated to minimum
+                else
+                    truncatedTitle.chop(3);
+            }
+            if (!skip)
+                truncatedTitle = ChartPresenter::truncatedText(axis()->titleFont(), truncatedTitle, qreal(0.0),
+                                                               titleSpace, Qt::Vertical, titleBoundingRect);
+        }
+        title->setHtml(truncatedTitle);
 
-        titlePad = titlePadding();
         titleBoundingRect = title->boundingRect();
 
         QPointF center = gridRect.center() - titleBoundingRect.center();
-        if (axis()->alignment() == Qt::AlignLeft) {
-            title->setPos(axisRect.left() - titleBoundingRect.width() / 2 + titleBoundingRect.height() / 2 + titlePad, center.y());
-        }
-        else if (axis()->alignment() == Qt::AlignRight) {
-            title->setPos(axisRect.right() - titleBoundingRect.width() / 2 - titleBoundingRect.height() / 2 - titlePad, center.y());
-        }
+        if (axis()->alignment() == Qt::AlignLeft)
+            title->setPos(axisRect.left() - titleBoundingRect.width() / 2.0 + titleBoundingRect.height() / 2.0 + titlePadding(), center.y());
+        else if (axis()->alignment() == Qt::AlignRight)
+            title->setPos(axisRect.right() - titleBoundingRect.width() / 2.0 - titleBoundingRect.height() / 2.0 - titlePadding(), center.y());
+
         title->setTransformOriginPoint(titleBoundingRect.center());
         title->setRotation(270);
+
+        availableSpace -= titleBoundingRect.height();
     }
 
     for (int i = 0; i < layout.size(); ++i) {
@@ -100,22 +118,21 @@ void VerticalAxis::updateGeometry()
         //label text wrapping
         QString text = labelList.at(i);
         QRectF boundingRect;
-        qreal size = axisRect.right() - axisRect.left() - labelPadding() - titleBoundingRect.height() - (titlePad * 2);
         labelItem->setHtml(ChartPresenter::truncatedText(axis()->labelsFont(), text, axis()->labelsAngle(),
-                                         size, Qt::Horizontal, boundingRect));
+                           availableSpace, Qt::Horizontal, boundingRect));
 
         //label transformation origin point
         const QRectF &rect = labelItem->boundingRect();
         QPointF center = rect.center();
         labelItem->setTransformOriginPoint(center.x(), center.y());
-        int widthDiff = rect.width() - boundingRect.width();
+        qreal widthDiff = rect.width() - boundingRect.width();
 
         //ticks and label position
         if (axis()->alignment() == Qt::AlignLeft) {
-            labelItem->setPos(axisRect.right() - rect.width() + (widthDiff / 2) - labelPadding(), layout[i] - center.y());
+            labelItem->setPos(axisRect.right() - rect.width() + (widthDiff / 2.0) - labelPadding(), layout[i] - center.y());
             tickItem->setLine(axisRect.right() - labelPadding(), layout[i], axisRect.right(), layout[i]);
         } else if (axis()->alignment() == Qt::AlignRight) {
-            labelItem->setPos(axisRect.left() + labelPadding() - (widthDiff / 2), layout[i] - center.y());
+            labelItem->setPos(axisRect.left() + labelPadding() - (widthDiff / 2.0), layout[i] - center.y());
             tickItem->setLine(axisRect.left(), layout[i], axisRect.left() + labelPadding(), layout[i]);
         }
 
@@ -192,13 +209,13 @@ QSizeF VerticalAxis::sizeHint(Qt::SizeHint which, const QSizeF &constraint) cons
     switch (which) {
     case Qt::MinimumSize: {
         QRectF titleRect = ChartPresenter::textBoundingRect(axis()->titleFont(), "...");
-        sh = QSizeF(titleRect.height() + (titlePadding() * 2), titleRect.width());
+        sh = QSizeF(titleRect.height() + (titlePadding() * 2.0), titleRect.width());
         break;
     }
     case Qt::MaximumSize:
     case Qt::PreferredSize: {
         QRectF titleRect = ChartPresenter::textBoundingRect(axis()->titleFont(), axis()->titleText());
-        sh = QSizeF(titleRect.height() + (titlePadding() * 2), titleRect.width());
+        sh = QSizeF(titleRect.height() + (titlePadding() * 2.0), titleRect.width());
         break;
     }
     default:

@@ -67,21 +67,39 @@ void HorizontalAxis::updateGeometry()
     qreal width = 0;
 
     //title
-    int titlePad = 0;
     QRectF titleBoundingRect;
     QString titleText = axis()->titleText();
+    qreal availableSpace = axisRect.height() - labelPadding();
     if (!titleText.isEmpty() && titleItem()->isVisible()) {
-        title->setHtml(ChartPresenter::truncatedText(axis()->titleFont(), titleText, qreal(0.0), gridRect.width(), Qt::Horizontal, QRectF()));
+        availableSpace -= titlePadding() * 2.0;
+        qreal minimumLabelHeight = ChartPresenter::textBoundingRect(axis()->labelsFont(), "...").height();
+        QString truncatedTitle = ChartPresenter::truncatedText(axis()->titleFont(), titleText, qreal(0.0),
+                                                               gridRect.width(), Qt::Horizontal, titleBoundingRect);
+        qreal titleSpace = availableSpace - minimumLabelHeight;
+        if (titleSpace < titleBoundingRect.height()) {
+            // Need to also truncate title vertically (multiline title)
+            bool skip = false;
+            if (truncatedTitle.endsWith("...")) {
+                if (truncatedTitle.size() == 3)
+                    skip = true; // Already truncated to minimum
+                else
+                    truncatedTitle.chop(3);
+            }
+            if (!skip)
+                truncatedTitle = ChartPresenter::truncatedText(axis()->titleFont(), truncatedTitle, qreal(0.0),
+                                                               titleSpace, Qt::Vertical, titleBoundingRect);
+        }
+        title->setHtml(truncatedTitle);
 
-        titlePad = titlePadding();
         titleBoundingRect = title->boundingRect();
 
         QPointF center = gridRect.center() - titleBoundingRect.center();
-        if (axis()->alignment() == Qt::AlignTop) {
-            title->setPos(center.x(), axisRect.top() + titlePad);
-        } else  if (axis()->alignment() == Qt::AlignBottom) {
-            title->setPos(center.x(), axisRect.bottom() - titleBoundingRect.height() - titlePad);
-        }
+        if (axis()->alignment() == Qt::AlignTop)
+            title->setPos(center.x(), axisRect.top() + titlePadding());
+        else  if (axis()->alignment() == Qt::AlignBottom)
+            title->setPos(center.x(), axisRect.bottom() - titleBoundingRect.height() - titlePadding());
+
+        availableSpace -= titleBoundingRect.height();
     }
 
     for (int i = 0; i < layout.size(); ++i) {
@@ -96,22 +114,21 @@ void HorizontalAxis::updateGeometry()
         //label text wrapping
         QString text = labelList.at(i);
         QRectF boundingRect;
-        qreal size = axisRect.bottom() - axisRect.top() - labelPadding() - titleBoundingRect.height() - (titlePad * 2);
         labelItem->setHtml(ChartPresenter::truncatedText(axis()->labelsFont(), text, axis()->labelsAngle(),
-                                                         size, Qt::Vertical, boundingRect));
+                                                         availableSpace, Qt::Vertical, boundingRect));
 
         //label transformation origin point
         const QRectF& rect = labelItem->boundingRect();
         QPointF center = rect.center();
         labelItem->setTransformOriginPoint(center.x(), center.y());
-        int heightDiff = rect.height() - boundingRect.height();
+        qreal heightDiff = rect.height() - boundingRect.height();
 
         //ticks and label position
         if (axis()->alignment() == Qt::AlignTop) {
-            labelItem->setPos(layout[i] - center.x(), axisRect.bottom() - rect.height() + (heightDiff / 2) - labelPadding());
+            labelItem->setPos(layout[i] - center.x(), axisRect.bottom() - rect.height() + (heightDiff / 2.0) - labelPadding());
             tickItem->setLine(layout[i], axisRect.bottom(), layout[i], axisRect.bottom() - labelPadding());
         } else if (axis()->alignment() == Qt::AlignBottom) {
-            labelItem->setPos(layout[i] - center.x(), axisRect.top() - (heightDiff / 2) + labelPadding());
+            labelItem->setPos(layout[i] - center.x(), axisRect.top() - (heightDiff / 2.0) + labelPadding());
             tickItem->setLine(layout[i], axisRect.top(), layout[i], axisRect.top() + labelPadding());
         }
 
@@ -187,13 +204,13 @@ QSizeF HorizontalAxis::sizeHint(Qt::SizeHint which, const QSizeF &constraint) co
     switch (which) {
     case Qt::MinimumSize: {
         QRectF titleRect = ChartPresenter::textBoundingRect(axis()->titleFont(), "...");
-        sh = QSizeF(titleRect.width(), titleRect.height() + (titlePadding() * 2));
+        sh = QSizeF(titleRect.width(), titleRect.height() + (titlePadding() * 2.0));
         break;
     }
     case Qt::MaximumSize:
     case Qt::PreferredSize: {
         QRectF titleRect = ChartPresenter::textBoundingRect(axis()->titleFont(), axis()->titleText());
-        sh = QSizeF(titleRect.width(), titleRect.height() + (titlePadding() * 2));
+        sh = QSizeF(titleRect.width(), titleRect.height() + (titlePadding() * 2.0));
         break;
     }
     default:

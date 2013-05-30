@@ -223,7 +223,7 @@ void PolarChartAxisAngular::updateGeometry()
 
         QRectF titleBoundingRect = title->boundingRect();
         QPointF titleCenter = center - titleBoundingRect.center();
-        title->setPos(titleCenter.x(), axisGeometry().top() - qreal(titlePadding()) * 2.0 - titleBoundingRect.height() - labelHeight);
+        title->setPos(titleCenter.x(), axisGeometry().top() - titlePadding() * 2.0 - titleBoundingRect.height() - labelHeight);
     }
 }
 
