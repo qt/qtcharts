@@ -85,7 +85,6 @@ protected:
     QString m_label;
 
     QBrush m_labelBrush;
-    QFont m_font;
     QPen m_pen;
     QBrush m_brush;
     bool m_hovering;

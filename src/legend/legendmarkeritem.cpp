@@ -110,11 +110,11 @@ QBrush LegendMarkerItem::labelBrush() const
 
 void LegendMarkerItem::setGeometry(const QRectF &rect)
 {
-    int width = rect.width();
+    qreal width = rect.width();
     qreal x = m_margin + m_markerRect.width() + m_space + m_margin;
     QRectF truncatedRect;
 
-    m_textItem->setHtml(ChartPresenter::truncatedText(m_font, m_label, qreal(0.0), width - x, Qt::Horizontal, truncatedRect));
+    m_textItem->setHtml(ChartPresenter::truncatedText(m_textItem->font(), m_label, qreal(0.0), width - x, Qt::Horizontal, truncatedRect));
 
     qreal y = qMax(m_markerRect.height() + 2 * m_margin, truncatedRect.height() + 2 * m_margin);
 
@@ -144,21 +144,26 @@ QSizeF LegendMarkerItem::sizeHint(Qt::SizeHint which, const QSizeF& constraint) 
 {
     Q_UNUSED(constraint)
 
-    QFontMetrics fn(m_textItem->font());
     QSizeF sh;
 
-      switch (which) {
-        case Qt::MinimumSize:
-            sh = QSizeF(fn.boundingRect("...").width() + 2*m_margin + m_space +m_markerRect.width(),qMax(m_markerRect.height()+2*m_margin,fn.height()+2*m_margin));
-            break;
-        case Qt::PreferredSize:
-            sh = QSizeF(fn.boundingRect(m_label).width() + 2*m_margin + m_space +m_markerRect.width(),qMax(m_markerRect.height()+2*m_margin,fn.height()+2*m_margin));
-            break;
-        default:
-          break;
-      }
+    switch (which) {
+    case Qt::MinimumSize: {
+        QRectF labelRect = ChartPresenter::textBoundingRect(m_textItem->font(), "...");
+        sh = QSizeF(labelRect.width() + (2.0 * m_margin) + m_space + m_markerRect.width(),
+                    qMax(m_markerRect.height(), labelRect.height()) + (2.0 * m_margin));
+        break;
+    }
+    case Qt::PreferredSize: {
+        QRectF labelRect = ChartPresenter::textBoundingRect(m_textItem->font(), m_label);
+        sh = QSizeF(labelRect.width() + (2.0 * m_margin) + m_space + m_markerRect.width(),
+                    qMax(m_markerRect.height(), labelRect.height()) + (2.0 * m_margin));
+        break;
+    }
+    default:
+        break;
+    }
 
-      return sh;
+    return sh;
 }
 
 void LegendMarkerItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
