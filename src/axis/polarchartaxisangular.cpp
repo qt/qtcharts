@@ -24,6 +24,7 @@
 #include "qabstractaxis.h"
 #include "qabstractaxis_p.h"
 #include <QDebug>
+#include <qmath.h>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -357,10 +358,23 @@ qreal PolarChartAxisAngular::preferredAxisRadius(const QSizeF &maxSize)
             QPointF labelPoint = QLineF::fromPolar(radius + tickWidth(), 90.0 - labelCoordinate).p2();
 
             boundingRect = moveLabelToPosition(labelCoordinate, labelPoint, boundingRect);
-            if (boundingRect.isEmpty() || maxRect.intersected(boundingRect) == boundingRect) {
+            QRectF intersectRect = maxRect.intersected(boundingRect);
+            if (boundingRect.isEmpty() || intersectRect == boundingRect) {
                 i++;
             } else {
-                radius -= 1.0;
+                qreal reduction(0.0);
+                // If there is no intersection, reduce by smallest dimension of label rect to be on the safe side
+                if (intersectRect.isEmpty()) {
+                    reduction = qMin(boundingRect.height(), boundingRect.width());
+                } else {
+                    // Approximate needed radius reduction is the amount label rect exceeds max rect in either dimension.
+                    // Could be further optimized by figuring out the proper math how to calculate exact needed reduction.
+                    reduction = qMax(boundingRect.height() - intersectRect.height(),
+                                     boundingRect.width() - intersectRect.width());
+                }
+                // Typically the approximated reduction is little low, so add one
+                radius -= (reduction + 1.0);
+
                 if (radius < 1.0) // safeguard
                     return 1.0;
             }
