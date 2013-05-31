@@ -36,12 +36,19 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-QGraphicsTextItem *dummyTextItem = 0;
+static QGraphicsTextItem *dummyTextItem = 0;
+static const char *truncateMatchString = "&#?[0-9a-zA-Z]*;$";
+static QRegExp *truncateMatcher = 0;
+
 class StaticDummyTextDeleter
 {
 public:
     StaticDummyTextDeleter() {}
-    ~StaticDummyTextDeleter() { delete dummyTextItem; }
+    ~StaticDummyTextDeleter()
+    {
+        delete dummyTextItem;
+        delete truncateMatcher;
+    }
 };
 StaticDummyTextDeleter staticDummyTextDeleter;
 
@@ -416,23 +423,60 @@ QString ChartPresenter::truncatedText(const QFont &font, const QString &text, qr
     qreal checkDimension = ((constraintOrientation == Qt::Horizontal)
                            ? boundingRect.width() : boundingRect.height());
     if (checkDimension > maxSize) {
-        truncatedString.append("...");
-        while (checkDimension > maxSize && truncatedString.length() > 3) {
-            // Crude truncation logic - simply remove any html tag completely
-            int removeIndex(-1);
-            int removeCount(1);
-            if (truncatedString.at(truncatedString.length() - 4) == QLatin1Char('>')) {
-                removeIndex = truncatedString.lastIndexOf(QLatin1Char('<'));
-                if (removeIndex != -1)
-                    removeCount = truncatedString.length() - 3 - removeIndex;
-            }
-            if (removeIndex == -1)
-                removeIndex = truncatedString.length() - 4;
+        // It can be assumed that almost any amount of string manipulation is faster
+        // than calculating one bounding rectangle, so first prepare a list of truncated strings
+        // to try.
+        if (!truncateMatcher)
+            truncateMatcher = new QRegExp(truncateMatchString);
+        QVector<QString> testStrings(text.length());
+        int count(0);
+        static QLatin1Char closeTag('>');
+        static QLatin1Char openTag('<');
+        static QLatin1Char semiColon(';');
+        static QLatin1String ellipsis("...");
+        while (truncatedString.length() > 1) {
+            int chopIndex(-1);
+            int chopCount(1);
+            QChar lastChar(truncatedString.at(truncatedString.length() - 1));
 
-            truncatedString.remove(removeIndex, removeCount);
-            boundingRect = textBoundingRect(font, truncatedString, angle);
+            if (lastChar == closeTag)
+                chopIndex = truncatedString.lastIndexOf(openTag);
+            else if (lastChar == semiColon)
+                chopIndex = truncateMatcher->indexIn(truncatedString, 0);
+
+            if (chopIndex != -1)
+                chopCount = truncatedString.length() - chopIndex;
+            truncatedString.chop(chopCount);
+            testStrings[count] = truncatedString + ellipsis;
+            count++;
+        }
+
+        // Binary search for best fit
+        int minIndex(0);
+        int maxIndex(count - 1);
+        int bestIndex(count);
+        QRectF checkRect;
+        while (maxIndex >= minIndex) {
+            int mid = (maxIndex + minIndex) / 2;
+            checkRect = textBoundingRect(font, testStrings.at(mid), angle);
             checkDimension = ((constraintOrientation == Qt::Horizontal)
-                             ? boundingRect.width() : boundingRect.height());
+                             ? checkRect.width() : checkRect.height());
+            if (checkDimension > maxSize) {
+                // Checked index too large, all under this are also too large
+                minIndex = mid + 1;
+            } else {
+                // Checked index fits, all over this also fit
+                maxIndex = mid - 1;
+                bestIndex = mid;
+                boundingRect = checkRect;
+            }
+        }
+        // Default to "..." if nothing fits
+        if (bestIndex == count) {
+            boundingRect = textBoundingRect(font, ellipsis, angle);
+            truncatedString = ellipsis;
+        } else {
+            truncatedString = testStrings.at(bestIndex);
         }
     }
 
