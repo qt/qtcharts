@@ -35,7 +35,7 @@ public:
     StaticLabelFormatMatcherDeleter() {}
     ~StaticLabelFormatMatcherDeleter() { delete labelFormatMatcher; }
 };
-StaticLabelFormatMatcherDeleter staticLabelFormatMatcherDeleter;
+static StaticLabelFormatMatcherDeleter staticLabelFormatMatcherDeleter;
 
 ChartAxisElement::ChartAxisElement(QAbstractAxis *axis, QGraphicsItem *item, bool intervalAxis)
     : ChartElement(item),

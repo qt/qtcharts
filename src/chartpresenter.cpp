@@ -36,22 +36,6 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-static QGraphicsTextItem *dummyTextItem = 0;
-static const char *truncateMatchString = "&#?[0-9a-zA-Z]*;$";
-static QRegExp *truncateMatcher = 0;
-
-class StaticDummyTextDeleter
-{
-public:
-    StaticDummyTextDeleter() {}
-    ~StaticDummyTextDeleter()
-    {
-        delete dummyTextItem;
-        delete truncateMatcher;
-    }
-};
-StaticDummyTextDeleter staticDummyTextDeleter;
-
 ChartPresenter::ChartPresenter(QChart *chart, QChart::ChartType type)
     : QObject(chart),
       m_chart(chart),
@@ -396,12 +380,11 @@ ChartTitle *ChartPresenter::titleElement()
 
 QRectF ChartPresenter::textBoundingRect(const QFont &font, const QString &text, qreal angle)
 {
-    if (!dummyTextItem)
-        dummyTextItem = new QGraphicsTextItem;
+    static QGraphicsTextItem dummyTextItem;
 
-    dummyTextItem->setFont(font);
-    dummyTextItem->setHtml(text);
-    QRectF boundingRect = dummyTextItem->boundingRect();
+    dummyTextItem.setFont(font);
+    dummyTextItem.setHtml(text);
+    QRectF boundingRect = dummyTextItem.boundingRect();
 
     // Take rotation into account
     if (angle) {
@@ -426,8 +409,9 @@ QString ChartPresenter::truncatedText(const QFont &font, const QString &text, qr
         // It can be assumed that almost any amount of string manipulation is faster
         // than calculating one bounding rectangle, so first prepare a list of truncated strings
         // to try.
-        if (!truncateMatcher)
-            truncateMatcher = new QRegExp(truncateMatchString);
+        static const char *truncateMatchString = "&#?[0-9a-zA-Z]*;$";
+        static QRegExp truncateMatcher(truncateMatchString);
+
         QVector<QString> testStrings(text.length());
         int count(0);
         static QLatin1Char closeTag('>');
@@ -442,7 +426,7 @@ QString ChartPresenter::truncatedText(const QFont &font, const QString &text, qr
             if (lastChar == closeTag)
                 chopIndex = truncatedString.lastIndexOf(openTag);
             else if (lastChar == semiColon)
-                chopIndex = truncateMatcher->indexIn(truncatedString, 0);
+                chopIndex = truncateMatcher.indexIn(truncatedString, 0);
 
             if (chopIndex != -1)
                 chopCount = truncatedString.length() - chopIndex;

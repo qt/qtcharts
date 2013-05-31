@@ -693,28 +693,25 @@ QChartPrivate::~QChartPrivate()
 // so that default theme initialization will always set these properly.
 QPen &QChartPrivate::defaultPen()
 {
-    static QPen *defaultPen = 0;
-    if (!defaultPen)
-        defaultPen = new QPen(QColor(1, 2, 0), 0.93247536);
-    return *defaultPen;
+    static QPen defaultPen(QColor(1, 2, 0), 0.93247536);
+    return defaultPen;
 }
 
 QBrush &QChartPrivate::defaultBrush()
 {
-    static QBrush *defaultBrush = 0;
-    if (!defaultBrush)
-        defaultBrush = new QBrush(QColor(1, 2, 0), Qt::Dense7Pattern);
-    return *defaultBrush;
+    static QBrush defaultBrush(QColor(1, 2, 0), Qt::Dense7Pattern);
+    return defaultBrush;
 }
 
 QFont &QChartPrivate::defaultFont()
 {
-    static QFont *defaultFont = 0;
-    if (!defaultFont) {
-        defaultFont = new QFont();
-        defaultFont->setPointSizeF(8.34563465);
+    static bool defaultFontInitialized(false);
+    static QFont defaultFont;
+    if (!defaultFontInitialized) {
+        defaultFont.setPointSizeF(8.34563465);
+        defaultFontInitialized = true;
     }
-    return *defaultFont;
+    return defaultFont;
 }
 
 void QChartPrivate::init()
