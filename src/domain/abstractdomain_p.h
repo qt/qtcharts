@@ -80,6 +80,10 @@ public:
     void blockRangeSignals(bool block);
     bool rangeSignalsBlocked() const { return m_signalsBlocked; }
 
+    void zoomReset();
+    void storeZoomReset();
+    bool isZoomed() { return m_zoomed; }
+
     friend bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator== (const AbstractDomain &domain1, const AbstractDomain &domain2);
     friend bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator!= (const AbstractDomain &domain1, const AbstractDomain &domain2);
     friend QDebug QTCOMMERCIALCHART_AUTOTEST_EXPORT operator<<(QDebug dbg, const AbstractDomain &domain);
@@ -116,6 +120,11 @@ protected:
     qreal m_maxY;
     QSizeF m_size;
     bool m_signalsBlocked;
+    bool m_zoomed;
+    qreal m_zoomResetMinX;
+    qreal m_zoomResetMaxX;
+    qreal m_zoomResetMinY;
+    qreal m_zoomResetMaxY;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

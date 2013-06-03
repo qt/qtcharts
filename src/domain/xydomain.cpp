@@ -61,6 +61,7 @@ void XYDomain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY)
 
 void XYDomain::zoomIn(const QRectF &rect)
 {
+    storeZoomReset();
     qreal dx = spanX() / m_size.width();
     qreal dy = spanY() / m_size.height();
 
@@ -79,6 +80,7 @@ void XYDomain::zoomIn(const QRectF &rect)
 
 void XYDomain::zoomOut(const QRectF &rect)
 {
+    storeZoomReset();
     qreal dx = spanX() / rect.width();
     qreal dy = spanY() / rect.height();
 

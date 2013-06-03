@@ -177,7 +177,7 @@ void QChartView::mouseMoveEvent(QMouseEvent *event)
 /*!
     If left mouse button is released and the rubber band is enabled then \a event is accepted and
     the view is zoomed into the rect specified by the rubber band.
-    If it is a right mouse button \a event then the rubber band is dismissed and the zoom is canceled.
+    If it is a right mouse button \a event then the view is zoomed out.
 */
 void QChartView::mouseReleaseEvent(QMouseEvent *event)
 {

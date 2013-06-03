@@ -105,6 +105,7 @@ private slots:
     void zoomIn();
     void zoomOut_data();
     void zoomOut();
+    void zoomReset();
     void createDefaultAxesForLineSeries_data();
     void createDefaultAxesForLineSeries();
     void axisPolarOrientation();
@@ -848,6 +849,77 @@ void tst_QChart::zoomOut()
         QCOMPARE(minY, axisY->min());
 
     QVERIFY(maxX == axisX->max());
+    QVERIFY(maxY == axisY->max());
+
+}
+
+void tst_QChart::zoomReset()
+{
+    createTestData();
+    m_chart->createDefaultAxes();
+    QValueAxis *axisX = qobject_cast<QValueAxis *>(m_chart->axisX());
+    QVERIFY(axisX != 0);
+    QValueAxis *axisY = qobject_cast<QValueAxis *>(m_chart->axisY());
+    QVERIFY(axisY != 0);
+
+    qreal minX = axisX->min();
+    qreal minY = axisY->min();
+    qreal maxX = axisX->max();
+    qreal maxY = axisY->max();
+
+    QVERIFY(!m_chart->isZoomed());
+
+    m_chart->zoomIn();
+
+    QVERIFY(m_chart->isZoomed());
+    QVERIFY(minX < axisX->min());
+    QVERIFY(maxX > axisX->max());
+    QVERIFY(minY < axisY->min());
+    QVERIFY(maxY > axisY->max());
+
+    m_chart->zoomReset();
+
+    // Reset after zoomIn should restore originals
+    QVERIFY(!m_chart->isZoomed());
+    QVERIFY(minX == axisX->min());
+    QVERIFY(maxX == axisX->max());
+    QVERIFY(minY == axisY->min());
+    QVERIFY(maxY == axisY->max());
+
+    m_chart->zoomOut();
+
+    QVERIFY(m_chart->isZoomed());
+    QVERIFY(minX > axisX->min());
+    QVERIFY(maxX < axisX->max());
+    QVERIFY(minY > axisY->min());
+    QVERIFY(maxY < axisY->max());
+
+    m_chart->zoomReset();
+
+    // Reset after zoomOut should restore originals
+    QVERIFY(!m_chart->isZoomed());
+    QVERIFY(minX == axisX->min());
+    QVERIFY(maxX == axisX->max());
+    QVERIFY(minY == axisY->min());
+    QVERIFY(maxY == axisY->max());
+
+    axisX->setRange(234, 345);
+    axisY->setRange(345, 456);
+
+    minX = axisX->min();
+    minY = axisY->min();
+    maxX = axisX->max();
+    maxY = axisY->max();
+
+    QVERIFY(!m_chart->isZoomed());
+
+    m_chart->zoomReset();
+
+    // Reset without zoom should not change anything
+    QVERIFY(!m_chart->isZoomed());
+    QVERIFY(minX == axisX->min());
+    QVERIFY(maxX == axisX->max());
+    QVERIFY(minY == axisY->min());
     QVERIFY(maxY == axisY->max());
 
 }

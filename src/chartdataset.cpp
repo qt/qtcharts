@@ -445,6 +445,31 @@ void ChartDataSet::zoomOutDomain(const QRectF &rect)
         domain->blockRangeSignals(false);
 }
 
+void ChartDataSet::zoomResetDomain()
+{
+    QList<AbstractDomain*> domains;
+    foreach (QAbstractSeries *s, m_seriesList) {
+        AbstractDomain *domain = s->d_ptr->domain();
+        s->d_ptr->m_domain->blockRangeSignals(true);
+        domains << domain;
+    }
+
+    foreach (AbstractDomain *domain, domains)
+        domain->zoomReset();
+
+    foreach (AbstractDomain *domain, domains)
+        domain->blockRangeSignals(false);
+}
+
+bool ChartDataSet::isZoomedDomain()
+{
+    foreach (QAbstractSeries *s, m_seriesList) {
+        if (s->d_ptr->domain()->isZoomed())
+            return true;
+    }
+    return false;
+}
+
 void ChartDataSet::scrollDomain(qreal dx, qreal dy)
 {
     QList<AbstractDomain*> domains;

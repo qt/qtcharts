@@ -70,6 +70,7 @@ void XLogYPolarDomain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY)
 
 void XLogYPolarDomain::zoomIn(const QRectF &rect)
 {
+    storeZoomReset();
     qreal dx = spanX() / m_size.width();
     qreal maxX = m_maxX;
     qreal minX = m_minX;
@@ -89,6 +90,7 @@ void XLogYPolarDomain::zoomIn(const QRectF &rect)
 
 void XLogYPolarDomain::zoomOut(const QRectF &rect)
 {
+    storeZoomReset();
     qreal dx = spanX() / rect.width();
     qreal maxX = m_maxX;
     qreal minX = m_minX;

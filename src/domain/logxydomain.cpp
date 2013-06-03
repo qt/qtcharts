@@ -70,6 +70,7 @@ void LogXYDomain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY)
 
 void LogXYDomain::zoomIn(const QRectF &rect)
 {
+    storeZoomReset();
     qreal logLeftX = rect.left() * (m_logRightX - m_logLeftX) / m_size.width() + m_logLeftX;
     qreal logRightX = rect.right() * (m_logRightX - m_logLeftX) / m_size.width() + m_logLeftX;
     qreal leftX = qPow(m_logBaseX, logLeftX);
@@ -89,6 +90,7 @@ void LogXYDomain::zoomIn(const QRectF &rect)
 
 void LogXYDomain::zoomOut(const QRectF &rect)
 {
+    storeZoomReset();
     const qreal factorX = m_size.width() / rect.width();
 
     qreal logLeftX = m_logLeftX + (m_logRightX - m_logLeftX) / 2 * (1 - factorX);

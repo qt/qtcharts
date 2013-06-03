@@ -61,6 +61,8 @@ public:
     void zoomIn(qreal factor);
     void zoomOut(qreal factor);
     void zoomIn(const QRectF &rect);
+    void zoomReset();
+    bool isZoomed();
     void scroll(qreal dx, qreal dy);
 };
 

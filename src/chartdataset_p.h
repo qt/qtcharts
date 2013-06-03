@@ -62,6 +62,8 @@ public:
 
     void zoomInDomain(const QRectF &rect);
     void zoomOutDomain(const QRectF &rect);
+    void zoomResetDomain();
+    bool isZoomedDomain();
     void scrollDomain(qreal dx, qreal dy);
 
     QPointF mapToValue(const QPointF &position, QAbstractSeries *series = 0);

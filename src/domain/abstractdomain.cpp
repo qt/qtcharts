@@ -30,7 +30,13 @@ AbstractDomain::AbstractDomain(QObject *parent)
       m_maxX(0),
       m_minY(0),
       m_maxY(0),
-      m_signalsBlocked(false)
+      m_signalsBlocked(false),
+      m_zoomed(false),
+      m_zoomResetMinX(0),
+      m_zoomResetMaxX(0),
+      m_zoomResetMinY(0),
+      m_zoomResetMaxY(0)
+
 {
 }
 
@@ -128,6 +134,28 @@ void AbstractDomain::blockRangeSignals(bool block)
             emit rangeHorizontalChanged(m_minX,m_maxX);
             emit rangeVerticalChanged(m_minY,m_maxY);
         }
+    }
+}
+
+void AbstractDomain::zoomReset()
+{
+    if (m_zoomed) {
+        setRange(m_zoomResetMinX,
+                 m_zoomResetMaxX,
+                 m_zoomResetMinY,
+                 m_zoomResetMaxY);
+        m_zoomed = false;
+    }
+}
+
+void AbstractDomain::storeZoomReset()
+{
+    if (!m_zoomed) {
+        m_zoomed = true;
+        m_zoomResetMinX = m_minX;
+        m_zoomResetMaxX = m_maxX;
+        m_zoomResetMinY = m_minY;
+        m_zoomResetMaxY = m_maxY;
     }
 }
 

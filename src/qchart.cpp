@@ -347,6 +347,26 @@ void QChart::zoom(qreal factor)
         d_ptr->zoomOut(1.0 / factor);
 }
 
+
+/*!
+ Resets the series domains to what they were before any zoom method was called.
+ Note that this will also reset any scrolls and explicit axis range settings done between
+ the first zoom operation and calling this method. If no zoom operation has been
+ done, this method does nothing.
+ */
+void QChart::zoomReset()
+{
+    d_ptr->zoomReset();
+}
+
+/*!
+ Returns true if any series has a zoomed domain.
+ */
+bool QChart::isZoomed()
+{
+   return d_ptr->isZoomed();
+}
+
 /*!
  Returns a pointer to the horizontal axis attached to the specified \a series.
  If no \a series is specified, the first horizontal axis added to the chart is returned.
@@ -747,6 +767,16 @@ void QChartPrivate::zoomIn(const QRectF &rect)
     m_dataset->zoomInDomain(r);
     m_presenter->setState(ChartPresenter::ShowState,QPointF());
 
+}
+
+void QChartPrivate::zoomReset()
+{
+    m_dataset->zoomResetDomain();
+}
+
+bool QChartPrivate::isZoomed()
+{
+    return m_dataset->isZoomedDomain();
 }
 
 void QChartPrivate::zoomOut(qreal factor)
