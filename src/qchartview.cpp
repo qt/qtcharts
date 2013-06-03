@@ -200,7 +200,23 @@ void QChartView::mouseReleaseEvent(QMouseEvent *event)
         }
 
         if (event->button() == Qt::RightButton) {
-            d_ptr->m_chart->zoomOut();
+            // If vertical or horizontal rubberband mode, restrict zoom out to specified axis.
+            // Since there is no suitable API for that, use zoomIn with rect bigger than the
+            // plot area.
+            if (d_ptr->m_rubberBandFlags == VerticalRubberBand
+                || d_ptr->m_rubberBandFlags == HorizonalRubberBand) {
+                QRectF rect = d_ptr->m_chart->plotArea();
+                if (d_ptr->m_rubberBandFlags == VerticalRubberBand) {
+                    qreal adjustment = rect.height() / 2;
+                    rect.adjust(0, -adjustment, 0, adjustment);
+                } else if (d_ptr->m_rubberBandFlags == HorizonalRubberBand) {
+                    qreal adjustment = rect.width() / 2;
+                    rect.adjust(-adjustment, 0, adjustment, 0);
+                }
+                d_ptr->m_chart->zoomIn(rect);
+            } else {
+                d_ptr->m_chart->zoomOut();
+            }
             event->accept();
         }
     } else {
