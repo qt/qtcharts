@@ -29,7 +29,8 @@ SOURCES += \
     ../declarative/declarativecategoryaxis.cpp \
     ../declarative/declarativemargins.cpp \
     ../declarative/declarativeaxes.cpp \
-    ../declarative/declarativepolarchart.cpp
+    ../declarative/declarativepolarchart.cpp \
+    ../declarative/declarativeboxplotseries.cpp
 
 HEADERS += \
     ../declarative/declarativechart.h \
@@ -45,7 +46,8 @@ HEADERS += \
     ../declarative/declarativemargins.h \
     ../declarative/declarativeaxes.h \
     ../declarative/declarativepolarchart.h \
-    ../declarative/shared_defines.h
+    ../declarative/shared_defines.h \
+    ../declarative/declarativeboxplotseries.h
 
 TARGETPATH = QtCommercial/Chart
 target.path = $$IMPORT_INSTALL_PATH/$$TARGETPATH

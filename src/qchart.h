@@ -34,6 +34,7 @@ class QAbstractSeries;
 class QAbstractAxis;
 class QLegend;
 class QChartPrivate;
+class QBoxPlotSeries;
 
 class QTCOMMERCIALCHART_EXPORT QChart : public QGraphicsWidget
 {
@@ -161,6 +162,7 @@ protected:
     friend class ChartPresenter;
     friend class ChartThemeManager;
     friend class QAbstractSeries;
+    friend class QBoxPlotSeriesPrivate;
     Q_DISABLE_COPY(QChart)
 };
 

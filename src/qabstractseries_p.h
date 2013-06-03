@@ -48,6 +48,7 @@ class QLegendMarker;
 class ChartTheme;
 class ChartAnimation;
 class ChartItem;
+class BoxPlotChartItem;
 
 class QAbstractSeriesPrivate : public QObject
 {
@@ -92,6 +93,7 @@ private:
     friend class ChartDataSet;
     friend class ChartPresenter;
     friend class QLegendPrivate;
+    friend class BoxPlotChartItem;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -19,8 +19,10 @@ SUBDIRS += \
            zoomlinechart \
            modeldata \
            barchart \
+           boxplotchart \
            legend \
            barmodelmapper \
+           qmlboxplot \
            qmlpiechart \
            lineandbar \
            horizontalbarchart \

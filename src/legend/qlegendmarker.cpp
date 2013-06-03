@@ -53,6 +53,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \value LegendMarkerTypeBar
     \value LegendMarkerTypePie
     \value LegendMarkerTypeXY
+    \value LegendMarkerTypeBoxPlot
 */
 
 /*!

@@ -778,21 +778,22 @@ void QAbstractBarSeriesPrivate::initializeAxes()
 
         if (axis->type() == QAbstractAxis::AxisTypeBarCategory) {
             switch (q->type()) {
-                case QAbstractSeries::SeriesTypeHorizontalBar:
-                case QAbstractSeries::SeriesTypeHorizontalPercentBar:
-                case QAbstractSeries::SeriesTypeHorizontalStackedBar:
+            case QAbstractSeries::SeriesTypeHorizontalBar:
+            case QAbstractSeries::SeriesTypeHorizontalPercentBar:
+            case QAbstractSeries::SeriesTypeHorizontalStackedBar:
                 if (axis->orientation() == Qt::Vertical)
                 populateCategories(qobject_cast<QBarCategoryAxis *>(axis));
-                break;
-                case QAbstractSeries::SeriesTypeBar:
-                case QAbstractSeries::SeriesTypePercentBar:
-                case QAbstractSeries::SeriesTypeStackedBar:
+            break;
+            case QAbstractSeries::SeriesTypeBar:
+            case QAbstractSeries::SeriesTypePercentBar:
+            case QAbstractSeries::SeriesTypeStackedBar:
+            case QAbstractSeries::SeriesTypeBoxPlot:
                 if (axis->orientation() == Qt::Horizontal)
-                populateCategories(qobject_cast<QBarCategoryAxis *>(axis));
-                break;
-                default:
+                    populateCategories(qobject_cast<QBarCategoryAxis *>(axis));
+            break;
+            default:
                 qWarning() << "Unexpected series type";
-                break;
+            break;
             }
         }
     }
@@ -812,6 +813,7 @@ QAbstractAxis::AxisType QAbstractBarSeriesPrivate::defaultAxisType(Qt::Orientati
     case QAbstractSeries::SeriesTypeBar:
     case QAbstractSeries::SeriesTypePercentBar:
     case QAbstractSeries::SeriesTypeStackedBar:
+    case QAbstractSeries::SeriesTypeBoxPlot:
         if (orientation == Qt::Horizontal)
             return QAbstractAxis::AxisTypeBarCategory;
         break;

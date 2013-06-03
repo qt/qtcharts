@@ -25,6 +25,7 @@
 #include "declarativebarseries.h"
 #include "declarativepieseries.h"
 #include "declarativesplineseries.h"
+#include "declarativeboxplotseries.h"
 #include "declarativescatterseries.h"
 #include "qbarcategoryaxis.h"
 #include "qvalueaxis.h"
@@ -849,6 +850,9 @@ QAbstractSeries *DeclarativeChart::createSeries(int type, QString name, QAbstrac
     case DeclarativeChart::SeriesTypeHorizontalStackedBar:
         series = new DeclarativeHorizontalStackedBarSeries();
         break;
+    case DeclarativeChart::SeriesTypeBoxPlot:
+        series = new DeclarativeBoxPlotSeries();
+        break;
     case DeclarativeChart::SeriesTypePie:
         series = new DeclarativePieSeries();
         break;
@@ -964,6 +968,8 @@ void DeclarativeChart::initializeAxes(QAbstractSeries *series)
         doInitializeAxes(series, qobject_cast<DeclarativeHorizontalStackedBarSeries *>(series)->m_axes);
     else if (qobject_cast<DeclarativeHorizontalPercentBarSeries *>(series))
         doInitializeAxes(series, qobject_cast<DeclarativeHorizontalPercentBarSeries *>(series)->m_axes);
+    else if (qobject_cast<DeclarativeBoxPlotSeries *>(series))
+        doInitializeAxes(series, qobject_cast<DeclarativeBoxPlotSeries *>(series)->m_axes);
     // else: do nothing
 }
 

@@ -63,6 +63,7 @@ public:
     QBrush labelBrush() const { return m_labelBrush; }
     QPen axisLinePen() const { return m_axisLinePen; }
     QPen backgroundShadesPen() const { return m_backgroundShadesPen; }
+    QPen outlinePen() const { return m_outlinePen; }
     QBrush backgroundShadesBrush() const { return m_backgroundShadesBrush; }
     BackgroundShadesMode backgroundShades() const { return m_backgroundShades; }
     bool isBackgroundDropShadowEnabled() const { return m_backgroundDropShadowEnabled; }
@@ -79,6 +80,7 @@ protected:
     QBrush m_labelBrush;
     QPen m_axisLinePen;
     QPen m_backgroundShadesPen;
+    QPen m_outlinePen;
     QBrush m_backgroundShadesBrush;
     BackgroundShadesMode m_backgroundShades;
     bool m_backgroundDropShadowEnabled;

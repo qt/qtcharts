@@ -44,6 +44,7 @@
                     <li><a href="qxylegendmarker.html">QXYLegendMarker</a></li>
                     <li><a href="qbarlegendmarker.html">QBarLegendMarker</a></li>
                     <li><a href="qarealegendmarker.html">QAreaLegendMarker</a></li>
+                    <li><a href="qboxplotlegendmarker.html">QBoxPlotLegendMarker</a></li>
                     <li><a href="qabstractseries.html">QAbstractSeries</a></li>
                     </ul>
                 </td>
@@ -83,6 +84,8 @@
                     <li><a href="qbarset.html">QBarSet</a></li>
                     <li><a href="qpercentbarseries.html">QPercentBarSeries</a></li>
                     <li><a href="qstackedbarseries.html">QStackedBarSeries</a></li>
+                    <li><a href="qboxplotseries.html">QBoxPlotSeries</a></li>
+                    <li><a href="qboxset.html">QBoxSet</a></li>
                     <li><a href="qhbarmodelmapper.html">QHBarModelMapper</a></li>
                     <li><a href="qvbarmodelmapper.html">QVBarModelMapper</a></li>
                     <li><a href="qhorizontalbarseries.html">QHorizontalBarSeries</a></li>

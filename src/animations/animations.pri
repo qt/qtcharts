@@ -8,7 +8,9 @@ SOURCES += \
     $$PWD/piesliceanimation.cpp \
     $$PWD/splineanimation.cpp \
     $$PWD/baranimation.cpp \
-    $$PWD/scatteranimation.cpp
+    $$PWD/scatteranimation.cpp \
+    $$PWD/boxplotanimation.cpp \
+    $$PWD/boxwhiskersanimation.cpp
 
 PRIVATE_HEADERS += \
     $$PWD/axisanimation_p.h \
@@ -18,4 +20,6 @@ PRIVATE_HEADERS += \
     $$PWD/piesliceanimation_p.h \
     $$PWD/splineanimation_p.h \
     $$PWD/baranimation_p.h \
-    $$PWD/scatteranimation_p.h
+    $$PWD/scatteranimation_p.h \
+    $$PWD/boxplotanimation_p.h \
+    $$PWD/boxwhiskersanimation_p.h

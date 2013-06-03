@@ -8,7 +8,8 @@ SUBDIRS += \
     qmlchartproperties \
     qmlchartaxis \
     presenterchart \
-    polarcharttest
+    polarcharttest \
+    boxplottester
 
 contains(QT_CONFIG, opengl) {
     SUBDIRS +=  chartwidgettest \

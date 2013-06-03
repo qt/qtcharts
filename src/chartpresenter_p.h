@@ -65,6 +65,7 @@ public:
         BarSeriesZValue = SeriesZValue,
         ScatterSeriesZValue = SeriesZValue,
         PieSeriesZValue = SeriesZValue,
+        BoxPlotSeriesZValue = SeriesZValue,
         LegendZValue,
         TopMostZValue
     };

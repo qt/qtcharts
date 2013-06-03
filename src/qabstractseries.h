@@ -52,7 +52,8 @@ public:
         SeriesTypeSpline,
         SeriesTypeHorizontalBar,
         SeriesTypeHorizontalStackedBar,
-        SeriesTypeHorizontalPercentBar
+        SeriesTypeHorizontalPercentBar,
+        SeriesTypeBoxPlot
     };
 
 protected:
@@ -71,8 +72,8 @@ public:
 
     QChart *chart() const;
 
-    bool attachAxis(QAbstractAxis* axis);
-    bool detachAxis(QAbstractAxis* axis);
+    bool attachAxis(QAbstractAxis *axis);
+    bool detachAxis(QAbstractAxis *axis);
     QList<QAbstractAxis*> attachedAxes();
 
     void show();

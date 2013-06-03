@@ -61,6 +61,8 @@ public:
         m_gridLinePen = QPen(QRgb(0x86878c));
         m_gridLinePen.setWidth(1);
         m_backgroundShades = BackgroundShadesNone;
+        m_outlinePen = QPen(QRgb(0xd6d6d6));
+        m_outlinePen.setWidthF(1.0);
     }
 };
 

@@ -32,6 +32,7 @@
 #include "declarativeareaseries.h"
 #include "declarativescatterseries.h"
 #include "declarativebarseries.h"
+#include "declarativeboxplotseries.h"
 #include "declarativepieseries.h"
 #include "declarativeaxes.h"
 #include "qvxymodelmapper.h"
@@ -74,6 +75,8 @@ Q_DECLARE_METATYPE(DeclarativeMargins *)
 Q_DECLARE_METATYPE(DeclarativeAreaSeries *)
 Q_DECLARE_METATYPE(DeclarativeBarSeries *)
 Q_DECLARE_METATYPE(DeclarativeBarSet *)
+Q_DECLARE_METATYPE(DeclarativeBoxPlotSeries *)
+Q_DECLARE_METATYPE(DeclarativeBoxSet *)
 Q_DECLARE_METATYPE(DeclarativeLineSeries *)
 Q_DECLARE_METATYPE(DeclarativePieSeries *)
 Q_DECLARE_METATYPE(DeclarativeScatterSeries *)
@@ -236,6 +239,8 @@ public:
         qmlRegisterType<DeclarativeLineSeries, 3>(uri, 1, 3, "LineSeries");
         qmlRegisterType<DeclarativeAreaSeries, 3>(uri, 1, 3, "AreaSeries");
         qmlRegisterType<QLogValueAxis>(uri, 1, 3, "LogValueAxis");
+        qmlRegisterType<DeclarativeBoxPlotSeries>(uri, 1, 3, "BoxPlotSeries");
+        qmlRegisterType<DeclarativeBoxSet>(uri, 1, 3, "BoxSet");
     }
 };
 

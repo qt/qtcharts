@@ -58,7 +58,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \property QVBarModelMapper::series
-    \brief Defines the QPieSeries object that is used by the mapper.
+    \brief Defines the QBarSeries object that is used by the mapper.
 
     All the data in the series is discarded when it is set to the mapper.
     When new series is specified the old series is disconnected (it preserves its data)

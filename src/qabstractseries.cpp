@@ -62,6 +62,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \value SeriesTypeHorizontalBar
     \value SeriesTypeHorizontalStackedBar
     \value SeriesTypeHorizontalPercentBar
+    \value SeriesTypeBoxPlot
 */
 
 /*!
