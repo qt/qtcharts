@@ -49,7 +49,10 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
  when displaying line, spline, or area series. In such case series don't draw a direct line between
  the two points, but instead draw a line to and from the center of the chart.
 
- \note Polar charts do not support multiple axes of same orientation.
+ \note Polar charts draw all axes of same orientation in the same position, so using multiple
+ axes of same orientation can be confusing, unless the extra axes are only used to customize the
+ grid (e.g. you can display a highlighted range with a secondary shaded QCategoryAxis or provide
+ unlabeled subticks with a secondary QValueAxis that has its labels hidden).
 
  \sa QChart
  */

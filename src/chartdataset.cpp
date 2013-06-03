@@ -111,17 +111,10 @@ void ChartDataSet::addAxis(QAbstractAxis *axis, Qt::Alignment aligment)
     };
 
     AbstractDomain *newDomain;
-    if (m_chart && m_chart->chartType() == QChart::ChartTypePolar) {
-        foreach (QAbstractAxis *existingAxis, axes()) {
-            if (existingAxis->orientation() == axis->orientation()) {
-                qWarning() << QObject::tr("Cannot add multiple axes of same orientation to a polar chart!");
-                return;
-            }
-        }
+    if (m_chart && m_chart->chartType() == QChart::ChartTypePolar)
         newDomain = new XYPolarDomain();
-    } else {
+    else
         newDomain = new XYDomain();
-    }
 
     QSharedPointer<AbstractDomain> domain(newDomain);
     axis->d_ptr->initializeDomain(domain.data());
