@@ -20,6 +20,7 @@
 
 #include <QApplication>
 #include <QtDeclarative/QDeclarativeEngine>
+#include <QDir>
 #include "qmlapplicationviewer.h"
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
