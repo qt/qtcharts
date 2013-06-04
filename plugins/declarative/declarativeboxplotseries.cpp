@@ -50,7 +50,7 @@ void DeclarativeBoxSet::setValues(QVariantList values)
 
 // =====================================================
 
-DeclarativeBoxPlotSeries::DeclarativeBoxPlotSeries(QDeclarativeItem *parent) :
+DeclarativeBoxPlotSeries::DeclarativeBoxPlotSeries(QDECLARATIVE_ITEM *parent) :
     QBoxPlotSeries(parent),
     m_axes(new DeclarativeAxes(this))
 {
@@ -78,12 +78,12 @@ void DeclarativeBoxPlotSeries::componentComplete()
     }
 }
 
-QDeclarativeListProperty<QObject> DeclarativeBoxPlotSeries::seriesChildren()
+QDECLARATIVE_LIST_PROPERTY<QObject> DeclarativeBoxPlotSeries::seriesChildren()
 {
-    return QDeclarativeListProperty<QObject>(this, 0, &DeclarativeBoxPlotSeries::appendSeriesChildren);
+    return QDECLARATIVE_LIST_PROPERTY<QObject>(this, 0, &DeclarativeBoxPlotSeries::appendSeriesChildren LIST_PROPERTY_PARAM_DEFAULTS);
 }
 
-void DeclarativeBoxPlotSeries::appendSeriesChildren(QDeclarativeListProperty<QObject> *list, QObject *element)
+void DeclarativeBoxPlotSeries::appendSeriesChildren(QDECLARATIVE_LIST_PROPERTY<QObject> *list, QObject *element)
 {
     // Empty implementation; the children are parsed in componentComplete instead
     Q_UNUSED(list);
