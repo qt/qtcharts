@@ -43,6 +43,7 @@ class QTCOMMERCIALCHART_EXPORT QChart : public QGraphicsWidget
     Q_PROPERTY(QString title READ title WRITE setTitle)
     Q_PROPERTY(bool backgroundVisible READ isBackgroundVisible WRITE setBackgroundVisible)
     Q_PROPERTY(bool dropShadowEnabled READ isDropShadowEnabled WRITE setDropShadowEnabled)
+    Q_PROPERTY(qreal backgroundRoundness READ backgroundRoundness WRITE setBackgroundRoundness)
     Q_PROPERTY(QChart::AnimationOptions animationOptions READ animationOptions WRITE setAnimationOptions)
     Q_PROPERTY(QMargins minimumMargins READ minimumMargins WRITE setMinimumMargins)
     Q_PROPERTY(QMargins margins READ margins WRITE setMargins)
@@ -119,6 +120,8 @@ public:
 
     void setDropShadowEnabled(bool enabled = true);
     bool isDropShadowEnabled() const;
+    void setBackgroundRoundness(qreal diameter);
+    qreal backgroundRoundness() const;
     void setAnimationOptions(AnimationOptions options);
     AnimationOptions animationOptions() const;
 

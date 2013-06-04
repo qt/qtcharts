@@ -42,6 +42,7 @@ ChartView {
     onTitleColorChanged:               console.log("chart.onTitleColorChanged: " + color);
     onBackgroundColorChanged:          console.log("chart.onBackgroundColorChanged: " + chart.backgroundColor);
     onDropShadowEnabledChanged:        console.log("chart.onDropShadowEnabledChanged: " + enabled);
+    onBackgroundRoundnessChanged:      console.log("chart.onBackgroundRoundnessChanged: " + diameter);
     onSeriesAdded:                     console.log("chart.onSeriesAdded: " + series.name);
     onSeriesRemoved:                   console.log("chart.onSeriesRemoved: " + series.name);
     onPlotAreaColorChanged:            console.log("chart.plotAreaColorChanged: " + chart.plotAreaColor);

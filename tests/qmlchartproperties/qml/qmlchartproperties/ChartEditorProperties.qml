@@ -58,6 +58,10 @@ Flow {
         onClicked: chart.dropShadowEnabled = !chart.dropShadowEnabled;
     }
     Button {
+        text: "roundness"
+        onClicked: chart.backgroundRoundness++;
+    }
+    Button {
         text: "zoom +"
         onClicked: chart.zoom(2);
     }

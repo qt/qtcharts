@@ -97,6 +97,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
  */
 
 /*!
+ \property QChart::backgroundRoundness
+ The diameter of the rounding cirle at the corners of the chart background.
+ */
+
+/*!
  \property QChart::minimumMargins
  Minimum margins between the plot area (axes) and the edge of the chart widget.
  This property is deprecated; use margins property instead.
@@ -592,6 +597,16 @@ void QChart::setDropShadowEnabled(bool enabled)
 bool QChart::isDropShadowEnabled() const
 {
     return d_ptr->m_presenter->isBackgroundDropShadowEnabled();
+}
+
+void QChart::setBackgroundRoundness(qreal diameter)
+{
+    d_ptr->m_presenter->setBackgroundRoundness(diameter);
+}
+
+qreal QChart::backgroundRoundness() const
+{
+    return d_ptr->m_presenter->backgroundRoundness();
 }
 
 /*!

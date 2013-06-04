@@ -42,8 +42,8 @@ public:
     ChartBackground(QGraphicsItem *parent = 0);
     ~ChartBackground();
 
-    void setDiameter(int diameter);
-    int diameter() const;
+    void setDiameter(qreal diameter);
+    qreal diameter() const;
     void setDropShadowEnabled(bool enabled);
     bool isDropShadowEnabled() { return m_dropShadow != 0; }
 
@@ -51,10 +51,7 @@ protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 private:
-    int roundness(qreal size) const;
-
-private:
-    int m_diameter;
+    qreal m_diameter;
     QGraphicsDropShadowEffect *m_dropShadow;
 };
 

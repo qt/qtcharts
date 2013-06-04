@@ -29,7 +29,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 ChartBackground::ChartBackground(QGraphicsItem *parent)
     : QGraphicsRectItem(parent),
-      m_diameter(15),
+      m_diameter(5),
       m_dropShadow(0)
 {
 }
@@ -69,7 +69,7 @@ void ChartBackground::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
     painter->save();
     painter->setPen(pen());
     painter->setBrush(brush());
-    painter->drawRoundRect(rect(), roundness(rect().width()), roundness(rect().height()));
+    painter->drawRoundedRect(rect(), m_diameter, m_diameter);
 #ifndef QT_NO_DEBUG
     painter->setPen(Qt::black);
     QFont font;
@@ -81,21 +81,15 @@ void ChartBackground::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
     painter->restore();
 }
 
-int ChartBackground::roundness(qreal size) const
-{
-    if (qFuzzyCompare(size, 0))
-        return 0;
-    return 100 * m_diameter / int(size);
-}
-
-int ChartBackground::diameter() const
+qreal ChartBackground::diameter() const
 {
     return m_diameter;
 }
 
-void ChartBackground::setDiameter(int diameter)
+void ChartBackground::setDiameter(qreal diameter)
 {
     m_diameter = diameter;
+    update();
 }
 
 QTCOMMERCIALCHART_END_NAMESPACE

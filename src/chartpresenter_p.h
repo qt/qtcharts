@@ -102,6 +102,9 @@ public:
     void setBackgroundPen(const QPen &pen);
     QPen backgroundPen() const;
 
+    void setBackgroundRoundness(qreal diameter);
+    qreal backgroundRoundness() const;
+
     void setPlotAreaBackgroundBrush(const QBrush &brush);
     QBrush plotAreaBackgroundBrush() const;
 

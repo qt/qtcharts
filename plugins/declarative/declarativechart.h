@@ -53,6 +53,7 @@ class DeclarativeChart : public QDECLARATIVE_PAINTED_ITEM
     Q_PROPERTY(int count READ count)
     Q_PROPERTY(QColor backgroundColor READ backgroundColor WRITE setBackgroundColor NOTIFY backgroundColorChanged)
     Q_PROPERTY(bool dropShadowEnabled READ dropShadowEnabled WRITE setDropShadowEnabled NOTIFY dropShadowEnabledChanged)
+    Q_PROPERTY(qreal backgroundRoundness READ backgroundRoundness WRITE setBackgroundRoundness NOTIFY backgroundRoundnessChanged REVISION 3)
     Q_PROPERTY(qreal topMargin READ topMargin)
     Q_PROPERTY(qreal bottomMargin READ bottomMargin)
     Q_PROPERTY(qreal leftMargin READ leftMargin)
@@ -143,6 +144,8 @@ public:
     int count();
     void setDropShadowEnabled(bool enabled);
     bool dropShadowEnabled();
+    Q_REVISION(3) qreal backgroundRoundness() const;
+    Q_REVISION(3) void setBackgroundRoundness(qreal diameter);
 
     // Margins & plotArea
     qreal topMargin();
@@ -191,6 +194,7 @@ Q_SIGNALS:
     void seriesAdded(QAbstractSeries *series);
     void seriesRemoved(QAbstractSeries *series);
     Q_REVISION(3) void plotAreaColorChanged();
+    Q_REVISION(3) void backgroundRoundnessChanged(qreal diameter);
 
 private Q_SLOTS:
     void changeMinimumMargins(int top, int bottom, int left, int right);

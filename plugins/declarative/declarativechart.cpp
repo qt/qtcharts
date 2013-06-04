@@ -115,6 +115,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+  \qmlproperty real ChartView::backgroundRoundness
+  The diameter of the rounding cirle at the corners of the chart background.
+*/
+
+/*!
   \qmlproperty color ChartView::plotAreaColor
   The color of the background of the chart's plot area. By default plot area background uses chart's
   background color.
@@ -704,6 +709,19 @@ void DeclarativeChart::setDropShadowEnabled(bool enabled)
 bool DeclarativeChart::dropShadowEnabled()
 {
     return m_chart->isDropShadowEnabled();
+}
+
+qreal DeclarativeChart::backgroundRoundness() const
+{
+    return m_chart->backgroundRoundness();
+}
+
+void DeclarativeChart::setBackgroundRoundness(qreal diameter)
+{
+    if (m_chart->backgroundRoundness() != diameter) {
+        m_chart->setBackgroundRoundness(diameter);
+        emit backgroundRoundnessChanged(diameter);
+    }
 }
 
 qreal DeclarativeChart::topMargin()

@@ -109,6 +109,7 @@ private slots:
     void createDefaultAxesForLineSeries_data();
     void createDefaultAxesForLineSeries();
     void axisPolarOrientation();
+    void backgroundRoundness();
 private:
     void createTestData();
 
@@ -1026,6 +1027,14 @@ void tst_QChart::axisPolarOrientation()
 
     QCOMPARE(chart.axisPolarOrientation(xAxes[0]), QPolarChart::PolarOrientationAngular);
     QCOMPARE(chart.axisPolarOrientation(yAxes[0]), QPolarChart::PolarOrientationRadial);
+}
+
+void tst_QChart::backgroundRoundness()
+{
+    createTestData();
+    m_chart->createDefaultAxes();
+    m_chart->setBackgroundRoundness(100.0);
+    QVERIFY(m_chart->backgroundRoundness() == 100.0);
 }
 
 QTEST_MAIN(tst_QChart)

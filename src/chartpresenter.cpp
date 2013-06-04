@@ -227,6 +227,20 @@ QPen ChartPresenter::backgroundPen() const
     return m_background->pen();
 }
 
+void ChartPresenter::setBackgroundRoundness(qreal diameter)
+{
+    createBackgroundItem();
+    m_background->setDiameter(diameter);
+    m_layout->invalidate();
+}
+
+qreal ChartPresenter::backgroundRoundness() const
+{
+    if (!m_background)
+        return 0;
+    return m_background->diameter();
+}
+
 void ChartPresenter::setPlotAreaBackgroundBrush(const QBrush &brush)
 {
     createPlotAreaBackgroundItem();
