@@ -8,6 +8,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = polarcharttest
 TEMPLATE = app
+INCLUDEPATH += .
 
 
 SOURCES += main.cpp \

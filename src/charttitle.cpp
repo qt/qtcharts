@@ -49,7 +49,8 @@ QString ChartTitle::text() const
 
 void ChartTitle::setGeometry(const QRectF &rect)
 {
-    QGraphicsTextItem::setHtml(ChartPresenter::truncatedText(font(), m_text, qreal(0.0), rect.width(), Qt::Horizontal, QRectF()));
+    QRectF dummyRect;
+    QGraphicsTextItem::setHtml(ChartPresenter::truncatedText(font(), m_text, qreal(0.0), rect.width(), Qt::Horizontal, dummyRect));
     setPos(rect.topLeft());
 }
 

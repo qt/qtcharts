@@ -220,7 +220,8 @@ void PolarChartAxisAngular::updateGeometry()
     // Title, centered above the chart
     QString titleText = axis()->titleText();
     if (!titleText.isEmpty() && axis()->isTitleVisible()) {
-        title->setHtml(ChartPresenter::truncatedText(axis()->titleFont(), titleText, qreal(0.0), axisGeometry().width(), Qt::Horizontal, QRectF()));
+        QRectF dummyRect;
+        title->setHtml(ChartPresenter::truncatedText(axis()->titleFont(), titleText, qreal(0.0), axisGeometry().width(), Qt::Horizontal, dummyRect));
 
         QRectF titleBoundingRect = title->boundingRect();
         QPointF titleCenter = center - titleBoundingRect.center();
