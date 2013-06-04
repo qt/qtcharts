@@ -18,8 +18,8 @@ feature.files = $$PWD/features/qtcommercialchart.prf
 INSTALLS += feature
 
 # docs
-CHARTS_VERSION = 1.2.1
-CHARTS_VERSION_TAG = 121
+CHARTS_VERSION = 1.3.0
+CHARTS_VERSION_TAG = 130
 
 contains(QMAKE_HOST.os, Windows) {
     QDOC_CONF = $$CHART_BUILD_DOC_DIR\\qcharts.qdocconf
