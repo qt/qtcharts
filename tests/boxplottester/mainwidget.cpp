@@ -43,15 +43,17 @@
 #include <QDebug>
 #include <QStandardItemModel>
 #include <QBarCategoryAxis>
-
+#include <QLogValueAxis>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
 QString addCategories[] = {"Jul", "Aug", "Sep", "Nov", "Dec"};
+static const int maxAddCategories = 5;
 
 MainWidget::MainWidget(QWidget *parent) :
     QWidget(parent),
     m_chart(0),
+    m_axis(0),
     rowPos(0),
     nSeries(0),
     nNewBoxes(0)
@@ -124,7 +126,6 @@ MainWidget::MainWidget(QWidget *parent) :
 
     // Create chart view with the chart
     m_chartView = new QChartView(m_chart, this);
-    //m_chartView->setRubberBand(QChartView::HorizonalRubberBand);
 
     // Another grid layout as a main layout
     QGridLayout *mainLayout = new QGridLayout();
@@ -187,7 +188,6 @@ void MainWidget::addSeries()
         return;
 
     // Initial data
-    //![1]
     QBoxSet *set0 = new QBoxSet();
     QBoxSet *set1 = new QBoxSet();
     QBoxSet *set2 = new QBoxSet();
@@ -196,7 +196,7 @@ void MainWidget::addSeries()
     QBoxSet *set5 = new QBoxSet();
 
     //      low  bot   med   top  upp
-    *set0 << 1 << 2 << 4.4 << 13 << 15;
+    *set0 << -1 << 2 << 4 << 13 << 15;
     *set1 << 5 << 6 << 7.5 << 8 << 12;
     *set2 << 3 << 5 << 5.7 << 8 << 9;
     *set3 << 5 << 6 << 6.8 << 7 << 8;
@@ -219,14 +219,14 @@ void MainWidget::addSeries()
 
     m_chart->addSeries(m_series[nSeries]);
 
-    if (nSeries == 0) {
+    if (!m_axis) {
         QStringList categories;
         categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun";
         m_axis = new QBarCategoryAxis();
         m_axis->append(categories);
         m_chart->createDefaultAxes();
-        m_chart->setAxisX(m_axis, m_series[nSeries]);
     }
+    m_chart->setAxisX(m_axis, m_series[nSeries]);
 
     nSeries++;
 }
@@ -248,7 +248,7 @@ void MainWidget::addBox()
 {
     qDebug() << "BoxPlotTester::MainWidget::addBox()";
 
-    if (nSeries > 0) {
+    if (nSeries > 0 && nNewBoxes < maxAddCategories) {
         QBoxSet *newSet = new QBoxSet();
         newSet->setValue(QBoxSet::LowerExtreme, 5.0);
         newSet->setValue(QBoxSet::LowerQuartile, 6.0);
@@ -256,8 +256,7 @@ void MainWidget::addBox()
         newSet->setValue(QBoxSet::UpperQuartile, 7.0);
         newSet->setValue(QBoxSet::UpperExtreme, 8.0);
 
-        for (int i = 0; i < nSeries; i++)
-            m_series[i]->append(newSet);
+        m_series[0]->append(newSet);
 
         m_axis->append(addCategories[nNewBoxes]);
 
@@ -288,11 +287,15 @@ void MainWidget::removeBox()
 
     if (nSeries > 0) {
         for (int i = 0; i < nSeries; i++) {
-            QList<QBoxSet *> sets = m_series[i]->boxSets();
-            m_series[i]->remove(sets.at(m_series[i]->count() - 3));
+            qDebug() << "m_series[i]->count() = " << m_series[i]->count();
+            if (m_series[i]->count() > 3) {
+                QList<QBoxSet *> sets = m_series[i]->boxSets();
+                m_series[i]->remove(sets.at(m_series[i]->count() - 3));
+            }
         }
 
-        m_axis->remove(m_axis->at(1));
+        if (m_axis->count() > 3)
+            m_axis->remove(m_axis->at(1));
     } else {
         qDebug() << "Create a series first";
     }

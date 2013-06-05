@@ -54,7 +54,6 @@ public:
     void setBrush(const QBrush &brush);
     void setPen(const QPen &pen);
     void setLayout(const BoxWhiskersData &data);
-    void setDomainSize(const QSizeF &size);
 
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
@@ -63,13 +62,10 @@ public:
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
 
-    void updateGeometry();
+    void updateGeometry(AbstractDomain *domain);
 protected:
     QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint) const;
     void setGeometry(const QRectF &rect);
-
-private:
-    void updateBoundingRect();
 
 Q_SIGNALS:
     void clicked(QBoxSet *boxset);

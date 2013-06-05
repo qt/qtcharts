@@ -33,9 +33,7 @@ BoxPlotChartItem::BoxPlotChartItem(QBoxPlotSeries *series, QGraphicsItem *item) 
     ChartItem(series->d_func(), item),
     m_series(series),
     m_animation(0),
-    m_animate(0),
-    m_domainMaxY(0.0),
-    m_domainMinY(0.0)
+    m_animate(0)
 {
     connect(series, SIGNAL(boxsetsRemoved(QList<QBoxSet *>)), this, SLOT(handleBoxsetRemove(QList<QBoxSet *>)));
     connect(series->d_func(), SIGNAL(restructuredBoxes()), this, SLOT(handleDataStructureChanged()));
@@ -90,7 +88,7 @@ void BoxPlotChartItem::handleDataStructureChanged()
         }
         updateBoxGeometry(box, s);
 
-        box->updateGeometry();
+        box->updateGeometry(domain());
 
         if (m_animation)
             m_animation->addBox(box);
@@ -128,17 +126,12 @@ void BoxPlotChartItem::handleDomainUpdated()
     if ((domain()->size().width() <= 0) || (domain()->size().height() <= 0))
         return;
 
-    // Set my bounding rect to same as domain size
-    m_boundingRect.setRect(0.0, 0.0, domain()->size().width(), domain()->size().height());
+    // Set my bounding rect to same as domain size. Add one pixel at the top (-1.0) and the bottom as 0.0 would
+    // snip a bit off from the whisker at the grid line
+    m_boundingRect.setRect(0.0, -1.0, domain()->size().width(), domain()->size().height() + 1.0);
 
     foreach (BoxWhiskers *item, m_boxTable.values()) {
-        // Update the domain size for each BoxWhisker item
-        item->setDomainSize(domain()->size());
-        if (domain()->minY() != m_domainMinY || domain()->maxY() != m_domainMaxY) {
-            item->updateGeometry();
-            m_domainMinY = domain()->minY();
-            m_domainMaxY = domain()->maxY();
-        }
+        item->updateGeometry(domain());
 
         // If the animation is set, start the animation for each BoxWhisker item
         if (m_animation)
@@ -156,7 +149,7 @@ void BoxPlotChartItem::handleLayoutChanged()
         if (dirty && m_animation)
             presenter()->startAnimation(m_animation->boxChangeAnimation(item));
         else
-            item->updateGeometry();
+            item->updateGeometry(domain());
     }
 }
 

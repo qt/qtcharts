@@ -76,8 +76,6 @@ protected:
 
     BoxPlotAnimation *m_animation;
     bool m_animate;
-    qreal m_domainMaxY;
-    qreal m_domainMinY;
 
     QRectF m_boundingRect;
 };

@@ -382,9 +382,9 @@ void QBoxPlotSeriesPrivate::initializeDomain()
     qreal maxY(domain()->maxY());
 
     qreal x = m_boxSets.count();
-    minX = qMin(minX, - (qreal)0.5);
+    minX = qMin(minX, qreal(-0.5));
     minY = qMin(minY, min());
-    maxX = qMax(maxX, x - (qreal)0.5);
+    maxX = qMax(maxX, x - qreal(0.5));
     maxY = qMax(maxY, max());
 
     domain()->setRange(minX, maxX, minY, maxY);
