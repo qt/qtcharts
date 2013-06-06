@@ -30,7 +30,8 @@ class BoxDataReader : public QTextStream
 {
 public:
     explicit BoxDataReader(QIODevice *device);
-    QBoxSet* readBox();
+    QBoxSet *readBox();
+    void readFile(QIODevice *device);
 
 protected:
     qreal findMedian(int begin, int end);

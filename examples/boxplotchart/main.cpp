@@ -33,52 +33,71 @@ QTCOMMERCIALCHART_USE_NAMESPACE
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-//![1]
 
-//![2]
-    QBoxPlotSeries *series = new QBoxPlotSeries();
-    series->setName("Acme Ltd");
-//![2]
+    //! [1]
+    QBoxPlotSeries *acmeSeries = new QBoxPlotSeries();
+    acmeSeries->setName("Acme Ltd");
 
-    QFile stockData(":stock");
-    if (!stockData.open(QIODevice::ReadOnly | QIODevice::Text))
+    QBoxPlotSeries *boxWhiskSeries = new QBoxPlotSeries();
+    boxWhiskSeries->setName("BoxWhisk Inc");
+    //! [1]
+
+    //! [2]
+    QFile acmeData(":acme");
+    if (!acmeData.open(QIODevice::ReadOnly | QIODevice::Text))
         return 1;
 
-    BoxDataReader dataReader(&stockData);
+    BoxDataReader dataReader(&acmeData);
     while (!dataReader.atEnd()) {
         QBoxSet *set = dataReader.readBox();
         if (set)
-            series->append(set);
+            acmeSeries->append(set);
     }
+    //! [2]
 
-//![3]
+    //! [3]
+    QFile boxwhiskData(":boxwhisk");
+    if (!boxwhiskData.open(QIODevice::ReadOnly | QIODevice::Text))
+        return 1;
+
+    dataReader.readFile(&boxwhiskData);
+    while (!dataReader.atEnd()) {
+        QBoxSet *set = dataReader.readBox();
+        if (set)
+            boxWhiskSeries->append(set);
+    }
+    //! [3]
+
+    //! [4]
     QChart *chart = new QChart();
-    chart->addSeries(series);
-    chart->setTitle("Acme's share deviation in 2012");
+    chart->addSeries(acmeSeries);
+    chart->addSeries(boxWhiskSeries);
+    chart->setTitle("Acme Ltd and BoxWhisk Inc share deviation in 2012");
     chart->setAnimationOptions(QChart::SeriesAnimations);
-//![3]
+    //! [4]
 
-//![4]
+    //! [5]
     chart->createDefaultAxes();
     chart->axisY()->setMin(15.0);
-//![4]
+    chart->axisY()->setMax(34.0);
+    //! [5]
 
-//![5]
+    //! [6]
     chart->legend()->setVisible(true);
     chart->legend()->setAlignment(Qt::AlignBottom);
-//![5]
+    //! [6]
 
-//![6]
+    //! [7]
     QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
-//![6]
+    //! [7]
 
-//![7]
+    //! [8]
     QMainWindow window;
     window.setCentralWidget(chartView);
-    window.resize(600, 400);
+    window.resize(800, 600);
     window.show();
-//![7]
+    //! [8]
 
     return a.exec();
 }

@@ -123,15 +123,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QBoxSet::colorChanged(QColor)
-    This signal is emitted when the fill (brush) color of the box-and-whisker item has changed to \a color.
-*/
-/*!
-    \qmlsignal BoxSet::onColorChanged(QColor color)
-    This signal is emitted when the fill (brush) color of the box-and-whisker item has changed to \a color.
-*/
-
-/*!
     \fn void QBoxSet::valuesChanged()
     This signal is emitted when multiple values have been changed on the box-and-whisker item.
     \sa append()

@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file alias="stock">stock_data.txt</file>
+        <file alias="acme">acme_data.txt</file>
+        <file alias="boxwhisk">boxwhisk_data.txt</file>
     </qresource>
 </RCC>
