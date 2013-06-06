@@ -863,11 +863,13 @@ void QPieSeriesPrivate::initializeAnimations(QtCommercialChart::QChart::Animatio
 {
     PieChartItem *item = static_cast<PieChartItem *>(m_item.data());
     Q_ASSERT(item);
-    if (options.testFlag(QChart::SeriesAnimations)) {
+    if (item->animation())
+        item->animation()->stopAndDestroyLater();
+
+    if (options.testFlag(QChart::SeriesAnimations))
         item->setAnimation(new PieAnimation(item));
-    }else{
+    else
         item->setAnimation(0);
-    }
     QAbstractSeriesPrivate::initializeAnimations(options);
 }
 

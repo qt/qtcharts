@@ -582,11 +582,13 @@ void QXYSeriesPrivate::initializeAnimations(QtCommercialChart::QChart::Animation
 {
     XYChart *item = static_cast<XYChart *>(m_item.data());
     Q_ASSERT(item);
-    if (options.testFlag(QChart::SeriesAnimations)) {
+    if (item->animation())
+        item->animation()->stopAndDestroyLater();
+
+    if (options.testFlag(QChart::SeriesAnimations))
         item->setAnimation(new XYAnimation(item));
-    }else{
+    else
         item->setAnimation(0);
-    }
     QAbstractSeriesPrivate::initializeAnimations(options);
 }
 

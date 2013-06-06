@@ -997,11 +997,13 @@ void QAbstractAxisPrivate::initializeAnimations(QChart::AnimationOptions options
 {
     ChartAxisElement *axis = m_item.data();
     Q_ASSERT(axis);
-    if (options.testFlag(QChart::GridAxisAnimations)) {
+    if (axis->animation())
+        axis->animation()->stopAndDestroyLater();
+
+    if (options.testFlag(QChart::GridAxisAnimations))
         axis->setAnimation(new AxisAnimation(axis));
-    } else {
+    else
         axis->setAnimation(0);
-    }
 }
 
 

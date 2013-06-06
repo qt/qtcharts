@@ -159,12 +159,6 @@ public Q_SLOTS:
     void handleAxisAdded(QAbstractAxis *axis);
     void handleAxisRemoved(QAbstractAxis *axis);
 
-private Q_SLOTS:
-    void handleAnimationFinished();
-
-Q_SIGNALS:
-    void animationsFinished();
-
 private:
     QChart *m_chart;
     QList<ChartItem *> m_chartItems;
@@ -174,7 +168,6 @@ private:
     QChart::AnimationOptions m_options;
     State m_state;
     QPointF m_statePoint;
-    QList<ChartAnimation *> m_animations;
     AbstractChartLayout *m_layout;
     ChartBackground *m_background;
     QAbstractGraphicsShapeItem *m_plotAreaBackground;

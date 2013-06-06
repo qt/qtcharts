@@ -139,11 +139,13 @@ void QSplineSeriesPrivate::initializeAnimations(QtCommercialChart::QChart::Anima
 {
     SplineChartItem *item = static_cast<SplineChartItem *>(m_item.data());
     Q_ASSERT(item);
-    if (options.testFlag(QChart::SeriesAnimations)) {
+    if (item->animation())
+        item->animation()->stopAndDestroyLater();
+
+    if (options.testFlag(QChart::SeriesAnimations))
         item->setAnimation(new SplineAnimation(item));
-    }else{
+    else
         item->setAnimation(0);
-    }
     QAbstractSeriesPrivate::initializeAnimations(options);
 }
 

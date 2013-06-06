@@ -395,11 +395,17 @@ void  QAreaSeriesPrivate::initializeAnimations(QChart::AnimationOptions options)
 {
     Q_Q(QAreaSeries);
     AreaChartItem *area = static_cast<AreaChartItem *>(m_item.data());
+
+    if (area->upperLineItem()->animation())
+        area->upperLineItem()->animation()->stopAndDestroyLater();
+    if (q->lowerSeries() && area->lowerLineItem()->animation())
+        area->lowerLineItem()->animation()->stopAndDestroyLater();
+
     if (options.testFlag(QChart::SeriesAnimations)) {
         area->upperLineItem()->setAnimation(new XYAnimation(area->upperLineItem()));
         if (q->lowerSeries())
-        area->lowerLineItem()->setAnimation(new XYAnimation(area->lowerLineItem()));
-    }else{
+            area->lowerLineItem()->setAnimation(new XYAnimation(area->lowerLineItem()));
+    } else {
         area->upperLineItem()->setAnimation(0);
         if (q->lowerSeries())
                area->lowerLineItem()->setAnimation(0);

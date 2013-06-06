@@ -484,10 +484,13 @@ void QBoxPlotSeriesPrivate::initializeAnimations(QChart::AnimationOptions option
 {
     BoxPlotChartItem *item = static_cast<BoxPlotChartItem *>(m_item.data());
     Q_ASSERT(item);
+    if (item->animation())
+        item->animation()->stopAndDestroyLater();
+
     if (options.testFlag(QChart::SeriesAnimations))
         item->setAnimation(new BoxPlotAnimation(item));
     else
-        item->setAnimation((BoxPlotAnimation *)0);
+        item->setAnimation(0);
     QAbstractSeriesPrivate::initializeAnimations(options);
 }
 

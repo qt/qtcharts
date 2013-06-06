@@ -887,11 +887,13 @@ void QAbstractBarSeriesPrivate::initializeAnimations(QChart::AnimationOptions op
 {
     AbstractBarChartItem *bar = static_cast<AbstractBarChartItem *>(m_item.data());
     Q_ASSERT(bar);
-    if (options.testFlag(QChart::SeriesAnimations)) {
+    if (bar->animation())
+        bar->animation()->stopAndDestroyLater();
+
+    if (options.testFlag(QChart::SeriesAnimations))
         bar->setAnimation(new BarAnimation(bar));
-    }else{
+    else
         bar->setAnimation(0);
-    }
     QAbstractSeriesPrivate::initializeAnimations(options);
 }
 

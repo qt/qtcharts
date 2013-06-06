@@ -18,40 +18,29 @@
 **
 ****************************************************************************/
 
-//  W A R N I N G
-//  -------------
-//
-// This file is not part of the QtCommercial Chart API.  It exists purely as an
-// implementation detail.  This header file may change from version to
-// version without notice, or even be removed.
-//
-// We mean it.
-
-#ifndef CHARTANIMATION_H
-#define CHARTANIMATION_H
-
-#include "qchartglobal.h"
-#include <QVariantAnimation>
+#include "chartanimation_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-const static int ChartAnimationDuration = 1000;
-
-class ChartAnimation: public QVariantAnimation
+ChartAnimation::ChartAnimation(QObject *parent) :
+    QVariantAnimation(parent),
+    m_destructing(false)
 {
-    Q_OBJECT
-public:
-    ChartAnimation(QObject *parent = 0);
+}
 
-    void stopAndDestroyLater();
+void ChartAnimation::stopAndDestroyLater()
+{
+    m_destructing = true;
+    stop();
+    deleteLater();
+}
 
-public Q_SLOTS:
-    void startChartAnimation();
-
-protected:
-    bool m_destructing;
-};
+void ChartAnimation::startChartAnimation()
+{
+    if (!m_destructing)
+        start();
+}
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif /* CHARTANIMATION_H */
+

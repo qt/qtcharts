@@ -288,6 +288,9 @@ void QScatterSeriesPrivate::initializeAnimations(QChart::AnimationOptions option
     ScatterChartItem *item = static_cast<ScatterChartItem *>(m_item.data());
     Q_ASSERT(item);
 
+    if (item->animation())
+        item->animation()->stopAndDestroyLater();
+
     if (options.testFlag(QChart::SeriesAnimations))
         item->setAnimation(new ScatterAnimation(item));
     else

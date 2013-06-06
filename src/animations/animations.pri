@@ -10,7 +10,8 @@ SOURCES += \
     $$PWD/baranimation.cpp \
     $$PWD/scatteranimation.cpp \
     $$PWD/boxplotanimation.cpp \
-    $$PWD/boxwhiskersanimation.cpp
+    $$PWD/boxwhiskersanimation.cpp \
+    $$PWD/chartanimation.cpp
 
 PRIVATE_HEADERS += \
     $$PWD/axisanimation_p.h \

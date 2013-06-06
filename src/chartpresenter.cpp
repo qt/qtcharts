@@ -126,14 +126,17 @@ void ChartPresenter::handleSeriesRemoved(QAbstractSeries *series)
 void ChartPresenter::setAnimationOptions(QChart::AnimationOptions options)
 {
     if (m_options != options) {
+        QChart::AnimationOptions oldOptions = m_options;
         m_options = options;
-
-        foreach(QAbstractSeries* series, m_series){
-            series->d_ptr->initializeAnimations(m_options);
+        if (options.testFlag(QChart::SeriesAnimations) != oldOptions.testFlag(QChart::SeriesAnimations)) {
+            foreach (QAbstractSeries *series, m_series)
+                series->d_ptr->initializeAnimations(m_options);
         }
-        foreach(QAbstractAxis* axis, m_axes){
-            axis->d_ptr->initializeAnimations(m_options);
+        if (options.testFlag(QChart::GridAxisAnimations) != oldOptions.testFlag(QChart::GridAxisAnimations)) {
+            foreach (QAbstractAxis *axis, m_axes)
+                axis->d_ptr->initializeAnimations(m_options);
         }
+        m_layout->invalidate(); // So that existing animations don't just stop halfway
     }
 }
 
@@ -182,21 +185,10 @@ void ChartPresenter::createTitleItem()
     }
 }
 
-
-void ChartPresenter::handleAnimationFinished()
-{
-    m_animations.removeAll(qobject_cast<ChartAnimation *>(sender()));
-    if (m_animations.empty())
-        emit animationsFinished();
-}
-
 void ChartPresenter::startAnimation(ChartAnimation *animation)
 {
-    if (animation->state() != QAbstractAnimation::Stopped) animation->stop();
-    QObject::connect(animation, SIGNAL(finished()), this, SLOT(handleAnimationFinished()), Qt::UniqueConnection);
-    if (!m_animations.isEmpty())
-        m_animations.append(animation);
-    QTimer::singleShot(0, animation, SLOT(start()));
+    animation->stop();
+    QTimer::singleShot(0, animation, SLOT(startChartAnimation()));
 }
 
 void ChartPresenter::setBackgroundBrush(const QBrush &brush)
