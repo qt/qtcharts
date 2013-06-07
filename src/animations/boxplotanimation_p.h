@@ -39,8 +39,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class BoxPlotChartItem;
 
-class BoxPlotAnimation
+class BoxPlotAnimation : public QObject
 {
+    Q_OBJECT
 public:
     BoxPlotAnimation(BoxPlotChartItem *item);
     ~BoxPlotAnimation();
@@ -50,6 +51,7 @@ public:
     ChartAnimation *boxChangeAnimation(BoxWhiskers *box);
 
     void setAnimationStart(BoxWhiskers *box);
+    void stopAll();
 
 protected:
     BoxPlotChartItem *m_item;

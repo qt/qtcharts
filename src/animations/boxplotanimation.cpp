@@ -26,7 +26,8 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 BoxPlotAnimation::BoxPlotAnimation(BoxPlotChartItem *item)
-      : m_item(item)
+    : QObject(item),
+    m_item(item)
 {
 }
 
@@ -71,6 +72,12 @@ void BoxPlotAnimation::setAnimationStart(BoxWhiskers *box)
 {
     BoxWhiskersAnimation *animation = m_animations.value(box);
     animation->setStartData(box->m_data);
+}
+
+void BoxPlotAnimation::stopAll()
+{
+    foreach (BoxWhiskersAnimation *animation, m_animations.values())
+        animation->stopAndDestroyLater();
 }
 
 //#include "moc_boxplotanimation_p.cpp"

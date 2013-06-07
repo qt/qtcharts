@@ -58,9 +58,7 @@ public: // from QVariantAnimation
 
 protected:
     friend class BoxPlotAnimation;
-    BoxPlotChartItem *m_item;
     BoxWhiskers *m_box;
-    BoxWhiskersData *m_boxData;
     bool m_moveMedianLine;
 };
 

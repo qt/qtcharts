@@ -37,6 +37,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+class BoxPlotAnimation;
+
 class QBoxPlotSeriesPrivate : public QAbstractSeriesPrivate
 {
     Q_OBJECT
@@ -85,6 +87,7 @@ protected:
     QPen m_pen;
     QBrush m_brush;
     int m_index;
+    BoxPlotAnimation *m_animation;
 
 private:
     Q_DECLARE_PUBLIC(QBoxPlotSeries)

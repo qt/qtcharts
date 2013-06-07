@@ -32,8 +32,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 BoxPlotChartItem::BoxPlotChartItem(QBoxPlotSeries *series, QGraphicsItem *item) :
     ChartItem(series->d_func(), item),
     m_series(series),
-    m_animation(0),
-    m_animate(0)
+    m_animation(0)
 {
     connect(series, SIGNAL(boxsetsRemoved(QList<QBoxSet *>)), this, SLOT(handleBoxsetRemove(QList<QBoxSet *>)));
     connect(series->d_func(), SIGNAL(restructuredBoxes()), this, SLOT(handleDataStructureChanged()));

@@ -75,7 +75,6 @@ protected:
     int m_seriesCount;
 
     BoxPlotAnimation *m_animation;
-    bool m_animate;
 
     QRectF m_boundingRect;
 };

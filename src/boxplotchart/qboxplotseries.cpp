@@ -488,9 +488,11 @@ void QBoxPlotSeriesPrivate::initializeAnimations(QChart::AnimationOptions option
         item->animation()->stopAndDestroyLater();
 
     if (options.testFlag(QChart::SeriesAnimations))
-        item->setAnimation(new BoxPlotAnimation(item));
+        m_animation = new BoxPlotAnimation(item);
     else
-        item->setAnimation(0);
+        m_animation = 0;
+    item->setAnimation(m_animation);
+
     QAbstractSeriesPrivate::initializeAnimations(options);
 }
 
@@ -506,7 +508,11 @@ void QBoxPlotSeriesPrivate::handleSeriesRemove(QAbstractSeries *series)
     Q_Q(QBoxPlotSeries);
 
     QBoxPlotSeries *removedSeries = static_cast<QBoxPlotSeries *>(series);
-    QObject::disconnect(m_chart->d_ptr->m_dataset, 0, removedSeries->d_func(), 0);
+
+    if (q == removedSeries && m_animation) {
+        m_animation->stopAll();
+        QObject::disconnect(m_chart->d_ptr->m_dataset, 0, removedSeries->d_func(), 0);
+    }
 
     // Test if series removed is me, then don't do anything
     if (q != removedSeries) {
