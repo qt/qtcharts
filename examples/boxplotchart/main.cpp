@@ -25,6 +25,7 @@
 #include <QBoxSet>
 #include <QLegend>
 #include <QBarCategoryAxis>
+#include <QFile>
 
 #include "boxdatareader.h"
 
