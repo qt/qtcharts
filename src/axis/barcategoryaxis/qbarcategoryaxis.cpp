@@ -248,7 +248,6 @@ void QBarCategoryAxis::remove(const QString &category)
                 setRange(d->m_minCategory, d->m_categories.last());
             } else {
                 d->updateCategoryDomain();
-                //TODO:: d->emitUpdated();
             }
         } else {
             setRange(QString::null, QString::null);
@@ -282,7 +281,6 @@ void QBarCategoryAxis::insert(int index, const QString &category)
         setRange(d->m_minCategory, d->m_categories.last());
     } else {
         d->updateCategoryDomain();
-        //TODO:: d->emitUpdated();
     }
 
     emit categoriesChanged();
@@ -302,13 +300,11 @@ void QBarCategoryAxis::replace(const QString &oldCategory, const QString &newCat
 
     if (pos != -1 && !d->m_categories.contains(newCategory) && !newCategory.isNull()) {
         d->m_categories.replace(pos, newCategory);
-        if (d->m_minCategory == oldCategory) {
+        if (d->m_minCategory == oldCategory)
             setRange(newCategory, d->m_maxCategory);
-        } else if (d->m_maxCategory == oldCategory) {
+        else if (d->m_maxCategory == oldCategory)
             setRange(d->m_minCategory, newCategory);
-        } else {
-            //TODO:: d->emitUpdated();
-        }
+
         emit categoriesChanged();
         emit countChanged();
     }
@@ -562,9 +558,22 @@ void QBarCategoryAxisPrivate::initializeGraphics(QGraphicsItem* parent)
 
 void QBarCategoryAxisPrivate::updateCategoryDomain()
 {
-    m_min = m_categories.indexOf(m_minCategory) - 0.5;
-    m_max = m_categories.indexOf(m_maxCategory) + 0.5;
+    bool changed = false;
+
+    qreal tmpMin = m_categories.indexOf(m_minCategory) - 0.5;
+    if (!qFuzzyIsNull(m_min - tmpMin)) {
+        m_min = tmpMin;
+        changed = true;
+    }
+    qreal tmpMax = m_categories.indexOf(m_maxCategory) + 0.5;
+    if (!qFuzzyIsNull(m_max - tmpMax)) {
+        m_max = tmpMax;
+        changed = true;
+    }
     m_count = m_max - m_min;
+
+    if (changed)
+        emit rangeChanged(m_min,m_max);
 }
 
 
