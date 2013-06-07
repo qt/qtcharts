@@ -107,7 +107,7 @@ MainWidget::MainWidget(QWidget *parent) :
     initThemeCombo(grid);
     initCheckboxes(grid);
 
-    m_model = new CustomTableModel;
+    m_model = new CustomTableModel();
     QTableView *tableView = new QTableView;
     tableView->setModel(m_model);
     tableView->setMaximumWidth(200);

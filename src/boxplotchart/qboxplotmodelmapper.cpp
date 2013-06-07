@@ -437,47 +437,6 @@ void QBoxPlotModelMapperPrivate::boxSetsRemoved(QList<QBoxSet *> sets)
     initializeBoxFromModel();
 }
 
-void QBoxPlotModelMapperPrivate::valuesAdded(int index, int count)
-{
-    if (m_seriesSignalsBlock)
-        return;
-
-    if (m_count != -1)
-        m_count += count;
-
-    int boxSetIndex = m_boxSets.indexOf(qobject_cast<QBoxSet *>(QObject::sender()));
-
-    blockModelSignals();
-    if (m_orientation == Qt::Vertical)
-        m_model->insertRows(index + m_first, count);
-    else
-        m_model->insertColumns(index + m_first, count);
-
-    for (int j = index; j < index + count; j++)
-        m_model->setData(boxModelIndex(boxSetIndex + m_firstBoxSetSection, j), m_boxSets.at(boxSetIndex)->at(j));
-
-    blockModelSignals(false);
-    initializeBoxFromModel();
-}
-
-void QBoxPlotModelMapperPrivate::valuesRemoved(int index, int count)
-{
-    if (m_seriesSignalsBlock)
-        return;
-
-    if (m_count != -1)
-        m_count -= count;
-
-    blockModelSignals();
-    if (m_orientation == Qt::Vertical)
-        m_model->removeRows(index + m_first, count);
-    else
-        m_model->removeColumns(index + m_first, count);
-
-    blockModelSignals(false);
-    initializeBoxFromModel();
-}
-
 void QBoxPlotModelMapperPrivate::boxValueChanged(int index)
 {
     if (m_seriesSignalsBlock)
@@ -513,8 +472,6 @@ void QBoxPlotModelMapperPrivate::initializeBoxFromModel()
                 posInBar++;
                 boxIndex = boxModelIndex(i, posInBar);
             }
-            connect(boxSet, SIGNAL(valuesAdded(int,int)), this, SLOT(valuesAdded(int,int)));
-            connect(boxSet, SIGNAL(valuesRemoved(int,int)), this, SLOT(valuesRemoved(int,int)));
             connect(boxSet, SIGNAL(valueChanged(int)), this, SLOT(boxValueChanged(int)));
             m_series->append(boxSet);
             m_boxSets.append(boxSet);

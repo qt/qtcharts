@@ -58,8 +58,6 @@ public Q_SLOTS:
     // for the series
     void boxSetsAdded(QList<QBoxSet *> sets);
     void boxSetsRemoved(QList<QBoxSet *> sets);
-    void valuesAdded(int index, int count);
-    void valuesRemoved(int index, int count);
     void boxValueChanged(int index);
     void handleSeriesDestroyed();
 
