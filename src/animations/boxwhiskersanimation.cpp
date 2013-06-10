@@ -29,9 +29,10 @@ Q_DECLARE_METATYPE(qreal)
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-BoxWhiskersAnimation::BoxWhiskersAnimation(BoxWhiskers *box)
+BoxWhiskersAnimation::BoxWhiskersAnimation(BoxWhiskers *box, BoxPlotAnimation *boxPlotAnimation)
     : ChartAnimation(box),
-      m_box(box)
+      m_box(box),
+      m_boxPlotAnimation(boxPlotAnimation)
 {
     setDuration(ChartAnimationDuration);
     setEasingCurve(QEasingCurve::OutQuart);
@@ -39,6 +40,8 @@ BoxWhiskersAnimation::BoxWhiskersAnimation(BoxWhiskers *box)
 
 BoxWhiskersAnimation::~BoxWhiskersAnimation()
 {
+    if (m_boxPlotAnimation)
+        m_boxPlotAnimation->removeBoxAnimation(m_box);
 }
 
 QVariant BoxWhiskersAnimation::interpolated(const QVariant &from, const QVariant &to, qreal progress) const

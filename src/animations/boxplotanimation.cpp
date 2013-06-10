@@ -39,7 +39,7 @@ void BoxPlotAnimation::addBox(BoxWhiskers *box)
 {
     BoxWhiskersAnimation *animation = m_animations.value(box);
     if (!animation) {
-        animation = new BoxWhiskersAnimation(box);
+        animation = new BoxWhiskersAnimation(box, this);
         m_animations.insert(box, animation);
         BoxWhiskersData start;
         start.m_median = box->m_data.m_median;
@@ -76,10 +76,16 @@ void BoxPlotAnimation::setAnimationStart(BoxWhiskers *box)
 
 void BoxPlotAnimation::stopAll()
 {
-    foreach (BoxWhiskersAnimation *animation, m_animations.values())
+    foreach (BoxWhiskers *box, m_animations.keys()) {
+        BoxWhiskersAnimation *animation = m_animations.value(box);
         animation->stopAndDestroyLater();
+        m_animations.remove(box);
+    }
 }
 
-//#include "moc_boxplotanimation_p.cpp"
+void BoxPlotAnimation::removeBoxAnimation(BoxWhiskers *box)
+{
+    m_animations.remove(box);
+}
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -52,6 +52,7 @@ public:
 
     void setAnimationStart(BoxWhiskers *box);
     void stopAll();
+    void removeBoxAnimation(BoxWhiskers *box);
 
 protected:
     BoxPlotChartItem *m_item;

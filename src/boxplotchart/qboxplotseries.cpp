@@ -559,13 +559,14 @@ void QBoxPlotSeriesPrivate::handleSeriesChange(QAbstractSeries *series)
 
 bool QBoxPlotSeriesPrivate::append(QBoxSet *set)
 {
-    if ((m_boxSets.contains(set)) || (set == 0))
+    if (m_boxSets.contains(set) || (set == 0) || set->d_ptr->m_series)
         return false; // Fail if set is already in list or set is null.
 
     m_boxSets.append(set);
     QObject::connect(set->d_ptr.data(), SIGNAL(updatedLayout()), this, SIGNAL(updatedLayout()));
     QObject::connect(set->d_ptr.data(), SIGNAL(updatedBox()), this, SIGNAL(updatedBoxes()));
     QObject::connect(set->d_ptr.data(), SIGNAL(restructuredBox()), this, SIGNAL(restructuredBoxes()));
+    set->d_ptr->m_series = this;
 
     emit restructuredBoxes(); // this notifies boxplotchartitem
     return true;
@@ -576,6 +577,7 @@ bool QBoxPlotSeriesPrivate::remove(QBoxSet *set)
     if (!m_boxSets.contains(set))
         return false; // Fail if set is not in list
 
+    set->d_ptr->m_series = 0;
     m_boxSets.removeOne(set);
     QObject::disconnect(set->d_ptr.data(), SIGNAL(updatedLayout()), this, SIGNAL(updatedLayout()));
     QObject::disconnect(set->d_ptr.data(), SIGNAL(updatedBox()), this, SIGNAL(updatedBoxes()));
@@ -588,7 +590,7 @@ bool QBoxPlotSeriesPrivate::remove(QBoxSet *set)
 bool QBoxPlotSeriesPrivate::append(QList<QBoxSet *> sets)
 {
     foreach (QBoxSet *set, sets) {
-        if ((set == 0) || (m_boxSets.contains(set)))
+        if ((set == 0) || m_boxSets.contains(set) || set->d_ptr->m_series)
             return false; // Fail if any of the sets is null or is already appended.
         if (sets.count(set) != 1)
             return false; // Also fail if same set is more than once in given list.
@@ -599,6 +601,7 @@ bool QBoxPlotSeriesPrivate::append(QList<QBoxSet *> sets)
         QObject::connect(set->d_ptr.data(), SIGNAL(updatedLayout()), this, SIGNAL(updatedLayout()));
         QObject::connect(set->d_ptr.data(), SIGNAL(updatedBox()), this, SIGNAL(updatedBoxes()));
         QObject::connect(set->d_ptr.data(), SIGNAL(restructuredBox()), this, SIGNAL(restructuredBoxes()));
+        set->d_ptr->m_series = this;
     }
 
     emit restructuredBoxes(); // this notifies boxplotchartitem
@@ -618,6 +621,7 @@ bool QBoxPlotSeriesPrivate::remove(QList<QBoxSet *> sets)
     }
 
     foreach (QBoxSet *set, sets) {
+        set->d_ptr->m_series = 0;
         m_boxSets.removeOne(set);
         QObject::disconnect(set->d_ptr.data(), SIGNAL(updatedLayout()), this, SIGNAL(updatedLayout()));
         QObject::disconnect(set->d_ptr.data(), SIGNAL(updatedBox()), this, SIGNAL(updatedBoxes()));
@@ -631,10 +635,11 @@ bool QBoxPlotSeriesPrivate::remove(QList<QBoxSet *> sets)
 
 bool QBoxPlotSeriesPrivate::insert(int index, QBoxSet *set)
 {
-    if ((m_boxSets.contains(set)) || (set == 0))
+    if ((m_boxSets.contains(set)) || (set == 0) || set->d_ptr->m_series)
         return false; // Fail if set is already in list or set is null.
 
     m_boxSets.insert(index, set);
+    set->d_ptr->m_series = this;
     QObject::connect(set->d_ptr.data(), SIGNAL(updatedLayout()), this, SIGNAL(updatedLayout()));
     QObject::connect(set->d_ptr.data(), SIGNAL(updatedBox()), this, SIGNAL(updatedBoxes()));
     QObject::connect(set->d_ptr.data(), SIGNAL(restructuredBox()), this, SIGNAL(restructuredBoxes()));

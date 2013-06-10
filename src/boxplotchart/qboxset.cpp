@@ -325,7 +325,8 @@ QBoxSetPrivate::QBoxSetPrivate(const QString label, QBoxSet *parent) : QObject(p
     m_valuesCount(5),
     m_appendCount(0),
     m_pen(QPen(Qt::NoPen)),
-    m_brush(QBrush(Qt::NoBrush))
+    m_brush(QBrush(Qt::NoBrush)),
+    m_series(0)
 {
     m_values = new qreal[m_valuesCount];
 }

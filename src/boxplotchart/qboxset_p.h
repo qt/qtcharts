@@ -38,6 +38,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+class QBoxPlotSeriesPrivate;
+
 class QBoxSetPrivate : public QObject
 {
     Q_OBJECT
@@ -71,6 +73,7 @@ private:
     QBrush m_brush;
     QBrush m_labelBrush;
     QFont m_labelFont;
+    QBoxPlotSeriesPrivate *m_series;
 
     friend class QBoxSet;
     friend class QBoxPlotSeriesPrivate;

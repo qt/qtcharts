@@ -43,7 +43,7 @@ class BoxWhiskersAnimation : public ChartAnimation
     Q_OBJECT
 
 public:
-    BoxWhiskersAnimation(BoxWhiskers *box);
+    BoxWhiskersAnimation(BoxWhiskers *box, BoxPlotAnimation *boxPlotAnimation);
     ~BoxWhiskersAnimation();
 
 public: // from QVariantAnimation
@@ -60,6 +60,7 @@ protected:
     friend class BoxPlotAnimation;
     BoxWhiskers *m_box;
     bool m_moveMedianLine;
+    BoxPlotAnimation *m_boxPlotAnimation;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
