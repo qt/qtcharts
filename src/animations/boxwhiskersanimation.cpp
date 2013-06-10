@@ -50,7 +50,7 @@ QVariant BoxWhiskersAnimation::interpolated(const QVariant &from, const QVariant
     BoxWhiskersData endData = qvariant_cast<BoxWhiskersData>(to);
     BoxWhiskersData result;
 
-    if (m_moveMedianLine) {
+    if (m_changeAnimation) {
         result.m_lowerExtreme = startData.m_lowerExtreme + progress * (endData.m_lowerExtreme - startData.m_lowerExtreme);
         result.m_lowerQuartile = startData.m_lowerQuartile + progress * (endData.m_lowerQuartile - startData.m_lowerQuartile);
         result.m_median = startData.m_median + progress * (endData.m_median - startData.m_median);

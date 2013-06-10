@@ -60,7 +60,7 @@ public: // from QVariantAnimation
 protected:
     friend class BoxPlotAnimation;
     BoxWhiskers *m_box;
-    bool m_moveMedianLine;
+    bool m_changeAnimation;
     BoxPlotAnimation *m_boxPlotAnimation;
 };
 

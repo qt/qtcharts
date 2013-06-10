@@ -42,7 +42,11 @@ void BoxPlotAnimation::addBox(BoxWhiskers *box)
         animation = new BoxWhiskersAnimation(box, this);
         m_animations.insert(box, animation);
         BoxWhiskersData start;
+        start.m_lowerExtreme = box->m_data.m_median;
+        start.m_lowerQuartile = box->m_data.m_median;
         start.m_median = box->m_data.m_median;
+        start.m_upperQuartile = box->m_data.m_median;
+        start.m_upperExtreme = box->m_data.m_median;
         animation->setup(start, box->m_data);
     } else {
         animation->stop();
@@ -54,7 +58,7 @@ ChartAnimation *BoxPlotAnimation::boxAnimation(BoxWhiskers *box)
 {
     BoxWhiskersAnimation *animation = m_animations.value(box);
     if (animation)
-        animation->m_moveMedianLine = false;
+        animation->m_changeAnimation = false;
 
     return animation;
 }
@@ -62,7 +66,7 @@ ChartAnimation *BoxPlotAnimation::boxAnimation(BoxWhiskers *box)
 ChartAnimation *BoxPlotAnimation::boxChangeAnimation(BoxWhiskers *box)
 {
     BoxWhiskersAnimation *animation = m_animations.value(box);
-    animation->m_moveMedianLine = true;
+    animation->m_changeAnimation = true;
     animation->setEndData(box->m_data);
 
     return animation;
