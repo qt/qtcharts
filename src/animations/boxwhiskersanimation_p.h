@@ -37,6 +37,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class BoxPlotChartItem;
+class BoxPlotAnimation;
 
 class BoxWhiskersAnimation : public ChartAnimation
 {
