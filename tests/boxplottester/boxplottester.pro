@@ -11,8 +11,10 @@ contains(QT_MAJOR_VERSION, 5) {
 
 SOURCES += main.cpp \
     mainwidget.cpp \
-    customtablemodel.cpp
+    customtablemodel.cpp \
+    pentool.cpp
 
 HEADERS += \
     mainwidget.h \
-    customtablemodel.h
+    customtablemodel.h \
+    pentool.h

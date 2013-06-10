@@ -20,6 +20,7 @@
 
 #include "mainwidget.h"
 #include "customtablemodel.h"
+#include "pentool.h"
 #include <QVBoxPlotModelMapper>
 #include <QTableView>
 #include <QHeaderView>
@@ -59,6 +60,8 @@ MainWidget::MainWidget(QWidget *parent) :
 {
     m_chart = new QChart();
 
+    m_penTool = new PenTool("Whiskers pen", this);
+
     // Grid layout for the controls for configuring the chart widget
     QGridLayout *grid = new QGridLayout();
 
@@ -97,11 +100,16 @@ MainWidget::MainWidget(QWidget *parent) :
     connect(clearBoxButton, SIGNAL(clicked()), this, SLOT(clearBox()));
     grid->addWidget(clearBoxButton, m_rowPos++, 1);
 
-
     // Create set brush button
     QPushButton *setBrushButton = new QPushButton("Set brush");
     connect(setBrushButton, SIGNAL(clicked()), this, SLOT(setBrush()));
     grid->addWidget(setBrushButton, m_rowPos++, 1);
+
+    // Create set whiskers pen button
+    QPushButton *setWhiskersButton = new QPushButton("Whiskers pen");
+    connect(setWhiskersButton, SIGNAL(clicked()), m_penTool, SLOT(show()));
+    connect(m_penTool, SIGNAL(changed()), this, SLOT(changePen()));
+    grid->addWidget(setWhiskersButton, m_rowPos++, 1);
 
     initThemeCombo(grid);
     initCheckboxes(grid);
@@ -125,6 +133,9 @@ MainWidget::MainWidget(QWidget *parent) :
 
     // Create chart view with the chart
     m_chartView = new QChartView(m_chart, this);
+
+    // As a default antialiasing is off
+    m_chartView->setRenderHint(QPainter::Antialiasing, false);
 
     // Another grid layout as a main layout
     QGridLayout *mainLayout = new QGridLayout();
@@ -171,6 +182,12 @@ void MainWidget::initCheckboxes(QGridLayout *grid)
     connect(titleCheckBox, SIGNAL(toggled(bool)), this, SLOT(titleToggled(bool)));
     titleCheckBox->setChecked(false);
     grid->addWidget(titleCheckBox, m_rowPos++, 0);
+
+    QCheckBox *renderCheckBox = new QCheckBox("Render Hint");
+    connect(renderCheckBox, SIGNAL(toggled(bool)), this, SLOT(renderToggled(bool)));
+    renderCheckBox->setChecked(false);
+    grid->addWidget(renderCheckBox, m_rowPos++, 0);
+
 
     QCheckBox *modelMapperCheckBox = new QCheckBox("Use model mapper");
     connect(modelMapperCheckBox, SIGNAL(toggled(bool)), this, SLOT(modelMapperToggled(bool)));
@@ -361,6 +378,13 @@ void MainWidget::titleToggled(bool enabled)
         m_chart->setTitle("");
 }
 
+void MainWidget::renderToggled(bool enabled)
+{
+    qDebug() << "BoxPlotTester::renderToggled toggled to " << enabled;
+    m_chartView->setRenderHint(QPainter::Antialiasing, enabled);
+}
+
+
 void MainWidget::modelMapperToggled(bool enabled)
 {
     if (enabled) {
@@ -416,4 +440,12 @@ void MainWidget::singleBoxHovered(bool state)
         qDebug() << "single box hover started";
     else
         qDebug() << "single box hover ended";
+}
+
+void MainWidget::changePen()
+{
+    qDebug() << "changePen() = " << m_penTool->pen();
+    for (int i = 0; i <  m_seriesCount; i++)
+        m_series[i]->setPen(m_penTool->pen());
+
 }
