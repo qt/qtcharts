@@ -45,6 +45,7 @@ signals:
 private:
     void initThemeCombo(QGridLayout *grid);
     void initCheckboxes(QGridLayout *grid);
+    void updateAxis(int categoryCount);
 
 private slots:
     void addSeries();
@@ -71,9 +72,8 @@ private:
     QGridLayout *m_scatterLayout;
     QBarCategoryAxis *m_axis;
     CustomTableModel *m_model;
-    int rowPos;
-    int nSeries;
-    int nNewBoxes;
+    int m_rowPos;
+    int m_seriesCount;
     QBoxPlotSeries *m_series[10];
 };
 

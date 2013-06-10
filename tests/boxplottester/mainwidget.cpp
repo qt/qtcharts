@@ -47,16 +47,15 @@
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
-QString addCategories[] = {"Jul", "Aug", "Sep", "Nov", "Dec"};
-static const int maxAddCategories = 5;
+static const QString allCategories[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+static const int maxCategories = 12;
 
 MainWidget::MainWidget(QWidget *parent) :
     QWidget(parent),
     m_chart(0),
     m_axis(0),
-    rowPos(0),
-    nSeries(0),
-    nNewBoxes(0)
+    m_rowPos(0),
+    m_seriesCount(0)
 {
     m_chart = new QChart();
 
@@ -66,43 +65,43 @@ MainWidget::MainWidget(QWidget *parent) :
     // Create add a series button
     QPushButton *addSeriesButton = new QPushButton("Add a series");
     connect(addSeriesButton, SIGNAL(clicked()), this, SLOT(addSeries()));
-    grid->addWidget(addSeriesButton, rowPos++, 1);
+    grid->addWidget(addSeriesButton, m_rowPos++, 1);
 
     // Create remove a series button
     QPushButton *removeSeriesButton = new QPushButton("Remove a series");
     connect(removeSeriesButton, SIGNAL(clicked()), this, SLOT(removeSeries()));
-    grid->addWidget(removeSeriesButton, rowPos++, 1);
+    grid->addWidget(removeSeriesButton, m_rowPos++, 1);
 
     // Create add a single box button
     QPushButton *addBoxButton = new QPushButton("Add a box");
     connect(addBoxButton, SIGNAL(clicked()), this, SLOT(addBox()));
-    grid->addWidget(addBoxButton, rowPos++, 1);
+    grid->addWidget(addBoxButton, m_rowPos++, 1);
 
     // Create insert a box button
     QPushButton *insertBoxButton = new QPushButton("Insert a box");
     connect(insertBoxButton, SIGNAL(clicked()), this, SLOT(insertBox()));
-    grid->addWidget(insertBoxButton, rowPos++, 1);
+    grid->addWidget(insertBoxButton, m_rowPos++, 1);
 
     // Create add a single box button
     QPushButton *removeBoxButton = new QPushButton("Remove a box");
     connect(removeBoxButton, SIGNAL(clicked()), this, SLOT(removeBox()));
-    grid->addWidget(removeBoxButton, rowPos++, 1);
+    grid->addWidget(removeBoxButton, m_rowPos++, 1);
 
     // Create clear button
     QPushButton *clearButton = new QPushButton("Clear");
     connect(clearButton, SIGNAL(clicked()), this, SLOT(clear()));
-    grid->addWidget(clearButton, rowPos++, 1);
+    grid->addWidget(clearButton, m_rowPos++, 1);
 
     // Create clear button
     QPushButton *clearBoxButton = new QPushButton("ClearBox");
     connect(clearBoxButton, SIGNAL(clicked()), this, SLOT(clearBox()));
-    grid->addWidget(clearBoxButton, rowPos++, 1);
+    grid->addWidget(clearBoxButton, m_rowPos++, 1);
 
 
     // Create set brush button
     QPushButton *setBrushButton = new QPushButton("Set brush");
     connect(setBrushButton, SIGNAL(clicked()), this, SLOT(setBrush()));
-    grid->addWidget(setBrushButton, rowPos++, 1);
+    grid->addWidget(setBrushButton, m_rowPos++, 1);
 
     initThemeCombo(grid);
     initCheckboxes(grid);
@@ -111,7 +110,7 @@ MainWidget::MainWidget(QWidget *parent) :
     QTableView *tableView = new QTableView;
     tableView->setModel(m_model);
     tableView->setMaximumWidth(200);
-    grid->addWidget(tableView, rowPos++, 0, 3, 2, Qt::AlignLeft);
+    grid->addWidget(tableView, m_rowPos++, 0, 3, 2, Qt::AlignLeft);
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
     tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     tableView->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -151,8 +150,8 @@ void MainWidget::initThemeCombo(QGridLayout *grid)
     chartTheme->addItem("Blue Icy");
     connect(chartTheme, SIGNAL(currentIndexChanged(int)),
             this, SLOT(changeChartTheme(int)));
-    grid->addWidget(new QLabel("Chart theme:"), rowPos, 0);
-    grid->addWidget(chartTheme, rowPos++, 1);
+    grid->addWidget(new QLabel("Chart theme:"), m_rowPos, 0);
+    grid->addWidget(chartTheme, m_rowPos++, 1);
 }
 
 // Different check boxes for customizing chart
@@ -161,30 +160,42 @@ void MainWidget::initCheckboxes(QGridLayout *grid)
     QCheckBox *animationCheckBox = new QCheckBox("Animation");
     connect(animationCheckBox, SIGNAL(toggled(bool)), this, SLOT(animationToggled(bool)));
     animationCheckBox->setChecked(false);
-    grid->addWidget(animationCheckBox, rowPos++, 0);
+    grid->addWidget(animationCheckBox, m_rowPos++, 0);
 
     QCheckBox *legendCheckBox = new QCheckBox("Legend");
     connect(legendCheckBox, SIGNAL(toggled(bool)), this, SLOT(legendToggled(bool)));
     legendCheckBox->setChecked(false);
-    grid->addWidget(legendCheckBox, rowPos++, 0);
+    grid->addWidget(legendCheckBox, m_rowPos++, 0);
 
     QCheckBox *titleCheckBox = new QCheckBox("Title");
     connect(titleCheckBox, SIGNAL(toggled(bool)), this, SLOT(titleToggled(bool)));
     titleCheckBox->setChecked(false);
-    grid->addWidget(titleCheckBox, rowPos++, 0);
+    grid->addWidget(titleCheckBox, m_rowPos++, 0);
 
     QCheckBox *modelMapperCheckBox = new QCheckBox("Use model mapper");
     connect(modelMapperCheckBox, SIGNAL(toggled(bool)), this, SLOT(modelMapperToggled(bool)));
     modelMapperCheckBox->setChecked(false);
-    grid->addWidget(modelMapperCheckBox, rowPos++, 0);
+    grid->addWidget(modelMapperCheckBox, m_rowPos++, 0);
 
+}
+
+void MainWidget::updateAxis(int categoryCount)
+{
+    if (!m_axis) {
+        m_chart->createDefaultAxes();
+        m_axis = new QBarCategoryAxis();
+    }
+    QStringList categories;
+    for (int i = 0; i < categoryCount; i++)
+        categories << allCategories[i];
+    m_axis->setCategories(categories);
 }
 
 void MainWidget::addSeries()
 {
     qDebug() << "BoxPlotTester::MainWidget::addSeries()";
 
-    if (nSeries > 9)
+    if (m_seriesCount > 9)
         return;
 
     // Initial data
@@ -203,42 +214,37 @@ void MainWidget::addSeries()
     *set4 << 4 << 5 << 5.2 << 6 << 7;
     *set5 << 4 << 7 << 8.2 << 9 << 10;
 
-    m_series[nSeries] = new QBoxPlotSeries();
-    m_series[nSeries]->append(set0);
-    m_series[nSeries]->append(set1);
-    m_series[nSeries]->append(set2);
-    m_series[nSeries]->append(set3);
-    m_series[nSeries]->append(set4);
-    m_series[nSeries]->append(set5);
-    m_series[nSeries]->setName("Box & Whiskers");
+    m_series[m_seriesCount] = new QBoxPlotSeries();
+    m_series[m_seriesCount]->append(set0);
+    m_series[m_seriesCount]->append(set1);
+    m_series[m_seriesCount]->append(set2);
+    m_series[m_seriesCount]->append(set3);
+    m_series[m_seriesCount]->append(set4);
+    m_series[m_seriesCount]->append(set5);
+    m_series[m_seriesCount]->setName("Box & Whiskers");
 
-    connect(m_series[nSeries], SIGNAL(clicked(QBoxSet*)), this, SLOT(boxClicked(QBoxSet*)));
-    connect(m_series[nSeries], SIGNAL(hovered(bool, QBoxSet*)), this, SLOT(boxHovered(bool, QBoxSet*)));
+    connect(m_series[m_seriesCount], SIGNAL(clicked(QBoxSet*)), this, SLOT(boxClicked(QBoxSet*)));
+    connect(m_series[m_seriesCount], SIGNAL(hovered(bool, QBoxSet*)), this, SLOT(boxHovered(bool, QBoxSet*)));
     connect(set1, SIGNAL(clicked()), this, SLOT(singleBoxClicked()));
     connect(set2, SIGNAL(hovered(bool)), this, SLOT(singleBoxHovered(bool)));
 
-    m_chart->addSeries(m_series[nSeries]);
+    m_chart->addSeries(m_series[m_seriesCount]);
 
-    if (!m_axis) {
-        QStringList categories;
-        categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun";
-        m_axis = new QBarCategoryAxis();
-        m_axis->append(categories);
-        m_chart->createDefaultAxes();
-    }
-    m_chart->setAxisX(m_axis, m_series[nSeries]);
+    updateAxis(m_series[0]->count());
+    m_chart->setAxisX(m_axis, m_series[m_seriesCount]);
 
-    nSeries++;
+    m_seriesCount++;
 }
 
 void MainWidget::removeSeries()
 {
     qDebug() << "BoxPlotTester::MainWidget::removeSeries()";
 
-    if (nSeries > 0) {
-        nSeries--;
-        m_chart->removeSeries(m_series[nSeries]);
-        delete m_series[nSeries];
+    if (m_seriesCount > 0) {
+        m_seriesCount--;
+        m_chart->removeSeries(m_series[m_seriesCount]);
+        delete m_series[m_seriesCount];
+        m_series[m_seriesCount] = 0;
     } else {
         qDebug() << "Create a series first";
     }
@@ -248,7 +254,7 @@ void MainWidget::addBox()
 {
     qDebug() << "BoxPlotTester::MainWidget::addBox()";
 
-    if (nSeries > 0 && nNewBoxes < maxAddCategories) {
+    if (m_seriesCount > 0 && m_series[0]->count() < maxCategories) {
         QBoxSet *newSet = new QBoxSet();
         newSet->setValue(QBoxSet::LowerExtreme, 5.0);
         newSet->setValue(QBoxSet::LowerQuartile, 6.0);
@@ -256,11 +262,9 @@ void MainWidget::addBox()
         newSet->setValue(QBoxSet::UpperQuartile, 7.0);
         newSet->setValue(QBoxSet::UpperExtreme, 8.0);
 
+        updateAxis(m_series[0]->count() + 1);
+
         m_series[0]->append(newSet);
-
-        m_axis->append(addCategories[nNewBoxes]);
-
-        nNewBoxes++;
     }
 }
 
@@ -268,16 +272,13 @@ void MainWidget::insertBox()
 {
     qDebug() << "BoxPlotTester::MainWidget::insertBox()";
 
-    if (nSeries > 0) {
-        QBoxSet *newSet = new QBoxSet();
-        *newSet << 2 << 6 << 6.8 << 7 << 10;
-
-        for (int i = 0; i < nSeries; i++)
+    if (m_seriesCount > 0 && m_series[0]->count() < maxCategories) {
+        updateAxis(m_series[0]->count() + 1);
+        for (int i = 0; i < m_seriesCount; i++) {
+            QBoxSet *newSet = new QBoxSet();
+            *newSet << 2 << 6 << 6.8 << 7 << 10;
             m_series[i]->insert(1, newSet);
-
-        m_axis->append(addCategories[nNewBoxes]);
-
-        nNewBoxes++;
+        }
     }
 }
 
@@ -285,17 +286,16 @@ void MainWidget::removeBox()
 {
     qDebug() << "BoxPlotTester::MainWidget::removeBox";
 
-    if (nSeries > 0) {
-        for (int i = 0; i < nSeries; i++) {
+    if (m_seriesCount > 0) {
+        for (int i = 0; i < m_seriesCount; i++) {
             qDebug() << "m_series[i]->count() = " << m_series[i]->count();
-            if (m_series[i]->count() > 3) {
+            if (m_series[i]->count()) {
                 QList<QBoxSet *> sets = m_series[i]->boxSets();
-                m_series[i]->remove(sets.at(m_series[i]->count() - 3));
+                m_series[i]->remove(sets.at(m_series[i]->count() - 1));
             }
         }
 
-        if (m_axis->count() > 3)
-            m_axis->remove(m_axis->at(1));
+        updateAxis(m_series[0]->count());
     } else {
         qDebug() << "Create a series first";
     }
@@ -305,7 +305,7 @@ void MainWidget::clear()
 {
     qDebug() << "BoxPlotTester::MainWidget::clear";
 
-    if (nSeries > 0)
+    if (m_seriesCount > 0)
         m_series[0]->clear();
     else
         qDebug() << "Create a series first";
@@ -315,7 +315,7 @@ void MainWidget::clearBox()
 {
     qDebug() << "BoxPlotTester::MainWidget::clearBox";
 
-    if (nSeries > 0) {
+    if (m_seriesCount > 0) {
         QList<QBoxSet *> sets = m_series[0]->boxSets();
         sets.at(1)->clear();
     } else {
@@ -327,7 +327,7 @@ void MainWidget::setBrush()
 {
     qDebug() << "BoxPlotTester::MainWidget::setBrush";
 
-    if (nSeries > 0) {
+    if (m_seriesCount > 0) {
         QList<QBoxSet *> sets = m_series[0]->boxSets();
         sets.at(1)->setBrush(QBrush(QColor(Qt::yellow)));
     } else {
@@ -364,7 +364,7 @@ void MainWidget::titleToggled(bool enabled)
 void MainWidget::modelMapperToggled(bool enabled)
 {
     if (enabled) {
-        m_series[nSeries] = new QBoxPlotSeries();
+        m_series[m_seriesCount] = new QBoxPlotSeries();
 
         int first = 0;
         int count = 5;
@@ -373,11 +373,11 @@ void MainWidget::modelMapperToggled(bool enabled)
         mapper->setLastBoxSetColumn(5);
         mapper->setFirstRow(first);
         mapper->setRowCount(count);
-        mapper->setSeries(m_series[nSeries]);
+        mapper->setSeries(m_series[m_seriesCount]);
         mapper->setModel(m_model);
-        m_chart->addSeries(m_series[nSeries]);
+        m_chart->addSeries(m_series[m_seriesCount]);
 
-        nSeries++;
+        m_seriesCount++;
     } else {
         removeSeries();
     }
