@@ -25,6 +25,7 @@
 #include "qchart.h"
 #include "qchartview.h"
 #include "customtablemodel.h"
+#include "pentool.h"
 #include <QWidget>
 #include <QBoxPlotSeries>
 #include <QBarCategoryAxis>
@@ -65,6 +66,8 @@ private slots:
     void boxHovered(bool state, QBoxSet *set);
     void singleBoxClicked();
     void singleBoxHovered(bool state);
+    void changePen();
+    void antialiasingToggled(bool);
 
 private:
     QChart *m_chart;
@@ -72,6 +75,7 @@ private:
     QGridLayout *m_scatterLayout;
     QBarCategoryAxis *m_axis;
     CustomTableModel *m_model;
+    PenTool *m_penTool;
     int m_rowPos;
     int m_seriesCount;
     QBoxPlotSeries *m_series[10];

@@ -183,11 +183,10 @@ void MainWidget::initCheckboxes(QGridLayout *grid)
     titleCheckBox->setChecked(false);
     grid->addWidget(titleCheckBox, m_rowPos++, 0);
 
-    QCheckBox *renderCheckBox = new QCheckBox("Render Hint");
-    connect(renderCheckBox, SIGNAL(toggled(bool)), this, SLOT(renderToggled(bool)));
-    renderCheckBox->setChecked(false);
-    grid->addWidget(renderCheckBox, m_rowPos++, 0);
-
+    QCheckBox *antialiasingCheckBox = new QCheckBox("Antialiasing");
+    connect(antialiasingCheckBox, SIGNAL(toggled(bool)), this, SLOT(antialiasingToggled(bool)));
+    antialiasingCheckBox->setChecked(false);
+    grid->addWidget(antialiasingCheckBox, m_rowPos++, 0);
 
     QCheckBox *modelMapperCheckBox = new QCheckBox("Use model mapper");
     connect(modelMapperCheckBox, SIGNAL(toggled(bool)), this, SLOT(modelMapperToggled(bool)));
@@ -378,12 +377,11 @@ void MainWidget::titleToggled(bool enabled)
         m_chart->setTitle("");
 }
 
-void MainWidget::renderToggled(bool enabled)
+void MainWidget::antialiasingToggled(bool enabled)
 {
-    qDebug() << "BoxPlotTester::renderToggled toggled to " << enabled;
+    qDebug() << "BoxPlotTester::antialiasingToggled toggled to " << enabled;
     m_chartView->setRenderHint(QPainter::Antialiasing, enabled);
 }
-
 
 void MainWidget::modelMapperToggled(bool enabled)
 {
