@@ -164,6 +164,9 @@ void BoxWhiskers::updateGeometry(AbstractDomain *domain)
 
     m_boxPath = path;
     m_boundingRect = m_boxPath.boundingRect();
+
+    qreal extra = (m_pen.width() / 2.0);
+    m_boundingRect.adjust(-extra, -extra, extra, extra);
 }
 
 #include "moc_boxwhiskers_p.cpp"
