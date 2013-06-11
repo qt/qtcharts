@@ -45,6 +45,8 @@ class QAbstractAxis;
 class ChartAxisElement : public ChartElement, public QGraphicsLayoutItem
 {
     Q_OBJECT
+
+    using QGraphicsLayoutItem::setGeometry;
 public:
     ChartAxisElement(QAbstractAxis *axis, QGraphicsItem *item, bool intervalAxis = false);
     ~ChartAxisElement();
