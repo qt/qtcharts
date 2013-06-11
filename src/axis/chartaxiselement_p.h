@@ -59,8 +59,8 @@ public:
     QAbstractAxis *axis() const { return m_axis; }
     void setLayout(QVector<qreal> &layout) { m_layout = layout; }
     QVector<qreal> &layout() { return m_layout; } // Modifiable reference
-    inline qreal labelPadding() const { return qreal(5.0); }
-    inline qreal titlePadding() const { return qreal(3.0); }
+    inline qreal labelPadding() const { return qreal(1.0); }
+    inline qreal titlePadding() const { return qreal(1.0); }
     void setLabels(const QStringList &labels) { m_labelsList = labels; }
     QStringList labels() const { return m_labelsList; }
 

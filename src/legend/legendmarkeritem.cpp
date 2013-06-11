@@ -38,8 +38,8 @@ LegendMarkerItem::LegendMarkerItem(QLegendMarkerPrivate *marker, QGraphicsObject
     m_boundingRect(0,0,0,0),
     m_textItem(new QGraphicsTextItem(this)),
     m_rectItem(new QGraphicsRectItem(this)),
-    m_margin(4),
-    m_space(4),
+    m_margin(1),
+    m_space(2),
     m_hovering(false),
     m_pressPos(0, 0)
 {
