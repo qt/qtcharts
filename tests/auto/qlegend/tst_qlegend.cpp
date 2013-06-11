@@ -542,18 +542,16 @@ void tst_QLegend::markerSignals()
     }
 
     QChartView view(chart);
-    view.resize(400,300);
+    view.resize(400, 400);
     view.show();
     QTest::qWaitForWindowShown(&view);
 
     // Sweep mouse over all legend items
-    for ( int i = 0; i < 300; i++ ) {
-        QTest::mouseMove(view.viewport(), QPoint(333,i));
-    }
+    for (int i = 0; i < 400; i++)
+        QTest::mouseMove(view.viewport(), QPoint(333, i));
 
-    foreach(QSignalSpy *spy, spies) {
+    foreach (QSignalSpy *spy, spies)
         TRY_COMPARE(spy->count(), 2);
-    }
 
     qDeleteAll(spies);
 }
