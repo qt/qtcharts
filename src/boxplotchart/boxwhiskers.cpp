@@ -58,12 +58,22 @@ void BoxWhiskers::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 void BoxWhiskers::setBrush(const QBrush &brush)
 {
     m_brush = brush;
+    m_outlinePen.setColor(m_brush.color());
     update();
 }
 
 void BoxWhiskers::setPen(const QPen &pen)
 {
+    qreal widthDiff = pen.widthF() - m_pen.widthF();
+    m_boundingRect.adjust(-widthDiff, -widthDiff, widthDiff, widthDiff);
+
     m_pen = pen;
+    m_medianPen = pen;
+    m_medianPen.setCapStyle(Qt::FlatCap);
+    m_outlinePen = pen;
+    m_outlinePen.setStyle(Qt::SolidLine);
+    m_outlinePen.setColor(m_brush.color());
+
     update();
 }
 
@@ -98,10 +108,17 @@ void BoxWhiskers::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
     Q_UNUSED(option)
     Q_UNUSED(widget)
 
-    painter->setPen(m_pen);
     painter->setBrush(m_brush);
     painter->setClipRect(parentItem()->boundingRect());
+    painter->setPen(m_pen);
     painter->drawPath(m_boxPath);
+    if (!m_boxOutlined)
+        painter->setPen(m_outlinePen);
+    painter->drawRect(m_middleBox);
+    painter->setPen(m_medianPen);
+    qreal halfLine = m_pen.widthF() / 2.0;
+    painter->drawLine(QLineF(m_geometryLeft - halfLine, m_geometryMedian,
+                             m_geometryRight + halfLine, m_geometryMedian));
 }
 
 void BoxWhiskers::updateGeometry(AbstractDomain *domain)
@@ -121,12 +138,12 @@ void BoxWhiskers::updateGeometry(AbstractDomain *domain)
     QPointF geometryPoint = m_domain->calculateGeometryPoint(QPointF(left, m_data.m_upperExtreme), m_validData);
     if (!m_validData)
         return;
-    qreal geometryLeft = geometryPoint.x();
+    m_geometryLeft = geometryPoint.x();
     qreal geometryUpperExtreme = geometryPoint.y();
     geometryPoint = m_domain->calculateGeometryPoint(QPointF(left + barWidth, m_data.m_upperQuartile), m_validData);
     if (!m_validData)
         return;
-    qreal geometryRight = geometryPoint.x();
+    m_geometryRight = geometryPoint.x();
     qreal geometryUpperQuartile = geometryPoint.y();
     geometryPoint = m_domain->calculateGeometryPoint(QPointF(left, m_data.m_lowerQuartile), m_validData);
     if (!m_validData)
@@ -139,33 +156,29 @@ void BoxWhiskers::updateGeometry(AbstractDomain *domain)
     geometryPoint = m_domain->calculateGeometryPoint(QPointF(left, m_data.m_median), m_validData);
     if (!m_validData)
         return;
-    qreal geometryMedian = geometryPoint.y();
+    m_geometryMedian = geometryPoint.y();
 
     // Upper whisker
-    path.moveTo(geometryLeft, geometryUpperExtreme);
-    path.lineTo(geometryRight, geometryUpperExtreme);
-    path.moveTo((geometryLeft + geometryRight) / 2.0, geometryUpperExtreme);
-    path.lineTo((geometryLeft + geometryRight) / 2.0, geometryUpperQuartile);
+    path.moveTo(m_geometryLeft, geometryUpperExtreme);
+    path.lineTo(m_geometryRight, geometryUpperExtreme);
+    path.moveTo((m_geometryLeft + m_geometryRight) / 2.0, geometryUpperExtreme);
+    path.lineTo((m_geometryLeft + m_geometryRight) / 2.0, geometryUpperQuartile);
 
     // Middle Box
-    path.addRect(geometryLeft, geometryUpperQuartile, geometryRight - geometryLeft, geometryLowerQuartile - geometryUpperQuartile);
-
-    // Median line
-    path.moveTo(geometryLeft, geometryMedian);
-    path.lineTo(geometryRight, geometryMedian);
+    m_middleBox.setCoords(m_geometryLeft, geometryUpperQuartile, m_geometryRight, geometryLowerQuartile);
 
     // Lower whisker
-    path.moveTo(geometryLeft, geometryLowerExtreme);
-    path.lineTo(geometryRight, geometryLowerExtreme);
-    path.moveTo((geometryLeft + geometryRight) / 2.0, geometryLowerQuartile);
-    path.lineTo((geometryLeft + geometryRight) / 2.0, geometryLowerExtreme);
+    path.moveTo(m_geometryLeft, geometryLowerExtreme);
+    path.lineTo(m_geometryRight, geometryLowerExtreme);
+    path.moveTo((m_geometryLeft + m_geometryRight) / 2.0, geometryLowerQuartile);
+    path.lineTo((m_geometryLeft + m_geometryRight) / 2.0, geometryLowerExtreme);
 
     path.closeSubpath();
 
     m_boxPath = path;
     m_boundingRect = m_boxPath.boundingRect();
 
-    qreal extra = (m_pen.width() / 2.0);
+    qreal extra = (m_pen.widthF() / 2.0);
     m_boundingRect.adjust(-extra, -extra, extra, extra);
 }
 

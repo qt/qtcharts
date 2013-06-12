@@ -84,6 +84,7 @@ void BoxPlotChartItem::handleDataStructureChanged()
             // Set the decorative issues for the newly created box
             box->setBrush(m_series->brush());
             box->setPen(m_series->pen());
+            box->setBoxOutlined(m_series->boxOutlineVisible());
         }
         updateBoxGeometry(box, s);
 
@@ -101,6 +102,7 @@ void BoxPlotChartItem::handleUpdatedBars()
     foreach (BoxWhiskers *item, m_boxTable.values()) {
         item->setBrush(m_series->brush());
         item->setPen(m_series->pen());
+        item->setBoxOutlined(m_series->boxOutlineVisible());
     }
     // Override with QBoxSet specific settings
     foreach (QBoxSet *set, m_boxTable.keys()) {

@@ -25,6 +25,227 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+/*!
+    \qmlclass BoxSet QBoxSet
+
+    BoxSet represents one box-and-whiskers item. It takes five values to create a graphical representation
+    of range and three medians. There are two ways to give the values. The first one is with constructor
+    or with append method. In these the values have to be given in the following order: lower extreme, lower quartile, median,
+    upper quartile and upper extreme. The second method is to create an empty QBoxSet instance and give the values using
+    value specific methods.
+    \sa BoxPlotSeries
+*/
+/*!
+    \qmlproperty string BoxSet::values
+    The values on the box-and-whiskers set.
+*/
+/*!
+    \qmlproperty string BoxSet::label
+    Defines the label of the box-and-whiskers set.
+*/
+/*!
+    \qmlproperty int BoxSet::count
+    The count of values on the box-and-whiskers set
+*/
+/*!
+    \qmlmethod void BoxSet::at(int index)
+    Returns the value at \a index position.
+*/
+/*!
+    \qmlmethod void BoxSet::append(qreal value)
+    Appends new value \a value to the end of set.
+*/
+/*!
+    \qmlmethod void BoxSet::clear()
+    Sets all values on the set to 0.
+*/
+/*!
+    \qmlmethod void BoxSet::setValue(int index, qreal value)
+    Sets a new \a value on the \a index position.
+*/
+/*!
+    \qmlsignal BoxSet::onClicked()
+    This signal is emitted when the user clicks with a mouse on top of box-and-whiskers item.
+*/
+/*!
+    \qmlsignal BoxSet::onHovered(bool status)
+    The signal is emitted if mouse is hovered on top of box-and-whiskers item.
+    Parameter \a status is true, if mouse entered on top of the item, and false if mouse left from top of the item.
+*/
+/*!
+    \qmlsignal BoxSet::onPenChanged()
+    This signal is emitted when the pen of the box-and-whiskers item has changed.
+*/
+/*!
+    \qmlsignal BoxSet::onBrushChanged()
+    This signal is emitted when the brush of the box-and-whiskers item has changed.
+*/
+/*!
+    \qmlsignal BoxSet::onChangedValues()
+    This signal is emitted when multiple values have been changed on the box-and-whiskers item.
+*/
+/*!
+    \qmlsignal BoxSet::onChangedValue(int index)
+    This signal is emitted values the value in the box-and-whiskers item has been modified.
+    Parameter \a index indicates the position of the modified value.
+*/
+/*!
+    \qmlsignal BoxSet::onCleared()
+    This signal is emitted when all the values on the set are cleared to 0.
+*/
+
+
+/*!
+    \qmlclass BoxPlotSeries QBoxPlotSeries
+    \inherits QAbstractSeries
+
+    BoxPlotSeries represents a series of data shown as box-and-whiskers bars. The purpose of this class is to act as
+    a container for single box-and-whiskers items. Each item is drawn to own slot. If chart includes multiple instances of
+    BoxPlotSeries then box-and-whiskers items with the same index are drawn to same slot.
+
+    The following QML shows how to create a simple box-and-whiskers chart:
+    \code
+    import QtQuick 1.0
+    import QtCommercial.Chart 1.3
+
+    ChartView {
+        title: "Box Plot series"
+        width: 400
+        height: 300
+        theme: ChartView.ChartThemeBrownSand
+        legend.alignment: Qt.AlignBottom
+
+        BoxPlotSeries {
+            id: plotSeries
+            name: "Income"
+            BoxSet { label: "Jan"; values: [3, 4, 5.1, 6.2, 8.5] }
+            BoxSet { label: "Feb"; values: [5, 6, 7.5, 8.6, 11.8] }
+            BoxSet { label: "Mar"; values: [3.2, 5, 5.7, 8, 9.2] }
+            BoxSet { label: "Apr"; values: [3.8, 5, 6.4, 7, 8] }
+            BoxSet { label: "May"; values: [4, 5, 5.2, 6, 7] }
+        }
+    }
+    \endcode
+
+    \beginfloatleft
+    \image examples_qmlboxplot.png
+    \endfloat
+    \clearfloat
+*/
+/*!
+    \qmlmethod BoxPlotSeries::append(string label, VariantList values)
+    Appends a new box-and-whiskers set with \a label and \a values to the series.
+ */
+/*!
+    \qmlmethod BoxPlotSeries::append(BoxSet box)
+    Appends the \a box to the series.
+*/
+/*!
+    \qmlmethod BoxPlotSeries::insert(int index, string label, VariantList values)
+    Inserts a new box-and-whiskers set with \a label and \a values at the \a index position.
+*/
+/*!
+    \qmlmethod BoxPlotSeries::remove(QBoxSet boxset)
+    Removes the \a boxset from the series.
+*/
+/*!
+    \qmlmethod BoxPlotSeries::clear()
+    Removes all boxsets from the series. Deletes removed sets.
+*/
+/*!
+    \qmlsignal BoxPlotSeries::onClicked(BoxSet boxset);
+    Signal is emitted when the user clicks the \a boxset on the chart.
+*/
+/*!
+    \qmlsignal BoxPlotSeries::onHovered(bool status, BoxSet boxset);
+    Signal is emitted when there is change in hover \a status over \a boxset.
+*/
+/*!
+    \qmlsignal BoxPlotSeries::onCountChanged();
+    Signal is emitted when there is change in count of box-and-whiskers items in the series.
+*/
+/*!
+    \qmlsignal BoxPlotSeries::onBoxsetsAdded()
+    Signal is emitted when new box-and-whiskers sets are added to the series.
+ */
+/*!
+    \qmlsignal BoxPlotSeries::onBoxsetsRemoved()
+    Signal is emitted when new box-and-whiskers sets are removed from the series.
+ */
+/*!
+    \qmlproperty AbstractAxis BoxPlotSeries::axisX
+    The x axis used for the series. If you leave both axisX and axisXTop undefined, a BarCategoriesAxis is created for
+    the series.
+    \sa axisXTop
+*/
+/*!
+    \qmlproperty AbstractAxis BoxPlotSeries::axisY
+    The y axis used for the series. If you leave both axisY and axisYRight undefined, a ValueAxis is created for
+    the series.
+    \sa axisYRight
+*/
+/*!
+    \qmlproperty AbstractAxis BoxPlotSeries::axisXTop
+    The x axis used for the series, drawn on top of the chart view. Note that you can only provide either axisX or
+    axisXTop, but not both.
+    \sa axisX
+*/
+/*!
+    \qmlproperty AbstractAxis BoxPlotSeries::axisYRight
+    The y axis used for the series, drawn to the right on the chart view. Note that you can only provide either axisY
+    or axisYRight, but not both.
+    \sa axisY
+*/
+/*!
+    \qmlproperty bool BoxPlotSeries::boxOutlineVisible
+    This property configures the visibility of the middle box outline.
+*/
+/*!
+    \qmlproperty Pen BoxPlotSeries::pen
+    This property configures the pen of the box-and-whiskers items.
+*/
+/*!
+    \qmlproperty Brush BoxPlotSeries::brush
+    This property configures the brush of the box-and-whiskers items.
+*/
+/*!
+    \qmlsignal BoxPlotSeries::onBoxOutlineVisibilityChanged()
+    Signal is emitted when the middle box outline visibility is changed.
+ */
+/*!
+    \qmlsignal BoxPlotSeries::onPenChanged()
+    Signal is emitted when the pen for box-and-whiskers items has changed.
+*/
+/*!
+    \qmlsignal BoxPlotSeries::onBrushChanged()
+    Signal is emitted when the brush for box-and-whiskers items has changed.
+*/
+/*!
+    \qmlsignal BoxPlotSeries::onClicked(BoxSet boxset)
+    Signal is emitted when the user clicks the \a boxset on the chart.
+*/
+/*!
+    \qmlsignal BoxPlotSeries::onHovered(bool status, BoxSet boxset)
+    Signal is emitted when there is change in hover \a status over \a boxset.
+*/
+/*!
+    \qmlsignal BoxPlotSeries::onAxisXChanged(AbstractAxis axis)
+    Signal is emitted when there is change in X axis.
+*/
+/*!
+    \qmlsignal BoxPlotSeries::onAxisYChanged(AbstractAxis axis)
+    Signal is emitted when there is change in Y axis.
+*/
+/*!
+    \qmlsignal BoxPlotSeries::onAxisXTopChanged(AbstractAxis axis)
+    Signal is emitted when there is change in top X axis.
+*/
+/*!
+    \qmlsignal BoxPlotSeries::onAxisYRightChanged(AbstractAxis axis)
+    Signal is emitted when there is change in Y right axis.
+*/
+
+
 DeclarativeBoxSet::DeclarativeBoxSet(const QString label, QObject *parent)
     : QBoxSet(label, parent)
 {

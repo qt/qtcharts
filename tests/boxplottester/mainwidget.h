@@ -30,6 +30,7 @@
 #include <QBoxPlotSeries>
 #include <QBarCategoryAxis>
 #include <QBoxSet>
+#include <QCheckBox>
 
 class QGridLayout;
 
@@ -68,6 +69,7 @@ private slots:
     void singleBoxHovered(bool state);
     void changePen();
     void antialiasingToggled(bool);
+    void boxOutlineToggled(bool);
 
 private:
     QChart *m_chart;
@@ -79,6 +81,7 @@ private:
     int m_rowPos;
     int m_seriesCount;
     QBoxPlotSeries *m_series[10];
+    QCheckBox *m_boxOutlined;
 };
 
 #endif // MAINWIDGET_H

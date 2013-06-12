@@ -32,6 +32,9 @@ class QBoxPlotSeriesPrivate;
 class QTCOMMERCIALCHART_EXPORT QBoxPlotSeries : public QAbstractSeries
 {
     Q_OBJECT
+    Q_PROPERTY(bool boxOutlineVisible READ boxOutlineVisible WRITE setBoxOutlineVisible NOTIFY boxOutlineVisibilityChanged)
+    Q_PROPERTY(QPen pen READ pen WRITE setPen NOTIFY penChanged)
+    Q_PROPERTY(QBrush brush READ brush WRITE setBrush NOTIFY brushChanged)
 public:
     explicit QBoxPlotSeries(QObject *parent = 0);
     ~QBoxPlotSeries();
@@ -47,6 +50,8 @@ public:
 
     QAbstractSeries::SeriesType type() const;
 
+    void setBoxOutlineVisible(bool visible);
+    bool boxOutlineVisible();
     void setBrush(const QBrush &brush);
     QBrush brush() const;
     void setPen(const QPen &pen);
@@ -56,6 +61,9 @@ Q_SIGNALS:
     void clicked(QBoxSet *boxset);
     void hovered(bool status, QBoxSet *boxset);
     void countChanged();
+    void penChanged();
+    void brushChanged();
+    void boxOutlineVisibilityChanged();
 
     void boxsetsAdded(QList<QBoxSet *> sets);
     void boxsetsRemoved(QList<QBoxSet *> sets);

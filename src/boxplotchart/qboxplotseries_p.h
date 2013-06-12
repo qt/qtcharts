@@ -86,6 +86,7 @@ protected:
     QList<QBoxSet *> m_boxSets;
     QPen m_pen;
     QBrush m_brush;
+    bool m_boxOutlineVisible;
     int m_index;
     BoxPlotAnimation *m_animation;
 

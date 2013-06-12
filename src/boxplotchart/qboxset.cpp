@@ -39,16 +39,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \sa QBoxPlotSeries
 */
 /*!
-    \qmlclass BoxSet QBoxSet
-
-    BoxSet represents one box-and-whiskers item. It takes five values to create a graphical representation
-    of range and three medians. There are two ways to give the values. The first one is with constructor
-    or with append method. In these the values have to be given in the following order: lower extreme, lower quartile, median,
-    upper quartile and upper extre. The second method is to create an empty QBoxSet instance and give the values using
-    value specific methods.
-    \sa BoxPlotSeries
-*/
-/*!
     \enum QBoxSet::ValuePositions
 
     \value LowerExtreme
@@ -57,39 +47,18 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \value UpperQuartile
     \value UpperExtreme
 */
-
-/*!
-    \qmlproperty string BoxSet::label
-    Defines the label of the boxSet.
-*/
-/*!
-    \qmlproperty int BoxSet::count
-    The count of values on the box-and-whiskers set
-*/
-
 /*!
     \property QBoxSet::pen
     \brief Defines the pen used by the box-and-whiskers set.
 */
-
 /*!
     \property QBoxSet::brush
     \brief Defines the brush used by the box-and-whiskers set.
-*/
-
-/*!
-    \qmlmethod void BoxSet::setValue(int index, qreal value)
-    Sets a new \a value on the \a index position.
 */
 /*!
     \fn void QBoxSet::clicked()
     The signal is emitted if the user clicks with a mouse on top of box-and-whisker item.
 */
-/*!
-    \qmlsignal BoxSet::onClicked()
-    This signal is emitted when the user clicks with a mouse on top of box-and-whisker item.
-*/
-
 /*!
     \fn void QBoxSet::hovered(bool status)
 
@@ -97,20 +66,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Parameter \a status is true, if mouse entered on top of item, false if mouse left from top of item.
 */
 /*!
-    \qmlsignal BoxSet::onHovered(bool status)
-
-    The signal is emitted if mouse is hovered on top of box-and-whisker item.
-    Parameter \a status is true, if mouse entered on top of item, false if mouse left from top of item.
-*/
-
-/*!
     \fn void QBoxSet::penChanged()
     This signal is emitted when the pen of the box-and-whisker item has changed.
     \sa pen
-*/
-/*!
-    \qmlsignal BoxSet::onPenChanged()
-    This signal is emitted when the pen of the box-and-whisker item has changed.
 */
 /*!
     \fn void QBoxSet::brushChanged()
@@ -118,20 +76,10 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \sa brush
 */
 /*!
-    \qmlsignal BoxSet::onBrushChanged()
-    This signal is emitted when the brush of the box-and-whisker item has changed.
-*/
-
-/*!
     \fn void QBoxSet::valuesChanged()
     This signal is emitted when multiple values have been changed on the box-and-whisker item.
     \sa append()
 */
-/*!
-    \qmlsignal BoxSet::onChangedValues()
-    This signal is emitted when multiple values have been changed on the box-and-whisker item.
-*/
-
 /*!
     \fn void QBoxSet::valueChanged(int index)
     This signal is emitted values the value in the box-and-whisker item has been modified.
@@ -139,20 +87,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \sa at()
 */
 /*!
-    \qmlsignal BoxSet::onChangedValue(int index)
-    This signal is emitted values the value in the box-and-whisker item has been modified.
-    Parameter \a index indicates the position of the modified value.
-*/
-
-/*!
     \fn void QBoxSet::cleared()
     This signal is emitted when all the values on the set are cleared to 0.
 */
-/*!
-    \qmlsignal BoxSet::onCleared()
-    This signal is emitted when all the values on the set are cleared to 0.
-*/
-
 
 /*!
     Constructs QBoxSet with optional \a label and parent of \a parent

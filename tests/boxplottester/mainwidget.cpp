@@ -193,6 +193,10 @@ void MainWidget::initCheckboxes(QGridLayout *grid)
     modelMapperCheckBox->setChecked(false);
     grid->addWidget(modelMapperCheckBox, m_rowPos++, 0);
 
+    m_boxOutlined = new QCheckBox("Box outlined");
+    connect(m_boxOutlined, SIGNAL(toggled(bool)), this, SLOT(boxOutlineToggled(bool)));
+    m_boxOutlined->setChecked(true);
+    grid->addWidget(m_boxOutlined, m_rowPos++, 0);
 }
 
 void MainWidget::updateAxis(int categoryCount)
@@ -243,6 +247,8 @@ void MainWidget::addSeries()
     connect(m_series[m_seriesCount], SIGNAL(hovered(bool, QBoxSet*)), this, SLOT(boxHovered(bool, QBoxSet*)));
     connect(set1, SIGNAL(clicked()), this, SLOT(singleBoxClicked()));
     connect(set2, SIGNAL(hovered(bool)), this, SLOT(singleBoxHovered(bool)));
+
+    m_series[m_seriesCount]->setBoxOutlineVisible(m_boxOutlined->checkState());
 
     m_chart->addSeries(m_series[m_seriesCount]);
 
@@ -383,6 +389,13 @@ void MainWidget::antialiasingToggled(bool enabled)
     m_chartView->setRenderHint(QPainter::Antialiasing, enabled);
 }
 
+void MainWidget::boxOutlineToggled(bool visible)
+{
+    qDebug() << "BoxPlotTester::boxOutlineToggled toggled to " << visible;
+    for (int i = 0; i <  m_seriesCount; i++)
+        m_series[i]->setBoxOutlineVisible(visible);
+}
+
 void MainWidget::modelMapperToggled(bool enabled)
 {
     if (enabled) {
@@ -445,5 +458,4 @@ void MainWidget::changePen()
     qDebug() << "changePen() = " << m_penTool->pen();
     for (int i = 0; i <  m_seriesCount; i++)
         m_series[i]->setPen(m_penTool->pen());
-
 }

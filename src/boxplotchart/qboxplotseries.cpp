@@ -48,115 +48,59 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
     \sa QBoxSet
 */
-
-/*!
-    \qmlclass BoxPlotSeries QBoxPlotSeries
-    \inherits QAbstractSeries
-
-    BoxPlotSeries represents a series of data shown as box-and-whisker bars. The purpose of this class is to act as
-    a container for single box-and-whisker items. Each item is drawn to own slot. If chart includes multiple instances of
-    BoxPlotSeries then box-and-whiskers items with the same index are drawn to same slot.
-
-    The following QML shows how to create a simple box-and-whiskers chart:
-    \code
-    import QtQuick 1.0
-    import QtCommercial.Chart 1.1
-
-    ChartView {
-        title: "Box Plot series"
-        width: 400
-        height: 300
-        theme: ChartView.ChartThemeBrownSand
-        legend.alignment: Qt.AlignBottom
-
-        BoxPlotSeries {
-            id: plotSeries
-            name: "Income"
-            BoxSet { label: "Jan"; values: [3, 4, 5.1, 6.2, 8.5] }
-            BoxSet { label: "Feb"; values: [5, 6, 7.5, 8.6, 11.8] }
-            BoxSet { label: "Mar"; values: [3.2, 5, 5.7, 8, 9.2] }
-            BoxSet { label: "Apr"; values: [3.8, 5, 6.4, 7, 8] }
-            BoxSet { label: "May"; values: [4, 5, 5.2, 6, 7] }
-        }
-    }
-    \endcode
-
-    \beginfloatleft
-    \image examples_qmlboxplot.png
-    \endfloat
-    \clearfloat
-*/
-
 /*!
     \fn QBoxPlotSeries::boxsetsAdded(QList<QBoxSet *> sets)
     \brief Signal is emitted when a new \a sets of box-and-whiskers data is added to the series.
 */
-
 /*!
     \fn QBoxPlotSeries::boxsetsRemoved(QList<QBoxSet *> sets)
     \brief Signal is emitted when \a sets of box-and-whiskers data is removed from the series.
 */
-
 /*!
     \fn QBoxPlotSeries::clicked(QBoxSet *boxset)
     \brief Signal is emitted when the user clicks the \a boxset on the chart.
 */
-
 /*!
     \fn QBoxPlotSeries::hovered(bool status, QBoxSet *boxset)
     \brief Signal is emitted when there is change in hover \a status over \a boxset.
 */
-
 /*!
     \fn QBoxPlotSeries::countChanged()
     \brief Signal is emitted when there is change in count of box-and-whiskers items in the series.
 */
 /*!
+    \property QBoxPlotSeries::boxOutlineVisible
+    \brief This property configures the visibility of the middle box outline.
+*/
+/*!
+    \property QBoxPlotSeries::pen
+    \brief This property configures the pen of the box-and-whiskers items.
+*/
+/*!
+    \property QBoxPlotSeries::brush
+    \brief This property configures the brush of the box-and-whiskers items.
+*/
+/*!
+    \fn void QBoxPlotSeries::boxOutlineVisibilityChanged()
+    Signal is emitted when the middle box outline visibility is changed.
+*/
+/*!
+    \fn void QBoxPlotSeries::penChanged()
+    This signal is emitted when the pen of the box-and-whiskers has changed.
+    \sa brush
+*/
+/*!
+    \fn void QBoxPlotSeries::brushChanged()
+    This signal is emitted when the brush of the box-and-whiskers has changed.
+    \sa brush
+*/
+
+
+/*!
     \fn virtual SeriesType QBoxPlotSeries::type() const
     \brief Returns type of series.
     \sa QAbstractSeries, SeriesType
 */
-/*!
-    \qmlmethod BoxPlotSeries::append(const QString label, QVariantList values)
-    Appends a new box-and-whiskers set with \a label and \a values to the series.
- */
-/*!
-    \qmlmethod BoxPlotSeries::append(BoxSet *box)
-    Appends the \a box to the series.
-*/
-/*!
-    \qmlmethod BoxPlotSeries::insert(int index, const QString label, QVariantList values)
-    Inserts a new box-and-whiskers set with \a label and \a values at the \a index position.
-*/
-/*!
-    \qmlmethod BoxPlotSeries::remove(QBoxSet *boxset)
-    Removes the \a boxset from the series.
-*/
-/*!
-    \qmlmethod BoxPlotSeries::clear()
-    Removes all boxsets from the series. Deletes removed sets.
-*/
-
-/*!
-    \qmlsignal BoxPlotSeries::onClicked(BoxSet boxset);
-    Signal is emitted when the user clicks the \a boxset on the chart.
-*/
-/*!
-    \qmlsignal BoxPlotSeries::onHovered(bool status, BoxSet boxset);
-    Signal is emitted when there is change in hover \a status over \a boxset.
-*/
-/*!
-    \qmlsignal BoxPlotSeries::onCountChanged();
-    Signal is emitted when there is change in count of box-and-whiskers items in the series.
-*/
-/*!
-    \qmlsignal BoxPlotSeries::onBoxsetsAdded()
-    Signal is emitted when new box-and-whiskers sets are added to the series.
- */
-/*!
-    \qmlsignal BoxPlotSeries::boxsetsRemoved()
-    Signal is emitted when new box-and-whiskers sets are removed from the series.
- */
 
 /*!
     Constructs empty QBoxPlotSeries.
@@ -314,9 +258,24 @@ QAbstractSeries::SeriesType QBoxPlotSeries::type() const
     return QAbstractSeries::SeriesTypeBoxPlot;
 }
 
-/*!
-    Sets brush for the series. Box-and-whiskers items are drawn using \a brush
-*/
+void QBoxPlotSeries::setBoxOutlineVisible(bool visible)
+{
+    Q_D(QBoxPlotSeries);
+
+    if (d->m_boxOutlineVisible != visible) {
+        d->m_boxOutlineVisible = visible;
+        emit d->updated();
+        emit boxOutlineVisibilityChanged();
+    }
+}
+
+bool QBoxPlotSeries::boxOutlineVisible()
+{
+    Q_D(QBoxPlotSeries);
+
+    return d->m_boxOutlineVisible;
+}
+
 void QBoxPlotSeries::setBrush(const QBrush &brush)
 {
     Q_D(QBoxPlotSeries);
@@ -324,12 +283,10 @@ void QBoxPlotSeries::setBrush(const QBrush &brush)
     if (d->m_brush != brush) {
         d->m_brush = brush;
         emit d->updated();
+        emit brushChanged();
     }
 }
 
-/*!
-    Returns brush of the series.
-*/
 QBrush QBoxPlotSeries::brush() const
 {
     Q_D(const QBoxPlotSeries);
@@ -337,9 +294,6 @@ QBrush QBoxPlotSeries::brush() const
     return d->m_brush;
 }
 
-/*!
-    Sets pen for the series. Box-and-whiskers items are drawn using \a pen
-*/
 void QBoxPlotSeries::setPen(const QPen &pen)
 {
     Q_D(QBoxPlotSeries);
@@ -347,12 +301,10 @@ void QBoxPlotSeries::setPen(const QPen &pen)
     if (d->m_pen != pen) {
         d->m_pen = pen;
         emit d->updated();
+        emit penChanged();
     }
 }
 
-/*!
-    Returns the pen of this series.
-*/
 QPen QBoxPlotSeries::pen() const
 {
     Q_D(const QBoxPlotSeries);
@@ -365,7 +317,8 @@ QPen QBoxPlotSeries::pen() const
 QBoxPlotSeriesPrivate::QBoxPlotSeriesPrivate(QBoxPlotSeries *q)
     : QAbstractSeriesPrivate(q),
       m_pen(QChartPrivate::defaultPen()),
-      m_brush(QChartPrivate::defaultBrush())
+      m_brush(QChartPrivate::defaultBrush()),
+      m_boxOutlineVisible(true)
 {
 }
 

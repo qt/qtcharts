@@ -54,6 +54,7 @@ public:
     void setBrush(const QBrush &brush);
     void setPen(const QPen &pen);
     void setLayout(const BoxWhiskersData &data);
+    void setBoxOutlined(const bool outlined) { m_boxOutlined = outlined; }
 
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
@@ -83,8 +84,15 @@ private:
     bool m_validData;
     QBrush  m_brush;
     QPen m_pen;
+    QPen m_medianPen;
+    QPen m_outlinePen;
+    bool m_boxOutlined;
     BoxWhiskersData m_data;
     QSizeF m_domainSize;
+    QRectF m_middleBox;
+    qreal m_geometryMedian;
+    qreal m_geometryLeft;
+    qreal m_geometryRight;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
