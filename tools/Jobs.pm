@@ -7,7 +7,7 @@ sub get {
 	my $jobname = shift;
 
     # Strip the prefix from job name when using ${bamboo.buildPlanName}
-	my $prefix = "Digia Qt Commercial - Chart component - ";
+	my $prefix = "Digia Qt Enterprise - Chart component - ";
 	$jobname =~ s/$prefix//;
 
 	# read ini file

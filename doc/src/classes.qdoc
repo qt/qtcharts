@@ -1,6 +1,6 @@
 /*!
     \page classes.html
-    \title QtCommercial Charts API
+    \title Qt Enterprise Charts API
     \keyword All Classes
 
     Charts API is build on top of Qt Graphics View Framework. Charts can be displayed as QGraphicsWidget using QChart class. However

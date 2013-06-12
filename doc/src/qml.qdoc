@@ -1,9 +1,9 @@
 /*!
     \page qml.html
-    \title QtCommercial Charts QML API
+    \title Qt Enterprise Charts QML API
     \keyword Charts QML API
 
-    QtCommercial Charts QML API is an intuitive and simple way to show charts in your QML
+    Qt Enterprise Charts QML API is an intuitive and simple way to show charts in your QML
     applications.
 
     \table
@@ -18,9 +18,9 @@
             \o \inlineimage examples_qmlpiechart.png
     \endtable
 
-    \note Since QtCommercial Charts utilizes Qt Graphics View Framework for drawing, it works best
+    \note Since Qt Enterprise Charts utilizes Qt Graphics View Framework for drawing, it works best
     with QtQuick 1, which is based on the same framework.
-    As of release 1.3.0, QtCommercial Charts is also usable with QtQuick 2, though the performance
+    As of release 1.3.0, Qt Enterprise Charts is also usable with QtQuick 2, though the performance
     is slightly worse than with QtQuick 1 due to additional rendering step that is required.
 
     \note QtQuick 1 is supported from Qt 4.7.4 onwards because of missing

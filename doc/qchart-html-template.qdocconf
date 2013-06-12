@@ -38,8 +38,8 @@ HTML.footer = \
     "     All other trademarks are property of their respective owners.</p>\n" \
     "  <br />\n" \
     "  <p>\n" \
-    "    Licensees holding valid Qt Commercial licenses may use this document in accordance with the" \
-    "    Qt Commercial License Agreement provided with the Software or, alternatively, in accordance" \
+    "    Licensees holding valid Qt Enterprise licenses may use this document in accordance with the" \
+    "    Qt Enterprise License Agreement provided with the Software or, alternatively, in accordance" \
     "    with the terms contained in a written agreement between you and Digia.</p>\n" \
     "  <p>\n" \
     "     <img src=\"images/digia_logo.png\" alt=\"digia\" /></p>\n" \

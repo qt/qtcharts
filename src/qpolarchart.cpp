@@ -4,11 +4,11 @@
 ** All rights reserved.
 ** For any questions to Digia, please use contact form at http://qt.digia.com
 **
-** This file is part of the Qt Commercial Charts Add-on.
+** This file is part of the Qt Enterprise Charts Add-on.
 **
 ** $QT_BEGIN_LICENSE$
-** Licensees holding valid Qt Commercial licenses may use this file in
-** accordance with the Qt Commercial License Agreement provided with the
+** Licensees holding valid Qt Enterprise licenses may use this file in
+** accordance with the Qt Enterprise License Agreement provided with the
 ** Software or, alternatively, in accordance with the terms contained in
 ** a written agreement between you and Digia.
 **
@@ -34,7 +34,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
  \class QPolarChart
- \brief QtCommercial chart API.
+ \brief Qt Enterprise Chart API.
 
  QPolarChart is a specialization of QChart to show a polar chart.
 

@@ -1,18 +1,18 @@
---------------------------------
-Commercial Charts Add-on 1.3.0
---------------------------------
+---------------------------------
+Qt Enterprise Charts Add-on 1.3.0
+---------------------------------
 
-What's in Qt Commercial Charts
-=============================
+What's in Qt Enterprise Charts
+==============================
 
 Directory structure:
 
 src/
-    Source code of the Qt Commercial Charts
+    Source code of the Qt Enterprise Charts
 plugins/
     QML bindings plugins and QtCreator plugin
 examples/
-    Some examples of using Qt Commercial Charts
+    Some examples of using Qt Enterprise Charts
 demos/
     More versatile example applications showing how to customize charts,
     combine several chart types and implement interaction in charts
@@ -24,7 +24,7 @@ licenses/
 Building
 ========
 Please note that if you have already installed a previous version of
-QtCommercial Charts, you should first uninstall it with
+Qt Enterprise Charts, you should first uninstall it with
     make uninstall
 
 Configure project with qmake and build project with make:
