@@ -122,6 +122,7 @@ void HorizontalAxis::updateGeometry()
         QPointF center = rect.center();
         labelItem->setTransformOriginPoint(center.x(), center.y());
         qreal heightDiff = rect.height() - boundingRect.height();
+        qreal widthDiff = rect.width() - boundingRect.width();
 
         //ticks and label position
         if (axis()->alignment() == Qt::AlignTop) {
@@ -146,11 +147,10 @@ void HorizontalAxis::updateGeometry()
                 labelItem->setPos(leftBound + (delta / 2.0) - center.x(), labelItem->pos().y());
             }
         }
-
         //label overlap detection - compensate one pixel for rounding errors
         if (labelItem->pos().x() < width || forceHide ||
-            labelItem->pos().x() < (axisRect.left() - 1.0) ||
-            (labelItem->pos().x() + boundingRect.width() - 1.0) > axisRect.right()){
+            (labelItem->pos().x() + (widthDiff / 2.0)) < (axisRect.left() - 1.0) ||
+            (labelItem->pos().x() + (widthDiff / 2.0) - 1.0) > axisRect.right()){
             labelItem->setVisible(false);
         } else {
             labelItem->setVisible(true);
