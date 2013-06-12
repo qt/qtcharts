@@ -23,6 +23,9 @@
     As of release 1.3.0, QtCommercial Charts is also usable with QtQuick 2, though the performance
     is slightly worse than with QtQuick 1 due to additional rendering step that is required.
 
+    \note QtQuick 1 is supported from Qt 4.7.4 onwards because of missing
+    Q_REVISION macro in the earlier Qt releases. QtQuick 2 is supported with only Qt 5.
+
     \raw HTML
         <table cellpadding="2" cellspacing="1" border="0" width="95%" class="indextable">
             <tr>

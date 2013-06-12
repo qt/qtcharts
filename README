@@ -10,7 +10,7 @@ Directory structure:
 src/
     Source code of the Qt Commercial Charts
 plugins/
-    QML bindings plugin and QtCreator plugin
+    QML bindings plugins and QtCreator plugin
 examples/
     Some examples of using Qt Commercial Charts
 demos/
@@ -65,23 +65,34 @@ can also be generated with:
     make docs
 
 Main Changes between 1.2.1 and 1.3.0
-===================================
+====================================
 
 - New chart type added: Polar chart
+- New series type added: Box and whiskers
 - QtQuick 2 support added
 
-Bug Fixes
-==========
-TODO
+Bug Fixes and minor new features
+================================
 
-Known Issues
-============
-- Automatic scaling of the axes is only done when you add a series on a chart
-- DateTimeAxis is not supported on ARM because of floating point precision
-  issues (qreals are floats)
-- Declarative plugin is available from Qt 4.7.4 onwards because of missing
-  Q_REVISION macro in the earlier Qt releases
-- Defining axis min-max values sometimes affects other axes with the same orientation
-  - See for example the secondary y-axis of QML Weather demo application
-  - The work-around is to set axis range dynamically instead of initializing min and
-    max properties to certain values
+- New: Added missing QML support for LogValueAxis
+- New: Implement index based removing/replacing points in series
+- New: Added API to specify plot area background
+- New: Added HTML support for various text items
+       Note that '\n' no longer causes new line in text items, use HTML tag <br/> instead
+- New: Added QChart::zoomReset() and QChart::isZoomed()
+- New: Added API for setting roundness of the corners for the background of the chart
+- Fixed: If vertical QLogValueAxis base is selected so that it has only single visible tick,
+         its label always displays as "..."
+- Fixed: Crash when removing pie series from chart
+- Fixed: Most themes disable axis shades
+- Fixed: Lingering shades from high contrast theme
+- Fixed: Crash when adding/removing points during animation
+- Fixed: Wrong expand direction with rotated chart view
+- Fixed: Android build errors
+- Fixed: Legend marker brush for series with black pen
+- Fixed: Explicitly set default pen/brush/font got overridden by theme
+- Fixed: Multi-line axis titles and labels now position correctly
+- Fixed: Legend markers text truncation with small font sizes
+- Fixed: QChartView right click zoom out when zooming only along one axis
+- Fixed: Crash or memory leak when resetting animation options mid-animation
+- Fixed: QBarCategoryAxis doesn't notify domain on category remove

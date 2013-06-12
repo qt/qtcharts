@@ -223,6 +223,8 @@ void QAbstractSeries::hide()
 /*!
  Attach \a axis to the series.
  \return true if the axis was attached successfully, false otherwise.
+ \note If multiple axes of same orientation are attached to same series,
+       they will have same min/max ranges.
  \sa QChart::addAxis(), QChart::createDefaultAxes()
  */
 bool QAbstractSeries::attachAxis(QAbstractAxis* axis)
