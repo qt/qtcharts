@@ -70,15 +70,22 @@ Main Changes between 1.2.1 and 1.3.0
 - New chart type added: Polar chart
 - New series type added: Box and whiskers
 - QtQuick 2 support added
+  - Note: Since Qt Enterprise Charts still uses QGraphicsView framework under the hood
+    even with QtQuick 2, its performance is actually better with QtQuick 1 than with QtQuick 2.
 
 Bug Fixes and minor new features
 ================================
 
 - New: Added missing QML support for LogValueAxis
-- New: Implement index based removing/replacing points in series
-- New: Added API to specify plot area background
-- New: Added HTML support for various text items
-       Note that '\n' no longer causes new line in text items, use HTML tag <br/> instead
+- New: Implement index based removing/replacing points in a series
+- New: Added API to specify plot area background for the chart
+- New: Added HTML support for various text items such as axis labels or titles
+       - HTML tags (e.g. <br/>) and character codes (e.g. &deg;) are now supported
+       - Setting pen for text items is deprecated and does nothing
+       - When setting brush for text items, only the color of the brush is relevant.
+         It specifies the default text color for the item.
+       - Logic for identifying axis label format specifiers was improved, so adding
+         additional information to labels via label format string is now more viable.
 - New: Added QChart::zoomReset() and QChart::isZoomed()
 - New: Added API for setting roundness of the corners for the background of the chart
 - Fixed: If vertical QLogValueAxis base is selected so that it has only single visible tick,
@@ -89,9 +96,12 @@ Bug Fixes and minor new features
 - Fixed: Crash when adding/removing points during animation
 - Fixed: Wrong expand direction with rotated chart view
 - Fixed: Android build errors
-- Fixed: Legend marker brush for series with black pen
 - Fixed: Explicitly set default pen/brush/font got overridden by theme
+         - Default pens, brushes, and fonts were changed to ones that won't clash with commonly
+           used types of the same. Most notably black pen is no longer default and won't anymore
+           get overridden by theme if used.
 - Fixed: Multi-line axis titles and labels now position correctly
+         - Note that '\n' no longer causes new line in text items, use HTML tag <br/> instead
 - Fixed: Legend markers text truncation with small font sizes
 - Fixed: QChartView right click zoom out when zooming only along one axis
 - Fixed: Crash or memory leak when resetting animation options mid-animation
