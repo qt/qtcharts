@@ -172,9 +172,6 @@ QList<QGradient> ChartThemeManager::generateSeriesGradients(const QList<QColor>&
         qreal h = color.hsvHueF();
         qreal s = color.hsvSaturationF();
 
-        // TODO: tune the algorithm to give nice results with most base colors defined in
-        // most themes. The rest of the gradients we can define manually in theme specific
-        // implementation.
         QColor start = color;
         start.setHsvF(h, 0.0, 1.0);
         g.setColorAt(0.0, start);

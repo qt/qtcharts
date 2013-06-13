@@ -238,7 +238,6 @@ void PolarChartAxisAngular::createItems(int count)
 {
     if (arrowItems().count() == 0) {
         // angular axis line
-        // TODO: need class similar to LineArrowItem for click handling?
         QGraphicsEllipseItem *arrow = new QGraphicsEllipseItem(presenter()->rootItem());
         arrow->setPen(axis()->linePen());
         arrowGroup()->addToGroup(arrow);
@@ -395,8 +394,6 @@ qreal PolarChartAxisAngular::preferredAxisRadius(const QSizeF &maxSize)
 
 QRectF PolarChartAxisAngular::moveLabelToPosition(qreal angularCoordinate, QPointF labelPoint, QRectF labelRect) const
 {
-    // TODO use fuzzy compare for "==" cases?
-    // TODO Adjust the rect position near 0, 90, 180, and 270 angles for smoother animation?
     if (angularCoordinate == 0.0)
         labelRect.moveCenter(labelPoint + QPointF(0, -labelRect.height() / 2.0));
     else if (angularCoordinate < 90.0)

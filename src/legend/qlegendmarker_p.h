@@ -38,15 +38,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-// TODO: check these
 class QAbstractSeries;
-class QAreaSeries;
-class QXYSeries;
-class QBarSet;
-class QAbstractBarSeries;
-class QPieSlice;
 class QLegend;
-class QPieSeries;
 
 class QLegendMarker;
 class LegendMarkerItem;

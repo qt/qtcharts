@@ -136,7 +136,6 @@ public:
 
     void startAnimation(ChartAnimation *animation);
 
-    //TODO refactor
     void setState(State state,QPointF point);
     State state() const { return m_state; }
     QPointF statePoint() const { return m_statePoint; }

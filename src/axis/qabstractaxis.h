@@ -145,7 +145,7 @@ public:
     void setShadesBorderColor(QColor color);
     QColor shadesBorderColor() const;
 
-    Qt::Orientation orientation(); //TODO: missing const <- BC (2.0)
+    Qt::Orientation orientation();
     Qt::Alignment alignment() const;
 
     //range handling

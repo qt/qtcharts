@@ -66,9 +66,6 @@ Q_DECLARE_METATYPE(QList<QAbstractAxis *>)
 
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 
-// NOTE: Hackish fixes for Qt5 (beta2).
-// These should not be needed or at least they are not needed in Qt4.
-
 Q_DECLARE_METATYPE(DeclarativeChart *)
 Q_DECLARE_METATYPE(DeclarativePolarChart *)
 Q_DECLARE_METATYPE(DeclarativeMargins *)

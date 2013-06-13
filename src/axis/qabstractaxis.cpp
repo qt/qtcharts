@@ -468,7 +468,6 @@ QPen QAbstractAxis::linePen() const
         return d_ptr->m_axisPen;
 }
 
-//TODO: remove me 2.0
 void QAbstractAxis::setLinePenColor(QColor color)
 {
     QPen p = d_ptr->m_axisPen;
@@ -620,7 +619,6 @@ int QAbstractAxis::labelsAngle() const
 {
     return d_ptr->m_labelsAngle;
 }
-//TODO: remove me 2.0
 void QAbstractAxis::setLabelsColor(QColor color)
 {
     QBrush b = d_ptr->m_labelsBrush;
@@ -878,8 +876,6 @@ void QAbstractAxis::setRange(const QVariant &min, const QVariant &max)
 /*!
   Returns the orientation in which the axis is being used (Vertical or Horizontal)
 */
-// NOTE: should have const but it breaks BC:
-// http://techbase.kde.org/Policies/Binary_Compatibility_Examples#Change_the_CV-qualifiers_of_a_member_function
 Qt::Orientation QAbstractAxis::orientation()
 {
     return d_ptr->orientation();
@@ -944,7 +940,6 @@ void QAbstractAxisPrivate::setAlignment( Qt::Alignment alignment)
 
 void QAbstractAxisPrivate::initializeTheme(ChartTheme* theme, bool forced)
 {
-    //TODO: introduce axis brush
     if (forced || QChartPrivate::defaultPen() == m_axisPen)
         q_ptr->setLinePen(theme->axisLinePen());
 
