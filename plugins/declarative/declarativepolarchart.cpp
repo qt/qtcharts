@@ -42,7 +42,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \note Polar charts do not support multiple axes of same orientation.
 
     The following QML shows how to create a polar chart with two series:
-    \snippet ../demos/qmlpolarchart/qml/qmlpolarchart/view1.qml 1
+    \snippet ../demos/qmlpolarchart/qml/qmlpolarchart/View1.qml 1
 
     \beginfloatleft
     \image demos_qmlpolarchart1.png
