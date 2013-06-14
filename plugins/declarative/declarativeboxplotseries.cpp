@@ -201,6 +201,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     This property configures the visibility of the middle box outline.
 */
 /*!
+    \qmlproperty qreal BoxPlotSeries::boxWidth
+    This property configures the width of the box-and-whiskers item. The value signifies the relative
+    width of the box-and-whiskers item inside its own slot. The value can between 0.0 and 1.0. Negative values
+    are clamped to 0.0 and values over 1.0 are clamped to 1.0.
+*/
+/*!
     \qmlproperty Pen BoxPlotSeries::pen
     This property configures the pen of the box-and-whiskers items.
 */
@@ -211,6 +217,10 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \qmlsignal BoxPlotSeries::onBoxOutlineVisibilityChanged()
     Signal is emitted when the middle box outline visibility is changed.
+ */
+/*!
+    \qmlsignal BoxPlotSeries::onBoxWidthChanged()
+    Signal is emitted when the width of the box-and-whiskers item is changed.
  */
 /*!
     \qmlsignal BoxPlotSeries::onPenChanged()

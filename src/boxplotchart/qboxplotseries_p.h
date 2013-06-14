@@ -89,6 +89,7 @@ protected:
     bool m_boxOutlineVisible;
     int m_index;
     BoxPlotAnimation *m_animation;
+    qreal m_boxWidth;
 
 private:
     Q_DECLARE_PUBLIC(QBoxPlotSeries)

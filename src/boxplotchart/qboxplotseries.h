@@ -33,6 +33,7 @@ class QTCOMMERCIALCHART_EXPORT QBoxPlotSeries : public QAbstractSeries
 {
     Q_OBJECT
     Q_PROPERTY(bool boxOutlineVisible READ boxOutlineVisible WRITE setBoxOutlineVisible NOTIFY boxOutlineVisibilityChanged)
+    Q_PROPERTY(qreal boxWidth READ boxWidth WRITE setBoxWidth NOTIFY boxWidthChanged)
     Q_PROPERTY(QPen pen READ pen WRITE setPen NOTIFY penChanged)
     Q_PROPERTY(QBrush brush READ brush WRITE setBrush NOTIFY brushChanged)
 public:
@@ -52,6 +53,8 @@ public:
 
     void setBoxOutlineVisible(bool visible);
     bool boxOutlineVisible();
+    void setBoxWidth(qreal width);
+    qreal boxWidth();
     void setBrush(const QBrush &brush);
     QBrush brush() const;
     void setPen(const QPen &pen);
@@ -64,6 +67,7 @@ Q_SIGNALS:
     void penChanged();
     void brushChanged();
     void boxOutlineVisibilityChanged();
+    void boxWidthChanged();
 
     void boxsetsAdded(QList<QBoxSet *> sets);
     void boxsetsRemoved(QList<QBoxSet *> sets);

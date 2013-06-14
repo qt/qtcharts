@@ -73,6 +73,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief This property configures the visibility of the middle box outline.
 */
 /*!
+    \property QBoxPlotSeries::boxWidth
+    \brief This property configures the width of the box-and-whiskers item. The value signifies the relative
+    width of the box-and-whiskers item inside its own slot. The value can between 0.0 and 1.0. Negative values
+    are clamped to 0.0 and values over 1.0 are clamped to 1.0.
+*/
+/*!
     \property QBoxPlotSeries::pen
     \brief This property configures the pen of the box-and-whiskers items.
 */
@@ -85,6 +91,10 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Signal is emitted when the middle box outline visibility is changed.
 */
 /*!
+    \fn void QBoxPlotSeries::boxWidthChanged()
+    Signal is emitted when the width of the box-and-whiskers item is changed.
+*/
+/*!
     \fn void QBoxPlotSeries::penChanged()
     This signal is emitted when the pen of the box-and-whiskers has changed.
     \sa brush
@@ -94,8 +104,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     This signal is emitted when the brush of the box-and-whiskers has changed.
     \sa brush
 */
-
-
 /*!
     \fn virtual SeriesType QBoxPlotSeries::type() const
     \brief Returns type of series.
@@ -276,6 +284,28 @@ bool QBoxPlotSeries::boxOutlineVisible()
     return d->m_boxOutlineVisible;
 }
 
+void QBoxPlotSeries::setBoxWidth(qreal width)
+{
+    Q_D(QBoxPlotSeries);
+
+    if (width != d->m_boxWidth) {
+        if (width < 0.0)
+            width = 0.0;
+        if (width > 1.0)
+            width = 1.0;
+        d->m_boxWidth = width;
+        emit d->updatedLayout();
+        emit boxWidthChanged();
+    }
+}
+
+qreal QBoxPlotSeries::boxWidth()
+{
+    Q_D(QBoxPlotSeries);
+
+    return d->m_boxWidth;
+}
+
 void QBoxPlotSeries::setBrush(const QBrush &brush)
 {
     Q_D(QBoxPlotSeries);
@@ -318,7 +348,8 @@ QBoxPlotSeriesPrivate::QBoxPlotSeriesPrivate(QBoxPlotSeries *q)
     : QAbstractSeriesPrivate(q),
       m_pen(QChartPrivate::defaultPen()),
       m_brush(QChartPrivate::defaultBrush()),
-      m_boxOutlineVisible(true)
+      m_boxOutlineVisible(true),
+      m_boxWidth(0.5)
 {
 }
 

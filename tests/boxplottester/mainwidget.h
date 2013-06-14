@@ -31,6 +31,7 @@
 #include <QBarCategoryAxis>
 #include <QBoxSet>
 #include <QCheckBox>
+#include <QDoubleSpinBox>
 
 class QGridLayout;
 
@@ -70,6 +71,7 @@ private slots:
     void changePen();
     void antialiasingToggled(bool);
     void boxOutlineToggled(bool);
+    void setBoxWidth(double width);
 
 private:
     QChart *m_chart;
@@ -82,6 +84,7 @@ private:
     int m_seriesCount;
     QBoxPlotSeries *m_series[10];
     QCheckBox *m_boxOutlined;
+    QDoubleSpinBox *m_boxWidthSB;
 };
 
 #endif // MAINWIDGET_H

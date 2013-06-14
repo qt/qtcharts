@@ -55,6 +55,7 @@ public:
     void setPen(const QPen &pen);
     void setLayout(const BoxWhiskersData &data);
     void setBoxOutlined(const bool outlined) { m_boxOutlined = outlined; }
+    void setBoxWidth(const qreal width);
 
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
@@ -87,6 +88,7 @@ private:
     QPen m_medianPen;
     QPen m_outlinePen;
     bool m_boxOutlined;
+    qreal m_boxWidth;
     BoxWhiskersData m_data;
     QSizeF m_domainSize;
     QRectF m_middleBox;

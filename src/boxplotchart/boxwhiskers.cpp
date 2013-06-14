@@ -77,6 +77,11 @@ void BoxWhiskers::setPen(const QPen &pen)
     update();
 }
 
+void BoxWhiskers::setBoxWidth(const qreal width)
+{
+    m_boxWidth = width;
+}
+
 void BoxWhiskers::setLayout(const BoxWhiskersData &data)
 {
     m_data = data;
@@ -132,8 +137,8 @@ void BoxWhiskers::updateGeometry(AbstractDomain *domain)
     m_boundingRect = m_boxPath.boundingRect();
 
     qreal columnWidth = 1.0 / m_data.m_seriesCount;
-    qreal left = 0.25 * columnWidth + columnWidth * m_data.m_seriesIndex + m_data.m_index - 0.5;
-    qreal barWidth = columnWidth / 2.0;
+    qreal left = ((1.0 - m_boxWidth) / 2.0) * columnWidth + columnWidth * m_data.m_seriesIndex + m_data.m_index - 0.5;
+    qreal barWidth = m_boxWidth * columnWidth;
 
     QPointF geometryPoint = m_domain->calculateGeometryPoint(QPointF(left, m_data.m_upperExtreme), m_validData);
     if (!m_validData)
@@ -178,7 +183,7 @@ void BoxWhiskers::updateGeometry(AbstractDomain *domain)
     m_boxPath = path;
     m_boundingRect = m_boxPath.boundingRect();
 
-    qreal extra = (m_pen.widthF() / 2.0);
+    qreal extra = m_pen.widthF();
     m_boundingRect.adjust(-extra, -extra, extra, extra);
 }
 

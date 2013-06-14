@@ -85,6 +85,7 @@ void BoxPlotChartItem::handleDataStructureChanged()
             box->setBrush(m_series->brush());
             box->setPen(m_series->pen());
             box->setBoxOutlined(m_series->boxOutlineVisible());
+            box->setBoxWidth(m_series->boxWidth());
         }
         updateBoxGeometry(box, s);
 
@@ -103,6 +104,7 @@ void BoxPlotChartItem::handleUpdatedBars()
         item->setBrush(m_series->brush());
         item->setPen(m_series->pen());
         item->setBoxOutlined(m_series->boxOutlineVisible());
+        item->setBoxWidth(m_series->boxWidth());
     }
     // Override with QBoxSet specific settings
     foreach (QBoxSet *set, m_boxTable.keys()) {
@@ -145,6 +147,8 @@ void BoxPlotChartItem::handleLayoutChanged()
     foreach (BoxWhiskers *item, m_boxTable.values()) {
         if (m_animation)
             m_animation->setAnimationStart(item);
+
+        item->setBoxWidth(m_series->boxWidth());
 
         bool dirty = updateBoxGeometry(item, item->m_data.m_index);
         if (dirty && m_animation)

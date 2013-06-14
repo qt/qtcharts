@@ -111,6 +111,16 @@ MainWidget::MainWidget(QWidget *parent) :
     connect(m_penTool, SIGNAL(changed()), this, SLOT(changePen()));
     grid->addWidget(setWhiskersButton, m_rowPos++, 1);
 
+    // Box width setting
+    m_boxWidthSB = new QDoubleSpinBox();
+    m_boxWidthSB->setMinimum(-1.0);
+    m_boxWidthSB->setMaximum(2.0);
+    m_boxWidthSB->setSingleStep(0.1);
+    m_boxWidthSB->setValue(0.5);
+    grid->addWidget(new QLabel("Box width:"), m_rowPos, 0);
+    grid->addWidget(m_boxWidthSB, m_rowPos++, 1);
+    connect(m_boxWidthSB, SIGNAL(valueChanged(double)), this, SLOT(setBoxWidth(double)));
+
     initThemeCombo(grid);
     initCheckboxes(grid);
 
@@ -249,6 +259,7 @@ void MainWidget::addSeries()
     connect(set2, SIGNAL(hovered(bool)), this, SLOT(singleBoxHovered(bool)));
 
     m_series[m_seriesCount]->setBoxOutlineVisible(m_boxOutlined->checkState());
+    m_series[m_seriesCount]->setBoxWidth(m_boxWidthSB->value());
 
     m_chart->addSeries(m_series[m_seriesCount]);
 
@@ -458,4 +469,12 @@ void MainWidget::changePen()
     qDebug() << "changePen() = " << m_penTool->pen();
     for (int i = 0; i <  m_seriesCount; i++)
         m_series[i]->setPen(m_penTool->pen());
+}
+
+void MainWidget::setBoxWidth(double width)
+{
+    qDebug() << "setBoxWidth to " << width;
+
+    for (int i = 0; i <  m_seriesCount; i++)
+        m_series[i]->setBoxWidth(qreal(width));
 }
