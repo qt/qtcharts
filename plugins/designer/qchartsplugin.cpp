@@ -54,7 +54,7 @@ QString QChartsPlugin::includeFile() const
 
 QString QChartsPlugin::group() const
 {
-    return tr("QCharts Widgets");
+    return tr("Qt Charts Widgets");
 }
 
 QIcon QChartsPlugin::icon() const
@@ -64,7 +64,7 @@ QIcon QChartsPlugin::icon() const
 
 QString QChartsPlugin::toolTip() const
 {
-    return tr("An qcharts view widget");
+    return tr("An Qt Charts view widget");
 }
 
 QString QChartsPlugin::whatsThis() const

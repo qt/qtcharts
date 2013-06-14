@@ -1,16 +1,16 @@
 /*!
     \example demos/quick2oscilloscope
-    \title QtQuick 2 Oscilloscope
+    \title Qt Quick 2 Oscilloscope
 
     \image demos_qmloscilloscope.png
 
-    This is a reimplementation of \l{Oscilloscope} demo in QtQuick 2.
+    This is a reimplementation of \l{Oscilloscope} demo in Qt Quick 2.
 
-    Only difference in qml files is importing the correct version of QtQuick:
+    The main difference in qml files is importing the correct version of Qt Quick:
 
     \snippet ../demos/quick2oscilloscope/qml/quick2oscilloscope/main.qml 3
 
-    \note QML_SHOW_FRAMERATE environment variable doesn't work with QtQuick 2.
+    \note QML_SHOW_FRAMERATE environment variable doesn't work with Qt Quick 2.
     Starting with Qt 5.1.0, QSG_RENDER_TIMING environment variable can be used
     similarly to display rendering time.
 */

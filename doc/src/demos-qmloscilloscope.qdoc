@@ -4,7 +4,7 @@
 
     \image demos_qmloscilloscope.png
 
-    Oscilloscope application demonstrates how to use Qt Enterprise Charts QML API to implement an
+    Oscilloscope application demonstrates how to use Qt Charts QML API to implement an
     application with strict performance requirements. The application uses generated data with
     configurable characteristics to mimic a simple oscilloscope user interface. To find out the
     actual screen refresh performance of the application, you can set QML_SHOW_FRAMERATE = 1 to

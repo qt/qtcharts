@@ -4,12 +4,12 @@
 
     \raw HTML
     <div class="qchart">
-    <img src="images/qt_commercial_logo.png" alt="qt_logo"/>
+    <img src="images/qt-logo.png" alt="qt-logo"/>
 
     <p>
-        QCharts is a part of Qt Enterprise addons package. It provides a set of easy to use chart
-        components which are available for Qt Enterprise customers. It uses Qt Graphics View
-        Framework, therefore charts can be easily integrated to modern user interfaces. QCharts can
+        Qt Charts is a part of Qt addons package. It provides a set of easy to use chart
+        components which are available for Qt customers. It uses Qt Graphics View
+        Framework, therefore charts can be easily integrated to modern user interfaces. Qt Charts can
         be used as QWidgets, QGraphicsWidget or QML elements. Users can easily create impressive
         graphs by selecting one of the charts themes.
     </p>

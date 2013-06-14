@@ -39,8 +39,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     any line connecting the two points becomes meaningless, so choose the axis ranges accordingly
     when displaying line, spline, or area series.
 
-    \note Polar charts do not support multiple axes of same orientation.
-
     The following QML shows how to create a polar chart with two series:
     \snippet ../demos/qmlpolarchart/qml/qmlpolarchart/View1.qml 1
 

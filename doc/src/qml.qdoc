@@ -1,9 +1,9 @@
 /*!
     \page qml.html
-    \title Qt Enterprise Charts QML API
+    \title Qt Charts QML API
     \keyword Charts QML API
 
-    Qt Enterprise Charts QML API is an intuitive and simple way to show charts in your QML
+    Qt Charts QML API is an intuitive and simple way to show charts in your QML
     applications.
 
     \table
@@ -18,13 +18,13 @@
             \o \inlineimage examples_qmlpiechart.png
     \endtable
 
-    \note Since Qt Enterprise Charts utilizes Qt Graphics View Framework for drawing, it works best
-    with QtQuick 1, which is based on the same framework.
-    As of release 1.3.0, Qt Enterprise Charts is also usable with QtQuick 2, though the performance
-    is slightly worse than with QtQuick 1 due to additional rendering step that is required.
+    \note Since Qt Charts utilizes Qt Graphics View Framework for drawing, it works best
+    with Qt Quick 1, which is based on the same framework.
+    As of release 1.3.0, Qt Charts is also usable with Qt Quick 2, though the performance
+    is slightly worse than with Qt Quick 1 due to additional rendering step that is required.
 
-    \note QtQuick 1 is supported from Qt 4.7.4 onwards because of missing
-    Q_REVISION macro in the earlier Qt releases. QtQuick 2 is supported with only Qt 5.
+    \note Qt Quick 1 is supported from Qt 4.7.4 onwards because of missing
+    Q_REVISION macro in the earlier Qt releases. Qt Quick 2 is supported with only Qt 5.
 
     \raw HTML
         <table cellpadding="2" cellspacing="1" border="0" width="95%" class="indextable">

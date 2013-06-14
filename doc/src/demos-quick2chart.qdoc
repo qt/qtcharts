@@ -1,13 +1,15 @@
 /*!
     \example demos/quick2chart
-    \title QtQuick 2 charts demo
+    \title Qt Quick 2 charts demo
     \subtitle
 
     \image demos_qmlchart1.png
 
-    This is a reimplementation of \l{Qml charts demo} in QtQuick 2.
+    This is a reimplementation of \l{Qml charts demo} in Qt Quick 2.
 
-    Only difference in qml files is importing the correct version of QtQuick:
+    The main difference in qml files is importing the correct version of Qt Quick:
 
     \snippet ../demos/quick2chart/qml/quick2chart/View1.qml 2
+
+    Additionally, antialiasing is set with qml property in Qt Quick 2.
 */

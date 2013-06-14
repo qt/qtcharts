@@ -12,7 +12,7 @@ HTML.scripts     =
 # These also need to be listed in qhp.Qt.extraFiles with the correct
 # directory prefixes.
 
-extraimages.HTML        = qt_commercial_logo.png \
+extraimages.HTML        = qt-logo.png \
                           digia_logo.png \
                           qcharts.png \
                           arrow_down.png \

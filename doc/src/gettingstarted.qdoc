@@ -1,6 +1,6 @@
 /*!
     \page gettingstarted.html
-    \title Qt Enterprise Charts getting started
+    \title Qt Charts getting started
     \keyword Introduction
 
     Compiling:
@@ -12,7 +12,7 @@
 
     Depending on the OS and the compiler you are using "make" might need to be replaced with another command like: nmake, mingw32-make, etc.
 
-    To uninstall the Qt Enterprise Charts run:
+    To uninstall the Qt Charts run:
     \code
     make uninstall
     \endcode
@@ -43,7 +43,7 @@
 
     \bold {Widget project}
 
-    To use the QCharts classes add Qt Enterprise Charts namespace macro in your header file.
+    To use the Qt Charts classes add Qt Charts namespace macro in your header file.
     \code
     #include<QWidget>
     #include<QChartView>
@@ -57,7 +57,7 @@
 
     Add an import line to your *.qml file:
     \code
-    import QtCommercial.Chart 1.2
+    import QtCommercial.Chart 1.3
     \endcode
 
     \raw HTML

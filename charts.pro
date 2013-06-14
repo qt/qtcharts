@@ -45,8 +45,8 @@ contains(QT_MAJOR_VERSION, 5) {
     HELPGENERATOR_CMD = qhelpgenerator
 }
 
-QHP_FILE = doc/html/qtcommercialcharts.qhp
-QCH_FILE = doc/qch/qtcommercialcharts.qch
+QHP_FILE = doc/html/qtcharts.qhp
+QCH_FILE = doc/qch/qtcharts.qch
 
 docs.target = docs
 docs.depends = qch_docs FORCE
