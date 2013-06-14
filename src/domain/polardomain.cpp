@@ -36,14 +36,14 @@ PolarDomain::~PolarDomain()
 void PolarDomain::setSize(const QSizeF &size)
 {
     Q_ASSERT(size.width() == size.height());
-    m_radius = size.height() / 2;
+    m_radius = size.height() / 2.0;
     m_center = QPointF(m_radius, m_radius);
     AbstractDomain::setSize(size);
 }
 
 QPointF PolarDomain::calculateGeometryPoint(const QPointF &point, bool &ok) const
 {
-    qreal r;
+    qreal r = 0.0;
     qreal a = toAngularCoordinate(point.x(), ok);
     if (ok)
         r = toRadialCoordinate(point.y(), ok);
@@ -60,8 +60,8 @@ QVector<QPointF> PolarDomain::calculateGeometryPoints(const QList<QPointF> &vect
     QVector<QPointF> result;
     result.resize(vector.count());
     bool ok;
-    qreal r;
-    qreal a;
+    qreal r = 0.0;
+    qreal a = 0.0;
 
     for (int i = 0; i < vector.count(); ++i) {
         a = toAngularCoordinate(vector[i].x(), ok);
