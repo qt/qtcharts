@@ -64,7 +64,7 @@ public:
         m_backgroundShadesBrush = QBrush(QRgb(0xffeecd));
         m_backgroundShades = BackgroundShadesHorizontal;
         m_outlinePen = QPen(QColor(Qt::black));
-        m_outlinePen.setWidthF(1.0);
+        m_outlinePen.setWidthF(2.0);
     }
 };
 
