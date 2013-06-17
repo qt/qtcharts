@@ -1,18 +1,18 @@
----------------------------------
-Qt Enterprise Charts Add-on 1.3.0
----------------------------------
+----------------------
+Qt Charts Add-on 1.3.0
+----------------------
 
-What's in Qt Enterprise Charts
-==============================
+What's in Qt Charts
+===================
 
 Directory structure:
 
 src/
-    Source code of the Qt Enterprise Charts
+    Source code of the Qt Charts
 plugins/
     QML bindings plugins and QtCreator plugin
 examples/
-    Some examples of using Qt Enterprise Charts
+    Some examples of using Qt Charts
 demos/
     More versatile example applications showing how to customize charts,
     combine several chart types and implement interaction in charts
@@ -24,7 +24,7 @@ licenses/
 Building
 ========
 Please note that if you have already installed a previous version of
-Qt Enterprise Charts, you should first uninstall it with
+Qt Charts, you should first uninstall it with
     make uninstall
 
 Configure project with qmake and build project with make:
@@ -70,7 +70,7 @@ Main Changes between 1.2.1 and 1.3.0
 - New chart type added: Polar chart
 - New series type added: Box and whiskers
 - QtQuick 2 support added
-  - Note: Since Qt Enterprise Charts still uses QGraphicsView framework under the hood
+  - Note: Since Qt Charts still uses QGraphicsView framework under the hood
     even with QtQuick 2, its performance is actually better with QtQuick 1 than with QtQuick 2.
 
 Bug Fixes and minor new features
@@ -106,3 +106,4 @@ Bug Fixes and minor new features
 - Fixed: QChartView right click zoom out when zooming only along one axis
 - Fixed: Crash or memory leak when resetting animation options mid-animation
 - Fixed: QBarCategoryAxis doesn't notify domain on category remove
+- Fixed: axisXTop QML property now actually puts axis on top
