@@ -7,7 +7,7 @@
     <img src="images/qt-logo.png" alt="qt-logo" style="margin:0px 8px"/>
 
     <p>
-        Qt Charts is a part of Qt addons package. It provides a set of easy to use chart
+        Qt Charts is a part of Qt Enterprise addons package. It provides a set of easy to use chart
         components which are available for Qt customers. It uses Qt Graphics View
         Framework, therefore charts can be easily integrated to modern user interfaces. Qt Charts can
         be used as QWidgets, QGraphicsWidget or QML elements. Users can easily create impressive
