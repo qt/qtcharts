@@ -3,7 +3,7 @@ include(macros.qdocconf)
 include(qchart-html-template.qdocconf)
 include(qchart-qch.qdocconf)
 
-project = QtCommercialCharts
+project = Qt Charts
 description = Library for creating charts
 
 sourcedirs = ../src \

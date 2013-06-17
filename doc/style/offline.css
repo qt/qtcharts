@@ -251,6 +251,15 @@
 /* end global settings*/
 
 /* header elements */
+    .header .qtcharts
+    {
+        color: #00732F;
+        font-weight: bold;
+        font-size: 200%;
+        text-align: center;
+        margin: 10px 0px
+    }
+
     .header .qtref
     {
         color: #00732F;
