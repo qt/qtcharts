@@ -4,7 +4,7 @@
 
     \raw HTML
     <div class="qchart">
-    <img src="images/qt-logo.png" alt="qt-logo"/>
+    <img src="images/qt-logo.png" alt="qt-logo" style="margin:0px 8px"/>
 
     <p>
         Qt Charts is a part of Qt addons package. It provides a set of easy to use chart
