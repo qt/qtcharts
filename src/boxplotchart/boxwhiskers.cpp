@@ -113,6 +113,7 @@ void BoxWhiskers::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
     Q_UNUSED(option)
     Q_UNUSED(widget)
 
+    painter->save();
     painter->setBrush(m_brush);
     painter->setClipRect(parentItem()->boundingRect());
     painter->setPen(m_pen);
@@ -124,6 +125,7 @@ void BoxWhiskers::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
     qreal halfLine = m_pen.widthF() / 2.0;
     painter->drawLine(QLineF(m_geometryLeft - halfLine, m_geometryMedian,
                              m_geometryRight + halfLine, m_geometryMedian));
+    painter->restore();
 }
 
 void BoxWhiskers::updateGeometry(AbstractDomain *domain)
