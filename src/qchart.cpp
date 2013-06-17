@@ -70,7 +70,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
  \class QChart
- \brief Qt Enterprise Chart API.
+ \brief Main chart API for Qt Charts.
 
  QChart is a QGraphicsWidget that you can show in a QGraphicsScene. It manages the graphical
  representation of different types of series and other chart related objects like legend and

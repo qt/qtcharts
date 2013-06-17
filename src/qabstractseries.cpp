@@ -33,7 +33,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QAbstractSeries
-    \brief Base class for all QtCommercial Chart series.
+    \brief Base class for all Qt Chart series.
     \mainclass
 
     Usually you use the series type specific inherited classes instead of the base class.

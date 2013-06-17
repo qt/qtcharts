@@ -40,15 +40,15 @@ Rectangle {
                 }
                 CategoryRange {
                     label: "low"
-                    endValue: 4
-                }
-                CategoryRange {
-                    label: "normal"
                     endValue: 7
                 }
                 CategoryRange {
+                    label: "normal"
+                    endValue: 12
+                }
+                CategoryRange {
                     label: "high"
-                    endValue: 15
+                    endValue: 18
                 }
                 CategoryRange {
                     label: "extremely high"

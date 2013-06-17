@@ -22,8 +22,8 @@ import QtQuick 1.0
 
 Item {
     id: container
-    width: 400
-    height: 300
+    width: 800
+    height: 600
     Component.onCompleted: {
     var co = Qt.createComponent("main.qml")
     if (co.status == Component.Ready) {

@@ -35,7 +35,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QPieSeries
-    \brief Pie series API for QtCommercial Charts.
+    \brief Pie series API for Qt Charts.
 
     The pie series defines a pie chart which consists of pie slices which are defined as QPieSlice objects.
     The slices can have any values as the QPieSeries will calculate its relative value to the sum of all slices.
