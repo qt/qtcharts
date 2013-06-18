@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
     chart->createDefaultAxes();
     chart->setAxisX(axis, series);
     chart->axisY(series)->setRange(-52, 52);
-    chart->axisY(series)->setTitleText(QString::fromUtf8("Temperature [\u00B0C]"));
+    chart->axisY(series)->setTitleText("Temperature [&deg;C]");
 //![4]
 
 //![5]

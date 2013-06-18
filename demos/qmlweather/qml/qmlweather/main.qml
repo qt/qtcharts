@@ -65,7 +65,7 @@ Rectangle {
             id: valueAxisY
             min: 0
             max: 15
-            titleText: "Temperature [\u00B0C]"
+            titleText: "Temperature [&deg;C]"
         }
 
         LineSeries {
