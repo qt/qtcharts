@@ -28,6 +28,7 @@
 #include <QValueAxis>
 #include <QLogValueAxis>
 #include <QGraphicsLayout>
+#include <QTextDocument>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -62,6 +63,7 @@ void CartesianChartAxis::createItems(int count)
         QGraphicsLineItem *arrow = new QGraphicsLineItem(this);
         QGraphicsLineItem *grid = new QGraphicsLineItem(this);
         QGraphicsTextItem *label = new QGraphicsTextItem(this);
+        label->document()->setDocumentMargin(ChartPresenter::textMargin());
         QGraphicsTextItem *title = titleItem();
         arrow->setPen(axis()->linePen());
         grid->setPen(axis()->gridLinePen());

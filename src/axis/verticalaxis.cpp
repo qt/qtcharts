@@ -77,7 +77,7 @@ void VerticalAxis::updateGeometry()
         QString truncatedTitle = ChartPresenter::truncatedText(axis()->titleFont(), titleText, qreal(0.0),
                                                                gridRect.height(), Qt::Horizontal, titleBoundingRect);
         qreal titleSpace = availableSpace - minimumLabelWidth;
-        if (titleSpace < titleBoundingRect.width()) {
+        if (titleSpace < titleBoundingRect.height()) {
             // Need to also truncate title vertically (multiline title)
             bool skip = false;
             if (truncatedTitle.endsWith("...")) {

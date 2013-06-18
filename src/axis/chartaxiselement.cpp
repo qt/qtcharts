@@ -24,6 +24,7 @@
 #include "abstractchartlayout_p.h"
 #include <qmath.h>
 #include <QDateTime>
+#include <QTextDocument>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -56,6 +57,7 @@ ChartAxisElement::ChartAxisElement(QAbstractAxis *axis, QGraphicsItem *item, boo
     m_shades->setZValue(ChartPresenter::ShadesZValue);
     m_grid->setZValue(ChartPresenter::GridZValue);
     m_title->setZValue(ChartPresenter::GridZValue);
+    m_title->document()->setDocumentMargin(ChartPresenter::textMargin());
     handleVisibleChanged(axis->isVisible());
     connectSlots();
 

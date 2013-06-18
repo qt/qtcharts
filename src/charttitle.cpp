@@ -23,13 +23,14 @@
 #include <QFont>
 #include <QFontMetrics>
 #include <QDebug>
+#include <QTextDocument>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 ChartTitle::ChartTitle(QGraphicsItem *parent)
     : QGraphicsTextItem(parent)
 {
-
+    document()->setDocumentMargin(ChartPresenter::textMargin());
 }
 
 ChartTitle::~ChartTitle()

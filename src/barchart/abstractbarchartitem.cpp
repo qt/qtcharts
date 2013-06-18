@@ -30,6 +30,7 @@
 #include "baranimation_p.h"
 #include "chartdataset_p.h"
 #include <QPainter>
+#include <QTextDocument>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -164,7 +165,9 @@ void AbstractBarChartItem::handleDataStructureChanged()
             //            m_layout.append(QRectF(0, 0, 1, 1));
 
             // Labels
-            m_labels.append(new QGraphicsTextItem(this));
+            QGraphicsTextItem *newLabel = new QGraphicsTextItem(this);
+            newLabel->document()->setDocumentMargin(ChartPresenter::textMargin());
+            m_labels.append(newLabel);
         }
     }
 

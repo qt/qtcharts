@@ -33,6 +33,7 @@
 #include "polarchartlayout_p.h"
 #include "charttitle_p.h"
 #include <QTimer>
+#include <QTextDocument>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -387,6 +388,11 @@ ChartTitle *ChartPresenter::titleElement()
 QRectF ChartPresenter::textBoundingRect(const QFont &font, const QString &text, qreal angle)
 {
     static QGraphicsTextItem dummyTextItem;
+    static bool initMargin = true;
+    if (initMargin) {
+        dummyTextItem.document()->setDocumentMargin(textMargin());
+        initMargin = false;
+    }
 
     dummyTextItem.setFont(font);
     dummyTextItem.setHtml(text);

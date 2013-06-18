@@ -21,6 +21,7 @@
 #include <QPainter>
 #include <QGraphicsSceneEvent>
 #include <QGraphicsTextItem>
+#include <QTextDocument>
 
 #include "qlegend.h"
 #include "qlegend_p.h"
@@ -38,12 +39,13 @@ LegendMarkerItem::LegendMarkerItem(QLegendMarkerPrivate *marker, QGraphicsObject
     m_boundingRect(0,0,0,0),
     m_textItem(new QGraphicsTextItem(this)),
     m_rectItem(new QGraphicsRectItem(this)),
-    m_margin(1),
-    m_space(2),
+    m_margin(3),
+    m_space(4),
     m_hovering(false),
     m_pressPos(0, 0)
 {
     m_rectItem->setRect(m_markerRect);
+    m_textItem->document()->setDocumentMargin(ChartPresenter::textMargin());
     setAcceptHoverEvents(true);
 }
 
@@ -122,7 +124,8 @@ void LegendMarkerItem::setGeometry(const QRectF &rect)
 
     m_textItem->setPos(x - m_margin, y / 2 - textRect.height() / 2);
     m_rectItem->setRect(m_markerRect);
-    m_rectItem->setPos(m_margin, y / 2  - m_markerRect.height() / 2);
+    // The textMargin adjustments to position are done to make default case rects less blurry with anti-aliasing
+    m_rectItem->setPos(m_margin - ChartPresenter::textMargin(), y / 2.0  - m_markerRect.height() / 2.0 + ChartPresenter::textMargin());
 
     prepareGeometryChange();
     m_boundingRect = QRectF(0, 0, x + textRect.width() + m_margin, y);

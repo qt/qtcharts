@@ -23,6 +23,7 @@
 #include "abstractchartlayout_p.h"
 #include "qabstractaxis_p.h"
 #include "linearrowitem_p.h"
+#include <QTextDocument>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -236,6 +237,7 @@ void PolarChartAxisRadial::createItems(int count)
         QGraphicsLineItem *arrow = new QGraphicsLineItem(presenter()->rootItem());
         QGraphicsEllipseItem *grid = new QGraphicsEllipseItem(presenter()->rootItem());
         QGraphicsTextItem *label = new QGraphicsTextItem(presenter()->rootItem());
+        label->document()->setDocumentMargin(ChartPresenter::textMargin());
         QGraphicsTextItem *title = titleItem();
         arrow->setPen(axis()->linePen());
         grid->setPen(axis()->gridLinePen());

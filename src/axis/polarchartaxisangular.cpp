@@ -25,6 +25,7 @@
 #include "qabstractaxis_p.h"
 #include <QDebug>
 #include <qmath.h>
+#include <QTextDocument>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -247,6 +248,7 @@ void PolarChartAxisAngular::createItems(int count)
         QGraphicsLineItem *arrow = new QGraphicsLineItem(presenter()->rootItem());
         QGraphicsLineItem *grid = new QGraphicsLineItem(presenter()->rootItem());
         QGraphicsTextItem *label = new QGraphicsTextItem(presenter()->rootItem());
+        label->document()->setDocumentMargin(ChartPresenter::textMargin());
         QGraphicsTextItem *title = titleItem();
         arrow->setPen(axis()->linePen());
         grid->setPen(axis()->gridLinePen());
