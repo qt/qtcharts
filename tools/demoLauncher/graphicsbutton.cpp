@@ -42,6 +42,10 @@ GraphicsButton::~GraphicsButton()
 void GraphicsButton::mousePressEvent(QMouseEvent *event)
 {
     QString program = m_appFolder.absolutePath() + QDir::separator() + m_app;
+    if (m_demoApp) {
+        m_demoApp->close();
+        delete m_demoApp;
+    }
     m_demoApp = new QProcess(this);
     m_demoApp->start(program);
     event->accept();
