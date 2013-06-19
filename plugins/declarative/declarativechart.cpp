@@ -274,6 +274,7 @@ void DeclarativeChart::initChart(QChart::ChartType type)
     m_currentSceneImage = 0;
     m_guiThreadId = QThread::currentThreadId();
     m_paintThreadId = 0;
+    m_updatePending = false;
 
     if (type == QChart::ChartTypePolar)
         m_chart = new QPolarChart();
