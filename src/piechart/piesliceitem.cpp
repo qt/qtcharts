@@ -85,11 +85,20 @@ void PieSliceItem::paint(QPainter *painter, const QStyleOptionGraphicsItem * /*o
         painter->setBrush(m_data.m_labelBrush);
         painter->setFont(m_data.m_labelFont);
 
+        QFontMetricsF fm(m_data.m_labelFont);
+        QString label = m_data.m_labelText;
+        QRectF labelBoundingRect;
+
         switch (m_data.m_labelPosition) {
         case QPieSlice::LabelOutside:
             painter->setClipRect(parentItem()->boundingRect());
             painter->strokePath(m_labelArmPath, m_data.m_labelBrush.color());
-            painter->drawText(m_labelTextRect, Qt::AlignCenter, m_data.m_labelText);
+            if (fm.width(m_data.m_labelText) > m_labelTextRect.width()) {
+                label = ChartPresenter::truncatedText(m_data.m_labelFont, m_data.m_labelText,
+                                                      qreal(0.0), m_labelTextRect.width(),
+                                                      Qt::Horizontal, labelBoundingRect);
+            }
+            painter->drawText(m_labelTextRect, Qt::AlignCenter, label);
             break;
         case QPieSlice::LabelInsideHorizontal:
             painter->setClipPath(m_slicePath);
@@ -165,6 +174,10 @@ void PieSliceItem::updateGeometry()
     switch (m_data.m_labelPosition) {
     case QPieSlice::LabelOutside:
         m_labelTextRect.moveBottomLeft(labelTextStart);
+        if (m_labelTextRect.left() < 0)
+            m_labelTextRect.setLeft(0);
+        if (m_labelTextRect.right() > parentItem()->boundingRect().right())
+            m_labelTextRect.setRight(parentItem()->boundingRect().right());
         break;
     case QPieSlice::LabelInsideHorizontal:
     case QPieSlice::LabelInsideTangential: {
