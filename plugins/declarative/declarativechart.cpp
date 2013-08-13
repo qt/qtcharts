@@ -372,7 +372,7 @@ void DeclarativeChart::handleAxisXSet(QAbstractAxis *axis)
     QAbstractSeries *s = qobject_cast<QAbstractSeries *>(sender());
     if (axis && s) {
         if (!m_chart->axes(Qt::Horizontal).contains(axis))
-            m_chart->addAxis(axis, Qt::AlignBottom);
+            m_chart->setAxisX(axis, s);
         if (!s->attachedAxes().contains(axis))
             s->attachAxis(axis);
     } else {
@@ -384,8 +384,14 @@ void DeclarativeChart::handleAxisXTopSet(QAbstractAxis *axis)
 {
     QAbstractSeries *s = qobject_cast<QAbstractSeries *>(sender());
     if (axis && s) {
-        if (!m_chart->axes(Qt::Horizontal).contains(axis))
+        if (!m_chart->axes(Qt::Horizontal).contains(axis)) {
+            QList<QAbstractAxis *> oldAxes = m_chart->axes(Qt::Horizontal, s);
+            foreach (QAbstractAxis* a, oldAxes) {
+                    m_chart->removeAxis(a);
+                    delete a;
+            }
             m_chart->addAxis(axis, Qt::AlignTop);
+        }
         if (!s->attachedAxes().contains(axis))
             s->attachAxis(axis);
     } else {
@@ -398,7 +404,7 @@ void DeclarativeChart::handleAxisYSet(QAbstractAxis *axis)
     QAbstractSeries *s = qobject_cast<QAbstractSeries *>(sender());
     if (axis && s) {
         if (!m_chart->axes(Qt::Vertical).contains(axis))
-            m_chart->addAxis(axis, Qt::AlignLeft);
+            m_chart->setAxisY(axis, s);
         if (!s->attachedAxes().contains(axis))
             s->attachAxis(axis);
     } else {
@@ -410,8 +416,14 @@ void DeclarativeChart::handleAxisYRightSet(QAbstractAxis *axis)
 {
     QAbstractSeries *s = qobject_cast<QAbstractSeries *>(sender());
     if (axis && s) {
-        if (!m_chart->axes(Qt::Vertical).contains(axis))
+        if (!m_chart->axes(Qt::Vertical).contains(axis)) {
+            QList<QAbstractAxis *> oldAxes = m_chart->axes((Qt::Vertical), s);
+            foreach (QAbstractAxis* a, oldAxes) {
+                m_chart->removeAxis(a);
+                delete a;
+            }
             m_chart->addAxis(axis, Qt::AlignRight);
+        }
         if (!s->attachedAxes().contains(axis))
             s->attachAxis(axis);
     } else {
