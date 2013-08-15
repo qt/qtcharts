@@ -85,6 +85,8 @@ public:
     qreal top();
     qreal bottom();
 
+    bool blockBarUpdate();
+
 Q_SIGNALS:
     void clicked(int index, QBarSet *barset);
     void updatedBars();
@@ -101,6 +103,7 @@ protected:
     qreal m_barWidth;
     bool m_labelsVisible;
     bool m_visible;
+    bool m_blockBarUpdate;
 
 private:
     Q_DECLARE_PUBLIC(QAbstractBarSeries)

@@ -413,7 +413,8 @@ QAbstractBarSeriesPrivate::QAbstractBarSeriesPrivate(QAbstractBarSeries *q) :
     QAbstractSeriesPrivate(q),
     m_barWidth(0.5),  // Default value is 50% of category width
     m_labelsVisible(false),
-    m_visible(true)
+    m_visible(true),
+    m_blockBarUpdate(false)
 {
 }
 
@@ -652,6 +653,10 @@ qreal QAbstractBarSeriesPrivate::bottom()
     return bottom;
 }
 
+bool QAbstractBarSeriesPrivate::blockBarUpdate()
+{
+    return m_blockBarUpdate;
+}
 
 void QAbstractBarSeriesPrivate::initializeDomain()
 {
@@ -843,6 +848,8 @@ QAbstractAxis* QAbstractBarSeriesPrivate::createDefaultAxis(Qt::Orientation orie
 
 void QAbstractBarSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bool forced)
 {
+    m_blockBarUpdate = true; // Ensures that the bars are not updated before the theme is ready
+
     const QList<QGradient> gradients = theme->seriesGradients();
 
     qreal takeAtPos = 0.5;
@@ -875,12 +882,13 @@ void QAbstractBarSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bo
             else
                 m_barSets.at(i)->setLabelBrush(ChartThemeManager::colorAt(gradients.at(index % gradients.size()), 0));
         }
-
         if (forced || QChartPrivate::defaultPen() == m_barSets.at(i)->d_ptr->m_pen) {
             QColor c = ChartThemeManager::colorAt(gradients.at(index % gradients.size()), 0.0);
             m_barSets.at(i)->setPen(c);
         }
     }
+    m_blockBarUpdate = false;
+    emit updatedBars();
 }
 
 void QAbstractBarSeriesPrivate::initializeAnimations(QChart::AnimationOptions options)
