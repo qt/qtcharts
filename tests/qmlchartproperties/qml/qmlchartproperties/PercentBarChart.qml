@@ -37,7 +37,7 @@ ChartView {
 
         BarSet { label: "Bob"; values: [2, 2, 3, 4, 5, 6]
             onClicked:                  console.log("barset.onClicked: " + index);
-            onHovered:                  console.log("barset.onHovered: " + status);
+            onHovered:                  console.log("barset.onHovered: " + status + " " + index);
             onPenChanged:               console.log("barset.onPenChanged: " + pen);
             onBrushChanged:             console.log("barset.onBrushChanged: " + brush);
             onLabelChanged:             console.log("barset.onLabelChanged: " + label);
@@ -58,7 +58,8 @@ ChartView {
         onVisibleChanged:           console.log("percentBarSeries.onVisibleChanged: " + series.visible);
         onOpacityChanged:           console.log("percentBarSeries.onOpacityChanged: " + opacity);
         onClicked:                  console.log("percentBarSeries.onClicked: " + barset + " " + index);
-        onHovered:                  console.log("percentBarSeries.onHovered: " + barset + " " + status);
+        onHovered:                  console.log("percentBarSeries.onHovered: " + barset
+                                                + " " + status + " " + index);
         onLabelsVisibleChanged:     console.log("percentBarSeries.onLabelsVisibleChanged: " + series.labelsVisible);
         onCountChanged:             console.log("percentBarSeries.onCountChanged: " + count);
     }

@@ -142,12 +142,22 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Parameter \a barset is the pointer of barset, where hover happened.
     Parameter \a status is true, if mouse entered on top of series, false if mouse left from top of series.
 */
+
 /*!
-    \qmlsignal AbstractBarSeries::onHovered(bool status, BarSet barset)
+    \fn void QAbstractBarSeries::hovered(bool status, int index, QBarSet* barset)
 
     The signal is emitted if mouse is hovered on top of series.
     Parameter \a barset is the pointer of barset, where hover happened.
     Parameter \a status is true, if mouse entered on top of series, false if mouse left from top of series.
+    Hovered bar inside the set is indexed by \a index.
+*/
+/*!
+    \qmlsignal AbstractBarSeries::onHovered(bool status, int index, BarSet barset)
+
+    The signal is emitted if mouse is hovered on top of series.
+    Parameter \a barset is the pointer of barset, where hover happened.
+    Parameter \a status is true, if mouse entered on top of series, false if mouse left from top of series.
+    Hovered bar inside the set is indexed by \a index.
 */
 
 /*!

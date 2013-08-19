@@ -37,7 +37,7 @@ ChartView {
         axisX: BarCategoryAxis { categories: ["2007", "2008", "2009", "2010", "2011", "2012" ] }
         BarSet { label: "Bob"; values: [2, 2, 3, 4, 5, 6]
             onClicked:                  console.log("barset.onClicked: " + index);
-            onHovered:                  console.log("barset.onHovered: " + status);
+            onHovered:                  console.log("barset.onHovered: " + status + " " + index);
             onPenChanged:               console.log("barset.onPenChanged: " + pen);
             onBrushChanged:             console.log("barset.onBrushChanged: " + brush);
             onLabelChanged:             console.log("barset.onLabelChanged: " + label);
@@ -58,7 +58,8 @@ ChartView {
         onVisibleChanged:           console.log("barSeries.onVisibleChanged: " + series.visible);
         onOpacityChanged:           console.log("barSeries.onOpacityChanged: " + opacity);
         onClicked:                  console.log("barSeries.onClicked: " + barset + " " + index);
-        onHovered:                  console.log("barSeries.onHovered: " + barset + " " + status);
+        onHovered:                  console.log("barSeries.onHovered: " + barset + " " + status
+                                                + " " + index);
         onLabelsVisibleChanged:     console.log("barSeries.onLabelsVisibleChanged: " + series.labelsVisible);
         onCountChanged:             console.log("barSeries.onCountChanged: " + count);
     }

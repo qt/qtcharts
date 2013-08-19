@@ -53,6 +53,7 @@ public:
 Q_SIGNALS:
     void clicked(int index, QBarSet *barset);
     void hovered(bool status, QBarSet *barset);
+    void hovered(bool status, int index, QBarSet *barset);
 
 private:
     int m_index;

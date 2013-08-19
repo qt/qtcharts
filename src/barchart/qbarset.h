@@ -85,6 +85,7 @@ public:
 Q_SIGNALS:
     void clicked(int index);
     void hovered(bool status);
+    void hovered(bool status, int index);
     void penChanged();
     void brushChanged();
     void labelChanged();
