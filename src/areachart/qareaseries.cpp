@@ -357,15 +357,17 @@ void QAreaSeriesPrivate::initializeDomain()
     QLineSeries *upperSeries = q->upperSeries();
     QLineSeries *lowerSeries = q->lowerSeries();
 
-    const QList<QPointF>& points = upperSeries->points();
+    if (upperSeries) {
+        const QList<QPointF>& points = upperSeries->points();
 
-    for (int i = 0; i < points.count(); i++) {
-        qreal x = points[i].x();
-        qreal y = points[i].y();
-        minX = qMin(minX, x);
-        minY = qMin(minY, y);
-        maxX = qMax(maxX, x);
-        maxY = qMax(maxY, y);
+        for (int i = 0; i < points.count(); i++) {
+            qreal x = points[i].x();
+            qreal y = points[i].y();
+            minX = qMin(minX, x);
+            minY = qMin(minY, y);
+            maxX = qMax(maxX, x);
+            maxY = qMax(maxY, y);
+        }
     }
     if (lowerSeries) {
 
@@ -396,7 +398,7 @@ void  QAreaSeriesPrivate::initializeAnimations(QChart::AnimationOptions options)
     Q_Q(QAreaSeries);
     AreaChartItem *area = static_cast<AreaChartItem *>(m_item.data());
 
-    if (area->upperLineItem()->animation())
+    if (q->upperSeries() && area->upperLineItem()->animation())
         area->upperLineItem()->animation()->stopAndDestroyLater();
     if (q->lowerSeries() && area->lowerLineItem()->animation())
         area->lowerLineItem()->animation()->stopAndDestroyLater();
@@ -406,7 +408,8 @@ void  QAreaSeriesPrivate::initializeAnimations(QChart::AnimationOptions options)
         if (q->lowerSeries())
             area->lowerLineItem()->setAnimation(new XYAnimation(area->lowerLineItem()));
     } else {
-        area->upperLineItem()->setAnimation(0);
+        if (q->upperSeries())
+            area->upperLineItem()->setAnimation(0);
         if (q->lowerSeries())
                area->lowerLineItem()->setAnimation(0);
     }

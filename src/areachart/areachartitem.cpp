@@ -40,7 +40,8 @@ AreaChartItem::AreaChartItem(QAreaSeries *areaSeries, QGraphicsItem* item)
 {
     setAcceptHoverEvents(true);
     setZValue(ChartPresenter::LineChartZValue);
-    m_upper = new AreaBoundItem(this, m_series->upperSeries());
+    if (m_series->upperSeries())
+        m_upper = new AreaBoundItem(this, m_series->upperSeries());
     if (m_series->lowerSeries())
         m_lower = new AreaBoundItem(this, m_series->lowerSeries());
 
@@ -61,7 +62,8 @@ AreaChartItem::~AreaChartItem()
 
 void AreaChartItem::setPresenter(ChartPresenter *presenter)
 {
-    m_upper->setPresenter(presenter);
+    if (m_upper)
+        m_upper->setPresenter(presenter);
     if (m_lower) {
         m_lower->setPresenter(presenter);
     }
@@ -128,11 +130,12 @@ void AreaChartItem::handleUpdated()
 
 void AreaChartItem::handleDomainUpdated()
 {
-    AbstractDomain* d = m_upper->domain();
-
-	d->setSize(domain()->size());
-	d->setRange(domain()->minX(),domain()->maxX(),domain()->minY(),domain()->maxY());
-	m_upper->handleDomainUpdated();
+    if (m_upper) {
+        AbstractDomain* d = m_upper->domain();
+        d->setSize(domain()->size());
+        d->setRange(domain()->minX(),domain()->maxX(),domain()->minY(),domain()->maxY());
+        m_upper->handleDomainUpdated();
+    }
 
     if (m_lower) {
         AbstractDomain* d = m_lower->domain();
