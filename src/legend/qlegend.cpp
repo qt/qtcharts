@@ -407,10 +407,8 @@ void QLegend::hideEvent(QHideEvent *event)
  */
 void QLegend::showEvent(QShowEvent *event)
 {
-    if (isAttachedToChart()) {
-        d_ptr->items()->setVisible(false);
+    if (isAttachedToChart())
         layout()->invalidate();
-    }
     QGraphicsWidget::showEvent(event);
     //layout activation will show the items
 }
