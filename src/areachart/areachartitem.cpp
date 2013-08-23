@@ -110,10 +110,16 @@ void AreaChartItem::updatePath()
         }
     }
     path.closeSubpath();
-    prepareGeometryChange();
-    m_path = path;
-    m_rect = path.boundingRect();
-    update();
+
+    // Only zoom in if the bounding rect of the path fits inside int limits. QWidget::update() uses
+    // a region that has to be compatible with QRect.
+    if (path.boundingRect().height() <= INT_MAX
+            && path.boundingRect().width() <= INT_MAX) {
+        prepareGeometryChange();
+        m_path = path;
+        m_rect = path.boundingRect();
+        update();
+    }
 }
 
 void AreaChartItem::handleUpdated()

@@ -267,7 +267,6 @@ void SplineChartItem::updateGeometry()
         }
         fullPath = splinePath;
     }
-    m_path = splinePath;
 
     QPainterPathStroker stroker;
     // The full path is comprised of three separate paths.
@@ -278,10 +277,20 @@ void SplineChartItem::updateGeometry()
     stroker.setCapStyle(Qt::SquareCap);
     stroker.setMiterLimit(m_linePen.miterLimit());
 
-    prepareGeometryChange();
+    // Only zoom in if the bounding rects of the path fit inside int limits. QWidget::update() uses
+    // a region that has to be compatible with QRect.
+    QPainterPath checkShapePath = stroker.createStroke(fullPath);
+    if (checkShapePath.boundingRect().height() <= INT_MAX
+            && checkShapePath.boundingRect().width() <= INT_MAX
+            && splinePath.boundingRect().height() <= INT_MAX
+            && splinePath.boundingRect().width() <= INT_MAX) {
+        m_path = splinePath;
 
-    m_fullPath = stroker.createStroke(fullPath);
-    m_rect = m_fullPath.boundingRect();
+        prepareGeometryChange();
+
+        m_fullPath = checkShapePath;
+        m_rect = m_fullPath.boundingRect();
+    }
 }
 
 /*!

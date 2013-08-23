@@ -126,31 +126,36 @@ void ScatterChartItem::updateGeometry()
 
     QRectF clipRect(QPointF(0,0),domain()->size());
 
-    QVector<bool> offGridStatus = offGridStatusVector();
-    const int seriesLastIndex = m_series->count() - 1;
+    // Only zoom in if the clipRect fits inside int limits. QWidget::update() uses
+    // a region that has to be compatible with QRect.
+    if (clipRect.height() <= INT_MAX
+            && clipRect.width() <= INT_MAX) {
+        QVector<bool> offGridStatus = offGridStatusVector();
+        const int seriesLastIndex = m_series->count() - 1;
 
-    for (int i = 0; i < points.size(); i++) {
-        QGraphicsItem *item = items.at(i);
-        const QPointF &point = points.at(i);
-        const QRectF &rect = item->boundingRect();
-        // During remove animation series may have different number of points,
-        // so ensure we don't go over the index. Animation handling itself ensures that
-        // if there is actually no points in the series, then it won't generate a fake point,
-        // so we can be assured there is always at least one point in m_series here.
-        // Note that marker map values can be technically incorrect during the animation,
-        // if it was caused by an insert, but this shouldn't be a problem as the points are
-        // fake anyway. After remove animation stops, geometry is updated to correct one.
-        m_markerMap[item] = m_series->at(qMin(seriesLastIndex, i));
-        item->setPos(point.x() - rect.width() / 2, point.y() - rect.height() / 2);
+        for (int i = 0; i < points.size(); i++) {
+            QGraphicsItem *item = items.at(i);
+            const QPointF &point = points.at(i);
+            const QRectF &rect = item->boundingRect();
+            // During remove animation series may have different number of points,
+            // so ensure we don't go over the index. Animation handling itself ensures that
+            // if there is actually no points in the series, then it won't generate a fake point,
+            // so we can be assured there is always at least one point in m_series here.
+            // Note that marker map values can be technically incorrect during the animation,
+            // if it was caused by an insert, but this shouldn't be a problem as the points are
+            // fake anyway. After remove animation stops, geometry is updated to correct one.
+            m_markerMap[item] = m_series->at(qMin(seriesLastIndex, i));
+            item->setPos(point.x() - rect.width() / 2, point.y() - rect.height() / 2);
 
-        if (!m_visible || offGridStatus.at(i))
-            item->setVisible(false);
-        else
-            item->setVisible(true);
+            if (!m_visible || offGridStatus.at(i))
+                item->setVisible(false);
+            else
+                item->setVisible(true);
+        }
+
+        prepareGeometryChange();
+        m_rect = clipRect;
     }
-
-    prepareGeometryChange();
-    m_rect = clipRect;
 }
 
 void ScatterChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

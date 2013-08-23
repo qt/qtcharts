@@ -276,13 +276,26 @@ void LineChartItem::updateGeometry()
     stroker.setCapStyle(Qt::SquareCap);
     stroker.setMiterLimit(m_linePen.miterLimit());
 
-    prepareGeometryChange();
+    QPainterPath checkShapePath = stroker.createStroke(fullPath);
 
-    m_linePath = linePath;
-    m_fullPath = fullPath;
-    m_shapePath = stroker.createStroke(fullPath);
+    // Only zoom in if the bounding rects of the paths fit inside int limits. QWidget::update() uses
+    // a region that has to be compatible with QRect.
+    if (checkShapePath.boundingRect().height() <= INT_MAX
+            && checkShapePath.boundingRect().width() <= INT_MAX
+            && linePath.boundingRect().height() <= INT_MAX
+            && linePath.boundingRect().width() <= INT_MAX
+            && fullPath.boundingRect().height() <= INT_MAX
+            && fullPath.boundingRect().width() <= INT_MAX) {
+        prepareGeometryChange();
 
-    m_rect = m_shapePath.boundingRect();
+        m_linePath = linePath;
+        m_fullPath = fullPath;
+        m_shapePath = checkShapePath;
+
+        m_rect = m_shapePath.boundingRect();
+    } else {
+        update();
+    }
 }
 
 void LineChartItem::handleUpdated()
