@@ -116,7 +116,8 @@ void LegendMarkerItem::setGeometry(const QRectF &rect)
     qreal x = m_margin + m_markerRect.width() + m_space + m_margin;
     QRectF truncatedRect;
 
-    m_textItem->setHtml(ChartPresenter::truncatedText(m_textItem->font(), m_label, qreal(0.0), width - x, Qt::Horizontal, truncatedRect));
+    m_textItem->setHtml(ChartPresenter::truncatedText(m_textItem->font(), m_label, qreal(0.0),
+                                                      width - x, rect.height(), truncatedRect));
 
     qreal y = qMax(m_markerRect.height() + 2 * m_margin, truncatedRect.height() + 2 * m_margin);
 

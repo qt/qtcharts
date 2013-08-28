@@ -74,23 +74,10 @@ void VerticalAxis::updateGeometry()
     if (!titleText.isEmpty() && titleItem()->isVisible()) {
         availableSpace -= titlePadding() * 2.0;
         qreal minimumLabelWidth = ChartPresenter::textBoundingRect(axis()->labelsFont(), "...").width();
-        QString truncatedTitle = ChartPresenter::truncatedText(axis()->titleFont(), titleText, qreal(0.0),
-                                                               gridRect.height(), Qt::Horizontal, titleBoundingRect);
         qreal titleSpace = availableSpace - minimumLabelWidth;
-        if (titleSpace < titleBoundingRect.height()) {
-            // Need to also truncate title vertically (multiline title)
-            bool skip = false;
-            if (truncatedTitle.endsWith("...")) {
-                if (truncatedTitle.size() == 3)
-                    skip = true; // Already truncated to minimum
-                else
-                    truncatedTitle.chop(3);
-            }
-            if (!skip)
-                truncatedTitle = ChartPresenter::truncatedText(axis()->titleFont(), truncatedTitle, qreal(0.0),
-                                                               titleSpace, Qt::Vertical, titleBoundingRect);
-        }
-        title->setHtml(truncatedTitle);
+        title->setHtml(ChartPresenter::truncatedText(axis()->titleFont(), titleText, qreal(90.0),
+                                                     titleSpace, gridRect.height(),
+                                                     titleBoundingRect));
 
         titleBoundingRect = title->boundingRect();
 
@@ -118,8 +105,15 @@ void VerticalAxis::updateGeometry()
         //label text wrapping
         QString text = labelList.at(i);
         QRectF boundingRect;
-        labelItem->setHtml(ChartPresenter::truncatedText(axis()->labelsFont(), text, axis()->labelsAngle(),
-                           availableSpace, Qt::Horizontal, boundingRect));
+        // don't truncate empty labels
+        if (text.isEmpty()) {
+            labelItem->setHtml(text);
+        } else {
+            qreal labelHeight = (axisRect.height() / layout.count()) - (2 * labelPadding());
+            labelItem->setHtml(ChartPresenter::truncatedText(axis()->labelsFont(), text,
+                                                             axis()->labelsAngle(), availableSpace,
+                                                             labelHeight, boundingRect));
+        }
 
         //label transformation origin point
         const QRectF &rect = labelItem->boundingRect();
@@ -145,7 +139,8 @@ void VerticalAxis::updateGeometry()
             const qreal delta = lowerBound - upperBound;
             // Hide label in case visible part of the category at the grid edge is too narrow
             if (delta < boundingRect.height()
-                && (lowerBound == gridRect.bottom() || upperBound == gridRect.top())) {
+                && (lowerBound == gridRect.bottom() || upperBound == gridRect.top())
+                && !intervalAxis()) {
                 forceHide = true;
             } else {
                 labelItem->setPos(labelItem->pos().x() , lowerBound - (delta / 2.0) - center.y());
@@ -153,9 +148,10 @@ void VerticalAxis::updateGeometry()
         }
 
         //label overlap detection - compensate one pixel for rounding errors
-        if (labelItem->pos().y() + boundingRect.height() > height || forceHide ||
+        if ((labelItem->pos().y() + boundingRect.height() > height || forceHide ||
             (labelItem->pos().y() + (heightDiff / 2.0) - 1.0) > axisRect.bottom() ||
-            labelItem->pos().y() + (heightDiff / 2.0) < (axisRect.top() - 1.0)) {
+            labelItem->pos().y() + (heightDiff / 2.0) < (axisRect.top() - 1.0))
+            && !intervalAxis()) {
             labelItem->setVisible(false);
         }
         else {

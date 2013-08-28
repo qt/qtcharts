@@ -222,7 +222,12 @@ void PolarChartAxisAngular::updateGeometry()
     QString titleText = axis()->titleText();
     if (!titleText.isEmpty() && axis()->isTitleVisible()) {
         QRectF dummyRect;
-        title->setHtml(ChartPresenter::truncatedText(axis()->titleFont(), titleText, qreal(0.0), axisGeometry().width(), Qt::Horizontal, dummyRect));
+        qreal availableTitleHeight = axisGeometry().height() - labelPadding() - titlePadding() * 2.0;
+        qreal minimumLabelHeight = ChartPresenter::textBoundingRect(axis()->labelsFont(), "...").height();
+        availableTitleHeight -= minimumLabelHeight;
+        title->setHtml(ChartPresenter::truncatedText(axis()->titleFont(), titleText, qreal(0.0),
+                                                     axisGeometry().width(), availableTitleHeight,
+                                                     dummyRect));
 
         QRectF titleBoundingRect = title->boundingRect();
         QPointF titleCenter = center - titleBoundingRect.center();

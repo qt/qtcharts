@@ -145,8 +145,8 @@ public:
     QChart *chart() { return m_chart; }
 
     static QRectF textBoundingRect(const QFont &font, const QString &text, qreal angle = 0.0);
-    static QString truncatedText(const QFont &font, const QString &text, qreal angle, qreal maxSize,
-                                 Qt::Orientation constraintOrientation, QRectF &boundingRect);
+    static QString truncatedText(const QFont &font, const QString &text, qreal angle,
+                                 qreal maxWidth, qreal maxHeight, QRectF &boundingRect);
     inline static qreal textMargin() { return qreal(0.5); }
 private:
     void createBackgroundItem();

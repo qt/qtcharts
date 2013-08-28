@@ -205,7 +205,8 @@ void PolarChartAxisRadial::updateGeometry()
     QString titleText = axis()->titleText();
     if (!titleText.isEmpty() && axis()->isTitleVisible()) {
         QRectF dummyRect;
-        title->setHtml(ChartPresenter::truncatedText(axis()->titleFont(), titleText, qreal(0.0), radius, Qt::Horizontal, dummyRect));
+        title->setHtml(ChartPresenter::truncatedText(axis()->titleFont(), titleText, qreal(0.0),
+                                                     radius, radius, dummyRect));
 
         QRectF titleBoundingRect = title->boundingRect();
         QPointF titleCenter = titleBoundingRect.center();

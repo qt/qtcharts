@@ -410,14 +410,11 @@ QRectF ChartPresenter::textBoundingRect(const QFont &font, const QString &text, 
 
 // boundingRect parameter returns the rotated bounding rect of the text
 QString ChartPresenter::truncatedText(const QFont &font, const QString &text, qreal angle,
-                                      qreal maxSize, Qt::Orientation constraintOrientation,
-                                      QRectF &boundingRect)
+                                      qreal maxWidth, qreal maxHeight, QRectF &boundingRect)
 {
     QString truncatedString(text);
     boundingRect = textBoundingRect(font, truncatedString, angle);
-    qreal checkDimension = ((constraintOrientation == Qt::Horizontal)
-                           ? boundingRect.width() : boundingRect.height());
-    if (checkDimension > maxSize) {
+    if (boundingRect.width() > maxWidth || boundingRect.height() > maxHeight) {
         // It can be assumed that almost any amount of string manipulation is faster
         // than calculating one bounding rectangle, so first prepare a list of truncated strings
         // to try.
@@ -452,12 +449,11 @@ QString ChartPresenter::truncatedText(const QFont &font, const QString &text, qr
         int maxIndex(count - 1);
         int bestIndex(count);
         QRectF checkRect;
+
         while (maxIndex >= minIndex) {
             int mid = (maxIndex + minIndex) / 2;
             checkRect = textBoundingRect(font, testStrings.at(mid), angle);
-            checkDimension = ((constraintOrientation == Qt::Horizontal)
-                             ? checkRect.width() : checkRect.height());
-            if (checkDimension > maxSize) {
+            if (checkRect.width() > maxWidth || checkRect.height() > maxHeight) {
                 // Checked index too large, all under this are also too large
                 minIndex = mid + 1;
             } else {

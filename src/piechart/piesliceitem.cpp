@@ -94,9 +94,11 @@ void PieSliceItem::paint(QPainter *painter, const QStyleOptionGraphicsItem * /*o
             painter->setClipRect(parentItem()->boundingRect());
             painter->strokePath(m_labelArmPath, m_data.m_labelBrush.color());
             if (fm.width(m_data.m_labelText) > m_labelTextRect.width()) {
+                // Only one line label text is supported currently.
+                // The height for the label is set one pixel over the font metrics.
                 label = ChartPresenter::truncatedText(m_data.m_labelFont, m_data.m_labelText,
                                                       qreal(0.0), m_labelTextRect.width(),
-                                                      Qt::Horizontal, labelBoundingRect);
+                                                      fm.height() + 1.0, labelBoundingRect);
             }
             painter->drawText(m_labelTextRect, Qt::AlignCenter, label);
             break;
