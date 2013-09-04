@@ -3,7 +3,9 @@
 }
 
 TEMPLATE = subdirs
-SUBDIRS = src plugins demos examples tests
+SUBDIRS = src plugins
+!nomake_demos_examples: SUBDIRS += demos examples
+SUBDIRS += tests
 
 development_build: message('Development build')
 

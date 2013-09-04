@@ -46,6 +46,10 @@ For release builds:
 For both builds
     qmake CONFIG+="debug_and_release build_all"; make
 
+If you want to leave out demos and examples from the build you can use
+the following config with qmake:
+    CONFIG+=nomake_demos_examples
+
 If you want to install the libraries to your Qt library directory use:
     make install
 
