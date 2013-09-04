@@ -46,28 +46,30 @@ void AbstractChartLayout::setGeometry(const QRectF &rect)
     if (!rect.isValid())
         return;
 
-    QList<ChartAxisElement *> axes = m_presenter->axisItems();
-    ChartTitle *title = m_presenter->titleElement();
-    QLegend *legend = m_presenter->legend();
-    ChartBackground *background = m_presenter->backgroundElement();
+    if (m_presenter->chart()->isVisible()) {
+        QList<ChartAxisElement *> axes = m_presenter->axisItems();
+        ChartTitle *title = m_presenter->titleElement();
+        QLegend *legend = m_presenter->legend();
+        ChartBackground *background = m_presenter->backgroundElement();
 
-    QRectF contentGeometry = calculateBackgroundGeometry(rect, background);
+        QRectF contentGeometry = calculateBackgroundGeometry(rect, background);
 
-    contentGeometry = calculateContentGeometry(contentGeometry);
+        contentGeometry = calculateContentGeometry(contentGeometry);
 
-    if (title && title->isVisible())
-        contentGeometry = calculateTitleGeometry(contentGeometry, title);
+        if (title && title->isVisible())
+            contentGeometry = calculateTitleGeometry(contentGeometry, title);
 
-    if (legend->isAttachedToChart() && legend->isVisible())
-        contentGeometry = calculateLegendGeometry(contentGeometry, legend);
+        if (legend->isAttachedToChart() && legend->isVisible())
+            contentGeometry = calculateLegendGeometry(contentGeometry, legend);
 
-    contentGeometry = calculateAxisGeometry(contentGeometry, axes);
+        contentGeometry = calculateAxisGeometry(contentGeometry, axes);
 
-    m_presenter->setGeometry(contentGeometry);
-    if (m_presenter->chart()->chartType() == QChart::ChartTypeCartesian)
-        static_cast<QGraphicsRectItem *>(m_presenter->plotAreaElement())->setRect(contentGeometry);
-    else
-        static_cast<QGraphicsEllipseItem *>(m_presenter->plotAreaElement())->setRect(contentGeometry);
+        m_presenter->setGeometry(contentGeometry);
+        if (m_presenter->chart()->chartType() == QChart::ChartTypeCartesian)
+            static_cast<QGraphicsRectItem *>(m_presenter->plotAreaElement())->setRect(contentGeometry);
+        else
+            static_cast<QGraphicsEllipseItem *>(m_presenter->plotAreaElement())->setRect(contentGeometry);
+    }
 
     QGraphicsLayout::setGeometry(rect);
 }

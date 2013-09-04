@@ -518,7 +518,9 @@ void QLegendPrivate::handleSeriesVisibleChanged()
             marker->setVisible(series->isVisible());
         }
     }
-    m_layout->invalidate();
+
+    if (m_chart->isVisible())
+        m_layout->invalidate();
 }
 
 void QLegendPrivate::handleCountChanged()
