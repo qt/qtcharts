@@ -77,6 +77,7 @@ void HorizontalAxis::updateGeometry()
         title->setHtml(ChartPresenter::truncatedText(axis()->titleFont(), titleText, qreal(0.0),
                                                      gridRect.width(), titleSpace,
                                                      titleBoundingRect));
+        title->setTextWidth(titleBoundingRect.width());
 
         titleBoundingRect = title->boundingRect();
 
@@ -106,9 +107,13 @@ void HorizontalAxis::updateGeometry()
             labelItem->setHtml(text);
         } else  {
             qreal labelWidth = axisRect.width() / layout.count() - (2 * labelPadding());
-            labelItem->setHtml(ChartPresenter::truncatedText(axis()->labelsFont(), text,
-                                                             axis()->labelsAngle(), labelWidth,
-                                                             availableSpace, boundingRect));
+            QString truncatedText = ChartPresenter::truncatedText(axis()->labelsFont(), text,
+                                                                  axis()->labelsAngle(),
+                                                                  labelWidth,
+                                                                  availableSpace, boundingRect);
+            labelItem->setTextWidth(ChartPresenter::textBoundingRect(axis()->labelsFont(),
+                                                                     truncatedText).width());
+            labelItem->setHtml(truncatedText);
         }
 
         //label transformation origin point

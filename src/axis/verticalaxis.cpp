@@ -78,6 +78,7 @@ void VerticalAxis::updateGeometry()
         title->setHtml(ChartPresenter::truncatedText(axis()->titleFont(), titleText, qreal(90.0),
                                                      titleSpace, gridRect.height(),
                                                      titleBoundingRect));
+        title->setTextWidth(titleBoundingRect.height());
 
         titleBoundingRect = title->boundingRect();
 
@@ -110,9 +111,13 @@ void VerticalAxis::updateGeometry()
             labelItem->setHtml(text);
         } else {
             qreal labelHeight = (axisRect.height() / layout.count()) - (2 * labelPadding());
-            labelItem->setHtml(ChartPresenter::truncatedText(axis()->labelsFont(), text,
-                                                             axis()->labelsAngle(), availableSpace,
-                                                             labelHeight, boundingRect));
+            QString truncatedText = ChartPresenter::truncatedText(axis()->labelsFont(), text,
+                                                                  axis()->labelsAngle(),
+                                                                  availableSpace,
+                                                                  labelHeight, boundingRect);
+            labelItem->setTextWidth(ChartPresenter::textBoundingRect(axis()->labelsFont(),
+                                                                     truncatedText).width());
+            labelItem->setHtml(truncatedText);
         }
 
         //label transformation origin point

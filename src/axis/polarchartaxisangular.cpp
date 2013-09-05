@@ -120,11 +120,14 @@ void PolarChartAxisAngular::updateGeometry()
 
         // Angular axis label
         if (axis()->labelsVisible() && labelVisible) {
+            QRectF boundingRect = ChartPresenter::textBoundingRect(axis()->labelsFont(),
+                                                                   labelList.at(i),
+                                                                   axis()->labelsAngle());
+            labelItem->setTextWidth(boundingRect.width());
             labelItem->setHtml(labelList.at(i));
             const QRectF &rect = labelItem->boundingRect();
             QPointF labelCenter = rect.center();
             labelItem->setTransformOriginPoint(labelCenter.x(), labelCenter.y());
-            QRectF boundingRect = ChartPresenter::textBoundingRect(axis()->labelsFont(), labelList.at(i), axis()->labelsAngle());
             boundingRect.moveCenter(labelCenter);
             QPointF positionDiff(rect.topLeft() - boundingRect.topLeft());
 
@@ -221,13 +224,14 @@ void PolarChartAxisAngular::updateGeometry()
     // Title, centered above the chart
     QString titleText = axis()->titleText();
     if (!titleText.isEmpty() && axis()->isTitleVisible()) {
-        QRectF dummyRect;
+        QRectF truncatedRect;
         qreal availableTitleHeight = axisGeometry().height() - labelPadding() - titlePadding() * 2.0;
         qreal minimumLabelHeight = ChartPresenter::textBoundingRect(axis()->labelsFont(), "...").height();
         availableTitleHeight -= minimumLabelHeight;
         title->setHtml(ChartPresenter::truncatedText(axis()->titleFont(), titleText, qreal(0.0),
                                                      axisGeometry().width(), availableTitleHeight,
-                                                     dummyRect));
+                                                     truncatedRect));
+        title->setTextWidth(truncatedRect.width());
 
         QRectF titleBoundingRect = title->boundingRect();
         QPointF titleCenter = center - titleBoundingRect.center();

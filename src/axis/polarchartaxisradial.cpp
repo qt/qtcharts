@@ -107,11 +107,14 @@ void PolarChartAxisRadial::updateGeometry()
 
         // Radial axis label
         if (axis()->labelsVisible() && labelVisible) {
+            QRectF boundingRect = ChartPresenter::textBoundingRect(axis()->labelsFont(),
+                                                                   labelList.at(i),
+                                                                   axis()->labelsAngle());
+            labelItem->setTextWidth(boundingRect.width());
             labelItem->setHtml(labelList.at(i));
             QRectF labelRect = labelItem->boundingRect();
             QPointF labelCenter = labelRect.center();
             labelItem->setTransformOriginPoint(labelCenter.x(), labelCenter.y());
-            QRectF boundingRect = ChartPresenter::textBoundingRect(axis()->labelsFont(), labelList.at(i), axis()->labelsAngle());
             boundingRect.moveCenter(labelCenter);
             QPointF positionDiff(labelRect.topLeft() - boundingRect.topLeft());
             QPointF labelPoint = center;
@@ -204,9 +207,10 @@ void PolarChartAxisRadial::updateGeometry()
     // Title, along the 0 axis
     QString titleText = axis()->titleText();
     if (!titleText.isEmpty() && axis()->isTitleVisible()) {
-        QRectF dummyRect;
+        QRectF truncatedRect;
         title->setHtml(ChartPresenter::truncatedText(axis()->titleFont(), titleText, qreal(0.0),
-                                                     radius, radius, dummyRect));
+                                                     radius, radius, truncatedRect));
+        title->setTextWidth(truncatedRect.width());
 
         QRectF titleBoundingRect = title->boundingRect();
         QPointF titleCenter = titleBoundingRect.center();
