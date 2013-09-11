@@ -1,6 +1,6 @@
 /*!
     \page gettingstarted.html
-    \title Qt Charts getting started
+    \title Qt Charts Getting Started
     \keyword Introduction
 
     Compiling:
@@ -10,7 +10,7 @@
     make install
     \endcode
 
-    Depending on the OS and the compiler you are using "make" might need to be replaced with another command like: nmake, mingw32-make, etc.
+    Depending on the OS and the compiler you are using, "make" might need to be replaced with another command like: nmake, mingw32-make, etc.
 
     To uninstall the Qt Charts run:
     \code
@@ -31,7 +31,7 @@
     make install
     \endcode
 
-    Please take a note that the \i build_all option is necessary for the install to work correctly. Otherwise it will not install both versions.
+    Please note that the \i build_all option is necessary for the install to work correctly. Otherwise it will not install both versions.
 
     Building without demos and examples:
     \code
@@ -69,5 +69,5 @@
 
     \raw HTML
     \endraw
-    
+
 */

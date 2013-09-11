@@ -3,10 +3,11 @@
     \title Qt Charts API
     \keyword All Classes
 
-    Charts API is build on top of Qt Graphics View Framework. Charts can be displayed as QGraphicsWidget using QChart class. However
-    there is also convenience class QChartView which is QWidget based. These lets quickly use Qt Charts as normal Qt widget.
+    Charts API is built on top of Qt Graphics View Framework. Charts can be displayed as QGraphicsWidget using the QChart class. However
+    there is also the convenience class QChartView, which is QWidget based. These enable us to quickly use Qt Charts as a normal Qt widget.
 
-    Each chart type is represented by QAbstractSeries derived class. To create given chart type users have to use instance of related series class and add it to QChart instance.
+    Each chart type is represented by the QAbstractSeries derived class. To create charts, the users have to use an instance of the related
+    series class and add it to a QChart instance.
     \code
     QLineSeries* series = new QLineSeries();
     series->add(0, 6);
@@ -35,7 +36,7 @@
                     <li><a href="qabstractaxis.html">QAbstractAxis</a></li>
                     <li><a href="qvalueaxis.html">QValueAxis</a></li>
                     <li><a href="qlogvalueaxis.html">QLogValueAxis</a></li>
-                    <li><a href="qbarcategoryaxis.html">QBarCategoryAxis</a></li>                   
+                    <li><a href="qbarcategoryaxis.html">QBarCategoryAxis</a></li>
                     <li><a href="qcategoryaxis.html">QCategoryAxis</a></li>
                     <li><a href="qdatetimeaxis.html">QDateTimeAxis</a></li>
                     <li><a href="qlegend.html">QLegend</a></li>
@@ -96,5 +97,5 @@
             </tr>
         </table>
     \endraw
-    
+
 */

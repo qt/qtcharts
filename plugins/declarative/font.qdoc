@@ -14,8 +14,8 @@
     Sets the family name of the font.
 
     The family name is case insensitive and may optionally include a foundry name, e.g. "Helvetica [Cronyx]".
-    If the family is available from more than one foundry and the foundry isn't specified, an arbitrary foundry is chosen.
-    If the family isn't available a family will be set using the font matching algorithm.
+    If the family is available from more than one foundry, and the foundry isn't specified, an arbitrary foundry is chosen.
+    If the family isn't available, a family will be set using the font matching algorithm.
 */
 
 /*!
@@ -46,19 +46,19 @@
 /*!
     \qmlproperty bool Font::italic
 
-    Sets whether the font has an italic style.
+    Sets on or off the italic style property.
 */
 
 /*!
     \qmlproperty bool Font::underline
 
-    Sets whether the text is underlined.
+    Sets on or off the underlined property.
 */
 
 /*!
     \qmlproperty bool Font::strikeout
 
-    Sets whether the font has a strikeout style.
+    Sets on or off the strikeout style.
 */
 
 /*!
@@ -102,9 +102,9 @@
 
     \list
     \o Font.MixedCase - This is the normal text rendering option where no capitalization change is applied.
-    \o Font.AllUppercase - This alters the text to be rendered in all uppercase type.
-    \o Font.AllLowercase	 - This alters the text to be rendered in all lowercase type.
-    \o Font.SmallCaps -	This alters the text to be rendered in small-caps type.
+    \o Font.AllUppercase - Changes the text to uppercasse.
+    \o Font.AllLowercase - Changes the text to lowercase.
+    \o Font.SmallCaps - Renders the text small-caps type.
     \o Font.Capitalize - This alters the text to be rendered with the first character of each word as an uppercase character.
     \endlist
 

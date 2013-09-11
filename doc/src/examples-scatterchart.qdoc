@@ -3,25 +3,25 @@
      \title ScatterChart Example
      \subtitle
 
-     The example shows how to create simple scatter chart.
+     The example shows how to create a simple scatter chart.
 
     \image examples_scatterchart.png
-    
-    To create scatter charts, QScatterSeries instance is needed. Here we create scatter series instance and we set the type, color and width of outline for scatter points.
+
+    To create scatter charts, a QScatterSeries instance is needed. Here we create a scatter series instance, and set the type, color, and width of outline for the scatter points.
 
     \snippet ../examples/scatterchart/chartview.cpp 1
 
-    We add data to be shown. We can use append() member function or use stream operator.  
+    We add the data to be shown. We can use the append() member function or use the stream operator.
 
     \snippet ../examples/scatterchart/chartview.cpp 2
 
-    In the end we enable anti-aliasing, set the chart title and add the scatter series onto the chart. We also disable
+    In the end we enable anti-aliasing, set the chart title, and add the scatter series onto the chart. We also disable
     drop shadow, because it would not look good on an application with only chart view shown.
 
     \snippet ../examples/scatterchart/chartview.cpp 3
-    
-    Chart is ready to be shown.
-    
+
+    The chart is ready to be shown.
+
     \snippet ../examples/scatterchart/main.cpp 4
-    
+
 */

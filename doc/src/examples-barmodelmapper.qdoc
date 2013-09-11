@@ -8,32 +8,32 @@
      \image examples_barmodelmapper.png
 
      Let's start by creating an instance of CustomTableModel class.
-     CustomTableModel class is derived from QAbstractTableModel and it was created for the purpose of this example.
-     The constructor of this class populates the internal data store of the model with the data that is good for our chart example.
+     The CustomTableModel class is derived from QAbstractTableModel, and it was created for the purpose of this example.
+     The constructor of this class populates the model's internal data store with the data required for our chart example.
 
      \snippet ../examples/barmodelmapper/tablewidget.cpp 1
 
      We now have a model with data that we would like to display both on the chart and in a QTableView.
-     First, we create QTableView and tell it use the model as a data source. To have the data presented nicely the minimum width of the table view is set and its headers resize mode changed to stretch.
+     First, we create QTableView and tell it to use the model as a data source. To have the data presented nicely, the minimum width of the table view is set and its headers resize mode changed to stretch.
 
      \snippet ../examples/barmodelmapper/tablewidget.cpp 2
 
-     Now we need QChart instance to display the same data on the chart.
-     We also enable animations. It makes it easier to see how modifying the model's data affect the chart.
+     Now we need a QChart instance to display the same data on the chart.
+     We also enable animations. It makes it easier to see how a modification to the model's data affects the chart.
 
      \snippet ../examples/barmodelmapper/tablewidget.cpp 3
 
-     First line of the code below creates new bar series. Variables firstRow and rowCount are used to define a custom model mapping.
+     The first line of the code below creates new bar series. Variables firstRow and rowCount are used to define a custom model mapping.
      Custom mapping allows to take only part of the data from the model. In this case data from 5 rows starting with the row with the index 3.
-     Following three lines create an instance of QVBarModelMapper class and specifie that data for the bar sets should be taken from the model's columns with indexes from 1 to 4(inclusive).
+     The following three lines create an instance of the QVBarModelMapper class and specify that the data for the bar sets should be taken from the model's columns with indexes from 1 to 4 (inclusive).
      To create a connection between the series and the model we set both of those objects to QVBarModelMapper.
 
      Finally the series is added to the chart.
 
      \snippet ../examples/barmodelmapper/tablewidget.cpp 4
 
-     To show in QTableView which data corresponds with which bar set this example uses table coloring.
-     When series is added to the chart it is assigned a color based on the currently selected theme.
+     To show in QTableView which data corresponds with which bar set, this example uses table coloring.
+     When series is added to the chart, it is assigned a color based on the currently selected theme.
      Code below extracts that color from the series and uses it to create colored QTableView.
      Coloring of the view is not a part of the QChart functionality.
 
@@ -44,14 +44,14 @@
 
      \snippet ../examples/barmodelmapper/tablewidget.cpp 6
 
-     To avoid setting up the QGraphicsScene we use QChartView class that does it for us. QChart object pointer is used as a parameter of the QChartView constructor.
+     To avoid setting up the QGraphicsScene we use the QChartView class that does it for us. The QChart object pointer is used as a parameter of the QChartView constructor.
      To make the render look nicer Antialiasing is turned on and the minimum size of the chartView widget is set.
 
      \snippet ../examples/barmodelmapper/tablewidget.cpp 7
 
-     Finally we place both widgets in a layout and use the layout as the application layout.
+     Finally, we place both widgets in a layout and use the layout as the application layout.
 
      \snippet ../examples/barmodelmapper/tablewidget.cpp 8
 
-     Application is ready. Try modifying the data in the table view and see how it affects the chart.
+     The application is ready. Try modifying the data in the table view and see how it affects the chart.
 */

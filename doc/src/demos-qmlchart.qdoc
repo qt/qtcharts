@@ -3,8 +3,8 @@
     \title Qml charts demo
     \subtitle
 
-    This is a basic demonstration how to use the different chart types by using qml. Creating each chart type begins
-    with creation of a ChartView.
+    This basic demonstration shows how to use the different chart types by using qml. Creating each chart type begins
+    with the creation of a ChartView.
 
     \table
         \row
@@ -19,7 +19,7 @@
     \table
         \row
             \o  \br
-                To create a chart with line series:
+                To create a chart with a line series:
                 \br
                 \br
                 \snippet ../demos/qmlchart/qml/qmlchart/View2.qml 1
@@ -49,7 +49,7 @@
     \table
         \row
             \o  \br
-                Then couple of scatter series:
+                Then a couple of scatter series:
                 \br
                 \br
                 \snippet ../demos/qmlchart/qml/qmlchart/View5.qml 1
@@ -109,7 +109,7 @@
     \table
         \row
             \o  \br
-                And finally an example how to create a donut chart with two pie series:
+                And finally an example demonstrating how to create a donut chart with two pie series:
                 \br
                 \br
                 \snippet ../demos/qmlchart/qml/qmlchart/View12.qml 1

@@ -3,9 +3,10 @@
     \title Chart themes demo
     \subtitle
 
-    This demo shows the look and feel of the different built in themes for all supported chart types.
-    The background palette of the application is also customized according to the selected theme, to make the result
-    look harmonious.
+    This demo shows the look and feel of the different built-in themes for all supported chart types.
+    In order to give the result a more harmonious look, the background palette of the application is
+    customized to the theme selected.
+
     \image demo_chartthemes_light.png
     \image demo_chartthemes_brown_sand.png
     \image demo_chartthemes_blue_cerulean.png

@@ -5,7 +5,7 @@
 
     \image demos_qmlf1legends.png
 
-    This application demonstrates using XmlListModel as a datasource for a Chart.
+    This application demonstrates how to use XmlListModel as a datasource for a Chart.
 
     Let's define an empty ChartView first:
     \snippet ../demos/qmlf1legends/qml/qmlf1legends/main.qml 1

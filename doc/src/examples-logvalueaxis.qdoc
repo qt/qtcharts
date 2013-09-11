@@ -1,17 +1,17 @@
 /*!
      \example examples/logvalueaxis
-     \title Logarithmic axis example
+     \title Logarithmic Axis Example
      \subtitle
 
      The example shows how to use QLogValueAxis.
 
     \image examples_logvalueaxis.png
-    
-    Create QLineSeries instance and add some data to it.
+
+    Create a QLineSeries instance and add some data to it.
 
     \snippet ../examples/logvalueaxis/main.cpp 1
 
-    To present the data on the chart we need QChart instance. Add the series to it, hide the legend and set the title of the chart.
+    To present the data on the chart we need a QChart instance. Add the series to it, hide the legend and set the title of the chart.
 
     \snippet ../examples/logvalueaxis/main.cpp 2
 
@@ -19,12 +19,12 @@
 
     \snippet ../examples/logvalueaxis/main.cpp 3
 
-    Then create a QChartView object with QChart as a parameter. Enable antialiasing to have the rendered line look nicer.     
-    
-    \snippet ../examples/logvalueaxis/main.cpp 4 
+    Then create a QChartView object with QChart as a parameter. Enable antialiasing to have the rendered line look nicer.
 
-    Chart is ready to be shown.
+    \snippet ../examples/logvalueaxis/main.cpp 4
+
+    The chart is ready to be shown.
 
     \snippet ../examples/logvalueaxis/main.cpp 5
-    
+
 */

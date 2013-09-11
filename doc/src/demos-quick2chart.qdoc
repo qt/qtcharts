@@ -11,5 +11,5 @@
 
     \snippet ../demos/quick2chart/qml/quick2chart/View1.qml 2
 
-    Additionally, antialiasing is set with qml property in Qt Quick 2.
+    Additionally, antialiasing is set with the qml property in Qt Quick 2.
 */

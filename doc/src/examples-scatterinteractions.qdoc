@@ -3,7 +3,7 @@
      \title ScatterInteractions Example
      \subtitle
 
-     The example shows how to create simple scatter chart and how to interact with the chart.
+     This example shows how to create a simple scatter chart and how to interact with the chart.
 
      \image examples_scatterinteractions.png
 */

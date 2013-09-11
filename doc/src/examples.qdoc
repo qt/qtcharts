@@ -2,7 +2,7 @@
     \page examples.html
     \title Qt Charts Examples
     \keyword Examples
-    
+
     \raw HTML
     <div class="qchart">
 
@@ -119,12 +119,12 @@
             <td><a href="examples-splinechart.html">Spline Chart</a></td>
             <td><a href="examples-stackedbarchart.html">Stacked Bar Chart</a></td>
         </tr>
-        <tr>            
+        <tr>
             <td><a href="examples-splinechart.html"><img src="images/examples_splinechart.png" width="300" alt="Spline Chart" /></a></td>
             <td><a href="examples-stackedbarchart.html"><img src="images/examples_stackedbarchart.png" width="300" alt="Stacked Bar Chart" /></a></td>
         </tr>
 
-        <tr>            
+        <tr>
             <td><a href="examples-stackedbarchartdrilldown.html">Stacked Bar Chart Drilldown</a></td>
             <td><a href="examples-temperaturerecords.html">Temperature Records</a></td>
         </tr>

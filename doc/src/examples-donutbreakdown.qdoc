@@ -14,7 +14,7 @@
 
      \snippet ../examples/donutbreakdown/main.cpp 2
 
-     Our own chart works so that in the constructor we create a main series
+     Our own chart works in such a way that we create a main series in the constructor we create a main series,
      which aggregates the data provided by the breakdown series. This is the piechart in the center.
 
      \snippet ../examples/donutbreakdown/donutbreakdownchart.cpp 1
@@ -29,7 +29,7 @@
 
      \snippet ../examples/donutbreakdown/donutbreakdownchart.cpp 3
 
-     Legend markers are customized to show the breakdown percentage and markers for the main level slices are hidden.
+     The legend markers are customized to show the breakdown percentage. The markers for the main level slices are hidden.
 
      \snippet ../examples/donutbreakdown/donutbreakdownchart.cpp 4
 
@@ -38,7 +38,7 @@
      \snippet ../examples/donutbreakdown/mainslice.cpp 1
      \snippet ../examples/donutbreakdown/mainslice.cpp 2
 
-     And now that we have our chart defined we can finally create a QChartView and show the chart.
+     Now that we have our chart defined, we can finally create a QChartView and show the chart.
 
      \snippet ../examples/donutbreakdown/main.cpp 3
 

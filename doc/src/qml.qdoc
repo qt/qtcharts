@@ -3,7 +3,7 @@
     \title Qt Charts QML API
     \keyword Charts QML API
 
-    Qt Charts QML API is an intuitive and simple way to show charts in your QML
+    The Qt Charts QML API is an intuitive and simple way to show charts in your QML
     applications.
 
     \table
@@ -21,9 +21,9 @@
     \note Since Qt Charts utilizes Qt Graphics View Framework for drawing, it works best
     with Qt Quick 1, which is based on the same framework.
     As of release 1.3.0, Qt Charts is also usable with Qt Quick 2, though the performance
-    is slightly worse than with Qt Quick 1 due to additional rendering step that is required.
+    is slightly worse than with Qt Quick 1 due to the additional rendering step that is required.
 
-    \note Qt Quick 1 is supported from Qt 4.7.4 onwards because of missing
+    \note Qt Quick 1 is supported from Qt 4.7.4 onwards because of the missing
     Q_REVISION macro in the earlier Qt releases. Qt Quick 2 is supported with only Qt 5.
 
     \raw HTML

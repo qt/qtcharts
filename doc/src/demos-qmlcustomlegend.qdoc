@@ -3,7 +3,7 @@
     \title Qml Custom Legend
     \subtitle
 
-    This demo application shows you how to create your own, custom legend instead of using the
+    This demo application shows you how to create your own custom legend instead of using the
     built-in legend of ChartView API.
 
     \table
@@ -18,7 +18,7 @@
             \o \inlineimage demos-qmlcustomlegend1.png
         \row
             \o  \br
-                Hovering with mouse on top of the legend will highlight the hovered series
+                Hovering with mouse on top of the legend will highlight the hovered series.
                 \br
                 (see CustomLegend.qml).
                 \br
