@@ -135,16 +135,13 @@ QChartView::RubberBands QChartView::rubberBand() const
 */
 void QChartView::mousePressEvent(QMouseEvent *event)
 {
-    if (d_ptr->m_rubberBand && d_ptr->m_rubberBand->isEnabled() && event->button() == Qt::LeftButton) {
-
-        QRectF plotArea = d_ptr->m_chart->plotArea();
-
-        if (plotArea.contains(event->pos())) {
-            d_ptr->m_rubberBandOrigin = event->pos();
-            d_ptr->m_rubberBand->setGeometry(QRect(d_ptr->m_rubberBandOrigin, QSize()));
-            d_ptr->m_rubberBand->show();
-            event->accept();
-        }
+    QRectF plotArea = d_ptr->m_chart->plotArea();
+    if (d_ptr->m_rubberBand && d_ptr->m_rubberBand->isEnabled()
+            && event->button() == Qt::LeftButton && plotArea.contains(event->pos())) {
+        d_ptr->m_rubberBandOrigin = event->pos();
+        d_ptr->m_rubberBand->setGeometry(QRect(d_ptr->m_rubberBandOrigin, QSize()));
+        d_ptr->m_rubberBand->show();
+        event->accept();
     } else {
         QGraphicsView::mousePressEvent(event);
     }
@@ -181,8 +178,8 @@ void QChartView::mouseMoveEvent(QMouseEvent *event)
 */
 void QChartView::mouseReleaseEvent(QMouseEvent *event)
 {
-    if (d_ptr->m_rubberBand) {
-        if (event->button() == Qt::LeftButton && d_ptr->m_rubberBand->isVisible()) {
+    if (d_ptr->m_rubberBand && d_ptr->m_rubberBand->isVisible()) {
+        if (event->button() == Qt::LeftButton) {
             d_ptr->m_rubberBand->hide();
             QRectF rect = d_ptr->m_rubberBand->geometry();
             // Since plotArea uses QRectF and rubberband uses QRect, we can't just blindly use
