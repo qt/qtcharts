@@ -253,20 +253,21 @@ void PolarChartAxisAngular::createItems(int count)
         arrowGroup()->addToGroup(arrow);
     }
 
+    QGraphicsTextItem *title = titleItem();
+    title->setFont(axis()->titleFont());
+    title->setDefaultTextColor(axis()->titleBrush().color());
+    title->setHtml(axis()->titleText());
+
     for (int i = 0; i < count; ++i) {
         QGraphicsLineItem *arrow = new QGraphicsLineItem(presenter()->rootItem());
         QGraphicsLineItem *grid = new QGraphicsLineItem(presenter()->rootItem());
         QGraphicsTextItem *label = new QGraphicsTextItem(presenter()->rootItem());
         label->document()->setDocumentMargin(ChartPresenter::textMargin());
-        QGraphicsTextItem *title = titleItem();
         arrow->setPen(axis()->linePen());
         grid->setPen(axis()->gridLinePen());
         label->setFont(axis()->labelsFont());
         label->setDefaultTextColor(axis()->labelsBrush().color());
         label->setRotation(axis()->labelsAngle());
-        title->setFont(axis()->titleFont());
-        title->setDefaultTextColor(axis()->titleBrush().color());
-        title->setHtml(axis()->titleText());
         arrowGroup()->addToGroup(arrow);
         gridGroup()->addToGroup(grid);
         labelGroup()->addToGroup(label);

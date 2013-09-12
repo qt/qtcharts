@@ -59,20 +59,21 @@ void CartesianChartAxis::createItems(int count)
         }
     }
 
+    QGraphicsTextItem *title = titleItem();
+    title->setFont(axis()->titleFont());
+    title->setDefaultTextColor(axis()->titleBrush().color());
+    title->setHtml(axis()->titleText());
+
     for (int i = 0; i < count; ++i) {
         QGraphicsLineItem *arrow = new QGraphicsLineItem(this);
         QGraphicsLineItem *grid = new QGraphicsLineItem(this);
         QGraphicsTextItem *label = new QGraphicsTextItem(this);
         label->document()->setDocumentMargin(ChartPresenter::textMargin());
-        QGraphicsTextItem *title = titleItem();
         arrow->setPen(axis()->linePen());
         grid->setPen(axis()->gridLinePen());
         label->setFont(axis()->labelsFont());
         label->setDefaultTextColor(axis()->labelsBrush().color());
         label->setRotation(axis()->labelsAngle());
-        title->setFont(axis()->titleFont());
-        title->setDefaultTextColor(axis()->titleBrush().color());
-        title->setHtml(axis()->titleText());
         arrowGroup()->addToGroup(arrow);
         gridGroup()->addToGroup(grid);
         labelGroup()->addToGroup(label);

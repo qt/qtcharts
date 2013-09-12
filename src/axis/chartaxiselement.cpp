@@ -152,7 +152,8 @@ void ChartAxisElement::handleTitleTextChanged(const QString &title)
 {
     QGraphicsLayoutItem::updateGeometry();
     presenter()->layout()->invalidate();
-    m_title->setHtml(title);
+    if (title.isEmpty() || !m_title->isVisible())
+        m_title->setHtml(title);
 }
 
 void ChartAxisElement::handleTitlePenChanged(const QPen &pen)
