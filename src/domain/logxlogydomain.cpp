@@ -138,18 +138,29 @@ void LogXLogYDomain::move(qreal dx, qreal dy)
 
 QPointF LogXLogYDomain::calculateGeometryPoint(const QPointF &point, bool &ok) const
 {
+    const qreal deltaX = m_size.width() / qAbs(m_logRightX - m_logLeftX);
+    const qreal deltaY = m_size.height() / qAbs(m_logRightY - m_logLeftY);
+    qreal x(0);
+    qreal y(0);
     if (point.x() > 0 && point.y() > 0) {
-        const qreal deltaX = m_size.width() / qAbs(m_logRightX - m_logLeftX);
-        const qreal deltaY = m_size.height() / qAbs(m_logRightY - m_logLeftY);
-        qreal x = (log10(point.x()) / log10(m_logBaseX)) * deltaX - m_logLeftX * deltaX;
-        qreal y = (log10(point.y()) / log10(m_logBaseY)) * -deltaY - m_logLeftY * -deltaY + m_size.height();
+        x = (log10(point.x()) / log10(m_logBaseX)) * deltaX - m_logLeftX * deltaX;
+        y = (log10(point.y()) / log10(m_logBaseY)) * -deltaY - m_logLeftY * -deltaY + m_size.height();
         ok = true;
-        return QPointF(x, y);
     } else {
-        qWarning() << "Logarithm of negative value is undefined. Empty layout returned.";
+        qWarning() << "Logarithms of zero and negative values are undefined.";
         ok = false;
-        return QPointF();
+        if (point.x() > 0)
+            x = (log10(point.x()) / log10(m_logBaseX)) * deltaX - m_logLeftX * deltaX;
+        else
+            x = 0;
+        if (point.y() > 0) {
+            y = (log10(point.y()) / log10(m_logBaseY)) * -deltaY - m_logLeftY * -deltaY
+                    + m_size.height();
+        } else {
+            y = m_size.height();
+        }
     }
+    return QPointF(x, y);
 }
 
 QVector<QPointF> LogXLogYDomain::calculateGeometryPoints(const QList<QPointF> &vector) const
@@ -167,7 +178,7 @@ QVector<QPointF> LogXLogYDomain::calculateGeometryPoints(const QList<QPointF> &v
             result[i].setX(x);
             result[i].setY(y);
         } else {
-            qWarning() << "Logarithm of negative value is undefined. Empty layout returned.";
+            qWarning() << "Logarithms of zero and negative values are undefined.";
             return QVector<QPointF>();
         }
     }

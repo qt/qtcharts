@@ -81,9 +81,6 @@ QVector<QRectF> BarChartItem::calculateLayout()
             else
                 bottomRight = domain()->calculateGeometryPoint(QPointF(category - barWidth / 2 + (set + 1)/(setCount) * barWidth, 0), m_validData);
 
-            if (!m_validData)
-                 return QVector<QRectF>();
-
             rect.setTopLeft(topLeft);
             rect.setBottomRight(bottomRight);
             layout.append(rect.normalized());

@@ -131,19 +131,20 @@ void XLogYDomain::move(qreal dx, qreal dy)
 
 QPointF XLogYDomain::calculateGeometryPoint(const QPointF &point, bool &ok) const
 {
-    if (point.y() > 0) {
-        const qreal deltaX = m_size.width() / (m_maxX - m_minX);
-        const qreal deltaY = m_size.height() / qAbs(m_logRightY - m_logLeftY);
+    const qreal deltaX = m_size.width() / (m_maxX - m_minX);
+    const qreal deltaY = m_size.height() / qAbs(m_logRightY - m_logLeftY);
 
-        qreal x = (point.x() - m_minX) * deltaX;
-        qreal y = (log10(point.y()) / log10(m_logBaseY)) * -deltaY - m_logLeftY * -deltaY + m_size.height();
+    qreal x = (point.x() - m_minX) * deltaX;
+    qreal y(0);
+    if (point.y() > 0) {
+        y = (log10(point.y()) / log10(m_logBaseY)) * -deltaY - m_logLeftY * -deltaY + m_size.height();
         ok = true;
-        return QPointF(x, y);
     } else {
-        qWarning() << "Logarithm of negative value is undefined. Empty layout returned.";
+        y = m_size.height();
+        qWarning() << "Logarithms of zero and negative values are undefined.";
         ok = false;
-        return QPointF();
     }
+    return QPointF(x, y);
 }
 
 QVector<QPointF> XLogYDomain::calculateGeometryPoints(const QList<QPointF> &vector) const
@@ -161,7 +162,7 @@ QVector<QPointF> XLogYDomain::calculateGeometryPoints(const QList<QPointF> &vect
             result[i].setX(x);
             result[i].setY(y);
         } else {
-            qWarning() << "Logarithm of negative value is undefined. Empty layout returned.";
+            qWarning() << "Logarithms of zero and negative values are undefined.";
             return QVector<QPointF>();
         }
     }

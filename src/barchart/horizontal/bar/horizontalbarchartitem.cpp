@@ -81,9 +81,6 @@ QVector<QRectF> HorizontalBarChartItem::calculateLayout()
 
             QPointF bottomRight = domain()->calculateGeometryPoint(QPointF(value, category - barWidth / 2 + (set + 1)/setCount * barWidth), m_validData);
 
-            if (!m_validData)
-                return QVector<QRectF>();
-
             rect.setTopLeft(topLeft);
             rect.setBottomRight(bottomRight);
             layout.append(rect.normalized());

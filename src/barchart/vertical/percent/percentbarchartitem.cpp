@@ -84,8 +84,6 @@ QVector<QRectF> PercentBarChartItem::calculateLayout()
             else
                 bottomRight = domain()->calculateGeometryPoint(QPointF(category + barWidth/2, set ? 100 * sum/categorySum : 0), m_validData);
 
-            if (!m_validData)
-                 return QVector<QRectF>();
             rect.setTopLeft(topLeft);
             rect.setBottomRight(bottomRight);
             layout.append(rect.normalized());

@@ -82,8 +82,6 @@ QVector<QRectF> HorizontalPercentBarChartItem::calculateLayout()
                 topLeft = domain()->calculateGeometryPoint(QPointF(set ? 100 * sum/categorySum : 0, category - barWidth/2), m_validData);
             QPointF bottomRight = domain()->calculateGeometryPoint(QPointF(100 * (value + sum)/categorySum, category + barWidth/2), m_validData);
 
-            if (!m_validData)
-                 return QVector<QRectF>();
             rect.setTopLeft(topLeft);
             rect.setBottomRight(bottomRight);
             layout.append(rect.normalized());

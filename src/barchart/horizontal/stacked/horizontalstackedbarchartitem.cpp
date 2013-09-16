@@ -92,8 +92,7 @@ QVector<QRectF> HorizontalStackedBarChartItem::calculateLayout()
                     topLeft = domain()->calculateGeometryPoint(QPointF(set ? positiveSum : 0, category + barWidth / 2), m_validData);
                 positiveSum += value;
             }
-            if (!m_validData)
-                 return QVector<QRectF>();
+
             rect.setTopLeft(topLeft);
             rect.setBottomRight(bottomRight);
             layout.append(rect.normalized());
