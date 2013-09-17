@@ -7,7 +7,8 @@
 
     \image examples_scatterchart.png
 
-    To create scatter charts, a QScatterSeries instance is needed. Here we create a scatter series instance, and set the type, color, and width of outline for the scatter points.
+    To create scatter charts, a QScatterSeries instance is needed. Here we create a scatter series
+    instance, and set the type and width of outline for the scatter points.
 
     \snippet ../examples/scatterchart/chartview.cpp 1
 
@@ -15,10 +16,21 @@
 
     \snippet ../examples/scatterchart/chartview.cpp 2
 
-    In the end we enable anti-aliasing, set the chart title, and add the scatter series onto the chart. We also disable
-    drop shadow, because it would not look good on an application with only chart view shown.
+    We can define the brush of the scatter series to be an image. Here the image is a star created
+    using QPainterPath.
 
     \snippet ../examples/scatterchart/chartview.cpp 3
+
+    In the end we enable anti-aliasing, set the chart title, and add the scatter series onto the
+    chart. We also disable drop shadow, because it would not look good on an application with only
+    chart view shown.
+
+    \snippet ../examples/scatterchart/chartview.cpp 4
+
+    The image used as a brush for the scatter series may contain several colors. Therefore we need
+    to set the desired color explicitly by setting the brush for the legend marker items.
+
+    \snippet ../examples/scatterchart/chartview.cpp 5
 
     The chart is ready to be shown.
 
