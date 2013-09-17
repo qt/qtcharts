@@ -21,7 +21,7 @@
 #include "chart.h"
 #include <QValueAxis>
 #include <QAbstractAxis>
-#include <cmath>
+#include <qmath.h>
 
 Chart::Chart(QGraphicsItem *parent, Qt::WindowFlags wFlags, QLineSeries *series)
     : QChart(QChart::ChartTypeCartesian, parent, wFlags), m_series(series)
@@ -48,7 +48,7 @@ void Chart::clickPoint(const QPointF &point)
 
 qreal Chart::distance(const QPointF &p1, const QPointF &p2)
 {
-    return sqrt((p1.x() - p2.x()) * (p1.x() - p2.x())
+    return qSqrt((p1.x() - p2.x()) * (p1.x() - p2.x())
                 + (p1.y() - p2.y()) * (p1.y() - p2.y()));
 }
 

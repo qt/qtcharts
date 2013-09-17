@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 #include "chartview.h"
-#include <math.h>
+#include <qmath.h>
 #include <QDebug>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
@@ -63,8 +63,10 @@ void ChartView::handleClickedPoint(const QPointF &point)
     QPointF closest(INT_MAX, INT_MAX);
     qreal distance(INT_MAX);
     foreach (QPointF currentPoint, m_scatter->points()) {
-        qreal currentDistance = sqrt((currentPoint.x() - clickedPoint.x()) * (currentPoint.x() - clickedPoint.x())
-                                     + (currentPoint.y() - clickedPoint.y()) * (currentPoint.y() - clickedPoint.y()));
+        qreal currentDistance = qSqrt((currentPoint.x() - clickedPoint.x())
+                                      * (currentPoint.x() - clickedPoint.x())
+                                      + (currentPoint.y() - clickedPoint.y())
+                                      * (currentPoint.y() - clickedPoint.y()));
         if (currentDistance < distance) {
             distance = currentDistance;
             closest = currentPoint;

@@ -24,7 +24,7 @@
 #include <QtQuick/QQuickView>
 #include <QtQuick/QQuickItem>
 #include <QDebug>
-#include <cmath>
+#include <qmath.h>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -70,7 +70,7 @@ void DataSource::generateData(int type, int rowCount, int colCount)
             switch (type) {
             case 0:
                 // data with sin + random component
-                y = sin(3.14159265358979 / 50 * j) + 0.5 + (qreal) rand() / (qreal) RAND_MAX;
+                y = qSin(3.14159265358979 / 50 * j) + 0.5 + (qreal) rand() / (qreal) RAND_MAX;
                 x = j;
                 break;
             case 1:
