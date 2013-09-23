@@ -394,9 +394,10 @@ QAbstractAxis::AxisType QBoxPlotSeriesPrivate::defaultAxisType(Qt::Orientation o
 
 QAbstractAxis* QBoxPlotSeriesPrivate::createDefaultAxis(Qt::Orientation orientation) const
 {
-    Q_UNUSED(orientation);
-
-    return 0;
+    if (defaultAxisType(orientation) == QAbstractAxis::AxisTypeBarCategory)
+        return new QBarCategoryAxis;
+    else
+        return new QValueAxis;
 }
 
 void QBoxPlotSeriesPrivate::populateCategories(QBarCategoryAxis *axis)

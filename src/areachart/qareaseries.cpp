@@ -438,7 +438,7 @@ QAbstractAxis::AxisType QAreaSeriesPrivate::defaultAxisType(Qt::Orientation orie
 QAbstractAxis* QAreaSeriesPrivate::createDefaultAxis(Qt::Orientation orientation) const
 {
     Q_UNUSED(orientation);
-    return 0;
+    return new QValueAxis;
 }
 
 void QAreaSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bool forced)

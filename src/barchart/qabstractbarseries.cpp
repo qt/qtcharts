@@ -852,8 +852,10 @@ void QAbstractBarSeriesPrivate::populateCategories(QBarCategoryAxis *axis)
 
 QAbstractAxis* QAbstractBarSeriesPrivate::createDefaultAxis(Qt::Orientation orientation) const
 {
-    Q_UNUSED(orientation);
-    return 0;
+    if (defaultAxisType(orientation) == QAbstractAxis::AxisTypeBarCategory)
+        return new QBarCategoryAxis;
+    else
+        return new QValueAxis;
 }
 
 void QAbstractBarSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bool forced)

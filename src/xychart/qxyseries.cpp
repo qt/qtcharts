@@ -575,7 +575,7 @@ QAbstractAxis::AxisType QXYSeriesPrivate::defaultAxisType(Qt::Orientation orient
 QAbstractAxis* QXYSeriesPrivate::createDefaultAxis(Qt::Orientation orientation) const
 {
     Q_UNUSED(orientation);
-    return 0;
+    return new QValueAxis;
 }
 
 void QXYSeriesPrivate::initializeAnimations(QtCommercialChart::QChart::AnimationOptions options)
