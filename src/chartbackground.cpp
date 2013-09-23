@@ -71,7 +71,7 @@ void ChartBackground::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
     painter->setBrush(brush());
     painter->drawRoundedRect(rect(), m_diameter, m_diameter);
 #ifndef QT_NO_DEBUG
-    painter->setPen(Qt::black);
+    painter->setPen(Qt::gray);
     QFont font;
     QString build("build %1");
     font.setPointSize(6);
