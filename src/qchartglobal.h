@@ -85,4 +85,11 @@ static inline QDebug chartDebug(int numargs,...)
 }
 #endif
 
+/*
+    On Windows min and max conflict with standard macros
+*/
+#ifdef Q_OS_WIN
+#define NOMINMAX
+#endif
+
 #endif // QCHARTGLOBAL_H
