@@ -35,6 +35,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QLegend;
+class LegendMarkerItem;
 
 class LegendLayout : public QGraphicsLayout
 {
@@ -58,6 +59,13 @@ protected:
 private:
     void setAttachedGeometry(const QRectF &rect);
     void setDettachedGeometry(const QRectF &rect);
+
+    struct LegendWidthStruct {
+        LegendMarkerItem *item;
+        qreal width;
+    };
+    static bool widthLongerThan(const LegendWidthStruct *item1,
+                                const LegendWidthStruct *item2);
 
 private:
     QLegend *m_legend;

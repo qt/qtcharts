@@ -136,19 +136,97 @@ void LegendLayout::setAttachedGeometry(const QRectF &rect)
     switch(m_legend->alignment()) {
     case Qt::AlignTop:
     case Qt::AlignBottom: {
+            // Calculate the space required for items and add them to a sorted list.
+            qreal markerItemsWidth = 0;
+            qreal itemMargins = 0;
+            QList<LegendWidthStruct *> legendWidthList;
+            foreach (QLegendMarker *marker, m_legend->d_ptr->markers()) {
+                LegendMarkerItem *item = marker->d_ptr->item();
+                if (item->isVisible()) {
+                    QSizeF dummySize;
+                    qreal itemWidth = item->sizeHint(Qt::PreferredSize, dummySize).width();
+                    LegendWidthStruct *structItem = new LegendWidthStruct;
+                    structItem->item = item;
+                    structItem->width = itemWidth;
+                    legendWidthList.append(structItem);
+                    markerItemsWidth += itemWidth;
+                    itemMargins += marker->d_ptr->item()->m_margin;
+                }
+            }
+            qSort(legendWidthList.begin(), legendWidthList.end(), widthLongerThan);
+
+            // If the items would occupy more space than is available, start truncating them
+            // from the longest one.
+            qreal availableGeometry = geometry.width() - right - left * 2 - itemMargins;
+            if (markerItemsWidth >= availableGeometry && legendWidthList.count() > 1) {
+                bool truncated(false);
+                int count = legendWidthList.count();
+                for (int i = 1; i < count; i++) {
+                    int truncateIndex = i - 1;
+
+                    while (legendWidthList.at(truncateIndex)->width >= legendWidthList.at(i)->width
+                           && !truncated) {
+                        legendWidthList.at(truncateIndex)->width--;
+                        markerItemsWidth--;
+                        if (i > 1) {
+                            // Truncate the items that are before the truncated one in the list.
+                            for (int j = truncateIndex - 1; j >= 0; j--) {
+                                if (legendWidthList.at(truncateIndex)->width
+                                        < legendWidthList.at(j)->width) {
+                                    legendWidthList.at(j)->width--;
+                                    markerItemsWidth--;
+                                }
+                            }
+                        }
+                        if (markerItemsWidth < availableGeometry)
+                            truncated = true;
+                    }
+                    // Truncate the last item if needed.
+                    if (i == count - 1) {
+                        if (legendWidthList.at(count - 1)->width
+                                > legendWidthList.at(truncateIndex)->width) {
+                            legendWidthList.at(count - 1)->width--;
+                            markerItemsWidth--;
+                        }
+                    }
+
+                    if (truncated)
+                        break;
+                }
+                // Items are of same width and all of them need to be truncated.
+                while (markerItemsWidth >= availableGeometry) {
+                    for (int i = 0; i < count; i++) {
+                        legendWidthList.at(i)->width--;
+                        markerItemsWidth--;
+                    }
+                }
+            }
+
             QPointF point(0,0);
             foreach (QLegendMarker *marker, m_legend->d_ptr->markers()) {
                 LegendMarkerItem *item = marker->d_ptr->item();
                 if (item->isVisible()) {
-                    item->setGeometry(geometry);
+                    QRectF itemRect = geometry;
+                    qreal availableWidth = 0;
+                    for (int i = 0; i < legendWidthList.size(); ++i) {
+                        if (legendWidthList.at(i)->item == item) {
+                            availableWidth = legendWidthList.at(i)->width;
+                            break;
+                        }
+                    }
+                    itemRect.setWidth(availableWidth);
+                    item->setGeometry(itemRect);
                     item->setPos(point.x(),geometry.height()/2 - item->boundingRect().height()/2);
                     const QRectF &rect = item->boundingRect();
                     size = size.expandedTo(rect.size());
                     qreal w = rect.width();
-                    m_width+=w;
+                    m_width = m_width + w - item->m_margin;
                     point.setX(point.x() + w);
                 }
             }
+            // Delete structs from the container
+            qDeleteAll(legendWidthList);
+
             if (m_width < geometry.width())
                 m_legend->d_ptr->items()->setPos(geometry.width() / 2 - m_width / 2, geometry.top());
             else
@@ -403,6 +481,12 @@ QSizeF LegendLayout::sizeHint(Qt::SizeHint which, const QSizeF &constraint) cons
     }
     size += QSize(left + right, top + bottom);
     return size;
+}
+
+bool LegendLayout::widthLongerThan(const LegendWidthStruct *item1,
+                                   const LegendWidthStruct *item2)
+{
+    return item1->width > item2->width;
 }
 
 QTCOMMERCIALCHART_END_NAMESPACE
