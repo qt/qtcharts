@@ -229,7 +229,11 @@ bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator!= (const LogXYPolarDomain &domai
 
 QDebug QTCOMMERCIALCHART_AUTOTEST_EXPORT operator<<(QDebug dbg, const LogXYPolarDomain &domain)
 {
+#ifdef QT_NO_TEXTSTREAM
+    Q_UNUSED(domain)
+#else
     dbg.nospace() << "AbstractDomain(" << domain.m_minX << ',' << domain.m_maxX << ',' << domain.m_minY << ',' << domain.m_maxY << ')' << domain.m_size;
+#endif
     return dbg.maybeSpace();
 }
 
