@@ -41,11 +41,11 @@
         </tr>
         <tr>
             <td><a href="demos-qmlcustomizations.html">Qml Customizations</a></td>
-            <td><a href="demos-qmlcustommodel.html">Qml Custom Model</a></td>
+            <td><a href="demos-qmlcustomlegend.html">Qml Custom Legend</a></td>
         </tr>
         <tr>
             <td><a href="demos-qmlcustomizations.html"><img src="images/demos_qmlcustomizations.png" width="300" alt="Qml Customizations" /></a></td>
-            <td><a href="demos-qmlcustommodel.html"><img src="images/demos_qmlcustommodel.png" width="300" alt="Qml Custom Model" /></a></td>
+            <td><a href="demos-qmlcustomlegend.html"><img src="images/demos-qmlcustomlegend1.png" width="300" alt="Qml Custom Legend" /></a></td>
         </tr>
         <tr>
             <td><a href="demos-qmlf1legends.html">Qml F1 Legends</a></td>
@@ -57,24 +57,18 @@
         </tr>
         <tr>
             <td><a href="demos-qmlweather.html">Qml Weather</a></td>
-            <td><a href="demos-qmlcustomlegend.html">Qml Custom Legend</a></td>
+            <td><a href="demos-qmlpolarchart.html">Qml Polar Chart</a></td>
         </tr>
         <tr>
             <td><a href="demos-qmlweather.html"><img src="images/demos_qmlweather.png" width="300" alt="Qml Weather" /></a></td>
-            <td><a href="demos-qmlcustomlegend.html"><img src="images/demos-qmlcustomlegend1.png" width="300" alt="Qml Custom Legend" /></a></td>
-        </tr>
-        <tr>
-            <td><a href="demos-qmlpolarchart.html">Qml Polar Chart</a></td>
-            <td><a href="demos-quick2chart.html">Qt Quick 2 Basic Charts</a></td>
-        </tr>
-        <tr>
             <td><a href="demos-qmlpolarchart.html"><img src="images/demos_qmlpolarchart1.png" width="300" alt="Qml Polar Chart" /></a></td>
-            <td><a href="demos-quick2chart.html"><img src="images/demos_qmlchart1.png" width="300" alt="Qt Quick 2 Basic Charts" /></a></td>
         </tr>
         <tr>
+            <td><a href="demos-quick2chart.html">Qt Quick 2 Basic Charts</a></td>
             <td><a href="demos-quick2oscilloscope.html">Qt Quick 2 Oscilloscope</a></td>
         </tr>
         <tr>
+            <td><a href="demos-quick2chart.html"><img src="images/demos_qmlchart1.png" width="300" alt="Qt Quick 2 Basic Charts" /></a></td>
             <td><a href="demos-quick2oscilloscope.html"><img src="images/demos_qmloscilloscope.png" width="300" alt="Qt Quick 2 Oscilloscope" /></a></td>
         </tr>
     </table>

@@ -74,9 +74,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 /*!
     \qmlproperty SomeModel HBarModelMapper::model
-    The QAbstractItemModel based model that is used by the mapper. You need to implement the model and expose it to
-    QML as shown in \l {QML Custom Model} demo application. Note: the model has to support adding/removing rows/columns
-    and modifying the data of the cells.
+    The QAbstractItemModel based model that is used by the mapper. You need to implement the model
+    and expose it to QML. Note: the model has to support adding/removing rows/columns and modifying
+    the data of the cells.
 */
 
 /*!
