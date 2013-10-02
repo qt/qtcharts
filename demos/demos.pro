@@ -11,7 +11,6 @@ SUBDIRS += piechartcustomization \
            qmlweather \
            qmlf1legends \
            qmlcustomizations \
-           qmlcustommodel \
            chartinteractions \
            qmlaxes \
            qmlcustomlegend \
