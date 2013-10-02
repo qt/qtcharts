@@ -719,6 +719,7 @@ void tst_QChart::theme_data()
     QTest::newRow("ChartThemeDark") << QChart::ChartThemeDark;
     QTest::newRow("hartThemeHighContrast") << QChart::ChartThemeHighContrast;
     QTest::newRow("ChartThemeLight") << QChart::ChartThemeLight;
+    QTest::newRow("ChartThemeQt") << QChart::ChartThemeQt;
 }
 
 void tst_QChart::theme()

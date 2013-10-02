@@ -151,6 +151,7 @@ QComboBox *ThemeWidget::createThemeBox() const
     themeComboBox->addItem("Blue NCS", QChart::ChartThemeBlueNcs);
     themeComboBox->addItem("High Contrast", QChart::ChartThemeHighContrast);
     themeComboBox->addItem("Blue Icy", QChart::ChartThemeBlueIcy);
+    themeComboBox->addItem("Qt", QChart::ChartThemeQt);
     return themeComboBox;
 }
 

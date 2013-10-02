@@ -10,4 +10,5 @@ THEMES += \
     $$PWD/chartthemebrownsand_p.h \
     $$PWD/chartthemebluencs_p.h \
     $$PWD/chartthemehighcontrast_p.h \
-    $$PWD/chartthemeblueicy_p.h
+    $$PWD/chartthemeblueicy_p.h \
+    $$PWD/chartthemeqt_p.h

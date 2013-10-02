@@ -29,6 +29,7 @@
 #include "chartthemebluencs_p.h"
 #include "chartthemehighcontrast_p.h"
 #include "chartthemeblueicy_p.h"
+#include "chartthemeqt_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -63,6 +64,9 @@ void ChartThemeManager::setTheme(QChart::ChartTheme theme)
             break;
         case QChart::ChartThemeBlueIcy:
             m_theme.reset(new ChartThemeBlueIcy());
+            break;
+        case QChart::ChartThemeQt:
+            m_theme.reset(new ChartThemeQt());
             break;
         default:
             m_theme.reset(new ChartThemeSystem());

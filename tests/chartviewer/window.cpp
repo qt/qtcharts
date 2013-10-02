@@ -163,6 +163,7 @@ QComboBox *Window::createThemeBox()
     themeComboBox->addItem("Blue NCS", QChart::ChartThemeBlueNcs);
     themeComboBox->addItem("High Contrast", QChart::ChartThemeHighContrast);
     themeComboBox->addItem("Blue Icy", QChart::ChartThemeBlueIcy);
+    themeComboBox->addItem("Qt", QChart::ChartThemeQt);
     return themeComboBox;
 }
 
@@ -409,6 +410,9 @@ void Window::checkTheme()
         pal.setColor(QPalette::WindowText, QRgb(0x181818));
     } else if (theme == QChart::ChartThemeBlueIcy) {
         pal.setColor(QPalette::Window, QRgb(0xcee7f0));
+        pal.setColor(QPalette::WindowText, QRgb(0x404044));
+    } else if (theme == QChart::ChartThemeQt) {
+        pal.setColor(QPalette::Window, QRgb(0xf0f0f0));
         pal.setColor(QPalette::WindowText, QRgb(0x404044));
     } else {
         pal.setColor(QPalette::Window, QRgb(0xf0f0f0));

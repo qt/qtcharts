@@ -80,7 +80,8 @@ public:
         ChartThemeBrownSand,
         ChartThemeBlueNcs,
         ChartThemeHighContrast,
-        ChartThemeBlueIcy
+        ChartThemeBlueIcy,
+        ChartThemeQt
     };
 
     enum Animation {
