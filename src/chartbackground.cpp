@@ -41,6 +41,9 @@ ChartBackground::~ChartBackground()
 
 void ChartBackground::setDropShadowEnabled(bool enabled)
 {
+#ifdef QT_NO_GRAPHICSEFFECT
+    Q_UNUSED(enabled)
+#else
     if (enabled) {
         if (!m_dropShadow) {
             m_dropShadow = new QGraphicsDropShadowEffect();
@@ -60,6 +63,7 @@ void ChartBackground::setDropShadowEnabled(bool enabled)
         delete m_dropShadow;
         m_dropShadow = 0;
     }
+#endif
 }
 
 void ChartBackground::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
