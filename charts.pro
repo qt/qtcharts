@@ -5,7 +5,7 @@
 TEMPLATE = subdirs
 SUBDIRS = src plugins
 !nomake_demos_examples: SUBDIRS += demos examples
-SUBDIRS += tests
+exists(tests): SUBDIRS += tests
 
 development_build: message('Development build')
 
