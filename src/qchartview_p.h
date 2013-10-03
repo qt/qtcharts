@@ -55,7 +55,9 @@ public:
     QGraphicsScene *m_scene;
     QChart *m_chart;
     QPoint m_rubberBandOrigin;
+#ifndef QT_NO_RUBBERBAND
     QRubberBand *m_rubberBand;
+#endif
     QChartView::RubberBands m_rubberBandFlags;
 };
 

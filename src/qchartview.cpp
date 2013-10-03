@@ -107,6 +107,7 @@ void QChartView::setChart(QChart *chart)
 */
 void QChartView::setRubberBand(const RubberBands &rubberBand)
 {
+#ifndef QT_NO_RUBBERBAND
     d_ptr->m_rubberBandFlags = rubberBand;
 
     if (!d_ptr->m_rubberBandFlags) {
@@ -119,6 +120,10 @@ void QChartView::setRubberBand(const RubberBands &rubberBand)
         d_ptr->m_rubberBand = new QRubberBand(QRubberBand::Rectangle, this);
         d_ptr->m_rubberBand->setEnabled(true);
     }
+#else
+    Q_UNUSED(rubberBand);
+    qWarning("Unable to set rubber band because Qt is configured without it.");
+#endif
 }
 
 /*!
@@ -135,6 +140,7 @@ QChartView::RubberBands QChartView::rubberBand() const
 */
 void QChartView::mousePressEvent(QMouseEvent *event)
 {
+#ifndef QT_NO_RUBBERBAND
     QRectF plotArea = d_ptr->m_chart->plotArea();
     if (d_ptr->m_rubberBand && d_ptr->m_rubberBand->isEnabled()
             && event->button() == Qt::LeftButton && plotArea.contains(event->pos())) {
@@ -143,8 +149,11 @@ void QChartView::mousePressEvent(QMouseEvent *event)
         d_ptr->m_rubberBand->show();
         event->accept();
     } else {
+#endif
         QGraphicsView::mousePressEvent(event);
+#ifndef QT_NO_RUBBERBAND
     }
+#endif
 }
 
 /*!
@@ -153,6 +162,7 @@ void QChartView::mousePressEvent(QMouseEvent *event)
 */
 void QChartView::mouseMoveEvent(QMouseEvent *event)
 {
+#ifndef QT_NO_RUBBERBAND
     if (d_ptr->m_rubberBand && d_ptr->m_rubberBand->isVisible()) {
         QRect rect = d_ptr->m_chart->plotArea().toRect();
         int width = event->pos().x() - d_ptr->m_rubberBandOrigin.x();
@@ -167,8 +177,11 @@ void QChartView::mouseMoveEvent(QMouseEvent *event)
         }
         d_ptr->m_rubberBand->setGeometry(QRect(d_ptr->m_rubberBandOrigin.x(), d_ptr->m_rubberBandOrigin.y(), width, height).normalized());
     } else {
+#endif
         QGraphicsView::mouseMoveEvent(event);
+#ifndef QT_NO_RUBBERBAND
     }
+#endif
 }
 
 /*!
@@ -178,6 +191,7 @@ void QChartView::mouseMoveEvent(QMouseEvent *event)
 */
 void QChartView::mouseReleaseEvent(QMouseEvent *event)
 {
+#ifndef QT_NO_RUBBERBAND
     if (d_ptr->m_rubberBand && d_ptr->m_rubberBand->isVisible()) {
         if (event->button() == Qt::LeftButton) {
             d_ptr->m_rubberBand->hide();
@@ -217,8 +231,11 @@ void QChartView::mouseReleaseEvent(QMouseEvent *event)
             event->accept();
         }
     } else {
+#endif
         QGraphicsView::mouseReleaseEvent(event);
+#ifndef QT_NO_RUBBERBAND
     }
+#endif
 }
 
 /*!
@@ -236,7 +253,9 @@ QChartViewPrivate::QChartViewPrivate(QChartView *q, QChart *chart)
     : q_ptr(q),
       m_scene(new QGraphicsScene(q)),
       m_chart(chart),
+#ifndef QT_NO_RUBBERBAND
       m_rubberBand(0),
+#endif
       m_rubberBandFlags(QChartView::NoRubberBand)
 {
     q_ptr->setFrameShape(QFrame::NoFrame);
