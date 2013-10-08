@@ -27,6 +27,7 @@
 #include <qmath.h>
 #include <QGraphicsSceneEvent>
 #include <QTime>
+#include <QTextDocument>
 #include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -45,6 +46,8 @@ PieSliceItem::PieSliceItem(QGraphicsItem *parent)
     setAcceptHoverEvents(true);
     setAcceptedMouseButtons(Qt::MouseButtonMask);
     setZValue(ChartPresenter::PieSeriesZValue);
+    m_labelItem = new QGraphicsTextItem(this);
+    m_labelItem->document()->setDocumentMargin(1.0);
 }
 
 PieSliceItem::~PieSliceItem()
@@ -80,47 +83,11 @@ void PieSliceItem::paint(QPainter *painter, const QStyleOptionGraphicsItem * /*o
         painter->save();
 
         // Pen for label arm not defined in the QPieSeries api, let's use brush's color instead
-        // Also, the drawText actually uses the pen color for the text color (unlike QGraphicsSimpleTextItem)
-        painter->setPen(m_data.m_labelBrush.color());
         painter->setBrush(m_data.m_labelBrush);
-        painter->setFont(m_data.m_labelFont);
 
-        QFontMetricsF fm(m_data.m_labelFont);
-        QString label = m_data.m_labelText;
-        QRectF labelBoundingRect;
-
-        switch (m_data.m_labelPosition) {
-        case QPieSlice::LabelOutside:
+        if (m_data.m_labelPosition == QPieSlice::LabelOutside) {
             painter->setClipRect(parentItem()->boundingRect());
             painter->strokePath(m_labelArmPath, m_data.m_labelBrush.color());
-            if (fm.width(m_data.m_labelText) > m_labelTextRect.width()) {
-                // Only one line label text is supported currently.
-                // The height for the label is set one pixel over the font metrics.
-                label = ChartPresenter::truncatedText(m_data.m_labelFont, m_data.m_labelText,
-                                                      qreal(0.0), m_labelTextRect.width(),
-                                                      fm.height() + 1.0, labelBoundingRect);
-            }
-            painter->drawText(m_labelTextRect, Qt::AlignCenter, label);
-            break;
-        case QPieSlice::LabelInsideHorizontal:
-            painter->setClipPath(m_slicePath);
-            painter->drawText(m_labelTextRect, Qt::AlignCenter, m_data.m_labelText);
-            break;
-        case QPieSlice::LabelInsideTangential:
-            painter->setClipPath(m_slicePath);
-            painter->translate(m_labelTextRect.center());
-            painter->rotate(m_data.m_startAngle + m_data.m_angleSpan / 2);
-            painter->drawText(-m_labelTextRect.width() / 2, -m_labelTextRect.height() / 2, m_labelTextRect.width(), m_labelTextRect.height(), Qt::AlignCenter, m_data.m_labelText);
-            break;
-        case QPieSlice::LabelInsideNormal:
-            painter->setClipPath(m_slicePath);
-            painter->translate(m_labelTextRect.center());
-            if (m_data.m_startAngle + m_data.m_angleSpan / 2 < 180)
-                painter->rotate(m_data.m_startAngle + m_data.m_angleSpan / 2 - 90);
-            else
-                painter->rotate(m_data.m_startAngle + m_data.m_angleSpan / 2 + 90);
-            painter->drawText(-m_labelTextRect.width() / 2, -m_labelTextRect.height() / 2, m_labelTextRect.width(), m_labelTextRect.height(), Qt::AlignCenter, m_data.m_labelText);
-            break;
         }
 
         painter->restore();
@@ -164,42 +131,80 @@ void PieSliceItem::updateGeometry()
     QPointF armStart;
     m_slicePath = slicePath(m_data.m_center, m_data.m_radius, m_data.m_startAngle, m_data.m_angleSpan, &centerAngle, &armStart);
 
-    // text rect
-    QFontMetricsF fm(m_data.m_labelFont);
-    m_labelTextRect = QRectF(0, 0, fm.width(m_data.m_labelText), fm.height());
+    if (m_data.m_isLabelVisible) {
+        // text rect
+        QFontMetricsF fm(m_data.m_labelFont);
+        m_labelTextRect = ChartPresenter::textBoundingRect(m_data.m_labelFont,
+                                                           m_data.m_labelText,
+                                                           0);
 
-    // label arm path
-    QPointF labelTextStart;
-    m_labelArmPath = labelArmPath(armStart, centerAngle, m_data.m_radius * m_data.m_labelArmLengthFactor, m_labelTextRect.width(), &labelTextStart);
+        QString label(m_data.m_labelText);
+        m_labelItem->setVisible(m_data.m_isLabelVisible);
+        m_labelItem->setDefaultTextColor(m_data.m_labelBrush.color());
+        m_labelItem->setFont(m_data.m_labelFont);
 
-    // text position
-    switch (m_data.m_labelPosition) {
-    case QPieSlice::LabelOutside:
-        m_labelTextRect.moveBottomLeft(labelTextStart);
-        if (m_labelTextRect.left() < 0)
-            m_labelTextRect.setLeft(0);
-        if (m_labelTextRect.right() > parentItem()->boundingRect().right())
-            m_labelTextRect.setRight(parentItem()->boundingRect().right());
-        break;
-    case QPieSlice::LabelInsideHorizontal:
-    case QPieSlice::LabelInsideTangential: {
-        QPointF textCenter;
-        if (m_data.m_holeRadius > 0)
-            textCenter = m_data.m_center + offset(centerAngle, m_data.m_holeRadius + (m_data.m_radius - m_data.m_holeRadius) / 2);
-        else
-            textCenter = m_data.m_center + offset(centerAngle, m_data.m_radius / 2);
-        m_labelTextRect.moveCenter(textCenter);
-        break;
-    }
-    case QPieSlice::LabelInsideNormal: {
-        QPointF textCenter;
-        if (m_data.m_holeRadius > 0)
-            textCenter = m_data.m_center + offset(centerAngle, m_data.m_holeRadius + (m_data.m_radius - m_data.m_holeRadius) / 2);
-        else
-            textCenter = m_data.m_center + offset(centerAngle, m_data.m_radius / 2);
-        m_labelTextRect.moveCenter(textCenter);
-        break;
-    }
+        // text position
+        if (m_data.m_labelPosition == QPieSlice::LabelOutside) {
+            setFlag(QGraphicsItem::ItemClipsChildrenToShape, false);
+
+            // label arm path
+            QPointF labelTextStart;
+            m_labelArmPath = labelArmPath(armStart, centerAngle,
+                                          m_data.m_radius * m_data.m_labelArmLengthFactor,
+                                          m_labelTextRect.width(), &labelTextStart);
+
+            m_labelTextRect.moveBottomLeft(labelTextStart);
+            if (m_labelTextRect.left() < 0)
+                m_labelTextRect.setLeft(0);
+            else if (m_labelTextRect.left() < parentItem()->boundingRect().left())
+                m_labelTextRect.setLeft(parentItem()->boundingRect().left());
+            if (m_labelTextRect.right() > parentItem()->boundingRect().right())
+                m_labelTextRect.setRight(parentItem()->boundingRect().right());
+
+            if (fm.width(m_data.m_labelText) > m_labelTextRect.width()) {
+                label = ChartPresenter::truncatedText(m_data.m_labelFont, m_data.m_labelText,
+                                                      qreal(0.0), m_labelTextRect.width(),
+                                                      m_labelTextRect.height(), m_labelTextRect);
+                m_labelArmPath = labelArmPath(armStart, centerAngle,
+                                              m_data.m_radius * m_data.m_labelArmLengthFactor,
+                                              m_labelTextRect.width(), &labelTextStart);
+
+                m_labelTextRect.moveBottomLeft(labelTextStart);
+            }
+            m_labelItem->setTextWidth(m_labelTextRect.width()
+                                      + m_labelItem->document()->documentMargin());
+            m_labelItem->setHtml(label);
+            m_labelItem->setPos(m_labelTextRect.x(), m_labelTextRect.y() + 1.0);
+        } else {
+            // label inside
+            setFlag(QGraphicsItem::ItemClipsChildrenToShape);
+            m_labelItem->setTextWidth(m_labelTextRect.width()
+                                      + m_labelItem->document()->documentMargin());
+            m_labelItem->setHtml(label);
+
+            QPointF textCenter;
+            if (m_data.m_holeRadius > 0) {
+                textCenter = m_data.m_center + offset(centerAngle, m_data.m_holeRadius
+                                                      + (m_data.m_radius
+                                                         - m_data.m_holeRadius) / 2);
+            } else {
+                textCenter = m_data.m_center + offset(centerAngle, m_data.m_radius / 2);
+            }
+            m_labelItem->setPos(textCenter.x() - m_labelItem->boundingRect().width() / 2,
+                                textCenter.y() - fm.height() / 2);
+
+            QPointF labelCenter = m_labelItem->boundingRect().center();
+            m_labelItem->setTransformOriginPoint(labelCenter);
+
+            if (m_data.m_labelPosition == QPieSlice::LabelInsideTangential) {
+                m_labelItem->setRotation(m_data.m_startAngle + m_data.m_angleSpan / 2);
+            } else if (m_data.m_labelPosition == QPieSlice::LabelInsideNormal) {
+                if (m_data.m_startAngle + m_data.m_angleSpan / 2 < 180)
+                    m_labelItem->setRotation(m_data.m_startAngle + m_data.m_angleSpan / 2 - 90);
+                else
+                    m_labelItem->setRotation(m_data.m_startAngle + m_data.m_angleSpan / 2 + 90);
+            }
+        }
     }
 
     //  bounding rect
