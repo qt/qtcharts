@@ -12,6 +12,7 @@ HTML.scripts     =
 # These also need to be listed in qhp.Qt.extraFiles with the correct
 # directory prefixes.
 
+#extraimages definition for Qt4
 extraimages.HTML        = qt-logo.png \
                           digia_logo.png \
                           qcharts.png \
@@ -24,9 +25,20 @@ extraimages.HTML        = qt-logo.png \
                           horBar.png \
                           presenterchart_example.png \
                           bg.png
-                         
-                          
-                          
+
+# extraimages definition for Qt5
+HTML.extraimages        = ./images/qt-logo.png \
+                          ./images/digia_logo.png \
+                          ./images/qcharts.png \
+                          ./images/arrow_down.png \
+                          ./images/breadcrumb.png \
+                          ./images/bullet_gt.png \
+                          ./images/bullet_dn.png \
+                          ./images/bullet_sq.png \
+                          ./images/bullet_up.png \
+                          ./images/horBar.png \
+                          ./images/presenterchart_example.png \
+                          ./images/bg.png
 
 # Include the style sheets and scripts used.
 
