@@ -131,6 +131,8 @@ void PieSliceItem::updateGeometry()
     QPointF armStart;
     m_slicePath = slicePath(m_data.m_center, m_data.m_radius, m_data.m_startAngle, m_data.m_angleSpan, &centerAngle, &armStart);
 
+    m_labelItem->setVisible(m_data.m_isLabelVisible);
+
     if (m_data.m_isLabelVisible) {
         // text rect
         QFontMetricsF fm(m_data.m_labelFont);
@@ -139,7 +141,6 @@ void PieSliceItem::updateGeometry()
                                                            0);
 
         QString label(m_data.m_labelText);
-        m_labelItem->setVisible(m_data.m_isLabelVisible);
         m_labelItem->setDefaultTextColor(m_data.m_labelBrush.color());
         m_labelItem->setFont(m_data.m_labelFont);
 
@@ -203,6 +204,8 @@ void PieSliceItem::updateGeometry()
                     m_labelItem->setRotation(m_data.m_startAngle + m_data.m_angleSpan / 2 - 90);
                 else
                     m_labelItem->setRotation(m_data.m_startAngle + m_data.m_angleSpan / 2 + 90);
+            } else {
+                m_labelItem->setRotation(0);
             }
         }
     }
