@@ -64,6 +64,7 @@ MainWidget::MainWidget(QWidget *parent)
     m_themeComboBox->addItem("BlueNcs", QChart::ChartThemeBlueNcs);
     m_themeComboBox->addItem("High Contrast", QChart::ChartThemeHighContrast);
     m_themeComboBox->addItem("Blue Icy", QChart::ChartThemeBlueIcy);
+    m_themeComboBox->addItem("Qt", QChart::ChartThemeQt);
 
     m_aaCheckBox = new QCheckBox();
     m_animationsCheckBox = new QCheckBox();

@@ -145,6 +145,7 @@ void MainWidget::initThemeCombo(QGridLayout *grid)
     chartTheme->addItem("Blue NCS");
     chartTheme->addItem("High Contrast");
     chartTheme->addItem("Blue Icy");
+    chartTheme->addItem("Qt");
     connect(chartTheme, SIGNAL(currentIndexChanged(int)),
             this, SLOT(changeChartTheme(int)));
     grid->addWidget(new QLabel("Chart theme:"), 8, 0);
@@ -371,5 +372,8 @@ void MainWidget::yMaxChanged(int value)
 void MainWidget::changeChartTheme(int themeIndex)
 {
     qDebug() << "changeChartTheme: " << themeIndex;
-    m_chart->setTheme((QChart::ChartTheme) themeIndex);
+    if (themeIndex == 0)
+        m_chart->setTheme(QChart::ChartThemeLight);
+    else
+        m_chart->setTheme((QChart::ChartTheme) (themeIndex - 1));
 }

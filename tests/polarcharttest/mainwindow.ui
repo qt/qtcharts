@@ -878,6 +878,11 @@
          <string>Theme: Blue Icy</string>
         </property>
        </item>
+       <item>
+        <property name="text">
+         <string>Theme: Qt</string>
+        </property>
+       </item>
       </widget>
       <widget class="QLabel" name="hoverLabel">
        <property name="geometry">

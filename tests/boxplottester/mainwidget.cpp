@@ -169,6 +169,7 @@ void MainWidget::initThemeCombo(QGridLayout *grid)
     chartTheme->addItem("Blue NCS");
     chartTheme->addItem("High Contrast");
     chartTheme->addItem("Blue Icy");
+    chartTheme->addItem("Qt");
     connect(chartTheme, SIGNAL(currentIndexChanged(int)),
             this, SLOT(changeChartTheme(int)));
     grid->addWidget(new QLabel("Chart theme:"), m_rowPos, 0);
