@@ -350,7 +350,10 @@ void MainWidget::clearBox()
 
     if (m_seriesCount > 0) {
         QList<QBoxSet *> sets = m_series[0]->boxSets();
-        sets.at(1)->clear();
+        if (sets.count() > 1)
+            sets.at(1)->clear();
+        else
+            qDebug() << "Create a series with at least two items first";
     } else {
         qDebug() << "Create a series first";
     }
