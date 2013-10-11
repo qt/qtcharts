@@ -175,6 +175,7 @@ void PieSliceItem::updateGeometry()
             m_labelItem->setTextWidth(m_labelTextRect.width()
                                       + m_labelItem->document()->documentMargin());
             m_labelItem->setHtml(label);
+            m_labelItem->setRotation(0);
             m_labelItem->setPos(m_labelTextRect.x(), m_labelTextRect.y() + 1.0);
         } else {
             // label inside
