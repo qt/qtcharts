@@ -45,6 +45,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
  \value ChartThemeBlueNcs
  \value ChartThemeHighContrast
  \value ChartThemeBlueIcy
+ \value ChartThemeQt
  */
 
 /*!
