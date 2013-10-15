@@ -133,18 +133,22 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
   \qmlproperty real ChartView::topMargin
+  Deprecated; use margins instead.
 */
 
 /*!
   \qmlproperty real ChartView::bottomMargin
+  Deprecated; use margins instead.
 */
 
 /*!
   \qmlproperty real ChartView::leftMargin
+  Deprecated; use margins instead.
 */
 
 /*!
   \qmlproperty real ChartView::rightMargin
+  Deprecated; use margins instead.
 */
 
 /*!
