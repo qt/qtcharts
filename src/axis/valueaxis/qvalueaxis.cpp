@@ -170,8 +170,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
   \qmlproperty bool ValueAxis::niceNumbersEnabled
-  \obsolete
-  Using this function can lead to unexpected behavior. Use applyNiceNumbers() instead.
+  Deprecated; Using this function can lead to unexpected behavior. Use applyNiceNumbers() instead.
 */
 
 /*!
@@ -254,7 +253,8 @@ int QValueAxis::tickCount() const
 void QValueAxis::setNiceNumbersEnabled(bool enable)
 {
     Q_D(QValueAxis);
-    qWarning()<<"This function is depreciated, it can lead to unexpected behavior.Use applyNiceNumbers(). ";
+    qWarning() << "Deprecated; Using this function can lead to unexpected behavior. " \
+                  "Use applyNiceNumbers() instead.";
     if(enable) {
         QObject::connect(this,SIGNAL(rangeChanged(qreal,qreal)),this,SLOT(applyNiceNumbers()));
         QObject::connect(this,SIGNAL(tickCountChanged(int)),this,SLOT(applyNiceNumbers()));
@@ -270,7 +270,8 @@ void QValueAxis::setNiceNumbersEnabled(bool enable)
 bool QValueAxis::niceNumbersEnabled() const
 {
     Q_D(const QValueAxis);
-    qWarning()<<"This function is depreciated.Use applyNiceNumbers().";
+    qWarning() << "Deprecated; Using this function can lead to unexpected behavior. " \
+                  "Use applyNiceNumbers() instead.";
     return d->m_niceNumbersEnabled;
 }
 
