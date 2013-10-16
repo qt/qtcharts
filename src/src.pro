@@ -184,7 +184,7 @@ mac: !staticlib: {
 
     # Update the name (id) of the installed library on OSX to point to the installation path
     postinstall.path = $$[QT_INSTALL_LIBS]
-    postinstall.extra = "install_name_tool -id $$[QT_INSTALL_LIBS]"/"$$MAC_CHARTS_LIB_NAME $$[QT_INSTALL_LIBS]"/"$$MAC_CHARTS_LIB_NAME"
+    postinstall.extra = "install_name_tool -id $(INSTALL_ROOT)"/"$$[QT_INSTALL_LIBS]"/"$$MAC_CHARTS_LIB_NAME $(INSTALL_ROOT)"/"$$[QT_INSTALL_LIBS]"/"$$MAC_CHARTS_LIB_NAME"
     INSTALLS += postinstall
 }
 
