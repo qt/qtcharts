@@ -20,7 +20,7 @@
 
 import QtQuick 2.0
 import QtTest 1.0
-import QtCommercial.Chart 1.1
+import QtCommercial.Chart 1.2
 
 Rectangle {
     width: 400
@@ -28,12 +28,23 @@ Rectangle {
 
     TestCase {
         id: tc1
-        name: "tst_qml-qtquicktest BarSeries 1.1"
+        name: "tst_qml-qtquicktest BarSeries 1.2"
         when: windowShown
 
         function test_properties() {
             compare(barSeries.barWidth, 0.5);
             compare(barSeries.labelsVisible, false);
+        }
+
+        function test_axes() {
+            verify(chartView.axisX() == barSeries.axisX);
+            verify(chartView.axisY() == barSeries.axisY);
+
+            compare(barSeries.axisX, stackedBarSeries.axisX);
+            compare(barSeries.axisY, stackedBarSeries.axisY);
+
+            compare(barSeries.axisX, percentBarSeries.axisX);
+            compare(barSeries.axisY, percentBarSeries.axisY);
         }
 
         function test_append() {
@@ -105,10 +116,10 @@ Rectangle {
         anchors.fill: parent
 
         BarSeries {
-            axisX: BarCategoriesAxis {}
-            axisY: ValuesAxis { min: 0; max: 10 }
             id: barSeries
             name: "bar"
+            axisX: BarCategoryAxis {}
+            axisY: ValueAxis { min: 0; max: 10 }
 
             SignalSpy {
                 id: addedSpy
@@ -120,6 +131,16 @@ Rectangle {
                 target: barSeries
                 signalName: "barsetsRemoved"
             }
+        }
+
+        StackedBarSeries {
+            id: stackedBarSeries
+            name: "stackedBar"
+        }
+
+        PercentBarSeries {
+            id: percentBarSeries
+            name: "percentBar"
         }
     }
 }

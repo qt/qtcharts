@@ -19,4 +19,10 @@
 ****************************************************************************/
 
 #include <QtQuickTest/quicktest.h>
-QUICK_TEST_MAIN(example)
+#include <QtWidgets/QApplication>
+
+int main(int argc, char *argv[])
+{
+    QApplication app(argc, argv);
+    return quick_test_main(argc, argv, "example", QUICK_TEST_SOURCE_DIR);
+}

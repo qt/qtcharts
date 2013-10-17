@@ -20,7 +20,7 @@
 
 import QtQuick 2.0
 import QtTest 1.0
-import QtCommercial.Chart 1.1
+import QtCommercial.Chart 1.2
 
 Rectangle {
     width: 400
@@ -28,7 +28,7 @@ Rectangle {
 
     TestCase {
         id: tc1
-        name: "tst_qml-qtquicktest ChartView Signals 1.1"
+        name: "tst_qml-qtquicktest ChartView Signals 1.2"
         when: windowShown
 
         // Verify onSeriesAdded and onSeriesRemoved signals

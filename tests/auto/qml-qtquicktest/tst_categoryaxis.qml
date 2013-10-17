@@ -18,9 +18,9 @@
 **
 ****************************************************************************/
 
-import QtQuick 1.0
-import QtQuickTest 1.0
-import QtCommercial.Chart 1.2
+import QtQuick 2.0
+import QtTest 1.0
+import QtCommercial.Chart 1.3
 
 Rectangle {
     width: 400

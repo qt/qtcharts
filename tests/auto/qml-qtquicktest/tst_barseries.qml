@@ -18,9 +18,9 @@
 **
 ****************************************************************************/
 
-import QtQuick 1.0
-import QtQuickTest 1.0
-import QtCommercial.Chart 1.2
+import QtQuick 2.0
+import QtTest 1.0
+import QtCommercial.Chart 1.3
 
 Rectangle {
     width: 400
@@ -37,9 +37,8 @@ Rectangle {
         }
 
         function test_axes() {
-            compare(chartView.axes.length, 2);
-            verify(chartView.axes[0] == barSeries.axisX || chartView.axes[1] == barSeries.axisX);
-            verify(chartView.axes[0] == barSeries.axisY || chartView.axes[1] == barSeries.axisY);
+            verify(chartView.axisX() == barSeries.axisX);
+            verify(chartView.axisY() == barSeries.axisY);
 
             compare(barSeries.axisX, stackedBarSeries.axisX);
             compare(barSeries.axisY, stackedBarSeries.axisY);
