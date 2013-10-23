@@ -28,6 +28,7 @@
 
 /*!
     \class QScatterSeries
+    \inmodule Qt Charts
     \brief The QScatterSeries class is used for making scatter charts.
 
     \mainclass
@@ -46,18 +47,21 @@
     chart->addSeries(series);
     \endcode
 */
+#ifdef QDOC_QT5
+/*!
+    \qmltype ScatterSeries
+    \instantiates QScatterSeries
+    \inqmlmodule QtCommercial.Chart
+
+    \include /doc/src/scatterseries.qdocinc
+*/
+#else
 /*!
     \qmlclass ScatterSeries QScatterSeries
-    \inherits XYSeries
 
-    The following QML shows how to create a chart with two simple scatter series:
-    \snippet ../demos/qmlchart/qml/qmlchart/View5.qml 1
-
-    \beginfloatleft
-    \image demos_qmlchart5.png
-    \endfloat
-    \clearfloat
+    \include ../doc/src/scatterseries.qdocinc
 */
+#endif
 
 /*!
     \enum QScatterSeries::MarkerShape

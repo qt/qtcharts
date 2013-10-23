@@ -25,6 +25,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QPieSlice
+    \inmodule Qt Charts
     \brief Defines a slice in pie series.
 
     This object defines the properties of a single slice in a QPieSeries.
@@ -38,21 +39,21 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     To enable user interaction with the pie some basic signals are provided about clicking and hovering.
 */
 
+#ifdef QDOC_QT5
+/*!
+    \qmltype PieSlice
+    \instantiates QPieSlice
+    \inqmlmodule QtCommercial.Chart
+
+    \include /doc/src/pieslice.qdocinc
+*/
+#else
 /*!
     \qmlclass PieSlice QPieSlice
-    PieSlice defines the properties of a single slice in a PieSeries. The element should be used
-    as a child for a PieSeries. For example:
-    \snippet ../examples/qmlpiechart/qml/qmlpiechart/main.qml 2
 
-    An alternative (dynamic) method for adding slices to a PieSeries is using PieSeries.append
-    method.
-    \snippet ../examples/qmlpiechart/qml/qmlpiechart/main.qml 4
-
-    In that case you may want to use PieSeries.at or PieSeries.find to access the properties of
-    an individual PieSlice instance.
-    \snippet ../examples/qmlpiechart/qml/qmlpiechart/main.qml 5
-    \sa PieSeries
+    \include ../doc/src/pieslice.qdocinc
 */
+#endif
 
 /*!
  \enum QPieSlice::LabelPosition
@@ -281,7 +282,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
     Defines the font used for slice label.
 
-    See the \l {Font} {QML Font Element} for detailed documentation.
+    See the Qt documentation for more details of Font.
 
     \sa labelVisible, labelPosition
 */

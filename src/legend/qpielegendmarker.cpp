@@ -27,12 +27,13 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QPieLegendMarker
+    \inmodule Qt Charts
     \brief LegendMarker object.
     \mainclass
 
     QPieLegendMarker is related to QPieSeries. With QPieSeries, each slice of pie is related to one marker in QLegend.
 
-    \sa QLegend QPieSeries QPieSlice
+    \sa QLegend, QPieSeries, QPieSlice
 */
 
 /*!

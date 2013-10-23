@@ -1,0 +1,3 @@
+VXYModelMapper allows you to use your own QAbstractItemModel derived model with data in columns as a data source
+for XYSeries based series. It is possible to use both QAbstractItemModel and XYSeries data API to manipulate data.
+VXYModelMapper keeps the series and the model in sync.

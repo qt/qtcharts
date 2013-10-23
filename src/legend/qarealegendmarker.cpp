@@ -27,12 +27,13 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QAreaLegendMarker
+    \inmodule Qt Charts
     \brief QAreaLegendMarker object.
     \mainclass
 
     QAreaLegendMarker is related to QAreaSeries. One QAreaSeries results in one marker.
 
-    \sa QLegend QAreaSeries
+    \sa QLegend, QAreaSeries
 */
 
 /*!

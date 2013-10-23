@@ -24,6 +24,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QVXYModelMapper
+    \inmodule Qt Charts
     \mainclass
 
     Model mappers allow you to use QAbstractItemModel derived models as a data source for a chart series.
@@ -31,13 +32,21 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     It is possible to use both QAbstractItemModel and QXYSeries model API. QXYModelMapper makes sure that QXYSeries and the model are kept in sync.
     Note: used model has to support adding/removing rows/columns and modifying the data of the cells.
 */
+#ifdef QDOC_QT5
 /*!
-    \qmlclass VXYModelMapper QHXYModelMapper
+    \qmltype VXYModelMapper
+    \instantiates QVXYModelMapper
+    \inqmlmodule QtCommercial.Chart
 
-    VXYModelMapper allows you to use your own QAbstractItemModel derived model with data in columns as a data source
-    for XYSeries based series. It is possible to use both QAbstractItemModel and XYSeries data API to manipulate data.
-    VYModelMapper keeps the series and the model in sync.
+    \include /doc/src/vxymodelmapper.qdocinc
 */
+#else
+/*!
+    \qmlclass VXYModelMapper QVXYModelMapper
+
+    \include ../doc/src/vxymodelmapper.qdocinc
+*/
+#endif
 
 /*!
     \property QVXYModelMapper::series

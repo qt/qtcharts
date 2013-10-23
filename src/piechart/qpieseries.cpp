@@ -35,6 +35,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QPieSeries
+    \inmodule Qt Charts
     \brief Pie series API for Qt Charts.
 
     The pie series defines a pie chart which consists of pie slices which are defined as QPieSlice objects.
@@ -51,23 +52,25 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     See the \l {PieChart Example} {pie chart example} or \l {DonutChart Example} {donut chart example} to learn how to use QPieSeries.
     \table 100%
     \row
-    \o \image examples_piechart.png
-    \o \image examples_donutchart.png
+    \li \image examples_piechart.png
+    \li \image examples_donutchart.png
     \endtable
 */
+#ifdef QDOC_QT5
+/*!
+    \qmltype PieSeries
+    \instantiates QPieSeries
+    \inqmlmodule QtCommercial.Chart
+
+    \include /doc/src/pieseries.qdocinc
+*/
+#else
 /*!
     \qmlclass PieSeries QPieSeries
-    \inherits AbstractSeries
 
-    The following QML shows how to create a simple pie chart.
-
-    \snippet ../demos/qmlchart/qml/qmlchart/View1.qml 1
-
-    \beginfloatleft
-    \image demos_qmlchart1.png
-    \endfloat
-    \clearfloat
+    \include ../doc/src/pieseries.qdocinc
 */
+#endif
 
 /*!
     \property QPieSeries::horizontalPosition
@@ -76,8 +79,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     The value is a relative value to the chart rectangle where:
 
     \list
-    \o 0.0 is the absolute left.
-    \o 1.0 is the absolute right.
+    \li 0.0 is the absolute left.
+    \li 1.0 is the absolute right.
     \endlist
     Default value is 0.5 (center).
     \sa verticalPosition
@@ -91,8 +94,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     The value is a relative value to the chart rectangle where:
 
     \list
-    \o 0.0 is the absolute left.
-    \o 1.0 is the absolute right.
+    \li 0.0 is the absolute left.
+    \li 1.0 is the absolute right.
     \endlist
     Default value is 0.5 (center).
     \sa verticalPosition
@@ -105,8 +108,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     The value is a relative value to the chart rectangle where:
 
     \list
-    \o 0.0 is the absolute top.
-    \o 1.0 is the absolute bottom.
+    \li 0.0 is the absolute top.
+    \li 1.0 is the absolute bottom.
     \endlist
     Default value is 0.5 (center).
     \sa horizontalPosition
@@ -120,8 +123,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     The value is a relative value to the chart rectangle where:
 
     \list
-    \o 0.0 is the absolute top.
-    \o 1.0 is the absolute bottom.
+    \li 0.0 is the absolute top.
+    \li 1.0 is the absolute bottom.
     \endlist
     Default value is 0.5 (center).
     \sa horizontalPosition
@@ -134,8 +137,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     The value is a relative value to the chart rectangle where:
 
     \list
-    \o 0.0 is the minimum size (pie not drawn).
-    \o 1.0 is the maximum size that can fit the chart.
+    \li 0.0 is the minimum size (pie not drawn).
+    \li 1.0 is the maximum size that can fit the chart.
     \endlist
 
     When setting this property the holeSize property is adjusted if necessary, to ensure that the hole size is not greater than the outer size.
@@ -151,8 +154,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     The value is a relative value to the chart rectangle where:
 
     \list
-    \o 0.0 is the minimum size (pie not drawn).
-    \o 1.0 is the maximum size that can fit the chart.
+    \li 0.0 is the minimum size (pie not drawn).
+    \li 1.0 is the maximum size that can fit the chart.
     \endlist
 
     Default value is 0.7.
@@ -165,8 +168,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     The value is a relative value to the chart rectangle where:
 
     \list
-    \o 0.0 is the minimum size (full pie drawn, without any hole inside).
-    \o 1.0 is the maximum size that can fit the chart. (donut has no width)
+    \li 0.0 is the minimum size (full pie drawn, without any hole inside).
+    \li 1.0 is the maximum size that can fit the chart. (donut has no width)
     \endlist
 
     The value is never greater then size property.
@@ -181,8 +184,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     The value is a relative value to the chart rectangle where:
 
     \list
-    \o 0.0 is the minimum size (full pie drawn, without any hole inside).
-    \o 1.0 is the maximum size that can fit the chart. (donut has no width)
+    \li 0.0 is the minimum size (full pie drawn, without any hole inside).
+    \li 1.0 is the maximum size that can fit the chart. (donut has no width)
     \endlist
 
     When setting this property the size property is adjusted if necessary, to ensure that the inner size is not greater than the outer size.

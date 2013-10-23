@@ -1,0 +1,12 @@
+PieSlice defines the properties of a single slice in a PieSeries. The element should be used
+as a child for a PieSeries. For example:
+\snippet ../examples/qmlpiechart/qml/qmlpiechart/main.qml 2
+
+An alternative (dynamic) method for adding slices to a PieSeries is using PieSeries.append
+method.
+\snippet ../examples/qmlpiechart/qml/qmlpiechart/main.qml 4
+
+In that case you may want to use PieSeries.at or PieSeries.find to access the properties of
+an individual PieSlice instance.
+\snippet ../examples/qmlpiechart/qml/qmlpiechart/main.qml 5
+\sa PieSeries

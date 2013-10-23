@@ -1,0 +1,19 @@
+\inherits BarModelMapper
+
+VBarModelMapper allows you to use your own QAbstractItemModel derived model with data in columns as a data source
+for any bar series. It is possible to use both QAbstractItemModel and bar series data API to manipulate data.
+VBarModelMapper keeps the series and the model in sync.
+
+The following QML example would create a bar series with three bar sets (assuming the
+model has at least four columns). Each bar set would contain data starting from row 1. The name of a set would be
+defined by the horizontal header (of the column).
+\code
+    BarSeries {
+        VBarModelMapper {
+            model: myCustomModel // QAbstractItemModel derived implementation
+            firstBarSetColumn: 1
+            lastBarSetColumn: 3
+            firstRow: 1
+        }
+    }
+\endcode

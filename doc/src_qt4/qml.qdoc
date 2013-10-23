@@ -8,14 +8,14 @@
 
     \table
         \row
-            \o  \br
+            \li \br
                 Use the following QML to create a simple pie chart:
                 \br
                 \br
                 \snippet ../examples/qmlpiechart/qml/qmlpiechart/main.qml 1
                 \snippet ../examples/qmlpiechart/qml/qmlpiechart/main.qml 2
                 \snippet ../examples/qmlpiechart/qml/qmlpiechart/main.qml 3
-            \o \inlineimage examples_qmlpiechart.png
+            \li \inlineimage examples_qmlpiechart.png
     \endtable
 
     \note Since Qt Charts utilizes Qt Graphics View Framework for drawing, it works best
@@ -38,7 +38,7 @@
                     <li><a href="qml-polarchartview.html">PolarChartView</a></li>
                     <li><a href="qml-abstractaxis.html">AbstractAxis</a></li>
                     <li><a href="qml-valueaxis.html">ValueAxis</a></li>
-                    <li><a href="qml-logvaluesaxis.html">LogValueAxis</a></li>
+                    <li><a href="qml-logvalueaxis.html">LogValueAxis</a></li>
                     <li><a href="qml-categoryaxis.html">CategoryAxis</a></li>
                     <li><a href="qml-categoryrange.html">CategoryRange</a></li>
                     <li><a href="qml-barcategoryaxis.html">BarCategoryAxis</a></li>
@@ -99,6 +99,7 @@
                     <li><a href="qml-boxset.html">BoxSet</a></li>
                     <li><a href="qml-hbarmodelmapper.html">HBarModelMapper</a></li>
                     <li><a href="qml-vbarmodelmapper.html">VBarModelMapper</a></li>
+                    <li><a href="qml-vboxplotmodelmapper.html">VBoxPlotModelMapper</a></li>
                     </ul>
                 </td>
             </tr>

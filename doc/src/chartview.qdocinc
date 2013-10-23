@@ -1,0 +1,11 @@
+ChartView element is the parent that is responsible for showing different chart series types.
+
+The following QML shows how to create a simple chart with one pie series:
+\snippet ../examples/qmlpiechart/qml/qmlpiechart/main.qml 1
+\snippet ../examples/qmlpiechart/qml/qmlpiechart/main.qml 2
+\snippet ../examples/qmlpiechart/qml/qmlpiechart/main.qml 3
+
+\beginfloatleft
+\image examples_qmlpiechart.png
+\endfloat
+\clearfloat

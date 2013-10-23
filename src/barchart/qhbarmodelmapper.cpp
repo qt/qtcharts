@@ -24,6 +24,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QHBarModelMapper
+    \inmodule Qt Charts
     \brief Horizontal model mapper for bar series.
     \mainclass
 
@@ -33,27 +34,21 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Adding/removing value from the BarSet causes the the same change in the rest of the BarSets added to the same series.
     \note Used model has to support adding/removing rows/columns and modifying the data of the cells.
 */
+#ifdef QDOC_QT5
+/*!
+    \qmltype HBarModelMapper
+    \instantiates QHBarModelMapper
+    \inqmlmodule QtCommercial.Chart
+
+    \include /doc/src/hbarmodelmapper.qdocinc
+*/
+#else
 /*!
     \qmlclass HBarModelMapper QHBarModelMapper
 
-    HBarModelMapper allows you to use your own QAbstractItemModel derived model with data in rows as a data source
-    for any bar series. It is possible to use both QAbstractItemModel and bar series data API to manipulate data.
-    HBarModelMapper keeps the series and the model in sync.
-
-    The following QML example would create a bar series with three bar sets (assuming the model has
-    at least four rows). Each bar set would contain data starting from column 1. The name of a set would be defined by
-    the vertical header (of the row).
-    \code
-        BarSeries {
-            HBarModelMapper {
-                model: myCustomModel // QAbstractItemModel derived implementation
-                firstBarSetRow: 1
-                lastBarSetRow: 3
-                firstColumn: 1
-            }
-        }
-    \endcode
+    \include ../doc/src/hbarmodelmapper.qdocinc
 */
+#endif
 
 /*!
     \property QHBarModelMapper::series

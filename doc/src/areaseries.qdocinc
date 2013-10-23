@@ -1,0 +1,8 @@
+\inherits AbstractSeries
+
+The following QML shows how to create a simple area chart:
+\snippet ../demos/qmlchart/qml/qmlchart/View4.qml 1
+\beginfloatleft
+\image demos_qmlchart4.png
+\endfloat
+\clearfloat

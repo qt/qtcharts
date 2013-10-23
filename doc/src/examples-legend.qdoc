@@ -10,8 +10,8 @@
 
     \table
         \row
-            \o \inlineimage examples_legend_detach.png
-            \o \inlineimage examples_legend_detach2.png
+            \li \inlineimage examples_legend_detach.png
+            \li \inlineimage examples_legend_detach2.png
     \endtable
 
     Here we turn the legend visible and set its alignment to the bottom of the chart.

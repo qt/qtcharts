@@ -24,6 +24,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QHXYModelMapper
+    \inmodule Qt Charts
     \mainclass
 
     Model mappers allow you to use QAbstractItemModel derived models as a data source for a chart series.
@@ -31,13 +32,21 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     It is possible to use both QAbstractItemModel and QXYSeries model API. QXYModelMapper makes sure that QXYSeries and the model are kept in sync.
     Note: used model has to support adding/removing rows/columns and modifying the data of the cells.
 */
+#ifdef QDOC_QT5
+/*!
+    \qmltype HXYModelMapper
+    \instantiates QHXYModelMapper
+    \inqmlmodule QtCommercial.Chart
+
+    \include /doc/src/hxymodelmapper.qdocinc
+*/
+#else
 /*!
     \qmlclass HXYModelMapper QHXYModelMapper
 
-    HXYModelMapper allows you to use your own QAbstractItemModel derived model with data in rows as a data source
-    for XYSeries based series. It is possible to use both QAbstractItemModel and XYSeries data API to manipulate data.
-    HXYModelMapper keeps the series and the model in sync.
+    \include ../doc/src/hxymodelmapper.qdocinc
 */
+#endif
 
 /*!
     \property QHXYModelMapper::series

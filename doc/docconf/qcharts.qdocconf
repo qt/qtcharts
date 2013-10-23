@@ -1,32 +1,23 @@
-include(compat.qdocconf)
-include(macros.qdocconf)
-include(qchart-html-template.qdocconf)
-include(qchart-qch.qdocconf)
-
 project = Qt Charts
 description = Library for creating charts
+version = 1.3.1
 
-sourcedirs = ../src \
-             ../examples \
-             ./src \
-             ../plugins/declarative
-headerdirs = ../src \
-             ../examples \
-             ../plugins/declarative
-exampledirs = ../ \
-              ../src \
-              ../examples 
-              
-excludefiles += ../examples/linechart/linechart.pro
+sourcedirs = ../../src \
+             ../../examples \
+             ../src \
+             ../qch \
+             ../../plugins/declarative
+headerdirs = ../../src \
+             ../../examples \
+             ../../plugins/declarative
+exampledirs = ../../ \
+              ../../src \
+              ../../examples
 
-sources.fileextensions = *.cpp *.qdoc *.mm *.qml
+sources.fileextensions = *.cpp *.qdoc *.mm *.qml *.qdocinc
 headers.fileextensions = *.h *.ch *.h++ *.hh *.hpp *.hxx
 examples.fileextensions = *.cpp *.h *.js *.xq *.svg *.xml *.ui *.qhp *.qhcp *.qml
 examples.imageextensions = *.png *.jpeg *.jpg *.gif *.mng
-
-imagedirs = ./images
-outputdir = ./html
-
 
 Cpp.ignoretokens        = QTCOMMERCIALCHART_EXPORT \
                           QTCOMMERCIALCHART_END_NAMESPACE \

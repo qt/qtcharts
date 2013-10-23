@@ -25,16 +25,21 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+#ifdef QDOC_QT5
+/*!
+    \qmltype BoxSet
+    \instantiates QBoxSet
+    \inqmlmodule QtCommercial.Chart
+
+    \include /doc/src/declarativeboxset.qdocinc
+*/
+#else
 /*!
     \qmlclass BoxSet QBoxSet
 
-    BoxSet represents one box-and-whiskers item. It takes five values to create a graphical representation
-    of range and three medians. There are two ways to give the values. The first one is with constructor
-    or with append method. In these the values have to be given in the following order: lower extreme, lower quartile, median,
-    upper quartile and upper extreme. The second method is to create an empty QBoxSet instance and give the values using
-    value specific methods.
-    \sa BoxPlotSeries
+    \include ../doc/src/declarativeboxset.qdocinc
 */
+#endif
 /*!
     \qmlproperty string BoxSet::values
     The values on the box-and-whiskers set.
@@ -95,43 +100,22 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 
+#ifdef QDOC_QT5
+/*!
+    \qmltype BoxPlotSeries
+    \instantiates QBoxPlotSeries
+    \inqmlmodule QtCommercial.Chart
+
+    \include /doc/src/declarativeboxplotseries.qdocinc
+*/
+#else
 /*!
     \qmlclass BoxPlotSeries QBoxPlotSeries
-    \inherits QAbstractSeries
 
-    BoxPlotSeries represents a series of data shown as box-and-whiskers bars. The purpose of this class is to act as
-    a container for single box-and-whiskers items. Each item is drawn to own slot. If chart includes multiple instances of
-    BoxPlotSeries then box-and-whiskers items with the same index are drawn to same slot.
-
-    The following QML shows how to create a simple box-and-whiskers chart:
-    \code
-    import QtQuick 1.0
-    import QtCommercial.Chart 1.3
-
-    ChartView {
-        title: "Box Plot series"
-        width: 400
-        height: 300
-        theme: ChartView.ChartThemeBrownSand
-        legend.alignment: Qt.AlignBottom
-
-        BoxPlotSeries {
-            id: plotSeries
-            name: "Income"
-            BoxSet { label: "Jan"; values: [3, 4, 5.1, 6.2, 8.5] }
-            BoxSet { label: "Feb"; values: [5, 6, 7.5, 8.6, 11.8] }
-            BoxSet { label: "Mar"; values: [3.2, 5, 5.7, 8, 9.2] }
-            BoxSet { label: "Apr"; values: [3.8, 5, 6.4, 7, 8] }
-            BoxSet { label: "May"; values: [4, 5, 5.2, 6, 7] }
-        }
-    }
-    \endcode
-
-    \beginfloatleft
-    \image examples_qmlboxplot.png
-    \endfloat
-    \clearfloat
+    \include ../doc/src/declarativeboxplotseries.qdocinc
 */
+#endif
+
 /*!
     \qmlmethod BoxPlotSeries::append(string label, VariantList values)
     Appends a new box-and-whiskers set with \a label and \a values to the series.

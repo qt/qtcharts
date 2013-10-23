@@ -37,6 +37,7 @@
 
 /*!
     \class QChartView
+    \inmodule Qt Charts
     \brief Standalone charting widget.
 
     QChartView is a standalone widget that can display charts. It does not require separate

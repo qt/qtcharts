@@ -31,6 +31,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \class QLogValueAxis
+    \inmodule Qt Charts
     \brief The QLogValueAxis class is used for manipulating chart's axis.
     \mainclass
 
@@ -40,16 +41,21 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     since empty cells in models typically contain zero values.
 */
 
+#ifdef QDOC_QT5
+/*!
+    \qmltype LogValueAxis
+    \instantiates QLogValueAxis
+    \inqmlmodule QtCommercial.Chart
+
+    \include /doc/src/logvalueaxis.qdocinc
+*/
+#else
 /*!
     \qmlclass LogValueAxis QLogValueAxis
-    \brief The LogValueAxis element is used for manipulating chart's axes.
-    \inherits AbstractAxis
 
-    \note If a LogValueAxis is attached to a series with one or more points with
-    negative or zero values on the associated dimension, the series will not be
-    plotted at all. This is particularly relevant when XYModelMappers are used,
-    since empty cells in models typically contain zero values.
+    \include ../doc/src/logvalueaxis.qdocinc
 */
+#endif
 
 /*!
   \property QLogValueAxis::min

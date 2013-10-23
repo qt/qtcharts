@@ -24,37 +24,30 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QVBoxPlotModelMapper
+    \inmodule Qt Charts
     \brief Vertical model mapper for bar series
     \mainclass
 
     Model mappers allow you to use QAbstractItemModel derived models as a data source for a chart series.
     Vertical model mapper is used to create a connection between QBoxPlotSeries and QAbstractItemModel derived model object.
     Model mapper maintains equal size of all the QBoxSets.
-    Note: used model has to support adding/removing rows/columns and modifying the data of the cells.
+    \note used model has to support adding/removing rows/columns and modifying the data of the cells.
 */
+#ifdef QDOC_QT5
 /*!
-    \qmlclass VBoxPlotModelMapper
-    \mainclass
+    \qmltype VBoxPlotModelMapper
+    \instantiates QVBoxPlotModelMapper
+    \inqmlmodule QtCommercial.Chart
 
-    VBoxPlotModelMapper allows you to use your own QAbstractItemModel derived model with data in columns as a data source
-    for any box-and-whiskers series. It is possible to use both QAbstractItemModel and box-and-whiskers series data API to
-    manipulate data.
-    VBoxPlotModelMapper keeps the series and the model in sync.
-
-    The following QML example would create a box-and-whiskers series with three box sets (assuming the
-    model has at least four columns). Each box set would contain data starting from row 1. The name of a set would be
-    defined by the horizontal header (of the column).
-    \code
-        BarSeries {
-            VBarModelMapper {
-                model: myCustomModel // QAbstractItemModel derived implementation
-                firstBoxSetColumn: 1
-                lastBoxSetColumn: 3
-                firstRow: 1
-            }
-        }
-    \endcode
+    \include /doc/src/vboxplotmodelmapper.qdocinc
 */
+#else
+/*!
+    \qmlclass VBoxPlotModelMapper QVBoxPlotModelMapper
+
+    \include ../doc/src/vboxplotmodelmapper.qdocinc
+*/
+#endif
 
 /*!
     \property QVBoxPlotModelMapper::series
@@ -64,7 +57,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     When new series is specified the old series is disconnected (it preserves its data)
 */
 /*!
-    \qmlproperty AbstractBarSeries VBarModelMapper::series
+    \qmlproperty AbstractBarSeries VBoxPlotModelMapper::series
     Defines the AbstractBarSeries based object that is used by the mapper. All the data in the series is discarded when it is
     set to the mapper. When new series is specified the old series is disconnected (it preserves its data).
 */
@@ -74,9 +67,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief Defines the model that is used by the mapper.
 */
 /*!
-    \qmlproperty SomeModel VBarModelMapper::model
+    \qmlproperty SomeModel VBoxPlotModelMapper::model
     The QAbstractItemModel based model that is used by the mapper. You need to implement the model
-    and expose it to QML. Note: the model has to support adding/removing rows/columns and modifying
+    and expose it to QML. \note the model has to support adding/removing rows/columns and modifying
     the data of the cells.
 */
 

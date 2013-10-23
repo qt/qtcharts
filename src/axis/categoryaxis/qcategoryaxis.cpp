@@ -31,6 +31,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \class QCategoryAxis
+    \inmodule Qt Charts
     \brief The QCategoryAxis class allows putting a named ranges on the axis.
     \mainclass
 
@@ -40,7 +41,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Example code on how to use QCategoryAxis:
     \table
         \row
-            \o  \br
+            \li  \br
                 \br
                 \code
                 QChartView *chartView = new QChartView;
@@ -57,25 +58,25 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
                 axisY->append("Third", 52);
                 chartView->chart()->setAxisY(axisY, series);
                 \endcode
-            \o \br
+            \li \br
                \inlineimage api_category_axis.png
     \endtable
 */
+#ifdef QDOC_QT5
+/*!
+    \qmltype CategoryAxis
+    \instantiates QCategoryAxis
+    \inqmlmodule QtCommercial.Chart
+
+    \include /doc/src/categoryaxis.qdocinc
+*/
+#else
 /*!
     \qmlclass CategoryAxis QCategoryAxis
-    \inherits AbstractAxis
-    \brief CategoryAxis allows putting a named ranges on the axis.
 
-    For example:
-    \table
-        \row
-            \o  \br
-                \br
-                \br
-                \snippet ../demos/qmlaxes/qml/qmlaxes/View3.qml 1
-            \o \inlineimage demos_qmlaxes3.png
-    \endtable
+    \include ../doc/src/categoryaxis.qdocinc
 */
+#endif
 
 /*!
   \property QCategoryAxis::startValue

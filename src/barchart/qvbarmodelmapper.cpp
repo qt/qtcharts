@@ -24,6 +24,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QVBarModelMapper
+    \inmodule Qt Charts
     \brief Vertical model mapper for bar series.
     \mainclass
 
@@ -33,28 +34,21 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Adding/removing value from the BarSet causes the the same change in the rest of the BarSets added to the same series.
     \note Used model has to support adding/removing rows/columns and modifying the data of the cells.
 */
+#ifdef QDOC_QT5
 /*!
-    \qmlclass VBarModelMapper
-    \mainclass
+    \qmltype VBarModelMapper
+    \instantiates QVBarModelMapper
+    \inqmlmodule QtCommercial.Chart
 
-    VBarModelMapper allows you to use your own QAbstractItemModel derived model with data in columns as a data source
-    for any bar series. It is possible to use both QAbstractItemModel and bar series data API to manipulate data.
-    VBarModelMapper keeps the series and the model in sync.
-
-    The following QML example would create a bar series with three bar sets (assuming the
-    model has at least four columns). Each bar set would contain data starting from row 1. The name of a set would be
-    defined by the horizontal header (of the column).
-    \code
-        BarSeries {
-            VBarModelMapper {
-                model: myCustomModel // QAbstractItemModel derived implementation
-                firstBarSetColumn: 1
-                lastBarSetColumn: 3
-                firstRow: 1
-            }
-        }
-    \endcode
+    \include /doc/src/vbarmodelmapper.qdocinc
 */
+#else
+/*!
+    \qmlclass VBarModelMapper QVBarModelMapper
+
+    \include ../doc/src/vbarmodelmapper.qdocinc
+*/
+#endif
 
 /*!
     \property QVBarModelMapper::series

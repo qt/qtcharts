@@ -28,6 +28,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QAbstractAxis
+    \inmodule Qt Charts
     \brief The QAbstractAxis class is used for manipulating chart's axis.
     \mainclass
 
@@ -38,16 +39,21 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Properties and visibility of various axis elements such as axis line, title, labels, grid lines,
     and shades can be individually controlled.
 */
+#ifdef QDOC_QT5
+/*!
+    \qmltype AbstractAxis
+    \instantiates QAbstractAxis
+    \inqmlmodule QtCommercial.Chart
 
+    \include /doc/src/abstractaxis.qdocinc
+*/
+#else
 /*!
     \qmlclass AbstractAxis QAbstractAxis
-    \brief The AbstractAxis is a base element used for specialized axis elements.
 
-    Each series can be bound to only one horizontal and vertical axis.
-
-    Properties and visibility of various axis elements such as axis line, title, labels, grid lines,
-    and shades can be individually controlled.
+    \include ../doc/src/abstractaxis.qdocinc
 */
+#endif
 
 /*!
     \enum QAbstractAxis::AxisType
@@ -142,7 +148,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   \qmlproperty Font AbstractAxis::labelsFont
   The font of the axis labels.
 
-  See the \l {Font} {QML Font Element} for detailed documentation.
+  See the Qt documentation for more details of Font.
 */
 
 /*!

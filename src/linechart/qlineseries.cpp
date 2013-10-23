@@ -28,6 +28,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QLineSeries
+    \inmodule Qt Charts
     \brief The QLineSeries class is used for making line charts.
 
     \mainclass
@@ -46,17 +47,21 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     chart->addSeries(series);
     \endcode
 */
+#ifdef QDOC_QT5
+/*!
+    \qmltype LineSeries
+    \instantiates QLineSeries
+    \inqmlmodule QtCommercial.Chart
+
+    \include /doc/src/lineseries.qdocinc
+*/
+#else
 /*!
     \qmlclass LineSeries QLineSeries
-    \inherits XYSeries
 
-    The following QML shows how to create a simple line chart:
-    \snippet ../demos/qmlchart/qml/qmlchart/View2.qml 1
-    \beginfloatleft
-    \image demos_qmlchart2.png
-    \endfloat
-    \clearfloat
+    \include ../doc/src/lineseries.qdocinc
 */
+#endif
 
 /*!
     \fn virtual SeriesType QLineSeries::type() const

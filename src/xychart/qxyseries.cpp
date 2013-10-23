@@ -31,15 +31,24 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QXYSeries
+    \inmodule Qt Charts
     \brief The QXYSeries class is a base class for line, spline and scatter series.
 */
+#ifdef QDOC_QT5
 /*!
-    \qmlclass XYSeries
-    \inherits AbstractSeries
-    The XYSeries class is a base class for line, spline and scatter series.
+    \qmltype XYSeries
+    \instantiates QXYSeries
+    \inqmlmodule QtCommercial.Chart
 
-    The class cannot be instantiated directly.
+    \include /doc/src/xyseries.qdocinc
 */
+#else
+/*!
+    \qmlclass XYSeries QXYSeries
+
+    \include ../doc/src/xyseries.qdocinc
+*/
+#endif
 
 /*!
     \qmlproperty AbstractAxis XYSeries::axisX

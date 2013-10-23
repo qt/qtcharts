@@ -30,6 +30,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QBarSeries
+    \inmodule Qt Charts
     \brief Series for creating bar chart.
     \mainclass
 
@@ -42,17 +43,21 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
     \sa QBarSet, QPercentBarSeries, QAbstractBarSeries, QStackedBarSeries
 */
+#ifdef QDOC_QT5
+/*!
+    \qmltype BarSeries
+    \instantiates QBarSeries
+    \inqmlmodule QtCommercial.Chart
+
+    \include /doc/src/barseries.qdocinc
+*/
+#else
 /*!
     \qmlclass BarSeries QBarSeries
-    \inherits AbstractBarSeries
 
-    The following QML shows how to create a simple grouped bar chart:
-    \snippet ../demos/qmlchart/qml/qmlchart/View6.qml 1
-    \beginfloatleft
-    \image demos_qmlchart6.png
-    \endfloat
-    \clearfloat
+    \include ../doc/src/barseries.qdocinc
 */
+#endif
 
 /*!
     Constructs empty QBarSeries.

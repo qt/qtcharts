@@ -38,6 +38,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QLegend
+    \inmodule Qt Charts
     \brief Legend object.
     \mainclass
 
@@ -50,26 +51,21 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
     \sa QChart
 */
+#ifdef QDOC_QT5
+/*!
+    \qmltype Legend
+    \instantiates QLegend
+    \inqmlmodule QtCommercial.Chart
+
+    \include /doc/src/legend.qdocinc
+*/
+#else
 /*!
     \qmlclass Legend QLegend
-    \brief Legend is part of Qt Chart QML API.
 
-    Legend is a graphical object, whics displays legend of the chart. Legend state is updated by ChartView, when
-    series have been changed. Legend is used via ChartView class. For example:
-    \code
-        ChartView {
-            legend.visible: true
-            legend.alignment: Qt.AlignBottom
-            // Add a few series...
-        }
-    \endcode
-
-    \image examples_percentbarchart_legend.png
-
-    Please note that there is no QML API available for modifying legend markers, unlike in the Qt API of Charts.
-    The use case of modifying markers can be implemented for example by creating your own custom legend. For an example
-    on how to do this, see \l {demos/qmlcustomlegend}{Qml Custom Demo} application.
+    \include ../doc/src/legend.qdocinc
 */
+#endif
 
 /*!
     \property QLegend::alignment

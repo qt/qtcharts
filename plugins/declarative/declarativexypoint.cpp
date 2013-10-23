@@ -23,12 +23,20 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+#ifdef QDOC_QT5
+/*!
+    \qmltype XYPoint
+    \inqmlmodule QtCommercial.Chart
+
+    \include /doc/src/declarativexypoint.qdocinc
+*/
+#else
 /*!
     \qmlclass XYPoint QPointF
-    XYPoint is a convenience element for initializing XY-series with static coordinate data. To
-    manipulate an XY-series dynamically, use it's data manipulation functions instead.
-    \sa LineSeries, AreaSeries, ScatterSeries, SplineSeries
+
+    \include ../doc/src/declarativexypoint.qdocinc
 */
+#endif
 
 /*!
     \qmlproperty real XYPoint::x

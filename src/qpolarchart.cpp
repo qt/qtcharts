@@ -34,6 +34,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
  \class QPolarChart
+ \inmodule Qt Charts
  \brief Polar chart API for Qt Charts.
 
  QPolarChart is a specialization of QChart to show a polar chart.

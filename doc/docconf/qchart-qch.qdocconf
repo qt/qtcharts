@@ -1,4 +1,4 @@
-qhp.projects                            = QtCharts
+qhp.projects                  = QtCharts
 qhp.QtCharts.file             = qtcharts.qhp
 qhp.QtCharts.namespace        = com.digia.qtcharts.$QT_CHARTS_VERSION_TAG
 qhp.QtCharts.virtualFolder    = doc
@@ -28,17 +28,17 @@ qhp.QtCharts.subprojects.demos.indexTitle = Qt Charts Demos
 # Files not referenced in any qdoc file.
 # See also extraimages.HTML
 qhp.QtCharts.extraFiles = index.html \
-                                    examples.html \
-                                    demos.html \
-                                    images/arrow_down.png \
-                                    images/bg.png \
-                                    images/breadcrumb.png \
-                                    images/bullet_gt.png \
-                                    images/bullet_dn.png \
-                                    images/bullet_sq.png \
-                                    images/bullet_up.png \
-                                    images/digia_logo.png \
-                                    images/horBar.png \
-                                    images/qcharts.png \
-                                    images/qt-logo.png \
-                                    style/offline.css
+                          examples.html \
+                          demos.html \
+                          images/arrow_down.png \
+                          images/bg.png \
+                          images/breadcrumb.png \
+                          images/bullet_gt.png \
+                          images/bullet_dn.png \
+                          images/bullet_sq.png \
+                          images/bullet_up.png \
+                          images/digia_logo.png \
+                          images/horBar.png \
+                          images/qcharts.png \
+                          images/qt-logo.png \
+                          style/offline.css

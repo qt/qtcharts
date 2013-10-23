@@ -8,16 +8,16 @@
 
     \table
         \row
-            \o  \br
+            \li \br
                 The main view of the application shows a stacked area chart. This is how one of
                 \br
                 the stacked areas is created. See ChartViewStacked.qml and AnimatedAreaSeries.qml.
                 \br
                 \br
                 \snippet ../demos/qmlcustomlegend/qml/qmlcustomlegend/ChartViewStacked.qml 1
-            \o \inlineimage demos-qmlcustomlegend1.png
+            \li \inlineimage demos-qmlcustomlegend1.png
         \row
-            \o  \br
+            \li \br
                 Hovering with mouse on top of the legend will highlight the hovered series.
                 \br
                 (see CustomLegend.qml).
@@ -26,15 +26,15 @@
                 \snippet ../demos/qmlcustomlegend/qml/qmlcustomlegend/CustomLegend.qml 1
                 \snippet ../demos/qmlcustomlegend/qml/qmlcustomlegend/CustomLegend.qml 2
                 \snippet ../demos/qmlcustomlegend/qml/qmlcustomlegend/CustomLegend.qml 3
-            \o \inlineimage demos-qmlcustomlegend2.png
+            \li \inlineimage demos-qmlcustomlegend2.png
         \row
-            \o  \br
+            \li \br
                 You can also select one of the stacked areas for a closer look as a line series by
                 \br
                 a mouse click (see ChartViewHighlighted.qml).
                 \br
                 \br
                 \snippet ../demos/qmlcustomlegend/qml/qmlcustomlegend/ChartViewHighlighted.qml 1
-            \o \inlineimage demos-qmlcustomlegend3.png
+            \li \inlineimage demos-qmlcustomlegend3.png
     \endtable
 */

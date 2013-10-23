@@ -1,5 +1,5 @@
 macro.0                         = "\\\\0"
-macro.b                         = "\\\\b"
+macro.b                         = "\\bold"
 macro.n                         = "\\\\n"
 macro.r                         = "\\\\r"
 macro.i                         = "\\o"
@@ -26,3 +26,6 @@ macro.relatesto                 = "\\relates"
 
 spurious                        = "Missing comma in .*" \
                                   "Missing pattern .*"
+
+macro.li                        = "\\o"
+macro.e                         = "\\i"

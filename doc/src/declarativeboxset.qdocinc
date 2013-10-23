@@ -1,0 +1,6 @@
+BoxSet represents one box-and-whiskers item. It takes five values to create a graphical representation
+of range and three medians. There are two ways to give the values. The first one is with constructor
+or with append method. In these the values have to be given in the following order: lower extreme, lower quartile, median,
+upper quartile and upper extreme. The second method is to create an empty QBoxSet instance and give the values using
+value specific methods.
+\sa BoxPlotSeries

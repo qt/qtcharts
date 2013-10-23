@@ -52,21 +52,21 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+#ifdef QDOC_QT5
+/*!
+    \qmltype ChartView
+    \instantiates DeclarativeChart
+    \inqmlmodule QtCommercial.Chart
+
+    \include /doc/src/chartview.qdocinc
+*/
+#else
 /*!
     \qmlclass ChartView DeclarativeChart
 
-    ChartView element is the parent that is responsible for showing different chart series types.
-
-    The following QML shows how to create a simple chart with one pie series:
-    \snippet ../examples/qmlpiechart/qml/qmlpiechart/main.qml 1
-    \snippet ../examples/qmlpiechart/qml/qmlpiechart/main.qml 2
-    \snippet ../examples/qmlpiechart/qml/qmlpiechart/main.qml 3
-
-    \beginfloatleft
-    \image examples_qmlpiechart.png
-    \endfloat
-    \clearfloat
+    \include ../doc/src/chartview.qdocinc
 */
+#endif
 
 /*!
   \qmlproperty Theme ChartView::theme
@@ -82,9 +82,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
   \qmlproperty Font ChartView::titleFont
-  The title font of the chart
+  The title font of the chart.
 
-  See the \l {Font} {QML Font Element} for detailed documentation.
+  See the Qt documentation for more details of Font.
 */
 
 /*!

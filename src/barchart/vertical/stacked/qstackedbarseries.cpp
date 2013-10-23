@@ -29,6 +29,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QStackedBarSeries
+    \inmodule Qt Charts
     \brief Series for creating stacked bar chart.
     \mainclass
 
@@ -42,17 +43,21 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \sa QBarSet, QPercentBarSeries, QAbstractBarSeries
 */
 
+#ifdef QDOC_QT5
+/*!
+    \qmltype StackedBarSeries
+    \instantiates QStackedBarSeries
+    \inqmlmodule QtCommercial.Chart
+
+    \include /doc/src/stackedbarseries.qdocinc
+*/
+#else
 /*!
     \qmlclass StackedBarSeries QStackedBarSeries
-    \inherits AbstractBarSeries
 
-    The following QML shows how to create a simple stacked bar chart:
-    \snippet ../demos/qmlchart/qml/qmlchart/View7.qml 1
-    \beginfloatleft
-    \image demos_qmlchart7.png
-    \endfloat
-    \clearfloat
+    \include ../doc/src/stackedbarseries.qdocinc
 */
+#endif
 
 /*!
     Constructs empty QStackedBarSeries.

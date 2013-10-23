@@ -32,6 +32,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QLegendMarker
+    \inmodule Qt Charts
     \brief LegendMarker object.
     \mainclass
 

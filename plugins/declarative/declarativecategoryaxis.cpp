@@ -23,11 +23,20 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+#ifdef QDOC_QT5
+/*!
+    \qmltype CategoryRange
+    \inqmlmodule QtCommercial.Chart
+
+    \include /doc/src/categoryrange.qdocinc
+*/
+#else
 /*!
     \qmlclass CategoryRange
-    \brief With CategoryRange you can define a range used by a CategoryAxis.
-    \sa CategoryAxis
+
+    \include ../doc/src/categoryrange.qdocinc
 */
+#endif
 
 DeclarativeCategoryRange::DeclarativeCategoryRange(QObject *parent) :
     QObject(parent),

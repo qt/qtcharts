@@ -20,11 +20,18 @@ feature.files = $$PWD/features/qtcommercialchart.prf
 INSTALLS += feature
 
 # docs
-CHARTS_VERSION = 1.3.0
-CHARTS_VERSION_TAG = 130
+CHARTS_VERSION = 1.3.1
+CHARTS_VERSION_TAG = 131
+
+contains(QT_MAJOR_VERSION, 5) {
+    QDOC_CONFFILE = qcharts-qt5.qdocconf
+    DEFINES += QDOC_QT5
+} else {
+    QDOC_CONFFILE = qcharts-qt4.qdocconf
+}
 
 contains(QMAKE_HOST.os, Windows) {
-    QDOC_CONF = $$CHART_BUILD_DOC_DIR\\qcharts.qdocconf
+    QDOC_CONF = $$CHART_BUILD_DOC_DIR\\docconf\\$$QDOC_CONFFILE
     win32-g++|qnx {
         VERSION_SETTINGS = \
             set QT_CHARTS_VERSION=$$CHARTS_VERSION&& set QT_CHARTS_VERSION_TAG=$$CHARTS_VERSION_TAG&&
@@ -34,7 +41,7 @@ contains(QMAKE_HOST.os, Windows) {
             set QT_CHARTS_VERSION_TAG=$$CHARTS_VERSION_TAG $$escape_expand(\\n\\t)
     }
 } else {
-    QDOC_CONF = $$CHART_BUILD_DOC_DIR/qcharts.qdocconf
+    QDOC_CONF = $$CHART_BUILD_DOC_DIR/docconf/$$QDOC_CONFFILE
     VERSION_SETTINGS = \
         QT_CHARTS_VERSION=$$CHARTS_VERSION QT_CHARTS_VERSION_TAG=$$CHARTS_VERSION_TAG
 }

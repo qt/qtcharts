@@ -36,6 +36,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QBoxPlotSeries
+    \inmodule Qt Charts
     \brief Series for creating box-and-whiskers chart
     \mainclass
 

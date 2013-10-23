@@ -1,0 +1,147 @@
+/*!
+    \page examples.html
+    \title Qt Charts Examples
+    \keyword Examples
+
+    \raw HTML
+    <div class="qchart">
+
+    <table>
+        <tr>
+            <td><a href="qt-charts-examples-areachart-example.html">Area Chart</a></td>
+            <td><a href="qt-charts-examples-barchart-example.html">Bar Chart</a></td>
+        </tr>
+        <tr>
+            <td><a href="qt-charts-examples-areachart-example.html"><img src="images/examples_areachart.png" width="300" alt="Area Chart" /></a></td>
+            <td><a href="qt-charts-examples-barchart-example.html"><img src="images/examples_barchart.png" width="300" alt="Bar Chart" /></a></td>
+        </tr>
+
+        <tr>
+            <td><a href="qt-charts-examples-barmodelmapper-example.html">Bar Chart from Model</a></td>
+            <td><a href="qt-charts-examples-boxplotchart-example.html">Box-and-whiskers Chart</a></td>
+        </tr>
+        <tr>
+            <td><a href="qt-charts-examples-barmodelmapper-example.html"><img src="images/examples_barmodelmapper.png" width="300" alt="Bar Chart from Model" /></a></td>
+            <td><a href="qt-charts-examples-boxplotchart-example.html"><img src="images/examples_boxplotchart.png" width="300" alt="Bar Chart from Model" /></a></td>
+        </tr>
+
+        <tr>
+            <td><a href="qt-charts-examples-customchart-example.html">Custom Chart</a></td>
+            <td><a href="qt-charts-examples-datetimeaxis-example.html">DateTimeAxis Example</a></td>
+        </tr>
+        <tr>
+            <td><a href="qt-charts-examples-customchart-example.html"><img src="images/examples_customchart.png" width="300" alt="Custom Chart" /></a></td>
+            <td><a href="qt-charts-examples-datetimeaxis-example.html"><img src="images/examples_datetimeaxis.png" width="300" alt="DateTimeAxis Example" /></a></td>
+        </tr>
+
+        <tr>
+            <td><a href="qt-charts-examples-donutbreakdown-example.html">Donut Breakdown Chart</a></td>
+            <td><a href="qt-charts-examples-donutchart-example.html">Donut Chart</a></td>
+        </tr>
+        <tr>
+            <td><a href="qt-charts-examples-donutbreakdown-example.html"><img src="images/examples_donutbreakdown.png" width="300" alt="Donut Breakdown Chart" /></a></td>
+            <td><a href="qt-charts-examples-donutchart-example.html"><img src="images/examples_donutchart.png" width="300" alt="Donut Chart" /></a></td>
+        </tr>
+
+        <tr>
+            <td><a href="qt-charts-examples-horizontalbarchart-example.html">Horizontal Bar Chart</a></td>
+            <td><a href="qt-charts-examples-horizontalpercentbarchart-example.html">Horizontal Percent Bar Chart</a></td>
+        </tr>
+        <tr>
+            <td><a href="qt-charts-examples-horizontalbarchart-example.html"><img src="images/examples_horizontalbarchart.png" width="300" alt="Horizontal Bar Chart" /></a></td>
+            <td><a href="qt-charts-examples-horizontalpercentbarchart-example.html"><img src="images/examples_horizontalpercentbarchart.png" width="300" alt="Horizontal Percent Bar Chart" /></a></td>
+        </tr>
+
+        <tr>
+            <td><a href="qt-charts-examples-horizontalstackedbarchart-example.html">Horizontal Stacked Bar Chart</a></td>
+            <td><a href="qt-charts-examples-legend-example.html">Legend</a></td>
+        </tr>
+        <tr>
+            <td><a href="qt-charts-examples-horizontalstackedbarchart-example.html"><img src="images/examples_horizontalstackedbarchart.png" width="300" alt="Horizontal Stacked Bar Chart" /></a></td>
+            <td><a href="qt-charts-examples-legend-example.html"><img src="images/examples_legend_detach.png" width="300" alt="Legend" /></a></td>
+        </tr>
+
+        <tr>
+            <td><a href="qt-charts-examples-legendmarkers-example.html">Legend Markers</a></td>
+            <td><a href="qt-charts-examples-lineandbar-example.html">Line and Barchart</a></td>
+        </tr>
+        <tr>
+            <td><a href="qt-charts-examples-legendmarkers-example.html"><img src="images/examples_legendmarkers.png" width="300" alt="Legend Markers" /></a></td>
+            <td><a href="qt-charts-examples-lineandbar-example.html"><img src="images/examples_lineandbar.png" width="300" alt="Line and Barchart" /></a></td>
+        </tr>
+
+        <tr>
+            <td><a href="qt-charts-examples-linechart-example.html">Line Chart</a></td>
+            <td><a href="qt-charts-examples-logvalueaxis-example.html">Logarithmic axis</a></td>
+        </tr>
+        <tr>
+            <td><a href="qt-charts-examples-linechart-example.html"><img src="images/examples_linechart.png" width="300" alt="Line Chart" /></a></td>
+            <td><a href="qt-charts-examples-logvalueaxis-example.html"><img src="images/examples_logvalueaxis.png" width="300" alt="Logarythmix axis" /></a></td>
+        </tr>
+
+        <tr>
+            <td><a href="qt-charts-examples-modeldata-example.html">Model Data</a></td>
+            <td><a href="qt-charts-examples-multiaxis-example.html">Multiple axes</a></td>
+        </tr>
+        <tr>
+            <td><a href="qt-charts-examples-modeldata-example.html"><img src="images/examples_modeldata.png" width="300" alt="Model Data" /></a></td>
+            <td><a href="qt-charts-examples-multiaxis-example.html"><img src="images/examples_multiaxis.png" width="300" alt="Multiple axes" /></a></td>
+        </tr>
+
+        <tr>
+            <td><a href="qt-charts-examples-percentbarchart-example.html">Percent Bar Chart</a></td>
+            <td><a href="qt-charts-examples-piechart-example.html">Pie Chart</a></td>
+        </tr>
+        <tr>
+            <td><a href="qt-charts-examples-percentbarchart-example.html"><img src="images/examples_percentbarchart.png" width="300" alt="Percent Bar Chart" /></a></td>
+            <td><a href="qt-charts-examples-piechart-example.html"><img src="images/examples_piechart.png" width="300" alt="Pie Chart" /></a></td>
+        </tr>
+
+        <tr>
+            <td><a href="qt-charts-examples-piechartdrilldown-example.html">Pie Chart Drilldown</a></td>
+            <td><a href="qt-charts-examples-polarchart-example.html">Polar chart</a></td>
+        </tr>
+        <tr>
+            <td><a href="qt-charts-examples-piechartdrilldown-example.html"><img src="images/examples_piechartdrill2.png" width="300" alt="Pie Chart Drilldown" /></a></td>
+            <td><a href="qt-charts-examples-polarchart-example.html"><img src="images/examples_polarchart.png" width="300" alt="Polar chart" /></a></td>
+        </tr>
+
+        <tr>
+            <td><a href="qt-charts-examples-scatterchart-example.html">Scatter chart</a></td>
+            <td><a href="qt-charts-examples-scatterinteractions-example.html">Scatter Interactions</a></td>
+        </tr>
+        <tr>
+            <td><a href="qt-charts-examples-scatterchart-example.html"><img src="images/examples_scatterchart.png" width="300" alt="Scatter chart" /></a></td>
+            <td><a href="qt-charts-examples-scatterinteractions-example.html"><img src="images/examples_scatterinteractions.png" width="300" alt="Scatter Interactions" /></a></td>
+        </tr>
+
+        <tr>
+            <td><a href="qt-charts-examples-splinechart-example.html">Spline Chart</a></td>
+            <td><a href="qt-charts-examples-stackedbarchart-example.html">Stacked Bar Chart</a></td>
+        </tr>
+        <tr>
+            <td><a href="qt-charts-examples-splinechart-example.html"><img src="images/examples_splinechart.png" width="300" alt="Spline Chart" /></a></td>
+            <td><a href="qt-charts-examples-stackedbarchart-example.html"><img src="images/examples_stackedbarchart.png" width="300" alt="Stacked Bar Chart" /></a></td>
+        </tr>
+
+        <tr>
+            <td><a href="qt-charts-examples-stackedbarchartdrilldown-example.html">Stacked Bar Chart Drilldown</a></td>
+            <td><a href="qt-charts-examples-temperaturerecords-example.html">Temperature Records</a></td>
+        </tr>
+        <tr>
+            <td><a href="qt-charts-examples-stackedbarchartdrilldown-example.html"><img src="images/examples_stackedbarchartdrilldown1.png" width="300" alt="Stacked Bar Chart Drilldown" /></a></td>
+            <td><a href="qt-charts-examples-temperaturerecords-example.html"><img src="images/examples_temperaturerecords.png" width="300" alt="Temperature Records" /></a></td>
+        </tr>
+
+        <tr>
+            <td><a href="qt-charts-examples-zoomlinechart-example.html">Zoom Line</a></td>
+        </tr>
+        <tr>
+            <td><a href="qt-charts-examples-zoomlinechart-example.html"><img src="images/examples_zoomlinechart1.png" width="300" alt="Zoom Line" /></a></td>
+        </tr>
+
+    </table>
+    </div>
+    \endraw
+
+*/

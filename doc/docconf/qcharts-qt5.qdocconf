@@ -1,0 +1,9 @@
+include(macros.qdocconf)
+include(qchart-html-template.qdocconf)
+include(qchart-qch.qdocconf)
+include(qcharts.qdocconf)
+
+defines = QDOC_QT5
+outputdir = ../html
+imagedirs = ../../images
+excludedirs += ../src_qt4

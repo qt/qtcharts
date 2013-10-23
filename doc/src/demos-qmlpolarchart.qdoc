@@ -7,27 +7,27 @@
 
     \table
         \row
-            \o  \br
+            \li \br
                 We begin with a chart that has a spline series and a scatter series with random
                 data. Both series use the same axes.
                 \br
                 \br
                 \snippet ../demos/qmlpolarchart/qml/qmlpolarchart/View1.qml 1
-            \o \inlineimage demos_qmlpolarchart1.png
+            \li \inlineimage demos_qmlpolarchart1.png
         \row
-            \o  \br
+            \li \br
                 The next example shows a chart with some accurate historical data for which we need to use a DateTimeAxis
                 and a AreaSeries.
                 \br
                 \br
                 \snippet ../demos/qmlpolarchart/qml/qmlpolarchart/View2.qml 1
-            \o \inlineimage demos_qmlpolarchart2.png
+            \li \inlineimage demos_qmlpolarchart2.png
         \row
-            \o  \br
+            \li \br
                 And the final example with a chart that uses a CategoryAxis to make the data easier to understand.
                 \br
                 \br
                 \snippet ../demos/qmlpolarchart/qml/qmlpolarchart/View3.qml 1
-            \o \inlineimage demos_qmlpolarchart3.png
+            \li \inlineimage demos_qmlpolarchart3.png
     \endtable
 */

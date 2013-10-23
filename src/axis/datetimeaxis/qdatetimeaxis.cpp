@@ -32,6 +32,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \class QDateTimeAxis
+    \inmodule Qt Charts
     \brief The QDateTimeAxis class is used for manipulating chart's axis.
     \mainclass
 
@@ -73,15 +74,21 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \endcode
 */
 
+#ifdef QDOC_QT5
+/*!
+    \qmltype DateTimeAxis
+    \instantiates QDateTimeAxis
+    \inqmlmodule QtCommercial.Chart
+
+    \include /doc/src/datetimeaxis.qdocinc
+*/
+#else
 /*!
     \qmlclass DateTimeAxis QDateTimeAxis
-    \brief The DateTimeAxis element is used for manipulating chart's axes.
-    \inherits AbstractAxis
 
-    The labels can be configured by setting an appropriate DateTime format.
-    Note that any date before 4714 BCE or after about 1.4 million CE may not be accurately stored.
-    DateTimeAxis can be setup to show axis line with tick marks, grid lines and shades.
+    \include ../doc/src/datetimeaxis.qdocinc
 */
+#endif
 
 /*!
   \property QDateTimeAxis::min

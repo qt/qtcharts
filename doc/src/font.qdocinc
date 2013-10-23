@@ -1,0 +1,3 @@
+\brief Defines the font used for drawing text.
+
+Font instantiates the C++ class QFont

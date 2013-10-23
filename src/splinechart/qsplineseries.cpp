@@ -28,6 +28,7 @@
 
 /*!
     \class QSplineSeries
+    \inmodule Qt Charts
     \brief Series type used to store data needed to draw a spline.
 
     QSplineSeries stores the data points along with the segment control points needed by QPainterPath to draw spline
@@ -44,18 +45,21 @@
     chart->addSeries(series);
     \endcode
 */
+#ifdef QDOC_QT5
+/*!
+    \qmltype SplineSeries
+    \instantiates QSplineSeries
+    \inqmlmodule QtCommercial.Chart
 
+    \include /doc/src/splineseries.qdocinc
+*/
+#else
 /*!
     \qmlclass SplineSeries QSplineSeries
-    \inherits XYSeries
 
-    The following QML shows how to create a simple spline chart:
-    \snippet ../demos/qmlchart/qml/qmlchart/View3.qml 1
-    \beginfloatleft
-    \image demos_qmlchart3.png
-    \endfloat
-    \clearfloat
+    \include ../doc/src/splineseries.qdocinc
 */
+#endif
 
 /*!
     \fn QSeriesType QSplineSeries::type() const

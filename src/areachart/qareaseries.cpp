@@ -33,6 +33,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QAreaSeries
+    \inmodule Qt Charts
     \brief The QAreaSeries class is used for making area charts.
 
     \mainclass
@@ -46,16 +47,21 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     See the \l {AreaChart Example} {area chart example} to learn how to create a simple area chart.
     \image examples_areachart.png
 */
+#ifdef QDOC_QT5
+/*!
+    \qmltype AreaSeries
+    \instantiates QAreaSeries
+    \inqmlmodule QtCommercial.Chart
+
+    \include /doc/src/areaseries.qdocinc
+*/
+#else
 /*!
     \qmlclass AreaSeries QAreaSeries
 
-    The following QML shows how to create a simple area chart:
-    \snippet ../demos/qmlchart/qml/qmlchart/View4.qml 1
-    \beginfloatleft
-    \image demos_qmlchart4.png
-    \endfloat
-    \clearfloat
+    \include ../doc/src/areaseries.qdocinc
 */
+#endif
 
 /*!
    \property QAreaSeries::upperSeries

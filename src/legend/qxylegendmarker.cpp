@@ -27,12 +27,13 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QXYLegendMarker
+    \inmodule Qt Charts
     \brief QXYLegendMarker object.
     \mainclass
 
     QXYLegendMarker is related to QXYSeries derived classes. Each marker is related to one series.
 
-    \sa QLegend QXYSeries QSplineSeries QScatterSeries QLineSeries
+    \sa QLegend, QXYSeries, QSplineSeries, QScatterSeries, QLineSeries
 */
 
 /*!

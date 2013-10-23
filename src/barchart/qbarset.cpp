@@ -27,6 +27,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QBarSet
+    \inmodule Qt Charts
     \brief Building block for different bar charts.
 
     QBarSet represents one set of bars. Set of bars contains one data value for each category.
@@ -38,15 +39,21 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
     \sa QAbstractBarSeries, QBarSeries, QStackedBarSeries, QPercentBarSeries
 */
+#ifdef QDOC_QT5
+/*!
+    \qmltype BarSet
+    \instantiates QBarSet
+    \inqmlmodule QtCommercial.Chart
+
+    \include /doc/src/barset.qdocinc
+*/
+#else
 /*!
     \qmlclass BarSet QBarSet
 
-    BarSet represents one set of bars. Set of bars contains one data value for each category.
-    First value of set is assumed to belong to first category, second to second category and so on.
-    If set has fewer values than there are categories, then the missing values are assumed to be
-    at the end of set. For missing values in middle of a set, numerical value of zero is used.
-    \sa AbstractBarSeries, BarSeries, StackedBarSeries, PercentBarSeries
+    \include ../doc/src/barset.qdocinc
 */
+#endif
 
 /*!
     \property QBarSet::label
@@ -81,7 +88,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \qmlproperty Font BarSet::labelFont
     Defines the font used by the bar set's label.
 
-    See the \l {Font} {QML Font Element} for detailed documentation.
+    See the Qt documentation for more details of Font.
 */
 
 /*!

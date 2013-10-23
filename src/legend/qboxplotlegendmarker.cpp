@@ -27,12 +27,13 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QBoxPlotLegendMarker
+    \inmodule Qt Charts
     \brief QBoxPlotLegendMarker object
     \mainclass
 
     QBoxPlotLegendMarker is related to QBoxPlotSeries classes.
 
-    \sa QLegend QBoxPlotSeries
+    \sa QLegend, QBoxPlotSeries
 */
 
 /*!

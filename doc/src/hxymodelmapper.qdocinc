@@ -1,0 +1,3 @@
+HXYModelMapper allows you to use your own QAbstractItemModel derived model with data in rows as a data source
+for XYSeries based series. It is possible to use both QAbstractItemModel and XYSeries data API to manipulate data.
+HXYModelMapper keeps the series and the model in sync.

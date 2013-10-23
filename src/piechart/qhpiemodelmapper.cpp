@@ -24,6 +24,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QHPieModelMapper
+    \inmodule Qt Charts
     \mainclass
 
     Model mappers allow you to use QAbstractItemModel derived models as a data source for a chart series.
@@ -31,26 +32,21 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     It is possible to use both QAbstractItemModel and QPieSeries model API. QHPieModelMapper makes sure that Pie and the model are kept in sync.
     \note Used model has to support adding/removing rows/columns and modifying the data of the cells.
 */
+#ifdef QDOC_QT5
+/*!
+    \qmltype HPieModelMapper
+    \instantiates QHPieModelMapper
+    \inqmlmodule QtCommercial.Chart
+
+    \include /doc/src/hpiemodelmapper.qdocinc
+*/
+#else
 /*!
     \qmlclass HPieModelMapper QHPieModelMapper
 
-    HPieModelMapper allows you to use your own QAbstractItemModel derived model with data in rows as a data source
-    for a pie series. It is possible to use both QAbstractItemModel and PieSeries data API to manipulate data.
-    HPieModelMapper keeps the Pie and the model in sync.
-
-    The following QML example would create a pie series with four slices (assuming the model has
-    at least five columns). Each slice would contain a label from row 1 and a value from row 2.
-    \code
-        HPieModelMapper {
-            series: pieSeries
-            model: customModel
-            labelsRow: 1
-            valuesRow: 2
-            firstColumn: 1
-            columnCount: 4
-        }
-    \endcode
+    \include ../doc/src/hpiemodelmapper.qdocinc
 */
+#endif
 
 /*!
     \property QHPieModelMapper::series

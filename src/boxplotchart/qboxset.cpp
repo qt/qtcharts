@@ -26,6 +26,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QBoxSet
+    \inmodule Qt Charts
     \brief Building block for box-and-whiskers chart
 
     QBoxSet represents one box-and-whiskers item. It takes five values to create a graphical representation

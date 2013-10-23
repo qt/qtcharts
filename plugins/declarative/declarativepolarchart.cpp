@@ -23,30 +23,21 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+#ifdef QDOC_QT5
+/*!
+    \qmltype PolarChartView
+    \instantiates DeclarativePolarChart
+    \inqmlmodule QtCommercial.Chart
+
+    \include /doc/src/declarativepolarchart.qdocinc
+*/
+#else
 /*!
     \qmlclass PolarChartView DeclarativePolarChart
 
-    PolarChartView element is the parent that is responsible for showing different chart series types
-    in a polar chart.
-
-    Polar charts support line, spline, area, and scatter series, and all axis types
-    supported by those series.
-
-    \note When setting ticks to an angular ValueAxis, keep in mind that the first and last tick
-    are co-located at 0/360 degree angle.
-
-    \note If the angular distance between two consecutive points in a series is more than 180 degrees,
-    any line connecting the two points becomes meaningless, so choose the axis ranges accordingly
-    when displaying line, spline, or area series.
-
-    The following QML shows how to create a polar chart with two series:
-    \snippet ../demos/qmlpolarchart/qml/qmlpolarchart/View1.qml 1
-
-    \beginfloatleft
-    \image demos_qmlpolarchart1.png
-    \endfloat
-    \clearfloat
+    \include ../doc/src/declarativepolarchart.qdocinc
 */
+#endif
 
 DeclarativePolarChart::DeclarativePolarChart(QDECLARATIVE_ITEM *parent)
     : DeclarativeChart(QChart::ChartTypePolar, parent)

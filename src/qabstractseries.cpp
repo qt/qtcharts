@@ -33,6 +33,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QAbstractSeries
+    \inmodule Qt Charts
     \brief Base class for all Qt Chart series.
     \mainclass
 
@@ -40,11 +41,21 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \sa QXYSeries, QLineSeries, QSplineSeries, QScatterSeries, QAreaSeries, QAbstractBarSeries, QStackedBarSeries,
     QPercentBarSeries, QPieSeries
 */
+#ifdef QDOC_QT5
 /*!
-    \qmlclass AbstractSeries
-    AbstractSeries is the base class for all series.
-    The class cannot be instantiated by the user.
+    \qmltype AbstractSeries
+    \instantiates QAbstractSeries
+    \inqmlmodule QtCommercial.Chart
+
+    \include /doc/src/abstractseries.qdocinc
 */
+#else
+/*!
+    \qmlclass AbstractSeries QAbstractSeries
+
+    \include ../doc/src/abstractseries.qdocinc
+*/
+#endif
 
 /*!
     \enum QAbstractSeries::SeriesType

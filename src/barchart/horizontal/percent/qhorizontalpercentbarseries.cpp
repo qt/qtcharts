@@ -28,6 +28,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QHorizontalPercentBarSeries
+    \inmodule Qt Charts
     \brief Series for creating horizontal percent bar chart.
     \mainclass
 
@@ -40,17 +41,21 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
     \sa QBarSet, QBarSeries, QPercentBarSeries, QAbstractBarSeries, QStackedBarSeries, QHorizontalStackedBarSeries, QHorizontalBarSeries
 */
+#ifdef QDOC_QT5
+/*!
+    \qmltype HorizontalPercentBarSeries
+    \instantiates QHorizontalPercentBarSeries
+    \inqmlmodule QtCommercial.Chart
+
+    \include /doc/src/horizontalpercentbarseries.qdocinc
+*/
+#else
 /*!
     \qmlclass HorizontalPercentBarSeries QHorizontalPercentBarSeries
-    \inherits QAbstractBarSeries
 
-    The following QML shows how to create a simple horizontal percent bar chart:
-    \snippet ../demos/qmlchart/qml/qmlchart/View11.qml 1
-    \beginfloatleft
-    \image demos_qmlchart11.png
-    \endfloat
-    \clearfloat
+    \include ../doc/src/horizontalpercentbarseries.qdocinc
 */
+#endif
 
 /*!
     Constructs empty QHorizontalPercentBarSeries.

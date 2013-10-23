@@ -71,6 +71,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
  \class QChart
+ \inmodule Qt Charts
  \brief Main chart API for Qt Charts.
 
  QChart is a QGraphicsWidget that you can show in a QGraphicsScene. It manages the graphical
@@ -436,21 +437,21 @@ QList<QAbstractAxis *> QChart::axes(Qt::Orientations orientation, QAbstractSerie
 
  \table
      \header
-         \o Series type
-         \o X-axis
-         \o Y-axis
+         \li Series type
+         \li X-axis
+         \li Y-axis
      \row
-         \o QXYSeries
-         \o QValueAxis
-         \o QValueAxis
+         \li QXYSeries
+         \li QValueAxis
+         \li QValueAxis
      \row
-         \o QBarSeries
-         \o QBarCategoryAxis
-         \o QValueAxis
+         \li QBarSeries
+         \li QBarCategoryAxis
+         \li QValueAxis
      \row
-         \o QPieSeries
-         \o None
-         \o None
+         \li QPieSeries
+         \li None
+         \li None
  \endtable
 
  If there are several QXYSeries derived series added to the chart and no series of other types have been added, then only one pair of axes is created.

@@ -1,0 +1,8 @@
+\inherits AbstractBarSeries
+
+The following QML shows how to create a simple stacked bar chart:
+\snippet ../demos/qmlchart/qml/qmlchart/View7.qml 1
+\beginfloatleft
+\image demos_qmlchart7.png
+\endfloat
+\clearfloat

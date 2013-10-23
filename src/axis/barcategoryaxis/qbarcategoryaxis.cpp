@@ -29,6 +29,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \class QBarCategoryAxis
+    \inmodule Qt Charts
     \brief The QBarCategoryAxis class is used for manipulating chart's axis.
     \mainclass
 
@@ -53,25 +54,21 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \endcode
 */
 
+#ifdef QDOC_QT5
+/*!
+    \qmltype BarCategoryAxis
+    \instantiates QBarCategoryAxis
+    \inqmlmodule QtCommercial.Chart
+
+    \include /doc/src/barcategoryaxis.qdocinc
+*/
+#else
 /*!
     \qmlclass BarCategoryAxis QBarCategoryAxis
-    \inherits AbstractAxis
-    \brief The Axis element is used for manipulating chart's axes.
 
-    Axis can be setup to show axis line with tick marks, grid lines and shades.
-    Categories are drawn between ticks. Note that you can use this also with lineseries too.
-
-    To access BarCategoryAxis you can use ChartView API. For example:
-    \code
-        ChartView {
-            BarCategoryAxis {
-                id: categoryAxis
-                categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun" ]
-            }
-        // Add a few series...
-        }
-    \endcode
+    \include ../doc/src/barcategoryaxis.qdocinc
 */
+#endif
 
 /*!
   \property QBarCategoryAxis::categories

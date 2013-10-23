@@ -24,10 +24,20 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+#ifdef QDOC_QT5
+/*!
+    \qmltype Margins
+    \inqmlmodule QtCommercial.Chart
+
+    \include /doc/src/margins.qdocinc
+*/
+#else
 /*!
     \qmlclass Margins
-    Uncreatable type that is used to define top, bottom, left and right margins.
+
+    \include ../doc/src/margins.qdocinc
 */
+#endif
 
 /*!
     \qmlproperty int Margins::top

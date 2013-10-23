@@ -4,7 +4,7 @@
 
 HTML.templatedir = .
 
-HTML.stylesheets = style/offline.css
+HTML.stylesheets = ../style/offline.css
 
 HTML.scripts     =
 
@@ -27,25 +27,24 @@ extraimages.HTML        = qt-logo.png \
                           bg.png
 
 # extraimages definition for Qt5
-HTML.extraimages        = ./images/qt-logo.png \
-                          ./images/digia_logo.png \
-                          ./images/qcharts.png \
-                          ./images/arrow_down.png \
-                          ./images/breadcrumb.png \
-                          ./images/bullet_gt.png \
-                          ./images/bullet_dn.png \
-                          ./images/bullet_sq.png \
-                          ./images/bullet_up.png \
-                          ./images/horBar.png \
-                          ./images/presenterchart_example.png \
-                          ./images/bg.png
+HTML.extraimages        = ../images/qt-logo.png \
+                          ../images/digia_logo.png \
+                          ../images/qcharts.png \
+                          ../images/arrow_down.png \
+                          ../images/breadcrumb.png \
+                          ../images/bullet_gt.png \
+                          ../images/bullet_dn.png \
+                          ../images/bullet_sq.png \
+                          ../images/bullet_up.png \
+                          ../images/horBar.png \
+                          ../images/bg.png
 
 # Include the style sheets and scripts used.
 
 HTML.headerstyles = \
     "  <link rel=\"stylesheet\" type=\"text/css\" href=\"style/offline.css\" />\n"
 
-HTML.headerscripts = 
+HTML.headerscripts =
 
 HTML.endheader = \
     "</head>\n" \
