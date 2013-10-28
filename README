@@ -1,5 +1,5 @@
 ----------------------
-Qt Charts Add-on 1.3.0
+Qt Charts Add-on 1.3.1
 ----------------------
 
 What's in Qt Charts
@@ -23,6 +23,7 @@ licenses/
 
 Building
 ========
+
 Please note that if you have already installed a previous version of
 Qt Charts, you should first uninstall it with
     make uninstall
@@ -39,11 +40,11 @@ For debug builds:
     qmake CONFIG+=debug_and_release; make debug
     
 For release builds:    
-    qmake CONFIG+=release ; make
+    qmake CONFIG+=release; make
     or 
     qmake CONFIG+=debug_and_release; make release
     
-For both builds
+For both builds:
     qmake CONFIG+="debug_and_release build_all"; make
 
 If you want to leave out demos and examples from the build you can use
@@ -53,61 +54,65 @@ the following config with qmake:
 If you want to install the libraries to your Qt library directory use:
     make install
 
-If you want to uninstall the libraries
+If you want to uninstall the libraries:
     make uninstall
 
 Building as a statically linked library
 =======================================
 
-The same as above applies you will just have to add staticlib to the CONFIG:
+The same as above applies, you will just have to add staticlib to the CONFIG:
     qmake CONFIG+=staticlib
 
 Documentation
 =============
+
 Documentation can be found from doc/html and doc/qch directories. The documentation
 can also be generated with:
     make docs
 
-Main Changes between 1.2.1 and 1.3.0
+The documentation provided with Charts is generated with qdoc and the creation of the
+documentation is prioritized for Qt5. We recommend building the documentation using Qt5,
+if you want to do it yourself. Creating the documentation using Qt4 also works, but some
+pages are not generated correctly, such as the 'List of All Members' page for all C++ and
+QML APIs in .qch documentation.
+
+Main Changes between 1.3.0 and 1.3.1
 ====================================
 
-- New chart type added: Polar chart
-- New series type added: Box and whiskers
-- QtQuick 2 support added
-  - Note: Since Qt Charts still uses QGraphicsView framework under the hood
-    even with QtQuick 2, its performance is actually better with QtQuick 1 than with QtQuick 2.
+- New Qt theme template added
 
 Bug Fixes and minor new features
 ================================
 
-- New: Added missing QML support for LogValueAxis
-- New: Implement index based removing/replacing points in a series
-- New: Added API to specify plot area background for the chart
-- New: Added HTML support for various text items such as axis labels or titles
-       - HTML tags (e.g. <br/>) and character codes (e.g. &deg;) are now supported
-       - Setting pen for text items is deprecated and does nothing
-       - When setting brush for text items, only the color of the brush is relevant.
-         It specifies the default text color for the item.
-       - Logic for identifying axis label format specifiers was improved, so adding
-         additional information to labels via label format string is now more viable.
-- New: Added QChart::zoomReset() and QChart::isZoomed()
-- New: Added API for setting roundness of the corners for the background of the chart
-- Fixed: If vertical QLogValueAxis base is selected so that it has only single visible tick,
-         its label always displays as "..."
-- Fixed: Crash when removing pie series from chart
-- Fixed: Most themes disable axis shades
-- Fixed: Lingering shades from high contrast theme
-- Fixed: Crash when adding/removing points during animation
-- Fixed: Wrong expand direction with rotated chart view
-- Fixed: Android build errors
-- Fixed: Explicitly set default pen/brush/font got overridden by theme
-         - Default pens, brushes, and fonts were changed to ones that won't clash with commonly
-           used types of the same. Most notably black pen is no longer default and won't anymore
-           get overridden by theme if used.
-- Fixed: Multi-line axis titles and labels now position correctly
-         - Note that '\n' no longer causes new line in text items, use HTML tag <br/> instead
-- Fixed: Legend markers text truncation with small font sizes
-- Fixed: QChartView right click zoom out when zooming only along one axis
-- Fixed: Crash or memory leak when resetting animation options mid-animation
-- Fixed: QBarCategoryAxis doesn't notify domain on category remove
-- Fixed: axisXTop QML property now actually puts axis on top
+- New: Added new hovered signal for bar charts with index information
+- New: Added example of using dynamically generated image as a brush for scatter series
+- New: Added HTML support for pie slice labels
+- New: Added possibility to build Charts without demos and examples
+- Fixed: Theme initialization performance for bar series is improved
+- Fixed: Documentation generated against Qt5
+- Fixed: Pie chart label is truncated if there's not enough space for the label
+- Fixed: Legend item truncation to start with the longest item
+- Fixed: Vertical and horizontal truncation of labels in bar chart
+- Fixed: Dynamic qml axis switch
+- Fixed: Crash with empty QAreaSeries
+- Fixed: Missing legend when printing a chart that is not shown
+- Fixed: Crash when zooming
+- Fixed: Chart geometry calculated only for visible items
+- Fixed: Alignment for multiline items
+         - Alignment can be set for multiline items using format:
+           "<p align=\"center\">multiline<br\>item</p>"
+- Fixed: Removed redundancy when setting the axis title
+- Fixed: Mouse event handling with rubber band
+- Fixed: logarithmic axis point calculation for zero and negative values
+- Fixed: Chart build on Solaris
+- Fixed: Axis creation with createDefaultAxes() when series of different types are present
+- Fixed: Debug information text color changed to gray to make it visible with all themes
+- Fixed: Min and max conflict with standard macros on Windows
+- Fixed: Chart build with QT_NO_TEXTSTREAM definition
+- Fixed: Chart build with QT_NO_RUBBERBAND definition
+- Fixed: Chart build with QT_NO_GRAPHICSEFFECT definition
+
+Known issues
+============
+
+- Zooming too far or too close may eventually freeze the zooming and scrolling.
