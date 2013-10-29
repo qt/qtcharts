@@ -105,23 +105,32 @@ RCC_DIR = $$CHART_BUILD_DIR/lib
 
 for(file, PUBLIC_HEADERS) {
     name = $$split(file,'/')
-    name = $$last(name)
+    last_name = $$last(name)
     class = "$$cat($$file)"
-    class = $$find(class,class) 
-    !isEmpty(class){
-    class = $$split(class,QTCOMMERCIALCHART_EXPORT)
-    class = $$member(class,1)
-    class = $$split(class,' ')
-    class = $$replace(class,' ','')
-    class = $$member(class,0)
+    found_class = $$find(class,class)
+    !isEmpty(found_class){
+    split_class = $$split(found_class,QTCOMMERCIALCHART_EXPORT)
+    member_class = $$member(split_class,1)
+    member_split_class = $$split(member_class,' ')
+    modified_class = $$replace(member_split_class,' ','')
+    final_class = $$member(modified_class,0)
     contains(QMAKE_HOST.os, Windows) {
-        command = "echo $${LITERAL_HASH}include \"$$name\" > $$CHART_BUILD_PUBLIC_HEADER_DIR/$$class"
+        command = "echo $${LITERAL_HASH}include \"$$last_name\" > $$CHART_BUILD_PUBLIC_HEADER_DIR/$$final_class"
     }else{
-        command = "echo \"$${LITERAL_HASH}include \\\"$$name\\\"\" > $$CHART_BUILD_PUBLIC_HEADER_DIR/$$class"
-    } 
-    PUBLIC_QT_HEADERS += $$CHART_BUILD_PUBLIC_HEADER_DIR/$$class
+        command = "echo \"$${LITERAL_HASH}include \\\"$$last_name\\\"\" > $$CHART_BUILD_PUBLIC_HEADER_DIR/$$final_class"
+    }
+    PUBLIC_QT_HEADERS += $$CHART_BUILD_PUBLIC_HEADER_DIR/$$final_class
     system($$command)
     }
+    unset(name)
+    unset(last_name)
+    unset(class)
+    unset(found_class)
+    unset(split_class)
+    unset(member_class)
+    unset(member_split_class)
+    unset(modified_class)
+    unset(final_class)
 }
 
 ############################# INSTALLERS ##########################################
