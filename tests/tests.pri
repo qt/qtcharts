@@ -16,7 +16,9 @@ staticlib: CONFIG-=staticlib
 android {
     # Workaround to fix android deployment, which seems to always look for target in
     # OUT_PWD instead of DESTDIR.
-    QMAKE_POST_LINK += $$QMAKE_COPY $$CHART_BUILD_BIN_DIR/lib$${TARGET}.so $$OUT_PWD/lib$${TARGET}.so
+    COPY_PARAMETERS = "$$CHART_BUILD_BIN_DIR/lib$${TARGET}.so $$OUT_PWD/lib$${TARGET}.so"
+    contains(QMAKE_HOST.os, Windows): COPY_PARAMETERS = $$replace(COPY_PARAMETERS, "/","\\")
+    QMAKE_POST_LINK += $$QMAKE_COPY $$COPY_PARAMETERS
 
     contains(TARGET, qml.*) {
         charts_qmldir.files = $$CHART_BUILD_QML_PLUGIN_DIR/qmldir
