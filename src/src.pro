@@ -16,7 +16,7 @@ win32-msvc*: {
 #    QMAKE_CXXFLAGS += -Werror
 }
 
-unix:!qnx {
+unix:!qnx:!android {
   QMAKE_CXXFLAGS += -fvisibility=hidden -fvisibility-inlines-hidden
 }
 

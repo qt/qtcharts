@@ -56,5 +56,5 @@ qmldir.path +=  $$IMPORT_INSTALL_PATH/$$TARGETPATH
 INSTALLS += target qmldir
 
 QMLDIR_FILE = $$_PRO_FILE_PWD_/qmldir
-win32:QMLDIR_FILE = $$replace(QMLDIR_FILE, "/","\\")
+contains(QMAKE_HOST.os, Windows): QMLDIR_FILE = $$replace(QMLDIR_FILE, "/","\\")
 QMAKE_POST_LINK += $$QMAKE_COPY $$QMLDIR_FILE $$DESTDIR
