@@ -46,7 +46,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \instantiates QHorizontalStackedBarSeries
     \inqmlmodule QtCommercial.Chart
 
-    \include /doc/src/horizontalstackedbarseries.qdocinc
+    \include doc/src/horizontalstackedbarseries.qdocinc
 */
 #else
 /*!

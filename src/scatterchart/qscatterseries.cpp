@@ -53,7 +53,7 @@
     \instantiates QScatterSeries
     \inqmlmodule QtCommercial.Chart
 
-    \include /doc/src/scatterseries.qdocinc
+    \include doc/src/scatterseries.qdocinc
 */
 #else
 /*!

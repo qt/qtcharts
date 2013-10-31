@@ -60,7 +60,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \instantiates QValueAxis
     \inqmlmodule QtCommercial.Chart
 
-    \include /doc/src/valueaxis.qdocinc
+    \include doc/src/valueaxis.qdocinc
 */
 #else
 /*!

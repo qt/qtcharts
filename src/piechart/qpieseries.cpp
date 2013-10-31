@@ -62,7 +62,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \instantiates QPieSeries
     \inqmlmodule QtCommercial.Chart
 
-    \include /doc/src/pieseries.qdocinc
+    \include doc/src/pieseries.qdocinc
 */
 #else
 /*!

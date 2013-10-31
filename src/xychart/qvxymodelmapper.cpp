@@ -38,7 +38,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \instantiates QVXYModelMapper
     \inqmlmodule QtCommercial.Chart
 
-    \include /doc/src/vxymodelmapper.qdocinc
+    \include doc/src/vxymodelmapper.qdocinc
 */
 #else
 /*!

@@ -39,7 +39,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \instantiates QVBoxPlotModelMapper
     \inqmlmodule QtCommercial.Chart
 
-    \include /doc/src/vboxplotmodelmapper.qdocinc
+    \include doc/src/vboxplotmodelmapper.qdocinc
 */
 #else
 /*!

@@ -28,7 +28,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \qmltype XYPoint
     \inqmlmodule QtCommercial.Chart
 
-    \include /doc/src/declarativexypoint.qdocinc
+    \include doc/src/declarativexypoint.qdocinc
 */
 #else
 /*!

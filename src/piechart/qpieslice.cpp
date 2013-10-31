@@ -45,7 +45,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \instantiates QPieSlice
     \inqmlmodule QtCommercial.Chart
 
-    \include /doc/src/pieslice.qdocinc
+    \include doc/src/pieslice.qdocinc
 */
 #else
 /*!

@@ -80,7 +80,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \instantiates QDateTimeAxis
     \inqmlmodule QtCommercial.Chart
 
-    \include /doc/src/datetimeaxis.qdocinc
+    \include doc/src/datetimeaxis.qdocinc
 */
 #else
 /*!

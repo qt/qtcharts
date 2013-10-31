@@ -45,7 +45,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \instantiates QAbstractAxis
     \inqmlmodule QtCommercial.Chart
 
-    \include /doc/src/abstractaxis.qdocinc
+    \include doc/src/abstractaxis.qdocinc
 */
 #else
 /*!

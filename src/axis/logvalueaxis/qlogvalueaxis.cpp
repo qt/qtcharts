@@ -47,7 +47,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \instantiates QLogValueAxis
     \inqmlmodule QtCommercial.Chart
 
-    \include /doc/src/logvalueaxis.qdocinc
+    \include doc/src/logvalueaxis.qdocinc
 */
 #else
 /*!

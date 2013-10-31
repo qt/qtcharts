@@ -56,7 +56,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \instantiates QAbstractBarSeries
     \inqmlmodule QtCommercial.Chart
 
-    \include /doc/src/abstractbarseries.qdocinc
+    \include doc/src/abstractbarseries.qdocinc
 */
 #else
 /*!

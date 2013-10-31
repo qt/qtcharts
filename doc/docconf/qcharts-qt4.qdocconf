@@ -4,6 +4,4 @@ include(qchart-html-template.qdocconf)
 include(qchart-qch.qdocconf)
 include(qcharts.qdocconf)
 
-outputdir = ../html
-imagedirs = ../images
 sourcedirs += ../src_qt4

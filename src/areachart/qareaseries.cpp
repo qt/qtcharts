@@ -53,7 +53,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \instantiates QAreaSeries
     \inqmlmodule QtCommercial.Chart
 
-    \include /doc/src/areaseries.qdocinc
+    \include doc/src/areaseries.qdocinc
 */
 #else
 /*!

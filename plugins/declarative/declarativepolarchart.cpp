@@ -29,7 +29,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \instantiates DeclarativePolarChart
     \inqmlmodule QtCommercial.Chart
 
-    \include /doc/src/declarativepolarchart.qdocinc
+    \include doc/src/declarativepolarchart.qdocinc
 */
 #else
 /*!

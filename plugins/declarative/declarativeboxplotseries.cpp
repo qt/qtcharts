@@ -31,7 +31,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \instantiates QBoxSet
     \inqmlmodule QtCommercial.Chart
 
-    \include /doc/src/declarativeboxset.qdocinc
+    \include doc/src/declarativeboxset.qdocinc
 */
 #else
 /*!
@@ -106,7 +106,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \instantiates QBoxPlotSeries
     \inqmlmodule QtCommercial.Chart
 
-    \include /doc/src/declarativeboxplotseries.qdocinc
+    \include doc/src/declarativeboxplotseries.qdocinc
 */
 #else
 /*!

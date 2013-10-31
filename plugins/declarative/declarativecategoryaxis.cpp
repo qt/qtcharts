@@ -28,7 +28,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \qmltype CategoryRange
     \inqmlmodule QtCommercial.Chart
 
-    \include /doc/src/categoryrange.qdocinc
+    \include doc/src/categoryrange.qdocinc
 */
 #else
 /*!

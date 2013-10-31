@@ -38,7 +38,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \instantiates QHPieModelMapper
     \inqmlmodule QtCommercial.Chart
 
-    \include /doc/src/hpiemodelmapper.qdocinc
+    \include doc/src/hpiemodelmapper.qdocinc
 */
 #else
 /*!

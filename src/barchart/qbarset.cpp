@@ -45,7 +45,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \instantiates QBarSet
     \inqmlmodule QtCommercial.Chart
 
-    \include /doc/src/barset.qdocinc
+    \include doc/src/barset.qdocinc
 */
 #else
 /*!

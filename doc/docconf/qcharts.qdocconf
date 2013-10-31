@@ -14,6 +14,9 @@ exampledirs = ../../ \
               ../../src \
               ../../examples
 
+outputdir = ../html
+imagedirs = ../images
+
 sources.fileextensions = *.cpp *.qdoc *.mm *.qml *.qdocinc
 headers.fileextensions = *.h *.ch *.h++ *.hh *.hpp *.hxx
 examples.fileextensions = *.cpp *.h *.js *.xq *.svg *.xml *.ui *.qhp *.qhcp *.qml

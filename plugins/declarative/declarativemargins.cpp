@@ -29,7 +29,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \qmltype Margins
     \inqmlmodule QtCommercial.Chart
 
-    \include /doc/src/margins.qdocinc
+    \include doc/src/margins.qdocinc
 */
 #else
 /*!

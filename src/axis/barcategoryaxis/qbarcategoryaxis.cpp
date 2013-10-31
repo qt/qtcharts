@@ -60,7 +60,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \instantiates QBarCategoryAxis
     \inqmlmodule QtCommercial.Chart
 
-    \include /doc/src/barcategoryaxis.qdocinc
+    \include doc/src/barcategoryaxis.qdocinc
 */
 #else
 /*!

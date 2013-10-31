@@ -50,7 +50,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \instantiates QHorizontalBarSeries
     \inqmlmodule QtCommercial.Chart
 
-    \include /doc/src/horizontalbarseries.qdocinc
+    \include doc/src/horizontalbarseries.qdocinc
 */
 #else
 /*!

@@ -40,7 +40,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \instantiates QXYSeries
     \inqmlmodule QtCommercial.Chart
 
-    \include /doc/src/xyseries.qdocinc
+    \include doc/src/xyseries.qdocinc
 */
 #else
 /*!

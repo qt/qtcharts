@@ -48,7 +48,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \instantiates QPercentBarSeries
     \inqmlmodule QtCommercial.Chart
 
-    \include /doc/src/persentbarseries.qdocinc
+    \include doc/src/persentbarseries.qdocinc
 */
 #else
 /*!

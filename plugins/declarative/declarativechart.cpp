@@ -58,7 +58,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \instantiates DeclarativeChart
     \inqmlmodule QtCommercial.Chart
 
-    \include /doc/src/chartview.qdocinc
+    \include doc/src/chartview.qdocinc
 */
 #else
 /*!

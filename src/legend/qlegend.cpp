@@ -57,7 +57,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \instantiates QLegend
     \inqmlmodule QtCommercial.Chart
 
-    \include /doc/src/legend.qdocinc
+    \include doc/src/legend.qdocinc
 */
 #else
 /*!

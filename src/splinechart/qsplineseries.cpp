@@ -51,7 +51,7 @@
     \instantiates QSplineSeries
     \inqmlmodule QtCommercial.Chart
 
-    \include /doc/src/splineseries.qdocinc
+    \include doc/src/splineseries.qdocinc
 */
 #else
 /*!
