@@ -135,7 +135,6 @@ void PieSliceItem::updateGeometry()
 
     if (m_data.m_isLabelVisible) {
         // text rect
-        QFontMetricsF fm(m_data.m_labelFont);
         m_labelTextRect = ChartPresenter::textBoundingRect(m_data.m_labelFont,
                                                            m_data.m_labelText,
                                                            0);
@@ -162,16 +161,14 @@ void PieSliceItem::updateGeometry()
             if (m_labelTextRect.right() > parentItem()->boundingRect().right())
                 m_labelTextRect.setRight(parentItem()->boundingRect().right());
 
-            if (fm.width(m_data.m_labelText) > m_labelTextRect.width()) {
-                label = ChartPresenter::truncatedText(m_data.m_labelFont, m_data.m_labelText,
-                                                      qreal(0.0), m_labelTextRect.width(),
-                                                      m_labelTextRect.height(), m_labelTextRect);
-                m_labelArmPath = labelArmPath(armStart, centerAngle,
-                                              m_data.m_radius * m_data.m_labelArmLengthFactor,
-                                              m_labelTextRect.width(), &labelTextStart);
+            label = ChartPresenter::truncatedText(m_data.m_labelFont, m_data.m_labelText,
+                                                  qreal(0.0), m_labelTextRect.width(),
+                                                  m_labelTextRect.height(), m_labelTextRect);
+            m_labelArmPath = labelArmPath(armStart, centerAngle,
+                                          m_data.m_radius * m_data.m_labelArmLengthFactor,
+                                          m_labelTextRect.width(), &labelTextStart);
+            m_labelTextRect.moveBottomLeft(labelTextStart);
 
-                m_labelTextRect.moveBottomLeft(labelTextStart);
-            }
             m_labelItem->setTextWidth(m_labelTextRect.width()
                                       + m_labelItem->document()->documentMargin());
             m_labelItem->setHtml(label);
@@ -193,7 +190,7 @@ void PieSliceItem::updateGeometry()
                 textCenter = m_data.m_center + offset(centerAngle, m_data.m_radius / 2);
             }
             m_labelItem->setPos(textCenter.x() - m_labelItem->boundingRect().width() / 2,
-                                textCenter.y() - fm.height() / 2);
+                                textCenter.y() - m_labelTextRect.height() / 2);
 
             QPointF labelCenter = m_labelItem->boundingRect().center();
             m_labelItem->setTransformOriginPoint(labelCenter);
