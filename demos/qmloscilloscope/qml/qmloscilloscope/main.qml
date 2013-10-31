@@ -23,8 +23,8 @@ import QtQuick 1.0
 //![1]
 Rectangle {
     id: main
-    width: 400
-    height: 300
+    width: 460
+    height: 350
     color: "#404040"
 
     ControlPanel {

@@ -22,7 +22,7 @@ import QtQuick 1.0
 
 Item {
     id: container
-    width: 400
+    width: 440
     height: 300
     Component.onCompleted: {
     var co = Qt.createComponent("main.qml")

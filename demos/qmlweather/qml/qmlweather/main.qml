@@ -22,8 +22,8 @@ import QtQuick 1.1
 import QtCommercial.Chart 1.2
 
 Rectangle {
-    width: 360
-    height: 360
+    width: 500
+    height: 400
     gradient: Gradient {
         GradientStop { position: 0.0; color: "lightblue" }
         GradientStop { position: 1.0; color: "white" }

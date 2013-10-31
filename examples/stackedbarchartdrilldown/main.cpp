@@ -105,7 +105,7 @@ int main(int argc, char *argv[])
 
     QChartView *chartView = new QChartView(drilldownChart);
     window.setCentralWidget(chartView);
-    window.resize(400, 300);
+    window.resize(480, 300);
     window.show();
 
     return a.exec();
