@@ -148,10 +148,9 @@ void HorizontalAxis::updateGeometry()
             }
         }
         //label overlap detection - compensate one pixel for rounding errors
-        if ((labelItem->pos().x() < width || forceHide ||
+        if (labelItem->pos().x() < width || forceHide ||
             (labelItem->pos().x() + (widthDiff / 2.0)) < (axisRect.left() - 1.0) ||
-            (labelItem->pos().x() + (widthDiff / 2.0) - 1.0) > axisRect.right())
-            && !intervalAxis()) {
+            (labelItem->pos().x() + (widthDiff / 2.0) - 1.0) > axisRect.right()) {
             labelItem->setVisible(false);
         } else {
             labelItem->setVisible(true);

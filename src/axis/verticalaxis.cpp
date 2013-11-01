@@ -153,10 +153,9 @@ void VerticalAxis::updateGeometry()
         }
 
         //label overlap detection - compensate one pixel for rounding errors
-        if ((labelItem->pos().y() + boundingRect.height() > height || forceHide ||
+        if (labelItem->pos().y() + boundingRect.height() > height || forceHide ||
             (labelItem->pos().y() + (heightDiff / 2.0) - 1.0) > axisRect.bottom() ||
-            labelItem->pos().y() + (heightDiff / 2.0) < (axisRect.top() - 1.0))
-            && !intervalAxis()) {
+            labelItem->pos().y() + (heightDiff / 2.0) < (axisRect.top() - 1.0)) {
             labelItem->setVisible(false);
         }
         else {
