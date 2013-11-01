@@ -247,6 +247,8 @@ QPen QLegend::pen() const
 void QLegend::setFont(const QFont &font)
 {
     if (d_ptr->m_font != font) {
+        // Hide items to avoid flickering
+        d_ptr->items()->setVisible(false);
         d_ptr->m_font = font;
         foreach (QLegendMarker *marker, d_ptr->markers()) {
             marker->setFont(d_ptr->m_font);
