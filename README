@@ -50,6 +50,9 @@ For both builds:
 If you want to leave out demos and examples from the build you can use
 the following config with qmake:
     CONFIG+=nomake_demos_examples
+For some embedded environments, such as VxWorks, all examples and demos
+may not be applicable. There it's recommended to use the above mentioned
+config option.
 
 If you want to install the libraries to your Qt library directory use:
     make install
