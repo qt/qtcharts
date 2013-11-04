@@ -23,8 +23,8 @@ import QtQuick 2.0
 //![1]
 
 Rectangle {
-    width: 360
-    height: 360
+    width: 600
+    height: 400
     property int viewNumber: 1
 
     Loader {
