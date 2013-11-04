@@ -21,11 +21,11 @@ if "%2"=="" (
 
 set CHARTS_VERSION=%1
 set CHARTS_BUILD_DIR=%CHARTS_TEMP_DIR_FULL%\tempbuild
-set CHARTS_PACKAGE_UNZIP_DIR=%CHARTS_TEMP_DIR_FULL%\qtcharts-%CHARTS_VERSION%
-set CHARTS_TEMP_ZIP=qtcharts_temp_%CHARTS_VERSION%.zip
+set CHARTS_PACKAGE_UNZIP_DIR=%CHARTS_TEMP_DIR_FULL%\qt-charts-enterprise-src-%CHARTS_VERSION%
+set CHARTS_TEMP_ZIP=qt-charts-enterprise-src-%CHARTS_VERSION%.zip
 set CHARTS_TEMP_ZIP_FULL=%CHARTS_TEMP_DIR_FULL%\%CHARTS_TEMP_ZIP%
 set CHARTS_XCOPY_CMD=xcopy /s /i /q
-set CHARTS_FINAL_ZIP=..\qt-enterprise-charts-src-%CHARTS_VERSION%.zip
+set CHARTS_FINAL_ZIP=..\qt-charts-enterprise-src-%CHARTS_VERSION%.zip
 
 echo Exporting %CHARTS_BRANCH% to %CHARTS_TEMP_ZIP_FULL%...
 rmdir /q /s %CHARTS_TEMP_DIR_FULL% 2> NUL
