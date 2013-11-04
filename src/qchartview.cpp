@@ -211,7 +211,7 @@ void QChartView::mouseReleaseEvent(QMouseEvent *event)
             event->accept();
         }
 
-        if (event->button() == Qt::RightButton) {
+    } else if (d_ptr->m_rubberBand && event->button() == Qt::RightButton) {
             // If vertical or horizontal rubberband mode, restrict zoom out to specified axis.
             // Since there is no suitable API for that, use zoomIn with rect bigger than the
             // plot area.
@@ -230,7 +230,6 @@ void QChartView::mouseReleaseEvent(QMouseEvent *event)
                 d_ptr->m_chart->zoomOut();
             }
             event->accept();
-        }
     } else {
 #endif
         QGraphicsView::mouseReleaseEvent(event);
