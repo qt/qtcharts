@@ -206,6 +206,13 @@ void PieSliceItem::updateGeometry()
                 m_labelItem->setRotation(0);
             }
         }
+        // Hide label if it's outside the bounding rect of parent item
+        QRectF labelRect(m_labelItem->boundingRect());
+        labelRect.moveTopLeft(m_labelItem->pos());
+        if (parentItem()->boundingRect().contains(labelRect))
+            m_labelItem->show();
+        else
+            m_labelItem->hide();
     }
 
     //  bounding rect
