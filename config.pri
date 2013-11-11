@@ -92,7 +92,7 @@ linux-arm*: {
 ##################### INCLUDES ############################################################
 
 
-INCLUDEPATH += $$CHART_BUILD_PUBLIC_HEADER_DIR
+INCLUDEPATH += $$CHART_BUILD_PUBLIC_HEADER_DIR $$[QT_INSTALL_HEADERS]/QtCommercialChart
 
 !win32: {
     LIBS += -L$$CHART_BUILD_LIB_DIR -Wl,-rpath,$$CHART_BUILD_LIB_DIR
