@@ -94,6 +94,9 @@ linux-arm*: {
 
 INCLUDEPATH += $$CHART_BUILD_PUBLIC_HEADER_DIR $$[QT_INSTALL_HEADERS]/QtCommercialChart
 
+!exists($$CHART_BUILD_LIB_DIR) {
+    system($$QMAKE_MKDIR $$CHART_BUILD_LIB_DIR)
+}
 !win32: {
     LIBS += -L$$CHART_BUILD_LIB_DIR -Wl,-rpath,$$CHART_BUILD_LIB_DIR
 } else {
@@ -105,6 +108,7 @@ INCLUDEPATH += $$CHART_BUILD_PUBLIC_HEADER_DIR $$[QT_INSTALL_HEADERS]/QtCommerci
         LIBS += -L$$CHART_BUILD_LIB_DIR
     }
 }
+LIBS += -L$$[QT_INSTALL_LIBS]
 
 ##################### DEVELOPMENT BUILD ###################################################
 
