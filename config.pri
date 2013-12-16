@@ -78,7 +78,7 @@ contains(QMAKE_HOST.os, Windows) {
     CHART_BUILD_LIB_DIR = $$replace(CHART_BUILD_LIB_DIR, "/","\\")
 }
 
-mac: {
+macx: {
     # Some Qt versions use an incompatible configuration on OSX which makes the build fail.
     # As a work-around, set the minimum OSX version to 10.5.
     QMAKE_CXXFLAGS *= -mmacosx-version-min=10.5
