@@ -158,7 +158,7 @@ void LegendLayout::setAttachedGeometry(const QRectF &rect)
             // If the items would occupy more space than is available, start truncating them
             // from the longest one.
             qreal availableGeometry = geometry.width() - right - left * 2 - itemMargins;
-            if (markerItemsWidth >= availableGeometry && legendWidthList.count() > 1) {
+            if (markerItemsWidth >= availableGeometry) {
                 bool truncated(false);
                 int count = legendWidthList.count();
                 for (int i = 1; i < count; i++) {
@@ -193,7 +193,8 @@ void LegendLayout::setAttachedGeometry(const QRectF &rect)
                     if (truncated)
                         break;
                 }
-                // Items are of same width and all of them need to be truncated.
+                // Items are of same width and all of them need to be truncated
+                // or there is just one item that is truncated.
                 while (markerItemsWidth >= availableGeometry) {
                     for (int i = 0; i < count; i++) {
                         legendWidthList.at(i)->width--;
