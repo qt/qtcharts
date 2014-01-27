@@ -23,11 +23,11 @@
 
 #include <qglobal.h>
 
-#define QTCOMMERCIALCHART_VERSION_STR   "1.3.0"
+#define QTCOMMERCIALCHART_VERSION_STR   "1.3.1"
 /*
    QTCOMMERCIALCHART_VERSION is (major << 16) + (minor << 8) + patch.
 */
-#define QTCOMMERCIALCHART_VERSION       0x010300
+#define QTCOMMERCIALCHART_VERSION       0x010301
 /*
    can be used like #if (QTCOMMERCIALCHART_VERSION >= QTCOMMERCIALCHART_VERSION_CHECK(1, 1, 0))
 */
