@@ -180,8 +180,10 @@ void ChartDataSet::removeAxis(QAbstractAxis *axis)
  */
 bool ChartDataSet::attachAxis(QAbstractSeries *series,QAbstractAxis *axis)
 {
-    Q_ASSERT(series);
     Q_ASSERT(axis);
+
+    if (!series)
+        return false;
 
     QList<QAbstractSeries *> attachedSeriesList = axis->d_ptr->m_series;
     QList<QAbstractAxis *> attachedAxisList = series->d_ptr->m_axes;
