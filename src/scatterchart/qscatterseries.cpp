@@ -195,6 +195,8 @@ void QScatterSeries::setBrush(const QBrush &brush)
 void QScatterSeries::setColor(const QColor &color)
 {
     QBrush b = brush();
+    if (b == QChartPrivate::defaultBrush())
+        b = QBrush();
     if (b == QBrush())
         b.setStyle(Qt::SolidPattern);
     b.setColor(color);
@@ -209,10 +211,10 @@ QColor QScatterSeries::color() const
 void QScatterSeries::setBorderColor(const QColor &color)
 {
     QPen p = pen();
-    if (p.color() != color) {
-        p.setColor(color);
-        setPen(p);
-    }
+    if (p == QChartPrivate::defaultPen())
+        p = QPen();
+    p.setColor(color);
+    setPen(p);
 }
 
 QColor QScatterSeries::borderColor() const
