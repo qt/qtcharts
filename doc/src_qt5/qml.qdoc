@@ -23,6 +23,11 @@
     As of release 1.3.0, Qt Charts is also usable with Qt Quick 2, though the performance
     is slightly worse than with Qt Quick 1 due to the additional rendering step that is required.
 
+    \note Since Qt Creator 3.0 the project created with Qt Quick Application wizard based on
+    Qt Quick 2 template uses QGuiApplication by default. As Qt Charts utilizes Qt Graphics View
+    Framework for drawing, QApplication must be used. The project created with the wizard is
+    usable with Qt Charts after the QGuiApplication is replaced with QApplication.
+
     \note Qt Quick 1 is supported from Qt 4.7.4 onwards because of the missing
     Q_REVISION macro in the earlier Qt releases. Qt Quick 2 is supported with only Qt 5.
 
