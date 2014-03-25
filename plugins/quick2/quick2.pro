@@ -6,4 +6,5 @@ DEFINES += CHARTS_FOR_QUICK2
 !include(../declarative/declarative.pri) {
     error( "Couldn't find the declarative.pri file!" )
 }
+qmldir.files += plugins.qmltypes
 
