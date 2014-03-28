@@ -1,6 +1,7 @@
 ##################### LIB #################################################
 
 LIBRARY_NAME = QtCommercialChart
+ios:CONFIG(iphonesimulator, iphonesimulator|iphoneos):LIBRARY_NAME = $$join(LIBRARY_NAME,,,_iphonesimulator)
 CONFIG(debug, debug|release) {
     mac: LIBRARY_NAME = $$join(LIBRARY_NAME,,,_debug)
     win32: LIBRARY_NAME = $$join(LIBRARY_NAME,,,d)
@@ -10,7 +11,7 @@ LIBS += -l$$LIBRARY_NAME
 
 # This will undefine Q_DECL_EXPORT/Q_DECL_IMPORT at qchartglobal.h
 # They should not be used for staticlib builds.
-staticlib:DEFINES+=QTCOMMERCIALCHART_STATICLIB
+static|staticlib:DEFINES+=QTCOMMERCIALCHART_STATICLIB
 
 #################### COVERAGE #################################################################
 coverage: CONFIG += debug
@@ -78,7 +79,7 @@ contains(QMAKE_HOST.os, Windows) {
     CHART_BUILD_LIB_DIR = $$replace(CHART_BUILD_LIB_DIR, "/","\\")
 }
 
-macx: {
+macx:!ios {
     # Some Qt versions use an incompatible configuration on OSX which makes the build fail.
     # As a work-around, set the minimum OSX version to 10.5.
     QMAKE_CXXFLAGS *= -mmacosx-version-min=10.5

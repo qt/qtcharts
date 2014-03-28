@@ -241,9 +241,9 @@ public:
     }
 };
 
-#include "plugin.moc"
-
 QTCOMMERCIALCHART_END_NAMESPACE
+
+#include "plugin.moc"
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 

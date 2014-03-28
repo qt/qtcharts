@@ -9,7 +9,7 @@ contains(DEFINES, CHARTS_FOR_QUICK2) {
 }
 
 INCLUDEPATH += $$CHART_BUILD_PRIVATE_HEADER_DIR
-
+ios:CONFIG(iphonesimulator, iphonesimulator|iphoneos):TARGET = $$join(TARGET,,,_iphonesimulator)
 CONFIG(debug, debug|release) {
   mac: TARGET = $$join(TARGET,,,_debug)
   win32: TARGET = $$join(TARGET,,,d)
