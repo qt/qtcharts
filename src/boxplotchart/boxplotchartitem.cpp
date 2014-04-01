@@ -82,8 +82,15 @@ void BoxPlotChartItem::handleDataStructureChanged()
             connect(box, SIGNAL(hovered(bool, QBoxSet *)), set, SIGNAL(hovered(bool)));
 
             // Set the decorative issues for the newly created box
-            box->setBrush(m_series->brush());
-            box->setPen(m_series->pen());
+            // so that the brush and pen already defined for the set are kept.
+            if (set->brush() == Qt::NoBrush)
+                box->setBrush(m_series->brush());
+            else
+                box->setBrush(set->brush());
+            if (set->pen() == Qt::NoPen)
+                box->setPen(m_series->pen());
+            else
+                box->setPen(set->pen());
             box->setBoxOutlined(m_series->boxOutlineVisible());
             box->setBoxWidth(m_series->boxWidth());
         }
