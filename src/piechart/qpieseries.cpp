@@ -844,9 +844,11 @@ void QPieSeriesPrivate::sliceClicked()
 void QPieSeriesPrivate::sliceHovered(bool state)
 {
     QPieSlice *slice = qobject_cast<QPieSlice *>(sender());
-    Q_ASSERT(m_slices.contains(slice));
-    Q_Q(QPieSeries);
-    emit q->hovered(slice, state);
+    if (!m_slices.isEmpty()) {
+        Q_ASSERT(m_slices.contains(slice));
+        Q_Q(QPieSeries);
+        emit q->hovered(slice, state);
+    }
 }
 
 void QPieSeriesPrivate::initializeDomain()

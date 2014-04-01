@@ -109,7 +109,6 @@ void PieSliceItem::hoverLeaveEvent(QGraphicsSceneHoverEvent * /*event*/)
 void PieSliceItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     emit clicked(event->buttons());
-    QGraphicsItem::mousePressEvent(event);
 }
 
 void PieSliceItem::setLayout(const PieSliceData &sliceData)
