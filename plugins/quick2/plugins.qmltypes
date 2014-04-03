@@ -1831,6 +1831,7 @@ Module {
         Property { name: "borderColor"; type: "QColor" }
         Property { name: "font"; type: "QFont" }
         Property { name: "labelColor"; type: "QColor" }
+        Property { name: "reverseMarkers"; type: "bool" }
         Signal {
             name: "backgroundVisibleChanged"
             Parameter { name: "visible"; type: "bool" }
@@ -1850,6 +1851,10 @@ Module {
         Signal {
             name: "labelColorChanged"
             Parameter { name: "color"; type: "QColor" }
+        }
+        Signal {
+            name: "reverseMarkersChanged"
+            Parameter { name: "reverseMarkers"; type: "bool" }
         }
     }
     Component { name: "QtCommercialChart::QLineSeries"; prototype: "QtCommercialChart::QXYSeries" }

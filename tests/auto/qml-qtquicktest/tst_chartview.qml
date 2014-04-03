@@ -55,6 +55,7 @@ Rectangle {
             compare(chartView.legend.backgroundVisible, false, "ChartView.legend.backgroundVisible");
             verify(chartView.legend.borderColor != undefined, "ChartView.legend.borderColor");
             verify(chartView.legend.color != undefined, "ChartView.legend.color");
+            compare(chartView.legend.reverseMarkers, false, "ChartView.legend.reverseMarkers");
             // Legend font
             compare(chartView.legend.font.bold, false, "ChartView.legend.font.bold");
             compare(chartView.legend.font.capitalization, Font.MixedCase, "ChartView.legend.font.capitalization");

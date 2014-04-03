@@ -65,6 +65,10 @@ Row {
             text: "legend right"
             onClicked: chartLegend.alignment = Qt.AlignRight;
         }
+        Button {
+            text: "legend use reverse order"
+            onClicked: chartLegend.reverseMarkers = !chartLegend.reverseMarkers;
+        }
     }
 
     FontEditor {

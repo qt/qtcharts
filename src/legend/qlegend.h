@@ -42,6 +42,7 @@ class QTCOMMERCIALCHART_EXPORT QLegend : public QGraphicsWidget
     Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor NOTIFY borderColorChanged)
     Q_PROPERTY(QFont font READ font WRITE setFont NOTIFY fontChanged)
     Q_PROPERTY(QColor labelColor READ labelColor WRITE setLabelColor NOTIFY labelColorChanged)
+    Q_PROPERTY(bool reverseMarkers READ reverseMarkers WRITE setReverseMarkers NOTIFY reverseMarkersChanged)
 
 private:
     explicit QLegend(QChart *chart);
@@ -81,6 +82,9 @@ public:
 
     QList <QLegendMarker*> markers(QAbstractSeries *series = 0) const;
 
+    bool reverseMarkers();
+    void setReverseMarkers(bool reverseMarkers = true);
+
 protected:
     void hideEvent(QHideEvent *event);
     void showEvent(QShowEvent *event);
@@ -91,6 +95,7 @@ Q_SIGNALS:
     void borderColorChanged(QColor color);
     void fontChanged(QFont font);
     void labelColorChanged(QColor color);
+    void reverseMarkersChanged(bool reverseMarkers);
 
 private:
     QScopedPointer<QLegendPrivate> d_ptr;

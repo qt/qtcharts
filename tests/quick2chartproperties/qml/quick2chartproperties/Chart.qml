@@ -52,6 +52,8 @@ ChartView {
     legend.onColorChanged:             console.log("legend.onColorChanged: " + color);
     legend.onBorderColorChanged:       console.log("legend.onBorderColorChanged: " + color);
     legend.onLabelColorChanged:        console.log("legend.onLabelColorChanged: " + color);
+    legend.onReverseMarkersChanged:    console.log("legend.onReverseMarkersChanged: "
+                                                   + chart.legend.reverseMarkers)
     margins.onTopChanged:       console.log("chart.margins.onTopChanged: " + top );
     margins.onBottomChanged:    console.log("chart.margins.onBottomChanged: " + bottom);
     margins.onLeftChanged:      console.log("chart.margins.onLeftChanged: " + left);

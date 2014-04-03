@@ -420,6 +420,7 @@ void tst_QChart::legend()
 {
     QLegend *legend = m_chart->legend();
     QVERIFY(legend);
+    QVERIFY(!m_chart->legend()->reverseMarkers());
 
     // Colors related signals
     QSignalSpy colorSpy(legend, SIGNAL(colorChanged(QColor)));
@@ -456,6 +457,13 @@ void tst_QChart::legend()
     f.setBold(!f.bold());
     legend->setFont(f);
     QCOMPARE(fontSpy.count(), 1);
+
+    // reverseMarkersChanged
+    QSignalSpy reverseMarkersSpy(legend, SIGNAL(reverseMarkersChanged(bool)));
+    QCOMPARE(reverseMarkersSpy.count(), 0);
+    legend->setReverseMarkers();
+    QCOMPARE(reverseMarkersSpy.count(), 1);
+    QVERIFY(legend->reverseMarkers());
 }
 
 void tst_QChart::plotArea_data()

@@ -129,6 +129,15 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \property QLegend::reverseMarkers
+    Whether reverse order is used for the markers in legend or not. False by default.
+*/
+/*!
+    \qmlproperty bool Legend::reverseMarkers
+    Whether reverse order is used for the markers in legend or not. False by default.
+*/
+
+/*!
     \fn void QLegend::backgroundVisibleChanged(bool)
     The visibility of the legend background changed to \a visible.
 */
@@ -391,6 +400,20 @@ QList<QLegendMarker*> QLegend::markers(QAbstractSeries *series) const
     return d_ptr->markers(series);
 }
 
+bool QLegend::reverseMarkers()
+{
+    return d_ptr->m_reverseMarkers;
+}
+
+void QLegend::setReverseMarkers(bool reverseMarkers)
+{
+    if (d_ptr->m_reverseMarkers != reverseMarkers) {
+        d_ptr->m_reverseMarkers = reverseMarkers;
+        layout()->invalidate();
+        emit reverseMarkersChanged(reverseMarkers);
+    }
+}
+
 /*!
  \internal \a event see QGraphicsWidget for details
  */
@@ -425,7 +448,8 @@ QLegendPrivate::QLegendPrivate(ChartPresenter *presenter, QChart *chart, QLegend
       m_labelBrush(QBrush()),
       m_diameter(5),
       m_attachedToChart(true),
-      m_backgroundVisible(false)
+      m_backgroundVisible(false),
+      m_reverseMarkers(false)
 {
     m_items->setHandlesChildEvents(false);
 }

@@ -82,6 +82,7 @@ private:
     qreal m_diameter;
     bool m_attachedToChart;
     bool m_backgroundVisible;
+    bool m_reverseMarkers;
 
     QList<QLegendMarker *> m_markers;
     QList<QAbstractSeries *> m_series;

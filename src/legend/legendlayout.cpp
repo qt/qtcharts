@@ -204,7 +204,14 @@ void LegendLayout::setAttachedGeometry(const QRectF &rect)
             }
 
             QPointF point(0,0);
-            foreach (QLegendMarker *marker, m_legend->d_ptr->markers()) {
+
+            int markerCount = m_legend->d_ptr->markers().count();
+            for (int i = 0; i < markerCount; i++) {
+                QLegendMarker *marker;
+                if (m_legend->d_ptr->m_reverseMarkers)
+                    marker = m_legend->d_ptr->markers().at(markerCount - 1 - i);
+                else
+                    marker = m_legend->d_ptr->markers().at(i);
                 LegendMarkerItem *item = marker->d_ptr->item();
                 if (item->isVisible()) {
                     QRectF itemRect = geometry;
@@ -238,7 +245,13 @@ void LegendLayout::setAttachedGeometry(const QRectF &rect)
     case Qt::AlignLeft:
     case Qt::AlignRight: {
             QPointF point(0,0);
-            foreach (QLegendMarker *marker, m_legend->d_ptr->markers()) {
+            int markerCount = m_legend->d_ptr->markers().count();
+            for (int i = 0; i < markerCount; i++) {
+                QLegendMarker *marker;
+                if (m_legend->d_ptr->m_reverseMarkers)
+                    marker = m_legend->d_ptr->markers().at(markerCount - 1 - i);
+                else
+                    marker = m_legend->d_ptr->markers().at(i);
                 LegendMarkerItem *item = marker->d_ptr->item();
                 if (item->isVisible()) {
                     item->setGeometry(geometry);
