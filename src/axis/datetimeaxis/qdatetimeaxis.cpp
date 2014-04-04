@@ -96,7 +96,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   When setting this property the max is adjusted if necessary, to ensure that the range remains valid.
 */
 /*!
-  \qmlproperty real ValuesAxis::min
+  \qmlproperty real DateTimeAxis::min
   Defines the minimum value on the axis.
   When setting this property the max is adjusted if necessary, to ensure that the range remains valid.
 */
@@ -107,7 +107,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   When setting this property the min is adjusted if necessary, to ensure that the range remains valid.
 */
 /*!
-  \qmlproperty real ValuesAxis::max
+  \qmlproperty real DateTimeAxis::max
   Defines the maximum value on the axis.
   When setting this property the min is adjusted if necessary, to ensure that the range remains valid.
 */
@@ -117,7 +117,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   Axis emits signal when \a min of axis has changed.
 */
 /*!
-  \qmlsignal ValuesAxis::onMinChanged(QDateTime min)
+  \qmlsignal DateTimeAxis::onMinChanged(QDateTime min)
   Axis emits signal when \a min of axis has changed.
 */
 
@@ -126,7 +126,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   Axis emits signal when \a max of axis has changed.
 */
 /*!
-  \qmlsignal ValuesAxis::onMaxChanged(QDateTime max)
+  \qmlsignal DateTimeAxis::onMaxChanged(QDateTime max)
   Axis emits signal when \a max of axis has changed.
 */
 
