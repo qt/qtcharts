@@ -514,19 +514,22 @@ void  QBarCategoryAxisPrivate::setRange(const QString &minCategory, const QStrin
         emit q->maxChanged(maxCategory);
         emit q->rangeChanged(m_minCategory, m_maxCategory);
         emit rangeChanged(m_min,m_max);
+        return;
     }
 
     if (m_categories.indexOf(maxCategory) < m_categories.indexOf(minCategory))
         return;
 
-    if (!minCategory.isEmpty() && m_minCategory != minCategory && m_categories.contains(minCategory)) {
+    if (!minCategory.isNull() && (m_minCategory != minCategory || m_minCategory.isNull())
+            && m_categories.contains(minCategory)) {
         m_minCategory = minCategory;
         m_min = m_categories.indexOf(m_minCategory) - 0.5;
         changed = true;
         emit q->minChanged(minCategory);
     }
 
-    if (!maxCategory.isEmpty() && m_maxCategory != maxCategory && m_categories.contains(maxCategory)) {
+    if (!maxCategory.isNull() && (m_maxCategory != maxCategory || m_maxCategory.isNull())
+            && m_categories.contains(maxCategory)) {
         m_maxCategory = maxCategory;
         m_max = m_categories.indexOf(m_maxCategory) + 0.5;
         changed = true;
