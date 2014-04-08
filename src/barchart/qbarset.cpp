@@ -256,10 +256,10 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \qmlproperty QVariantList BarSet::values
     The values of the bar set. You can set either a list of reals or a list of points as values. If you set a list of
     reals as values, the values are automatically completed to points by using the index of a value as it's
-    x-coordinate. For example:
+    x-coordinate. For example the following sets have equal values:
     \code
         myBarSet1.values = [0, 5, 1, 5];
-        myBarSet2.values = [Qt.point(0, 1), Qt.point(1, 5), Qt.point(2.2, 4.3)];
+        myBarSet2.values = [Qt.point(0, 0), Qt.point(1, 5), Qt.point(2, 1), Qt.point(3, 5)];
     \endcode
 */
 

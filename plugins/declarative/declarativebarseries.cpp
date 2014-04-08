@@ -67,9 +67,33 @@ void DeclarativeBarSet::setValues(QVariantList values)
     while (count())
         remove(count() - 1);
 
-    for (int i(0); i < values.count(); i++) {
-        if (values.at(i).canConvert(QVariant::Double))
-            QBarSet::append(values[i].toDouble());
+    if (values.at(0).canConvert(QVariant::Point)) {
+        // Create list of values for appending if the first item is Qt.point
+        int maxValue = 0;
+        for (int i = 0; i < values.count(); i++) {
+            if (values.at(i).canConvert(QVariant::Point) &&
+                    values.at(i).toPoint().x() > maxValue) {
+                maxValue = values.at(i).toPoint().x();
+            }
+        }
+
+        QVector<int> indexValueList;
+        indexValueList.resize(maxValue + 1);
+
+        for (int i = 0; i < values.count(); i++) {
+            if (values.at(i).canConvert(QVariant::Point)) {
+                indexValueList.replace(values.at(i).toPoint().x(), values.at(i).toPoint().y());
+            }
+        }
+
+        for (int i = 0; i < indexValueList.count(); i++)
+            QBarSet::append(indexValueList.at(i));
+
+    } else {
+        for (int i(0); i < values.count(); i++) {
+            if (values.at(i).canConvert(QVariant::Double))
+                QBarSet::append(values[i].toDouble());
+        }
     }
 }
 
