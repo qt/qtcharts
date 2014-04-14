@@ -121,6 +121,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \qmlproperty QString AreaSeries::brushFilename
+    The name of the file used as a brush image for the series.
+*/
+
+/*!
     \fn void QAreaSeries::colorChanged(QColor color)
     \brief Signal is emitted when the fill (brush) color has changed to \a color.
 */

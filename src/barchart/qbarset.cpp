@@ -75,6 +75,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \qmlproperty QString BarSet::brushFilename
+    The name of the file used as a brush for the set.
+*/
+
+/*!
     \property QBarSet::labelBrush
     \brief Defines the brush used by the bar set's label.
 */

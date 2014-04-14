@@ -25,6 +25,41 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+DeclarativePieSlice::DeclarativePieSlice(QObject *parent)
+    : QPieSlice(parent)
+{
+    connect(this, SIGNAL(brushChanged()), this, SLOT(handleBrushChanged()));
+}
+
+QString DeclarativePieSlice::brushFilename() const
+{
+    return m_brushFilename;
+}
+
+void DeclarativePieSlice::setBrushFilename(const QString &brushFilename)
+{
+    QImage brushImage(brushFilename);
+    if (QPieSlice::brush().textureImage() != brushImage) {
+        QBrush brush = QPieSlice::brush();
+        brush.setTextureImage(brushImage);
+        QPieSlice::setBrush(brush);
+        m_brushFilename = brushFilename;
+        m_brushImage = brushImage;
+        emit brushFilenameChanged(brushFilename);
+    }
+}
+
+void DeclarativePieSlice::handleBrushChanged()
+{
+    // If the texture image of the brush has changed along the brush
+    // the brush file name needs to be cleared.
+    if (!m_brushFilename.isEmpty() && QPieSlice::brush().textureImage() != m_brushImage) {
+        m_brushFilename.clear();
+        emit brushFilenameChanged(QString(""));
+    }
+}
+
+// Declarative pie series =========================================================================
 DeclarativePieSeries::DeclarativePieSeries(QDECLARATIVE_ITEM *parent) :
     QPieSeries(parent)
 {
@@ -81,13 +116,15 @@ QPieSlice *DeclarativePieSeries::find(QString label)
     return 0;
 }
 
-QPieSlice *DeclarativePieSeries::append(QString label, qreal value)
+DeclarativePieSlice *DeclarativePieSeries::append(QString label, qreal value)
 {
-    QPieSlice *slice = new QPieSlice(this);
+    DeclarativePieSlice *slice = new DeclarativePieSlice(this);
     slice->setLabel(label);
     slice->setValue(value);
-    QPieSeries::append(slice);
-    return slice;
+    if (QPieSeries::append(slice))
+        return slice;
+    delete slice;
+    return 0;
 }
 
 bool DeclarativePieSeries::remove(QPieSlice *slice)

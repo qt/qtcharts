@@ -30,6 +30,7 @@ DeclarativeBarSet::DeclarativeBarSet(QObject *parent)
 {
     connect(this, SIGNAL(valuesAdded(int,int)), this, SLOT(handleCountChanged(int,int)));
     connect(this, SIGNAL(valuesRemoved(int,int)), this, SLOT(handleCountChanged(int,int)));
+    connect(this, SIGNAL(brushChanged()), this, SLOT(handleBrushChanged()));
 }
 
 void DeclarativeBarSet::handleCountChanged(int index, int count)
@@ -94,6 +95,34 @@ void DeclarativeBarSet::setValues(QVariantList values)
             if (values.at(i).canConvert(QVariant::Double))
                 QBarSet::append(values[i].toDouble());
         }
+    }
+}
+
+QString DeclarativeBarSet::brushFilename() const
+{
+    return m_brushFilename;
+}
+
+void DeclarativeBarSet::setBrushFilename(const QString &brushFilename)
+{
+    QImage brushImage(brushFilename);
+    if (QBarSet::brush().textureImage() != brushImage) {
+        QBrush brush = QBarSet::brush();
+        brush.setTextureImage(brushImage);
+        QBarSet::setBrush(brush);
+        m_brushFilename = brushFilename;
+        m_brushImage = brushImage;
+        emit brushFilenameChanged(brushFilename);
+    }
+}
+
+void DeclarativeBarSet::handleBrushChanged()
+{
+    // If the texture image of the brush has changed along the brush
+    // the brush file name needs to be cleared.
+    if (!m_brushFilename.isEmpty() && QBarSet::brush().textureImage() != m_brushImage) {
+        m_brushFilename.clear();
+        emit brushFilenameChanged(QString(""));
     }
 }
 

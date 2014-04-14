@@ -73,6 +73,11 @@
 */
 
 /*!
+    \property QScatterSeries::brush
+    Brush used to draw the series.
+*/
+
+/*!
     \property QScatterSeries::color
     Fill (brush) color of the series. This is a convenience property for modifying the color of brush.
     \sa QScatterSeries::brush()
@@ -111,6 +116,11 @@
 /*!
     \qmlproperty real ScatterSeries::markerSize
     Defines the size of the marker used to draw the points in the series. The default size is 15.0.
+*/
+
+/*!
+    \qmlproperty QString ScatterSeries::brushFilename
+    The name of the file used as a brush for the series.
 */
 
 /*!
@@ -190,6 +200,15 @@ void QScatterSeries::setBrush(const QBrush &brush)
         if (emitColorChanged)
             emit colorChanged(brush.color());
     }
+}
+
+QBrush QScatterSeries::brush() const
+{
+    Q_D(const QScatterSeries);
+    if (d->m_brush == QChartPrivate::defaultBrush())
+        return QBrush();
+    else
+        return d->m_brush;
 }
 
 void QScatterSeries::setColor(const QColor &color)

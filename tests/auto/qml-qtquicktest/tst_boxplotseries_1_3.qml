@@ -20,7 +20,7 @@
 
 import QtQuick 2.0
 import QtTest 1.0
-import QtCommercial.Chart 1.4
+import QtCommercial.Chart 1.3
 
 Rectangle {
     width: 400
@@ -28,19 +28,17 @@ Rectangle {
 
     TestCase {
         id: tc1
-        name: "tst_qml-qtquicktest BoxPlotSeries"
+        name: "tst_qml-qtquicktest BoxPlotSeries 1.3"
         when: windowShown
 
         function test_properties() {
             compare(boxPlotSeries.boxWidth, 0.5);
-            compare(boxPlotSeries.brushFilename, "");
         }
 
         function test_setproperties() {
             var set = boxPlotSeries.append("boxplot", [1, 2, 5, 6, 8]);
             compare(set.label, "boxplot");
             compare(set.count, 5);
-            compare(set.brushFilename, "");
         }
 
         function test_append() {

@@ -20,7 +20,7 @@
 
 import QtQuick 2.0
 import QtTest 1.0
-import QtCommercial.Chart 1.4
+import QtCommercial.Chart 1.3
 
 Rectangle {
     width: 400
@@ -28,7 +28,7 @@ Rectangle {
 
     TestCase {
         id: tc1
-        name: "tst_qml-qtquicktest ChartView Properties"
+        name: "tst_qml-qtquicktest ChartView Properties 1.3"
         when: windowShown
 
         function test_chartViewProperties() {

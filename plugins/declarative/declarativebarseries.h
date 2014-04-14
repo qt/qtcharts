@@ -49,6 +49,7 @@ class DeclarativeBarSet : public QBarSet
     Q_PROPERTY(QVariantList values READ values WRITE setValues)
     Q_PROPERTY(qreal borderWidth READ borderWidth WRITE setBorderWidth NOTIFY borderWidthChanged REVISION 1)
     Q_PROPERTY(int count READ count NOTIFY countChanged)
+    Q_PROPERTY(QString brushFilename READ brushFilename WRITE setBrushFilename NOTIFY brushFilenameChanged REVISION 2)
 
 public:
     explicit DeclarativeBarSet(QObject *parent = 0);
@@ -56,6 +57,8 @@ public:
     void setValues(QVariantList values);
     qreal borderWidth() const;
     void setBorderWidth(qreal borderWidth);
+    QString brushFilename() const;
+    void setBrushFilename(const QString &brushFilename);
 
 public: // From QBarSet
     Q_INVOKABLE void append(qreal value) { QBarSet::append(value); }
@@ -66,9 +69,15 @@ public: // From QBarSet
 Q_SIGNALS:
     void countChanged(int count);
     Q_REVISION(1) void borderWidthChanged(qreal width);
+    Q_REVISION(2) void brushFilenameChanged(const QString &brushFilename);
 
 private Q_SLOTS:
     void handleCountChanged(int index, int count);
+    void handleBrushChanged();
+
+private:
+    QString m_brushFilename;
+    QImage m_brushImage;
 };
 
 class DeclarativeBarSeries : public QBarSeries, public QDECLARATIVE_PARSER_STATUS

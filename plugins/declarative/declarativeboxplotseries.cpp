@@ -245,6 +245,7 @@ DeclarativeBoxSet::DeclarativeBoxSet(const QString label, QObject *parent)
 {
     connect(this, SIGNAL(valuesChanged()), this, SIGNAL(changedValues()));
     connect(this, SIGNAL(valueChanged(int)), this, SIGNAL(changedValue(int)));
+    connect(this, SIGNAL(brushChanged()), this, SLOT(handleBrushChanged()));
 }
 
 QVariantList DeclarativeBoxSet::values()
@@ -263,6 +264,34 @@ void DeclarativeBoxSet::setValues(QVariantList values)
     }
 }
 
+QString DeclarativeBoxSet::brushFilename() const
+{
+    return m_brushFilename;
+}
+
+void DeclarativeBoxSet::setBrushFilename(const QString &brushFilename)
+{
+    QImage brushImage(brushFilename);
+    if (QBoxSet::brush().textureImage() != brushImage) {
+        QBrush brush = QBoxSet::brush();
+        brush.setTextureImage(brushImage);
+        QBoxSet::setBrush(brush);
+        m_brushFilename = brushFilename;
+        m_brushImage = brushImage;
+        emit brushFilenameChanged(brushFilename);
+    }
+}
+
+void DeclarativeBoxSet::handleBrushChanged()
+{
+    // If the texture image of the brush has changed along the brush
+    // the brush file name needs to be cleared.
+    if (!m_brushFilename.isEmpty() && QBoxSet::brush().textureImage() != m_brushImage) {
+        m_brushFilename.clear();
+        emit brushFilenameChanged(QString(""));
+    }
+}
+
 // =====================================================
 
 DeclarativeBoxPlotSeries::DeclarativeBoxPlotSeries(QDECLARATIVE_ITEM *parent) :
@@ -275,6 +304,7 @@ DeclarativeBoxPlotSeries::DeclarativeBoxPlotSeries(QDECLARATIVE_ITEM *parent) :
     connect(m_axes, SIGNAL(axisYRightChanged(QAbstractAxis*)), this, SIGNAL(axisYRightChanged(QAbstractAxis*)));
     connect(this, SIGNAL(hovered(bool, QBoxSet*)), this, SLOT(onHovered(bool, QBoxSet*)));
     connect(this, SIGNAL(clicked(QBoxSet*)), this, SLOT(onClicked(QBoxSet*)));
+    connect(this, SIGNAL(brushChanged()), this, SLOT(handleBrushChanged()));
 }
 
 void DeclarativeBoxPlotSeries::classBegin()
@@ -332,6 +362,34 @@ void DeclarativeBoxPlotSeries::onHovered(bool status, QBoxSet *boxset)
 void DeclarativeBoxPlotSeries::onClicked(QBoxSet *boxset)
 {
     emit clicked(qobject_cast<DeclarativeBoxSet *>(boxset));
+}
+
+QString DeclarativeBoxPlotSeries::brushFilename() const
+{
+    return m_brushFilename;
+}
+
+void DeclarativeBoxPlotSeries::setBrushFilename(const QString &brushFilename)
+{
+    QImage brushImage(brushFilename);
+    if (QBoxPlotSeries::brush().textureImage() != brushImage) {
+        QBrush brush = QBoxPlotSeries::brush();
+        brush.setTextureImage(brushImage);
+        QBoxPlotSeries::setBrush(brush);
+        m_brushFilename = brushFilename;
+        m_brushImage = brushImage;
+        emit brushFilenameChanged(brushFilename);
+    }
+}
+
+void DeclarativeBoxPlotSeries::handleBrushChanged()
+{
+    // If the texture image of the brush has changed along the brush
+    // the brush file name needs to be cleared.
+    if (!m_brushFilename.isEmpty() && QBoxPlotSeries::brush().textureImage() != m_brushImage) {
+        m_brushFilename.clear();
+        emit brushFilenameChanged(QString(""));
+    }
 }
 
 #include "moc_declarativeboxplotseries.cpp"

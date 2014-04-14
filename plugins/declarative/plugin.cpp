@@ -76,6 +76,7 @@ Q_DECLARE_METATYPE(DeclarativeBoxPlotSeries *)
 Q_DECLARE_METATYPE(DeclarativeBoxSet *)
 Q_DECLARE_METATYPE(DeclarativeLineSeries *)
 Q_DECLARE_METATYPE(DeclarativePieSeries *)
+Q_DECLARE_METATYPE(DeclarativePieSlice *)
 Q_DECLARE_METATYPE(DeclarativeScatterSeries *)
 Q_DECLARE_METATYPE(DeclarativeSplineSeries *)
 
@@ -238,6 +239,14 @@ public:
         qmlRegisterType<QLogValueAxis>(uri, 1, 3, "LogValueAxis");
         qmlRegisterType<DeclarativeBoxPlotSeries>(uri, 1, 3, "BoxPlotSeries");
         qmlRegisterType<DeclarativeBoxSet>(uri, 1, 3, "BoxSet");
+
+        // QtCommercial.Chart 1.4
+        qmlRegisterType<DeclarativeAreaSeries, 4>(uri, 1, 4, "AreaSeries");
+        qmlRegisterType<DeclarativeBarSet, 2>(uri, 1, 4, "BarSet");
+        qmlRegisterType<DeclarativeBoxPlotSeries, 1>(uri, 1, 4, "BoxPlotSeries");
+        qmlRegisterType<DeclarativeBoxSet, 1>(uri, 1, 4, "BoxSet");
+        qmlRegisterType<DeclarativePieSlice>(uri, 1, 4, "PieSlice");
+        qmlRegisterType<DeclarativeScatterSeries, 4>(uri, 1, 4, "ScatterSeries");
     }
 };
 

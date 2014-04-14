@@ -35,6 +35,7 @@ class QTCOMMERCIALCHART_EXPORT QScatterSeries : public QXYSeries
     Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor NOTIFY borderColorChanged)
     Q_PROPERTY(MarkerShape markerShape READ markerShape WRITE setMarkerShape)
     Q_PROPERTY(qreal markerSize READ markerSize WRITE setMarkerSize)
+    Q_PROPERTY(QBrush brush READ brush WRITE setBrush)
     Q_ENUMS(MarkerShape)
 
 public:
@@ -49,6 +50,7 @@ public:
     QAbstractSeries::SeriesType type() const;
     void setPen(const QPen &pen);
     void setBrush(const QBrush &brush);
+    QBrush brush() const;
     void setColor(const QColor &color);
     QColor color() const;
     void setBorderColor(const QColor &color);

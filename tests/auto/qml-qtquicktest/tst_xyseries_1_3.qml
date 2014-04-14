@@ -20,7 +20,7 @@
 
 import QtQuick 2.0
 import QtTest 1.0
-import QtCommercial.Chart 1.4
+import QtCommercial.Chart 1.3
 
 Rectangle {
     width: 400
@@ -28,7 +28,7 @@ Rectangle {
 
     TestCase {
         id: tc1
-        name: "tst_qml-qtquicktest XY Series"
+        name: "tst_qml-qtquicktest XY Series 1.3"
         when: windowShown
 
         function test_properties() {
@@ -49,12 +49,10 @@ Rectangle {
             compare(scatterSeries.borderWidth, 2.0);
             compare(scatterSeries.markerShape, ScatterSeries.MarkerShapeCircle);
             compare(scatterSeries.markerSize, 15.0);
-            compare(scatterSeries.brushFilename, "");
 
             verify(areaSeries.color != undefined);
             verify(areaSeries.borderColor != undefined);
             compare(areaSeries.borderWidth, 2.0);
-            compare(areaSeries.brushFilename, "");
         }
 
         function test_axes() {

@@ -56,6 +56,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \property QBoxSet::brush
     \brief Defines the brush used by the box-and-whiskers set.
 */
+
+/*!
+    \qmlproperty QString BoxSet::brushFilename
+    The name of the file used as a brush for the box-and-whiskers set.
+*/
+
 /*!
     \fn void QBoxSet::clicked()
     The signal is emitted if the user clicks with a mouse on top of box-and-whisker item.

@@ -211,6 +211,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \qmlproperty QString PieSlice::brushFilename
+    The name of the file used as a brush for the slice.
+*/
+
+/*!
     \property QPieSlice::color
     Fill (brush) color of the slice.
     This is a convenience property for modifying the slice brush.

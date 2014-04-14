@@ -22,6 +22,7 @@
 #define DECLARATIVEPIESERIES_H
 
 #include "qpieseries.h"
+#include "qpieslice.h"
 #include "shared_defines.h"
 
 #ifdef CHARTS_FOR_QUICK2
@@ -33,7 +34,27 @@
 #endif
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
-class QPieSlice;
+
+class DeclarativePieSlice : public QPieSlice
+{
+    Q_OBJECT
+    Q_PROPERTY(QString brushFilename READ brushFilename WRITE setBrushFilename NOTIFY brushFilenameChanged)
+
+public:
+    explicit DeclarativePieSlice(QObject *parent = 0);
+    QString brushFilename() const;
+    void setBrushFilename(const QString &brushFilename);
+
+Q_SIGNALS:
+    void brushFilenameChanged(const QString &brushFilename);
+
+private Q_SLOTS:
+    void handleBrushChanged();
+
+private:
+    QString m_brushFilename;
+    QImage m_brushImage;
+};
 
 class DeclarativePieSeries : public QPieSeries, public QDECLARATIVE_PARSER_STATUS
 {
@@ -52,7 +73,7 @@ public:
     QDECLARATIVE_LIST_PROPERTY<QObject> seriesChildren();
     Q_INVOKABLE QPieSlice *at(int index);
     Q_INVOKABLE QPieSlice *find(QString label);
-    Q_INVOKABLE QPieSlice *append(QString label, qreal value);
+    Q_INVOKABLE DeclarativePieSlice *append(QString label, qreal value);
     Q_INVOKABLE bool remove(QPieSlice *slice);
     Q_INVOKABLE void clear();
 

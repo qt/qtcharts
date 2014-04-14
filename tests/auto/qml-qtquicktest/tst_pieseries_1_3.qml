@@ -20,7 +20,7 @@
 
 import QtQuick 2.0
 import QtTest 1.0
-import QtCommercial.Chart 1.4
+import QtCommercial.Chart 1.3
 
 Rectangle {
     width: 400
@@ -28,7 +28,7 @@ Rectangle {
 
     TestCase {
         id: tc1
-        name: "tst_qml-qtquicktest PieSeries"
+        name: "tst_qml-qtquicktest PieSeries 1.3"
         when: windowShown
 
         function test_properties() {
@@ -58,7 +58,6 @@ Rectangle {
             compare(slice.percentage, 1.0);
             compare(slice.startAngle, 0.0);
             compare(slice.value, 10.0);
-            compare(slice.brushFilename, "");
         }
 
         function test_append() {
@@ -89,15 +88,12 @@ Rectangle {
             compare(pieSeries.count, 0);
         }
 
-        function test_find_and_at() {
+        function test_find() {
             var count = 50;
             for (var i = 0; i < count; i++)
                 pieSeries.append("slice" + i, Math.random());
-            for (var j = 0; j < count; j++) {
+            for (var j = 0; j < count; j++)
                 compare(pieSeries.find("slice" + j).label, "slice" + j);
-                compare(pieSeries.find("slice" + j).brushFilename, "");
-            }
-            compare(pieSeries.at(3).brushFilename,"");
             pieSeries.clear();
         }
     }

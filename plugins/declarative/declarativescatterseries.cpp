@@ -34,6 +34,7 @@ DeclarativeScatterSeries::DeclarativeScatterSeries(QObject *parent) :
     connect(m_axes, SIGNAL(axisYChanged(QAbstractAxis*)), this, SIGNAL(axisRadialChanged(QAbstractAxis*)));
     connect(this, SIGNAL(pointAdded(int)), this, SLOT(handleCountChanged(int)));
     connect(this, SIGNAL(pointRemoved(int)), this, SLOT(handleCountChanged(int)));
+    connect(this, SIGNAL(brushChanged()), this, SLOT(handleBrushChanged()));
 }
 
 void DeclarativeScatterSeries::handleCountChanged(int index)
@@ -67,6 +68,45 @@ void DeclarativeScatterSeries::appendDeclarativeChildren(QDECLARATIVE_LIST_PROPE
     Q_UNUSED(list)
     Q_UNUSED(element)
     // Empty implementation, children are parsed in componentComplete
+}
+
+QString DeclarativeScatterSeries::brushFilename() const
+{
+    return m_brushFilename;
+}
+
+void DeclarativeScatterSeries::setBrushFilename(const QString &brushFilename)
+{
+    QImage brushImage(brushFilename);
+    if (QScatterSeries::brush().textureImage() != brushImage) {
+        QBrush brush = QScatterSeries::brush();
+        brush.setTextureImage(brushImage);
+        QScatterSeries::setBrush(brush);
+        m_brushFilename = brushFilename;
+        m_brushImage = brushImage;
+        emit brushFilenameChanged(brushFilename);
+    }
+}
+
+void DeclarativeScatterSeries::setBrush(const QBrush &brush)
+{
+    QScatterSeries::setBrush(brush);
+    emit brushChanged();
+}
+
+QBrush DeclarativeScatterSeries::brush() const
+{
+    return QScatterSeries::brush();
+}
+
+void DeclarativeScatterSeries::handleBrushChanged()
+{
+    // If the texture image of the brush has changed along the brush
+    // the brush file name needs to be cleared.
+    if (!m_brushFilename.isEmpty() && QScatterSeries::brush().textureImage() != m_brushImage) {
+        m_brushFilename.clear();
+        emit brushFilenameChanged(QString(""));
+    }
 }
 
 #include "moc_declarativescatterseries.cpp"

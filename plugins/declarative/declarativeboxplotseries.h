@@ -40,6 +40,7 @@ class DeclarativeBoxSet : public QBoxSet
     Q_PROPERTY(QVariantList values READ values WRITE setValues)
     Q_PROPERTY(QString label READ label WRITE setLabel)
     Q_PROPERTY(int count READ count)
+    Q_PROPERTY(QString brushFilename READ brushFilename WRITE setBrushFilename NOTIFY brushFilenameChanged REVISION 1)
     Q_ENUMS(ValuePositions)
 
 public: // duplicate from QBoxSet
@@ -55,6 +56,8 @@ public:
     explicit DeclarativeBoxSet(const QString label = "", QObject *parent = 0);
     QVariantList values();
     void setValues(QVariantList values);
+    QString brushFilename() const;
+    void setBrushFilename(const QString &brushFilename);
 
 public: // From QBoxSet
     Q_INVOKABLE void append(qreal value) { QBoxSet::append(value); }
@@ -65,6 +68,14 @@ public: // From QBoxSet
 Q_SIGNALS:
     void changedValues();
     void changedValue(int index);
+    Q_REVISION(1) void brushFilenameChanged(const QString &brushFilename);
+
+private Q_SLOTS:
+    void handleBrushChanged();
+
+private:
+    QString m_brushFilename;
+    QImage m_brushImage;
 };
 
 class DeclarativeBoxPlotSeries : public QBoxPlotSeries, public QDECLARATIVE_PARSER_STATUS
@@ -84,6 +95,7 @@ class DeclarativeBoxPlotSeries : public QBoxPlotSeries, public QDECLARATIVE_PARS
 #else
     Q_PROPERTY(QDeclarativeListProperty<QObject> seriesChildren READ seriesChildren)
 #endif
+    Q_PROPERTY(QString brushFilename READ brushFilename WRITE setBrushFilename NOTIFY brushFilenameChanged REVISION 1)
     Q_CLASSINFO("DefaultProperty", "seriesChildren")
 
 public:
@@ -97,6 +109,8 @@ public:
     QAbstractAxis *axisYRight() { return m_axes->axisYRight(); }
     void setAxisYRight(QAbstractAxis *axis) { m_axes->setAxisYRight(axis); }
     QDECLARATIVE_LIST_PROPERTY<QObject> seriesChildren();
+    QString brushFilename() const;
+    void setBrushFilename(const QString &brushFilename);
 
 public:
     Q_INVOKABLE DeclarativeBoxSet *at(int index);
@@ -117,14 +131,22 @@ Q_SIGNALS:
     void axisYRightChanged(QAbstractAxis *axis);
     void clicked(DeclarativeBoxSet *boxset);
     void hovered(bool status, DeclarativeBoxSet *boxset);
+    Q_REVISION(1) void brushFilenameChanged(const QString &brushFilename);
 
 public Q_SLOTS:
     static void appendSeriesChildren(QDECLARATIVE_LIST_PROPERTY<QObject> *list, QObject *element);
     void onHovered(bool status, QBoxSet *boxset);
     void onClicked(QBoxSet *boxset);
 
+private Q_SLOTS:
+    void handleBrushChanged();
+
 public:
     DeclarativeAxes *m_axes;
+
+private:
+    QString m_brushFilename;
+    QImage m_brushImage;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

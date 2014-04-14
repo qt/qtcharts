@@ -57,6 +57,8 @@ class DeclarativeScatterSeries : public QScatterSeries, public DeclarativeXySeri
 #else
     Q_PROPERTY(QDeclarativeListProperty<QObject> declarativeChildren READ declarativeChildren)
 #endif
+    Q_PROPERTY(QString brushFilename READ brushFilename WRITE setBrushFilename NOTIFY brushFilenameChanged REVISION 4)
+    Q_PROPERTY(QBrush brush READ brush WRITE setBrush NOTIFY brushChanged REVISION 4)
     Q_CLASSINFO("DefaultProperty", "declarativeChildren")
 
 public:
@@ -77,6 +79,10 @@ public:
     qreal borderWidth() const;
     void setBorderWidth(qreal borderWidth);
     QDECLARATIVE_LIST_PROPERTY<QObject> declarativeChildren();
+    QString brushFilename() const;
+    void setBrushFilename(const QString &brushFilename);
+    void setBrush(const QBrush &brush);
+    QBrush brush() const;
 
 public: // from QDeclarativeParserStatus
     void classBegin() { DeclarativeXySeries::classBegin(); }
@@ -101,13 +107,22 @@ Q_SIGNALS:
     Q_REVISION(2) void axisYRightChanged(QAbstractAxis *axis);
     Q_REVISION(3) void axisAngularChanged(QAbstractAxis *axis);
     Q_REVISION(3) void axisRadialChanged(QAbstractAxis *axis);
+    Q_REVISION(4) void brushFilenameChanged(const QString &brushFilename);
+    Q_REVISION(4) void brushChanged();
 
 public Q_SLOTS:
     static void appendDeclarativeChildren(QDECLARATIVE_LIST_PROPERTY<QObject> *list, QObject *element);
     void handleCountChanged(int index);
 
+private Q_SLOTS:
+    void handleBrushChanged();
+
 public:
     DeclarativeAxes *m_axes;
+
+private:
+    QString m_brushFilename;
+    QImage m_brushImage;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -33,6 +33,7 @@ DeclarativeAreaSeries::DeclarativeAreaSeries(QObject *parent) :
     connect(m_axes, SIGNAL(axisYRightChanged(QAbstractAxis*)), this, SIGNAL(axisYRightChanged(QAbstractAxis*)));
     connect(m_axes, SIGNAL(axisXChanged(QAbstractAxis*)), this, SIGNAL(axisAngularChanged(QAbstractAxis*)));
     connect(m_axes, SIGNAL(axisYChanged(QAbstractAxis*)), this, SIGNAL(axisRadialChanged(QAbstractAxis*)));
+    connect(this, SIGNAL(brushChanged()), this, SLOT(handleBrushChanged()));
 }
 
 void DeclarativeAreaSeries::setUpperSeries(DeclarativeLineSeries *series)
@@ -68,6 +69,45 @@ void DeclarativeAreaSeries::setBorderWidth(qreal width)
         setPen(p);
         emit borderWidthChanged(width);
     }
+}
+
+QString DeclarativeAreaSeries::brushFilename() const
+{
+    return m_brushFilename;
+}
+
+void DeclarativeAreaSeries::setBrushFilename(const QString &brushFilename)
+{
+    QImage brushImage(brushFilename);
+    if (QAreaSeries::brush().textureImage() != brushImage) {
+        QBrush brush = QAreaSeries::brush();
+        brush.setTextureImage(brushImage);
+        QAreaSeries::setBrush(brush);
+        m_brushFilename = brushFilename;
+        m_brushImage = brushImage;
+        emit brushFilenameChanged(brushFilename);
+    }
+}
+
+void DeclarativeAreaSeries::handleBrushChanged()
+{
+    // If the texture image of the brush has changed along the brush
+    // the brush file name needs to be cleared.
+    if (!m_brushFilename.isEmpty() && QAreaSeries::brush().textureImage() != m_brushImage) {
+        m_brushFilename.clear();
+        emit brushFilenameChanged(QString(""));
+    }
+}
+
+void DeclarativeAreaSeries::setBrush(const QBrush &brush)
+{
+    QAreaSeries::setBrush(brush);
+    emit brushChanged();
+}
+
+QBrush DeclarativeAreaSeries::brush() const
+{
+    return QAreaSeries::brush();
 }
 
 #include "moc_declarativeareaseries.cpp"

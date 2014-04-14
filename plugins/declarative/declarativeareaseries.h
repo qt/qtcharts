@@ -39,6 +39,8 @@ class DeclarativeAreaSeries : public QAreaSeries
     Q_PROPERTY(QAbstractAxis *axisAngular READ axisAngular WRITE setAxisAngular NOTIFY axisAngularChanged REVISION 3)
     Q_PROPERTY(QAbstractAxis *axisRadial READ axisRadial WRITE setAxisRadial NOTIFY axisRadialChanged REVISION 3)
     Q_PROPERTY(qreal borderWidth READ borderWidth WRITE setBorderWidth NOTIFY borderWidthChanged REVISION 1)
+    Q_PROPERTY(QString brushFilename READ brushFilename WRITE setBrushFilename NOTIFY brushFilenameChanged REVISION 4)
+    Q_PROPERTY(QBrush brush READ brush WRITE setBrush NOTIFY brushChanged REVISION 4)
 
 public:
     explicit DeclarativeAreaSeries(QObject *parent = 0);
@@ -60,6 +62,10 @@ public:
     Q_REVISION(3) void setAxisRadial(QAbstractAxis *axis) { m_axes->setAxisY(axis); }
     qreal borderWidth() const;
     void setBorderWidth(qreal borderWidth);
+    QString brushFilename() const;
+    void setBrushFilename(const QString &brushFilename);
+    void setBrush(const QBrush &brush);
+    QBrush brush() const;
 
 Q_SIGNALS:
     Q_REVISION(1) void axisXChanged(QAbstractAxis *axis);
@@ -69,9 +75,18 @@ Q_SIGNALS:
     Q_REVISION(2) void axisYRightChanged(QAbstractAxis *axis);
     Q_REVISION(3) void axisAngularChanged(QAbstractAxis *axis);
     Q_REVISION(3) void axisRadialChanged(QAbstractAxis *axis);
+    Q_REVISION(4) void brushChanged();
+    Q_REVISION(4) void brushFilenameChanged(const QString &brushFilename);
+
+private Q_SLOTS:
+    void handleBrushChanged();
 
 public:
     DeclarativeAxes *m_axes;
+
+private:
+    QString m_brushFilename;
+    QImage m_brushImage;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

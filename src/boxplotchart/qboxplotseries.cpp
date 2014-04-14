@@ -87,6 +87,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \property QBoxPlotSeries::brush
     \brief This property configures the brush of the box-and-whiskers items.
 */
+
+/*!
+    \qmlproperty QString BoxPlotSeries::brushFilename
+    The name of the file used as a brush for the series.
+*/
+
 /*!
     \fn void QBoxPlotSeries::boxOutlineVisibilityChanged()
     Signal is emitted when the middle box outline visibility is changed.
