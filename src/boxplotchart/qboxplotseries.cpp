@@ -87,6 +87,10 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \property QBoxPlotSeries::brush
     \brief This property configures the brush of the box-and-whiskers items.
 */
+/*!
+    \property QBoxPlotSeries::count
+    \brief The count of sets in series.
+*/
 
 /*!
     \qmlproperty QString BoxPlotSeries::brushFilename

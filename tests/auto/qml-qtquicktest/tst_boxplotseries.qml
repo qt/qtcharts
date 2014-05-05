@@ -44,6 +44,7 @@ Rectangle {
         }
 
         function test_append() {
+            boxPlotSeries.clear();
             addedSpy.clear();
             countChangedSpy.clear();
             var count = 50;
@@ -51,11 +52,12 @@ Rectangle {
                 boxPlotSeries.append("boxplot" + i, Math.random());
             compare(addedSpy.count, count);
             compare(countChangedSpy.count, count);
-            console.log("Check the series count once QTRD-2504 is implemented");
+            compare(boxPlotSeries.count, count)
             boxPlotSeries.clear();
         }
 
         function test_remove() {
+            boxPlotSeries.clear();
             removedSpy.clear();
             countChangedSpy.clear();
             var count = 50;
@@ -65,7 +67,7 @@ Rectangle {
                 boxPlotSeries.remove(boxPlotSeries.at(0));
             compare(removedSpy.count, count);
             compare(countChangedSpy.count, 2 * count);
-            console.log("Check the series count once QTRD-2504 is implemented");
+            compare(boxPlotSeries.count, 0)
         }
     }
 

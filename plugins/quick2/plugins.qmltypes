@@ -1738,6 +1738,7 @@ Module {
         Property { name: "boxWidth"; type: "double" }
         Property { name: "pen"; type: "QPen" }
         Property { name: "brush"; type: "QBrush" }
+        Property { name: "count"; revision: 1; type: "int"; isReadonly: true }
         Signal {
             name: "clicked"
             Parameter { name: "boxset"; type: "QBoxSet"; isPointer: true }
@@ -1747,7 +1748,6 @@ Module {
             Parameter { name: "status"; type: "bool" }
             Parameter { name: "boxset"; type: "QBoxSet"; isPointer: true }
         }
-        Signal { name: "countChanged" }
         Signal { name: "boxOutlineVisibilityChanged" }
         Signal {
             name: "boxsetsAdded"

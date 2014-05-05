@@ -199,6 +199,10 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     This property configures the brush of the box-and-whiskers items.
 */
 /*!
+    \qmlproperty int BoxPlotSeries::count
+    The count of sets in series.
+*/
+/*!
     \qmlsignal BoxPlotSeries::onBoxOutlineVisibilityChanged()
     Signal is emitted when the middle box outline visibility is changed.
  */
