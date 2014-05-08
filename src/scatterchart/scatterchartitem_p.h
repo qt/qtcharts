@@ -91,18 +91,18 @@ public:
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event)
     {
-        m_parent->markerSelected(this);
         QGraphicsEllipseItem::mousePressEvent(event);
+        m_parent->markerSelected(this);
     }
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event)
     {
-        m_parent->markerHovered(this, true);
         QGraphicsEllipseItem::hoverEnterEvent(event);
+        m_parent->markerHovered(this, true);
     }
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
     {
-        m_parent->markerHovered(this, false);
         QGraphicsEllipseItem::hoverLeaveEvent(event);
+        m_parent->markerHovered(this, false);
     }
 
 private:
@@ -123,18 +123,18 @@ public:
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event)
     {
-        m_parent->markerSelected(this);
         QGraphicsRectItem::mousePressEvent(event);
+        m_parent->markerSelected(this);
     }
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event)
     {
-        m_parent->markerHovered(this, true);
         QGraphicsRectItem::hoverEnterEvent(event);
+        m_parent->markerHovered(this, true);
     }
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
     {
-        m_parent->markerHovered(this, false);
         QGraphicsRectItem::hoverLeaveEvent(event);
+        m_parent->markerHovered(this, false);
     }
 
 private:
