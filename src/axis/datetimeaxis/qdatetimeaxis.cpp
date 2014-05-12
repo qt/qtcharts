@@ -96,7 +96,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   When setting this property the max is adjusted if necessary, to ensure that the range remains valid.
 */
 /*!
-  \qmlproperty real DateTimeAxis::min
+  \qmlproperty datetime DateTimeAxis::min
   Defines the minimum value on the axis.
   When setting this property the max is adjusted if necessary, to ensure that the range remains valid.
 */
@@ -107,7 +107,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   When setting this property the min is adjusted if necessary, to ensure that the range remains valid.
 */
 /*!
-  \qmlproperty real DateTimeAxis::max
+  \qmlproperty datetime DateTimeAxis::max
   Defines the maximum value on the axis.
   When setting this property the min is adjusted if necessary, to ensure that the range remains valid.
 */
@@ -117,7 +117,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   Axis emits signal when \a min of axis has changed.
 */
 /*!
-  \qmlsignal DateTimeAxis::onMinChanged(QDateTime min)
+  \qmlsignal DateTimeAxis::onMinChanged(datetime min)
   Axis emits signal when \a min of axis has changed.
 */
 
@@ -126,7 +126,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   Axis emits signal when \a max of axis has changed.
 */
 /*!
-  \qmlsignal DateTimeAxis::onMaxChanged(QDateTime max)
+  \qmlsignal DateTimeAxis::onMaxChanged(datetime max)
   Axis emits signal when \a max of axis has changed.
 */
 
@@ -192,7 +192,7 @@ QDateTimeAxis::QDateTimeAxis(QDateTimeAxisPrivate &d, QObject *parent) : QAbstra
 }
 
 /*!
-    Destroys the object
+    Destroys the object.
 */
 QDateTimeAxis::~QDateTimeAxis()
 {
@@ -269,7 +269,7 @@ void QDateTimeAxis::setTickCount(int count)
 
 /*!
   \fn int QDateTimeAxis::tickCount() const
-  Return number of ticks on the axis
+  Return number of ticks on the axis.
 */
 int QDateTimeAxis::tickCount() const
 {
@@ -278,7 +278,7 @@ int QDateTimeAxis::tickCount() const
 }
 
 /*!
-  Returns the type of the axis
+  Returns the type of the axis.
 */
 QAbstractAxis::AxisType QDateTimeAxis::type() const
 {

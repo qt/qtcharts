@@ -112,11 +112,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \property QLegend::font
-    The font of markers used by legend
+    The font of markers used by legend.
 */
 /*!
     \qmlproperty Font Legend::font
-    The font of markers used by legend
+    The font of markers used by legend.
 */
 
 /*!
@@ -124,7 +124,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     The color of brush used to draw labels.
 */
 /*!
-    \qmlproperty color QLegend::labelColor
+    \qmlproperty color Legend::labelColor
     The color of brush used to draw labels.
 */
 
@@ -160,6 +160,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \fn void QLegend::labelColorChanged(QColor color)
     This signal is emitted when the color of brush used to draw labels has changed to \a color.
+*/
+
+/*!
+    \fn void QLegend::reverseMarkersChanged(bool)
+    The use of reverse order for the markers in legend is changed to \a reverseMarkers.
 */
 
 QLegend::QLegend(QChart *chart): QGraphicsWidget(chart),
@@ -245,7 +250,7 @@ void QLegend::setPen(const QPen &pen)
 }
 
 /*!
- Returns the pen used by legend
+ Returns the pen used by legend.
  */
 
 QPen QLegend::pen() const
