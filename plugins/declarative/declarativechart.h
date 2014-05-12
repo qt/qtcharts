@@ -49,7 +49,7 @@ class DeclarativeChart : public QDECLARATIVE_PAINTED_ITEM
     Q_PROPERTY(QString title READ title WRITE setTitle)
     Q_PROPERTY(QFont titleFont READ titleFont WRITE setTitleFont)
     Q_PROPERTY(QColor titleColor READ titleColor WRITE setTitleColor NOTIFY titleColorChanged)
-    Q_PROPERTY(QLegend *legend READ legend)
+    Q_PROPERTY(QLegend *legend READ legend CONSTANT)
     Q_PROPERTY(int count READ count)
     Q_PROPERTY(QColor backgroundColor READ backgroundColor WRITE setBackgroundColor NOTIFY backgroundColorChanged)
     Q_PROPERTY(bool dropShadowEnabled READ dropShadowEnabled WRITE setDropShadowEnabled NOTIFY dropShadowEnabledChanged)
