@@ -47,6 +47,10 @@ AbstractBarChartItem::AbstractBarChartItem(QAbstractBarSeries *series, QGraphics
     connect(series->d_func(), SIGNAL(restructuredBars()), this, SLOT(handleDataStructureChanged()));
     connect(series, SIGNAL(visibleChanged()), this, SLOT(handleVisibleChanged()));
     connect(series, SIGNAL(opacityChanged()), this, SLOT(handleOpacityChanged()));
+    connect(series, SIGNAL(labelsFormatChanged(QString)), this, SLOT(handleUpdatedBars()));
+    connect(series, SIGNAL(labelsFormatChanged(QString)), this, SLOT(positionLabels()));
+    connect(series, SIGNAL(labelsPositionChanged(QAbstractBarSeries::LabelsPosition)),
+            this, SLOT(handleLabelsPositionChanged()));
     setZValue(ChartPresenter::BarSeriesZValue);
     handleDataStructureChanged();
     handleVisibleChanged();
@@ -99,12 +103,10 @@ void AbstractBarChartItem::setLayout(const QVector<QRectF> &layout)
 
     m_layout = layout;
 
-    for (int i = 0; i < m_bars.count(); i++) {
+    for (int i = 0; i < m_bars.count(); i++)
         m_bars.at(i)->setRect(layout.at(i));
-        QGraphicsTextItem *label = m_labels.at(i);
-        label->setPos(layout.at(i).center() - label->boundingRect().center());
 
-    }
+    positionLabels();
 }
 //handlers
 
@@ -203,6 +205,7 @@ void AbstractBarChartItem::handleUpdatedBars()
         int categoryCount = m_series->d_func()->categoryCount();
         int setCount = m_series->count();
         int itemIndex(0);
+        static const QString valueTag(QLatin1String("@value"));
 
         for (int category = 0; category < categoryCount; category++) {
             for (int set = 0; set < setCount; set++) {
@@ -213,13 +216,46 @@ void AbstractBarChartItem::handleUpdatedBars()
                 bar->update();
 
                 QGraphicsTextItem *label = m_labels.at(itemIndex);
-                label->setHtml(QString("%1").arg(barSet->value(category)));
+                QString valueLabel;
+                if (m_series->labelsFormat().isEmpty()) {
+                    valueLabel = QString("%1").arg(barSet->value(category));
+                } else {
+                    valueLabel = m_series->labelsFormat();
+                    valueLabel.replace(valueTag, QString::number(barSet->value(category)));
+                }
+                label->setHtml(valueLabel);
                 label->setFont(barSet->m_labelFont);
                 label->setDefaultTextColor(barSet->m_labelBrush.color());
                 label->update();
                 itemIndex++;
             }
         }
+    }
+}
+
+void AbstractBarChartItem::handleLabelsPositionChanged()
+{
+    positionLabels();
+}
+
+void AbstractBarChartItem::positionLabels()
+{
+    for (int i = 0; i < m_layout.count(); i++) {
+        QGraphicsTextItem *label = m_labels.at(i);
+        qreal xPos = 0;
+        qreal yPos = m_layout.at(i).center().y() - label->boundingRect().center().y();
+
+        if (m_series->labelsPosition() == QAbstractBarSeries::LabelsCenter)
+            xPos = m_layout.at(i).center().x() - label->boundingRect().center().x();
+        else if (m_series->labelsPosition() == QAbstractBarSeries::LabelsInsideEnd)
+            xPos = m_layout.at(i).right() - label->boundingRect().width();
+        else if (m_series->labelsPosition() == QAbstractBarSeries::LabelsInsideBase)
+            xPos = m_layout.at(i).left();
+        else if (m_series->labelsPosition() == QAbstractBarSeries::LabelsOutsideEnd)
+            xPos = m_layout.at(i).right();
+
+        label->setPos(xPos, yPos);
+        label->setZValue(zValue() + 1);
     }
 }
 

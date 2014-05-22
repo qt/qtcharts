@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 import QtQuick 1.0
-import QtCommercial.Chart 1.1
+import QtCommercial.Chart 1.4
 
 ChartView {
     title: "scatter series"
@@ -37,6 +37,8 @@ ChartView {
         XYPoint { x: 2.1; y: 1.3 }
         XYPoint { x: 2.5; y: 2.1 }
 
+        pointLabelsFormat: "@xPoint, @yPoint";
+
         onNameChanged:              console.log("scatterSeries.onNameChanged: " + name);
         onVisibleChanged:           console.log("scatterSeries.onVisibleChanged: " + visible);
         onOpacityChanged:           console.log(name + ".onOpacityChanged: " + opacity);
@@ -48,6 +50,14 @@ ChartView {
         onBorderColorChanged:       console.log("scatterSeries.onBorderColorChanged: " + borderColor);
         onBorderWidthChanged:       console.log("scatterSeries.onBorderChanged: " + borderWidth);
         onCountChanged:             console.log("scatterSeries.onCountChanged: " + count);
+        onPointLabelsVisibilityChanged:  console.log("lineSeries.onPointLabelsVisibilityChanged: "
+                                                     + visible);
+        onPointLabelsFormatChanged:      console.log("lineSeries.onPointLabelsFormatChanged: "
+                                                     + format);
+        onPointLabelsFontChanged:        console.log("lineSeries.onPointLabelsFontChanged: "
+                                                     + font.family);
+        onPointLabelsColorChanged:       console.log("lineSeries.onPointLabelsColorChanged: "
+                                                     + color);
     }
 
     ScatterSeries {

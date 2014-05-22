@@ -23,6 +23,8 @@
 #include "qlineseries_p.h"
 #include "chartpresenter_p.h"
 #include "polardomain_p.h"
+#include "chartthememanager_p.h"
+#include "charttheme_p.h"
 #include <QPainter>
 #include <QGraphicsSceneMouseEvent>
 
@@ -34,13 +36,23 @@ LineChartItem::LineChartItem(QLineSeries *series, QGraphicsItem *item)
     : XYChart(series,item),
       m_series(series),
       m_pointsVisible(false),
-      m_chartType(QChart::ChartTypeUndefined)
+      m_chartType(QChart::ChartTypeUndefined),
+      m_pointLabelsFormat(series->pointLabelsFormat()),
+      m_pointLabelsVisible(false),
+      m_pointLabelsFont(series->pointLabelsFont()),
+      m_pointLabelsColor(series->pointLabelsColor())
 {
     setAcceptHoverEvents(true);
     setZValue(ChartPresenter::LineChartZValue);
     QObject::connect(series->d_func(), SIGNAL(updated()), this, SLOT(handleUpdated()));
     QObject::connect(series, SIGNAL(visibleChanged()), this, SLOT(handleUpdated()));
     QObject::connect(series, SIGNAL(opacityChanged()), this, SLOT(handleUpdated()));
+    QObject::connect(series, SIGNAL(pointLabelsFormatChanged(QString)),
+                     this, SLOT(handleUpdated()));
+    QObject::connect(series, SIGNAL(pointLabelsVisibilityChanged(bool)),
+                     this, SLOT(handleUpdated()));
+    QObject::connect(series, SIGNAL(pointLabelsFontChanged(QFont)), this, SLOT(handleUpdated()));
+    QObject::connect(series, SIGNAL(pointLabelsColorChanged(QColor)), this, SLOT(handleUpdated()));
     handleUpdated();
 }
 
@@ -300,7 +312,7 @@ void LineChartItem::updateGeometry()
 
 void LineChartItem::handleUpdated()
 {
-    // If points visiblity has changed, a geometry update is needed.
+    // If points visibility has changed, a geometry update is needed.
     // Also, if pen changes when points are visible, geometry update is needed.
     bool doGeometryUpdate =
         (m_pointsVisible != m_series->pointsVisible())
@@ -309,6 +321,10 @@ void LineChartItem::handleUpdated()
     setOpacity(m_series->opacity());
     m_pointsVisible = m_series->pointsVisible();
     m_linePen = m_series->pen();
+    m_pointLabelsFormat = m_series->pointLabelsFormat();
+    m_pointLabelsVisible = m_series->pointLabelsVisible();
+    m_pointLabelsFont = m_series->pointLabelsFont();
+    m_pointLabelsColor = m_series->pointLabelsColor();
     if (doGeometryUpdate)
         updateGeometry();
     update();
@@ -357,7 +373,11 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
         }
     }
 
+    if (m_pointLabelsVisible)
+        m_series->d_func()->drawSeriesPointLabels(painter, m_points);
+
     painter->restore();
+
 }
 
 void LineChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)

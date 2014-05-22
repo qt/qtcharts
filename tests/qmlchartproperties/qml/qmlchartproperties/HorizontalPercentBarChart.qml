@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 import QtQuick 1.0
-import QtCommercial.Chart 1.1
+import QtCommercial.Chart 1.4
 
 ChartView {
     title: "Percent bar series"
@@ -61,5 +61,18 @@ ChartView {
                                                 + " " + status + " " + index);
         onLabelsVisibleChanged:     console.log("horizontalPercentBarSeries.onLabelsVisibleChanged: " + series.labelsVisible);
         onCountChanged:             console.log("horizontalPercentBarSeries.onCountChanged: " + count);
+        onLabelsFormatChanged:      console.log(
+                                        "horizontalPercentBarSeries.onLabelsFormatChanged: "
+                                        + format);
+        onLabelsPositionChanged:    console.log(
+                                        "horizontalPercentBarSeries.onLabelsPositionChanged: "
+                                        + series.labelsPosition);
+
+        function changeLabelsPosition() {
+            if (labelsPosition === BarSeries.LabelsCenter)
+                labelsPosition = BarSeries.LabelsInsideEnd;
+            else
+                labelsPosition = BarSeries.LabelsCenter;
+        }
     }
 }

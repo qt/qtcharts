@@ -83,6 +83,11 @@ private:
     QBrush m_brush;
     bool m_pointsVisible;
 
+    bool m_pointLabelsVisible;
+    QString m_pointLabelsFormat;
+    QFont m_pointLabelsFont;
+    QColor m_pointLabelsColor;
+
 };
 
 class AreaBoundItem : public LineChartItem

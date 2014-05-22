@@ -29,6 +29,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 PercentBarChartItem::PercentBarChartItem(QAbstractBarSeries *series, QGraphicsItem* item) :
     AbstractBarChartItem(series, item)
 {
+    connect(series, SIGNAL(labelsPositionChanged(QAbstractBarSeries::LabelsPosition)),
+            this, SLOT(handleLabelsPositionChanged()));
+    connect(series, SIGNAL(labelsFormatChanged(QString)), this, SLOT(positionLabels()));
 }
 
 void PercentBarChartItem::initializeLayout()
@@ -99,6 +102,7 @@ void PercentBarChartItem::handleUpdatedBars()
     int categoryCount = m_series->d_func()->categoryCount();
     int setCount = m_series->count();
     int itemIndex(0);
+    static const QString valueTag(QLatin1String("@value"));
 
     for (int category = 0; category < categoryCount; category++) {
         for (int set = 0; set < setCount; set++) {
@@ -113,12 +117,45 @@ void PercentBarChartItem::handleUpdatedBars()
             QString vString(QString::number(p));
             vString.truncate(3);
             vString.append("%");
-            label->setHtml(vString);
+            QString valueLabel;
+            if (m_series->labelsFormat().isEmpty()) {
+                valueLabel = vString;
+            } else {
+                valueLabel = m_series->labelsFormat();
+                valueLabel.replace(valueTag, QString::number(barSet->value(category)));
+            }
+            label->setHtml(valueLabel);
             label->setFont(barSet->m_labelFont);
             label->setDefaultTextColor(barSet->m_labelBrush.color());
             label->update();
             itemIndex++;
         }
+    }
+}
+
+void PercentBarChartItem::handleLabelsPositionChanged()
+{
+    positionLabels();
+}
+
+void PercentBarChartItem::positionLabels()
+{
+    for (int i = 0; i < m_layout.count(); i++) {
+        QGraphicsTextItem *label = m_labels.at(i);
+        qreal xPos = m_layout.at(i).center().x() - label->boundingRect().center().x();
+        qreal yPos = 0;
+
+        if (m_series->labelsPosition() == QAbstractBarSeries::LabelsCenter)
+            yPos = m_layout.at(i).center().y() - label->boundingRect().center().y();
+        else if (m_series->labelsPosition() == QAbstractBarSeries::LabelsInsideEnd)
+            yPos = m_layout.at(i).top();
+        else if (m_series->labelsPosition() == QAbstractBarSeries::LabelsInsideBase)
+            yPos = m_layout.at(i).bottom() - label->boundingRect().height();
+        else if (m_series->labelsPosition() == QAbstractBarSeries::LabelsOutsideEnd)
+            yPos = m_layout.at(i).top() - label->boundingRect().height();
+
+        label->setPos(xPos, yPos);
+        label->setZValue(zValue() + 1);
     }
 }
 

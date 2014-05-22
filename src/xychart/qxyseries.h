@@ -38,6 +38,14 @@ class QTCOMMERCIALCHART_EXPORT QXYSeries : public QAbstractSeries
     Q_OBJECT
     Q_PROPERTY(bool pointsVisible READ pointsVisible WRITE setPointsVisible)
     Q_PROPERTY(QColor color READ color WRITE setColor NOTIFY colorChanged)
+    Q_PROPERTY(QString pointLabelsFormat READ pointLabelsFormat WRITE setPointLabelsFormat
+               NOTIFY pointLabelsFormatChanged)
+    Q_PROPERTY(bool pointLabelsVisible READ pointLabelsVisible WRITE setPointLabelsVisible
+               NOTIFY pointLabelsVisibilityChanged)
+    Q_PROPERTY(QFont pointLabelsFont READ pointLabelsFont WRITE setPointLabelsFont
+               NOTIFY pointLabelsFontChanged)
+    Q_PROPERTY(QColor pointLabelsColor READ pointLabelsColor WRITE setPointLabelsColor
+               NOTIFY pointLabelsColorChanged)
 
 protected:
     explicit QXYSeries(QXYSeriesPrivate &d, QObject *parent = 0);
@@ -76,6 +84,18 @@ public:
     void setPointsVisible(bool visible = true);
     bool pointsVisible() const;
 
+    void setPointLabelsFormat(const QString &format);
+    QString pointLabelsFormat() const;
+
+    void setPointLabelsVisible(bool visible = true);
+    bool pointLabelsVisible() const;
+
+    void setPointLabelsFont(const QFont &font);
+    QFont pointLabelsFont() const;
+
+    void setPointLabelsColor(const QColor &color);
+    QColor pointLabelsColor() const;
+
     void replace(QList<QPointF> points);
 
 Q_SIGNALS:
@@ -86,6 +106,10 @@ Q_SIGNALS:
     void pointAdded(int index);
     void colorChanged(QColor color);
     void pointsReplaced();
+    void pointLabelsFormatChanged(const QString &format);
+    void pointLabelsVisibilityChanged(bool visible);
+    void pointLabelsFontChanged(const QFont &font);
+    void pointLabelsColorChanged(const QColor &color);
 
 private:
     Q_DECLARE_PRIVATE(QXYSeries)

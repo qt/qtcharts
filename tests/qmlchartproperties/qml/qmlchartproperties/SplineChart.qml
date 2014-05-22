@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 import QtQuick 1.0
-import QtCommercial.Chart 1.1
+import QtCommercial.Chart 1.4
 
 ChartView {
     title: "spline series"
@@ -38,6 +38,8 @@ ChartView {
         XYPoint { x: 3.4; y: 3.0 }
         XYPoint { x: 4.1; y: 3.3 }
 
+        pointLabelsFormat: "@xPoint, @yPoint";
+
         onNameChanged:              console.log("splineSeries.onNameChanged: " + name);
         onVisibleChanged:           console.log("splineSeries.onVisibleChanged: " + visible);
         onOpacityChanged:           console.log(name + ".onOpacityChanged: " + opacity);
@@ -50,6 +52,14 @@ ChartView {
         onStyleChanged:             console.log("splineSeries.onStyleChanged: " + style);
         onCapStyleChanged:          console.log("splineSeries.onCapStyleChanged: " + capStyle);
         onCountChanged:             console.log("splineSeries.onCountChanged: " + count);
+        onPointLabelsVisibilityChanged:  console.log("splineSeries.onPointLabelsVisibilityChanged: "
+                                                     + visible);
+        onPointLabelsFormatChanged:      console.log("splineSeries.onPointLabelsFormatChanged: "
+                                                     + format);
+        onPointLabelsFontChanged:        console.log("splineSeries.onPointLabelsFontChanged: "
+                                                     + font.family);
+        onPointLabelsColorChanged:       console.log("splineSeries.onPointLabelsColorChanged: "
+                                                     + color);
     }
 
     SplineSeries {

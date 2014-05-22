@@ -55,6 +55,32 @@ Flow {
         onClicked: series.borderWidth -= 0.5;
     }
     Button {
+        text: "point labels visible"
+        onClicked: series.pointLabelsVisible = !series.pointLabelsVisible;
+    }
+    Button {
+        text: "point labels format"
+        onClicked: {
+            if (series.pointLabelsFormat === "@xPoint, @yPoint")
+                series.pointLabelsFormat = "(@xPoint)"
+            else
+                series.pointLabelsFormat = "@xPoint, @yPoint"
+        }
+    }
+    Button {
+        text: "point labels font"
+        onClicked: {
+            if (series.pointLabelsFont.family === "Times")
+                series.pointLabelsFont.family = "Courier";
+            else
+                series.pointLabelsFont.family = "Times";
+        }
+    }
+    Button {
+        text: "point labels color"
+        onClicked: series.pointLabelsColor = main.nextColor();
+    }
+    Button {
         id: upperButton
         text: "upper series"
         unpressedColor: "#79bd8f"

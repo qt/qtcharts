@@ -43,6 +43,10 @@ class StackedBarChartItem : public AbstractBarChartItem
 public:
     StackedBarChartItem(QAbstractBarSeries *series, QGraphicsItem* item =0);
 
+private slots:
+    void handleLabelsPositionChanged();
+    void positionLabels();
+
 private:
     virtual QVector<QRectF> calculateLayout();
     void initializeLayout();

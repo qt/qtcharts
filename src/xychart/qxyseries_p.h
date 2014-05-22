@@ -53,6 +53,8 @@ public:
     QAbstractAxis::AxisType defaultAxisType(Qt::Orientation orientation) const;
     QAbstractAxis* createDefaultAxis(Qt::Orientation orientation) const;
 
+    void drawSeriesPointLabels(QPainter *painter, const QVector<QPointF> &points);
+
 Q_SIGNALS:
     void updated();
 
@@ -61,6 +63,10 @@ protected:
     QPen m_pen;
     QBrush m_brush;
     bool m_pointsVisible;
+    QString m_pointLabelsFormat;
+    bool m_pointLabelsVisible;
+    QFont m_pointLabelsFont;
+    QColor m_pointLabelsColor;
 
 private:
     Q_DECLARE_PUBLIC(QXYSeries)

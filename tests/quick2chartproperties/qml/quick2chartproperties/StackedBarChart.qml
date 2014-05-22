@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 import QtQuick 2.0
-import QtCommercial.Chart 1.1
+import QtCommercial.Chart 1.4
 
 ChartView {
     title: "Stacked bar series"
@@ -33,6 +33,7 @@ ChartView {
     StackedBarSeries {
         id: mySeries
         name: "bar"
+        labelsFormat: "@value";
         axisX: BarCategoryAxis { categories: ["2007", "2008", "2009", "2010", "2011", "2012" ] }
         BarSet { label: "Bob"; values: [2, 2, 3, 4, 5, 6]
             onClicked:                  console.log("barset.onClicked: " + index);
@@ -61,5 +62,16 @@ ChartView {
                                                 + " " + status + " " + index);
         onLabelsVisibleChanged:     console.log("stackedBarSeries.onLabelsVisibleChanged: " + series.labelsVisible);
         onCountChanged:             console.log("stackedBarSeries.onCountChanged: " + count);
+        onLabelsFormatChanged:      console.log("stackedBarSeries.onLabelsFormatChanged: "
+                                                + format);
+        onLabelsPositionChanged:    console.log("stackedBarSeries.onLabelsPositionChanged: "
+                                                + series.labelsPosition);
+
+        function changeLabelsPosition() {
+            if (labelsPosition === BarSeries.LabelsCenter)
+                labelsPosition = BarSeries.LabelsInsideEnd;
+            else
+                labelsPosition = BarSeries.LabelsCenter;
+        }
     }
 }

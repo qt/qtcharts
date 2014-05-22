@@ -306,6 +306,11 @@ void QScatterSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bool f
         QBrush brush(colors.at(index % colors.size()));
         q->setBrush(brush);
     }
+
+    if (forced || QChartPrivate::defaultPen().color() == m_pointLabelsColor) {
+        QColor color = theme->labelBrush().color();
+        q->setPointLabelsColor(color);
+    }
 }
 
 void QScatterSeriesPrivate::initializeAnimations(QChart::AnimationOptions options)

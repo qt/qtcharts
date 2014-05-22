@@ -1561,9 +1561,20 @@ Module {
         prototype: "QtCommercialChart::QAbstractSeries"
         exports: ["QtCommercial.Chart/AbstractBarSeries 1.0"]
         exportMetaObjectRevisions: [0]
+        Enum {
+            name: "LabelsPosition"
+            values: {
+                "LabelsCenter": 0,
+                "LabelsInsideEnd": 1,
+                "LabelsInsideBase": 2,
+                "LabelsOutsideEnd": 3
+            }
+        }
         Property { name: "barWidth"; type: "double" }
         Property { name: "count"; type: "int"; isReadonly: true }
         Property { name: "labelsVisible"; type: "bool" }
+        Property { name: "labelsFormat"; type: "string" }
+        Property { name: "labelsPosition"; type: "LabelsPosition" }
         Signal {
             name: "clicked"
             Parameter { name: "index"; type: "int" }
@@ -1579,6 +1590,14 @@ Module {
             Parameter { name: "status"; type: "bool" }
             Parameter { name: "index"; type: "int" }
             Parameter { name: "barset"; type: "QBarSet"; isPointer: true }
+        }
+        Signal {
+            name: "labelsFormatChanged"
+            Parameter { name: "format"; type: "string" }
+        }
+        Signal {
+            name: "labelsPositionChanged"
+            Parameter { name: "position"; type: "QAbstractBarSeries::LabelsPosition" }
         }
         Signal {
             name: "barsetsAdded"
@@ -1623,6 +1642,10 @@ Module {
         Property { name: "lowerSeries"; type: "QLineSeries"; isReadonly: true; isPointer: true }
         Property { name: "color"; type: "QColor" }
         Property { name: "borderColor"; type: "QColor" }
+        Property { name: "pointLabelsFormat"; type: "string" }
+        Property { name: "pointLabelsVisible"; type: "bool" }
+        Property { name: "pointLabelsFont"; type: "QFont" }
+        Property { name: "pointLabelsColor"; type: "QColor" }
         Signal {
             name: "clicked"
             Parameter { name: "point"; type: "QPointF" }
@@ -1639,6 +1662,22 @@ Module {
         }
         Signal {
             name: "borderColorChanged"
+            Parameter { name: "color"; type: "QColor" }
+        }
+        Signal {
+            name: "pointLabelsFormatChanged"
+            Parameter { name: "format"; type: "string" }
+        }
+        Signal {
+            name: "pointLabelsVisibilityChanged"
+            Parameter { name: "visible"; type: "bool" }
+        }
+        Signal {
+            name: "pointLabelsFontChanged"
+            Parameter { name: "font"; type: "QFont" }
+        }
+        Signal {
+            name: "pointLabelsColorChanged"
             Parameter { name: "color"; type: "QColor" }
         }
     }
@@ -2140,6 +2179,10 @@ Module {
         exportMetaObjectRevisions: [0]
         Property { name: "pointsVisible"; type: "bool" }
         Property { name: "color"; type: "QColor" }
+        Property { name: "pointLabelsFormat"; type: "string" }
+        Property { name: "pointLabelsVisible"; type: "bool" }
+        Property { name: "pointLabelsFont"; type: "QFont" }
+        Property { name: "pointLabelsColor"; type: "QColor" }
         Signal {
             name: "clicked"
             Parameter { name: "point"; type: "QPointF" }
@@ -2166,5 +2209,21 @@ Module {
             Parameter { name: "color"; type: "QColor" }
         }
         Signal { name: "pointsReplaced" }
+        Signal {
+            name: "pointLabelsFormatChanged"
+            Parameter { name: "format"; type: "string" }
+        }
+        Signal {
+            name: "pointLabelsVisibilityChanged"
+            Parameter { name: "visible"; type: "bool" }
+        }
+        Signal {
+            name: "pointLabelsFontChanged"
+            Parameter { name: "font"; type: "QFont" }
+        }
+        Signal {
+            name: "pointLabelsColorChanged"
+            Parameter { name: "color"; type: "QColor" }
+        }
     }
 }

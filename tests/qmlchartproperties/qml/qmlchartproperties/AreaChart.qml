@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 import QtQuick 1.0
-import QtCommercial.Chart 1.1
+import QtCommercial.Chart 1.4
 
 ChartView {
     title: "area series"
@@ -61,6 +61,8 @@ ChartView {
             XYPoint { x: 11; y: 0 }
         }
 
+        pointLabelsFormat: "@xPoint, @yPoint";
+
         onNameChanged:              console.log(name + ".onNameChanged: " + name);
         onVisibleChanged:           console.log(name + ".onVisibleChanged: " + visible);
         onOpacityChanged:           console.log(name + ".onOpacityChanged: " + opacity);
@@ -71,6 +73,14 @@ ChartView {
         onBorderWidthChanged:       console.log(name + ".onBorderChanged: " + borderWidth);
 //        onCountChanged:             console.log(name + ".onCountChanged: " + count);
         onHovered:                  console.log("lineSeries.onHovered:" + point.x + "," + point.y + " " + state);
+        onPointLabelsVisibilityChanged:  console.log(name + ".onPointLabelsVisibilityChanged: "
+                                                     + visible);
+        onPointLabelsFormatChanged:      console.log(name + ".onPointLabelsFormatChanged: "
+                                                     + format);
+        onPointLabelsFontChanged:        console.log(name + ".onPointLabelsFontChanged: "
+                                                     + font.family);
+        onPointLabelsColorChanged:       console.log(name + ".onPointLabelsColorChanged: "
+                                                     + color);
     }
 
     AreaSeries {

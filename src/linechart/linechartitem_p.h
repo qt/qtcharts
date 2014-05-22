@@ -79,6 +79,11 @@ private:
     QPen m_linePen;
     bool m_pointsVisible;
     QChart::ChartType m_chartType;
+
+    bool m_pointLabelsVisible;
+    QString m_pointLabelsFormat;
+    QFont m_pointLabelsFont;
+    QColor m_pointLabelsColor;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

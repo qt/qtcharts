@@ -32,13 +32,23 @@ SplineChartItem::SplineChartItem(QSplineSeries *series, QGraphicsItem *item)
     : XYChart(series,item),
       m_series(series),
       m_pointsVisible(false),
-      m_animation(0)
+      m_animation(0),
+      m_pointLabelsFormat(series->pointLabelsFormat()),
+      m_pointLabelsVisible(false),
+      m_pointLabelsFont(series->pointLabelsFont()),
+      m_pointLabelsColor(series->pointLabelsColor())
 {
     setAcceptHoverEvents(true);
     setZValue(ChartPresenter::SplineChartZValue);
     QObject::connect(m_series->d_func(), SIGNAL(updated()), this, SLOT(handleUpdated()));
     QObject::connect(series, SIGNAL(visibleChanged()), this, SLOT(handleUpdated()));
     QObject::connect(series, SIGNAL(opacityChanged()), this, SLOT(handleUpdated()));
+    QObject::connect(series, SIGNAL(pointLabelsFormatChanged(QString)),
+                     this, SLOT(handleUpdated()));
+    QObject::connect(series, SIGNAL(pointLabelsVisibilityChanged(bool)),
+                     this, SLOT(handleUpdated()));
+    QObject::connect(series, SIGNAL(pointLabelsFontChanged(QFont)), this, SLOT(handleUpdated()));
+    QObject::connect(series, SIGNAL(pointLabelsColorChanged(QColor)), this, SLOT(handleUpdated()));
     handleUpdated();
 }
 
@@ -400,6 +410,10 @@ void SplineChartItem::handleUpdated()
     m_linePen = m_series->pen();
     m_pointPen = m_series->pen();
     m_pointPen.setWidthF(2 * m_pointPen.width());
+    m_pointLabelsFormat = m_series->pointLabelsFormat();
+    m_pointLabelsVisible = m_series->pointLabelsVisible();
+    m_pointLabelsFont = m_series->pointLabelsFont();
+    m_pointLabelsColor = m_series->pointLabelsColor();
     update();
 }
 
@@ -441,6 +455,9 @@ void SplineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
         else
             painter->drawPoints(geometryPoints());
     }
+
+    if (m_pointLabelsVisible)
+        m_series->d_func()->drawSeriesPointLabels(painter, m_points);
 
     painter->restore();
 }

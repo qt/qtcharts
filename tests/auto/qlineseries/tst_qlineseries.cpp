@@ -75,6 +75,8 @@ void tst_QLineSeries::qlineseries()
     QCOMPARE(series.points(), QList<QPointF>());
     QCOMPARE(series.pen(), QPen());
     QCOMPARE(series.pointsVisible(), false);
+    QCOMPARE(series.pointLabelsVisible(), false);
+    QCOMPARE(series.pointLabelsFormat(), QLatin1String("@xPoint, @yPoint"));
 
     series.append(QList<QPointF>());
     series.append(0.0,0.0);
@@ -90,6 +92,9 @@ void tst_QLineSeries::qlineseries()
 
     series.setPen(QPen());
     series.setPointsVisible(false);
+
+    series.setPointLabelsVisible(false);
+    series.setPointLabelsFormat(QString());
 
     m_chart->addSeries(&series);
     m_view->show();

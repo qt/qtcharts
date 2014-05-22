@@ -43,6 +43,10 @@ class BarChartItem : public AbstractBarChartItem
 public:
     BarChartItem(QAbstractBarSeries *series, QGraphicsItem* item = 0);
 
+private slots:
+    void handleLabelsPositionChanged();
+    void positionLabels();
+
 private:
     virtual QVector<QRectF> calculateLayout();
     void initializeLayout();

@@ -34,6 +34,7 @@ Rectangle {
         function test_properties() {
             compare(barSeries.barWidth, 0.5);
             compare(barSeries.labelsVisible, false);
+            compare(barSeries.labelsPosition, BarSeries.LabelsCenter);
         }
 
         function test_setproperties() {
@@ -92,6 +93,12 @@ Rectangle {
             compare(barSeries.count, 0);
         }
 
+        function test_signals() {
+            labelsPositionSpy.clear();
+            barSeries.labelsPosition = BarSeries.LabelsOutsideEnd;
+            compare(labelsPositionSpy.count, 1, "onLabelsPositionChanged")
+        }
+
         function test_remove() {
             var setCount = 5;
             var valueCount = 50;
@@ -135,6 +142,11 @@ Rectangle {
                 id: removedSpy
                 target: barSeries
                 signalName: "barsetsRemoved"
+            }
+            SignalSpy {
+                id: labelsPositionSpy
+                target: barSeries
+                signalName: "labelsPositionChanged"
             }
         }
 

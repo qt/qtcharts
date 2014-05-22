@@ -129,6 +129,75 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \property QAbstractBarSeries::labelsFormat
+    The \a format used for showing labels in series.
+
+    QAbstractBarSeries supports the following format tag:
+    \table
+      \row
+        \li @value      \li The value of the bar
+    \endtable
+
+    For example, the following usage of the format tags would produce labels that show the value
+    followed by unit ('u'):
+    \code
+    series->setLabelsFormat("@value u");
+    \endcode
+
+    By default, the labels shows the value of the bar. For percent bar series '%' is added after
+    the value. The labels are shown on the plot area, labels on the edge of the plot area are cut.
+    If the bars are close to each other the labels may overlap.
+
+    \sa QAbstractBarSeries::labelsVisible, QAbstractBarSeries::labelsPosition
+*/
+/*!
+    \qmlproperty string AbstractBarSeries::labelsFormat
+    The format used for showing labels in series.
+
+    \sa QAbstractBarSeries::labelsFormat, labelsVisible, labelsPosition
+*/
+/*!
+    \fn void QAbstractBarSeries::labelsFormatChanged(const QString &format)
+    Signal is emitted when the \a format of data value labels is changed.
+*/
+/*!
+    \qmlsignal XYSeries::onLabelsFormatChanged(string format)
+    Signal is emitted when the \a format of data value labels is changed.
+*/
+
+/*!
+ \enum QAbstractBarSeries::LabelsPosition
+
+ This enum describes the position of the data value labels.
+
+ \value LabelsCenter Label is in the center of the bar.
+ \value LabelsInsideEnd Label is inside the bar at the high end of it.
+ \value LabelsInsideBase Label is inside the bar at the low end of it.
+ \value LabelsOutsideEnd Label is outside the bar at the high end of it.
+ */
+
+/*!
+    \property QAbstractBarSeries::labelsPosition
+    Defines the \a position of value labels.
+
+    \sa QAbstractBarSeries::labelsVisible, QAbstractBarSeries::labelsFormat
+*/
+/*!
+    \qmlproperty string AbstractBarSeries::labelsPosition
+    Defines the \a position of value labels.
+
+    \sa labelsVisible, labelsFormat
+*/
+/*!
+    \fn void QAbstractBarSeries::labelsPositionChanged(QAbstractBarSeries::LabelsPosition position)
+    Signal is emitted when the \a position of value labels is changed.
+*/
+/*!
+    \qmlsignal AbstractBarSeries::onLabelsPositionChanged(LabelsPosition position)
+    Signal is emitted when the \a position of value labels is changed.
+*/
+
+/*!
     \fn void QAbstractBarSeries::clicked(int index, QBarSet *barset)
     The signal is emitted if the user clicks with a mouse on top of QBarSet \a barset.
     Clicked bar inside set is indexed by \a index
@@ -421,6 +490,36 @@ bool QAbstractBarSeries::isLabelsVisible() const
     return d->m_labelsVisible;
 }
 
+void QAbstractBarSeries::setLabelsFormat(const QString &format)
+{
+    Q_D(QAbstractBarSeries);
+    if (d->m_labelsFormat != format) {
+        d->m_labelsFormat = format;
+        emit labelsFormatChanged(format);
+    }
+}
+
+QString QAbstractBarSeries::labelsFormat() const
+{
+    Q_D(const QAbstractBarSeries);
+    return d->m_labelsFormat;
+}
+
+void QAbstractBarSeries::setLabelsPosition(QAbstractBarSeries::LabelsPosition position)
+{
+    Q_D(QAbstractBarSeries);
+    if (d->m_labelsPosition != position) {
+        d->m_labelsPosition = position;
+        emit labelsPositionChanged(position);
+    }
+}
+
+QAbstractBarSeries::LabelsPosition QAbstractBarSeries::labelsPosition() const
+{
+    Q_D(const QAbstractBarSeries);
+    return d->m_labelsPosition;
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QAbstractBarSeriesPrivate::QAbstractBarSeriesPrivate(QAbstractBarSeries *q) :
@@ -428,7 +527,9 @@ QAbstractBarSeriesPrivate::QAbstractBarSeriesPrivate(QAbstractBarSeries *q) :
     m_barWidth(0.5),  // Default value is 50% of category width
     m_labelsVisible(false),
     m_visible(true),
-    m_blockBarUpdate(false)
+    m_blockBarUpdate(false),
+    m_labelsFormat(),
+    m_labelsPosition(QAbstractBarSeries::LabelsCenter)
 {
 }
 

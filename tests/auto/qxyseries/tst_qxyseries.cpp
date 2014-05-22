@@ -81,6 +81,78 @@ void tst_QXYSeries::seriesOpacity()
     QCOMPARE(opacitySpy.count(), 3);
 }
 
+void tst_QXYSeries::pointLabelsFormat()
+{
+    QSignalSpy labelsFormatSpy(m_series, SIGNAL(pointLabelsFormatChanged(QString)));
+    QCOMPARE(m_series->pointLabelsFormat(), QLatin1String("@xPoint, @yPoint"));
+
+    QString format("@yPoint");
+    m_series->setPointLabelsFormat(format);
+    TRY_COMPARE(labelsFormatSpy.count(), 1);
+    QList<QVariant> arguments = labelsFormatSpy.takeFirst();
+    QVERIFY(arguments.at(0).toString() == format);
+
+    m_series->setPointLabelsFormat(QString());
+    TRY_COMPARE(labelsFormatSpy.count(), 1);
+    arguments = labelsFormatSpy.takeFirst();
+    QVERIFY(arguments.at(0).toString() == QString());
+
+}
+
+void tst_QXYSeries::pointLabelsVisible()
+{
+    QSignalSpy labelsVisibleSpy(m_series, SIGNAL(pointLabelsVisibilityChanged(bool)));
+    QCOMPARE(m_series->pointLabelsVisible(), false);
+
+    m_series->setPointLabelsVisible();
+    QCOMPARE(m_series->pointLabelsVisible(), true);
+    TRY_COMPARE(labelsVisibleSpy.count(), 1);
+    QList<QVariant> arguments = labelsVisibleSpy.takeFirst();
+    QVERIFY(arguments.at(0).toBool() == true);
+
+    m_series->setPointLabelsVisible(false);
+    QCOMPARE(m_series->pointLabelsVisible(), false);
+    TRY_COMPARE(labelsVisibleSpy.count(), 1);
+    arguments = labelsVisibleSpy.takeFirst();
+    QVERIFY(arguments.at(0).toBool() == false);
+}
+
+void tst_QXYSeries::pointLabelsFont()
+{
+    QFont defaultFont(m_series->pointLabelsFont());
+    QSignalSpy labelsFontSpy(m_series, SIGNAL(pointLabelsFontChanged(QFont)));
+
+    QFont font("Times", 10);
+    m_series->setPointLabelsFont(font);
+    TRY_COMPARE(labelsFontSpy.count(), 1);
+    QList<QVariant> arguments = labelsFontSpy.takeFirst();
+    QVERIFY(arguments.at(0).value<QFont>() == font);
+
+    m_series->setPointLabelsFont(defaultFont);
+    TRY_COMPARE(labelsFontSpy.count(), 1);
+    arguments = labelsFontSpy.takeFirst();
+    QVERIFY(arguments.at(0).value<QFont>() == defaultFont);
+
+}
+
+void tst_QXYSeries::pointLabelsColor()
+{
+    QColor defaultColor(QPen().color());
+    QSignalSpy labelsColorSpy(m_series, SIGNAL(pointLabelsColorChanged(QColor)));
+    QCOMPARE(m_series->pointLabelsColor(), defaultColor);
+
+    QColor color(Qt::blue);
+    m_series->setPointLabelsColor(color);
+    TRY_COMPARE(labelsColorSpy.count(), 1);
+    QList<QVariant> arguments = labelsColorSpy.takeFirst();
+    QVERIFY(arguments.at(0).value<QColor>() == color);
+
+    m_series->setPointLabelsColor(defaultColor);
+    TRY_COMPARE(labelsColorSpy.count(), 1);
+    arguments = labelsColorSpy.takeFirst();
+    QVERIFY(arguments.at(0).value<QColor>() == defaultColor);
+}
+
 void tst_QXYSeries::append_data()
 {
     QTest::addColumn< QList<QPointF> >("points");

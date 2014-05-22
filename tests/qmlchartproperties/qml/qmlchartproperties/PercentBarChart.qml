@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 import QtQuick 1.0
-import QtCommercial.Chart 1.1
+import QtCommercial.Chart 1.4
 
 ChartView {
     title: "Percent bar series"
@@ -33,6 +33,7 @@ ChartView {
     PercentBarSeries {
         id: mySeries
         name: "bar"
+        labelsFormat: "@value";
         axisX: BarCategoryAxis { categories: ["2007", "2008", "2009", "2010", "2011", "2012" ] }
 
         BarSet { label: "Bob"; values: [2, 2, 3, 4, 5, 6]
@@ -62,5 +63,16 @@ ChartView {
                                                 + " " + status + " " + index);
         onLabelsVisibleChanged:     console.log("percentBarSeries.onLabelsVisibleChanged: " + series.labelsVisible);
         onCountChanged:             console.log("percentBarSeries.onCountChanged: " + count);
+        onLabelsFormatChanged:      console.log("percentBarSeries.onLabelsFormatChanged: "
+                                                + format);
+        onLabelsPositionChanged:    console.log("percentBarSeries.onLabelsPositionChanged: "
+                                                + series.labelsPosition);
+
+        function changeLabelsPosition() {
+            if (labelsPosition === BarSeries.LabelsCenter)
+                labelsPosition = BarSeries.LabelsInsideEnd;
+            else
+                labelsPosition = BarSeries.LabelsCenter;
+        }
     }
 }

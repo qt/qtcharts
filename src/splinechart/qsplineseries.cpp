@@ -137,6 +137,11 @@ void QSplineSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bool fo
         pen.setWidthF(2);
         q->setPen(pen);
     }
+
+    if (forced || QChartPrivate::defaultPen().color() == m_pointLabelsColor) {
+        QColor color = theme->labelBrush().color();
+        q->setPointLabelsColor(color);
+    }
 }
 
 void QSplineSeriesPrivate::initializeAnimations(QtCommercialChart::QChart::AnimationOptions options)

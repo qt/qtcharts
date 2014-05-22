@@ -160,6 +160,11 @@ void QLineSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bool forc
         pen.setWidthF(2);
         q->setPen(pen);
     }
+
+    if (forced || QChartPrivate::defaultPen().color() == m_pointLabelsColor) {
+        QColor color = theme->labelBrush().color();
+        q->setPointLabelsColor(color);
+    }
 }
 
 #include "moc_qlineseries.cpp"

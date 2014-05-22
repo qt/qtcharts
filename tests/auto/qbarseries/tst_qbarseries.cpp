@@ -29,6 +29,7 @@ QTCOMMERCIALCHART_USE_NAMESPACE
 
 Q_DECLARE_METATYPE(QBarSet*)
 Q_DECLARE_METATYPE(QList<QBarSet*>)
+Q_DECLARE_METATYPE(QAbstractBarSeries::LabelsPosition)
 
 class tst_QBarSeries : public QObject
 {
@@ -59,6 +60,8 @@ private slots:
     void barSets();
     void setLabelsVisible_data();
     void setLabelsVisible();
+    void setLabelsFormat();
+    void setLabelsPosition();
     void opacity();
     void mouseclicked_data();
     void mouseclicked();
@@ -79,6 +82,7 @@ void tst_QBarSeries::initTestCase()
 {
     qRegisterMetaType<QBarSet*>("QBarSet*");
     qRegisterMetaType<QList<QBarSet*> >("QList<QBarSet*>");
+    qRegisterMetaType<QAbstractBarSeries::LabelsPosition>("QAbstractBarSeries::LabelsPosition");
 }
 
 void tst_QBarSeries::cleanupTestCase()
@@ -341,6 +345,60 @@ void tst_QBarSeries::setLabelsVisible()
     m_barseries_with_sets->setLabelsVisible();
     // TODO: test the signal
     QVERIFY(m_barseries_with_sets->isLabelsVisible() == true);
+}
+
+void tst_QBarSeries::setLabelsFormat()
+{
+    QSignalSpy labelsFormatSpy(m_barseries, SIGNAL(labelsFormatChanged(QString)));
+    QCOMPARE(m_barseries->labelsFormat(), QString());
+
+    QString format("(@value)");
+    m_barseries->setLabelsFormat(format);
+    TRY_COMPARE(labelsFormatSpy.count(), 1);
+    QList<QVariant> arguments = labelsFormatSpy.takeFirst();
+    QVERIFY(arguments.at(0).toString() == format);
+    QCOMPARE(m_barseries->labelsFormat(), format);
+
+    m_barseries->setLabelsFormat(QString());
+    TRY_COMPARE(labelsFormatSpy.count(), 1);
+    arguments = labelsFormatSpy.takeFirst();
+    QVERIFY(arguments.at(0).toString() == QString());
+    QCOMPARE(m_barseries->labelsFormat(), QString());
+}
+
+void tst_QBarSeries::setLabelsPosition()
+{
+    QSignalSpy labelsPositionSpy(m_barseries,
+                             SIGNAL(labelsPositionChanged(QAbstractBarSeries::LabelsPosition)));
+    QCOMPARE(m_barseries->labelsPosition(), QBarSeries::LabelsCenter);
+
+    m_barseries->setLabelsPosition(QBarSeries::LabelsInsideEnd);
+    TRY_COMPARE(labelsPositionSpy.count(), 1);
+    QList<QVariant> arguments = labelsPositionSpy.takeFirst();
+    QVERIFY(arguments.at(0).value<QAbstractBarSeries::LabelsPosition>()
+                == QBarSeries::LabelsInsideEnd);
+    QCOMPARE(m_barseries->labelsPosition(), QBarSeries::LabelsInsideEnd);
+
+    m_barseries->setLabelsPosition(QBarSeries::LabelsInsideBase);
+    TRY_COMPARE(labelsPositionSpy.count(), 1);
+    arguments = labelsPositionSpy.takeFirst();
+    QVERIFY(arguments.at(0).value<QAbstractBarSeries::LabelsPosition>()
+            == QBarSeries::LabelsInsideBase);
+    QCOMPARE(m_barseries->labelsPosition(), QBarSeries::LabelsInsideBase);
+
+    m_barseries->setLabelsPosition(QBarSeries::LabelsOutsideEnd);
+    TRY_COMPARE(labelsPositionSpy.count(), 1);
+    arguments = labelsPositionSpy.takeFirst();
+    QVERIFY(arguments.at(0).value<QAbstractBarSeries::LabelsPosition>()
+            == QBarSeries::LabelsOutsideEnd);
+    QCOMPARE(m_barseries->labelsPosition(), QBarSeries::LabelsOutsideEnd);
+
+    m_barseries->setLabelsPosition(QBarSeries::LabelsCenter);
+    TRY_COMPARE(labelsPositionSpy.count(), 1);
+    arguments = labelsPositionSpy.takeFirst();
+    QVERIFY(arguments.at(0).value<QAbstractBarSeries::LabelsPosition>()
+            == QBarSeries::LabelsCenter);
+    QCOMPARE(m_barseries->labelsPosition(), QBarSeries::LabelsCenter);
 }
 
 void tst_QBarSeries::opacity()

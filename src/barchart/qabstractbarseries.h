@@ -36,6 +36,19 @@ class QTCOMMERCIALCHART_EXPORT QAbstractBarSeries : public QAbstractSeries
     Q_PROPERTY(qreal barWidth READ barWidth WRITE setBarWidth)
     Q_PROPERTY(int count READ count NOTIFY countChanged)
     Q_PROPERTY(bool labelsVisible READ isLabelsVisible WRITE setLabelsVisible NOTIFY labelsVisibleChanged)
+    Q_PROPERTY(QString labelsFormat READ labelsFormat WRITE setLabelsFormat
+               NOTIFY labelsFormatChanged)
+    Q_PROPERTY(LabelsPosition labelsPosition READ labelsPosition
+               WRITE setLabelsPosition NOTIFY labelsPositionChanged)
+    Q_ENUMS(LabelsPosition)
+
+public:
+    enum LabelsPosition {
+        LabelsCenter = 0,
+        LabelsInsideEnd,
+        LabelsInsideBase,
+        LabelsOutsideEnd
+    };
 
 public:
     virtual ~QAbstractBarSeries();
@@ -55,6 +68,12 @@ public:
     void setLabelsVisible(bool visible = true);
     bool isLabelsVisible() const;
 
+    void setLabelsFormat(const QString &format);
+    QString labelsFormat() const;
+
+    void setLabelsPosition(QAbstractBarSeries::LabelsPosition position);
+    QAbstractBarSeries::LabelsPosition labelsPosition() const;
+
 protected:
     explicit QAbstractBarSeries(QAbstractBarSeriesPrivate &d, QObject *parent = 0);
 
@@ -64,6 +83,8 @@ Q_SIGNALS:
     void hovered(bool status, int index, QBarSet *barset);
     void countChanged();
     void labelsVisibleChanged();
+    void labelsFormatChanged(const QString &format);
+    void labelsPositionChanged(QAbstractBarSeries::LabelsPosition position);
 
     void barsetsAdded(QList<QBarSet *> sets);
     void barsetsRemoved(QList<QBarSet *> sets);

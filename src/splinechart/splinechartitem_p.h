@@ -81,6 +81,11 @@ private:
     QVector<QPointF> m_visiblePoints;
     SplineAnimation *m_animation;
 
+    bool m_pointLabelsVisible;
+    QString m_pointLabelsFormat;
+    QFont m_pointLabelsFont;
+    QColor m_pointLabelsColor;
+
     friend class SplineAnimation;
 };
 

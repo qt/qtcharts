@@ -70,6 +70,8 @@ public Q_SLOTS:
     void handleVisibleChanged();
     void handleOpacityChanged();
     virtual void handleUpdatedBars();
+    void handleLabelsPositionChanged();
+    virtual void positionLabels();
 
 protected:
 

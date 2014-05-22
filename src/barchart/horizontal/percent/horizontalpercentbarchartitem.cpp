@@ -97,6 +97,7 @@ void HorizontalPercentBarChartItem::handleUpdatedBars()
     int categoryCount = m_series->d_func()->categoryCount();
     int setCount = m_series->count();
     int itemIndex(0);
+    static const QString valueTag(QLatin1String("@value"));
 
     for (int category = 0; category < categoryCount; category++) {
         for (int set = 0; set < setCount; set++) {
@@ -111,7 +112,14 @@ void HorizontalPercentBarChartItem::handleUpdatedBars()
             QString vString(QString::number(p));
             vString.truncate(3);
             vString.append("%");
-            label->setHtml(vString);
+            QString valueLabel;
+            if (m_series->labelsFormat().isEmpty()) {
+                valueLabel = vString;
+            } else {
+                valueLabel = m_series->labelsFormat();
+                valueLabel.replace(valueTag, QString::number(barSet->value(category)));
+            }
+            label->setHtml(valueLabel);
             label->setFont(barSet->m_labelFont);
             label->setDefaultTextColor(barSet->m_labelBrush.color());
             label->update();

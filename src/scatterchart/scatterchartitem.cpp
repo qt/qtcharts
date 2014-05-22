@@ -37,11 +37,21 @@ ScatterChartItem::ScatterChartItem(QScatterSeries *series, QGraphicsItem *item)
       m_items(this),
       m_visible(true),
       m_shape(QScatterSeries::MarkerShapeRectangle),
-      m_size(15)
+      m_size(15),
+      m_pointLabelsFormat(series->pointLabelsFormat()),
+      m_pointLabelsVisible(false),
+      m_pointLabelsFont(series->pointLabelsFont()),
+      m_pointLabelsColor(series->pointLabelsColor())
 {
     QObject::connect(m_series->d_func(), SIGNAL(updated()), this, SLOT(handleUpdated()));
     QObject::connect(m_series, SIGNAL(visibleChanged()), this, SLOT(handleUpdated()));
     QObject::connect(m_series, SIGNAL(opacityChanged()), this, SLOT(handleUpdated()));
+    QObject::connect(series, SIGNAL(pointLabelsFormatChanged(QString)),
+                     this, SLOT(handleUpdated()));
+    QObject::connect(series, SIGNAL(pointLabelsVisibilityChanged(bool)),
+                     this, SLOT(handleUpdated()));
+    QObject::connect(series, SIGNAL(pointLabelsFontChanged(QFont)), this, SLOT(handleUpdated()));
+    QObject::connect(series, SIGNAL(pointLabelsColorChanged(QColor)), this, SLOT(handleUpdated()));
 
     setZValue(ChartPresenter::ScatterSeriesZValue);
     setFlags(QGraphicsItem::ItemClipsChildrenToShape);
@@ -160,9 +170,18 @@ void ScatterChartItem::updateGeometry()
 
 void ScatterChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    Q_UNUSED(painter)
     Q_UNUSED(option)
     Q_UNUSED(widget)
+
+    QRectF clipRect = QRectF(QPointF(0, 0), domain()->size());
+
+    painter->save();
+    painter->setClipRect(clipRect);
+
+    if (m_pointLabelsVisible)
+        m_series->d_func()->drawSeriesPointLabels(painter, m_points);
+
+    painter->restore();
 }
 
 void ScatterChartItem::setPen(const QPen &pen)
@@ -192,6 +211,10 @@ void ScatterChartItem::handleUpdated()
     m_size = m_series->markerSize();
     m_shape = m_series->markerShape();
     setOpacity(m_series->opacity());
+    m_pointLabelsFormat = m_series->pointLabelsFormat();
+    m_pointLabelsVisible = m_series->pointLabelsVisible();
+    m_pointLabelsFont = m_series->pointLabelsFont();
+    m_pointLabelsColor = m_series->pointLabelsColor();
 
     if (recreate) {
         deletePoints(count);

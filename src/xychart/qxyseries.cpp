@@ -26,6 +26,7 @@
 #include "qxylegendmarker.h"
 #include "charthelpers_p.h"
 #include "qchart_p.h"
+#include <QPainter>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -121,6 +122,110 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \qmlproperty color XYSeries::color
     The color of the series. This is line (pen) color in case of LineSeries or SplineSeries and
     fill (brush) color in case of ScatterSeries or AreaSeries.
+*/
+
+/*!
+    \property QXYSeries::pointLabelsFormat
+    The \a format used for showing labels with series points.
+
+    QXYSeries supports the following format tags:
+    \table
+      \row
+        \li @xPoint      \li The x value of the data point
+      \row
+        \li @yPoint      \li The y value of the data point
+    \endtable
+
+    For example, the following usage of the format tags would produce labels that have the data
+    point (x, y) shown inside brackets separated by a comma:
+    \code
+    series->setPointLabelsFormat("(@xPoint, @yPoint)");
+    \endcode
+
+    By default, the labels format is set to '@xPoint, @yPoint'. The labels are shown on the plot
+    area, labels on the edge of the plot area are cut. If the points are close to each other the
+    labels may overlap.
+
+    \sa QXYSeries::pointLabelsVisible, QXYSeries::pointLabelsFont, QXYSeries::pointLabelsColor
+*/
+/*!
+    \qmlproperty string XYSeries::pointLabelsFormat
+    The \a format used for showing labels with series points.
+
+    \sa QXYSeries::pointLabelsFormat, pointLabelsVisible, pointLabelsFont, pointLabelsColor
+*/
+/*!
+    \fn void QXYSeries::pointLabelsFormatChanged(const QString &format)
+    Signal is emitted when the \a format of data point labels is changed.
+*/
+/*!
+    \qmlsignal XYSeries::onPointLabelsFormatChanged(string format)
+    Signal is emitted when the \a format of data point labels is changed.
+*/
+
+/*!
+    \property QXYSeries::pointLabelsVisible
+    Defines the visibility for data point labels. False by default.
+
+    \sa QXYSeries::pointLabelsFormat
+*/
+/*!
+    \qmlproperty bool XYSeries::pointLabelsVisible
+    Defines the visibility for data point labels.
+
+    \sa pointLabelsFormat
+*/
+/*!
+    \fn void QXYSeries::pointLabelsVisibilityChanged(bool visible)
+    The visibility of the data point labels is changed to \a visible.
+*/
+/*!
+    \qmlsignal XYSeries::onPointLabelsVisibilityChanged(bool visible)
+    The visibility of the data point labels is changed to \a visible.
+*/
+
+/*!
+    \property QXYSeries::pointLabelsFont
+    Defines the font used for data point labels.
+
+    \sa QXYSeries::pointLabelsFormat
+*/
+/*!
+    \qmlproperty font XYSeries::pointLabelsFont
+    Defines the font used for data point labels.
+
+    \sa pointLabelsFormat
+*/
+/*!
+    \fn void QXYSeries::pointLabelsFontChanged(const QFont &font);
+    The font used for data point labels is changed to \a font.
+*/
+/*!
+    \qmlsignal XYSeries::onPointLabelsFontChanged(Font font)
+    The font used for data point labels is changed to \a font.
+*/
+
+/*!
+    \property QXYSeries::pointLabelsColor
+    Defines the color used for data point labels. By default, the color is the color of the brush
+    defined in theme for labels.
+
+    \sa QXYSeries::pointLabelsFormat
+*/
+/*!
+    \qmlproperty font XYSeries::pointLabelsColor
+    Defines the color used for data point labels. By default, the color is the color of the brush
+    defined in theme for labels.
+
+    \sa pointLabelsFormat
+*/
+/*!
+    \fn void QXYSeries::pointLabelsColorChanged(const QColor &color);
+    The color used for data point labels is changed to \a color.
+*/
+/*!
+    \qmlsignal XYSeries::onPointLabelsColorChanged(Color color)
+    The color used for data point labels is changed to \a color.
 */
 
 /*!
@@ -499,6 +604,68 @@ bool QXYSeries::pointsVisible() const
     return d->m_pointsVisible;
 }
 
+void QXYSeries::setPointLabelsFormat(const QString &format)
+{
+    Q_D(QXYSeries);
+    if (d->m_pointLabelsFormat != format) {
+        d->m_pointLabelsFormat = format;
+        emit pointLabelsFormatChanged(format);
+    }
+}
+
+QString QXYSeries::pointLabelsFormat() const
+{
+    Q_D(const QXYSeries);
+    return d->m_pointLabelsFormat;
+}
+
+void QXYSeries::setPointLabelsVisible(bool visible)
+{
+    Q_D(QXYSeries);
+    if (d->m_pointLabelsVisible != visible) {
+        d->m_pointLabelsVisible = visible;
+        emit pointLabelsVisibilityChanged(visible);
+    }
+}
+
+bool QXYSeries::pointLabelsVisible() const
+{
+    Q_D(const QXYSeries);
+    return d->m_pointLabelsVisible;
+}
+
+void QXYSeries::setPointLabelsFont(const QFont &font)
+{
+    Q_D(QXYSeries);
+    if (d->m_pointLabelsFont != font) {
+        d->m_pointLabelsFont = font;
+        emit pointLabelsFontChanged(font);
+    }
+}
+
+QFont QXYSeries::pointLabelsFont() const
+{
+    Q_D(const QXYSeries);
+    return d->m_pointLabelsFont;
+}
+
+void QXYSeries::setPointLabelsColor(const QColor &color)
+{
+    Q_D(QXYSeries);
+    if (d->m_pointLabelsColor != color) {
+        d->m_pointLabelsColor = color;
+        emit pointLabelsColorChanged(color);
+    }
+}
+
+QColor QXYSeries::pointLabelsColor() const
+{
+    Q_D(const QXYSeries);
+    if (d->m_pointLabelsColor == QChartPrivate::defaultPen().color())
+        return QPen().color();
+    else
+        return d->m_pointLabelsColor;
+}
 
 /*!
     Stream operator for adding a data \a point to the series.
@@ -529,7 +696,11 @@ QXYSeriesPrivate::QXYSeriesPrivate(QXYSeries *q)
     : QAbstractSeriesPrivate(q),
       m_pen(QChartPrivate::defaultPen()),
       m_brush(QChartPrivate::defaultBrush()),
-      m_pointsVisible(false)
+      m_pointsVisible(false),
+      m_pointLabelsFormat(QLatin1String("@xPoint, @yPoint")),
+      m_pointLabelsVisible(false),
+      m_pointLabelsFont(QChartPrivate::defaultFont()),
+      m_pointLabelsColor(QChartPrivate::defaultPen().color())
 {
 }
 
@@ -599,6 +770,31 @@ void QXYSeriesPrivate::initializeAnimations(QtCommercialChart::QChart::Animation
     else
         item->setAnimation(0);
     QAbstractSeriesPrivate::initializeAnimations(options);
+}
+
+void QXYSeriesPrivate::drawSeriesPointLabels(QPainter *painter, const QVector<QPointF> &points)
+{
+    static const QString xPointTag(QLatin1String("@xPoint"));
+    static const QString yPointTag(QLatin1String("@yPoint"));
+    const int labelOffset = 2;
+
+    painter->setFont(m_pointLabelsFont);
+    painter->setPen(QPen(m_pointLabelsColor));
+    QFontMetrics fm(painter->font());
+
+    for (int i(0); i < m_points.size(); i++) {
+        QString pointLabel = m_pointLabelsFormat;
+        pointLabel.replace(xPointTag, QString::number(m_points.at(i).x()));
+        pointLabel.replace(yPointTag, QString::number(m_points.at(i).y()));
+
+        // Position text in relation to the point
+        int pointLabelWidth = fm.width(pointLabel);
+        QPointF position(points.at(i));
+        position.setX(position.x() - pointLabelWidth / 2);
+        position.setY(position.y() - painter->pen().width() / 2 - labelOffset);
+
+        painter->drawText(position, pointLabel);
+    }
 }
 
 #include "moc_qxyseries.cpp"

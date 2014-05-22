@@ -63,6 +63,10 @@ protected:
     QLineSeries *m_upperSeries;
     QLineSeries *m_lowerSeries;
     bool m_pointsVisible;
+    QString m_pointLabelsFormat;
+    bool m_pointLabelsVisible;
+    QFont m_pointLabelsFont;
+    QColor m_pointLabelsColor;
 private:
     Q_DECLARE_PUBLIC(QAreaSeries);
 };

@@ -182,6 +182,110 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \property QAreaSeries::pointLabelsFormat
+    The \a format used for showing labels with series points.
+
+    QAreaSeries supports the following format tags:
+    \table
+      \row
+        \li @xPoint      \li The x value of the data point
+      \row
+        \li @yPoint      \li The y value of the data point
+    \endtable
+
+    For example, the following usage of the format tags would produce labels that have the data
+    point (x, y) shown inside brackets separated by a comma:
+    \code
+    series->setPointLabelsFormat("(@xPoint, @yPoint)");
+    \endcode
+
+    By default, the labels format is set to '@xPoint, @yPoint'. The labels are shown on the plot
+    area, labels on the edge of the plot area are cut. If the points are close to each other the
+    labels may overlap.
+
+    \sa QAreaSeries::pointLabelsVisible, QAreaSeries::pointLabelsFont, QAreaSeries::pointLabelsColor
+*/
+/*!
+    \qmlproperty string AreaSeries::pointLabelsFormat
+    The \a format used for showing labels with series points.
+
+    \sa QAreaSeries::pointLabelsFormat, pointLabelsVisible, pointLabelsFont, pointLabelsColor
+*/
+/*!
+    \fn void QAreaSeries::pointLabelsFormatChanged(const QString &format)
+    Signal is emitted when the \a format of data point labels is changed.
+*/
+/*!
+    \qmlsignal AreaSeries::onPointLabelsFormatChanged(string format)
+    Signal is emitted when the \a format of data point labels is changed.
+*/
+
+/*!
+    \property QAreaSeries::pointLabelsVisible
+    Defines the visibility for data point labels. False by default.
+
+    \sa QAreaSeries::pointLabelsFormat
+*/
+/*!
+    \qmlproperty bool AreaSeries::pointLabelsVisible
+    Defines the visibility for data point labels.
+
+    \sa pointLabelsFormat
+*/
+/*!
+    \fn void QAreaSeries::pointLabelsVisibilityChanged(bool visible)
+    The visibility of the data point labels is changed to \a visible.
+*/
+/*!
+    \qmlsignal AreaSeries::onPointLabelsVisibilityChanged(bool visible)
+    The visibility of the data point labels is changed to \a visible.
+*/
+
+/*!
+    \property QAreaSeries::pointLabelsFont
+    Defines the font used for data point labels.
+
+    \sa QAreaSeries::pointLabelsFormat
+*/
+/*!
+    \qmlproperty font AreaSeries::pointLabelsFont
+    Defines the font used for data point labels.
+
+    \sa pointLabelsFormat
+*/
+/*!
+    \fn void QAreaSeries::pointLabelsFontChanged(const QFont &font);
+    The font used for data point labels is changed to \a font.
+*/
+/*!
+    \qmlsignal AreaSeries::onPointLabelsFontChanged(Font font)
+    The font used for data point labels is changed to \a font.
+*/
+
+/*!
+    \property QAreaSeries::pointLabelsColor
+    Defines the color used for data point labels. By default, the color is the color of the brush
+    defined in theme for labels.
+
+    \sa QAreaSeries::pointLabelsFormat
+*/
+/*!
+    \qmlproperty font AreaSeries::pointLabelsColor
+    Defines the color used for data point labels. By default, the color is the color of the brush
+    defined in theme for labels.
+
+    \sa pointLabelsFormat
+*/
+/*!
+    \fn void QAreaSeries::pointLabelsColorChanged(const QColor &color);
+    The color used for data point labels is changed to \a color.
+*/
+/*!
+    \qmlsignal AreaSeries::onPointLabelsColorChanged(Color color)
+    The color used for data point labels is changed to \a color.
+*/
+
+/*!
     Constructs area series object which is a child of \a upperSeries. Area will be spanned between \a
     upperSeries line and \a lowerSeries line.  If no \a lowerSeries is passed to constructor, area is specified by axis x (y=0) instead.
     When series object is added to QChartView or QChart instance ownerships is transferred.
@@ -344,6 +448,69 @@ bool QAreaSeries::pointsVisible() const
     return d->m_pointsVisible;
 }
 
+void QAreaSeries::setPointLabelsFormat(const QString &format)
+{
+    Q_D(QAreaSeries);
+    if (d->m_pointLabelsFormat != format) {
+        d->m_pointLabelsFormat = format;
+        emit pointLabelsFormatChanged(format);
+    }
+}
+
+QString QAreaSeries::pointLabelsFormat() const
+{
+    Q_D(const QAreaSeries);
+    return d->m_pointLabelsFormat;
+}
+
+void QAreaSeries::setPointLabelsVisible(bool visible)
+{
+    Q_D(QAreaSeries);
+    if (d->m_pointLabelsVisible != visible) {
+        d->m_pointLabelsVisible = visible;
+        emit pointLabelsVisibilityChanged(visible);
+    }
+}
+
+bool QAreaSeries::pointLabelsVisible() const
+{
+    Q_D(const QAreaSeries);
+    return d->m_pointLabelsVisible;
+}
+
+void QAreaSeries::setPointLabelsFont(const QFont &font)
+{
+    Q_D(QAreaSeries);
+    if (d->m_pointLabelsFont != font) {
+        d->m_pointLabelsFont = font;
+        emit pointLabelsFontChanged(font);
+    }
+}
+
+QFont QAreaSeries::pointLabelsFont() const
+{
+    Q_D(const QAreaSeries);
+    return d->m_pointLabelsFont;
+}
+
+void QAreaSeries::setPointLabelsColor(const QColor &color)
+{
+    Q_D(QAreaSeries);
+    if (d->m_pointLabelsColor != color) {
+        d->m_pointLabelsColor = color;
+        emit pointLabelsColorChanged(color);
+    }
+}
+
+QColor QAreaSeries::pointLabelsColor() const
+{
+    Q_D(const QAreaSeries);
+    if (d->m_pointLabelsColor == QChartPrivate::defaultPen().color())
+        return QPen().color();
+    else
+        return d->m_pointLabelsColor;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QAreaSeriesPrivate::QAreaSeriesPrivate(QLineSeries *upperSeries, QLineSeries *lowerSeries, QAreaSeries *q)
@@ -352,7 +519,11 @@ QAreaSeriesPrivate::QAreaSeriesPrivate(QLineSeries *upperSeries, QLineSeries *lo
       m_pen(QChartPrivate::defaultPen()),
       m_upperSeries(upperSeries),
       m_lowerSeries(lowerSeries),
-      m_pointsVisible(false)
+      m_pointsVisible(false),
+      m_pointLabelsFormat(QLatin1String("@xPoint, @yPoint")),
+      m_pointLabelsVisible(false),
+      m_pointLabelsFont(QChartPrivate::defaultFont()),
+      m_pointLabelsColor(QChartPrivate::defaultPen().color())
 {
 }
 
@@ -469,6 +640,11 @@ void QAreaSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bool forc
     if (forced || QChartPrivate::defaultBrush() == m_brush) {
         QBrush brush(colors.at(index % colors.size()));
         q->setBrush(brush);
+    }
+
+    if (forced || QChartPrivate::defaultPen().color() == m_pointLabelsColor) {
+        QColor color = theme->labelBrush().color();
+        q->setPointLabelsColor(color);
     }
 }
 

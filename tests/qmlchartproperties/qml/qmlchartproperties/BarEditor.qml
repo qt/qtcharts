@@ -172,6 +172,19 @@ Row {
             onClicked: series.labelsVisible = !series.labelsVisible;
         }
         Button {
+            text: "labels format"
+            onClicked: {
+                if (series.labelsFormat === "@value")
+                    series.labelsFormat = "@value%"
+                else
+                    series.labelsFormat = "@value"
+            }
+        }
+        Button {
+            text: "labels position"
+            onClicked: series.changeLabelsPosition();
+        }
+        Button {
             text: "set 1 label color"
             onClicked: series.at(0).labelColor = main.nextColor();
         }

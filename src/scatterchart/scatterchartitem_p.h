@@ -75,6 +75,11 @@ private:
     int m_size;
     QRectF m_rect;
     QMap<QGraphicsItem *, QPointF> m_markerMap;
+
+    bool m_pointLabelsVisible;
+    QString m_pointLabelsFormat;
+    QFont m_pointLabelsFont;
+    QColor m_pointLabelsColor;
 };
 
 class CircleMarker: public QGraphicsEllipseItem

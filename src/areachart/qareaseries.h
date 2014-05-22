@@ -37,6 +37,14 @@ class QTCOMMERCIALCHART_EXPORT QAreaSeries : public QAbstractSeries
     Q_PROPERTY(QLineSeries *lowerSeries READ lowerSeries)
     Q_PROPERTY(QColor color READ color WRITE setColor NOTIFY colorChanged)
     Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor NOTIFY borderColorChanged)
+    Q_PROPERTY(QString pointLabelsFormat READ pointLabelsFormat WRITE setPointLabelsFormat
+               NOTIFY pointLabelsFormatChanged)
+    Q_PROPERTY(bool pointLabelsVisible READ pointLabelsVisible WRITE setPointLabelsVisible
+               NOTIFY pointLabelsVisibilityChanged)
+    Q_PROPERTY(QFont pointLabelsFont READ pointLabelsFont WRITE setPointLabelsFont
+               NOTIFY pointLabelsFontChanged)
+    Q_PROPERTY(QColor pointLabelsColor READ pointLabelsColor WRITE setPointLabelsColor
+               NOTIFY pointLabelsColorChanged)
 
 public:
     explicit QAreaSeries(QObject *parent = 0);
@@ -66,12 +74,28 @@ public:
     void setPointsVisible(bool visible = true);
     bool pointsVisible() const;
 
+    void setPointLabelsFormat(const QString &format);
+    QString pointLabelsFormat() const;
+
+    void setPointLabelsVisible(bool visible = true);
+    bool pointLabelsVisible() const;
+
+    void setPointLabelsFont(const QFont &font);
+    QFont pointLabelsFont() const;
+
+    void setPointLabelsColor(const QColor &color);
+    QColor pointLabelsColor() const;
+
 Q_SIGNALS:
     void clicked(const QPointF &point);    
     void hovered(const QPointF &point, bool state);
     void selected();
     void colorChanged(QColor color);
     void borderColorChanged(QColor color);
+    void pointLabelsFormatChanged(const QString &format);
+    void pointLabelsVisibilityChanged(bool visible);
+    void pointLabelsFontChanged(const QFont &font);
+    void pointLabelsColorChanged(const QColor &color);
 
 private:
     Q_DECLARE_PRIVATE(QAreaSeries)

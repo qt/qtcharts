@@ -104,6 +104,8 @@ protected:
     bool m_labelsVisible;
     bool m_visible;
     bool m_blockBarUpdate;
+    QString m_labelsFormat;
+    QAbstractBarSeries::LabelsPosition m_labelsPosition;
 
 private:
     Q_DECLARE_PUBLIC(QAbstractBarSeries)

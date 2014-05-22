@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 import QtQuick 1.0
-import QtCommercial.Chart 1.1
+import QtCommercial.Chart 1.4
 
 ChartView {
     property variant series: lineSeries
@@ -39,6 +39,8 @@ ChartView {
         XYPoint { x: 3.4; y: 3.0 }
         XYPoint { x: 4.1; y: 3.3 }
 
+        pointLabelsFormat: "@xPoint, @yPoint";
+
         onNameChanged:              console.log("lineSeries.onNameChanged: " + name);
         onVisibleChanged:           console.log("lineSeries.onVisibleChanged: " + visible);
         onOpacityChanged:           console.log(name + ".onOpacityChanged: " + opacity);
@@ -52,6 +54,14 @@ ChartView {
         onCapStyleChanged:          console.log("lineSeries.onCapStyleChanged: " + capStyle);
         onCountChanged:             console.log("lineSeries.onCountChanged: " + count);
         onHovered:                  console.log("lineSeries.onHovered:" + point.x + "," + point.y + " " + state);
+        onPointLabelsVisibilityChanged:  console.log("lineSeries.onPointLabelsVisibilityChanged: "
+                                                     + visible);
+        onPointLabelsFormatChanged:      console.log("lineSeries.onPointLabelsFormatChanged: "
+                                                     + format);
+        onPointLabelsFontChanged:        console.log("lineSeries.onPointLabelsFontChanged: "
+                                                     + font.family);
+        onPointLabelsColorChanged:       console.log("lineSeries.onPointLabelsColorChanged: "
+                                                     + color);
     }
 
     LineSeries {

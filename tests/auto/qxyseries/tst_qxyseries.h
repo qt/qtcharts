@@ -42,6 +42,10 @@ public slots:
 private slots:
     void seriesName();
     void seriesVisible();
+    void pointLabelsFormat();
+    void pointLabelsVisible();
+    void pointLabelsFont();
+    void pointLabelsColor();
     void seriesOpacity();
     void oper_data();
     void oper();

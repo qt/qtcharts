@@ -36,7 +36,11 @@ AreaChartItem::AreaChartItem(QAreaSeries *areaSeries, QGraphicsItem* item)
       m_series(areaSeries),
       m_upper(0),
       m_lower(0),
-      m_pointsVisible(false)
+      m_pointsVisible(false),
+      m_pointLabelsFormat(areaSeries->pointLabelsFormat()),
+      m_pointLabelsVisible(false),
+      m_pointLabelsFont(areaSeries->pointLabelsFont()),
+      m_pointLabelsColor(areaSeries->pointLabelsColor())
 {
     setAcceptHoverEvents(true);
     setZValue(ChartPresenter::LineChartZValue);
@@ -50,6 +54,14 @@ AreaChartItem::AreaChartItem(QAreaSeries *areaSeries, QGraphicsItem* item)
     QObject::connect(m_series, SIGNAL(opacityChanged()), this, SLOT(handleUpdated()));
     QObject::connect(this, SIGNAL(clicked(QPointF)), areaSeries, SIGNAL(clicked(QPointF)));
     QObject::connect(this, SIGNAL(hovered(QPointF,bool)), areaSeries, SIGNAL(hovered(QPointF,bool)));
+    QObject::connect(areaSeries, SIGNAL(pointLabelsFormatChanged(QString)),
+                     this, SLOT(handleUpdated()));
+    QObject::connect(areaSeries, SIGNAL(pointLabelsVisibilityChanged(bool)),
+                     this, SLOT(handleUpdated()));
+    QObject::connect(areaSeries, SIGNAL(pointLabelsFontChanged(QFont)),
+                     this, SLOT(handleUpdated()));
+    QObject::connect(areaSeries, SIGNAL(pointLabelsColorChanged(QColor)),
+                     this, SLOT(handleUpdated()));
 
     handleUpdated();
 }
@@ -131,6 +143,10 @@ void AreaChartItem::handleUpdated()
     m_pointPen = m_series->pen();
     m_pointPen.setWidthF(2 * m_pointPen.width());
     setOpacity(m_series->opacity());
+    m_pointLabelsFormat = m_series->pointLabelsFormat();
+    m_pointLabelsVisible = m_series->pointLabelsVisible();
+    m_pointLabelsFont = m_series->pointLabelsFont();
+    m_pointLabelsColor = m_series->pointLabelsColor();
     update();
 }
 
@@ -170,6 +186,50 @@ void AreaChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
         if (m_lower)
             painter->drawPoints(m_lower->geometryPoints());
     }
+
+    // Draw series point label
+    if (m_pointLabelsVisible) {
+        static const QString xPointTag(QLatin1String("@xPoint"));
+        static const QString yPointTag(QLatin1String("@yPoint"));
+        const int labelOffset = 2;
+
+        painter->setFont(m_pointLabelsFont);
+        painter->setPen(QPen(m_pointLabelsColor));
+        QFontMetrics fm(painter->font());
+
+        QString pointLabel = m_pointLabelsFormat;
+
+        if (m_series->upperSeries()) {
+            for (int i(0); i < m_series->upperSeries()->count(); i++) {
+                pointLabel.replace(xPointTag, QString::number(m_series->upperSeries()->at(i).x()));
+                pointLabel.replace(yPointTag, QString::number(m_series->upperSeries()->at(i).y()));
+
+                // Position text in relation to the point
+                int pointLabelWidth = fm.width(pointLabel);
+                QPointF position(m_upper->geometryPoints().at(i));
+                position.setX(position.x() - pointLabelWidth / 2);
+                position.setY(position.y() - m_series->upperSeries()->pen().width() / 2 - labelOffset);
+
+                painter->drawText(position, pointLabel);
+            }
+        }
+
+        if (m_series->lowerSeries()) {
+            for (int i(0); i < m_series->lowerSeries()->count(); i++) {
+                pointLabel.replace(xPointTag, QString::number(m_series->lowerSeries()->at(i).x()));
+                pointLabel.replace(yPointTag, QString::number(m_series->lowerSeries()->at(i).y()));
+
+                // Position text in relation to the point
+                int pointLabelWidth = fm.width(pointLabel);
+                QPointF position(m_lower->geometryPoints().at(i));
+                position.setX(position.x() - pointLabelWidth / 2);
+                position.setY(position.y() - m_series->lowerSeries()->pen().width() / 2 - labelOffset);
+
+                painter->drawText(position, pointLabel);
+            }
+        }
+    }
+
     painter->restore();
 }
 

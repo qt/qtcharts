@@ -29,6 +29,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 BarChartItem::BarChartItem(QAbstractBarSeries *series, QGraphicsItem* item) :
     AbstractBarChartItem(series, item)
 {
+    connect(series, SIGNAL(labelsPositionChanged(QAbstractBarSeries::LabelsPosition)),
+            this, SLOT(handleLabelsPositionChanged()));
+    connect(series, SIGNAL(labelsFormatChanged(QString)), this, SLOT(positionLabels()));
 }
 
 void BarChartItem::initializeLayout()
@@ -86,7 +89,34 @@ QVector<QRectF> BarChartItem::calculateLayout()
             layout.append(rect.normalized());
         }
     }
+
     return layout;
+}
+
+void BarChartItem::handleLabelsPositionChanged()
+{
+    positionLabels();
+}
+
+void BarChartItem::positionLabels()
+{
+    for (int i = 0; i < m_layout.count(); i++) {
+        QGraphicsTextItem *label = m_labels.at(i);
+        qreal xPos = m_layout.at(i).center().x() - label->boundingRect().center().x();
+        qreal yPos = 0;
+
+        if (m_series->labelsPosition() == QAbstractBarSeries::LabelsCenter)
+            yPos = m_layout.at(i).center().y() - label->boundingRect().center().y();
+        else if (m_series->labelsPosition() == QAbstractBarSeries::LabelsInsideEnd)
+            yPos = m_layout.at(i).top();
+        else if (m_series->labelsPosition() == QAbstractBarSeries::LabelsInsideBase)
+            yPos = m_layout.at(i).bottom() - label->boundingRect().height();
+        else if (m_series->labelsPosition() == QAbstractBarSeries::LabelsOutsideEnd)
+            yPos = m_layout.at(i).top() - label->boundingRect().height();
+
+        label->setPos(xPos, yPos);
+        label->setZValue(zValue() + 1);
+    }
 }
 
 #include "moc_barchartitem_p.cpp"
