@@ -75,17 +75,24 @@ QVector<QRectF> HorizontalPercentBarChartItem::calculateLayout()
         for (int set = 0; set < setCount; set++) {
             qreal value = m_series->barSets().at(set)->at(category);
             QRectF rect;
+            qreal topX = 0;
+            if (sum > 0)
+                topX = 100 * sum / categorySum;
+            qreal bottomX = 0;
+            qreal newSum = value + sum;
+            if (newSum > 0)
+                bottomX = 100 * newSum / categorySum;
             QPointF topLeft;
             if (domain()->type() == AbstractDomain::LogXYDomain || domain()->type() == AbstractDomain::LogXLogYDomain)
-                topLeft = domain()->calculateGeometryPoint(QPointF(set ? 100 * sum/categorySum : domain()->minX(), category - barWidth/2), m_validData);
+                topLeft = domain()->calculateGeometryPoint(QPointF(set ? topX : domain()->minX(), category - barWidth/2), m_validData);
             else
-                topLeft = domain()->calculateGeometryPoint(QPointF(set ? 100 * sum/categorySum : 0, category - barWidth/2), m_validData);
-            QPointF bottomRight = domain()->calculateGeometryPoint(QPointF(100 * (value + sum)/categorySum, category + barWidth/2), m_validData);
+                topLeft = domain()->calculateGeometryPoint(QPointF(set ? topX : 0, category - barWidth/2), m_validData);
+            QPointF bottomRight = domain()->calculateGeometryPoint(QPointF(bottomX, category + barWidth/2), m_validData);
 
             rect.setTopLeft(topLeft);
             rect.setBottomRight(bottomRight);
             layout.append(rect.normalized());
-            sum +=value;
+            sum = newSum;
         }
     }
     return layout;

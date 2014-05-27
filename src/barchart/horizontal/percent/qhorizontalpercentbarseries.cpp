@@ -32,14 +32,17 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief Series for creating horizontal percent bar chart.
     \mainclass
 
-    QHorizontalPercentBarSeries represents a series of data shown as bars. The purpose of this class is to draw bars
-    as groups, where bars in same category are grouped next to each other. QHorizontalPercentBarSeries groups the data
-    from sets to categories, which are defined by a QStringList.
+    QHorizontalPercentBarSeries represents a series of data shown as bars. The purpose of this
+    class is to draw bars as groups, where bars in same category are grouped next to each other.
+    QHorizontalPercentBarSeries groups the data from sets to categories, which are defined by a
+    QStringList. Bars with zero value are not drawn.
 
-    See the \l {HorizontalPercentBarChart Example} {horizontal percent bar chart example} to learn how to create a horizontal percent bar chart.
+    See the \l {HorizontalPercentBarChart Example} {horizontal percent bar chart example} to learn
+    how to create a horizontal percent bar chart.
     \image examples_horizontalpercentbarchart.png
 
-    \sa QBarSet, QBarSeries, QPercentBarSeries, QAbstractBarSeries, QStackedBarSeries, QHorizontalStackedBarSeries, QHorizontalBarSeries
+    \sa QBarSet, QBarSeries, QPercentBarSeries, QAbstractBarSeries, QStackedBarSeries,
+    QHorizontalStackedBarSeries, QHorizontalBarSeries
 */
 #ifdef QDOC_QT5
 /*!

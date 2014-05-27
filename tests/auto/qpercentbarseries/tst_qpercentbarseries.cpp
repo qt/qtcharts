@@ -51,6 +51,7 @@ private slots:
     void mouseclicked();
     void mousehovered_data();
     void mousehovered();
+    void zeroValuesInSeries();
 
 private:
     QPercentBarSeries* m_barseries;
@@ -655,6 +656,25 @@ void tst_QPercentBarSeries::mousehovered()
     QVERIFY(setIndexSpyArg.at(0).toBool() == false);
     QVERIFY(setIndexSpyArg.at(1).type() == QVariant::Int);
     QVERIFY(setIndexSpyArg.at(1).toInt() == 1);
+}
+
+void tst_QPercentBarSeries::zeroValuesInSeries()
+{
+    QPercentBarSeries *series = new QPercentBarSeries();
+    QBarSet *set1 = new QBarSet(QString("set 1"));
+    *set1 << 100 << 0.0 << 10;
+    series->append(set1);
+
+    QBarSet *set2 = new QBarSet(QString("set 2"));
+    *set2 << 0.0 << 0.0 << 70;
+    series->append(set2);
+
+    QChartView view(new QChart());
+    view.chart()->addSeries(series);
+    view.chart()->createDefaultAxes();
+    view.show();
+
+    QTest::qWaitForWindowShown(&view);
 }
 
 QTEST_MAIN(tst_QPercentBarSeries)

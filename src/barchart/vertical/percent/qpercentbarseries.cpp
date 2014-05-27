@@ -33,11 +33,13 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief Series for creating percent bar chart.
     \mainclass
 
-    QPercentBarSeries represents a series of data shown as bars. The purpose of this class is to draw bars
-    as stacks, where each bar is shown as percentage of all bars in that category.
+    QPercentBarSeries represents a series of data shown as bars. The purpose of this class is to
+    draw bars as stacks, where each bar is shown as percentage of all bars in that category.
     QPercentBarSeries groups the data from sets to categories, which are defined by a QStringList.
+    Bars with zero value are not drawn.
 
-    See the \l {PercentbarChart Example} {percent bar chart example} to learn how to create a percent bar chart.
+    See the \l {PercentbarChart Example} {percent bar chart example} to learn how to create a
+    percent bar chart.
     \image examples_percentbarchart.png
 
     \sa QBarSet, QStackedBarSeries, QAbstractBarSeries
