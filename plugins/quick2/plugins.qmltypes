@@ -1706,6 +1706,7 @@ Module {
             Parameter { name: "min"; type: "string" }
             Parameter { name: "max"; type: "string" }
         }
+        Method { name: "clear" }
     }
     Component {
         name: "QtCommercialChart::QBarModelMapper"

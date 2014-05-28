@@ -33,7 +33,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief The QBarCategoryAxis class is used for manipulating chart's axis.
     \mainclass
 
-    BarCategoryAxis can be setup to show axis line with tick marks, grid lines and shades.
+    QBarCategoryAxis can be setup to show axis line with tick marks, grid lines and shades.
     Categories are drawn between ticks. Note that you can use this also with lineseries too.
     See the \l {Line and BarChart Example} {Line and BarChart Example} to learn how to do that.
 
@@ -141,6 +141,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
   \fn void QBarCategoryAxis::rangeChanged(const QString &min, const QString &max)
   Axis emits signal when \a min or \a max of axis has changed.
+*/
+
+/*!
+  \qmlmethod void BarCategoryAxis::clear()
+  Removes all categories. Sets the maximum and minimum of the axis's range to QString::null.
 */
 
 /*!

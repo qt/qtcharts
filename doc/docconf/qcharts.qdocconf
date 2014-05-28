@@ -22,7 +22,8 @@ headers.fileextensions = *.h *.ch *.h++ *.hh *.hpp *.hxx
 examples.fileextensions = *.cpp *.h *.js *.xq *.svg *.xml *.ui *.qhp *.qhcp *.qml
 examples.imageextensions = *.png *.jpeg *.jpg *.gif *.mng
 
-Cpp.ignoretokens        = QTCOMMERCIALCHART_EXPORT \
+Cpp.ignoretokens        = Q_INVOKABLE \
+                          QTCOMMERCIALCHART_EXPORT \
                           QTCOMMERCIALCHART_END_NAMESPACE \
                           QTCOMMERCIALCHART_BEGIN_NAMESPACE
 Cpp.ignoredirectives    = Q_DECLARE_HANDLE \

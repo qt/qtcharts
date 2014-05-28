@@ -49,7 +49,7 @@ public:
     void remove(const QString &category);
     void insert(int index, const QString &category);
     void replace(const QString &oldCategory, const QString &newCategory);
-    void clear();
+    Q_INVOKABLE void clear();
     void setCategories(const QStringList &categories);
     QStringList categories();
     int count() const;

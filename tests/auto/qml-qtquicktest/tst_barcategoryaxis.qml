@@ -64,6 +64,17 @@ Rectangle {
             compare(minChangedSpy.count, 1, "onMinChanged");
             compare(maxChangedSpy.count, 1, "onMaxChanged");
         }
+
+        function test_seriesAxisClear() {
+            verify(barSeries1.axisX.min !== "", "barSeries1.axisX.min");
+            verify(barSeries1.axisX.max !== "", "barSeries1.axisX.max");
+            verify(barSeries1.axisX.count !== 0, "barSeries1.axisX.count"); // category count
+            barSeries1.axisX.clear();
+            verify(barSeries1.axisX.min === "", "barSeries1.axisX.min");
+            verify(barSeries1.axisX.max === "", "barSeries1.axisX.max");
+            verify(barSeries1.axisX.count === 0);
+        }
+
     }
 
     ChartView {
