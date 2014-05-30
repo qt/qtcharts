@@ -36,10 +36,8 @@ class QTCOMMERCIALCHART_EXPORT QAbstractBarSeries : public QAbstractSeries
     Q_PROPERTY(qreal barWidth READ barWidth WRITE setBarWidth)
     Q_PROPERTY(int count READ count NOTIFY countChanged)
     Q_PROPERTY(bool labelsVisible READ isLabelsVisible WRITE setLabelsVisible NOTIFY labelsVisibleChanged)
-    Q_PROPERTY(QString labelsFormat READ labelsFormat WRITE setLabelsFormat
-               NOTIFY labelsFormatChanged)
-    Q_PROPERTY(LabelsPosition labelsPosition READ labelsPosition
-               WRITE setLabelsPosition NOTIFY labelsPositionChanged)
+    Q_PROPERTY(QString labelsFormat READ labelsFormat WRITE setLabelsFormat NOTIFY labelsFormatChanged)
+    Q_PROPERTY(LabelsPosition labelsPosition READ labelsPosition WRITE setLabelsPosition NOTIFY labelsPositionChanged)
     Q_ENUMS(LabelsPosition)
 
 public:
