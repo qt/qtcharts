@@ -20,8 +20,8 @@ feature.files = $$PWD/features/qtcommercialchart.prf
 INSTALLS += feature
 
 # docs
-CHARTS_VERSION = 1.3.1
-CHARTS_VERSION_TAG = 131
+CHARTS_VERSION = 1.4.0
+CHARTS_VERSION_TAG = 140
 
 contains(QT_MAJOR_VERSION, 5) {
     QDOC_CONFFILE = qcharts-qt5.qdocconf

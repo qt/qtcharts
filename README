@@ -1,5 +1,5 @@
 ----------------------
-Qt Charts Add-on 1.3.1
+Qt Charts Add-on 1.4.0
 ----------------------
 
 What's in Qt Charts
@@ -79,41 +79,36 @@ if you want to do it yourself. Creating the documentation using Qt4 also works, 
 pages are not generated correctly, such as the 'List of All Members' page for all C++ and
 QML APIs in .qch documentation.
 
-Main Changes between 1.3.0 and 1.3.1
+Main Changes between 1.3.1 and 1.4.0
 ====================================
 
-- New Qt theme template added
+- New: Added possibility to set brush image for AreaSeries, BarSet, BoxPlotSeries,
+    BoxSet, PieSlice and ScatterSeries by specifying 'brushFilename'
+- New: Added possibility to show series point values for line, spline and scatter series
+- New: Added possibility to position the bar value labels
 
 Bug Fixes and minor new features
 ================================
 
-- New: Added new hovered signal for bar charts with index information
-- New: Added example of using dynamically generated image as a brush for scatter series
-- New: Added HTML support for pie slice labels
-- New: Added possibility to build Charts without demos and examples
-- Fixed: Theme initialization performance for bar series is improved
-- Fixed: Documentation generated against Qt5
-- Fixed: Pie chart label is truncated if there's not enough space for the label
-- Fixed: Legend item truncation to start with the longest item
-- Fixed: Vertical and horizontal truncation of labels in bar chart
-- Fixed: Dynamic qml axis switch
-- Fixed: Crash with empty QAreaSeries
-- Fixed: Missing legend when printing a chart that is not shown
-- Fixed: Crash when zooming
-- Fixed: Chart geometry calculated only for visible items
-- Fixed: Alignment for multiline items
-         - Alignment can be set for multiline items using format:
-           "<p align=\"center\">multiline<br\>item</p>"
-- Fixed: Removed redundancy when setting the axis title
-- Fixed: Mouse event handling with rubber band
-- Fixed: logarithmic axis point calculation for zero and negative values
-- Fixed: Chart build on Solaris
-- Fixed: Axis creation with createDefaultAxes() when series of different types are present
-- Fixed: Debug information text color changed to gray to make it visible with all themes
-- Fixed: Min and max conflict with standard macros on Windows
-- Fixed: Chart build with QT_NO_TEXTSTREAM definition
-- Fixed: Chart build with QT_NO_RUBBERBAND definition
-- Fixed: Chart build with QT_NO_GRAPHICSEFFECT definition
+- New: Added count property for QBoxPlotSeries
+- New: Added option to set markers in legend in reverse order
+- New: Install the plugins.qmltypes file for Qt Quick 2 requested by Qt Creator
+- New: Added clear function for BarCategoryAxis
+- Fixed: Assert failure with percent bar series zero values
+- Fixed: Updated files generated with Qt Creator for demos
+- Fixed: DeclarativeChart::legend property marked as constant
+- Fixed: Crash with ScatterChartItem mouse events
+- Fixed: Build for iOS and for building the QtQuick2 plugin statically
+- Fixed: Setting values for BarSet using Qt.point
+- Fixed: Bar category rendering for empty category
+- Fixed: QBoxSet color setting
+- Fixed: Mouse event handling for pie
+- Fixed: Legend truncation
+- Fixed: Scatter series color
+- Fixed: Crash in ChartDataSet::attachAxis()
+- Fixed: Added missing library directory
+- Fixed: Added Charts directory to include path
+- Fixed: NOMINMAX definition
 
 Known issues
 ============
