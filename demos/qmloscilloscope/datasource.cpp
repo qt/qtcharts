@@ -28,6 +28,7 @@
 QTCOMMERCIALCHART_USE_NAMESPACE
 
 Q_DECLARE_METATYPE(QAbstractSeries *)
+Q_DECLARE_METATYPE(QAbstractAxis *)
 
 DataSource::DataSource(QDeclarativeView *appViewer, QObject *parent) :
     QObject(parent),
@@ -35,6 +36,7 @@ DataSource::DataSource(QDeclarativeView *appViewer, QObject *parent) :
     m_index(-1)
 {
     qRegisterMetaType<QAbstractSeries*>();
+    qRegisterMetaType<QAbstractAxis*>();
 
     generateData(0, 5, 1024);
 }
