@@ -37,8 +37,8 @@ AreaChartItem::AreaChartItem(QAreaSeries *areaSeries, QGraphicsItem* item)
       m_upper(0),
       m_lower(0),
       m_pointsVisible(false),
-      m_pointLabelsFormat(areaSeries->pointLabelsFormat()),
       m_pointLabelsVisible(false),
+      m_pointLabelsFormat(areaSeries->pointLabelsFormat()),
       m_pointLabelsFont(areaSeries->pointLabelsFont()),
       m_pointLabelsColor(areaSeries->pointLabelsColor())
 {

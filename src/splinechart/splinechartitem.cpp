@@ -33,8 +33,8 @@ SplineChartItem::SplineChartItem(QSplineSeries *series, QGraphicsItem *item)
       m_series(series),
       m_pointsVisible(false),
       m_animation(0),
-      m_pointLabelsFormat(series->pointLabelsFormat()),
       m_pointLabelsVisible(false),
+      m_pointLabelsFormat(series->pointLabelsFormat()),
       m_pointLabelsFont(series->pointLabelsFont()),
       m_pointLabelsColor(series->pointLabelsColor())
 {

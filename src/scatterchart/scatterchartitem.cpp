@@ -38,8 +38,8 @@ ScatterChartItem::ScatterChartItem(QScatterSeries *series, QGraphicsItem *item)
       m_visible(true),
       m_shape(QScatterSeries::MarkerShapeRectangle),
       m_size(15),
-      m_pointLabelsFormat(series->pointLabelsFormat()),
       m_pointLabelsVisible(false),
+      m_pointLabelsFormat(series->pointLabelsFormat()),
       m_pointLabelsFont(series->pointLabelsFont()),
       m_pointLabelsColor(series->pointLabelsColor())
 {
