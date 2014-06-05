@@ -53,7 +53,8 @@ public:
     QAbstractAxis::AxisType defaultAxisType(Qt::Orientation orientation) const;
     QAbstractAxis* createDefaultAxis(Qt::Orientation orientation) const;
 
-    void drawSeriesPointLabels(QPainter *painter, const QVector<QPointF> &points);
+    void drawSeriesPointLabels(QPainter *painter, const QVector<QPointF> &points,
+                               const int offset = 0);
 
 Q_SIGNALS:
     void updated();

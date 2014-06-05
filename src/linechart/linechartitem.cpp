@@ -374,7 +374,7 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     }
 
     if (m_pointLabelsVisible)
-        m_series->d_func()->drawSeriesPointLabels(painter, m_points);
+        m_series->d_func()->drawSeriesPointLabels(painter, m_points, m_linePen.width() / 2);
 
     painter->restore();
 

@@ -178,8 +178,11 @@ void ScatterChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
     painter->save();
     painter->setClipRect(clipRect);
 
-    if (m_pointLabelsVisible)
-        m_series->d_func()->drawSeriesPointLabels(painter, m_points);
+    if (m_pointLabelsVisible) {
+        m_series->d_func()->drawSeriesPointLabels(painter, m_points,
+                                                  m_series->markerSize() / 2
+                                                  + m_series->pen().width());
+    }
 
     painter->restore();
 }

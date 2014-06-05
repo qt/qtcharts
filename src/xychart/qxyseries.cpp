@@ -772,11 +772,12 @@ void QXYSeriesPrivate::initializeAnimations(QtCommercialChart::QChart::Animation
     QAbstractSeriesPrivate::initializeAnimations(options);
 }
 
-void QXYSeriesPrivate::drawSeriesPointLabels(QPainter *painter, const QVector<QPointF> &points)
+void QXYSeriesPrivate::drawSeriesPointLabels(QPainter *painter, const QVector<QPointF> &points,
+                                             const int offset)
 {
     static const QString xPointTag(QLatin1String("@xPoint"));
     static const QString yPointTag(QLatin1String("@yPoint"));
-    const int labelOffset = 2;
+    const int labelOffset = offset + 2;
 
     painter->setFont(m_pointLabelsFont);
     painter->setPen(QPen(m_pointLabelsColor));
@@ -791,7 +792,7 @@ void QXYSeriesPrivate::drawSeriesPointLabels(QPainter *painter, const QVector<QP
         int pointLabelWidth = fm.width(pointLabel);
         QPointF position(points.at(i));
         position.setX(position.x() - pointLabelWidth / 2);
-        position.setY(position.y() - painter->pen().width() / 2 - labelOffset);
+        position.setY(position.y() - labelOffset);
 
         painter->drawText(position, pointLabel);
     }
