@@ -245,14 +245,15 @@ void AbstractBarChartItem::positionLabels()
         qreal xPos = 0;
         qreal yPos = m_layout.at(i).center().y() - label->boundingRect().center().y();
 
+        int offset = m_bars.at(i)->pen().width() / 2 + 2;
         if (m_series->labelsPosition() == QAbstractBarSeries::LabelsCenter)
             xPos = m_layout.at(i).center().x() - label->boundingRect().center().x();
         else if (m_series->labelsPosition() == QAbstractBarSeries::LabelsInsideEnd)
-            xPos = m_layout.at(i).right() - label->boundingRect().width();
+            xPos = m_layout.at(i).right() - label->boundingRect().width() - offset;
         else if (m_series->labelsPosition() == QAbstractBarSeries::LabelsInsideBase)
-            xPos = m_layout.at(i).left();
+            xPos = m_layout.at(i).left() + offset;
         else if (m_series->labelsPosition() == QAbstractBarSeries::LabelsOutsideEnd)
-            xPos = m_layout.at(i).right();
+            xPos = m_layout.at(i).right() + offset;
 
         label->setPos(xPos, yPos);
         label->setZValue(zValue() + 1);
