@@ -40,7 +40,7 @@
 #endif
 
 #ifndef DEVELOPMENT_BUILD
-#ifdef Q_OS_ANDROID
+#if defined (Q_OS_ANDROID) || defined (Q_OS_IOS)
 // Android builds do not have __DATE__
 const char *buildTime =  __TIME__;
 #else
