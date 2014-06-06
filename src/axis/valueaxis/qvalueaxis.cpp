@@ -367,13 +367,25 @@ void QValueAxisPrivate::setRange(qreal min, qreal max)
     if (min > max)
         return;
 
-    if (!qFuzzyCompare(m_min,min)) {
+    bool changeMin = false;
+    if (m_min == 0 || min == 0)
+        changeMin = !qFuzzyCompare(1 + m_min, 1 + min);
+    else
+        changeMin = !qFuzzyCompare(m_min, min);
+
+    bool changeMax = false;
+    if (m_max == 0 || max == 0)
+        changeMax = !qFuzzyCompare(1 + m_max, 1 + max);
+    else
+        changeMax = !qFuzzyCompare(m_max, max);
+
+    if (changeMin) {
     	m_min = min;
         changed = true;
         emit q->minChanged(min);
     }
 
-    if (!qFuzzyCompare(m_max,max)) {
+    if (changeMax) {
         m_max = max;
         changed = true;
         emit q->maxChanged(max);
