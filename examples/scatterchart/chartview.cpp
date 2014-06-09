@@ -77,7 +77,6 @@ ChartView::ChartView(QWidget *parent) :
     painter.drawPath(starPath);
 
     series2->setBrush(star);
-    series2->setPen(Qt::NoPen);
     //![3]
 
     //![4]
