@@ -114,3 +114,4 @@ Known issues
 ============
 
 - Zooming too far or too close may eventually freeze the zooming and scrolling.
+- Qt Quick 1 is not supported on iOS.
