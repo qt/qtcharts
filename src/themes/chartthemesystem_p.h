@@ -44,7 +44,7 @@ public:
     // System theme not used at the moment (the user is not able to select this theme)
     ChartThemeSystem() : ChartTheme(QChart::ChartThemeLight /*QChart::ChartThemeSystem*/)
     {
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) && !defined(Q_OS_WINRT)
         // We could also use theme specific window frame color as a series base color (it would give more
         // variation to the base colors in addition to the blue and black used now)
 
