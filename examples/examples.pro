@@ -22,8 +22,6 @@ SUBDIRS += \
            boxplotchart \
            legend \
            barmodelmapper \
-           qmlboxplot \
-           qmlpiechart \
            lineandbar \
            horizontalbarchart \
            horizontalstackedbarchart \
@@ -35,6 +33,11 @@ SUBDIRS += \
            legendmarkers \
            logvalueaxis \
            polarchart
+
+!contains(QT_VERSION, ^5\\..*\\..*$)|qtHaveModule(declarative) {
+    SUBDIRS += qmlboxplot \
+           qmlpiechart
+}
 
 !linux-arm*: {
 SUBDIRS += \

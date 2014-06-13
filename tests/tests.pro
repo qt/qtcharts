@@ -5,11 +5,14 @@
 TEMPLATE = subdirs
 SUBDIRS += \ 
     auto \    
-    qmlchartproperties \
-    qmlchartaxis \
     presenterchart \
     polarcharttest \
     boxplottester
+
+!contains(QT_VERSION, ^5\\..*\\..*$)|qtHaveModule(declarative) {
+    SUBDIRS +=  qmlchartproperties \
+                qmlchartaxis
+}
 
 contains(QT_CONFIG, opengl) {
     SUBDIRS +=  chartwidgettest \

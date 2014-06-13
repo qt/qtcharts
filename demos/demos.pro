@@ -7,17 +7,20 @@ TEMPLATE = subdirs
 SUBDIRS += piechartcustomization \
            dynamicspline \
            nesteddonuts \
-           qmlchart \
+           chartinteractions \
+           callout \
+           chartthemes
+
+!contains(QT_VERSION, ^5\\..*\\..*$)|qtHaveModule(declarative) {
+    SUBDIRS += qmlchart \
            qmlweather \
            qmlf1legends \
            qmlcustomizations \
-           chartinteractions \
            qmlaxes \
            qmlcustomlegend \
-           callout \
            qmlpolarchart \
-           qmloscilloscope \
-           chartthemes
+           qmloscilloscope
+}
 
 contains(QT_CONFIG, multimedia) {
         SUBDIRS += audio
