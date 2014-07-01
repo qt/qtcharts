@@ -18,12 +18,11 @@
 **
 ****************************************************************************/
 #include <QtTest/QtTest>
-#include <QDeclarativeEngine>
-#include <QDeclarativeComponent>
-#include <QDir>
+#include <QtQml/QQmlEngine>
+#include <QtQml/QQmlComponent>
 #include "tst_definitions.h"
 
-class tst_QML : public QObject
+class tst_qml : public QObject
 {
     Q_OBJECT
 
@@ -36,57 +35,70 @@ private slots:
     void checkPlugin_data();
     void checkPlugin();
 private:
-    QString componentErrors(const QDeclarativeComponent* component) const;
+    QString componentErrors(const QQmlComponent* component) const;
     QString imports_1_1();
     QString imports_1_3();
+    QString imports_1_4();
+    QString imports_2_0();
 
 };
 
-QString tst_QML::componentErrors(const QDeclarativeComponent* component) const
+QString tst_qml::componentErrors(const QQmlComponent* component) const
 {
     Q_ASSERT(component);
 
     QStringList errors;
 
-    foreach (QDeclarativeError const& error, component->errors()) {
+    foreach (QQmlError const& error, component->errors()) {
         errors  << error.toString();
     }
 
     return errors.join("\n");
 }
 
-QString tst_QML::imports_1_1()
+QString tst_qml::imports_1_1()
 {
-    return "import QtQuick 1.0 \n"
-           "import QtCommercial.Chart 1.1 \n";
+    return "import QtQuick 2.0 \n"
+           "import QtCharts 1.1 \n";
 }
 
-QString tst_QML::imports_1_3()
+QString tst_qml::imports_1_3()
 {
-    return "import QtQuick 1.0 \n"
-           "import QtCommercial.Chart 1.3 \n";
+    return "import QtQuick 2.0 \n"
+           "import QtCharts 1.3 \n";
 }
 
+QString tst_qml::imports_1_4()
+{
+    return "import QtQuick 2.0 \n"
+           "import QtCharts 1.4 \n";
+}
 
-void tst_QML::initTestCase()
+QString tst_qml::imports_2_0()
+{
+    return "import QtQuick 2.0 \n"
+           "import QtCharts 2.0 \n";
+}
+
+void tst_qml::initTestCase()
 {
 }
 
-void tst_QML::cleanupTestCase()
+void tst_qml::cleanupTestCase()
 {
 }
 
-void tst_QML::init()
-{
-
-}
-
-void tst_QML::cleanup()
+void tst_qml::init()
 {
 
 }
 
-void tst_QML::checkPlugin_data()
+void tst_qml::cleanup()
+{
+
+}
+
+void tst_qml::checkPlugin_data()
 {
     QTest::addColumn<QString>("source");
 
@@ -121,33 +133,60 @@ void tst_QML::checkPlugin_data()
 
     QTest::newRow("createPolarChartView") <<  imports_1_3() + "PolarChartView{}";
     QTest::newRow("LogValueAxis") <<  imports_1_3() + "LogValueAxis{}";
+    QTest::newRow("BoxPlotSeries") <<  imports_1_3() + "BoxPlotSeries{}";
+    QTest::newRow("BoxSet") <<  imports_1_3() + "BoxSet{}";
+
+    QTest::newRow("createChartView_2_0") <<  imports_2_0() + "ChartView{}";
+    QTest::newRow("XYPoint_2_0") << imports_2_0() + "XYPoint{}";
+    QTest::newRow("scatterSeries_2_0") <<  imports_2_0() + "ScatterSeries{}";
+    QTest::newRow("lineSeries_2_0") <<  imports_2_0() + "LineSeries{}";
+    QTest::newRow("splineSeries_2_0") <<  imports_2_0() + "SplineSeries{}";
+    QTest::newRow("areaSeries_2_0") <<  imports_2_0() + "AreaSeries{}";
+    QTest::newRow("barSeries_2_0") << imports_2_0() + "BarSeries{}";
+    QTest::newRow("stackedBarSeries_2_0") << imports_2_0() + "StackedBarSeries{}";
+    QTest::newRow("precentBarSeries_2_0") << imports_2_0() + "PercentBarSeries{}";
+    QTest::newRow("horizonatlBarSeries_2_0") << imports_2_0() + "HorizontalBarSeries{}";
+    QTest::newRow("horizonatlStackedBarSeries_2_0")
+            << imports_2_0() + "HorizontalStackedBarSeries{}";
+    QTest::newRow("horizonatlstackedBarSeries_2_0")
+            << imports_2_0() + "HorizontalPercentBarSeries{}";
+    QTest::newRow("pieSeries_2_0") << imports_2_0() + "PieSeries{}";
+    QTest::newRow("PieSlice_2_0") << imports_2_0() + "PieSlice{}";
+    QTest::newRow("BarSet_2_0") << imports_2_0() + "BarSet{}";
+    QTest::newRow("HXYModelMapper_2_0") << imports_2_0() + "HXYModelMapper{}";
+    QTest::newRow("VXYModelMapper_2_0") << imports_2_0() + "VXYModelMapper{}";
+    QTest::newRow("HPieModelMapper_2_0") << imports_2_0() + "HPieModelMapper{}";
+    QTest::newRow("HPieModelMapper_2_0") << imports_2_0() + "HPieModelMapper{}";
+    QTest::newRow("HBarModelMapper_2_0") << imports_2_0() + "HBarModelMapper{}";
+    QTest::newRow("VBarModelMapper_2_0") << imports_2_0() + "VBarModelMapper{}";
+    QTest::newRow("ValueAxis_2_0") << imports_2_0() + "ValueAxis{}";
+#ifndef QT_ON_ARM
+    QTest::newRow("DateTimeAxis_2_0") << imports_2_0() + "DateTimeAxis{}";
+#endif
+    QTest::newRow("CategoryAxis_2_0") << imports_2_0() + "CategoryAxis{}";
+    QTest::newRow("CategoryRange_2_0") << imports_2_0() + "CategoryRange{}";
+    QTest::newRow("BarCategoryAxis_2_0") << imports_2_0() + "BarCategoryAxis{}";
+    QTest::newRow("createPolarChartView_2_0") <<  imports_2_0() + "PolarChartView{}";
+    QTest::newRow("LogValueAxis_2_0") <<  imports_2_0() + "LogValueAxis{}";
+    QTest::newRow("BoxPlotSeries_2_0") <<  imports_2_0() + "BoxPlotSeries{}";
+    QTest::newRow("BoxSet_2_0") <<  imports_2_0() + "BoxSet{}";
 }
 
-void tst_QML::checkPlugin()
+void tst_qml::checkPlugin()
 {
     QFETCH(QString, source);
-    QDeclarativeEngine engine;
-#ifdef Q_OS_ANDROID
-    engine.addImportPath(QString::fromLatin1("assets:/imports"));
-    engine.addPluginPath(QString::fromLatin1("%1/../%2").arg(QDir::homePath(), QString::fromLatin1("lib")));
-#else
-    engine.addImportPath(QString::fromLatin1("%1/%2").arg(QCoreApplication::applicationDirPath(), QString::fromLatin1("imports")));
-#endif
-    QDeclarativeComponent component(&engine);
+    QQmlEngine engine;
+    engine.addImportPath(QString::fromLatin1("%1/%2").arg(QCoreApplication::applicationDirPath(), QLatin1String("qml")));
+    QQmlComponent component(&engine);
     component.setData(source.toLatin1(), QUrl());
     QVERIFY2(!component.isError(), qPrintable(componentErrors(&component)));
-    TRY_COMPARE(component.status(), QDeclarativeComponent::Ready);
+    TRY_COMPARE(component.status(), QQmlComponent::Ready);
     QObject *obj = component.create();
     QVERIFY(obj != 0);
-
-    //
-    //TODO:
-    //  QCOMPARE(obj->property("something").toInt(), 0);
-
     delete obj;
 }
 
-QTEST_MAIN(tst_QML)
+QTEST_MAIN(tst_qml)
 
 #include "tst_qml.moc"
 

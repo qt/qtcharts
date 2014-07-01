@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>qml/qmlchartproperties/loader.qml</file>
         <file>qml/qmlchartproperties/main.qml</file>
         <file>qml/qmlchartproperties/Button.qml</file>
         <file>qml/qmlchartproperties/PieChart.qml</file>

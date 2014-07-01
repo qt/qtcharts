@@ -35,7 +35,7 @@
 #include <qmath.h>
 #include <QDateTime>
 
-QTCOMMERCIALCHART_USE_NAMESPACE
+QT_CHARTS_USE_NAMESPACE
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :

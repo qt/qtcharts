@@ -18,12 +18,12 @@
 **
 ****************************************************************************/
 
-import QtQuick 1.0
+import QtQuick 2.0
 
 Rectangle {
     id: main
-    width: 400
-    height: 300
+    width: 500
+    height: 400
     property string viewName: "DefaultAxes"
 
     Row {

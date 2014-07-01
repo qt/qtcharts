@@ -20,7 +20,7 @@
 
 import QtQuick 2.0
 import QtTest 1.0
-import QtCommercial.Chart 1.2
+import QtCharts 1.2
 
 Rectangle {
     width: 400

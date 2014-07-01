@@ -46,16 +46,16 @@ Widget::Widget(QWidget *parent)
     // Create push buttons for starting the executables
     QGridLayout* demosLayout = new QGridLayout;
 
-    GraphicsButton *button = new GraphicsButton(imageFolder.absolutePath() + QDir::separator() + "demos_audio.png", m_appFolder, "audio", this);
+    GraphicsButton *button = new GraphicsButton(imageFolder.absolutePath() + QDir::separator() + "examples_audio.png", m_appFolder, "audio", this);
     demosLayout->addWidget(button, 0, 0);
 
-    button = new GraphicsButton(imageFolder.absolutePath() + QDir::separator() +"demos_callout.png", m_appFolder, "callout", this);
+    button = new GraphicsButton(imageFolder.absolutePath() + QDir::separator() +"examples_callout.png", m_appFolder, "callout", this);
     demosLayout->addWidget(button, 0, 1);
 
     button = new GraphicsButton(imageFolder.absolutePath() + QDir::separator() +"demo_chartthemes_blue_cerulean.png", m_appFolder, "chartthemes", this);
     demosLayout->addWidget(button, 0, 2);
 
-    button = new GraphicsButton(imageFolder.absolutePath() + QDir::separator() +"demos_nesteddonuts.png", m_appFolder, "nesteddonuts", this);
+    button = new GraphicsButton(imageFolder.absolutePath() + QDir::separator() +"examples_nesteddonuts.png", m_appFolder, "nesteddonuts", this);
     demosLayout->addWidget(button, 1, 0);
 
     button = new GraphicsButton(imageFolder.absolutePath() + QDir::separator() +"examples_zoomlinechart1.png", m_appFolder, "zoomlinechart", this);

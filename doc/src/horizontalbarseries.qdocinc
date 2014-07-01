@@ -1,8 +1,0 @@
-\inherits AbstractBarSeries
-
-The following QML shows how to create a simple horizontal bar chart:
-\snippet ../demos/qmlchart/qml/qmlchart/View9.qml 1
-\beginfloatleft
-\image demos_qmlchart9.png
-\endfloat
-\clearfloat

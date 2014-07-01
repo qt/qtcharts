@@ -1,6 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>qml/qmlcustomizations/loader.qml</file>
-        <file>qml/qmlcustomizations/main.qml</file>
-    </qresource>
-</RCC>

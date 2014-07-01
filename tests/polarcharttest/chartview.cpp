@@ -23,7 +23,7 @@
 #include <QDebug>
 #include <QAbstractAxis>
 
-QTCOMMERCIALCHART_USE_NAMESPACE
+QT_CHARTS_USE_NAMESPACE
 
 ChartView::ChartView(QWidget *parent) :
     QChartView(parent)

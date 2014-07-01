@@ -1,4 +1,0 @@
-\inherits AbstractSeries
-
-The XYSeries class is a base class for line, spline and scatter series.
-The class cannot be instantiated directly.

@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-import QtQuick 1.0
-import QtCommercial.Chart 1.3
+import QtQuick 2.0
+import QtCharts 2.0
 
 ChartView {
     id: chartView
@@ -78,7 +78,7 @@ ChartView {
         onMinChanged:                 console.log("axisX.onMinChanged: " + min);
         onMaxChanged:                 console.log("axisX.onMaxChanged: " + max);
     }
-    
+
     ValueAxis{
         onColorChanged:               console.log("axisY.onColorChanged: " + color);
         onLabelsVisibleChanged:       console.log("axisY.onLabelsVisibleChanged: " + visible);

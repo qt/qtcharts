@@ -24,7 +24,7 @@
 #include <QChartView>
 #include <QTimer>
 
-QTCOMMERCIALCHART_USE_NAMESPACE
+QT_CHARTS_USE_NAMESPACE
 
 //![1]
 class ChartView: public QChartView

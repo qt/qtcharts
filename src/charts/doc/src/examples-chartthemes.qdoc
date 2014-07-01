@@ -1,0 +1,15 @@
+/*!
+    \example chartthemes
+    \title Chart themes example
+    \ingroup qtcharts_examples
+
+    \brief The example shows the look and feel of the different built-in themes.
+
+    This example shows the look and feel of the different built-in themes for all supported chart
+    types. In order to give the result a more harmonious look, the background palette of the
+    application is customized to the theme selected.
+
+    \image examples_chartthemes_light.png
+    \image examples_chartthemes_brown_sand.png
+    \image examples_chartthemes_blue_cerulean.png
+*/

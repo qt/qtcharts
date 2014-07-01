@@ -25,7 +25,7 @@
 #include <qpieslice.h>
 #include <qpieseries.h>
 
-QTCOMMERCIALCHART_USE_NAMESPACE
+QT_CHARTS_USE_NAMESPACE
 
 class tst_qpieslice : public QObject
 {

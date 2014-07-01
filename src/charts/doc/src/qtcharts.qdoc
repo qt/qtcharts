@@ -1,0 +1,200 @@
+/****************************************************************************
+**
+** Copyright (C) 2014 Digia Plc
+** All rights reserved.
+** For any questions to Digia, please use contact form at http://qt.digia.com
+**
+** This file is part of the QtCharts module.
+**
+** Licensees holding valid Qt Enterprise licenses may use this file in
+** accordance with the Qt Enterprise License Agreement provided with the
+** Software or, alternatively, in accordance with the terms contained in
+** a written agreement between you and Digia.
+**
+** If you have questions regarding the use of this file, please use
+** contact form at http://qt.digia.com
+**
+****************************************************************************/
+
+/*!
+    \module Qt Charts
+    \title Qt Charts C++ Classes
+    \ingroup modules
+
+    \brief C++ classes for the Qt Charts API.
+
+    Charts API is built on top of Qt Graphics View Framework. Charts can be displayed as QGraphicsWidget using the QChart class. However
+    there is also the convenience class QChartView, which is QWidget based. These enable us to quickly use Qt Charts as a normal Qt widget.
+
+    Each chart type is represented by the QAbstractSeries derived class. To create charts, the users have to use an instance of the related
+    series class and add it to a QChart instance.
+    \code
+    QLineSeries* series = new QLineSeries();
+    series->add(0, 6);
+    series->add(2, 4);
+    ...
+    chartView->chart()->addSeries(series);
+    chartView->chart()->createDefaultAxes();
+    \endcode
+*/
+
+/*!
+    \qmlmodule QtCharts 2.0
+    \title Qt Charts QML Types
+    \ingroup qmlmodules
+
+    \brief QML types for the Qt Charts API.
+
+    The Qt Charts QML API is an intuitive and simple way to show charts in your QML
+    applications.
+
+    \table
+        \row
+            \li \br
+                Use the following QML to create a simple pie chart:
+                \br
+                \br
+                \snippet qmlpiechart/qml/qmlpiechart/main.qml 1
+                \snippet qmlpiechart/qml/qmlpiechart/main.qml 2
+                \snippet qmlpiechart/qml/qmlpiechart/main.qml 3
+            \li \inlineimage examples_qmlpiechart.png
+    \endtable
+
+    \note Since Qt Creator 3.0 the project created with Qt Quick Application wizard based on
+    Qt Quick 2 template uses QGuiApplication by default. As Qt Charts utilizes Qt Graphics View
+    Framework for drawing, QApplication must be used. The project created with the wizard is
+    usable with Qt Charts after the QGuiApplication is replaced with QApplication.
+
+    \section1 QML Types
+*/
+
+/*!
+    \group charts_examples
+    \ingroup all-examples
+    \title Qt Charts Examples
+
+    \brief Examples for the Qt Charts.
+
+    For some code examples, see one of the Qt Charts examples:
+
+    \section1 Examples
+
+    \annotatedlist qtcharts_examples
+*/
+
+/*!
+    \group qtcharts_getting_started
+    \title Qt Charts Getting Started
+
+    \section1 Installing the Qt Charts module
+
+    Use the \c {Package Manager} in \c {Maintenance Tool} or the \c {Online installer} to install
+    the Qt Charts module. The module can be found under \c {Qt Enterprise Add-Ons} in the
+    package manager.
+
+    After installation Qt Charts documentation and examples are available in Qt Creator.
+    Examples can be found on the examples page of Qt Creator by selecting the Qt Charts
+    component from the drop-down menu.
+
+    The source code is installed into the QtCharts folder under EnterpriseAddOns.
+
+    \section1 Building Qt Charts
+
+    To build the Qt Charts module from source code yourself, set up a command prompt with
+    an environment for building Qt applications, navigate to the directory containing
+    \c {qtcharts.pro}, and configure the project with qmake:
+    \code
+    qmake
+    \endcode
+
+    After running qmake, build the project with make:
+    \table
+    \header
+      \li OS                       \li Make command
+    \row
+      \li Linux                    \li make
+    \row
+      \li Windows (MinGw)          \li mingw32-make
+    \row
+      \li Windows (MSVC)           \li nmake
+    \row
+      \li OSX                      \li make
+    \endtable
+
+    The above generates the default makefiles for your configuration, which is typically
+    the release build if you are using precompiled binary Qt distribution. To build both debug
+    and release, or one specifically, use one of the following qmake lines instead.
+
+    For debug builds:
+    \code
+    qmake CONFIG+=debug
+    make
+    \endcode
+    or
+    \code
+    qmake CONFIG+=debug_and_release
+    make debug
+    \endcode
+
+    For release builds:
+    \code
+    qmake CONFIG+=release
+    make
+    \endcode
+    or
+    \code
+    qmake CONFIG+=debug_and_release
+    make release
+    \endcode
+
+    For both builds (Windows/OS X only):
+    \code
+    qmake CONFIG+="debug_and_release build_all"
+    make
+    \endcode
+
+    After building, install the module to your Qt directory:
+    \code
+    make install
+    \endcode
+
+    If you want to uninstall the module:
+    \code
+    make uninstall
+    \endcode
+
+    To build a statically linked version of the Qt Charts module, give the following commands:
+
+    \snippet doc_src_qtcharts.cpp 1
+
+    \section1 Running examples
+
+    Qt Charts examples are found under the \c examples subdirectory. To build and run a single
+    example, in this case qmlpolarchart, navigate to the example directory and enter the following
+    commands:
+
+    \snippet doc_src_qtcharts.cpp 2
+
+    \note On some platforms, such as Windows, the executable can be generated under debug or
+    release folders, depending on your build.
+
+    \section1 Creating a simple application
+
+    To create a simple application, start by creating a new Qt Gui Application project in Qt
+    Creator and add this line to the \c .pro file of the project:
+
+    \snippet doc_src_qtcharts.pro 0
+
+    In the \c main.cpp file, include the module headers and declare namespace usage:
+
+    \snippet doc_src_qtcharts.cpp 0
+
+    \note Since Qt Creator 3.0 the project created with Qt Quick Application wizard based on
+    Qt Quick 2 template uses QGuiApplication by default. As Qt Charts utilizes Qt Graphics View
+    Framework for drawing, QApplication must be used. The project created with the wizard is
+    usable with Qt Charts after the QGuiApplication is replaced with QApplication.
+
+    For further code examples, see one of the Qt Charts examples:
+
+    \annotatedlist qtcharts_examples
+*/

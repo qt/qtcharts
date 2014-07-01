@@ -1,6 +1,0 @@
-\brief The AbstractAxis is a base element used for specialized axis elements.
-
-Each series can be bound to only one horizontal and vertical axis.
-
-Properties and visibility of various axis elements such as axis line, title, labels, grid lines,
-and shades can be individually controlled.

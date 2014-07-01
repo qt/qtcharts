@@ -19,13 +19,13 @@
 ****************************************************************************/
 
 #include <QtTest/QtTest>
-#include <qchartview.h>
-#include <qlineseries.h>
+#include <QtCharts/qchartview.h>
+#include <QtCharts/qlineseries.h>
 #include <cmath>
 #include <tst_definitions.h>
-#include <qvalueaxis.h>
+#include <QtCharts/qvalueaxis.h>
 
-QTCOMMERCIALCHART_USE_NAMESPACE
+QT_CHARTS_USE_NAMESPACE
 
 
 Q_DECLARE_METATYPE(QChart*)

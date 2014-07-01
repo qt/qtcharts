@@ -19,25 +19,31 @@
 ****************************************************************************/
 
 #include <QApplication>
-#include <QDeclarativeEngine>
-#include <QDir>
-#include "qmlapplicationviewer.h"
+#include <QtCore/QDir>
+#include <QtQuick/QQuickView>
+#include <QtQml/QQmlEngine>
 
-Q_DECL_EXPORT int main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
-    QScopedPointer<QApplication> app(createApplication(argc, argv));
-    QScopedPointer<QmlApplicationViewer> viewer(QmlApplicationViewer::create());
-#ifdef Q_OS_ANDROID
-    viewer->addImportPath(QString::fromLatin1("assets:/imports"));
-    viewer->engine()->addPluginPath(QString::fromLatin1("%1/../%2").arg(QDir::homePath(), QString::fromLatin1("lib")));
+    // Qt Charts uses Qt Graphics View Framework for drawing, therefore QApplication must be used.
+    QApplication app(argc, argv);
+
+    QQuickView viewer;
+
+    // The following are needed to make examples run without having to install the module
+    // in desktop environments.
+#ifdef Q_OS_WIN
+    QString extraImportPath(QStringLiteral("%1/../../../../%2"));
 #else
-    viewer->addImportPath(QString::fromLatin1("%1/%2").arg(QCoreApplication::applicationDirPath(), QString::fromLatin1("imports")));
+    QString extraImportPath(QStringLiteral("%1/../../../%2"));
 #endif
+    viewer.engine()->addImportPath(extraImportPath.arg(QGuiApplication::applicationDirPath(),
+                                      QString::fromLatin1("qml")));
+    QObject::connect(viewer.engine(), &QQmlEngine::quit, &viewer, &QWindow::close);
 
-    // // viewer->setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
-    viewer->setSource(QUrl("qrc:/qml/qmlchartproperties/loader.qml"));
-    viewer->setRenderHint(QPainter::Antialiasing, true);
-    viewer->showExpanded();
+    viewer.setSource(QUrl("qrc:/qml/qmlchartproperties/main.qml"));
+    viewer.setResizeMode(QQuickView::SizeRootObjectToView);
+    viewer.show();
 
-    return app->exec();
+    return app.exec();
 }

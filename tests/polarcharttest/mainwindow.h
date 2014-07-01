@@ -34,7 +34,7 @@ namespace Ui {
 class MainWindow;
 }
 
-QTCOMMERCIALCHART_USE_NAMESPACE
+QT_CHARTS_USE_NAMESPACE
 
 class QBrush;
 class QPen;

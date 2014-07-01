@@ -1,2 +1,0 @@
-AbstractSeries is the base class for all series.
-The class cannot be instantiated by the user.

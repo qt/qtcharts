@@ -1,0 +1,47 @@
+/*!
+    \example qmloscilloscope
+    \title QML Oscilloscope
+    \ingroup qtcharts_examples
+
+    \image examples_qmloscilloscope.png
+
+    \brief The example shows how to implement application with strict performance requirements
+    using the Qt Charts QML API.
+
+    The oscilloscope application demonstrates how to use the Qt Charts QML API to implement an
+    application with strict performance requirements. The application uses generated data with
+    configurable characteristics to mimic a simple oscilloscope user interface. To find out the
+    actual screen refresh performance of the application, you can set QML_SHOW_FRAMERATE = 1 to
+    your run environment settings to get the framerate shown in the application output console.
+    To do so go to Projects - Run - Run environment in Qt Creator and select Add. Then you can
+    experiment with the different configurable options of the example application to find the
+    configuration that gives you the best performance in your environment.
+
+    Note: You can try if enabling OpenGL improves the performance with the following startup
+    parameter:
+    \code
+    -graphicssystem opengl
+    \endcode
+
+    The application window is shared by control and scope views:
+    \snippet qmloscilloscope/qml/qmloscilloscope/main.qml 1
+    \dots
+    \snippet qmloscilloscope/qml/qmloscilloscope/main.qml 2
+
+    ControlView implements the buttons used for configuring. ScopeView uses a ChartView to show
+    a chart with two line series:
+    \snippet qmloscilloscope/qml/qmloscilloscope/ScopeView.qml 1
+    \dots
+
+    The data of the line series is updated with a QML timer. In a real life application the
+    updating could be triggered with a signal from Qt C++ code.
+    \snippet qmloscilloscope/qml/qmloscilloscope/ScopeView.qml 2
+
+    The oscilloscope also allows you to switch the type of the series used for visualizing the
+    signal sources. This is implemented by dynamically destroying and creating series:
+    \snippet qmloscilloscope/qml/qmloscilloscope/ScopeView.qml 3
+
+    \note QML_SHOW_FRAMERATE environment variable doesn't work with Qt Quick 2.
+    From Qt 5.1.0 on, the QSG_RENDER_TIMING environment variable can be used
+    similarly to display rendering time.
+*/

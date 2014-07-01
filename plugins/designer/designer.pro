@@ -1,17 +1,19 @@
-!include( ../plugins.pri ) {
-    error( "Couldn't find the plugins.pri file!" )
-}
+CONFIG += plugin
 
-TARGET=qtcommercialchartdesigner
-DESTDIR = $$CHART_BUILD_DESIGNER_PLUGIN_DIR
-greaterThan(QT_MAJOR_VERSION, 4) {
-    QT += designer
-} else {
-    CONFIG += designer
-}
-HEADERS = qchartsplugin.h
-SOURCES = qchartsplugin.cpp
-RESOURCES = qchartsplugin.qrc
+TEMPLATE = lib
+
+TARGET = qtchartsdesigner
+
+QT += charts
+QT += designer
+
+INCLUDEPATH += $$PWD
+DEPENDPATH += $$PWD
+INCLUDEPATH += ../../../include
+
+HEADERS = $$PWD/qchartsplugin.h
+SOURCES = $$PWD/qchartsplugin.cpp
+RESOURCES = $$PWD/qchartsplugin.qrc
 
 target.path = $$[QT_INSTALL_PLUGINS]/designer
 INSTALLS += target

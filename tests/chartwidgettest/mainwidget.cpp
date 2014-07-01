@@ -45,7 +45,7 @@
 #include <QBarCategoryAxis>
 #include <QGLWidget>
 
-QTCOMMERCIALCHART_USE_NAMESPACE
+QT_CHARTS_USE_NAMESPACE
 
 MainWidget::MainWidget(QWidget *parent) :
     QWidget(parent),
@@ -322,6 +322,7 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
         for (int j(0); j < data.count(); j ++) {
             QList<qreal> column = data.at(j);
             QSplineSeries *series = new QSplineSeries();
+            series->setName("spline" + QString::number(j));
             for (int i(0); i < column.count(); i++)
                 series->append(i, column.at(i));
             m_chart->addSeries(series);

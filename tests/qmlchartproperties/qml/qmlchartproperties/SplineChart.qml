@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-import QtQuick 1.0
-import QtCommercial.Chart 1.4
+import QtQuick 2.0
+import QtCharts 2.0
 
 ChartView {
     title: "spline series"
@@ -44,6 +44,7 @@ ChartView {
         onVisibleChanged:           console.log("splineSeries.onVisibleChanged: " + visible);
         onOpacityChanged:           console.log(name + ".onOpacityChanged: " + opacity);
         onClicked:                  console.log(name + ".onClicked: " + point.x + ", " + point.y);
+        onHovered:                  console.log(name + ".onHovered: " + point.x + ", " + point.y);
         onPointReplaced:            console.log("splineSeries.onPointReplaced: " + index);
         onPointRemoved:             console.log("splineSeries.onPointRemoved: " + index);
         onPointAdded:               console.log("splineSeries.onPointAdded: " + series.at(index).x + ", " + series.at(index).y);
@@ -71,5 +72,6 @@ ChartView {
         XYPoint { x: 3.4; y: 2.0 }
         XYPoint { x: 4.1; y: 2.3 }
         onClicked:                  console.log(name + ".onClicked: " + point.x + ", " + point.y);
+        onHovered:                  console.log(name + ".onHovered: " + point.x + ", " + point.y);
     }
 }

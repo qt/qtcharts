@@ -31,11 +31,7 @@ private Q_SLOTS:
 
 void tst_ChartDataSet::skip()
 {
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
     QSKIP("This test requires the debug version of library");
-#else
-    QSKIP("This test requires the debug version of library", SkipAll);
-#endif
 }
 
 QTEST_MAIN(tst_ChartDataSet)
@@ -63,7 +59,7 @@ QTEST_MAIN(tst_ChartDataSet)
 #include <private/abstractdomain_p.h>
 #include <tst_definitions.h>
 
-QTCOMMERCIALCHART_USE_NAMESPACE
+QT_CHARTS_USE_NAMESPACE
 
 Q_DECLARE_METATYPE(AbstractDomain *)
 Q_DECLARE_METATYPE(QAbstractAxis *)

@@ -29,15 +29,15 @@ class QStandardItemModel;
 class QItemSelectionModel;
 
 
-QTCOMMERCIALCHART_BEGIN_NAMESPACE
+QT_CHARTS_BEGIN_NAMESPACE
 class QChart;
 class QXYSeries;
 class QAbstractBarSeries;
 class QPieSeries;
 class QAreaSeries;
-QTCOMMERCIALCHART_END_NAMESPACE
+QT_CHARTS_END_NAMESPACE
 
-QTCOMMERCIALCHART_USE_NAMESPACE
+QT_CHARTS_USE_NAMESPACE
 
 class Engine : public QObject
 {

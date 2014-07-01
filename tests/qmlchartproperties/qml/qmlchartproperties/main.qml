@@ -18,12 +18,12 @@
 **
 ****************************************************************************/
 
-import QtQuick 1.0
+import QtQuick 2.0
 
 Rectangle {
     id: main
-    width: parent.width
-    height: parent.height
+    width: 800
+    height: 600
     property int viewCount: 9
     property variant colors: ["#637D74", "#403D3A", "#8C3B3B", "#AB6937", "#D4A960"]
     property int colorIndex: 0

@@ -29,7 +29,7 @@
 #include <qhpiemodelmapper.h>
 #include <QStandardItemModel>
 
-QTCOMMERCIALCHART_USE_NAMESPACE
+QT_CHARTS_USE_NAMESPACE
 
 class tst_qpiemodelmapper : public QObject
 {

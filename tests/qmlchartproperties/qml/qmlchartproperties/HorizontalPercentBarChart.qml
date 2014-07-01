@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-import QtQuick 1.0
-import QtCommercial.Chart 1.4
+import QtQuick 2.0
+import QtCharts 2.0
 
 ChartView {
     title: "Percent bar series"
@@ -33,6 +33,7 @@ ChartView {
     HorizontalPercentBarSeries {
         id: mySeries
         name: "bar"
+        labelsFormat: "@value";
         axisY: BarCategoryAxis { categories: ["2007", "2008", "2009", "2010", "2011", "2012" ] }
         BarSet { label: "Bob"; values: [2, 2, 3, 4, 5, 6]
             onClicked:                  console.log("barset.onClicked: " + index);

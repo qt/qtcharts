@@ -1,0 +1,9 @@
+/*!
+     \example piechartdrilldown
+     \title Piechart Drilldown Example
+     \ingroup qtcharts_examples
+
+     \brief The example shows how to implement a piechart with drilldown effect.
+     \image examples_piechartdrill1.png
+     \image examples_piechartdrill2.png
+*/

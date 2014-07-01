@@ -6,4 +6,3 @@ RESOURCES += resources.qrc
 SOURCES += main.cpp
 OTHER_FILES += qml/qmlchartaxis/*
 
-include(qmlapplicationviewer/qmlapplicationviewer.pri)

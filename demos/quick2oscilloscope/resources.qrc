@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>qml/quick2oscilloscope/main.qml</file>
-        <file>qml/quick2oscilloscope/ControlPanel.qml</file>
-        <file>qml/quick2oscilloscope/ScopeView.qml</file>
-        <file>qml/quick2oscilloscope/MultiButton.qml</file>
-    </qresource>
-</RCC>

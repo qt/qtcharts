@@ -1,0 +1,8 @@
+/*!
+     \example audio
+     \title Audio example
+     \ingroup qtcharts_examples
+
+     \brief This example shows the drawing of dynamic data (microphone input).
+     \image examples_audio.png
+*/

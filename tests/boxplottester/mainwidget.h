@@ -35,7 +35,7 @@
 
 class QGridLayout;
 
-QTCOMMERCIALCHART_USE_NAMESPACE
+QT_CHARTS_USE_NAMESPACE
 
 class MainWidget : public QWidget
 {

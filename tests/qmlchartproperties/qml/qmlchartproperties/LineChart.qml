@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-import QtQuick 1.0
-import QtCommercial.Chart 1.4
+import QtQuick 2.0
+import QtCharts 2.0
 
 ChartView {
     property variant series: lineSeries
@@ -73,5 +73,6 @@ ChartView {
         XYPoint { x: 3.4; y: 2.0 }
         XYPoint { x: 4.1; y: 2.3 }
         onClicked:                  console.log(name + ".onClicked: " + point.x + ", " + point.y);
+        onHovered:                  console.log(name + ".onHovered: " + point.x + ", " + point.y);
     }
 }

@@ -24,7 +24,7 @@
 #include <QChartView>
 #include <QPolarChart>
 
-QTCOMMERCIALCHART_USE_NAMESPACE
+QT_CHARTS_USE_NAMESPACE
 
 class ChartView : public QChartView
 {

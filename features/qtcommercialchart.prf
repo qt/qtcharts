@@ -1,9 +1,0 @@
-INCLUDEPATH += $$[QT_INSTALL_HEADERS]/QtCommercialChart
-LIBRARY_NAME = QtCommercialChart
-ios:CONFIG(iphonesimulator, iphonesimulator|iphoneos):LIBRARY_NAME = $$join(LIBRARY_NAME,,,_iphonesimulator)
-CONFIG(debug, debug|release) {
-    mac: LIBRARY_NAME = $$join(LIBRARY_NAME,,,_debug)
-    win32: LIBRARY_NAME = $$join(LIBRARY_NAME,,,d)
-}
-
-LIBS += -l$$LIBRARY_NAME

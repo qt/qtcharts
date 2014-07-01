@@ -20,7 +20,7 @@
 
 import QtQuick 2.0
 import QtTest 1.0
-import QtCommercial.Chart 1.4
+import QtCharts 2.0
 
 Rectangle {
     width: 400
@@ -87,7 +87,7 @@ Rectangle {
                 id: axisX
                 categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun" ]
             }
-            axisY: ValuesAxis {
+            axisY: ValueAxis {
                 id: axisY
                 min: 0
                 max: 10

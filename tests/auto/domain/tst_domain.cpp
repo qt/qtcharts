@@ -32,11 +32,7 @@ private Q_SLOTS:
 
 void tst_Domain::skip()
 {
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
     QSKIP("This test requires the debug version of library");
-#else
-    QSKIP("This test requires the debug version of library", SkipAll);
-#endif
 }
 
 QTEST_MAIN(tst_Domain)
@@ -49,7 +45,7 @@ QTEST_MAIN(tst_Domain)
 #include <private/qabstractaxis_p.h>
 #include <tst_definitions.h>
 
-QTCOMMERCIALCHART_USE_NAMESPACE
+QT_CHARTS_USE_NAMESPACE
 
 Q_DECLARE_METATYPE(XYDomain*)
 Q_DECLARE_METATYPE(QSizeF)

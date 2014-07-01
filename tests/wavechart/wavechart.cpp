@@ -21,7 +21,7 @@
 #include "wavechart.h"
 #include <cmath>
 
-QTCOMMERCIALCHART_USE_NAMESPACE
+QT_CHARTS_USE_NAMESPACE
 
 #define PI 3.14159265358979
 static const int numPoints =100;

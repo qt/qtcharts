@@ -18,7 +18,7 @@
 **
 ****************************************************************************/
 
-import QtQuick 1.0
+import QtQuick 2.0
 
 Item {
     id: chartEditor
@@ -84,7 +84,7 @@ Item {
             onClicked: {
                 selectButton(axisXButton);
                 loader.source = "ChartEditorAxis.qml";
-                loader.item.axis = chart.axisX;
+                loader.item.axis = chart.axisX();
             }
         }
         Button {
@@ -94,7 +94,7 @@ Item {
             onClicked: {
                 selectButton(axisYButton);
                 loader.source = "ChartEditorAxis.qml";
-                loader.item.axis = chart.axisY;
+                loader.item.axis = chart.axisY();
             }
         }
         Button {

@@ -203,7 +203,7 @@ void MainWindow::createDockWidgets()
 
 void MainWindow::createLayout()
 {
-    m_table->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
+    m_table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     int rowHeight = m_table->rowHeight(0);
     int tableHeight = (m_engine->modelCount() * rowHeight) + m_table->horizontalHeader()->height() + 2 * m_table->frameWidth();

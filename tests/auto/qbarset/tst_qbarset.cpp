@@ -24,7 +24,7 @@
 #include <qchartview.h>
 #include "tst_definitions.h"
 
-QTCOMMERCIALCHART_USE_NAMESPACE
+QT_CHARTS_USE_NAMESPACE
 
 class tst_QBarSet : public QObject
 {

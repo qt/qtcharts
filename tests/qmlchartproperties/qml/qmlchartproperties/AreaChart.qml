@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-import QtQuick 1.0
-import QtCommercial.Chart 1.4
+import QtQuick 2.0
+import QtCharts 2.0
 
 ChartView {
     title: "area series"

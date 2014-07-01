@@ -46,7 +46,7 @@
 #include <QBarCategoryAxis>
 #include <QLogValueAxis>
 
-QTCOMMERCIALCHART_USE_NAMESPACE
+QT_CHARTS_USE_NAMESPACE
 
 static const QString allCategories[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 static const int maxCategories = 12;
@@ -129,13 +129,8 @@ MainWidget::MainWidget(QWidget *parent) :
     tableView->setModel(m_model);
     tableView->setMaximumWidth(200);
     grid->addWidget(tableView, m_rowPos++, 0, 3, 2, Qt::AlignLeft);
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
     tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     tableView->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-#else
-    tableView->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
-    tableView->verticalHeader()->setResizeMode(QHeaderView::Stretch);
-#endif
 
     // add row with empty label to make all the other rows static
     grid->addWidget(new QLabel(""), grid->rowCount(), 0);

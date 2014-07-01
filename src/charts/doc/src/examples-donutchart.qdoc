@@ -1,0 +1,9 @@
+/*!
+     \example donutchart
+     \title Donutchart Example
+     \ingroup qtcharts_examples
+
+     \brief This example shows how to create a simple donut chart, and do some customizations to
+     a slice.
+     \image examples_donutchart.png
+*/

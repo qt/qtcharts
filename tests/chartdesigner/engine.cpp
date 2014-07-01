@@ -163,7 +163,7 @@ void Engine::removeSeries(QAbstractSeries* series)
     m_chart->removeSeries(series);
 
     foreach (const QModelIndex& index, m_seriesModelIndex.value(series)) {
-        m_model->setData(index, Qt::white, Qt::BackgroundRole);
+        m_model->setData(index, QColor(Qt::white), Qt::BackgroundRole);
     }
 }
 

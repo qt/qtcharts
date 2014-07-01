@@ -1,0 +1,66 @@
+include($QT_INSTALL_DOCS/global/macros.qdocconf)
+include($QT_INSTALL_DOCS/global/qt-cpp-defines.qdocconf)
+include($QT_INSTALL_DOCS/global/compat.qdocconf)
+include($QT_INSTALL_DOCS/global/fileextensions.qdocconf)
+include($QT_INSTALL_DOCS/global/qt-html-templates-offline.qdocconf)
+
+project = Qt Charts
+description = Qt Charts Reference Documentation
+version = 2.0.0
+
+sourcedirs += ..
+headerdirs += ..
+exampledirs += ../../../examples/charts \
+               snippets
+imagedirs += images
+examplesinstallpath = charts
+
+indexes +=  $QT_INSTALL_DOCS/qtcore/qtcore.index \
+            $QT_INSTALL_DOCS/qtgui/qtgui.index \
+            $QT_INSTALL_DOCS/qtqml/qtqml.index \
+            $QT_INSTALL_DOCS/qtquick/qtquick.index \
+            $QT_INSTALL_DOCS/qtmultimedia/qtmultimedia.index
+
+Cpp.ignoretokens        = Q_INVOKABLE \
+                          QT_CHARTS_EXPORT \
+                          QT_CHARTS_END_NAMESPACE \
+                          QT_CHARTS_BEGIN_NAMESPACE
+
+qhp.projects                  = QtCharts
+qhp.QtCharts.file             = qtcharts.qhp
+qhp.QtCharts.namespace        = com.digia.qtcharts.200
+qhp.QtCharts.virtualFolder    = qtcharts
+qhp.QtCharts.indexTitle       = Qt Charts Reference
+qhp.QtCharts.indexRoot        =
+
+qhp.QtCharts.filterAttributes                  = qtcharts 2.0.0 qtrefdoc
+qhp.QtCharts.customFilters.Qt.name             = QtCharts 2.0.0
+qhp.QtCharts.customFilters.Qt.filterAttributes = qtcharts 2.0.0
+
+qhp.QtCharts.subprojects = gettingstarted classes types examples
+
+qhp.QtCharts.subprojects.gettingstarted.title      = Getting Started
+qhp.QtCharts.subprojects.gettingstarted.indexTitle = Qt Charts Getting Started
+qhp.QtCharts.subprojects.gettingstarted.selectors  = fake:page
+qhp.QtCharts.subprojects.gettingstarted.sortPages  = true
+
+qhp.QtCharts.subprojects.classes.title      = C++ Classes
+qhp.QtCharts.subprojects.classes.indexTitle = Qt Charts C++ Classes
+qhp.QtCharts.subprojects.classes.selectors  = class
+qhp.QtCharts.subprojects.classes.sortPages  = true
+
+qhp.QtCharts.subprojects.types.title      = QML Types
+qhp.QtCharts.subprojects.types.indexTitle = Qt Charts QML Types
+qhp.QtCharts.subprojects.types.selectors  = fake:qmlclass
+qhp.QtCharts.subprojects.types.sortPages  = true
+
+qhp.QtCharts.subprojects.examples.title      = Examples
+qhp.QtCharts.subprojects.examples.indexTitle = Qt Charts Examples
+qhp.QtCharts.subprojects.examples.selectors  = fake:example
+qhp.QtCharts.subprojects.examples.sortPages  = true
+
+navigation.landingpage = Qt Charts
+navigation.cppclassespage = Qt Charts C++ Classes
+navigation.qmltypespage = Qt Charts QML Types
+
+buildversion = Qt Charts $QT_VERSION Reference Documentation

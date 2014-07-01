@@ -1,7 +1,0 @@
-\brief The LogValueAxis element is used for manipulating chart's axes.
-\inherits AbstractAxis
-
-\note If a LogValueAxis is attached to a series with one or more points with
-negative or zero values on the associated dimension, the series will not be
-plotted at all. This is particularly relevant when XYModelMappers are used,
-since empty cells in models typically contain zero values.

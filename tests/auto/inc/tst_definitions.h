@@ -21,11 +21,10 @@
 #ifndef TST_DEFINITIONS_H
 #define TST_DEFINITIONS_H
 
-#include "qpolarchart.h"
+#include <QtCharts/qpolarchart.h>
 #include <QtTest/QtTest>
 #include <QPushButton>
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 namespace QTest
 {
     // This was deprecated in Qt5. This is a small hack for the sake of compatibility.
@@ -34,7 +33,6 @@ namespace QTest
         return QTest::qWaitForWindowExposed(window);
     }
 }
-#endif
 
 #define TRY_COMPARE(actual, expected) { \
     do { \
@@ -51,7 +49,6 @@ namespace QTest
 // Some bamboo clients have trouble passing mouse events to the test application.
 // This can be used to skip those tests so that they don't show up as a failure
 // in the test report.
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
     #define SKIP_IF_CANNOT_TEST_MOUSE_EVENTS() { \
         do { \
             QPushButton b; \
@@ -74,30 +71,6 @@ namespace QTest
         if (!isPolarTest()) \
             QSKIP("Test not supported by cartesian chart"); \
         }
-#else
-    #define SKIP_IF_CANNOT_TEST_MOUSE_EVENTS() { \
-        do { \
-            QPushButton b; \
-            b.resize(100, 100); \
-            b.show(); \
-            QTest::qWaitForWindowShown(&b); \
-            QSignalSpy spy(&b, SIGNAL(clicked())); \
-            QTest::mouseClick(&b, Qt::LeftButton, 0, b.rect().center()); \
-            if (spy.count() == 0) \
-                QSKIP("Cannot test mouse events in this environment", SkipAll); \
-        } while (0); \
-    }
-
-    #define SKIP_ON_POLAR() { \
-        if (isPolarTest()) \
-            QSKIP("Test not supported by polar chart", SkipAll); \
-        }
-
-    #define SKIP_ON_CARTESIAN() { \
-        if (!isPolarTest()) \
-            QSKIP("Test not supported by cartesian chart", SkipAll); \
-        }
-#endif
 
 static inline bool isPolarTest()
 {
@@ -112,12 +85,12 @@ static inline bool isPolarTest()
     return isPolar;
 }
 
-static inline QtCommercialChart::QChart *newQChartOrQPolarChart()
+static inline QtCharts::QChart *newQChartOrQPolarChart()
 {
     if (isPolarTest())
-        return new QtCommercialChart::QPolarChart();
+        return new QtCharts::QPolarChart();
     else
-        return new QtCommercialChart::QChart();
+        return new QtCharts::QChart();
 }
 
 

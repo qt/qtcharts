@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-import QtQuick 1.0
-import QtCommercial.Chart 1.4
+import QtQuick 2.0
+import QtCharts 2.0
 
 ChartView {
     title: "scatter series"
@@ -43,6 +43,7 @@ ChartView {
         onVisibleChanged:           console.log("scatterSeries.onVisibleChanged: " + visible);
         onOpacityChanged:           console.log(name + ".onOpacityChanged: " + opacity);
         onClicked:                  console.log(name + ".onClicked: " + point.x + ", " + point.y);
+        onHovered:                  console.log(name + ".onHovered: " + point.x + ", " + point.y);
         onPointReplaced:            console.log("scatterSeries.onPointReplaced: " + index);
         onPointRemoved:             console.log("scatterSeries.onPointRemoved: " + index);
         onPointAdded:               console.log("scatterSeries.onPointAdded: " + series.at(index).x + ", " + series.at(index).y);
@@ -69,5 +70,6 @@ ChartView {
         XYPoint { x: 2.4; y: 2.7 }
         XYPoint { x: 2.67; y: 2.65 }
         onClicked:                  console.log(name + ".onClicked: " + point.x + ", " + point.y);
+        onHovered:                  console.log(name + ".onHovered: " + point.x + ", " + point.y);
     }
 }

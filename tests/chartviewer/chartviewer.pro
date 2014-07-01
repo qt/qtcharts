@@ -1,4 +1,4 @@
-!include( ../tests.pri ):error( "Couldn't find the demos.pri file!" )
+!include( ../tests.pri ):error( "Couldn't find the tests.pri file!" )
 include(charts/charts.pri)
 TARGET = chartviewer
 QT += opengl

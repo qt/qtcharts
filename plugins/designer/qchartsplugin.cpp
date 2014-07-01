@@ -19,10 +19,10 @@
 ****************************************************************************/
 
 #include "qchartsplugin.h"
-#include "qchartview.h"
+#include <QtCharts/QChartView>
 #include <QtPlugin>
 
-QTCOMMERCIALCHART_USE_NAMESPACE
+QT_CHARTS_USE_NAMESPACE
 
 QChartsPlugin::QChartsPlugin(QObject *parent) :
     QObject(parent)
@@ -35,21 +35,22 @@ QChartsPlugin::~QChartsPlugin()
 
 QString QChartsPlugin::name() const
 {
-    return "QChartView";
+    return QStringLiteral("QtCharts::QChartView");
 }
 
 QString QChartsPlugin::includeFile() const
 {
 #ifdef linux
-    QString myNewLine = "\n";
+    QString myNewLine = QStringLiteral("\n");
 #endif
 #ifdef WIN32
-    QString myNewLine = "\n\r";
+    QString myNewLine = QStringLiteral("\n\r");
 #endif
 #ifdef __APPLE__
-    QString myNewLine = "\n";
+    QString myNewLine = QStringLiteral("\n");
 #endif
-    return "<qchartview.h>" + myNewLine + "#include <chartsnamespace.h>";
+    return QStringLiteral("<QtCharts/QChartView>") + myNewLine
+            + QStringLiteral("#include <chartsnamespace.h>");
 }
 
 QString QChartsPlugin::group() const
@@ -59,12 +60,12 @@ QString QChartsPlugin::group() const
 
 QIcon QChartsPlugin::icon() const
 {
-    return QIcon(":/images/qcharts.png");
+    return QIcon(QStringLiteral(":/images/qcharts.png"));
 }
 
 QString QChartsPlugin::toolTip() const
 {
-    return tr("An Qt Charts view widget");
+    return tr("A Qt Charts view widget");
 }
 
 QString QChartsPlugin::whatsThis() const
@@ -82,7 +83,20 @@ QWidget *QChartsPlugin::createWidget(QWidget *parent)
     return new QChartView(new QChart(), parent);
 }
 
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-    Q_EXPORT_PLUGIN2(qtcommercialchart, QChartsPlugin)
-#endif
+QString QChartsPlugin::domXml() const
+{
+    return QStringLiteral("\
+    <ui language=\"c++\">\
+        <widget class=\"QtCharts::QChartView\" name=\"chartview\">\
+            <property name=\"geometry\">\
+                <rect>\
+                    <x>0</x>\
+                    <y>0</y>\
+                    <width>200</width>\
+                    <height>200</height>\
+                </rect>\
+            </property>\
+        </widget>\
+    </ui>");
+}
 

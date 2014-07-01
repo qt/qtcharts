@@ -1,3 +1,0 @@
-module QtCommercial.Chart
-plugin qtcommercialchartqml2
-classname ChartQmlPlugin

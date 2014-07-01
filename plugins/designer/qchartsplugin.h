@@ -25,10 +25,7 @@
 
 class QChartsPlugin: public QObject, public QDesignerCustomWidgetInterface
 {
-
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
     Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QDesignerCustomWidgetInterface")
-#endif
 
     Q_OBJECT
     Q_INTERFACES(QDesignerCustomWidgetInterface)
@@ -44,6 +41,7 @@ public:
     QString whatsThis() const;
     bool isContainer() const;
     QWidget *createWidget(QWidget *parent);
+    QString domXml() const;
 };
 
 #endif /* QCHARTSPLUGIN_H */

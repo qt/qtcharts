@@ -1,0 +1,10 @@
+/*!
+     \example dynamicspline
+     \title Dynamic spline example
+     \ingroup qtcharts_examples
+
+     \brief This example shows how to draw dynamic data.
+
+     \image examples_dynamicspline1.png
+     \image examples_dynamicspline2.png
+*/

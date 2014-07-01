@@ -1,0 +1,26 @@
+/*!
+    \example customchart
+    \title Custom Chart Example
+    \ingroup qtcharts_examples
+
+    \brief This example shows how to customize the appearance of the different elements on a chart.
+    \image examples_customchart.png
+
+    We begin by creating a simple line series and a chart object.
+    \snippet customchart/main.cpp 1
+
+    First we customize the series and the chart's title and background.
+    \snippet customchart/main.cpp 2
+
+    Then we customize the axes.
+    \snippet customchart/main.cpp 3
+
+    Then the axis label values and ranges. Once the axes are ready, we set them to be used by the chart.
+    \snippet customchart/main.cpp 4
+
+    Finally, we create a view containing the chart.
+    \snippet customchart/main.cpp 5
+
+    Now we are ready to show the chart on a main window.
+    \snippet customchart/main.cpp 6
+*/
