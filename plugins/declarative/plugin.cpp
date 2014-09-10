@@ -46,6 +46,8 @@
 #include "qbarlegendmarker.h"
 #include "qpielegendmarker.h"
 #include "qxylegendmarker.h"
+#include "qboxplotmodelmapper.h"
+#include "qvboxplotmodelmapper.h"
 #ifndef QT_ON_ARM
     #include "qdatetimeaxis.h"
 #endif
@@ -103,6 +105,9 @@ Q_DECLARE_METATYPE(QVPieModelMapper *)
 Q_DECLARE_METATYPE(QVXYModelMapper *)
 Q_DECLARE_METATYPE(QXYLegendMarker *)
 Q_DECLARE_METATYPE(QXYModelMapper *)
+Q_DECLARE_METATYPE(QBoxPlotModelMapper *)
+Q_DECLARE_METATYPE(QVBoxPlotModelMapper *)
+
 
 Q_DECLARE_METATYPE(QAbstractSeries *)
 Q_DECLARE_METATYPE(QXYSeries *)
@@ -165,6 +170,7 @@ public:
         qmlRegisterType<QVPieModelMapper>(uri, 1, 0, "VPieModelMapper");
         qmlRegisterType<QHBarModelMapper>(uri, 1, 0, "HBarModelMapper");
         qmlRegisterType<QVBarModelMapper>(uri, 1, 0, "VBarModelMapper");
+
         qmlRegisterType<QValueAxis>(uri, 1, 0, "ValuesAxis");
         qmlRegisterType<QBarCategoryAxis>(uri, 1, 0, "BarCategoriesAxis");
         qmlRegisterUncreatableType<QLegend>(uri, 1, 0, "Legend",
@@ -247,6 +253,11 @@ public:
         qmlRegisterType<DeclarativeBoxSet, 1>(uri, 1, 4, "BoxSet");
         qmlRegisterType<DeclarativePieSlice>(uri, 1, 4, "PieSlice");
         qmlRegisterType<DeclarativeScatterSeries, 4>(uri, 1, 4, "ScatterSeries");
+
+        // QtCommercial.Chart 2.0
+        qmlRegisterType<QVBoxPlotModelMapper>(uri, 2, 0, "VBoxPlotModelMapper");
+        qmlRegisterUncreatableType<QBoxPlotModelMapper>(uri, 2, 0, "BoxPlotModelMapper",
+            QLatin1String("Trying to create uncreatable: BoxPlotModelMapper."));
     }
 };
 
