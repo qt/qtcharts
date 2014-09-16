@@ -217,11 +217,14 @@ void AbstractBarChartItem::handleUpdatedBars()
 
                 QGraphicsTextItem *label = m_labels.at(itemIndex);
                 QString valueLabel;
-                if (m_series->labelsFormat().isEmpty()) {
-                    valueLabel = QString("%1").arg(barSet->value(category));
-                } else {
-                    valueLabel = m_series->labelsFormat();
-                    valueLabel.replace(valueTag, QString::number(barSet->value(category)));
+                if (presenter()) { // At startup presenter is not yet set, yet somehow update comes
+                    if (m_series->labelsFormat().isEmpty()) {
+                        valueLabel = presenter()->numberToString(barSet->value(category));
+                    } else {
+                        valueLabel = m_series->labelsFormat();
+                        valueLabel.replace(valueTag,
+                                           presenter()->numberToString(barSet->value(category)));
+                    }
                 }
                 label->setHtml(valueLabel);
                 label->setFont(barSet->m_labelFont);

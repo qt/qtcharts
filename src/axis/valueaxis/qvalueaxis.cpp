@@ -106,14 +106,22 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
   \property QValueAxis::labelFormat
   Defines the label format of the axis.
-  Supported specifiers are: d, i, o, x, X, f, F, e, E, g, G, c
+  Supported specifiers are: d, i, o, x, X, f, F, e, E, g, G, and c.
   See QString::sprintf() for additional details.
+
+  If the QChart::localizeNumbers is \c{true}, the supported specifiers are limited to: d, e, E, f,
+  g, and G. Also, only the precision modifier is supported. The rest of the formatting comes from
+  the default QLocale of the application.
 */
 /*!
   \qmlproperty real ValueAxis::labelFormat
   Defines the label format of the axis.
-  Supported specifiers are: d, i, o, x, X, f, F, e, E, g, G, c
+  Supported specifiers are: d, i, o, x, X, f, F, e, E, g, G, and c.
   See QString::sprintf() for additional details.
+
+  If the ChartView::localizeNumbers is \c{true}, the supported specifiers are limited to: d, e, E, f,
+  g, and G. Also, only the precision modifier is supported. The rest of the formatting comes from
+  the default QLocale of the application.
 */
 
 /*!

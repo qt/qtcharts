@@ -77,9 +77,10 @@ public:
     //this flag indicates that axis is used to show intervals it means labels are in between ticks
     bool intervalAxis() const { return m_intervalAxis; }
 
-    static QStringList createValueLabels(qreal max, qreal min, int ticks, const QString &format);
-    static QStringList createLogValueLabels(qreal min, qreal max, qreal base, int ticks, const QString &format);
-    static QStringList createDateTimeLabels(qreal max, qreal min, int ticks, const QString &format);
+    QStringList createValueLabels(qreal max, qreal min, int ticks, const QString &format) const;
+    QStringList createLogValueLabels(qreal min, qreal max, qreal base, int ticks,
+                                     const QString &format) const;
+    QStringList createDateTimeLabels(qreal max, qreal min, int ticks, const QString &format) const;
 
     // from QGraphicsLayoutItem
     QRectF boundingRect() const
@@ -132,6 +133,9 @@ Q_SIGNALS:
 
 private:
     void connectSlots();
+    QString formatLabel(const QString &formatSpec, const QByteArray &array,
+                        qreal value, int precision, const QString &preStr,
+                        const QString &postStr) const;
 
     QAbstractAxis *m_axis;
     AxisAnimation *m_animation;

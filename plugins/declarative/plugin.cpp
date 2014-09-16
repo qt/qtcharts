@@ -258,6 +258,7 @@ public:
         qmlRegisterType<QVBoxPlotModelMapper>(uri, 2, 0, "VBoxPlotModelMapper");
         qmlRegisterUncreatableType<QBoxPlotModelMapper>(uri, 2, 0, "BoxPlotModelMapper",
             QLatin1String("Trying to create uncreatable: BoxPlotModelMapper."));
+        qmlRegisterType<DeclarativeChart, 4>(uri, 2, 0, "ChartView");
     }
 };
 

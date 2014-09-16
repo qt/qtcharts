@@ -115,16 +115,15 @@ void HorizontalPercentBarChartItem::handleUpdatedBars()
             bar->update();
 
             QGraphicsTextItem *label = m_labels.at(itemIndex);
-            int p = m_series->d_func()->percentageAt(set, category) * 100;
-            QString vString(QString::number(p));
-            vString.truncate(3);
-            vString.append("%");
+            qreal p = m_series->d_func()->percentageAt(set, category) * 100.0;
+            QString vString(presenter()->numberToString(p, 'f', 0));
             QString valueLabel;
             if (m_series->labelsFormat().isEmpty()) {
+                vString.append("%");
                 valueLabel = vString;
             } else {
                 valueLabel = m_series->labelsFormat();
-                valueLabel.replace(valueTag, QString::number(barSet->value(category)));
+                valueLabel.replace(valueTag, vString);
             }
             label->setHtml(valueLabel);
             label->setFont(barSet->m_labelFont);

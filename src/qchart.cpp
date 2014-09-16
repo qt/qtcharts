@@ -145,6 +145,15 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
  */
 
 /*!
+  \property QChart::localizeNumbers
+  \since QtCharts 2.0
+  When \c{true}, all generated numbers appearing in various series and axis labels will be
+  localized using the default QLocale of the application, which defaults to the system locale.
+  When \c{false}, the "C" locale is always used.
+  Defaults to \c{false}.
+*/
+
+/*!
  \internal
  Constructs a chart object of \a type which is a child of a \a parent.
  Parameter \a wFlags is passed to the QGraphicsWidget constructor.
@@ -559,6 +568,16 @@ void QChart::setPlotAreaBackgroundVisible(bool visible)
 bool QChart::isPlotAreaBackgroundVisible() const
 {
     return d_ptr->m_presenter->isPlotAreaBackgroundVisible();
+}
+
+void QChart::setLocalizeNumbers(bool localize)
+{
+    d_ptr->m_presenter->setLocalizeNumbers(localize);
+}
+
+bool QChart::localizeNumbers() const
+{
+    return d_ptr->m_presenter->localizeNumbers();
 }
 
 void QChart::setAnimationOptions(AnimationOptions options)

@@ -44,7 +44,8 @@ ChartPresenter::ChartPresenter(QChart *chart, QChart::ChartType type)
       m_state(ShowState),
       m_background(0),
       m_plotAreaBackground(0),
-      m_title(0)
+      m_title(0),
+      m_localizeNumbers(false)
 {
     if (type == QChart::ChartTypeCartesian)
         m_layout = new CartesianChartLayout(this);
@@ -102,6 +103,7 @@ void ChartPresenter::handleSeriesAdded(QAbstractSeries *series)
 {
     series->d_ptr->initializeGraphics(rootItem());
     series->d_ptr->initializeAnimations(m_options);
+    series->d_ptr->setPresenter(this);
     ChartItem *chart = series->d_ptr->chartItem();
     chart->setPresenter(this);
     chart->setThemeManager(m_chart->d_ptr->m_themeManager);
@@ -344,6 +346,17 @@ bool ChartPresenter::isBackgroundDropShadowEnabled() const
     return m_background->isDropShadowEnabled();
 }
 
+void ChartPresenter::setLocalizeNumbers(bool localize)
+{
+    m_localizeNumbers = localize;
+    m_layout->invalidate();
+}
+
+bool ChartPresenter::localizeNumbers() const
+{
+    return m_localizeNumbers;
+}
+
 
 AbstractChartLayout *ChartPresenter::layout()
 {
@@ -473,6 +486,14 @@ QString ChartPresenter::truncatedText(const QFont &font, const QString &text, qr
     }
 
     return truncatedString;
+}
+
+QString ChartPresenter::numberToString(double value, char f, int prec)
+{
+    if (m_localizeNumbers)
+        return m_locale.toString(value, f, prec);
+    else
+        return QString::number(value, f, prec);
 }
 
 #include "moc_chartpresenter_p.cpp"

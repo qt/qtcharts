@@ -73,6 +73,9 @@ public:
     virtual void setDomain(AbstractDomain* domain);
     AbstractDomain* domain() { return m_domain.data(); }
 
+    virtual void setPresenter(ChartPresenter *presenter);
+    ChartPresenter *presenter() const;
+
     QChart* chart() { return m_chart; }
 
 Q_SIGNALS:
@@ -88,6 +91,7 @@ private:
     QString m_name;
     bool m_visible;
     qreal m_opacity;
+    ChartPresenter *m_presenter;
 
     friend class QAbstractSeries;
     friend class ChartDataSet;

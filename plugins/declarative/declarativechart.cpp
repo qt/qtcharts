@@ -175,6 +175,15 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+  \qmlproperty bool ChartView::localizeNumbers
+  \since QtCharts 2.0
+  When \c{true}, all generated numbers appearing in various series and axis labels will be
+  localized using the default QLocale of the application, which defaults to the system locale.
+  When \c{false}, the "C" locale is always used.
+  Defaults to \c{false}.
+*/
+
+/*!
   \qmlmethod AbstractSeries ChartView::series(int index)
   Returns the series with \a index on the chart. This allows you to loop through the series of a chart together with
   the count property of the chart.
@@ -708,6 +717,19 @@ void QtCommercialChart::DeclarativeChart::setPlotAreaColor(QColor color)
 QColor QtCommercialChart::DeclarativeChart::plotAreaColor()
 {
     return m_chart->plotAreaBackgroundBrush().color();
+}
+
+void DeclarativeChart::setLocalizeNumbers(bool localize)
+{
+    if (m_chart->localizeNumbers() != localize) {
+        m_chart->setLocalizeNumbers(localize);
+        emit localizeNumbersChanged();
+    }
+}
+
+bool DeclarativeChart::localizeNumbers() const
+{
+    return m_chart->localizeNumbers();
 }
 
 int DeclarativeChart::count()

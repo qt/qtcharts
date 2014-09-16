@@ -34,6 +34,7 @@
 #include "qchart.h" //because of QChart::ChartThemeId
 #include <QRectF>
 #include <QMargins>
+#include <QLocale>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -129,6 +130,9 @@ public:
     void setBackgroundDropShadowEnabled(bool enabled);
     bool isBackgroundDropShadowEnabled() const;
 
+    void setLocalizeNumbers(bool localize);
+    bool localizeNumbers() const;
+
     void setVisible(bool visible);
 
     void setAnimationOptions(QChart::AnimationOptions options);
@@ -148,6 +152,10 @@ public:
     static QString truncatedText(const QFont &font, const QString &text, qreal angle,
                                  qreal maxWidth, qreal maxHeight, QRectF &boundingRect);
     inline static qreal textMargin() { return qreal(0.5); }
+
+    QString numberToString(double value, char f = 'g', int prec = 6);
+    inline const QLocale &locale() const { return m_locale; }
+
 private:
     void createBackgroundItem();
     void createPlotAreaBackgroundItem();
@@ -173,6 +181,8 @@ private:
     QAbstractGraphicsShapeItem *m_plotAreaBackground;
     ChartTitle *m_title;
     QRectF m_rect;
+    bool m_localizeNumbers;
+    QLocale m_locale;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

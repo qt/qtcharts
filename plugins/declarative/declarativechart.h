@@ -67,6 +67,7 @@ class DeclarativeChart : public QDECLARATIVE_PAINTED_ITEM
 #else
     Q_PROPERTY(QDeclarativeListProperty<QAbstractAxis> axes READ axes REVISION 2)
 #endif
+    Q_PROPERTY(bool localizeNumbers READ localizeNumbers WRITE setLocalizeNumbers NOTIFY localizeNumbersChanged REVISION 4)
     Q_ENUMS(Animation)
     Q_ENUMS(Theme)
     Q_ENUMS(SeriesType)
@@ -142,6 +143,9 @@ public:
     QColor backgroundColor();
     Q_REVISION(3) void setPlotAreaColor(QColor color);
     Q_REVISION(3) QColor plotAreaColor();
+    Q_REVISION(4) void setLocalizeNumbers(bool localize);
+    Q_REVISION(4) bool localizeNumbers() const;
+
     int count();
     void setDropShadowEnabled(bool enabled);
     bool dropShadowEnabled();
@@ -196,6 +200,7 @@ Q_SIGNALS:
     void seriesRemoved(QAbstractSeries *series);
     Q_REVISION(3) void plotAreaColorChanged();
     Q_REVISION(3) void backgroundRoundnessChanged(qreal diameter);
+    Q_REVISION(4) bool localizeNumbersChanged();
 
 private Q_SLOTS:
     void changeMinimumMargins(int top, int bottom, int left, int right);

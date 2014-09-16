@@ -303,6 +303,16 @@ void QAbstractSeriesPrivate::setDomain(AbstractDomain* domain)
     }
 }
 
+void QAbstractSeriesPrivate::setPresenter(ChartPresenter *presenter)
+{
+    m_presenter = presenter;
+}
+
+ChartPresenter *QAbstractSeriesPrivate::presenter() const
+{
+    return m_presenter;
+}
+
 void QAbstractSeriesPrivate::initializeGraphics(QGraphicsItem* parent)
 {
     Q_ASSERT(!m_item.isNull());

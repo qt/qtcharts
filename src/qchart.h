@@ -49,6 +49,7 @@ class QTCOMMERCIALCHART_EXPORT QChart : public QGraphicsWidget
     Q_PROPERTY(QMargins margins READ margins WRITE setMargins)
     Q_PROPERTY(QChart::ChartType chartType READ chartType)
     Q_PROPERTY(bool plotAreaBackgroundVisible READ isPlotAreaBackgroundVisible WRITE setPlotAreaBackgroundVisible)
+    Q_PROPERTY(bool localizeNumbers READ localizeNumbers WRITE setLocalizeNumbers)
     Q_ENUMS(ChartTheme)
     Q_ENUMS(AnimationOption)
     Q_ENUMS(ChartType)
@@ -151,6 +152,8 @@ public:
     QPen plotAreaBackgroundPen() const;
     void setPlotAreaBackgroundVisible(bool visible = true);
     bool isPlotAreaBackgroundVisible() const;
+    void setLocalizeNumbers(bool localize);
+    bool localizeNumbers() const;
 
     QPointF mapToValue(const QPointF &position, QAbstractSeries *series = 0);
     QPointF mapToPosition(const QPointF &value, QAbstractSeries *series = 0);

@@ -29,12 +29,17 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 static const char *labelFormatMatchString = "%[\\-\\+#\\s\\d\\.lhjztL]*([dicuoxfegXFEG])";
+static const char *labelFormatMatchLocalizedString = "^([^%]*)%\\.?(\\d)*([defgEG])(.*)$";
 static QRegExp *labelFormatMatcher = 0;
+static QRegExp *labelFormatMatcherLocalized = 0;
 class StaticLabelFormatMatcherDeleter
 {
 public:
     StaticLabelFormatMatcherDeleter() {}
-    ~StaticLabelFormatMatcherDeleter() { delete labelFormatMatcher; }
+    ~StaticLabelFormatMatcherDeleter() {
+        delete labelFormatMatcher;
+        delete labelFormatMatcherLocalized;
+    }
 };
 static StaticLabelFormatMatcherDeleter staticLabelFormatMatcherDeleter;
 
@@ -233,74 +238,95 @@ qreal ChartAxisElement::max() const
     return m_axis->d_ptr->max();
 }
 
-static void appendFormattedLabel(const QString &capStr, const QByteArray &array,
-                                 QStringList &labels, qreal value)
+QString ChartAxisElement::formatLabel(const QString &formatSpec, const QByteArray &array,
+                                      qreal value, int precision, const QString &preStr,
+                                      const QString &postStr) const
 {
-    if (capStr.isEmpty()) {
-        labels << QString();
-    } else if (capStr.at(0) == QLatin1Char('d')
-        || capStr.at(0) == QLatin1Char('i')
-        || capStr.at(0) == QLatin1Char('c')) {
-        labels << QString().sprintf(array, (qint64)value);
-    } else if (capStr.at(0) == QLatin1Char('u')
-             || capStr.at(0) == QLatin1Char('o')
-             || capStr.at(0) == QLatin1Char('x')
-             || capStr.at(0) == QLatin1Char('X')) {
-        labels << QString().sprintf(array, (quint64)value);
-    } else if (capStr.at(0) == QLatin1Char('f')
-               || capStr.at(0) == QLatin1Char('F')
-               || capStr.at(0) == QLatin1Char('e')
-               || capStr.at(0) == QLatin1Char('E')
-               || capStr.at(0) == QLatin1Char('g')
-               || capStr.at(0) == QLatin1Char('G')) {
-        labels << QString().sprintf(array, value);
-    } else {
-        labels << QString();
+    QString retVal;
+    if (!formatSpec.isEmpty()) {
+        if (formatSpec.at(0) == QLatin1Char('d')
+            || formatSpec.at(0) == QLatin1Char('i')
+            || formatSpec.at(0) == QLatin1Char('c')) {
+            if (presenter()->localizeNumbers())
+                retVal = preStr + presenter()->locale().toString(qint64(value)) + postStr;
+            else
+                retVal = QString().sprintf(array, qint64(value));
+        } else if (formatSpec.at(0) == QLatin1Char('u')
+                 || formatSpec.at(0) == QLatin1Char('o')
+                 || formatSpec.at(0) == QLatin1Char('x')
+                 || formatSpec.at(0) == QLatin1Char('X')) {
+            // These formats are not supported by localized numbers
+            retVal = QString().sprintf(array, quint64(value));
+        } else if (formatSpec.at(0) == QLatin1Char('f')
+                   || formatSpec.at(0) == QLatin1Char('F')
+                   || formatSpec.at(0) == QLatin1Char('e')
+                   || formatSpec.at(0) == QLatin1Char('E')
+                   || formatSpec.at(0) == QLatin1Char('g')
+                   || formatSpec.at(0) == QLatin1Char('G')) {
+            if (presenter()->localizeNumbers()) {
+                retVal = preStr
+                        + presenter()->locale().toString(value, formatSpec.at(0).toLatin1(),
+                                                         precision)
+                        + postStr;
+            } else {
+                retVal = QString().sprintf(array, value);
+            }
+        }
     }
+    return retVal;
 }
 
-QStringList ChartAxisElement::createValueLabels(qreal min, qreal max, int ticks, const QString &format)
+QStringList ChartAxisElement::createValueLabels(qreal min, qreal max, int ticks,
+                                                const QString &format) const
 {
     QStringList labels;
 
     if (max <= min || ticks < 1)
         return labels;
 
-    int n = qMax(int(-qFloor(log10((max - min) / (ticks - 1)))), 0);
-    n++;
-
     if (format.isNull()) {
+        int n = qMax(int(-qFloor(log10((max - min) / (ticks - 1)))), 0) + 1;
         for (int i = 0; i < ticks; i++) {
             qreal value = min + (i * (max - min) / (ticks - 1));
-            labels << QString::number(value, 'f', n);
+            labels << presenter()->numberToString(value, 'f', n);
         }
     } else {
         QByteArray array = format.toLatin1();
-        QString capStr;
-        if (!labelFormatMatcher)
-            labelFormatMatcher = new QRegExp(labelFormatMatchString);
-        if (labelFormatMatcher->indexIn(format, 0) != -1)
-            capStr = labelFormatMatcher->cap(1);
+        QString formatSpec;
+        QString preStr;
+        QString postStr;
+        int precision = 0;
+        if (presenter()->localizeNumbers()) {
+            if (!labelFormatMatcherLocalized)
+                labelFormatMatcherLocalized = new QRegExp(labelFormatMatchLocalizedString);
+            if (labelFormatMatcherLocalized->indexIn(format, 0) != -1) {
+                preStr = labelFormatMatcherLocalized->cap(1);
+                precision = labelFormatMatcherLocalized->cap(2).toInt();
+                formatSpec = labelFormatMatcherLocalized->cap(3);
+                postStr = labelFormatMatcherLocalized->cap(4);
+            }
+        } else {
+            if (!labelFormatMatcher)
+                labelFormatMatcher = new QRegExp(labelFormatMatchString);
+            if (labelFormatMatcher->indexIn(format, 0) != -1)
+                formatSpec = labelFormatMatcher->cap(1);
+        }
         for (int i = 0; i < ticks; i++) {
             qreal value = min + (i * (max - min) / (ticks - 1));
-            appendFormattedLabel(capStr, array, labels, value);
+            labels << formatLabel(formatSpec, array, value, precision, preStr, postStr);
         }
     }
 
     return labels;
 }
 
-QStringList ChartAxisElement::createLogValueLabels(qreal min, qreal max, qreal base, int ticks, const QString &format)
+QStringList ChartAxisElement::createLogValueLabels(qreal min, qreal max, qreal base, int ticks,
+                                                   const QString &format) const
 {
     QStringList labels;
 
     if (max <= min || ticks < 1)
         return labels;
-
-    int n = 0;
-    if (ticks > 1)
-        n = qMax(int(-qFloor(log10((max - min) / (ticks - 1)))), 0);
-    n++;
 
     int firstTick;
     if (base > 1)
@@ -309,27 +335,46 @@ QStringList ChartAxisElement::createLogValueLabels(qreal min, qreal max, qreal b
         firstTick = ceil(log10(max) / log10(base));
 
     if (format.isNull()) {
+        int n = 0;
+        if (ticks > 1)
+            n = qMax(int(-qFloor(log10((max - min) / (ticks - 1)))), 0);
+        n++;
         for (int i = firstTick; i < ticks + firstTick; i++) {
             qreal value = qPow(base, i);
-            labels << QString::number(value, 'f', n);
+            labels << presenter()->numberToString(value, 'f', n);
         }
     } else {
         QByteArray array = format.toLatin1();
-        QString capStr;
-        if (!labelFormatMatcher)
-            labelFormatMatcher = new QRegExp(labelFormatMatchString);
-        if (labelFormatMatcher->indexIn(format, 0) != -1)
-            capStr = labelFormatMatcher->cap(1);
+        QString formatSpec;
+        QString preStr;
+        QString postStr;
+        int precision = 0;
+        if (presenter()->localizeNumbers()) {
+            if (!labelFormatMatcherLocalized)
+                labelFormatMatcherLocalized = new QRegExp(labelFormatMatchLocalizedString);
+            if (labelFormatMatcherLocalized->indexIn(format, 0) != -1) {
+                preStr = labelFormatMatcherLocalized->cap(1);
+                precision = labelFormatMatcherLocalized->cap(2).toInt();
+                formatSpec = labelFormatMatcherLocalized->cap(3);
+                postStr = labelFormatMatcherLocalized->cap(4);
+            }
+        } else {
+            if (!labelFormatMatcher)
+                labelFormatMatcher = new QRegExp(labelFormatMatchString);
+            if (labelFormatMatcher->indexIn(format, 0) != -1)
+                formatSpec = labelFormatMatcher->cap(1);
+        }
         for (int i = firstTick; i < ticks + firstTick; i++) {
             qreal value = qPow(base, i);
-            appendFormattedLabel(capStr, array, labels, value);
+            labels << formatLabel(formatSpec, array, value, precision, preStr, postStr);
         }
     }
 
     return labels;
 }
 
-QStringList ChartAxisElement::createDateTimeLabels(qreal min, qreal max,int ticks,const QString &format)
+QStringList ChartAxisElement::createDateTimeLabels(qreal min, qreal max,int ticks,
+                                                   const QString &format) const
 {
     QStringList labels;
 

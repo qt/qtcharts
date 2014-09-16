@@ -201,8 +201,10 @@ void AreaChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 
         if (m_series->upperSeries()) {
             for (int i(0); i < m_series->upperSeries()->count(); i++) {
-                pointLabel.replace(xPointTag, QString::number(m_series->upperSeries()->at(i).x()));
-                pointLabel.replace(yPointTag, QString::number(m_series->upperSeries()->at(i).y()));
+                pointLabel.replace(xPointTag,
+                                   presenter()->numberToString(m_series->upperSeries()->at(i).x()));
+                pointLabel.replace(yPointTag,
+                                   presenter()->numberToString(m_series->upperSeries()->at(i).y()));
 
                 // Position text in relation to the point
                 int pointLabelWidth = fm.width(pointLabel);
@@ -216,8 +218,10 @@ void AreaChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 
         if (m_series->lowerSeries()) {
             for (int i(0); i < m_series->lowerSeries()->count(); i++) {
-                pointLabel.replace(xPointTag, QString::number(m_series->lowerSeries()->at(i).x()));
-                pointLabel.replace(yPointTag, QString::number(m_series->lowerSeries()->at(i).y()));
+                pointLabel.replace(xPointTag,
+                                   presenter()->numberToString(m_series->lowerSeries()->at(i).x()));
+                pointLabel.replace(yPointTag,
+                                   presenter()->numberToString(m_series->lowerSeries()->at(i).y()));
 
                 // Position text in relation to the point
                 int pointLabelWidth = fm.width(pointLabel);
