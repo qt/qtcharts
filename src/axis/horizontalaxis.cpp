@@ -65,6 +65,7 @@ void HorizontalAxis::updateGeometry()
         arrowItem->setLine(gridRect.left(), axisRect.top(), gridRect.right(), axisRect.top());
 
     qreal width = 0;
+    const QLatin1String ellipsis("...");
 
     //title
     QRectF titleBoundingRect;
@@ -147,8 +148,9 @@ void HorizontalAxis::updateGeometry()
                 labelItem->setPos(leftBound + (delta / 2.0) - center.x(), labelItem->pos().y());
             }
         }
+
         //label overlap detection - compensate one pixel for rounding errors
-        if (labelItem->pos().x() < width || forceHide ||
+        if ((labelItem->pos().x() < width && labelItem->toPlainText() == ellipsis) || forceHide ||
             (labelItem->pos().x() + (widthDiff / 2.0)) < (axisRect.left() - 1.0) ||
             (labelItem->pos().x() + (widthDiff / 2.0) - 1.0) > axisRect.right()) {
             labelItem->setVisible(false);
