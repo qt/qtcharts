@@ -156,6 +156,7 @@ public:
     inline static qreal textMargin() { return qreal(0.5); }
 
     QString numberToString(double value, char f = 'g', int prec = 6);
+    QString numberToString(int value);
 
 private:
     void createBackgroundItem();

@@ -950,7 +950,7 @@ void QAbstractBarSeriesPrivate::populateCategories(QBarCategoryAxis *axis)
     QStringList categories;
     if (axis->categories().isEmpty()) {
         for (int i(1); i < categoryCount() + 1; i++)
-            categories << QString::number(i);
+            categories << presenter()->numberToString(i);
         axis->append(categories);
     }
 }

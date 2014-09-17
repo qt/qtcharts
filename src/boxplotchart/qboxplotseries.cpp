@@ -418,7 +418,7 @@ void QBoxPlotSeriesPrivate::populateCategories(QBarCategoryAxis *axis)
         for (int i(1); i < m_boxSets.count() + 1; i++) {
             QBoxSet *set = m_boxSets.at(i - 1);
             if (set->label().isEmpty())
-                categories << QString::number(i);
+                categories << presenter()->numberToString(i);
             else
                 categories << set->label();
         }

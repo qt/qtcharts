@@ -496,6 +496,14 @@ QString ChartPresenter::numberToString(double value, char f, int prec)
         return QString::number(value, f, prec);
 }
 
+QString ChartPresenter::numberToString(int value)
+{
+    if (m_localizeNumbers)
+        return m_locale.toString(value);
+    else
+        return QString::number(value);
+}
+
 #include "moc_chartpresenter_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -110,7 +110,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   See QString::sprintf() for additional details.
 
   If the QChart::localizeNumbers is \c{true}, the supported specifiers are limited to: d, e, E, f,
-  g, and G. Also, only the precision modifier is supported. The rest of the formatting comes from
+  g, G, and i. Also, only the precision modifier is supported. The rest of the formatting comes from
   the default QLocale of the application.
 */
 /*!
@@ -120,7 +120,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   See QString::sprintf() for additional details.
 
   If the ChartView::localizeNumbers is \c{true}, the supported specifiers are limited to: d, e, E, f,
-  g, and G. Also, only the precision modifier is supported. The rest of the formatting comes from
+  g, G, and i. Also, only the precision modifier is supported. The rest of the formatting comes from
   the default QLocale of the application.
 */
 

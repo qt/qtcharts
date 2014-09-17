@@ -29,7 +29,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 static const char *labelFormatMatchString = "%[\\-\\+#\\s\\d\\.lhjztL]*([dicuoxfegXFEG])";
-static const char *labelFormatMatchLocalizedString = "^([^%]*)%\\.?(\\d)*([defgEG])(.*)$";
+static const char *labelFormatMatchLocalizedString = "^([^%]*)%\\.?(\\d)*([defgiEG])(.*)$";
 static QRegExp *labelFormatMatcher = 0;
 static QRegExp *labelFormatMatcherLocalized = 0;
 class StaticLabelFormatMatcherDeleter
@@ -295,13 +295,14 @@ QStringList ChartAxisElement::createValueLabels(qreal min, qreal max, int ticks,
         QString formatSpec;
         QString preStr;
         QString postStr;
-        int precision = 0;
+        int precision = 6; // Six is the default precision in Qt API
         if (presenter()->localizeNumbers()) {
             if (!labelFormatMatcherLocalized)
                 labelFormatMatcherLocalized = new QRegExp(labelFormatMatchLocalizedString);
             if (labelFormatMatcherLocalized->indexIn(format, 0) != -1) {
                 preStr = labelFormatMatcherLocalized->cap(1);
-                precision = labelFormatMatcherLocalized->cap(2).toInt();
+                if (!labelFormatMatcherLocalized->cap(2).isEmpty())
+                    precision = labelFormatMatcherLocalized->cap(2).toInt();
                 formatSpec = labelFormatMatcherLocalized->cap(3);
                 postStr = labelFormatMatcherLocalized->cap(4);
             }
@@ -348,13 +349,14 @@ QStringList ChartAxisElement::createLogValueLabels(qreal min, qreal max, qreal b
         QString formatSpec;
         QString preStr;
         QString postStr;
-        int precision = 0;
+        int precision = 6; // Six is the default precision in Qt API
         if (presenter()->localizeNumbers()) {
             if (!labelFormatMatcherLocalized)
                 labelFormatMatcherLocalized = new QRegExp(labelFormatMatchLocalizedString);
             if (labelFormatMatcherLocalized->indexIn(format, 0) != -1) {
                 preStr = labelFormatMatcherLocalized->cap(1);
-                precision = labelFormatMatcherLocalized->cap(2).toInt();
+                if (!labelFormatMatcherLocalized->cap(2).isEmpty())
+                    precision = labelFormatMatcherLocalized->cap(2).toInt();
                 formatSpec = labelFormatMatcherLocalized->cap(3);
                 postStr = labelFormatMatcherLocalized->cap(4);
             }
