@@ -148,9 +148,24 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   \property QChart::localizeNumbers
   \since QtCharts 2.0
   When \c{true}, all generated numbers appearing in various series and axis labels will be
-  localized using the default QLocale of the application, which defaults to the system locale.
+  localized using the QLocale set with the locale property.
   When \c{false}, the "C" locale is always used.
-  Defaults to \c{false}.
+  Defaults to \c{true}.
+  \note This property doesn't affect QDateTimeAxis labels, which always use the QLocale set with
+  the locale property.
+
+  \sa locale
+*/
+
+/*!
+  \property QChart::locale
+  \since QtCharts 2.0
+  Sets the locale used to format various chart labels when localizeNumbers is \c{true}.
+  This also determines the locale used to format QDateTimeAxis labels regardless of
+  localizeNumbers property.
+  Defaults to application default locale at the time the chart is constructed.
+
+  \sa localizeNumbers
 */
 
 /*!
@@ -578,6 +593,16 @@ void QChart::setLocalizeNumbers(bool localize)
 bool QChart::localizeNumbers() const
 {
     return d_ptr->m_presenter->localizeNumbers();
+}
+
+void QChart::setLocale(const QLocale &locale)
+{
+    d_ptr->m_presenter->setLocale(locale);
+}
+
+QLocale QChart::locale() const
+{
+    return d_ptr->m_presenter->locale();
 }
 
 void QChart::setAnimationOptions(AnimationOptions options)

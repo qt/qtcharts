@@ -180,7 +180,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   When \c{true}, all generated numbers appearing in various series and axis labels will be
   localized using the default QLocale of the application, which defaults to the system locale.
   When \c{false}, the "C" locale is always used.
-  Defaults to \c{false}.
+  Defaults to \c{true}.
 */
 
 /*!

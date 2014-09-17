@@ -149,6 +149,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   \property QDateTimeAxis::format
   The format string that is used when creating label for the axis out of a QDateTime object.
   Check QDateTime documentation for information on how the string should be defined.
+
+  \sa QChart::locale
 */
 /*!
   \qmlproperty string DateTimeAxis::format

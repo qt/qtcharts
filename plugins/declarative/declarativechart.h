@@ -200,7 +200,7 @@ Q_SIGNALS:
     void seriesRemoved(QAbstractSeries *series);
     Q_REVISION(3) void plotAreaColorChanged();
     Q_REVISION(3) void backgroundRoundnessChanged(qreal diameter);
-    Q_REVISION(4) bool localizeNumbersChanged();
+    Q_REVISION(4) void localizeNumbersChanged();
 
 private Q_SLOTS:
     void changeMinimumMargins(int top, int bottom, int left, int right);

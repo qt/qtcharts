@@ -45,7 +45,7 @@ ChartPresenter::ChartPresenter(QChart *chart, QChart::ChartType type)
       m_background(0),
       m_plotAreaBackground(0),
       m_title(0),
-      m_localizeNumbers(false)
+      m_localizeNumbers(true)
 {
     if (type == QChart::ChartTypeCartesian)
         m_layout = new CartesianChartLayout(this);
@@ -352,11 +352,11 @@ void ChartPresenter::setLocalizeNumbers(bool localize)
     m_layout->invalidate();
 }
 
-bool ChartPresenter::localizeNumbers() const
+void ChartPresenter::setLocale(const QLocale &locale)
 {
-    return m_localizeNumbers;
+    m_locale = locale;
+    m_layout->invalidate();
 }
-
 
 AbstractChartLayout *ChartPresenter::layout()
 {

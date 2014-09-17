@@ -131,7 +131,9 @@ public:
     bool isBackgroundDropShadowEnabled() const;
 
     void setLocalizeNumbers(bool localize);
-    bool localizeNumbers() const;
+    inline bool localizeNumbers() const { return m_localizeNumbers; }
+    void setLocale(const QLocale &locale);
+    inline const QLocale &locale() const { return m_locale; }
 
     void setVisible(bool visible);
 
@@ -154,7 +156,6 @@ public:
     inline static qreal textMargin() { return qreal(0.5); }
 
     QString numberToString(double value, char f = 'g', int prec = 6);
-    inline const QLocale &locale() const { return m_locale; }
 
 private:
     void createBackgroundItem();
