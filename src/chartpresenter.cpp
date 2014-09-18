@@ -45,7 +45,7 @@ ChartPresenter::ChartPresenter(QChart *chart, QChart::ChartType type)
       m_background(0),
       m_plotAreaBackground(0),
       m_title(0),
-      m_localizeNumbers(true)
+      m_localizeNumbers(false)
 {
     if (type == QChart::ChartTypeCartesian)
         m_layout = new CartesianChartLayout(this);

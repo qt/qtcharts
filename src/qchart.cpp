@@ -150,7 +150,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   When \c{true}, all generated numbers appearing in various series and axis labels will be
   localized using the QLocale set with the locale property.
   When \c{false}, the "C" locale is always used.
-  Defaults to \c{true}.
+  Defaults to \c{false}.
   \note This property doesn't affect QDateTimeAxis labels, which always use the QLocale set with
   the locale property.
 

@@ -34,6 +34,7 @@
 #endif
 
 #include "qchart.h"
+#include <QtCore/QLocale>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -68,6 +69,7 @@ class DeclarativeChart : public QDECLARATIVE_PAINTED_ITEM
     Q_PROPERTY(QDeclarativeListProperty<QAbstractAxis> axes READ axes REVISION 2)
 #endif
     Q_PROPERTY(bool localizeNumbers READ localizeNumbers WRITE setLocalizeNumbers NOTIFY localizeNumbersChanged REVISION 4)
+    Q_PROPERTY(QLocale locale READ locale WRITE setLocale NOTIFY localeChanged REVISION 4)
     Q_ENUMS(Animation)
     Q_ENUMS(Theme)
     Q_ENUMS(SeriesType)
@@ -145,6 +147,8 @@ public:
     Q_REVISION(3) QColor plotAreaColor();
     Q_REVISION(4) void setLocalizeNumbers(bool localize);
     Q_REVISION(4) bool localizeNumbers() const;
+    Q_REVISION(4) void setLocale(const QLocale &locale);
+    Q_REVISION(4) QLocale locale() const;
 
     int count();
     void setDropShadowEnabled(bool enabled);
@@ -201,6 +205,7 @@ Q_SIGNALS:
     Q_REVISION(3) void plotAreaColorChanged();
     Q_REVISION(3) void backgroundRoundnessChanged(qreal diameter);
     Q_REVISION(4) void localizeNumbersChanged();
+    Q_REVISION(4) void localeChanged();
 
 private Q_SLOTS:
     void changeMinimumMargins(int top, int bottom, int left, int right);
