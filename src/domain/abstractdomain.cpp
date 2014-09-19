@@ -102,7 +102,7 @@ qreal AbstractDomain::spanY() const
 
 bool AbstractDomain::isEmpty() const
 {
-    return qFuzzyIsNull(spanX()) || qFuzzyIsNull(spanY()) || m_size.isEmpty() ;
+    return qFuzzyCompare(spanX(), 0) || qFuzzyCompare(spanY(), 0) || m_size.isEmpty();
 }
 
 QPointF AbstractDomain::calculateDomainPoint(const QPointF &point) const
