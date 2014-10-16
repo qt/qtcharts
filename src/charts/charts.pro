@@ -80,3 +80,9 @@ OTHER_FILES += doc/qtcharts.qdocconf \
 CONFIG(debug, debug|release) {
     DEFINES += BUILD_PRIVATE_UNIT_TESTS
 }
+
+msvc {
+    # Suppress "conversion from 'size_t' to 'int', possible loss of data" warnings in 64bit
+    # builds resulting from usage of str::sort
+    QMAKE_CXXFLAGS_WARN_ON += -wd4267
+}
