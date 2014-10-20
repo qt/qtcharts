@@ -18,13 +18,13 @@
 **
 ****************************************************************************/
 
-#include "qscatterseries.h"
-#include "qscatterseries_p.h"
-#include "scatterchartitem_p.h"
-#include "chartdataset_p.h"
-#include "charttheme_p.h"
-#include "scatteranimation_p.h"
-#include "qchart_p.h"
+#include <QtCharts/QScatterSeries>
+#include <private/qscatterseries_p.h>
+#include <private/scatterchartitem_p.h>
+#include <private/chartdataset_p.h>
+#include <private/charttheme_p.h>
+#include <private/scatteranimation_p.h>
+#include <private/qchart_p.h>
 
 /*!
     \class QScatterSeries

@@ -30,10 +30,10 @@
 #ifndef LINECHARTITEM_H
 #define LINECHARTITEM_H
 
-#include "qchartglobal.h"
-#include "xychart_p.h"
-#include "qchart.h"
-#include <QPen>
+#include <QtCharts/QChartGlobal>
+#include <private/xychart_p.h>
+#include <QtCharts/QChart>
+#include <QtGui/QPen>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

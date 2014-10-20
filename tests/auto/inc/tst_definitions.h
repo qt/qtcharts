@@ -23,7 +23,7 @@
 
 #include <QtCharts/qpolarchart.h>
 #include <QtTest/QtTest>
-#include <QPushButton>
+#include <QtWidgets/QPushButton>
 
 namespace QTest
 {

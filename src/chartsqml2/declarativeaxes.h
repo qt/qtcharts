@@ -21,8 +21,8 @@
 #ifndef DECLARATIVEAXES_H
 #define DECLARATIVEAXES_H
 
-#include "qchartglobal.h"
-#include <QObject>
+#include <QtCharts/QChartGlobal>
+#include <QtCore/QObject>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

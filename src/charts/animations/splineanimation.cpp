@@ -18,9 +18,9 @@
  **
  ****************************************************************************/
 
-#include "splineanimation_p.h"
-#include "splinechartitem_p.h"
-#include <QDebug>
+#include <private/splineanimation_p.h>
+#include <private/splinechartitem_p.h>
+#include <QtCore/QDebug>
 
 Q_DECLARE_METATYPE(QVector<QPointF>)
 Q_DECLARE_METATYPE(SplineVector)

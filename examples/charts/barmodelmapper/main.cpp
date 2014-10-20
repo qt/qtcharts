@@ -18,7 +18,7 @@
 **
 ****************************************************************************/
 
-#include <QApplication>
+#include <QtWidgets/QApplication>
 #include "tablewidget.h"
 
 int main(int argc, char *argv[])

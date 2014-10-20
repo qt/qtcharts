@@ -30,10 +30,10 @@
 #ifndef PIESLICEDATA_P_H
 #define PIESLICEDATA_P_H
 
-#include <qchartglobal.h>
-#include <qpieslice.h>
-#include <QPen>
-#include <QBrush>
+#include <QtCharts/QChartGlobal>
+#include <QtCharts/QPieSlice>
+#include <QtGui/QPen>
+#include <QtGui/QBrush>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

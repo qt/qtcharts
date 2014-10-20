@@ -21,9 +21,9 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
-#include <QChartGlobal>
-#include <QMap>
+#include <QtWidgets/QMainWindow>
+#include <QtCharts/QChartGlobal>
+#include <QtCore/QMap>
 
 
 QT_CHARTS_BEGIN_NAMESPACE

@@ -30,11 +30,11 @@
 #ifndef XYCHART_H
 #define XYCHART_H
 
-#include <qchartglobal.h>
-#include "chartitem_p.h"
-#include "xyanimation_p.h"
-#include "qvalueaxis.h"
-#include <QPen>
+#include <QtCharts/QChartGlobal>
+#include <private/chartitem_p.h>
+#include <private/xyanimation_p.h>
+#include <QtCharts/QValueAxis>
+#include <QtGui/QPen>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

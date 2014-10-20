@@ -30,8 +30,8 @@
 #ifndef QHORIZONTALSTACKEDBARSERIES_P_H
 #define QHORIZONTALSTACKEDBARSERIES_P_H
 
-#include "qabstractbarseries_p.h"
-#include "abstractdomain_p.h"
+#include <private/qabstractbarseries_p.h>
+#include <private/abstractdomain_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

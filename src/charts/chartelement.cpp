@@ -18,9 +18,9 @@
 **
 ****************************************************************************/
 
-#include "chartelement_p.h"
-#include "chartpresenter_p.h"
-#include "abstractdomain_p.h"
+#include <private/chartelement_p.h>
+#include <private/chartpresenter_p.h>
+#include <private/abstractdomain_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

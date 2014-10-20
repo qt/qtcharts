@@ -30,8 +30,8 @@
 #ifndef QXYMODELMAPPER_P_H
 #define QXYMODELMAPPER_P_H
 
-#include "qxymodelmapper.h"
-#include <QObject>
+#include <QtCharts/QXYModelMapper>
+#include <QtCore/QObject>
 
 class QModelIndex;
 class QAbstractItemModel;

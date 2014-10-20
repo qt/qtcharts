@@ -18,10 +18,10 @@
 **
 ****************************************************************************/
 
-#include "qboxplotlegendmarker.h"
-#include "qboxplotlegendmarker_p.h"
-#include "qboxplotseries.h"
-#include "qboxplotseries_p.h"
+#include <QtCharts/QBoxPlotLegendMarker>
+#include <private/qboxplotlegendmarker_p.h>
+#include <QtCharts/QBoxPlotSeries>
+#include <private/qboxplotseries_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

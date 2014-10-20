@@ -19,10 +19,10 @@
 ****************************************************************************/
 
 #include "charts.h"
-#include "qchart.h"
-#include "qlineseries.h"
-#include "qlogvalueaxis.h"
-#include "qcategoryaxis.h"
+#include <QtCharts/QChart>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QLogValueAxis>
+#include <QtCharts/QCategoryAxis>
 
 class LogValueAxisX: public Chart
 {

@@ -19,13 +19,13 @@
 ****************************************************************************/
 
 #include "widget.h"
-#include <QAudioDeviceInfo>
-#include <QAudioInput>
-#include <QChartView>
-#include <QLineSeries>
-#include <QChart>
-#include <QVBoxLayout>
-#include <QValueAxis>
+#include <QtMultimedia/QAudioDeviceInfo>
+#include <QtMultimedia/QAudioInput>
+#include <QtCharts/QChartView>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QChart>
+#include <QtWidgets/QVBoxLayout>
+#include <QtCharts/QValueAxis>
 #include "xyseriesiodevice.h"
 
 QT_CHARTS_USE_NAMESPACE

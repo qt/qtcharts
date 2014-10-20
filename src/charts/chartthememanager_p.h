@@ -30,10 +30,10 @@
 #ifndef CHARTTHEMEMANAGER_H
 #define CHARTTHEMEMANAGER_H
 
-#include "qchartglobal.h"
-#include "qchart.h"
-#include <QColor>
-#include <QGradientStops>
+#include <QtCharts/QChartGlobal>
+#include <QtCharts/QChart>
+#include <QtGui/QColor>
+#include <QtGui/QGradientStops>
 
 QT_CHARTS_BEGIN_NAMESPACE
 class ChartTheme;

@@ -21,10 +21,10 @@
 #ifndef QLEGEND_H
 #define QLEGEND_H
 
-#include <QtCharts/qchartglobal.h>
-#include <QGraphicsWidget>
-#include <QPen>
-#include <QBrush>
+#include <QtCharts/QChartGlobal>
+#include <QtWidgets/QGraphicsWidget>
+#include <QtGui/QPen>
+#include <QtGui/QBrush>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

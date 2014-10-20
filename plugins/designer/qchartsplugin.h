@@ -21,7 +21,7 @@
 #ifndef QCHARTSPLUGIN_H
 #define QCHARTSPLUGIN_H
 
-#include <QDesignerCustomWidgetInterface>
+#include <QtDesigner/QDesignerCustomWidgetInterface>
 
 class QChartsPlugin: public QObject, public QDesignerCustomWidgetInterface
 {

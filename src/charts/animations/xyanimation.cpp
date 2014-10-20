@@ -18,9 +18,9 @@
 **
 ****************************************************************************/
 
-#include "xyanimation_p.h"
-#include "xychart_p.h"
-#include <QDebug>
+#include <private/xyanimation_p.h>
+#include <private/xychart_p.h>
+#include <QtCore/QDebug>
 
 Q_DECLARE_METATYPE(QVector<QPointF>)
 

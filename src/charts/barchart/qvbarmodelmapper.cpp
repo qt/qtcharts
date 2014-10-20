@@ -18,7 +18,7 @@
 **
 ****************************************************************************/
 
-#include "qvbarmodelmapper.h"
+#include <QtCharts/QVBarModelMapper>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

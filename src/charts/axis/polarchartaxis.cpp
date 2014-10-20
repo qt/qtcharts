@@ -18,9 +18,9 @@
 **
 ****************************************************************************/
 
-#include "polarchartaxis_p.h"
-#include "qabstractaxis_p.h"
-#include "chartpresenter_p.h"
+#include <private/polarchartaxis_p.h>
+#include <private/qabstractaxis_p.h>
+#include <private/chartpresenter_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

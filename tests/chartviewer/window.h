@@ -20,10 +20,10 @@
 
 #ifndef WINDOW_H
 #define WINDOW_H
-#include <QMainWindow>
-#include <QChartGlobal>
-#include <QHash>
-#include <QComboBox>
+#include <QtWidgets/QMainWindow>
+#include <QtCharts/QChartGlobal>
+#include <QtCore/QHash>
+#include <QtWidgets/QComboBox>
 
 class QCheckBox;
 class QGraphicsRectItem;

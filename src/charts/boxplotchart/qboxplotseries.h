@@ -21,9 +21,9 @@
 #ifndef QBOXPLOTSERIES_H
 #define QBOXPLOTSERIES_H
 
-#include <QtCharts/qchartglobal.h>
-#include <QtCharts/qboxset.h>
-#include <QtCharts/qabstractseries.h>
+#include <QtCharts/QChartGlobal>
+#include <QtCharts/QBoxSet>
+#include <QtCharts/QAbstractSeries>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

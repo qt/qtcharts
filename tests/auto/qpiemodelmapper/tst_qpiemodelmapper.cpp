@@ -21,13 +21,13 @@
 #include <QtCore/QString>
 #include <QtTest/QtTest>
 
-#include <qchart.h>
-#include <qchartview.h>
-#include <qpieseries.h>
-#include <qpieslice.h>
-#include <qvpiemodelmapper.h>
-#include <qhpiemodelmapper.h>
-#include <QStandardItemModel>
+#include <QtCharts/QChart>
+#include <QtCharts/QChartView>
+#include <QtCharts/QPieSeries>
+#include <QtCharts/QPieSlice>
+#include <QtCharts/QVPieModelMapper>
+#include <QtCharts/QHPieModelMapper>
+#include <QtGui/QStandardItemModel>
 
 QT_CHARTS_USE_NAMESPACE
 

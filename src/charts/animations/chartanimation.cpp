@@ -18,7 +18,7 @@
 **
 ****************************************************************************/
 
-#include "chartanimation_p.h"
+#include <private/chartanimation_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

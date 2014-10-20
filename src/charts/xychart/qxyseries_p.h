@@ -30,7 +30,7 @@
 #ifndef QXYSERIES_P_H
 #define QXYSERIES_P_H
 
-#include "qabstractseries_p.h"
+#include <private/qabstractseries_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

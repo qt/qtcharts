@@ -19,9 +19,9 @@
  ****************************************************************************/
 
 #include "../qabstractaxis/tst_qabstractaxis.h"
-#include <qbarseries.h>
-#include <qbarset.h>
-#include <qbarcategoryaxis.h>
+#include <QtCharts/QBarSeries>
+#include <QtCharts/QBarSet>
+#include <QtCharts/QBarCategoryAxis>
 
 class tst_QBarCategoriesAxis: public tst_QAbstractAxis
 {

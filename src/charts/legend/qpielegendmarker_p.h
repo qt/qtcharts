@@ -30,11 +30,11 @@
 #ifndef QPIELEGENDMARKER_P_H
 #define QPIELEGENDMARKER_P_H
 
-#include "qchartglobal.h"
-#include "qlegendmarker_p.h"
-#include "legendmarkeritem_p.h"
-#include <QPieSeries>
-#include <QPieSlice>
+#include <QtCharts/QChartGlobal>
+#include <private/qlegendmarker_p.h>
+#include <private/legendmarkeritem_p.h>
+#include <QtCharts/QPieSeries>
+#include <QtCharts/QPieSlice>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

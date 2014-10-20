@@ -21,8 +21,8 @@
 #ifndef WIDGET_H
 #define WIDGET_H
 
-#include <QWidget>
-#include <QChartGlobal>
+#include <QtWidgets/QWidget>
+#include <QtCharts/QChartGlobal>
 
 QT_CHARTS_BEGIN_NAMESPACE
 class QLineSeries;

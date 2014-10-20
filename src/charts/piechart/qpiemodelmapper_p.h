@@ -30,8 +30,8 @@
 #ifndef QPIEMODELMAPPER_P_H
 #define QPIEMODELMAPPER_P_H
 
-#include <QObject>
-#include <qpiemodelmapper.h>
+#include <QtCore/QObject>
+#include <QtCharts/QPieModelMapper>
 
 class QModelIndex;
 

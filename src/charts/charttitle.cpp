@@ -18,12 +18,12 @@
 **
 ****************************************************************************/
 
-#include "charttitle_p.h"
-#include "chartpresenter_p.h"
-#include <QFont>
-#include <QFontMetrics>
-#include <QDebug>
-#include <QTextDocument>
+#include <private/charttitle_p.h>
+#include <private/chartpresenter_p.h>
+#include <QtGui/QFont>
+#include <QtGui/QFontMetrics>
+#include <QtCore/QDebug>
+#include <QtGui/QTextDocument>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

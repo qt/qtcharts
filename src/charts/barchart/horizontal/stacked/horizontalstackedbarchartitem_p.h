@@ -30,8 +30,8 @@
 #ifndef HORIZONTALSTACKEDBARCHARTITEM_P_H
 #define HORIZONTALSTACKEDBARCHARTITEM_P_H
 
-#include "abstractbarchartitem_p.h"
-#include <QGraphicsItem>
+#include <private/abstractbarchartitem_p.h>
+#include <QtWidgets/QGraphicsItem>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

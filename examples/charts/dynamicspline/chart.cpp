@@ -19,11 +19,11 @@
 ****************************************************************************/
 
 #include "chart.h"
-#include <QAbstractAxis>
-#include <QSplineSeries>
-#include <QValueAxis>
-#include <QTime>
-#include <QDebug>
+#include <QtCharts/QAbstractAxis>
+#include <QtCharts/QSplineSeries>
+#include <QtCharts/QValueAxis>
+#include <QtCore/QTime>
+#include <QtCore/QDebug>
 
 Chart::Chart(QGraphicsItem *parent, Qt::WindowFlags wFlags):
     QChart(QChart::ChartTypeCartesian, parent, wFlags),

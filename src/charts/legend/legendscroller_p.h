@@ -32,8 +32,8 @@
 #define LEGENDSCROLLER_P_H
 
 #include <QtCharts/qlegend.h>
-#include "qlegend_p.h"
-#include "scroller_p.h"
+#include <private/qlegend_p.h>
+#include <private/scroller_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

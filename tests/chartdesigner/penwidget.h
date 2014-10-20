@@ -21,8 +21,8 @@
 #ifndef PENWIDGET_H
 #define PENWIDGET_H
 
-#include <QWidget>
-#include <QPen>
+#include <QtWidgets/QWidget>
+#include <QtWidgets/QPen>
 
 class QComboBox;
 class QSpinBox;

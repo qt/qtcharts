@@ -21,7 +21,7 @@
 #ifndef QVALUEAXIS_H
 #define QVALUEAXIS_H
 
-#include <QtCharts/qabstractaxis.h>
+#include <QtCharts/QAbstractAxis>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

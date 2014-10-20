@@ -21,8 +21,8 @@
 #ifndef QBOXPLOTMODELMAPPER_H
 #define QBOXPLOTMODELMAPPER_H
 
-#include <QtCharts/qchartglobal.h>
-#include <QObject>
+#include <QtCharts/QChartGlobal>
+#include <QtCore/QObject>
 
 class QAbstractItemModel;
 

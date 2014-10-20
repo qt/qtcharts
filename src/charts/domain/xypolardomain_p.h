@@ -29,8 +29,8 @@
 
 #ifndef XYPOLARDOMAIN_H
 #define XYPOLARDOMAIN_H
-#include "polardomain_p.h"
-#include <QRectF>
+#include <private/polardomain_p.h>
+#include <QtCore/QRectF>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

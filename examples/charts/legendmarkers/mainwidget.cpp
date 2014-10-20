@@ -19,17 +19,17 @@
 ****************************************************************************/
 
 #include "mainwidget.h"
-#include <QChart>
-#include <QChartView>
-#include <QPushButton>
-#include <QLabel>
-#include <QDebug>
-#include <QLegend>
-#include <QFormLayout>
-#include <QLegendMarker>
-#include <QLineSeries>
-#include <QXYLegendMarker>
-#include <qmath.h>
+#include <QtCharts/QChart>
+#include <QtCharts/QChartView>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QLabel>
+#include <QtCore/QDebug>
+#include <QtCharts/QLegend>
+#include <QtWidgets/QFormLayout>
+#include <QtCharts/QLegendMarker>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QXYLegendMarker>
+#include <QtCore/QtMath>
 
 QT_CHARTS_USE_NAMESPACE
 

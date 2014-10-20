@@ -30,7 +30,7 @@
 #ifndef CHARTTHEMESYSTEM_P_H
 #define CHARTTHEMESYSTEM_P_H
 
-#include "charttheme_p.h"
+#include <private/charttheme_p.h>
 #ifdef Q_OS_WIN
 #include <windows.h>
 #include <stdio.h>

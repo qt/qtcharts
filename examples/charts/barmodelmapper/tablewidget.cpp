@@ -20,17 +20,17 @@
 
 #include "tablewidget.h"
 #include "customtablemodel.h"
-#include <QGridLayout>
-#include <QTableView>
-#include <QChart>
-#include <QChartView>
-#include <QLineSeries>
-#include <QVXYModelMapper>
-#include <QBarSeries>
-#include <QBarSet>
-#include <QVBarModelMapper>
-#include <QHeaderView>
-#include <QBarCategoryAxis>
+#include <QtWidgets/QGridLayout>
+#include <QtWidgets/QTableView>
+#include <QtCharts/QChart>
+#include <QtCharts/QChartView>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QVXYModelMapper>
+#include <QtCharts/QBarSeries>
+#include <QtCharts/QBarSet>
+#include <QtCharts/QVBarModelMapper>
+#include <QtWidgets/QHeaderView>
+#include <QtCharts/QBarCategoryAxis>
 
 QT_CHARTS_USE_NAMESPACE
 

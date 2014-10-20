@@ -19,8 +19,8 @@
 ****************************************************************************/
 
 #include "declarativemargins.h"
-#include <QDataStream>
-#include <QDebug>
+#include <QtCore/QDataStream>
+#include <QtCore/QDebug>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 #include "declarativepolarchart.h"
-#include "qchart.h"
+#include <QtCharts/QChart>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

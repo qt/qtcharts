@@ -18,14 +18,14 @@
 **
 ****************************************************************************/
 
-#include "qdatetimeaxis.h"
-#include "qdatetimeaxis_p.h"
-#include "chartdatetimeaxisx_p.h"
-#include "chartdatetimeaxisy_p.h"
-#include "polarchartdatetimeaxisangular_p.h"
-#include "polarchartdatetimeaxisradial_p.h"
-#include "abstractdomain_p.h"
-#include "qchart.h"
+#include <QtCharts/QDateTimeAxis>
+#include <private/qdatetimeaxis_p.h>
+#include <private/chartdatetimeaxisx_p.h>
+#include <private/chartdatetimeaxisy_p.h>
+#include <private/polarchartdatetimeaxisangular_p.h>
+#include <private/polarchartdatetimeaxisradial_p.h>
+#include <private/abstractdomain_p.h>
+#include <QtCharts/QChart>
 #include <float.h>
 #include <cmath>
 

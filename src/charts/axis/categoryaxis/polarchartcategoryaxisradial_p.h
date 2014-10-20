@@ -30,7 +30,7 @@
 #ifndef POLARCHARTCATEGORYAXISRADIAL_P_H
 #define POLARCHARTCATEGORYAXISRADIAL_P_H
 
-#include "polarchartaxisradial_p.h"
+#include <private/polarchartaxisradial_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

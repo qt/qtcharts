@@ -19,10 +19,10 @@
 ****************************************************************************/
 
 #include "callout.h"
-#include <QPainter>
-#include <QFontMetrics>
-#include <QGraphicsSceneMouseEvent>
-#include <QMouseEvent>
+#include <QtGui/QPainter>
+#include <QtGui/QFontMetrics>
+#include <QtWidgets/QGraphicsSceneMouseEvent>
+#include <QtGui/QMouseEvent>
 
 Callout::Callout(QGraphicsItem * parent):
     QGraphicsItem(parent)

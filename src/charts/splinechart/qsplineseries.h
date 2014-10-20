@@ -21,11 +21,11 @@
 #ifndef QSPLINESERIES_H
 #define QSPLINESERIES_H
 
-#include <QtCharts/qchartglobal.h>
+#include <QtCharts/QChartGlobal>
 #include <QtCharts/qlineseries.h>
-#include <QList>
-#include <QPointF>
-#include <QtGlobal>
+#include <QtCore/QList>
+#include <QtCore/QPointF>
+#include <QtCore/QtGlobal>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

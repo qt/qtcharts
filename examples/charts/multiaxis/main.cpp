@@ -18,13 +18,13 @@
 **
 ****************************************************************************/
 
-#include <QApplication>
-#include <QMainWindow>
-#include <QChartView>
-#include <QLineSeries>
-#include <QSplineSeries>
-#include <QValueAxis>
-#include <QCategoryAxis>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QMainWindow>
+#include <QtCharts/QChartView>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QSplineSeries>
+#include <QtCharts/QValueAxis>
+#include <QtCharts/QCategoryAxis>
 
 QT_CHARTS_USE_NAMESPACE
 

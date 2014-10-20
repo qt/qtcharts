@@ -19,10 +19,10 @@
 ****************************************************************************/
 
 #include "charts.h"
-#include "qchart.h"
-#include "qlineseries.h"
-#include "qvalueaxis.h"
-#include "qcategoryaxis.h"
+#include <QtCharts/QChart>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QValueAxis>
+#include <QtCharts/QCategoryAxis>
 
 class MultiValueAxis: public Chart
 {

@@ -21,8 +21,8 @@
 #ifndef CHARTVIEW_H
 #define CHARTVIEW_H
 
-#include <QChartView>
-#include <QRubberBand>
+#include <QtCharts/QChartView>
+#include <QtWidgets/QRubberBand>
 
 QT_CHARTS_USE_NAMESPACE
 

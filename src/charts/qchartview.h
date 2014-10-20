@@ -24,7 +24,7 @@
 #include <QtCharts/QAbstractAxis>
 #include <QtCharts/QAbstractSeries>
 #include <QtCharts/QChart>
-#include <QGraphicsView>
+#include <QtWidgets/QGraphicsView>
 
 class QGraphicsScene;
 class QRubberBand;

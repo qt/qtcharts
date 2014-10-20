@@ -30,7 +30,7 @@
 #ifndef QCHARTVIEW_P_H
 #define QCHARTVIEW_P_H
 
-#include "qchartview.h"
+#include <QtCharts/QChartView>
 
 class QGraphicsScene;
 class ChartPresenter;

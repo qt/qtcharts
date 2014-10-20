@@ -30,9 +30,9 @@
 #ifndef ABSTRACTCHARTLAYOUT_H
 #define ABSTRACTCHARTLAYOUT_H
 
-#include <QGraphicsLayout>
-#include <QMargins>
-#include "qchartglobal.h"
+#include <QtWidgets/QGraphicsLayout>
+#include <QtCore/QMargins>
+#include <QtCharts/QChartGlobal>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

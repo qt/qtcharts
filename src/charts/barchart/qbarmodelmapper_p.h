@@ -30,8 +30,8 @@
 #ifndef QBARMODELMAPPER_P_H
 #define QBARMODELMAPPER_P_H
 
-#include <QObject>
-#include "qbarmodelmapper.h"
+#include <QtCore/QObject>
+#include <QtCharts/QBarModelMapper>
 
 class QModelIndex;
 

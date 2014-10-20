@@ -21,7 +21,7 @@
 #ifndef QPOLARCHART_H
 #define QPOLARCHART_H
 
-#include <QtCharts/qchart.h>
+#include <QtCharts/QChart>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

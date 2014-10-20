@@ -18,9 +18,9 @@
 **
 ****************************************************************************/
 
-#include "qboxset.h"
-#include "qboxset_p.h"
-#include "charthelpers_p.h"
+#include <QtCharts/QBoxSet>
+#include <private/qboxset_p.h>
+#include <private/charthelpers_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

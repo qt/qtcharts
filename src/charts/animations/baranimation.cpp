@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#include "baranimation_p.h"
-#include "abstractbarchartitem_p.h"
+#include <private/baranimation_p.h>
+#include <private/abstractbarchartitem_p.h>
 
 Q_DECLARE_METATYPE(QVector<QRectF>)
 

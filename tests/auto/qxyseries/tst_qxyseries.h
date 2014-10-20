@@ -22,9 +22,9 @@
 #define TST_QXYSERIES_H
 
 #include <QtTest/QtTest>
-#include <qxyseries.h>
-#include <qchartview.h>
-#include <QStandardItemModel>
+#include <QtCharts/QXYSeries>
+#include <QtCharts/QChartView>
+#include <QtGui/QStandardItemModel>
 #include <tst_definitions.h>
 
 QT_CHARTS_USE_NAMESPACE

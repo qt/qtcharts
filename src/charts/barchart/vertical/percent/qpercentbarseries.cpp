@@ -18,12 +18,12 @@
 **
 ****************************************************************************/
 
-#include "qpercentbarseries.h"
-#include "qpercentbarseries_p.h"
-#include "percentbarchartitem_p.h"
-#include "chartdataset_p.h"
-#include "charttheme_p.h"
-#include "qvalueaxis.h"
+#include <QtCharts/QPercentBarSeries>
+#include <private/qpercentbarseries_p.h>
+#include <private/percentbarchartitem_p.h>
+#include <private/chartdataset_p.h>
+#include <private/charttheme_p.h>
+#include <QtCharts/QValueAxis>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

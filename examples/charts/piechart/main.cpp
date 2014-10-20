@@ -18,11 +18,11 @@
 **
 ****************************************************************************/
 
-#include <QApplication>
-#include <QMainWindow>
-#include <QChartView>
-#include <QPieSeries>
-#include <QPieSlice>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QMainWindow>
+#include <QtCharts/QChartView>
+#include <QtCharts/QPieSeries>
+#include <QtCharts/QPieSlice>
 
 QT_CHARTS_USE_NAMESPACE
 

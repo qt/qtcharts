@@ -30,8 +30,8 @@
 #ifndef PIESLICEANIMATION_P_H
 #define PIESLICEANIMATION_P_H
 
-#include "chartanimation_p.h"
-#include "piesliceitem_p.h"
+#include <private/chartanimation_p.h>
+#include <private/piesliceitem_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

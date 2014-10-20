@@ -18,13 +18,13 @@
 **
 ****************************************************************************/
 
-#include "chartcategoryaxisx_p.h"
-#include "qcategoryaxis.h"
-#include "qabstractaxis.h"
-#include "chartpresenter_p.h"
-#include "abstractchartlayout_p.h"
-#include <QGraphicsLayout>
-#include <qmath.h>
+#include <private/chartcategoryaxisx_p.h>
+#include <QtCharts/QCategoryAxis>
+#include <QtCharts/QAbstractAxis>
+#include <private/chartpresenter_p.h>
+#include <private/abstractchartlayout_p.h>
+#include <QtWidgets/QGraphicsLayout>
+#include <QtCore/QtMath>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

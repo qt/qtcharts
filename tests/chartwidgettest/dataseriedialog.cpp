@@ -19,14 +19,14 @@
 ****************************************************************************/
 
 #include "dataseriedialog.h"
-#include <QDialogButtonBox>
-#include <QGridLayout>
-#include <QCheckBox>
-#include <QPushButton>
-#include <QGroupBox>
-#include <QRadioButton>
-#include <QLabel>
-#include <QDebug>
+#include <QtWidgets/QDialogButtonBox>
+#include <QtWidgets/QGridLayout>
+#include <QtWidgets/QCheckBox>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QGroupBox>
+#include <QtWidgets/QRadioButton>
+#include <QtWidgets/QLabel>
+#include <QtCore/QDebug>
 
 DataSerieDialog::DataSerieDialog(QWidget *parent) :
     QDialog(parent)

@@ -30,13 +30,13 @@
 #ifndef LEGENDMARKERITEM_P_H
 #define LEGENDMARKERITEM_P_H
 
-#include <qchartglobal.h>
+#include <QtCharts/QChartGlobal>
 #include <QGraphicsObject>
-#include <QFont>
-#include <QBrush>
-#include <QPen>
-#include <QGraphicsTextItem>
-#include <QGraphicsLayoutItem>
+#include <QtGui/QFont>
+#include <QtGui/QBrush>
+#include <QtGui/QPen>
+#include <QtWidgets/QGraphicsTextItem>
+#include <QtWidgets/QGraphicsLayoutItem>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

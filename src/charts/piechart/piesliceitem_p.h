@@ -30,14 +30,14 @@
 #ifndef PIESLICEITEM_H
 #define PIESLICEITEM_H
 
-#include "qchartglobal.h"
-#include "charttheme_p.h"
-#include "qpieseries.h"
-#include "pieslicedata_p.h"
-#include <QGraphicsItem>
-#include <QRectF>
-#include <QColor>
-#include <QPen>
+#include <QtCharts/QChartGlobal>
+#include <private/charttheme_p.h>
+#include <QtCharts/QPieSeries>
+#include <private/pieslicedata_p.h>
+#include <QtWidgets/QGraphicsItem>
+#include <QtCore/QRectF>
+#include <QtGui/QColor>
+#include <QtGui/QPen>
 
 #define PIESLICE_LABEL_GAP 5
 

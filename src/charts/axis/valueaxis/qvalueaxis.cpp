@@ -18,16 +18,16 @@
 **
 ****************************************************************************/
 
-#include "qvalueaxis.h"
-#include "qvalueaxis_p.h"
-#include "chartvalueaxisx_p.h"
-#include "chartvalueaxisy_p.h"
-#include "abstractdomain_p.h"
-#include "polarchartvalueaxisangular_p.h"
-#include "polarchartvalueaxisradial_p.h"
-#include "chartdataset_p.h"
-#include "chartpresenter_p.h"
-#include "charttheme_p.h"
+#include <QtCharts/QValueAxis>
+#include <private/qvalueaxis_p.h>
+#include <private/chartvalueaxisx_p.h>
+#include <private/chartvalueaxisy_p.h>
+#include <private/abstractdomain_p.h>
+#include <private/polarchartvalueaxisangular_p.h>
+#include <private/polarchartvalueaxisradial_p.h>
+#include <private/chartdataset_p.h>
+#include <private/chartpresenter_p.h>
+#include <private/charttheme_p.h>
 
 
 QT_CHARTS_BEGIN_NAMESPACE

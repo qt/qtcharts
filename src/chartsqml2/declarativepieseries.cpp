@@ -19,9 +19,9 @@
 ****************************************************************************/
 
 #include "declarativepieseries.h"
-#include "qpieslice.h"
-#include "qvpiemodelmapper.h"
-#include "qhpiemodelmapper.h"
+#include <QtCharts/QPieSlice>
+#include <QtCharts/QVPieModelMapper>
+#include <QtCharts/QHPieModelMapper>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

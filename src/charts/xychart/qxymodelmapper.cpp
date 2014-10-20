@@ -18,11 +18,11 @@
 **
 ****************************************************************************/
 
-#include "qxymodelmapper.h"
-#include "qxymodelmapper_p.h"
-#include "qxyseries.h"
-#include <QAbstractItemModel>
-#include <QDateTime>
+#include <QtCharts/QXYModelMapper>
+#include <private/qxymodelmapper_p.h>
+#include <QtCharts/QXYSeries>
+#include <QtCore/QAbstractItemModel>
+#include <QtCore/QDateTime>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

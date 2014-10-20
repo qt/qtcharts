@@ -18,10 +18,10 @@
 **
 ****************************************************************************/
 
-#include "qpielegendmarker.h"
-#include "qpielegendmarker_p.h"
-#include <QPieSeries>
-#include <QPieSlice>
+#include <QtCharts/QPieLegendMarker>
+#include <private/qpielegendmarker_p.h>
+#include <QtCharts/QPieSeries>
+#include <QtCharts/QPieSlice>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

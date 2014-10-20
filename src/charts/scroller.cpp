@@ -18,10 +18,10 @@
 **
 ****************************************************************************/
 
-#include "scroller_p.h"
-#include "qlegend.h"
-#include <QGraphicsSceneMouseEvent>
-#include <QDebug>
+#include <private/scroller_p.h>
+#include <QtCharts/QLegend>
+#include <QtWidgets/QGraphicsSceneMouseEvent>
+#include <QtCore/QDebug>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

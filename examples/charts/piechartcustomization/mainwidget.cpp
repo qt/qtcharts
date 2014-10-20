@@ -21,16 +21,16 @@
 #include "customslice.h"
 #include "pentool.h"
 #include "brushtool.h"
-#include <QPushButton>
-#include <QComboBox>
-#include <QCheckBox>
-#include <QLineEdit>
-#include <QGroupBox>
-#include <QDoubleSpinBox>
-#include <QFormLayout>
-#include <QFontDialog>
-#include <QChartView>
-#include <QPieSeries>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QComboBox>
+#include <QtWidgets/QCheckBox>
+#include <QtWidgets/QLineEdit>
+#include <QtWidgets/QGroupBox>
+#include <QtWidgets/QDoubleSpinBox>
+#include <QtWidgets/QFormLayout>
+#include <QtWidgets/QFontDialog>
+#include <QtCharts/QChartView>
+#include <QtCharts/QPieSeries>
 
 QT_CHARTS_USE_NAMESPACE
 

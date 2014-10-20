@@ -30,8 +30,8 @@
 #ifndef XYANIMATION_P_H
 #define XYANIMATION_P_H
 
-#include "chartanimation_p.h"
-#include <QPointF>
+#include <private/chartanimation_p.h>
+#include <QtCore/QPointF>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

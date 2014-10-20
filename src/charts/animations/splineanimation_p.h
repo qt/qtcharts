@@ -29,8 +29,8 @@
 
 #ifndef SPLINEANIMATION_P_H
 #define SPLINEANIMATION_P_H
-#include "xyanimation_p.h"
-#include <QPointF>
+#include <private/xyanimation_p.h>
+#include <QtCore/QPointF>
 
 typedef  QPair<QVector<QPointF >, QVector<QPointF > >  SplineVector;
 

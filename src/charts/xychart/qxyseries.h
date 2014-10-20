@@ -21,10 +21,10 @@
 #ifndef QXYSERIES_H
 #define QXYSERIES_H
 
-#include <QtCharts/qchartglobal.h>
-#include <QtCharts/qabstractseries.h>
-#include <QPen>
-#include <QBrush>
+#include <QtCharts/QChartGlobal>
+#include <QtCharts/QAbstractSeries>
+#include <QtGui/QPen>
+#include <QtGui/QBrush>
 
 class QModelIndex;
 

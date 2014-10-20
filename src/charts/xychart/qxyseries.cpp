@@ -18,15 +18,15 @@
 **
 ****************************************************************************/
 
-#include "qxyseries.h"
-#include "qxyseries_p.h"
-#include "abstractdomain_p.h"
-#include "qvalueaxis.h"
-#include "xychart_p.h"
-#include "qxylegendmarker.h"
-#include "charthelpers_p.h"
-#include "qchart_p.h"
-#include <QPainter>
+#include <QtCharts/QXYSeries>
+#include <private/qxyseries_p.h>
+#include <private/abstractdomain_p.h>
+#include <QtCharts/QValueAxis>
+#include <private/xychart_p.h>
+#include <QtCharts/QXYLegendMarker>
+#include <private/charthelpers_p.h>
+#include <private/qchart_p.h>
+#include <QtGui/QPainter>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

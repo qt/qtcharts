@@ -17,19 +17,19 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-#include "qabstractseries_p.h"
-#include "qabstractaxis_p.h"
-#include <QTime>
+#include <private/qabstractseries_p.h>
+#include <private/qabstractaxis_p.h>
+#include <QtCore/QTime>
 //themes
-#include "chartthemesystem_p.h"
-#include "chartthemelight_p.h"
-#include "chartthemebluecerulean_p.h"
-#include "chartthemedark_p.h"
-#include "chartthemebrownsand_p.h"
-#include "chartthemebluencs_p.h"
-#include "chartthemehighcontrast_p.h"
-#include "chartthemeblueicy_p.h"
-#include "chartthemeqt_p.h"
+#include <private/chartthemesystem_p.h>
+#include <private/chartthemelight_p.h>
+#include <private/chartthemebluecerulean_p.h>
+#include <private/chartthemedark_p.h>
+#include <private/chartthemebrownsand_p.h>
+#include <private/chartthemebluencs_p.h>
+#include <private/chartthemehighcontrast_p.h>
+#include <private/chartthemeblueicy_p.h>
+#include <private/chartthemeqt_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

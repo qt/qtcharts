@@ -18,13 +18,13 @@
  **
  ****************************************************************************/
 
-#include "splinechartitem_p.h"
-#include "qsplineseries_p.h"
-#include "chartpresenter_p.h"
-#include "splineanimation_p.h"
-#include "polardomain_p.h"
-#include <QPainter>
-#include <QGraphicsSceneMouseEvent>
+#include <private/splinechartitem_p.h>
+#include <private/qsplineseries_p.h>
+#include <private/chartpresenter_p.h>
+#include <private/splineanimation_p.h>
+#include <private/polardomain_p.h>
+#include <QtGui/QPainter>
+#include <QtWidgets/QGraphicsSceneMouseEvent>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

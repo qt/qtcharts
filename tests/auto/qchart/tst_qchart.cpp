@@ -19,18 +19,18 @@
 ****************************************************************************/
 
 #include <QtTest/QtTest>
-#include <qchartview.h>
-#include <qlineseries.h>
-#include <qareaseries.h>
-#include <qscatterseries.h>
-#include <qsplineseries.h>
-#include <qpieseries.h>
-#include <qabstractbarseries.h>
-#include <qbarseries.h>
-#include <qpercentbarseries.h>
-#include <qstackedbarseries.h>
-#include <qvalueaxis.h>
-#include <qbarcategoryaxis.h>
+#include <QtCharts/QChartView>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QAreaSeries>
+#include <QtCharts/QScatterSeries>
+#include <QtCharts/QSplineSeries>
+#include <QtCharts/QPieSeries>
+#include <QtCharts/QAbstractBarSeries>
+#include <QtCharts/QBarSeries>
+#include <QtCharts/QPercentBarSeries>
+#include <QtCharts/QStackedBarSeries>
+#include <QtCharts/QValueAxis>
+#include <QtCharts/QBarCategoryAxis>
 #include "tst_definitions.h"
 
 QT_CHARTS_USE_NAMESPACE

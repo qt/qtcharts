@@ -18,9 +18,9 @@
 **
 ****************************************************************************/
 
-#include "bar_p.h"
-#include <QPainter>
-#include <QGraphicsSceneEvent>
+#include <private/bar_p.h>
+#include <QtGui/QPainter>
+#include <QtWidgets/QGraphicsSceneEvent>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

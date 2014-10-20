@@ -21,8 +21,8 @@
 #ifndef QABSTRACTBARSERIES_H
 #define QABSTRACTBARSERIES_H
 
-#include <QtCharts/qabstractseries.h>
-#include <QStringList>
+#include <QtCharts/QAbstractSeries>
+#include <QtCore/QStringList>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

@@ -18,19 +18,20 @@
 **
 ****************************************************************************/
 
-#include "abstractbarchartitem_p.h"
-#include "bar_p.h"
-#include "qbarset.h"
-#include "qbarset_p.h"
-#include "qabstractbarseries.h"
-#include "qabstractbarseries_p.h"
-#include "qchart.h"
-#include "chartpresenter_p.h"
-#include "charttheme_p.h"
-#include "baranimation_p.h"
-#include "chartdataset_p.h"
-#include <QPainter>
-#include <QTextDocument>
+#include <private/abstractbarchartitem_p.h>
+#include <private/bar_p.h>
+#include <QtCharts/QBarSet>
+#include <private/qbarset_p.h>
+#include <QtCharts/QAbstractBarSeries>
+#include <private/qabstractbarseries_p.h>
+#include <QtCharts/QChart>
+#include <private/chartpresenter_p.h>
+#include <private/charttheme_p.h>
+#include <private/baranimation_p.h>
+
+#include <private/chartdataset_p.h>
+#include <QtGui/QPainter>
+#include <QtGui/QTextDocument>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

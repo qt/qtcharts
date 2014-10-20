@@ -21,8 +21,8 @@
 #ifndef CHARTVIEW_H
 #define CHARTVIEW_H
 
-#include <QChartView>
-#include <QPolarChart>
+#include <QtCharts/QChartView>
+#include <QtCharts/QPolarChart>
 
 QT_CHARTS_USE_NAMESPACE
 

@@ -30,11 +30,11 @@
 #ifndef CHARTPRESENTER_H
 #define CHARTPRESENTER_H
 
-#include "qchartglobal.h"
-#include "qchart.h" //because of QChart::ChartThemeId
-#include <QRectF>
-#include <QMargins>
-#include <QLocale>
+#include <QtCharts/QChartGlobal>
+#include <QtCharts/QChart> //because of QChart::ChartThemeId
+#include <QtCore/QRectF>
+#include <QtCore/QMargins>
+#include <QtCore/QLocale>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

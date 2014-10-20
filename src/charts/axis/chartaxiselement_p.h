@@ -30,12 +30,12 @@
 #ifndef CHARTAXISELEMENT_H
 #define CHARTAXISELEMENT_H
 
-#include "qchartglobal.h"
-#include "chartelement_p.h"
-#include "axisanimation_p.h"
-#include <QGraphicsItem>
-#include <QGraphicsLayoutItem>
-#include <QFont>
+#include <QtCharts/QChartGlobal>
+#include <private/chartelement_p.h>
+#include <private/axisanimation_p.h>
+#include <QtWidgets/QGraphicsItem>
+#include <QtWidgets/QGraphicsLayoutItem>
+#include <QtGui/QFont>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

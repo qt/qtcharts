@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#include <QApplication>
-#include <QDir>
+#include <QtWidgets/QApplication>
+#include <QtCore/QDir>
 #include <QtQuick/QQuickView>
 #include <QtQml/QQmlEngine>
 

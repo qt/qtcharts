@@ -17,12 +17,12 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-#include "qhorizontalpercentbarseries.h"
-#include "qhorizontalpercentbarseries_p.h"
-#include "horizontalpercentbarchartitem_p.h"
+#include <QtCharts/QHorizontalPercentBarSeries>
+#include <private/qhorizontalpercentbarseries_p.h>
+#include <private/horizontalpercentbarchartitem_p.h>
 
-#include "chartdataset_p.h"
-#include "charttheme_p.h"
+#include <private/chartdataset_p.h>
+#include <private/charttheme_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

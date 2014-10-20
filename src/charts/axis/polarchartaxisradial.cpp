@@ -18,12 +18,12 @@
 **
 ****************************************************************************/
 
-#include "polarchartaxisradial_p.h"
-#include "chartpresenter_p.h"
-#include "abstractchartlayout_p.h"
-#include "qabstractaxis_p.h"
-#include "linearrowitem_p.h"
-#include <QTextDocument>
+#include <private/polarchartaxisradial_p.h>
+#include <private/chartpresenter_p.h>
+#include <private/abstractchartlayout_p.h>
+#include <private/qabstractaxis_p.h>
+#include <private/linearrowitem_p.h>
+#include <QtGui/QTextDocument>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

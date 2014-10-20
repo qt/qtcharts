@@ -19,18 +19,18 @@
 ****************************************************************************/
 
 #include <QtTest/QtTest>
-#include <qchartview.h>
-#include <qlegend.h>
-#include <qpieseries.h>
-#include <qpielegendmarker.h>
-#include <qareaseries.h>
-#include <qarealegendmarker.h>
-#include <qlineseries.h>
-#include <qxylegendmarker.h>
-#include <qscatterseries.h>
-#include <qbarseries.h>
-#include <qbarset.h>
-#include <qbarlegendmarker.h>
+#include <QtCharts/QChartView>
+#include <QtCharts/QLegend>
+#include <QtCharts/QPieSeries>
+#include <QtCharts/QPieLegendMarker>
+#include <QtCharts/QAreaSeries>
+#include <QtCharts/QAreaLegendMarker>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QXYLegendMarker>
+#include <QtCharts/QScatterSeries>
+#include <QtCharts/QBarSeries>
+#include <QtCharts/QBarSet>
+#include <QtCharts/QBarLegendMarker>
 #include "tst_definitions.h"
 
 QT_CHARTS_USE_NAMESPACE

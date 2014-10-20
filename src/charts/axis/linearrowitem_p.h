@@ -30,9 +30,9 @@
 #ifndef LINEARROWITEM_P_H
 #define LINEARROWITEM_P_H
 
-#include "chartaxiselement_p.h"
-#include "qabstractaxis_p.h"
-#include <QGraphicsLineItem>
+#include <private/chartaxiselement_p.h>
+#include <private/qabstractaxis_p.h>
+#include <QtWidgets/QGraphicsLineItem>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

@@ -19,9 +19,9 @@
 ****************************************************************************/
 
 #include "charts.h"
-#include "qchart.h"
-#include "qscatterseries.h"
-#include "qlogvalueaxis.h"
+#include <QtCharts/QChart>
+#include <QtCharts/QScatterSeries>
+#include <QtCharts/QLogValueAxis>
 
 class ScatterLogXLogY: public Chart
 {

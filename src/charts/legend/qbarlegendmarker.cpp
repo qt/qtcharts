@@ -18,10 +18,10 @@
 **
 ****************************************************************************/
 
-#include "qbarlegendmarker.h"
-#include "qbarlegendmarker_p.h"
-#include <QAbstractBarSeries>
-#include <QBarSet>
+#include <QtCharts/QBarLegendMarker>
+#include <private/qbarlegendmarker_p.h>
+#include <QtCharts/QAbstractBarSeries>
+#include <QtCharts/QBarSet>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

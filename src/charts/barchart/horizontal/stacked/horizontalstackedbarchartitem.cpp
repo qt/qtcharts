@@ -18,10 +18,10 @@
 **
 ****************************************************************************/
 
-#include "horizontalstackedbarchartitem_p.h"
-#include "qabstractbarseries_p.h"
-#include "qbarset_p.h"
-#include "bar_p.h"
+#include <private/horizontalstackedbarchartitem_p.h>
+#include <private/qabstractbarseries_p.h>
+#include <private/qbarset_p.h>
+#include <private/bar_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

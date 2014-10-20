@@ -18,11 +18,11 @@
 **
 ****************************************************************************/
 
-#include <QApplication>
-#include <QMainWindow>
-#include <QLineSeries>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QMainWindow>
+#include <QtCharts/QLineSeries>
 
-#include <QValueAxis>
+#include <QtCharts/QValueAxis>
 
 #include "chart.h"
 #include "chartview.h"

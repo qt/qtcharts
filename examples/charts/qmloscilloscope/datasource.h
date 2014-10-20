@@ -21,8 +21,8 @@
 #ifndef DATASOURCE_H
 #define DATASOURCE_H
 
-#include <QObject>
-#include <QAbstractSeries>
+#include <QtCore/QObject>
+#include <QtCharts/QAbstractSeries>
 
 class QQuickView;
 

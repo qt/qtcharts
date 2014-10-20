@@ -21,7 +21,7 @@
 #ifndef DECLARATIVEAREASERIES_H
 #define DECLARATIVEAREASERIES_H
 
-#include "qareaseries.h"
+#include <QtCharts/QAreaSeries>
 #include "declarativeaxes.h"
 
 QT_CHARTS_BEGIN_NAMESPACE

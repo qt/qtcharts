@@ -31,10 +31,10 @@
 #ifndef ABSTRACTBARCHARTITEM_H
 #define ABSTRACTBARCHARTITEM_H
 
-#include "chartitem_p.h"
-#include "qabstractbarseries.h"
-#include <QPen>
-#include <QBrush>
+#include <private/chartitem_p.h>
+#include <QtCharts/QAbstractBarSeries>
+#include <QtGui/QPen>
+#include <QtGui/QBrush>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

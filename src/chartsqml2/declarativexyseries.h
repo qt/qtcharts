@@ -21,7 +21,7 @@
 #ifndef DECLARATIVE_XY_SERIES_H
 #define DECLARATIVE_XY_SERIES_H
 
-#include <QXYSeries>
+#include <QtCharts/QXYSeries>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

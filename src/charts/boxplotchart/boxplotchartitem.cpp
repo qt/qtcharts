@@ -18,14 +18,14 @@
 **
 ****************************************************************************/
 
-#include "boxplotchartitem_p.h"
-#include "qboxplotseries_p.h"
-#include "bar_p.h"
-#include "qboxset_p.h"
-#include "qabstractbarseries_p.h"
-#include "qboxset.h"
-#include "boxwhiskers_p.h"
-#include <QPainter>
+#include <private/boxplotchartitem_p.h>
+#include <private/qboxplotseries_p.h>
+#include <private/bar_p.h>
+#include <private/qboxset_p.h>
+#include <private/qabstractbarseries_p.h>
+#include <QtCharts/QBoxSet>
+#include <private/boxwhiskers_p.h>
+#include <QtGui/QPainter>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

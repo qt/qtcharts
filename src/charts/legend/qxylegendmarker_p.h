@@ -30,10 +30,10 @@
 #ifndef QXYLEGENDMARKER_P_H
 #define QXYLEGENDMARKER_P_H
 
-#include "qchartglobal.h"
-#include "qlegendmarker_p.h"
-#include "legendmarkeritem_p.h"
-#include <QXYSeries>
+#include <QtCharts/QChartGlobal>
+#include <private/qlegendmarker_p.h>
+#include <private/legendmarkeritem_p.h>
+#include <QtCharts/QXYSeries>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

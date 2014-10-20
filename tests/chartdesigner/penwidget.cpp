@@ -19,9 +19,9 @@
 ****************************************************************************/
 
 #include "penwidget.h"
-#include <QFormLayout>
-#include <QComboBox>
-#include <QSpinBox>
+#include <QtWidgets/QFormLayout>
+#include <QtWidgets/QComboBox>
+#include <QtWidgets/QSpinBox>
 
 PenWidget::PenWidget(QWidget *parent):QWidget(parent),
 m_colorComboBox(0),

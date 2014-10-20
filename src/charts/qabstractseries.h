@@ -21,10 +21,10 @@
 #ifndef QABSTRACTSERIES_H
 #define QABSTRACTSERIES_H
 
-#include <QtCharts/qchartglobal.h>
-#include <QtCharts/qabstractaxis.h>
-#include <QObject>
-#include <QPen>
+#include <QtCharts/QChartGlobal>
+#include <QtCharts/QAbstractAxis>
+#include <QtCore/QObject>
+#include <QtGui/QPen>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

@@ -30,10 +30,10 @@
 #ifndef QABSTRACTBARSERIES_P_H
 #define QABSTRACTBARSERIES_P_H
 
-#include <QtCharts/qabstractbarseries.h>
-#include "qabstractseries_p.h"
-#include <QStringList>
-#include <QAbstractSeries>
+#include <QtCharts/QAbstractBarSeries>
+#include <private/qabstractseries_p.h>
+#include <QtCore/QStringList>
+#include <QtCharts/QAbstractSeries>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

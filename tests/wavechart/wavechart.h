@@ -21,11 +21,11 @@
 #ifndef WAVECHART_H
 #define WAVECHART_H
 
-#include <QTimer>
-#include <QTime>
-#include <QObject>
-#include <QLineSeries>
-#include <QChartView>
+#include <QtCore/QTimer>
+#include <QtCore/QTime>
+#include <QtCore/QObject>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QChartView>
 
 QT_CHARTS_USE_NAMESPACE
 

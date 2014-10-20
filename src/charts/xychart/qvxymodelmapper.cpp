@@ -18,7 +18,7 @@
 **
 ****************************************************************************/
 
-#include "qvxymodelmapper.h"
+#include <QtCharts/QVXYModelMapper>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

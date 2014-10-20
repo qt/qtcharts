@@ -21,10 +21,10 @@
 #ifndef QAREASERIES_H
 #define QAREASERIES_H
 
-#include <QtCharts/qchartglobal.h>
-#include <QtCharts/qabstractseries.h>
-#include <QPen>
-#include <QBrush>
+#include <QtCharts/QChartGlobal>
+#include <QtCharts/QAbstractSeries>
+#include <QtGui/QPen>
+#include <QtGui/QBrush>
 
 QT_CHARTS_BEGIN_NAMESPACE
 class QLineSeries;

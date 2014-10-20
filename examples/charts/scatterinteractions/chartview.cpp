@@ -19,8 +19,8 @@
 ****************************************************************************/
 
 #include "chartview.h"
-#include <qmath.h>
-#include <QDebug>
+#include <QtCore/QtMath>
+#include <QtCore/QDebug>
 
 QT_CHARTS_USE_NAMESPACE
 

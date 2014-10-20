@@ -21,8 +21,8 @@
 #ifndef CHART_H
 #define CHART_H
 
-#include <QChart>
-#include <QLineSeries>
+#include <QtCharts/QChart>
+#include <QtCharts/QLineSeries>
 
 QT_CHARTS_USE_NAMESPACE
 

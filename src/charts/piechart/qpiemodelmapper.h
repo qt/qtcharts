@@ -21,8 +21,8 @@
 #ifndef QPIEMODELMAPPER_H
 #define QPIEMODELMAPPER_H
 
-#include <QtCharts/qchartglobal.h>
-#include <QObject>
+#include <QtCharts/QChartGlobal>
+#include <QtCore/QObject>
 
 class QAbstractItemModel;
 

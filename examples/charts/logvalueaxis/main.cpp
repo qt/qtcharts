@@ -18,12 +18,12 @@
 **
 ****************************************************************************/
 
-#include <QApplication>
-#include <QMainWindow>
-#include <QChartView>
-#include <QLineSeries>
-#include <QValueAxis>
-#include <QLogValueAxis>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QMainWindow>
+#include <QtCharts/QChartView>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QValueAxis>
+#include <QtCharts/QLogValueAxis>
 
 QT_CHARTS_USE_NAMESPACE
 
@@ -69,6 +69,7 @@ int main(int argc, char *argv[])
     window.setCentralWidget(chartView);
     window.resize(400, 300);
     window.show();
+
     //![5]
 
     return a.exec();

@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 #include "declarativexypoint.h"
-#include <QDataStream>
+#include <QtCore/QDataStream>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

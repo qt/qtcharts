@@ -30,10 +30,10 @@
 #ifndef SCROLLER_P_H
 #define SCROLLER_P_H
 
-#include "qchartglobal.h"
-#include <QBasicTimer>
-#include <QTime>
-#include <QPointF>
+#include <QtCharts/QChartGlobal>
+#include <QtCore/QBasicTimer>
+#include <QtCore/QTime>
+#include <QtCore/QPointF>
 
 class QGraphicsSceneMouseEvent;
 

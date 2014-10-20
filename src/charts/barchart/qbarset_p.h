@@ -30,11 +30,11 @@
 #ifndef QBARSET_P_H
 #define QBARSET_P_H
 
-#include <qbarset.h>
-#include <QMap>
-#include <QPen>
-#include <QBrush>
-#include <QFont>
+#include <QtCharts/QBarSet>
+#include <QtCore/QMap>
+#include <QtGui/QPen>
+#include <QtGui/QBrush>
+#include <QtGui/QFont>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

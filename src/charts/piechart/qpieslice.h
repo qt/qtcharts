@@ -21,11 +21,11 @@
 #ifndef QPIESLICE_H
 #define QPIESLICE_H
 
-#include <QtCharts/qchartglobal.h>
-#include <QObject>
-#include <QPen>
-#include <QBrush>
-#include <QFont>
+#include <QtCharts/QChartGlobal>
+#include <QtCore/QObject>
+#include <QtGui/QPen>
+#include <QtGui/QBrush>
+#include <QtGui/QFont>
 
 QT_CHARTS_BEGIN_NAMESPACE
 class QPieSlicePrivate;

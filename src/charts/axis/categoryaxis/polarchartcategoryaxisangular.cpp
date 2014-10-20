@@ -18,11 +18,11 @@
 **
 ****************************************************************************/
 
-#include "polarchartcategoryaxisangular_p.h"
-#include "chartpresenter_p.h"
-#include "abstractchartlayout_p.h"
-#include "qcategoryaxis.h"
-#include <QDebug>
+#include <private/polarchartcategoryaxisangular_p.h>
+#include <private/chartpresenter_p.h>
+#include <private/abstractchartlayout_p.h>
+#include <QtCharts/QCategoryAxis>
+#include <QtCore/QDebug>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

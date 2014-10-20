@@ -21,7 +21,7 @@
 #ifndef QVPIEMODELMAPPER_H
 #define QVPIEMODELMAPPER_H
 
-#include <QtCharts/qpiemodelmapper.h>
+#include <QtCharts/QPieModelMapper>
 
 QT_CHARTS_BEGIN_NAMESPACE
 /* Comment line for syncqt to generate the fwd-include correctly, due to QTBUG-22432 */

@@ -40,21 +40,21 @@ QTEST_MAIN(tst_ChartDataSet)
 #else
 
 #include <QtTest/QtTest>
-#include <qabstractaxis.h>
-#include <qvalueaxis.h>
-#include <qbarcategoryaxis.h>
-#include <qcategoryaxis.h>
+#include <QtCharts/QAbstractAxis>
+#include <QtCharts/QValueAxis>
+#include <QtCharts/QBarCategoryAxis>
+#include <QtCharts/QCategoryAxis>
 #ifndef QT_ON_ARM
-#include "qdatetimeaxis.h"
+#include <QtCharts/QDateTimeAxis>
 #endif
-#include <qlineseries.h>
-#include <qareaseries.h>
-#include <qscatterseries.h>
-#include <qsplineseries.h>
-#include <qpieseries.h>
-#include <qbarseries.h>
-#include <qpercentbarseries.h>
-#include <qstackedbarseries.h>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QAreaSeries>
+#include <QtCharts/QScatterSeries>
+#include <QtCharts/QSplineSeries>
+#include <QtCharts/QPieSeries>
+#include <QtCharts/QBarSeries>
+#include <QtCharts/QPercentBarSeries>
+#include <QtCharts/QStackedBarSeries>
 #include <private/chartdataset_p.h>
 #include <private/abstractdomain_p.h>
 #include <tst_definitions.h>

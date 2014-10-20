@@ -18,16 +18,16 @@
 **
 ****************************************************************************/
 
-#include "qabstractseries.h"
-#include "qabstractseries_p.h"
-#include "chartdataset_p.h"
-#include "qchart.h"
-#include "qchart_p.h"
-#include "chartitem_p.h"
-#include "xydomain_p.h"
-#include "xlogydomain_p.h"
-#include "logxydomain_p.h"
-#include "logxlogydomain_p.h"
+#include <QtCharts/QAbstractSeries>
+#include <private/qabstractseries_p.h>
+#include <private/chartdataset_p.h>
+#include <QtCharts/QChart>
+#include <private/qchart_p.h>
+#include <private/chartitem_p.h>
+#include <private/xydomain_p.h>
+#include <private/xlogydomain_p.h>
+#include <private/logxydomain_p.h>
+#include <private/logxlogydomain_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

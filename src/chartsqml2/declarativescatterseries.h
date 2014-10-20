@@ -21,7 +21,7 @@
 #ifndef DECLARATIVESCATTERSERIES_H
 #define DECLARATIVESCATTERSERIES_H
 
-#include "qscatterseries.h"
+#include <QtCharts/QScatterSeries>
 #include "declarativexyseries.h"
 #include "declarativeaxes.h"
 

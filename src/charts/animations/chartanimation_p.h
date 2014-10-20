@@ -30,8 +30,8 @@
 #ifndef CHARTANIMATION_H
 #define CHARTANIMATION_H
 
-#include "qchartglobal.h"
-#include <QVariantAnimation>
+#include <QtCharts/QChartGlobal>
+#include <QtCore/QVariantAnimation>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

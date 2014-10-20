@@ -18,17 +18,17 @@
 **
 ****************************************************************************/
 
-#include "cartesianchartaxis_p.h"
-#include "qabstractaxis.h"
-#include "qabstractaxis_p.h"
-#include "chartpresenter_p.h"
-#include "abstractchartlayout_p.h"
-#include "abstractdomain_p.h"
-#include "linearrowitem_p.h"
-#include <QValueAxis>
-#include <QLogValueAxis>
-#include <QGraphicsLayout>
-#include <QTextDocument>
+#include <private/cartesianchartaxis_p.h>
+#include <QtCharts/QAbstractAxis>
+#include <private/qabstractaxis_p.h>
+#include <private/chartpresenter_p.h>
+#include <private/abstractchartlayout_p.h>
+#include <private/abstractdomain_p.h>
+#include <private/linearrowitem_p.h>
+#include <QtCharts/QValueAxis>
+#include <QtCharts/QLogValueAxis>
+#include <QtWidgets/QGraphicsLayout>
+#include <QtGui/QTextDocument>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

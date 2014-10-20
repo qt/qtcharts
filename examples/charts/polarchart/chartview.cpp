@@ -19,10 +19,10 @@
 ****************************************************************************/
 
 #include "chartview.h"
-#include <QMouseEvent>
-#include <QDebug>
-#include <QAbstractAxis>
-#include <QValueAxis>
+#include <QtGui/QMouseEvent>
+#include <QtCore/QDebug>
+#include <QtCharts/QAbstractAxis>
+#include <QtCharts/QValueAxis>
 
 QT_CHARTS_USE_NAMESPACE
 

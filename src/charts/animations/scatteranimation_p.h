@@ -29,7 +29,7 @@
 
 #ifndef SCATTERANIMATION_P_H
 #define SCATTERANIMATION_P_H
-#include "xyanimation_p.h"
+#include <private/xyanimation_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

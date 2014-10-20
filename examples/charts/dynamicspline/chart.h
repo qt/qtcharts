@@ -21,8 +21,8 @@
 #ifndef CHART_H
 #define CHART_H
 
-#include <QChart>
-#include <QTimer>
+#include <QtCharts/QChart>
+#include <QtCore/QTimer>
 
 QT_CHARTS_BEGIN_NAMESPACE
 class QSplineSeries;

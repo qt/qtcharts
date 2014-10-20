@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 #include "xyseriesiodevice.h"
-#include <QXYSeries>
+#include <QtCharts/QXYSeries>
 
 XYSeriesIODevice::XYSeriesIODevice(QXYSeries * series, QObject *parent) :
     QIODevice(parent),

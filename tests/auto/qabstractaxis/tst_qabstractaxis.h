@@ -23,8 +23,8 @@
 
 #include <QtTest/QtTest>
 #include <tst_definitions.h>
-#include <qabstractaxis.h>
-#include <qchartview.h>
+#include <QtCharts/QAbstractAxis>
+#include <QtCharts/QChartView>
 
 QT_CHARTS_USE_NAMESPACE
 

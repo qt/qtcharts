@@ -18,14 +18,14 @@
 **
 ****************************************************************************/
 
-#include "legendlayout_p.h"
-#include "chartpresenter_p.h"
-#include "qlegend_p.h"
-#include "abstractchartlayout_p.h"
+#include <private/legendlayout_p.h>
+#include <private/chartpresenter_p.h>
+#include <private/qlegend_p.h>
+#include <private/abstractchartlayout_p.h>
 
-#include "qlegendmarker_p.h"
-#include "legendmarkeritem_p.h"
-#include "qlegendmarker.h"
+#include <private/qlegendmarker_p.h>
+#include <private/legendmarkeritem_p.h>
+#include <QtCharts/QLegendMarker>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

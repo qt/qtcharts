@@ -21,9 +21,9 @@
 #ifndef QLINESERIES_H
 #define QLINESERIES_H
 
-#include <QtCharts/qchartglobal.h>
-#include <QtCharts/qxyseries.h>
-#include <QPen>
+#include <QtCharts/QChartGlobal>
+#include <QtCharts/QXYSeries>
+#include <QtGui/QPen>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

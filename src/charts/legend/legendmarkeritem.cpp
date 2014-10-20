@@ -18,17 +18,17 @@
  **
  ****************************************************************************/
 
-#include <QPainter>
-#include <QGraphicsSceneEvent>
-#include <QGraphicsTextItem>
-#include <QTextDocument>
+#include <QtGui/QPainter>
+#include <QtWidgets/QGraphicsSceneEvent>
+#include <QtWidgets/QGraphicsTextItem>
+#include <QtGui/QTextDocument>
 
-#include "qlegend.h"
-#include "qlegend_p.h"
-#include "qlegendmarker.h"
-#include "qlegendmarker_p.h"
-#include "legendmarkeritem_p.h"
-#include "chartpresenter_p.h"
+#include <QtCharts/QLegend>
+#include <private/qlegend_p.h>
+#include <QtCharts/QLegendMarker>
+#include <private/qlegendmarker_p.h>
+#include <private/legendmarkeritem_p.h>
+#include <private/chartpresenter_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

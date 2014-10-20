@@ -30,8 +30,8 @@
 #ifndef QLOGVALUEAXIS_P_H
 #define QLOGVALUEAXIS_P_H
 
-#include <qlogvalueaxis.h>
-#include "qabstractaxis_p.h"
+#include <QtCharts/QLogValueAxis>
+#include <private/qabstractaxis_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

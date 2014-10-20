@@ -30,10 +30,10 @@
 #ifndef QABSTRACTAXIS_P_H
 #define QABSTRACTAXIS_P_H
 
-#include "qabstractaxis.h"
-#include "chartaxiselement_p.h"
-#include "qchart.h"
-#include <QDebug>
+#include <QtCharts/QAbstractAxis>
+#include <private/chartaxiselement_p.h>
+#include <QtCharts/QChart>
+#include <QtCore/QDebug>
 
 class QGraphicsItem;
 

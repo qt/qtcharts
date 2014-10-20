@@ -30,8 +30,8 @@
 #ifndef POLARCHARTAXISRADIAL_P_H
 #define POLARCHARTAXISRADIAL_P_H
 
-#include "polarchartaxis_p.h"
-#include "qvalueaxis.h"
+#include <private/polarchartaxis_p.h>
+#include <QtCharts/QValueAxis>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

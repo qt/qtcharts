@@ -30,14 +30,14 @@
 #ifndef BOXWHISKERS_H
 #define BOXWHISKERS_H
 
-#include "boxwhiskersdata_p.h"
-#include "qchartglobal.h"
-#include "abstractdomain_p.h"
-#include <QBoxSet>
-#include <QGraphicsRectItem>
-#include <QGraphicsLineItem>
-#include <QGraphicsLayoutItem>
-#include <QPainterPath>
+#include <private/boxwhiskersdata_p.h>
+#include <QtCharts/QChartGlobal>
+#include <private/abstractdomain_p.h>
+#include <QtCharts/QBoxSet>
+#include <QtWidgets/QGraphicsRectItem>
+#include <QtWidgets/QGraphicsLineItem>
+#include <QtWidgets/QGraphicsLayoutItem>
+#include <QtGui/QPainterPath>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

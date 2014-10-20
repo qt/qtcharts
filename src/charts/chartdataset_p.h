@@ -30,10 +30,10 @@
 #ifndef CHARTDATASET_P_H
 #define CHARTDATASET_P_H
 
-#include "qabstractseries.h"
-#include "abstractdomain_p.h"
-#include "qabstractaxis_p.h"
-#include <QVector>
+#include <QtCharts/QAbstractSeries>
+#include <private/abstractdomain_p.h>
+#include <private/qabstractaxis_p.h>
+#include <QtCore/QVector>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

@@ -18,11 +18,11 @@
 **
 ****************************************************************************/
 
-#include "qchartview.h"
-#include "qchartview_p.h"
-#include "qchart_p.h"
-#include <QGraphicsScene>
-#include <QRubberBand>
+#include <QtCharts/QChartView>
+#include <private/qchartview_p.h>
+#include <private/qchart_p.h>
+#include <QtWidgets/QGraphicsScene>
+#include <QtWidgets/QRubberBand>
 
 /*!
     \enum QChartView::RubberBand

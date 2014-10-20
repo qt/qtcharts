@@ -19,9 +19,9 @@
 ****************************************************************************/
 
 #include "objectinspectorwidget.h"
-#include <QIcon>
-#include <QPainter>
-#include <QPixmapCache>
+#include <QtGui/QIcon>
+#include <QtGui/QPainter>
+#include <QtGui/QPixmapCache>
 
 InspectorWidget::InspectorWidget()
 {

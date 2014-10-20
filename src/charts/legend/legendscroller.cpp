@@ -18,13 +18,13 @@
 **
 ****************************************************************************/
 
-#include <QDebug>
-#include <QGraphicsSceneMouseEvent>
-#include <QGraphicsScene>
-#include <QLegendMarker>
-#include "qlegendmarker_p.h"
-#include "legendmarkeritem_p.h"
-#include "legendscroller_p.h"
+#include <QtCore/QDebug>
+#include <QtWidgets/QGraphicsSceneMouseEvent>
+#include <QtWidgets/QGraphicsScene>
+#include <QtCharts/QLegendMarker>
+#include <private/qlegendmarker_p.h>
+#include <private/legendmarkeritem_p.h>
+#include <private/legendscroller_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

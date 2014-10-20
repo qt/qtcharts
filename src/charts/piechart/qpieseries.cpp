@@ -18,18 +18,18 @@
 **
 ****************************************************************************/
 
-#include "qpieseries.h"
-#include "qpieseries_p.h"
-#include "qpieslice.h"
-#include "qpieslice_p.h"
-#include "pieslicedata_p.h"
-#include "chartdataset_p.h"
-#include "charttheme_p.h"
-#include "qabstractaxis.h"
-#include "pieanimation_p.h"
-#include "charthelpers_p.h"
+#include <QtCharts/QPieSeries>
+#include <private/qpieseries_p.h>
+#include <QtCharts/QPieSlice>
+#include <private/qpieslice_p.h>
+#include <private/pieslicedata_p.h>
+#include <private/chartdataset_p.h>
+#include <private/charttheme_p.h>
+#include <QtCharts/QAbstractAxis>
+#include <private/pieanimation_p.h>
+#include <private/charthelpers_p.h>
 
-#include "qpielegendmarker.h"
+#include <QtCharts/QPieLegendMarker>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

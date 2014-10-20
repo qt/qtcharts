@@ -20,7 +20,7 @@
 #ifndef QBARLEGENDMARKER_H
 #define QBARLEGENDMARKER_H
 
-#include <QtCharts/qchartglobal.h>
+#include <QtCharts/QChartGlobal>
 #include <QtCharts/QLegendMarker>
 #include <QtCharts/QAbstractBarSeries>
 #include <QtCharts/QBarSet>

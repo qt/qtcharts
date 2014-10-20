@@ -18,12 +18,12 @@
  **
  ****************************************************************************/
 
-#include "chartbarcategoryaxisx_p.h"
-#include "chartpresenter_p.h"
-#include "qbarcategoryaxis_p.h"
-#include "abstractchartlayout_p.h"
-#include <QDebug>
-#include <qmath.h>
+#include <private/chartbarcategoryaxisx_p.h>
+#include <private/chartpresenter_p.h>
+#include <private/qbarcategoryaxis_p.h>
+#include <private/abstractchartlayout_p.h>
+#include <QtCore/QDebug>
+#include <QtCore/QtMath>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

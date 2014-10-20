@@ -19,10 +19,10 @@
 ****************************************************************************/
 
 #include "customtablemodel.h"
-#include <QVector>
-#include <QTime>
-#include <QRect>
-#include <QColor>
+#include <QtCore/QVector>
+#include <QtCore/QTime>
+#include <QtCore/QRect>
+#include <QtGui/QColor>
 
 CustomTableModel::CustomTableModel(QObject *parent) :
     QAbstractTableModel(parent)

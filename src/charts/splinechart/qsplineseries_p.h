@@ -30,7 +30,7 @@
 #ifndef QSPLINESERIES_P_H
 #define QSPLINESERIES_P_H
 
-#include "qlineseries_p.h"
+#include <private/qlineseries_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

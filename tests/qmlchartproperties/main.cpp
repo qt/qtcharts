@@ -18,7 +18,7 @@
 **
 ****************************************************************************/
 
-#include <QApplication>
+#include <QtWidgets/QApplication>
 #include <QtCore/QDir>
 #include <QtQuick/QQuickView>
 #include <QtQml/QQmlEngine>

@@ -27,7 +27,7 @@
 #include <QtWidgets/QGraphicsScene>
 #include <QtCore/QMutex>
 
-#include "qchart.h"
+#include <QtCharts/QChart>
 #include <QtCore/QLocale>
 
 QT_CHARTS_BEGIN_NAMESPACE

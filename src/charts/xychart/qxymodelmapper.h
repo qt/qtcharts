@@ -21,8 +21,8 @@
 #ifndef QXYMODELMAPPER_H
 #define QXYMODELMAPPER_H
 
-#include <QtCharts/qchartglobal.h>
-#include <QObject>
+#include <QtCharts/QChartGlobal>
+#include <QtCore/QObject>
 
 class QAbstractItemModel;
 

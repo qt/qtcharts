@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#include "piesliceanimation_p.h"
-#include "piechartitem_p.h"
+#include <private/piesliceanimation_p.h>
+#include <private/piechartitem_p.h>
 
 Q_DECLARE_METATYPE(QT_CHARTS_NAMESPACE::PieSliceData)
 

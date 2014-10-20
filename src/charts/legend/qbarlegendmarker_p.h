@@ -30,11 +30,11 @@
 #ifndef QBARLEGENDMARKER_P_H
 #define QBARLEGENDMARKER_P_H
 
-#include "qchartglobal.h"
-#include "qlegendmarker_p.h"
-#include "legendmarkeritem_p.h"
-#include <QAbstractBarSeries>
-#include <QBarSet>
+#include <QtCharts/QChartGlobal>
+#include <private/qlegendmarker_p.h>
+#include <private/legendmarkeritem_p.h>
+#include <QtCharts/QAbstractBarSeries>
+#include <QtCharts/QBarSet>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

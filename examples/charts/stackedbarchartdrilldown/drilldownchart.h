@@ -21,7 +21,7 @@
 #ifndef DRILLDOWNCHART_H
 #define DRILLDOWNCHART_H
 
-#include <QChart>
+#include <QtCharts/QChart>
 #include "drilldownseries.h"
 
 QT_CHARTS_USE_NAMESPACE

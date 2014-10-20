@@ -30,8 +30,8 @@
 #ifndef QCATEGORYAXIS_P_H
 #define QCATEGORYAXIS_P_H
 
-#include <qcategoryaxis.h>
-#include "qvalueaxis_p.h"
+#include <QtCharts/QCategoryAxis>
+#include <private/qvalueaxis_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

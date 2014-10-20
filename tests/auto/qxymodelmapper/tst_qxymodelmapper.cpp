@@ -21,13 +21,13 @@
 #include <QtCore/QString>
 #include <QtTest/QtTest>
 
-#include <qchart.h>
-#include <qchartview.h>
-#include <qxyseries.h>
-#include <qlineseries.h>
-#include <qvxymodelmapper.h>
-#include <qhxymodelmapper.h>
-#include <QStandardItemModel>
+#include <QtCharts/QChart>
+#include <QtCharts/QChartView>
+#include <QtCharts/QXYSeries>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QVXYModelMapper>
+#include <QtCharts/QHXYModelMapper>
+#include <QtGui/QStandardItemModel>
 #include "tst_definitions.h"
 
 QT_CHARTS_USE_NAMESPACE

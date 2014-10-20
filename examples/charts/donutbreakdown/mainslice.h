@@ -21,8 +21,8 @@
 #ifndef MAINSLICE_H
 #define MAINSLICE_H
 
-#include <QPieSlice>
-#include <QPieSeries>
+#include <QtCharts/QPieSlice>
+#include <QtCharts/QPieSeries>
 
 QT_CHARTS_USE_NAMESPACE
 

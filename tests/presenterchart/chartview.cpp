@@ -19,11 +19,11 @@
 ****************************************************************************/
 
 #include "chartview.h"
-#include <QLineSeries>
-#include <QScatterSeries>
-#include <QSplineSeries>
-#include <QAreaSeries>
-#include <QTime>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QScatterSeries>
+#include <QtCharts/QSplineSeries>
+#include <QtCharts/QAreaSeries>
+#include <QtCore/QTime>
 
 ChartView::ChartView(QChart *chart, QWidget *parent)
     : QChartView(chart, parent),

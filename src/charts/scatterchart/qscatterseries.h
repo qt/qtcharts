@@ -21,7 +21,7 @@
 #ifndef QSCATTERSERIES_H
 #define QSCATTERSERIES_H
 
-#include <QtCharts/qchartglobal.h>
+#include <QtCharts/QChartGlobal>
 #include <QtCharts/qxyseries.h>
 
 QT_CHARTS_BEGIN_NAMESPACE

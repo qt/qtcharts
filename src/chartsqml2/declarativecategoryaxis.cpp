@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 #include "declarativecategoryaxis.h"
-#include <QDebug>
+#include <QtCore/QDebug>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

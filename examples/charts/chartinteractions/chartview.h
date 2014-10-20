@@ -21,7 +21,7 @@
 #ifndef CHARTVIEW_H
 #define CHARTVIEW_H
 
-#include <QChartView>
+#include <QtCharts/QChartView>
 
 class Chart;
 

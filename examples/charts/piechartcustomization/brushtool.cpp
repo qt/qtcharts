@@ -18,10 +18,10 @@
 **
 ****************************************************************************/
 #include "brushtool.h"
-#include <QPushButton>
-#include <QFormLayout>
-#include <QComboBox>
-#include <QColorDialog>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QFormLayout>
+#include <QtWidgets/QComboBox>
+#include <QtWidgets/QColorDialog>
 
 BrushTool::BrushTool(QString title, QWidget *parent)
     : QWidget(parent)

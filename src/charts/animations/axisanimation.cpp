@@ -18,9 +18,9 @@
 **
 ****************************************************************************/
 
-#include "axisanimation_p.h"
-#include "chartaxiselement_p.h"
-#include "qabstractaxis_p.h"
+#include <private/axisanimation_p.h>
+#include <private/chartaxiselement_p.h>
+#include <private/qabstractaxis_p.h>
 
 Q_DECLARE_METATYPE(QVector<qreal>)
 

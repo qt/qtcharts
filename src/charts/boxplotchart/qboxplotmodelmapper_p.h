@@ -30,8 +30,8 @@
 #ifndef QBOXPLOTMODELMAPPER_P_H
 #define QBOXPLOTMODELMAPPER_P_H
 
-#include <QObject>
-#include <qboxplotmodelmapper.h>
+#include <QtCore/QObject>
+#include <QtCharts/QBoxPlotModelMapper>
 
 class QModelIndex;
 

@@ -30,10 +30,10 @@
 #ifndef SCATTERCHARTITEM_H
 #define SCATTERCHARTITEM_H
 
-#include "qchartglobal.h"
-#include "xychart_p.h"
-#include <QGraphicsEllipseItem>
-#include <QPen>
+#include <QtCharts/QChartGlobal>
+#include <private/xychart_p.h>
+#include <QtWidgets/QGraphicsEllipseItem>
+#include <QtGui/QPen>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

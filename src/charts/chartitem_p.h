@@ -30,9 +30,9 @@
 #ifndef CHARTITEM_H
 #define CHARTITEM_H
 
-#include "chartelement_p.h"
-#include "chartpresenter_p.h"
-#include <QGraphicsItem>
+#include <private/chartelement_p.h>
+#include <private/chartpresenter_p.h>
+#include <QtWidgets/QGraphicsItem>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

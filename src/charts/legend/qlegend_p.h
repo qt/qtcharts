@@ -30,7 +30,7 @@
 #ifndef QLEGEND_P_H
 #define QLEGEND_P_H
 
-#include "qlegend.h"
+#include <QtCharts/QLegend>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

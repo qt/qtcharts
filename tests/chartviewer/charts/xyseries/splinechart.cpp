@@ -19,8 +19,8 @@
 ****************************************************************************/
 
 #include "charts.h"
-#include "qchart.h"
-#include "qsplineseries.h"
+#include <QtCharts/QChart>
+#include <QtCharts/QSplineSeries>
 
 class SplineChart: public Chart
 {

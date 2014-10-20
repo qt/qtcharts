@@ -18,10 +18,10 @@
 **
 ****************************************************************************/
 
-#include "boxwhiskersanimation_p.h"
-#include "boxplotanimation_p.h"
-#include "boxplotchartitem_p.h"
-#include "boxwhiskersdata_p.h"
+#include <private/boxwhiskersanimation_p.h>
+#include <private/boxplotanimation_p.h>
+#include <private/boxplotchartitem_p.h>
+#include <private/boxwhiskersdata_p.h>
 
 Q_DECLARE_METATYPE(QVector<QRectF>)
 Q_DECLARE_METATYPE(QT_CHARTS_NAMESPACE::BoxWhiskersData)

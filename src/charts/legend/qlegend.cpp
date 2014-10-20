@@ -18,21 +18,21 @@
  **
  ****************************************************************************/
 
-#include "qlegend.h"
-#include "qlegend_p.h"
-#include "qabstractseries.h"
-#include "qabstractseries_p.h"
-#include "qchart_p.h"
-#include "legendlayout_p.h"
-#include "chartpresenter_p.h"
-#include "abstractchartlayout_p.h"
-#include "qlegendmarker.h"
-#include "qlegendmarker_p.h"
-#include "legendmarkeritem_p.h"
-#include "chartdataset_p.h"
-#include <QPainter>
-#include <QPen>
-#include <QGraphicsItemGroup>
+#include <QtCharts/QLegend>
+#include <private/qlegend_p.h>
+#include <QtCharts/QAbstractSeries>
+#include <private/qabstractseries_p.h>
+#include <private/qchart_p.h>
+#include <private/legendlayout_p.h>
+#include <private/chartpresenter_p.h>
+#include <private/abstractchartlayout_p.h>
+#include <QtCharts/QLegendMarker>
+#include <private/qlegendmarker_p.h>
+#include <private/legendmarkeritem_p.h>
+#include <private/chartdataset_p.h>
+#include <QtGui/QPainter>
+#include <QtGui/QPen>
+#include <QtWidgets/QGraphicsItemGroup>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

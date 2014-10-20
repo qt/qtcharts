@@ -18,11 +18,11 @@
 **
 ****************************************************************************/
 
-#include <QApplication>
-#include <QMainWindow>
-#include <QChartView>
-#include <QBarSet>
-#include <QLegend>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QMainWindow>
+#include <QtCharts/QChartView>
+#include <QtCharts/QBarSet>
+#include <QtCharts/QLegend>
 #include "drilldownseries.h"
 #include "drilldownchart.h"
 

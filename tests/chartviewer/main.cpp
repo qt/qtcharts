@@ -19,8 +19,8 @@
 ****************************************************************************/
 
 #include "window.h"
-#include <QApplication>
-#include <QMainWindow>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QMainWindow>
 #include <iostream>
 
 QVariantHash parseArgs(QStringList args)

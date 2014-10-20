@@ -20,8 +20,8 @@
 #ifndef PENTOOL_H
 #define PENTOOL_H
 
-#include <QWidget>
-#include <QPen>
+#include <QtWidgets/QWidget>
+#include <QtGui/QPen>
 
 class QPushButton;
 class QDoubleSpinBox;

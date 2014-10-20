@@ -19,9 +19,9 @@
 ****************************************************************************/
 
 #include "chart.h"
-#include <QValueAxis>
-#include <QAbstractAxis>
-#include <qmath.h>
+#include <QtCharts/QValueAxis>
+#include <QtCharts/QAbstractAxis>
+#include <QtCore/QtMath>
 
 Chart::Chart(QGraphicsItem *parent, Qt::WindowFlags wFlags, QLineSeries *series)
     : QChart(QChart::ChartTypeCartesian, parent, wFlags), m_series(series)

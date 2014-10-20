@@ -21,9 +21,9 @@
 #ifndef DECLARATIVE_MARGINS_H
 #define DECLARATIVE_MARGINS_H
 
-#include "qchartglobal.h"
-#include <QObject>
-#include <QMargins>
+#include <QtCharts/QChartGlobal>
+#include <QtCore/QObject>
+#include <QtCore/QMargins>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

@@ -21,8 +21,8 @@
 #ifndef CALLOUT_H
 #define CALLOUT_H
 
-#include <QGraphicsItem>
-#include <QFont>
+#include <QtWidgets/QGraphicsItem>
+#include <QtGui/QFont>
 
 class QGraphicsSceneMouseEvent;
 

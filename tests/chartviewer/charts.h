@@ -22,9 +22,9 @@
 #ifndef CHARTS_H
 #define CHARTS_H
 #include "model.h"
-#include <QList>
-#include <QString>
-#include <qchartglobal.h>
+#include <QtCore/QList>
+#include <QtCore/QString>
+#include <QtCharts/QChartGlobal>
 
 QT_CHARTS_BEGIN_NAMESPACE
 class QChart;

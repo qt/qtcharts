@@ -18,19 +18,19 @@
 **
 ****************************************************************************/
 
-#include "qboxplotseries.h"
-#include "qboxplotseries_p.h"
-#include "qboxplotlegendmarker.h"
-#include "qbarcategoryaxis.h"
-#include "boxplotchartitem_p.h"
-#include "chartdataset_p.h"
-#include "charttheme_p.h"
-#include "qvalueaxis.h"
-#include "charttheme_p.h"
-#include "boxplotanimation_p.h"
-#include "qchart_p.h"
-#include "qboxset.h"
-#include "qboxset_p.h"
+#include <QtCharts/QBoxPlotSeries>
+#include <private/qboxplotseries_p.h>
+#include <QtCharts/QBoxPlotLegendMarker>
+#include <QtCharts/QBarCategoryAxis>
+#include <private/boxplotchartitem_p.h>
+#include <private/chartdataset_p.h>
+#include <private/charttheme_p.h>
+#include <QtCharts/QValueAxis>
+#include <private/charttheme_p.h>
+#include <private/boxplotanimation_p.h>
+#include <private/qchart_p.h>
+#include <QtCharts/QBoxSet>
+#include <private/qboxset_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

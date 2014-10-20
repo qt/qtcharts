@@ -19,9 +19,9 @@
 ****************************************************************************/
 
 #include "charts.h"
-#include "qchart.h"
-#include "qareaseries.h"
-#include "qlineseries.h"
+#include <QtCharts/QChart>
+#include <QtCharts/QAreaSeries>
+#include <QtCharts/QLineSeries>
 
 class AreaChart: public Chart
 {

@@ -21,19 +21,19 @@
 #ifndef MAINWIDGET_H
 #define MAINWIDGET_H
 
-#include "qchartglobal.h"
-#include "qchart.h"
-#include "qchartview.h"
-#include "customtablemodel.h"
-#include "pentool.h"
-#include <QWidget>
-#include <QBoxPlotSeries>
-#include <QBarCategoryAxis>
-#include <QBoxSet>
-#include <QCheckBox>
-#include <QDoubleSpinBox>
+#include <QtCharts/QChartGlobal>
+#include <QtCharts/QChart>
+#include <QtCharts/QChartView>
+#include <QtWidgets/QWidget>
+#include <QtCharts/QBoxPlotSeries>
+#include <QtCharts/QBarCategoryAxis>
+#include <QtCharts/QBoxSet>
+#include <QtWidgets/QCheckBox>
+#include <QtWidgets/QDoubleSpinBox>
 
 class QGridLayout;
+class CustomTableModel;
+class PenTool;
 
 QT_CHARTS_USE_NAMESPACE
 

@@ -18,11 +18,11 @@
 **
 ****************************************************************************/
 
-#include "horizontalaxis_p.h"
-#include "qabstractaxis_p.h"
-#include "chartpresenter_p.h"
-#include <qmath.h>
-#include <QDebug>
+#include <private/horizontalaxis_p.h>
+#include <private/qabstractaxis_p.h>
+#include <private/chartpresenter_p.h>
+#include <QtCore/QtMath>
+#include <QtCore/QDebug>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

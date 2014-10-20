@@ -19,10 +19,10 @@
 ****************************************************************************/
 
 #include "charts.h"
-#include "qchart.h"
-#include "qsplineseries.h"
-#include "qlogvalueaxis.h"
-#include "qvalueaxis.h"
+#include <QtCharts/QChart>
+#include <QtCharts/QSplineSeries>
+#include <QtCharts/QLogValueAxis>
+#include <QtCharts/QValueAxis>
 
 class SplineXLogY: public Chart
 {

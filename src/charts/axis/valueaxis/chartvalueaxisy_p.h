@@ -30,7 +30,7 @@
 #ifndef CHARTVALUEAXISY_H
 #define CHARTVALUEAXISY_H
 
-#include "verticalaxis_p.h"
+#include <private/verticalaxis_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

@@ -20,30 +20,30 @@
 
 #include "mainwidget.h"
 #include "dataseriedialog.h"
-#include "qchartview.h"
-#include "qpieseries.h"
-#include "qscatterseries.h"
-#include "qlineseries.h"
-#include <qareaseries.h>
-#include <qsplineseries.h>
-#include <qbarset.h>
-#include <qbarseries.h>
-#include <qstackedbarseries.h>
-#include <qpercentbarseries.h>
-#include <QPushButton>
-#include <QComboBox>
-#include <QSpinBox>
-#include <QCheckBox>
-#include <QGridLayout>
-#include <QHBoxLayout>
-#include <QLabel>
-#include <QSpacerItem>
-#include <QMessageBox>
+#include <QtCharts/QChartView>
+#include <QtCharts/QPieSeries>
+#include <QtCharts/QScatterSeries>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QAreaSeries>
+#include <QtCharts/QSplineSeries>
+#include <QtCharts/QBarSet>
+#include <QtCharts/QBarSeries>
+#include <QtCharts/QStackedBarSeries>
+#include <QtCharts/QPercentBarSeries>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QComboBox>
+#include <QtWidgets/QSpinBox>
+#include <QtWidgets/QCheckBox>
+#include <QtWidgets/QGridLayout>
+#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QSpacerItem>
+#include <QtWidgets/QMessageBox>
 #include <cmath>
-#include <QDebug>
-#include <QStandardItemModel>
-#include <QBarCategoryAxis>
-#include <QGLWidget>
+#include <QtCore/QDebug>
+#include <QtGui/QStandardItemModel>
+#include <QtCharts/QBarCategoryAxis>
+#include <QtOpenGL/QGLWidget>
 
 QT_CHARTS_USE_NAMESPACE
 

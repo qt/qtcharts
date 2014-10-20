@@ -19,21 +19,21 @@
  ****************************************************************************/
 
 #include "engine.h"
-#include <QItemSelectionModel>
-#include <QStandardItemModel>
-#include <QVXYModelMapper>
-#include <QHBarModelMapper>
-#include <QVPieModelMapper>
-#include <QLineSeries>
-#include <QSplineSeries>
-#include <QScatterSeries>
-#include <QBarSeries>
-#include <QPercentBarSeries>
-#include <QStackedBarSeries>
-#include <QAreaSeries>
-#include <QPieSeries>
-#include <QChart>
-#include <QBarSet>
+#include <QtCore/QItemSelectionModel>
+#include <QtGui/QStandardItemModel>
+#include <QtCharts/QVXYModelMapper>
+#include <QtCharts/QHBarModelMapper>
+#include <QtCharts/QVPieModelMapper>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QSplineSeries>
+#include <QtCharts/QScatterSeries>
+#include <QtCharts/QBarSeries>
+#include <QtCharts/QPercentBarSeries>
+#include <QtCharts/QStackedBarSeries>
+#include <QtCharts/QAreaSeries>
+#include <QtCharts/QPieSeries>
+#include <QtCharts/QChart>
+#include <QtCharts/QBarSet>
 
 
 const qint32 MAGIC_NUMBER = 0x66666666;

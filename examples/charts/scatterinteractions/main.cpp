@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#include <QApplication>
-#include <QMainWindow>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QMainWindow>
 #include "chartview.h"
 
 int main(int argc, char *argv[])

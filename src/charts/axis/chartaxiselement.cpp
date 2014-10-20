@@ -18,13 +18,13 @@
 **
 ****************************************************************************/
 
-#include "chartaxiselement_p.h"
-#include "qabstractaxis_p.h"
-#include "chartpresenter_p.h"
-#include "abstractchartlayout_p.h"
-#include <qmath.h>
-#include <QDateTime>
-#include <QTextDocument>
+#include <private/chartaxiselement_p.h>
+#include <private/qabstractaxis_p.h>
+#include <private/chartpresenter_p.h>
+#include <private/abstractchartlayout_p.h>
+#include <QtCore/QtMath>
+#include <QtCore/QDateTime>
+#include <QtGui/QTextDocument>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

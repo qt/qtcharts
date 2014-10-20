@@ -19,9 +19,9 @@
 ****************************************************************************/
 
 #include "charts.h"
-#include "qchart.h"
-#include "qhorizontalstackedbarseries.h"
-#include "qbarset.h"
+#include <QtCharts/QChart>
+#include <QtCharts/QHorizontalStackedBarSeries>
+#include <QtCharts/QBarSet>
 
 class HorizontalStackedBarChart: public Chart
 {

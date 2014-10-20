@@ -19,8 +19,8 @@
 ****************************************************************************/
 
 #include "themewidget.h"
-#include <QApplication>
-#include <QMainWindow>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QMainWindow>
 
 int main(int argc, char *argv[])
 {

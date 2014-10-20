@@ -18,9 +18,9 @@
 **
 ****************************************************************************/
 
-#include "polarchartvalueaxisangular_p.h"
-#include "chartpresenter_p.h"
-#include "abstractchartlayout_p.h"
+#include <private/polarchartvalueaxisangular_p.h>
+#include <private/chartpresenter_p.h>
+#include <private/abstractchartlayout_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

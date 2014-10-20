@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 #include "declarativeaxes.h"
-#include "qabstractaxis.h"
+#include <QtCharts/QAbstractAxis>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

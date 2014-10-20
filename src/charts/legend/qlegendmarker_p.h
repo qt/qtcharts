@@ -30,11 +30,11 @@
 #ifndef QLEGENDMARKERPRIVATE_H
 #define QLEGENDMARKERPRIVATE_H
 
-#include "qchartglobal.h"
+#include <QtCharts/QChartGlobal>
 #include <QGraphicsObject>
-#include <QBrush>
-#include <QPen>
-#include <QGraphicsLayoutItem>
+#include <QtGui/QBrush>
+#include <QtGui/QPen>
+#include <QtWidgets/QGraphicsLayoutItem>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

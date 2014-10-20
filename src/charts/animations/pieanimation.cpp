@@ -18,9 +18,9 @@
 **
 ****************************************************************************/
 
-#include "pieanimation_p.h"
-#include "piesliceanimation_p.h"
-#include "piechartitem_p.h"
+#include <private/pieanimation_p.h>
+#include <private/piesliceanimation_p.h>
+#include <private/piechartitem_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

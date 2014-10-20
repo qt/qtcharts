@@ -18,10 +18,10 @@
 **
 ****************************************************************************/
 
-#include "cartesianchartlayout_p.h"
-#include "chartpresenter_p.h"
-#include "chartaxiselement_p.h"
-#include <QDebug>
+#include <private/cartesianchartlayout_p.h>
+#include <private/chartpresenter_p.h>
+#include <private/chartaxiselement_p.h>
+#include <QtCore/QDebug>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

@@ -21,10 +21,10 @@
 #ifndef MAINWIDGET_H
 #define MAINWIDGET_H
 
-#include "qchartglobal.h"
-#include "qchart.h"
-#include "qchartview.h"
-#include <QWidget>
+#include <QtCharts/QChartGlobal>
+#include <QtCharts/QChart>
+#include <QtCharts/QChartView>
+#include <QtWidgets/QWidget>
 
 class QSpinBox;
 class QCheckBox;

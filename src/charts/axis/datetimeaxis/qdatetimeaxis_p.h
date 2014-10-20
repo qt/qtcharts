@@ -30,9 +30,9 @@
 #ifndef QDATETIMEAXIS_P_H
 #define QDATETIMEAXIS_P_H
 
-#include "qdatetimeaxis.h"
-#include "qabstractaxis_p.h"
-#include <QDateTime>
+#include <QtCharts/QDateTimeAxis>
+#include <private/qabstractaxis_p.h>
+#include <QtCore/QDateTime>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

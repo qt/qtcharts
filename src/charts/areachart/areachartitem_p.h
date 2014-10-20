@@ -30,10 +30,10 @@
 #ifndef AREACHARTITEM_H
 #define AREACHARTITEM_H
 
-#include "qchartglobal.h"
-#include "linechartitem_p.h"
-#include "qareaseries.h"
-#include <QPen>
+#include <QtCharts/QChartGlobal>
+#include <private/linechartitem_p.h>
+#include <QtCharts/QAreaSeries>
+#include <QtGui/QPen>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

@@ -19,15 +19,15 @@
 ****************************************************************************/
 
 #include "chartview.h"
-#include <QApplication>
-#include <QMainWindow>
-#include <QScatterSeries>
-#include <QLineSeries>
-#include <QSplineSeries>
-#include <QAreaSeries>
-#include <QValueAxis>
-#include <QPolarChart>
-#include <QDebug>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QMainWindow>
+#include <QtCharts/QScatterSeries>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QSplineSeries>
+#include <QtCharts/QAreaSeries>
+#include <QtCharts/QValueAxis>
+#include <QtCharts/QPolarChart>
+#include <QtCore/QDebug>
 
 QT_CHARTS_USE_NAMESPACE
 

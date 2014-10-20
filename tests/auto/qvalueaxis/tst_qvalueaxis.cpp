@@ -19,8 +19,8 @@
  ****************************************************************************/
 
 #include "../qabstractaxis/tst_qabstractaxis.h"
-#include "qvalueaxis.h"
-#include <qlineseries.h>
+#include <QtCharts/QValueAxis>
+#include <QtCharts/QLineSeries>
 
 class tst_QValueAxis: public tst_QAbstractAxis
 {

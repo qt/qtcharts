@@ -30,8 +30,8 @@
 #ifndef QPIESERIES_P_H
 #define QPIESERIES_P_H
 
-#include "qpieseries.h"
-#include "qabstractseries_p.h"
+#include <QtCharts/QPieSeries>
+#include <private/qabstractseries_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 class QLegendPrivate;

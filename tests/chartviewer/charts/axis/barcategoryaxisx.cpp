@@ -19,11 +19,11 @@
 ****************************************************************************/
 
 #include "charts.h"
-#include "qchart.h"
-#include "qbarseries.h"
-#include "qbarset.h"
-#include "qvalueaxis.h"
-#include "qbarcategoryaxis.h"
+#include <QtCharts/QChart>
+#include <QtCharts/QBarSeries>
+#include <QtCharts/QBarSet>
+#include <QtCharts/QValueAxis>
+#include <QtCharts/QBarCategoryAxis>
 
 class BarCategoryAxisX: public Chart
 {

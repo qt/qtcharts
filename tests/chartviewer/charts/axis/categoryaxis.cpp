@@ -19,9 +19,9 @@
 ****************************************************************************/
 
 #include "charts.h"
-#include "qchart.h"
-#include "qlineseries.h"
-#include <QCategoryAxis>
+#include <QtCharts/QChart>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QCategoryAxis>
 
 class CategoryLineChart: public Chart
 {

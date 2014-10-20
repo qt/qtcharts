@@ -29,8 +29,8 @@
 
 #ifndef LEGENDLAYOUT_H
 #define LEGENDLAYOUT_H
-#include <QGraphicsLayout>
-#include "qchartglobal.h"
+#include <QtWidgets/QGraphicsLayout>
+#include <QtCharts/QChartGlobal>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

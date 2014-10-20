@@ -30,7 +30,7 @@
 #ifndef POLARCHARTCATEGORYAXISANGULAR_P_H
 #define POLARCHARTCATEGORYAXISANGULAR_P_H
 
-#include "polarchartaxisangular_p.h"
+#include <private/polarchartaxisangular_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

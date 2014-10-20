@@ -21,9 +21,9 @@
 #ifndef DECLARATIVEBOXPLOT_H
 #define DECLARATIVEBOXPLOT_H
 
-#include "qboxset.h"
+#include <QtCharts/QBoxSet>
 #include "declarativeaxes.h"
-#include "qboxplotseries.h"
+#include <QtCharts/QBoxPlotSeries>
 
 #include <QtQuick/QQuickItem>
 #include <QtQml/QQmlParserStatus>

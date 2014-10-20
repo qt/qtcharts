@@ -18,12 +18,12 @@
 **
 ****************************************************************************/
 
-#include "qstackedbarseries.h"
-#include "qstackedbarseries_p.h"
-#include "stackedbarchartitem_p.h"
-#include "chartdataset_p.h"
-#include "charttheme_p.h"
-#include "qvalueaxis.h"
+#include <QtCharts/QStackedBarSeries>
+#include <private/qstackedbarseries_p.h>
+#include <private/stackedbarchartitem_p.h>
+#include <private/chartdataset_p.h>
+#include <private/charttheme_p.h>
+#include <QtCharts/QValueAxis>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

@@ -21,8 +21,8 @@
 #ifndef XYSERIESIODEVICE_H
 #define XYSERIESIODEVICE_H
 
-#include <QIODevice>
-#include <QChartGlobal>
+#include <QtCore/QIODevice>
+#include <QtCharts/QChartGlobal>
 
 QT_CHARTS_BEGIN_NAMESPACE
 class QXYSeries;

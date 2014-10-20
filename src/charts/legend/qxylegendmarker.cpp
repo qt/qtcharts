@@ -18,10 +18,10 @@
 **
 ****************************************************************************/
 
-#include "qxylegendmarker.h"
-#include "qxylegendmarker_p.h"
-#include "qxyseries_p.h"
-#include <QXYSeries>
+#include <QtCharts/QXYLegendMarker>
+#include <private/qxylegendmarker_p.h>
+#include <private/qxyseries_p.h>
+#include <QtCharts/QXYSeries>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

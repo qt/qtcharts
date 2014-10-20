@@ -30,7 +30,7 @@
 #ifndef VERTICALAXIS_P_H_
 #define VERTICALAXIS_P_H_
 
-#include "cartesianchartaxis_p.h"
+#include <private/cartesianchartaxis_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

@@ -21,9 +21,9 @@
 #ifndef CUSTOMTABLEMODEL_H
 #define CUSTOMTABLEMODEL_H
 
-#include <QAbstractTableModel>
-#include <QHash>
-#include <QRect>
+#include <QtCore/QAbstractTableModel>
+#include <QtCore/QHash>
+#include <QtCore/QRect>
 
 class CustomTableModel : public QAbstractTableModel
 {

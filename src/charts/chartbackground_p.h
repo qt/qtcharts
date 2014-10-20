@@ -30,8 +30,8 @@
 #ifndef CHARTBACKGROUND_H
 #define CHARTBACKGROUND_H
 
-#include "qchartglobal.h"
-#include <QGraphicsRectItem>
+#include <QtCharts/QChartGlobal>
+#include <QtWidgets/QGraphicsRectItem>
 
 class QGraphicsDropShadowEffect;
 QT_CHARTS_BEGIN_NAMESPACE

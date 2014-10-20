@@ -19,14 +19,14 @@
  ****************************************************************************/
 
 #include "view.h"
-#include <QResizeEvent>
-#include <QGraphicsScene>
-#include <QChart>
-#include <QLineSeries>
-#include <QSplineSeries>
-#include <QGraphicsTextItem>
+#include <QtGui/QResizeEvent>
+#include <QtWidgets/QGraphicsScene>
+#include <QtCharts/QChart>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QSplineSeries>
+#include <QtWidgets/QGraphicsTextItem>
 #include "callout.h"
-#include <QMouseEvent>
+#include <QtGui/QMouseEvent>
 
 View::View(QWidget *parent)
     : QGraphicsView(new QGraphicsScene, parent),

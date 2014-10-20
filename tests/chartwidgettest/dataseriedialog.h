@@ -21,7 +21,7 @@
 #ifndef DATASERIEDIALOG_H
 #define DATASERIEDIALOG_H
 
-#include <QDialog>
+#include <QtWidgets/QDialog>
 
 class QGroupBox;
 class QCheckBox;

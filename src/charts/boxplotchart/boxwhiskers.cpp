@@ -18,9 +18,9 @@
  **
  ****************************************************************************/
 
-#include "boxwhiskers_p.h"
-#include <QPainter>
-#include <QWidget>
+#include <private/boxwhiskers_p.h>
+#include <QtGui/QPainter>
+#include <QtWidgets/QWidget>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

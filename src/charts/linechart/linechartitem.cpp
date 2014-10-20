@@ -18,15 +18,15 @@
 **
 ****************************************************************************/
 
-#include "linechartitem_p.h"
-#include "qlineseries.h"
-#include "qlineseries_p.h"
-#include "chartpresenter_p.h"
-#include "polardomain_p.h"
-#include "chartthememanager_p.h"
-#include "charttheme_p.h"
-#include <QPainter>
-#include <QGraphicsSceneMouseEvent>
+#include <private/linechartitem_p.h>
+#include <QtCharts/QLineSeries>
+#include <private/qlineseries_p.h>
+#include <private/chartpresenter_p.h>
+#include <private/polardomain_p.h>
+#include <private/chartthememanager_p.h>
+#include <private/charttheme_p.h>
+#include <QtGui/QPainter>
+#include <QtWidgets/QGraphicsSceneMouseEvent>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

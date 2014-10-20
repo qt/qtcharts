@@ -18,19 +18,19 @@
 **
 ****************************************************************************/
 
-#include "qabstractbarseries.h"
-#include "qabstractbarseries_p.h"
-#include "qbarset.h"
-#include "qbarset_p.h"
-#include "abstractdomain_p.h"
-#include "chartdataset_p.h"
-#include "charttheme_p.h"
-#include "qvalueaxis.h"
-#include "qbarcategoryaxis.h"
-#include "qbarlegendmarker.h"
-#include "baranimation_p.h"
-#include "abstractbarchartitem_p.h"
-#include "qchart_p.h"
+#include <QtCharts/QAbstractBarSeries>
+#include <private/qabstractbarseries_p.h>
+#include <QtCharts/QBarSet>
+#include <private/qbarset_p.h>
+#include <private/abstractdomain_p.h>
+#include <private/chartdataset_p.h>
+#include <private/charttheme_p.h>
+#include <QtCharts/QValueAxis>
+#include <QtCharts/QBarCategoryAxis>
+#include <QtCharts/QBarLegendMarker>
+#include <private/baranimation_p.h>
+#include <private/abstractbarchartitem_p.h>
+#include <private/qchart_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

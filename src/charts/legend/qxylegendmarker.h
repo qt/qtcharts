@@ -21,7 +21,7 @@
 #ifndef QXYLEGENDMARKER_H
 #define QXYLEGENDMARKER_H
 
-#include <QtCharts/qchartglobal.h>
+#include <QtCharts/QChartGlobal>
 #include <QtCharts/QLegendMarker>
 #include <QtCharts/QXYSeries>
 

@@ -20,28 +20,28 @@
 
 #include "themewidget.h"
 
-#include <QChartView>
-#include <QPieSeries>
-#include <QPieSlice>
-#include <QAbstractBarSeries>
-#include <QPercentBarSeries>
-#include <QStackedBarSeries>
-#include <QBarSeries>
-#include <QBarSet>
-#include <QLineSeries>
-#include <QSplineSeries>
-#include <QScatterSeries>
-#include <QAreaSeries>
-#include <QLegend>
-#include <QGridLayout>
-#include <QFormLayout>
-#include <QComboBox>
-#include <QSpinBox>
-#include <QCheckBox>
-#include <QGroupBox>
-#include <QLabel>
-#include <QTime>
-#include <QBarCategoryAxis>
+#include <QtCharts/QChartView>
+#include <QtCharts/QPieSeries>
+#include <QtCharts/QPieSlice>
+#include <QtCharts/QAbstractBarSeries>
+#include <QtCharts/QPercentBarSeries>
+#include <QtCharts/QStackedBarSeries>
+#include <QtCharts/QBarSeries>
+#include <QtCharts/QBarSet>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QSplineSeries>
+#include <QtCharts/QScatterSeries>
+#include <QtCharts/QAreaSeries>
+#include <QtCharts/QLegend>
+#include <QtWidgets/QGridLayout>
+#include <QtWidgets/QFormLayout>
+#include <QtWidgets/QComboBox>
+#include <QtWidgets/QSpinBox>
+#include <QtWidgets/QCheckBox>
+#include <QtWidgets/QGroupBox>
+#include <QtWidgets/QLabel>
+#include <QtCore/QTime>
+#include <QtCharts/QBarCategoryAxis>
 
 ThemeWidget::ThemeWidget(QWidget *parent) :
     QWidget(parent),

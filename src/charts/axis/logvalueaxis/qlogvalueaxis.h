@@ -21,7 +21,7 @@
 #ifndef QLOGVALUEAXIS_H
 #define QLOGVALUEAXIS_H
 
-#include <QtCharts/qabstractaxis.h>
+#include <QtCharts/QAbstractAxis>
 
 class QDateTime;
 

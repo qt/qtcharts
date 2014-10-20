@@ -21,7 +21,7 @@
 #ifndef QBOXPLOTLEGENDMARKER_H
 #define QBOXPLOTLEGENDMARKER_H
 
-#include <QtCharts/qchartglobal.h>
+#include <QtCharts/QChartGlobal>
 #include <QtCharts/QLegendMarker>
 #include <QtCharts/QBoxPlotSeries>
 

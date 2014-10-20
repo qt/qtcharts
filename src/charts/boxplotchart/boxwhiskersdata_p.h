@@ -30,8 +30,8 @@
 #ifndef BOXWHISKERSDATA_P_H
 #define BOXWHISKERSDATA_P_H
 
-#include "qchartglobal.h"
-#include <QSizeF>
+#include <QtCharts/QChartGlobal>
+#include <QtCore/QSizeF>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

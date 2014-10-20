@@ -18,13 +18,13 @@
 **
 ****************************************************************************/
 
-#include <QApplication>
-#include <QMainWindow>
-#include <QChartView>
-#include <QPercentBarSeries>
-#include <QBarSet>
-#include <QLegend>
-#include <QBarCategoryAxis>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QMainWindow>
+#include <QtCharts/QChartView>
+#include <QtCharts/QPercentBarSeries>
+#include <QtCharts/QBarSet>
+#include <QtCharts/QLegend>
+#include <QtCharts/QBarCategoryAxis>
 
 QT_CHARTS_USE_NAMESPACE
 

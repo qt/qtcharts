@@ -18,7 +18,7 @@
 **
 ****************************************************************************/
 
-#include "qvpiemodelmapper.h"
+#include <QtCharts/QVPieModelMapper>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

@@ -21,7 +21,7 @@
 #ifndef QCHARTGLOBAL_H
 #define QCHARTGLOBAL_H
 
-#include <qglobal.h>
+#include <QtCore/QtGlobal>
 
 #define QT_CHARTS_VERSION_STR   "2.0.0"
 /*

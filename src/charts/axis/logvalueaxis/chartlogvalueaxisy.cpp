@@ -18,13 +18,13 @@
 **
 ****************************************************************************/
 
-#include "chartlogvalueaxisy_p.h"
-#include "chartpresenter_p.h"
-#include "qlogvalueaxis.h"
-#include "abstractchartlayout_p.h"
-#include <QGraphicsLayout>
-#include <qmath.h>
-#include <QDebug>
+#include <private/chartlogvalueaxisy_p.h>
+#include <private/chartpresenter_p.h>
+#include <QtCharts/QLogValueAxis>
+#include <private/abstractchartlayout_p.h>
+#include <QtWidgets/QGraphicsLayout>
+#include <QtCore/QtMath>
+#include <QtCore/QDebug>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

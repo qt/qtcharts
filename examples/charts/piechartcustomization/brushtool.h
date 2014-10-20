@@ -20,8 +20,8 @@
 #ifndef BRUSHTOOL_H
 #define BRUSHTOOL_H
 
-#include <QWidget>
-#include <QBrush>
+#include <QtWidgets/QWidget>
+#include <QtGui/QBrush>
 
 class QPushButton;
 class QComboBox;

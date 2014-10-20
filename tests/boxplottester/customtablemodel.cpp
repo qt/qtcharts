@@ -19,10 +19,10 @@
 ****************************************************************************/
 
 #include "customtablemodel.h"
-#include <QVector>
-#include <QTime>
-#include <QRect>
-#include <QColor>
+#include <QtCore/QVector>
+#include <QtCore/QTime>
+#include <QtCore/QRect>
+#include <QtGui/QColor>
 
 const QString categories[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Nov", "Dec"};
 

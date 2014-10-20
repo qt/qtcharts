@@ -20,7 +20,7 @@
 
 #include <QtWidgets/QApplication>
 #include <QtQuick/QQuickView>
-#include <QDebug>
+#include <QtCore/QDebug>
 #include <QtCore/QDir>
 #include <QtQml/QQmlContext>
 #include <QtQml/QQmlEngine>

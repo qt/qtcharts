@@ -21,8 +21,8 @@
 
 #include "declarativexyseries.h"
 #include "declarativexypoint.h"
-#include "qvxymodelmapper.h"
-#include "qhxymodelmapper.h"
+#include <QtCharts/QVXYModelMapper>
+#include <QtCharts/QHXYModelMapper>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

@@ -21,16 +21,16 @@
 #ifndef MAINWIDGET_H
 #define MAINWIDGET_H
 
-#include "qchartglobal.h"
-#include "qchart.h"
-#include "qchartview.h"
-#include <QWidget>
-#include <QGraphicsWidget>
-#include <QGridLayout>
-#include <QGraphicsGridLayout>
-#include <QDoubleSpinBox>
-#include <QGroupBox>
-#include <QBarSeries>
+#include <QtCharts/QChartGlobal>
+#include <QtCharts/QChart>
+#include <QtCharts/QChartView>
+#include <QtWidgets/QWidget>
+#include <QtWidgets/QGraphicsWidget>
+#include <QtWidgets/QGridLayout>
+#include <QtWidgets/QGraphicsGridLayout>
+#include <QtWidgets/QDoubleSpinBox>
+#include <QtWidgets/QGroupBox>
+#include <QtCharts/QBarSeries>
 
 QT_CHARTS_USE_NAMESPACE
 

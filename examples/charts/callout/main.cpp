@@ -18,7 +18,7 @@
 **
 ****************************************************************************/
 
-#include <QApplication>
+#include <QtWidgets/QApplication>
 #include "view.h"
 
 int main(int argc, char *argv[])

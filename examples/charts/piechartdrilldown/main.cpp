@@ -20,12 +20,12 @@
 
 #include "drilldownchart.h"
 #include "drilldownslice.h"
-#include <QApplication>
-#include <QMainWindow>
-#include <QTime>
-#include <QChartView>
-#include <QLegend>
-#include <QPieSeries>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QMainWindow>
+#include <QtCore/QTime>
+#include <QtCharts/QChartView>
+#include <QtCharts/QLegend>
+#include <QtCharts/QPieSeries>
 
 QT_CHARTS_USE_NAMESPACE
 

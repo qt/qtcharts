@@ -21,14 +21,14 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QPolarChart>
-#include <QMainWindow>
-#include <QFont>
-#include <QChart>
-#include <QScatterSeries>
-#include <QLineSeries>
-#include <QSplineSeries>
-#include <QAreaSeries>
+#include <QtCharts/QPolarChart>
+#include <QtWidgets/QMainWindow>
+#include <QtGui/QFont>
+#include <QtCharts/QChart>
+#include <QtCharts/QScatterSeries>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QSplineSeries>
+#include <QtCharts/QAreaSeries>
 
 namespace Ui {
 class MainWindow;

@@ -18,14 +18,14 @@
 **
 ****************************************************************************/
 
-#include "polarchartaxisangular_p.h"
-#include "chartpresenter_p.h"
-#include "abstractchartlayout_p.h"
-#include "qabstractaxis.h"
-#include "qabstractaxis_p.h"
-#include <QDebug>
-#include <qmath.h>
-#include <QTextDocument>
+#include <private/polarchartaxisangular_p.h>
+#include <private/chartpresenter_p.h>
+#include <private/abstractchartlayout_p.h>
+#include <QtCharts/QAbstractAxis>
+#include <private/qabstractaxis_p.h>
+#include <QtCore/QDebug>
+#include <QtCore/QtMath>
+#include <QtGui/QTextDocument>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

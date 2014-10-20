@@ -30,9 +30,9 @@
 #ifndef CHARTTHEME_H
 #define CHARTTHEME_H
 
-#include "chartthememanager_p.h"
-#include <QColor>
-#include <QGradientStops>
+#include <private/chartthememanager_p.h>
+#include <QtGui/QColor>
+#include <QtGui/QGradientStops>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

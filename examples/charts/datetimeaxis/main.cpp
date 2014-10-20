@@ -18,16 +18,16 @@
 **
 ****************************************************************************/
 
-#include <QApplication>
-#include <QMainWindow>
-#include <QChartView>
-#include <QLineSeries>
-#include <QDateTime>
-#include <QDateTimeAxis>
-#include <QFile>
-#include <QTextStream>
-#include <QDebug>
-#include <QValueAxis>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QMainWindow>
+#include <QtCharts/QChartView>
+#include <QtCharts/QLineSeries>
+#include <QtCore/QDateTime>
+#include <QtCharts/QDateTimeAxis>
+#include <QtCore/QFile>
+#include <QtCore/QTextStream>
+#include <QtCore/QDebug>
+#include <QtCharts/QValueAxis>
 
 QT_CHARTS_USE_NAMESPACE
 

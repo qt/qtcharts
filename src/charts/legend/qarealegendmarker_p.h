@@ -30,10 +30,10 @@
 #ifndef QAREALEGENDMARKER_P_H
 #define QAREALEGENDMARKER_P_H
 
-#include "qchartglobal.h"
-#include "qlegendmarker_p.h"
-#include "legendmarkeritem_p.h"
-#include <QAreaSeries>
+#include <QtCharts/QChartGlobal>
+#include <private/qlegendmarker_p.h>
+#include <private/legendmarkeritem_p.h>
+#include <QtCharts/QAreaSeries>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

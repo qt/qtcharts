@@ -21,13 +21,13 @@
 #ifndef DECLARATIVEBARSERIES_H
 #define DECLARATIVEBARSERIES_H
 
-#include "qbarseries.h"
-#include "qstackedbarseries.h"
-#include "qpercentbarseries.h"
-#include "qhorizontalbarseries.h"
-#include "qhorizontalstackedbarseries.h"
-#include "qhorizontalpercentbarseries.h"
-#include "qbarset.h"
+#include <QtCharts/QBarSeries>
+#include <QtCharts/QStackedBarSeries>
+#include <QtCharts/QPercentBarSeries>
+#include <QtCharts/QHorizontalBarSeries>
+#include <QtCharts/QHorizontalStackedBarSeries>
+#include <QtCharts/QHorizontalPercentBarSeries>
+#include <QtCharts/QBarSet>
 #include "declarativeaxes.h"
 
 #include <QtQuick/QQuickItem>

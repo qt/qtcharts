@@ -20,7 +20,7 @@
 #ifndef DRILLDOWNSLICE_H
 #define DRILLDOWNSLICE_H
 
-#include <QPieSlice>
+#include <QtCharts/QPieSlice>
 
 QT_CHARTS_BEGIN_NAMESPACE
 class QAbstractSeries;

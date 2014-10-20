@@ -30,7 +30,7 @@
 #ifndef CHARTTHEMEBLUECERULEAN_P_H
 #define CHARTTHEMEBLUECERULEAN_P_H
 
-#include "charttheme_p.h"
+#include <private/charttheme_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

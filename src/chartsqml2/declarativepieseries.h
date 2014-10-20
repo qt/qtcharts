@@ -21,8 +21,8 @@
 #ifndef DECLARATIVEPIESERIES_H
 #define DECLARATIVEPIESERIES_H
 
-#include "qpieseries.h"
-#include "qpieslice.h"
+#include <QtCharts/QPieSeries>
+#include <QtCharts/QPieSlice>
 
 #include <QtQuick/QQuickItem>
 #include <QtQml/QQmlParserStatus>

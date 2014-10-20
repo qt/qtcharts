@@ -18,13 +18,13 @@
 **
 ****************************************************************************/
 
-#include "qbarcategoryaxis.h"
-#include "qbarcategoryaxis_p.h"
-#include "chartbarcategoryaxisx_p.h"
-#include "chartbarcategoryaxisy_p.h"
-#include "abstractdomain_p.h"
-#include "qchart.h"
-#include <qmath.h>
+#include <QtCharts/QBarCategoryAxis>
+#include <private/qbarcategoryaxis_p.h>
+#include <private/chartbarcategoryaxisx_p.h>
+#include <private/chartbarcategoryaxisy_p.h>
+#include <private/abstractdomain_p.h>
+#include <QtCharts/QChart>
+#include <QtCore/QtMath>
 
 QT_CHARTS_BEGIN_NAMESPACE
 /*!

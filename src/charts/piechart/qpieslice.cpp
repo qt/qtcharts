@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#include "qpieslice.h"
-#include "qpieslice_p.h"
+#include <QtCharts/QPieSlice>
+#include <private/qpieslice_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

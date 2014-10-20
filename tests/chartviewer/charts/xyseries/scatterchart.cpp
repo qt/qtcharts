@@ -19,8 +19,8 @@
 ****************************************************************************/
 
 #include "charts.h"
-#include "qchart.h"
-#include "qscatterseries.h"
+#include <QtCharts/QChart>
+#include <QtCharts/QScatterSeries>
 
 class ScatterChart: public Chart
 {

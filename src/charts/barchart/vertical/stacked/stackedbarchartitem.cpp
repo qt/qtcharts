@@ -18,11 +18,11 @@
 **
 ****************************************************************************/
 
-#include "stackedbarchartitem_p.h"
-#include "bar_p.h"
-#include "qbarset_p.h"
-#include "qabstractbarseries_p.h"
-#include "qbarset.h"
+#include <private/stackedbarchartitem_p.h>
+#include <private/bar_p.h>
+#include <private/qbarset_p.h>
+#include <private/qabstractbarseries_p.h>
+#include <QtCharts/QBarSet>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

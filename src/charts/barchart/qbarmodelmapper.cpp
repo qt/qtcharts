@@ -18,12 +18,12 @@
 **
 ****************************************************************************/
 
-#include "qbarmodelmapper.h"
-#include "qbarmodelmapper_p.h"
-#include "qabstractbarseries.h"
-#include "qbarset.h"
-#include "qchart.h"
-#include <QAbstractItemModel>
+#include <QtCharts/QBarModelMapper>
+#include <private/qbarmodelmapper_p.h>
+#include <QtCharts/QAbstractBarSeries>
+#include <QtCharts/QBarSet>
+#include <QtCharts/QChart>
+#include <QtCore/QAbstractItemModel>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

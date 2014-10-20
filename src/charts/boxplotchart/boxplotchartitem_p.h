@@ -31,12 +31,12 @@
 #ifndef BOXPLOTCHARTITEM_H
 #define BOXPLOTCHARTITEM_H
 
-#include "boxwhiskers_p.h"
-#include "qboxplotseries.h"
-#include "chartitem_p.h"
-#include "boxplotanimation_p.h"
-#include "qboxset.h"
-#include <QGraphicsItem>
+#include <private/boxwhiskers_p.h>
+#include <QtCharts/QBoxPlotSeries>
+#include <private/chartitem_p.h>
+#include <private/boxplotanimation_p.h>
+#include <QtCharts/QBoxSet>
+#include <QtWidgets/QGraphicsItem>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

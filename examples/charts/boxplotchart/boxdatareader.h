@@ -21,8 +21,8 @@
 #ifndef BOXDATAREADER_H
 #define BOXDATAREADER_H
 
-#include <QTextStream>
-#include <QBoxSet>
+#include <QtCore/QTextStream>
+#include <QtCharts/QBoxSet>
 
 QT_CHARTS_USE_NAMESPACE
 

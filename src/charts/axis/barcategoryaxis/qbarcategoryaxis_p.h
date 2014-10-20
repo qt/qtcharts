@@ -30,8 +30,8 @@
 #ifndef QBARCATEGORYAXIS_P_H
 #define QBARCATEGORYAXIS_P_H
 
-#include <qbarcategoryaxis.h>
-#include "qabstractaxis_p.h"
+#include <QtCharts/QBarCategoryAxis>
+#include <private/qabstractaxis_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

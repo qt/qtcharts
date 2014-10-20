@@ -29,9 +29,9 @@
 
 #ifndef POLARDOMAIN_H
 #define POLARDOMAIN_H
-#include "abstractdomain_p.h"
-#include <QRectF>
-#include <QSizeF>
+#include <private/abstractdomain_p.h>
+#include <QtCore/QRectF>
+#include <QtCore/QSizeF>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

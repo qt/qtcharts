@@ -19,11 +19,11 @@
 ****************************************************************************/
 
 #include "chartview.h"
-#include <QScatterSeries>
-#include <QLegendMarker>
-#include <QImage>
-#include <QPainter>
-#include <qmath.h>
+#include <QtCharts/QScatterSeries>
+#include <QtCharts/QLegendMarker>
+#include <QtGui/QImage>
+#include <QtGui/QPainter>
+#include <QtCore/QtMath>
 
 const float Pi = 3.14159f;
 

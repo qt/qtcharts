@@ -30,8 +30,8 @@
 #ifndef CHARTTITLE_P_H_
 #define CHARTTITLE_P_H_
 
-#include "qchartglobal.h"
-#include <QGraphicsTextItem>
+#include <QtCharts/QChartGlobal>
+#include <QtWidgets/QGraphicsTextItem>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

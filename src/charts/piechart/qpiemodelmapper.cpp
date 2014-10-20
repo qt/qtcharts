@@ -18,11 +18,11 @@
 **
 ****************************************************************************/
 
-#include "qpiemodelmapper.h"
-#include "qpiemodelmapper_p.h"
-#include "qpieseries.h"
-#include "qpieslice.h"
-#include <QAbstractItemModel>
+#include <QtCharts/QPieModelMapper>
+#include <private/qpiemodelmapper_p.h>
+#include <QtCharts/QPieSeries>
+#include <QtCharts/QPieSlice>
+#include <QtCore/QAbstractItemModel>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

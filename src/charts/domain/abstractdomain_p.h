@@ -29,10 +29,10 @@
 
 #ifndef ABSTRACTDOMAIN_H
 #define ABSTRACTDOMAIN_H
-#include "qchartglobal.h"
-#include <QRectF>
-#include <QSizeF>
-#include <QDebug>
+#include <QtCharts/QChartGlobal>
+#include <QtCore/QRectF>
+#include <QtCore/QSizeF>
+#include <QtCore/QDebug>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

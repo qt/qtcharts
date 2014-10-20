@@ -23,17 +23,17 @@
 #include "penwidget.h"
 #include "brushwidget.h"
 #include "engine.h"
-#include <QSettings>
-#include <QChartView>
-#include <QDockWidget>
-#include <QMenuBar>
-#include <QTableWidget>
-#include <QSplitter>
-#include <QMetaEnum>
-#include <QStandardItemModel>
-#include <QHeaderView>
-#include <QDebug>
-#include <QMessageBox>
+#include <QtCore/QSettings>
+#include <QtCharts/QChartView>
+#include <QtWidgets/QDockWidget>
+#include <QtWidgets/QMenuBar>
+#include <QtWidgets/QTableWidget>
+#include <QtWidgets/QSplitter>
+#include <QtCore/QMetaEnum>
+#include <QtGui/QStandardItemModel>
+#include <QtWidgets/QHeaderView>
+#include <QtCore/QDebug>
+#include <QtWidgets/QMessageBox>
 
 static const QString FILENAME_SETTING("filename");
 static const QString GEOMETRY_SETTING("geometry");

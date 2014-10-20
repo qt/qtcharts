@@ -19,9 +19,9 @@
 ****************************************************************************/
 
 #include "charts.h"
-#include "qchart.h"
-#include "qhorizontalpercentbarseries.h"
-#include "qbarset.h"
+#include <QtCharts/QChart>
+#include <QtCharts/QHorizontalPercentBarSeries>
+#include <QtCharts/QBarSet>
 
 class HorizontalPercentBarChart: public Chart
 {

@@ -30,8 +30,8 @@
 #ifndef QCHART_P_H
 #define QCHART_P_H
 
-#include "qchartglobal.h"
-#include "qchart.h"
+#include <QtCharts/QChartGlobal>
+#include <QtCharts/QChart>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

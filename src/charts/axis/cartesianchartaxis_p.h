@@ -30,8 +30,8 @@
 #ifndef CARTESIANCHARTAXIS_H
 #define CARTESIANCHARTAXIS_H
 
-#include "qchartglobal.h"
-#include "chartaxiselement_p.h"
+#include <QtCharts/QChartGlobal>
+#include <private/chartaxiselement_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

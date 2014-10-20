@@ -18,16 +18,16 @@
 **
 ****************************************************************************/
 
-#include "qareaseries.h"
-#include "qareaseries_p.h"
-#include "qlineseries.h"
-#include "areachartitem_p.h"
-#include "abstractdomain_p.h"
-#include "chartdataset_p.h"
-#include "charttheme_p.h"
-#include "qvalueaxis.h"
-#include "qarealegendmarker.h"
-#include "qchart_p.h"
+#include <QtCharts/QAreaSeries>
+#include <private/qareaseries_p.h>
+#include <QtCharts/QLineSeries>
+#include <private/areachartitem_p.h>
+#include <private/abstractdomain_p.h>
+#include <private/chartdataset_p.h>
+#include <private/charttheme_p.h>
+#include <QtCharts/QValueAxis>
+#include <QtCharts/QAreaLegendMarker>
+#include <private/qchart_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

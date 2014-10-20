@@ -18,9 +18,9 @@
 **
 ****************************************************************************/
 
-#include "xypolardomain_p.h"
-#include "qabstractaxis_p.h"
-#include <qmath.h>
+#include <private/xypolardomain_p.h>
+#include <private/qabstractaxis_p.h>
+#include <QtCore/QtMath>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

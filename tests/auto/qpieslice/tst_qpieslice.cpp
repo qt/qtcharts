@@ -20,10 +20,10 @@
 
 #include <QtTest/QtTest>
 #include <tst_definitions.h>
-#include <qchartview.h>
-#include <qchart.h>
-#include <qpieslice.h>
-#include <qpieseries.h>
+#include <QtCharts/QChartView>
+#include <QtCharts/QChart>
+#include <QtCharts/QPieSlice>
+#include <QtCharts/QPieSeries>
 
 QT_CHARTS_USE_NAMESPACE
 

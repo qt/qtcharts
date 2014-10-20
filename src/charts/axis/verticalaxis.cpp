@@ -18,10 +18,10 @@
 **
 ****************************************************************************/
 
-#include "verticalaxis_p.h"
-#include "qabstractaxis.h"
-#include "chartpresenter_p.h"
-#include <QDebug>
+#include <private/verticalaxis_p.h>
+#include <QtCharts/QAbstractAxis>
+#include <private/chartpresenter_p.h>
+#include <QtCore/QDebug>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

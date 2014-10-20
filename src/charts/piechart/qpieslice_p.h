@@ -30,9 +30,9 @@
 #ifndef QPIESLICE_P_H
 #define QPIESLICE_P_H
 
-#include <QObject>
-#include "qpieslice.h"
-#include "pieslicedata_p.h"
+#include <QtCore/QObject>
+#include <QtCharts/QPieSlice>
+#include <private/pieslicedata_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 class QPieSeries;

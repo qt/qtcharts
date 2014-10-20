@@ -18,9 +18,9 @@
  **
  ****************************************************************************/
 
-#include "scatteranimation_p.h"
-#include "scatterchartitem_p.h"
-#include <QDebug>
+#include <private/scatteranimation_p.h>
+#include <private/scatterchartitem_p.h>
+#include <QtCore/QDebug>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

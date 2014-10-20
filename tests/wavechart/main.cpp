@@ -19,9 +19,9 @@
 ****************************************************************************/
 
 #include "wavechart.h"
-#include <QApplication>
-#include <QMainWindow>
-#include <QGLWidget>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QMainWindow>
+#include <QtOpenGL/QGLWidget>
 
 int main(int argc, char *argv[])
 {

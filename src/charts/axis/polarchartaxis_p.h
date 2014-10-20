@@ -30,7 +30,7 @@
 #ifndef POLARCHARTAXIS_P_H
 #define POLARCHARTAXIS_P_H
 
-#include "chartaxiselement_p.h"
+#include <private/chartaxiselement_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

@@ -21,8 +21,8 @@
 #ifndef QPERCENTBARSERIES_H
 #define QPERCENTBARSERIES_H
 
-#include <QStringList>
-#include <QtCharts/qabstractbarseries.h>
+#include <QtCore/QStringList>
+#include <QtCharts/QAbstractBarSeries>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

@@ -20,7 +20,7 @@
 #ifndef DRILLDOWNCHART_H
 #define DRILLDOWNCHART_H
 
-#include <QChart>
+#include <QtCharts/QChart>
 
 QT_CHARTS_BEGIN_NAMESPACE
 class QAbstractSeries;

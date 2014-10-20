@@ -19,8 +19,8 @@
 ****************************************************************************/
 #include "donutbreakdownchart.h"
 #include "mainslice.h"
-#include <QPieSlice>
-#include <QPieLegendMarker>
+#include <QtCharts/QPieSlice>
+#include <QtCharts/QPieLegendMarker>
 
 QT_CHARTS_USE_NAMESPACE
 

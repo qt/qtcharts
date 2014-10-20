@@ -21,8 +21,8 @@
 #ifndef QCATEGORYAXIS_H
 #define QCATEGORYAXIS_H
 
-#include <QtCharts/qabstractaxis.h>
-#include <QtCharts/qvalueaxis.h>
+#include <QtCharts/QAbstractAxis>
+#include <QtCharts/QValueAxis>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

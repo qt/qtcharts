@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 #include "../qxyseries/tst_qxyseries.h"
-#include <qscatterseries.h>
+#include <QtCharts/QScatterSeries>
 
 Q_DECLARE_METATYPE(QList<QPointF>)
 

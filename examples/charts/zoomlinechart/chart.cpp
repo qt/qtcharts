@@ -19,9 +19,9 @@
 ****************************************************************************/
 
 #include "chart.h"
-#include <QGesture>
-#include <QGraphicsScene>
-#include <QGraphicsView>
+#include <QtWidgets/QGesture>
+#include <QtWidgets/QGraphicsScene>
+#include <QtWidgets/QGraphicsView>
 
 Chart::Chart(QGraphicsItem *parent, Qt::WindowFlags wFlags)
     : QChart(QChart::ChartTypeCartesian, parent, wFlags)

@@ -19,9 +19,9 @@
  ****************************************************************************/
 
 #include "view.h"
-#include <QGraphicsWidget>
-#include <QResizeEvent>
-#include <QDebug>
+#include <QtWidgets/QGraphicsWidget>
+#include <QtGui/QResizeEvent>
+#include <QtCore/QDebug>
 
 View::View(QGraphicsScene *scene, QGraphicsWidget *form , QWidget *parent)
     : QGraphicsView(scene, parent),

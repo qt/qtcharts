@@ -18,7 +18,7 @@
 **
 ****************************************************************************/
 
-#include "qvboxplotmodelmapper.h"
+#include <QtCharts/QVBoxPlotModelMapper>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

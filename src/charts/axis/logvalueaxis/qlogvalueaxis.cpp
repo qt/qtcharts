@@ -18,13 +18,13 @@
 **
 ****************************************************************************/
 
-#include "qlogvalueaxis.h"
-#include "qlogvalueaxis_p.h"
-#include "chartlogvalueaxisx_p.h"
-#include "chartlogvalueaxisy_p.h"
-#include "polarchartlogvalueaxisangular_p.h"
-#include "polarchartlogvalueaxisradial_p.h"
-#include "abstractdomain_p.h"
+#include <QtCharts/QLogValueAxis>
+#include <private/qlogvalueaxis_p.h>
+#include <private/chartlogvalueaxisx_p.h>
+#include <private/chartlogvalueaxisy_p.h>
+#include <private/polarchartlogvalueaxisangular_p.h>
+#include <private/polarchartlogvalueaxisradial_p.h>
+#include <private/abstractdomain_p.h>
 #include <float.h>
 #include <cmath>
 

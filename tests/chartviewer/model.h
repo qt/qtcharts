@@ -21,10 +21,10 @@
 #ifndef MODEL_H
 #define MODEL_H
 
-#include <QList>
-#include <QPair>
-#include <QPointF>
-#include <QTime>
+#include <QtCore/QList>
+#include <QtCore/QPair>
+#include <QtCore/QPointF>
+#include <QtCore/QTime>
 #include <stdlib.h>
 
 typedef QPair<QPointF, QString> Data;

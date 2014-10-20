@@ -18,13 +18,13 @@
 **
 ****************************************************************************/
 
-#include "qsplineseries.h"
-#include "qsplineseries_p.h"
-#include "splinechartitem_p.h"
-#include "chartdataset_p.h"
-#include "charttheme_p.h"
-#include "splineanimation_p.h"
-#include "qchart_p.h"
+#include <QtCharts/QSplineSeries>
+#include <private/qsplineseries_p.h>
+#include <private/splinechartitem_p.h>
+#include <private/chartdataset_p.h>
+#include <private/charttheme_p.h>
+#include <private/splineanimation_p.h>
+#include <private/qchart_p.h>
 
 /*!
     \class QSplineSeries

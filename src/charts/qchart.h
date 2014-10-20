@@ -23,8 +23,8 @@
 
 #include <QtCharts/QAbstractSeries>
 #include <QtCharts/QLegend>
-#include <QGraphicsWidget>
-#include <QMargins>
+#include <QtWidgets/QGraphicsWidget>
+#include <QtCore/QMargins>
 
 class QGraphicsSceneResizeEvent;
 

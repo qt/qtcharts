@@ -29,9 +29,9 @@
 
 #ifndef LOGXYPOLARDOMAIN_H
 #define LOGXYPOLARDOMAIN_H
-#include "polardomain_p.h"
-#include <QRectF>
-#include <QSizeF>
+#include <private/polardomain_p.h>
+#include <QtCore/QRectF>
+#include <QtCore/QSizeF>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

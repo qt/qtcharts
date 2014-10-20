@@ -18,10 +18,10 @@
 **
 ****************************************************************************/
 
-#include "qarealegendmarker.h"
-#include "qarealegendmarker_p.h"
-#include "qareaseries_p.h"
-#include <QAreaSeries>
+#include <QtCharts/QAreaLegendMarker>
+#include <private/qarealegendmarker_p.h>
+#include <private/qareaseries_p.h>
+#include <QtCharts/QAreaSeries>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

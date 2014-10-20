@@ -18,14 +18,14 @@
 **
 ****************************************************************************/
 
-#include <QApplication>
-#include <QMainWindow>
-#include <QChartView>
-#include <QBoxPlotSeries>
-#include <QBoxSet>
-#include <QLegend>
-#include <QBarCategoryAxis>
-#include <QFile>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QMainWindow>
+#include <QtCharts/QChartView>
+#include <QtCharts/QBoxPlotSeries>
+#include <QtCharts/QBoxSet>
+#include <QtCharts/QLegend>
+#include <QtCharts/QBarCategoryAxis>
+#include <QtCore/QFile>
 
 #include "boxdatareader.h"
 

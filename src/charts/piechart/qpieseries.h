@@ -21,7 +21,7 @@
 #ifndef QPIESERIES_H
 #define QPIESERIES_H
 
-#include <QtCharts/qabstractseries.h>
+#include <QtCharts/QAbstractSeries>
 #include <QtCharts/QPieSlice>
 
 QT_CHARTS_BEGIN_NAMESPACE

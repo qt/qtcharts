@@ -19,9 +19,9 @@
 ****************************************************************************/
 
 #include "declarativebarseries.h"
-#include "qbarset.h"
-#include "qvbarmodelmapper.h"
-#include "qhbarmodelmapper.h"
+#include <QtCharts/QBarSet>
+#include <QtCharts/QVBarModelMapper>
+#include <QtCharts/QHBarModelMapper>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

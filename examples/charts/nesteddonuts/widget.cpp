@@ -18,14 +18,14 @@
 **
 ****************************************************************************/
 #include "widget.h"
-#include <QChartView>
-#include <QChart>
-#include <QLegend>
-#include <QPieSeries>
-#include <QPieSlice>
-#include <QTime>
-#include <QGridLayout>
-#include <QTimer>
+#include <QtCharts/QChartView>
+#include <QtCharts/QChart>
+#include <QtCharts/QLegend>
+#include <QtCharts/QPieSeries>
+#include <QtCharts/QPieSlice>
+#include <QtCore/QTime>
+#include <QtWidgets/QGridLayout>
+#include <QtCore/QTimer>
 
 QT_CHARTS_USE_NAMESPACE
 

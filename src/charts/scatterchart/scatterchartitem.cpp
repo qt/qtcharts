@@ -18,16 +18,16 @@
  **
  ****************************************************************************/
 
-#include "scatterchartitem_p.h"
-#include "qscatterseries.h"
-#include "qscatterseries_p.h"
-#include "chartpresenter_p.h"
-#include "abstractdomain_p.h"
-#include "qchart.h"
-#include <QPainter>
-#include <QGraphicsScene>
-#include <QDebug>
-#include <QGraphicsSceneMouseEvent>
+#include <private/scatterchartitem_p.h>
+#include <QtCharts/QScatterSeries>
+#include <private/qscatterseries_p.h>
+#include <private/chartpresenter_p.h>
+#include <private/abstractdomain_p.h>
+#include <QtCharts/QChart>
+#include <QtGui/QPainter>
+#include <QtWidgets/QGraphicsScene>
+#include <QtCore/QDebug>
+#include <QtWidgets/QGraphicsSceneMouseEvent>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

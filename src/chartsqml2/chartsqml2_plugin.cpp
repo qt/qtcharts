@@ -18,12 +18,12 @@
 **
 ****************************************************************************/
 
-#include "qchart.h"
-#include "qabstractaxis.h"
-#include "qvalueaxis.h"
-#include "qlogvalueaxis.h"
+#include <QtCharts/QChart>
+#include <QtCharts/QAbstractAxis>
+#include <QtCharts/QValueAxis>
+#include <QtCharts/QLogValueAxis>
 #include "declarativecategoryaxis.h"
-#include "qbarcategoryaxis.h"
+#include <QtCharts/QBarCategoryAxis>
 #include "declarativechart.h"
 #include "declarativepolarchart.h"
 #include "declarativexypoint.h"
@@ -35,23 +35,23 @@
 #include "declarativeboxplotseries.h"
 #include "declarativepieseries.h"
 #include "declarativeaxes.h"
-#include "qvxymodelmapper.h"
-#include "qhxymodelmapper.h"
-#include "qhpiemodelmapper.h"
-#include "qvpiemodelmapper.h"
-#include "qhbarmodelmapper.h"
-#include "qvbarmodelmapper.h"
+#include <QtCharts/QVXYModelMapper>
+#include <QtCharts/QHXYModelMapper>
+#include <QtCharts/QHPieModelMapper>
+#include <QtCharts/QVPieModelMapper>
+#include <QtCharts/QHBarModelMapper>
+#include <QtCharts/QVBarModelMapper>
 #include "declarativemargins.h"
-#include "qarealegendmarker.h"
-#include "qbarlegendmarker.h"
-#include "qpielegendmarker.h"
-#include "qxylegendmarker.h"
-#include "qboxplotmodelmapper.h"
-#include "qvboxplotmodelmapper.h"
+#include <QtCharts/QAreaLegendMarker>
+#include <QtCharts/QBarLegendMarker>
+#include <QtCharts/QPieLegendMarker>
+#include <QtCharts/QXYLegendMarker>
+#include <QtCharts/QBoxPlotModelMapper>
+#include <QtCharts/QVBoxPlotModelMapper>
 #ifndef QT_ON_ARM
-    #include "qdatetimeaxis.h"
+    #include <QtCharts/QDateTimeAxis>
 #endif
-#include <QAbstractItemModel>
+#include <QtCore/QAbstractItemModel>
 #include <QtQml>
 
 QT_CHARTS_USE_NAMESPACE

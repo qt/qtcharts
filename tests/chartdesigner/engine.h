@@ -21,9 +21,9 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 
-#include <QObject>
-#include <QAbstractSeries>
-#include <QModelIndex>
+#include <QtCore/QObject>
+#include <QtCharts/QAbstractSeries>
+#include <QtCore/QModelIndex>
 
 class QStandardItemModel;
 class QItemSelectionModel;

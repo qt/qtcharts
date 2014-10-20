@@ -30,7 +30,7 @@
 #ifndef CHARTCONFIG_H
 #define CHARTCONFIG_H
 
-#include "qchartglobal.h"
+#include <QtCharts/QChartGlobal>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

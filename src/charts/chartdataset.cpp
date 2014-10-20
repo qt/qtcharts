@@ -18,31 +18,31 @@
 **
 ****************************************************************************/
 
-#include "chartdataset_p.h"
-#include "chartpresenter_p.h"
-#include "qchart.h"
-#include "qchart_p.h"
-#include "qvalueaxis.h"
-#include "qbarcategoryaxis.h"
-#include "qvalueaxis_p.h"
-#include "qcategoryaxis.h"
-#include "qabstractseries_p.h"
-#include "qabstractbarseries.h"
-#include "qstackedbarseries.h"
-#include "qpercentbarseries.h"
-#include "qpieseries.h"
-#include "chartitem_p.h"
-#include "xydomain_p.h"
-#include "xypolardomain_p.h"
-#include "xlogydomain_p.h"
-#include "logxydomain_p.h"
-#include "logxlogydomain_p.h"
-#include "xlogypolardomain_p.h"
-#include "logxypolardomain_p.h"
-#include "logxlogypolardomain_p.h"
+#include <private/chartdataset_p.h>
+#include <private/chartpresenter_p.h>
+#include <QtCharts/QChart>
+#include <private/qchart_p.h>
+#include <QtCharts/QValueAxis>
+#include <QtCharts/QBarCategoryAxis>
+#include <private/qvalueaxis_p.h>
+#include <QtCharts/QCategoryAxis>
+#include <private/qabstractseries_p.h>
+#include <QtCharts/QAbstractBarSeries>
+#include <QtCharts/QStackedBarSeries>
+#include <QtCharts/QPercentBarSeries>
+#include <QtCharts/QPieSeries>
+#include <private/chartitem_p.h>
+#include <private/xydomain_p.h>
+#include <private/xypolardomain_p.h>
+#include <private/xlogydomain_p.h>
+#include <private/logxydomain_p.h>
+#include <private/logxlogydomain_p.h>
+#include <private/xlogypolardomain_p.h>
+#include <private/logxypolardomain_p.h>
+#include <private/logxlogypolardomain_p.h>
 
 #ifndef QT_ON_ARM
-#include "qdatetimeaxis.h"
+#include <QtCharts/QDateTimeAxis>
 #endif
 
 QT_CHARTS_BEGIN_NAMESPACE

@@ -30,7 +30,7 @@
 #ifndef CHARTDATETIMEAXISX_H
 #define CHARTDATETIMEAXISX_H
 
-#include "horizontalaxis_p.h"
+#include <private/horizontalaxis_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

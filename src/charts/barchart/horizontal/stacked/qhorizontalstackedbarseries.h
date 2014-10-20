@@ -21,7 +21,7 @@
 #ifndef QHORIZONTALSTACKEDBARSERIES_H
 #define QHORIZONTALSTACKEDBARSERIES_H
 
-#include <QtCharts/qabstractbarseries.h>
+#include <QtCharts/QAbstractBarSeries>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

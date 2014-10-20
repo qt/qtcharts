@@ -30,7 +30,7 @@
 #ifndef CHARTTHEMEQT_P_H
 #define CHARTTHEMEQT_P_H
 
-#include "charttheme_p.h"
+#include <private/charttheme_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

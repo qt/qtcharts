@@ -18,9 +18,9 @@
 **
 ****************************************************************************/
 
-#include "chartitem_p.h"
-#include "qabstractseries_p.h"
-#include "abstractdomain_p.h"
+#include <private/chartitem_p.h>
+#include <private/qabstractseries_p.h>
+#include <private/abstractdomain_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

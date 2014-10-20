@@ -18,13 +18,13 @@
 **
 ****************************************************************************/
 
-#include "chartdatetimeaxisy_p.h"
-#include "chartpresenter_p.h"
-#include "qdatetimeaxis.h"
-#include "abstractchartlayout_p.h"
-#include <QGraphicsLayout>
-#include <QDateTime>
-#include <qmath.h>
+#include <private/chartdatetimeaxisy_p.h>
+#include <private/chartpresenter_p.h>
+#include <QtCharts/QDateTimeAxis>
+#include <private/abstractchartlayout_p.h>
+#include <QtWidgets/QGraphicsLayout>
+#include <QtCore/QDateTime>
+#include <QtCore/QtMath>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

@@ -30,8 +30,8 @@
 #ifndef QVALUEAXIS_P_H
 #define QVALUEAXIS_P_H
 
-#include <qvalueaxis.h>
-#include "qabstractaxis_p.h"
+#include <QtCharts/QValueAxis>
+#include <private/qabstractaxis_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

@@ -17,23 +17,23 @@
  ** $QT_END_LICENSE$
  **
  ****************************************************************************/
-#include "chartpresenter_p.h"
-#include "qchart.h"
-#include "chartitem_p.h"
-#include "qchart_p.h"
-#include "qabstractaxis.h"
-#include "qabstractaxis_p.h"
-#include "chartdataset_p.h"
-#include "chartanimation_p.h"
-#include "qabstractseries_p.h"
-#include "qareaseries.h"
-#include "chartaxiselement_p.h"
-#include "chartbackground_p.h"
-#include "cartesianchartlayout_p.h"
-#include "polarchartlayout_p.h"
-#include "charttitle_p.h"
-#include <QTimer>
-#include <QTextDocument>
+#include <private/chartpresenter_p.h>
+#include <QtCharts/QChart>
+#include <private/chartitem_p.h>
+#include <private/qchart_p.h>
+#include <QtCharts/QAbstractAxis>
+#include <private/qabstractaxis_p.h>
+#include <private/chartdataset_p.h>
+#include <private/chartanimation_p.h>
+#include <private/qabstractseries_p.h>
+#include <QtCharts/QAreaSeries>
+#include <private/chartaxiselement_p.h>
+#include <private/chartbackground_p.h>
+#include <private/cartesianchartlayout_p.h>
+#include <private/polarchartlayout_p.h>
+#include <private/charttitle_p.h>
+#include <QtCore/QTimer>
+#include <QtGui/QTextDocument>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

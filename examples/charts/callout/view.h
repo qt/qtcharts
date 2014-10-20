@@ -20,8 +20,8 @@
 
 #ifndef VIEW_H
 #define VIEW_H
-#include <QGraphicsView>
-#include <QChartGlobal>
+#include <QtWidgets/QGraphicsView>
+#include <QtCharts/QChartGlobal>
 
 QT_CHARTS_BEGIN_NAMESPACE
 class QChart;

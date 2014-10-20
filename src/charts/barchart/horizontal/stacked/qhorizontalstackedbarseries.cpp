@@ -17,12 +17,12 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-#include "qhorizontalstackedbarseries.h"
-#include "qhorizontalstackedbarseries_p.h"
-#include "horizontalstackedbarchartitem_p.h"
+#include <QtCharts/QHorizontalStackedBarSeries>
+#include <private/qhorizontalstackedbarseries_p.h>
+#include <private/horizontalstackedbarchartitem_p.h>
 
-#include "chartdataset_p.h"
-#include "charttheme_p.h"
+#include <private/chartdataset_p.h>
+#include <private/charttheme_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 /*!

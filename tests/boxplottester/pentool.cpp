@@ -19,11 +19,11 @@
 ****************************************************************************/
 
 #include "pentool.h"
-#include <QPushButton>
-#include <QDoubleSpinBox>
-#include <QComboBox>
-#include <QFormLayout>
-#include <QColorDialog>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QDoubleSpinBox>
+#include <QtWidgets/QComboBox>
+#include <QtWidgets/QFormLayout>
+#include <QtWidgets/QColorDialog>
 
 PenTool::PenTool(QString title, QWidget *parent)
     : QWidget(parent)

@@ -30,8 +30,8 @@
 #ifndef AXISANIMATION_H
 #define AXISANIMATION_H
 
-#include "chartanimation_p.h"
-#include <QPointF>
+#include <private/chartanimation_p.h>
+#include <QtCore/QPointF>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

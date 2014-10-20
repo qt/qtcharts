@@ -18,15 +18,15 @@
 **
 ****************************************************************************/
 
-#include "qcategoryaxis.h"
-#include "qcategoryaxis_p.h"
-#include "chartcategoryaxisx_p.h"
-#include "chartcategoryaxisy_p.h"
-#include "polarchartcategoryaxisangular_p.h"
-#include "polarchartcategoryaxisradial_p.h"
-#include "qchart.h"
-#include <qmath.h>
-#include <QDebug>
+#include <QtCharts/QCategoryAxis>
+#include <private/qcategoryaxis_p.h>
+#include <private/chartcategoryaxisx_p.h>
+#include <private/chartcategoryaxisy_p.h>
+#include <private/polarchartcategoryaxisangular_p.h>
+#include <private/polarchartcategoryaxisradial_p.h>
+#include <QtCharts/QChart>
+#include <QtCore/QtMath>
+#include <QtCore/QDebug>
 
 QT_CHARTS_BEGIN_NAMESPACE
 /*!

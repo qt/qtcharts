@@ -17,10 +17,10 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-#include <QApplication>
-#include <QMainWindow>
-#include <QStatusBar>
-#include <QChartView>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QMainWindow>
+#include <QtWidgets/QStatusBar>
+#include <QtCharts/QChartView>
 #include "donutbreakdownchart.h"
 
 QT_CHARTS_USE_NAMESPACE

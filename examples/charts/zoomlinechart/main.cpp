@@ -20,11 +20,11 @@
 
 #include "chart.h"
 #include "chartview.h"
-#include <QApplication>
-#include <QMainWindow>
-#include <qmath.h>
-#include <QLineSeries>
-#include <QValueAxis>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QMainWindow>
+#include <QtCore/QtMath>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QValueAxis>
 
 QT_CHARTS_USE_NAMESPACE
 

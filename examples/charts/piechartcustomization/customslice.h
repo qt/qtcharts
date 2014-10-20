@@ -20,7 +20,7 @@
 #ifndef CUSTOMSLICE_H
 #define CUSTOMSLICE_H
 
-#include <QPieSlice>
+#include <QtCharts/QPieSlice>
 
 QT_CHARTS_USE_NAMESPACE
 

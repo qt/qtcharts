@@ -19,9 +19,9 @@
  ****************************************************************************/
 
 #include "../qabstractaxis/tst_qabstractaxis.h"
-#include "qlogvalueaxis.h"
-#include <qlineseries.h>
-#include <QDebug>
+#include <QtCharts/QLogValueAxis>
+#include <QtCharts/QLineSeries>
+#include <QtCore/QDebug>
 
 class tst_QLogValueAxis: public tst_QAbstractAxis
 {

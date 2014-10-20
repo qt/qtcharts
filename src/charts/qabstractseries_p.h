@@ -30,9 +30,9 @@
 #ifndef QABSTRACTSERIES_P_H
 #define QABSTRACTSERIES_P_H
 
-#include "qabstractseries.h"
-#include "qchart.h"
-#include "abstractdomain_p.h"
+#include <QtCharts/QAbstractSeries>
+#include <QtCharts/QChart>
+#include <private/abstractdomain_p.h>
 
 class QGraphicsItem;
 

@@ -30,8 +30,8 @@
 #ifndef CHARTHELPERS_P_H
 #define CHARTHELPERS_P_H
 
-#include <qnumeric.h>
-#include <QPointF>
+#include <QtCore/QtNumeric>
+#include <QtCore/QPointF>
 
 static inline bool isValidValue(qreal value)
 {

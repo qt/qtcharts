@@ -20,7 +20,7 @@
 
 #include "qchartsplugin.h"
 #include <QtCharts/QChartView>
-#include <QtPlugin>
+#include <QtCore/QtPlugin>
 
 QT_CHARTS_USE_NAMESPACE
 

@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#include <QApplication>
-#include <QMainWindow>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QMainWindow>
 #include "chartview.h"
 
 QT_CHARTS_USE_NAMESPACE

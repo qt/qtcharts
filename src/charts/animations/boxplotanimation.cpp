@@ -18,10 +18,10 @@
 **
 ****************************************************************************/
 
-#include "boxplotanimation_p.h"
-#include "boxplotchartitem_p.h"
-#include "boxwhiskersdata_p.h"
-#include "boxwhiskersanimation_p.h"
+#include <private/boxplotanimation_p.h>
+#include <private/boxplotchartitem_p.h>
+#include <private/boxwhiskersdata_p.h>
+#include <private/boxwhiskersanimation_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

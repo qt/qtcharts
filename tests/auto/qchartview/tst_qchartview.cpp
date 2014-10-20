@@ -23,7 +23,7 @@
 #include <QtCharts/qlineseries.h>
 #include <cmath>
 #include <tst_definitions.h>
-#include <QtCharts/qvalueaxis.h>
+#include <QtCharts/QValueAxis>
 
 QT_CHARTS_USE_NAMESPACE
 

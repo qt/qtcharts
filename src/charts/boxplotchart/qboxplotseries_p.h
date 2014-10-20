@@ -30,10 +30,10 @@
 #ifndef QBOXPLOTSERIES_P_H
 #define QBOXPLOTSERIES_P_H
 
-#include "qboxplotseries.h"
-#include "qabstractbarseries_p.h"
-#include "abstractdomain_p.h"
-#include "qbarset.h"
+#include <QtCharts/QBoxPlotSeries>
+#include <private/qabstractbarseries_p.h>
+#include <private/abstractdomain_p.h>
+#include <QtCharts/QBarSet>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

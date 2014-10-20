@@ -31,9 +31,9 @@
 #ifndef STACKEDBARCHARTITEM_H
 #define STACKEDBARCHARTITEM_H
 
-#include "abstractbarchartitem_p.h"
-#include <qstackedbarseries.h>
-#include <QGraphicsItem>
+#include <private/abstractbarchartitem_p.h>
+#include <QtCharts/QStackedBarSeries>
+#include <QtWidgets/QGraphicsItem>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

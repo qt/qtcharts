@@ -21,13 +21,13 @@
 #include <QtCore/QString>
 #include <QtTest/QtTest>
 
-#include <qchart.h>
-#include <qchartview.h>
-#include <qbarseries.h>
-#include <qbarset.h>
-#include <qvbarmodelmapper.h>
-#include <qhbarmodelmapper.h>
-#include <QStandardItemModel>
+#include <QtCharts/QChart>
+#include <QtCharts/QChartView>
+#include <QtCharts/QBarSeries>
+#include <QtCharts/QBarSet>
+#include <QtCharts/QVBarModelMapper>
+#include <QtCharts/QHBarModelMapper>
+#include <QtGui/QStandardItemModel>
 
 QT_CHARTS_USE_NAMESPACE
 

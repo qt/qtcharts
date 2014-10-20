@@ -18,11 +18,11 @@
 **
 ****************************************************************************/
 
-#include "chartbackground_p.h"
-#include "chartconfig_p.h"
-#include <QPen>
-#include <QBrush>
-#include <QPainter>
+#include <private/chartbackground_p.h>
+#include <private/chartconfig_p.h>
+#include <QtGui/QPen>
+#include <QtGui/QBrush>
+#include <QtGui/QPainter>
 #include <QGraphicsDropShadowEffect>
 
 QT_CHARTS_BEGIN_NAMESPACE

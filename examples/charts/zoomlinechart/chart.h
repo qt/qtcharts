@@ -21,7 +21,7 @@
 #ifndef CHART_H
 #define CHART_H
 
-#include <QChart>
+#include <QtCharts/QChart>
 
 class QGestureEvent;
 

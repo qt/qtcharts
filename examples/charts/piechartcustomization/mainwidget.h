@@ -20,8 +20,8 @@
 #ifndef MAINWIDGET_H
 #define MAINWIDGET_H
 
-#include <QWidget>
-#include <QChartGlobal>
+#include <QtWidgets/QWidget>
+#include <QtCharts/QChartGlobal>
 
 class QLineEdit;
 class QPushButton;

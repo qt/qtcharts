@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 #include "declarativechart.h"
-#include <QPainter>
+#include <QtGui/QPainter>
 #include "declarativelineseries.h"
 #include "declarativeareaseries.h"
 #include "declarativebarseries.h"
@@ -27,26 +27,26 @@
 #include "declarativesplineseries.h"
 #include "declarativeboxplotseries.h"
 #include "declarativescatterseries.h"
-#include "qbarcategoryaxis.h"
-#include "qvalueaxis.h"
-#include "qlogvalueaxis.h"
-#include "qcategoryaxis.h"
-#include "qabstractseries_p.h"
+#include <QtCharts/QBarCategoryAxis>
+#include <QtCharts/QValueAxis>
+#include <QtCharts/QLogValueAxis>
+#include <QtCharts/QCategoryAxis>
+#include <private/qabstractseries_p.h>
 #include "declarativemargins.h"
-#include "chartdataset_p.h"
+#include <private/chartdataset_p.h>
 #include "declarativeaxes.h"
-#include "qchart_p.h"
-#include "qpolarchart.h"
+#include <private/qchart_p.h>
+#include <QtCharts/QPolarChart>
 
 #ifndef QT_ON_ARM
-    #include "qdatetimeaxis.h"
+    #include <QtCharts/QDateTimeAxis>
 #endif
 
-#include <QGraphicsSceneMouseEvent>
-#include <QGraphicsSceneHoverEvent>
-#include <QApplication>
-#include <QTimer>
-#include <QThread>
+#include <QtWidgets/QGraphicsSceneMouseEvent>
+#include <QtWidgets/QGraphicsSceneHoverEvent>
+#include <QtWidgets/QApplication>
+#include <QtCore/QTimer>
+#include <QtCore/QThread>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

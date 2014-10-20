@@ -19,8 +19,8 @@
 ****************************************************************************/
 
 #include "charts.h"
-#include "qchart.h"
-#include "qlineseries.h"
+#include <QtCharts/QChart>
+#include <QtCharts/QLineSeries>
 
 class LineChart: public Chart
 {

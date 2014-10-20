@@ -18,14 +18,14 @@
 **
 ****************************************************************************/
 
-#include "chartvalueaxisy_p.h"
-#include "qabstractaxis.h"
-#include "chartpresenter_p.h"
-#include "qvalueaxis.h"
-#include "abstractchartlayout_p.h"
-#include <QGraphicsLayout>
-#include <qmath.h>
-#include <QDebug>
+#include <private/chartvalueaxisy_p.h>
+#include <QtCharts/QAbstractAxis>
+#include <private/chartpresenter_p.h>
+#include <QtCharts/QValueAxis>
+#include <private/abstractchartlayout_p.h>
+#include <QtWidgets/QGraphicsLayout>
+#include <QtCore/QtMath>
+#include <QtCore/QDebug>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

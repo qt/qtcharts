@@ -30,10 +30,10 @@
 #ifndef PIECHARTITEM_H
 #define PIECHARTITEM_H
 
-#include "qpieseries.h"
-#include "chartitem_p.h"
-#include "piesliceitem_p.h"
-#include <QPointer>
+#include <QtCharts/QPieSeries>
+#include <private/chartitem_p.h>
+#include <private/piesliceitem_p.h>
+#include <QtCore/QPointer>
 
 class QGraphicsItem;
 QT_CHARTS_BEGIN_NAMESPACE

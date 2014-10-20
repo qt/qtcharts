@@ -17,7 +17,7 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-#include <QApplication>
+#include <QtWidgets/QApplication>
 #include "widget.h"
 
 int main(int argc, char *argv[])

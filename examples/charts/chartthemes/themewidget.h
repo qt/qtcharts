@@ -21,8 +21,8 @@
 #ifndef THEMEWIDGET_H
 #define THEMEWIDGET_H
 
-#include <QWidget>
-#include <QChartGlobal>
+#include <QtWidgets/QWidget>
+#include <QtCharts/QChartGlobal>
 
 class QComboBox;
 class QCheckBox;

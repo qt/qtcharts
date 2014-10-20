@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#include "qpolarchart.h"
-#include "qabstractaxis.h"
+#include <QtCharts/QPolarChart>
+#include <QtCharts/QAbstractAxis>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

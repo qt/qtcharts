@@ -20,20 +20,20 @@
 
 #include "mainwindow.h"
 #include "chartview.h"
-#include <QScatterSeries>
-#include <QLineSeries>
-#include <QSplineSeries>
-#include <QAreaSeries>
-#include <QBarSeries>
-#include <QBarSet>
-#include <QValueAxis>
-#include <QLogValueAxis>
-#include <QDateTimeAxis>
-#include <QCategoryAxis>
-#include <QPolarChart>
-#include <QDebug>
-#include <qmath.h>
-#include <QDateTime>
+#include <QtCharts/QScatterSeries>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QSplineSeries>
+#include <QtCharts/QAreaSeries>
+#include <QtCharts/QBarSeries>
+#include <QtCharts/QBarSet>
+#include <QtCharts/QValueAxis>
+#include <QtCharts/QLogValueAxis>
+#include <QtCharts/QDateTimeAxis>
+#include <QtCharts/QCategoryAxis>
+#include <QtCharts/QPolarChart>
+#include <QtCore/QDebug>
+#include <QtCore/QtMath>
+#include <QtCore/QDateTime>
 
 QT_CHARTS_USE_NAMESPACE
 #include "ui_mainwindow.h"

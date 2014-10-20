@@ -19,12 +19,12 @@
 ****************************************************************************/
 
 #include <QtTest/QtTest>
-#include <qchartview.h>
-#include <qchart.h>
-#include <qpieseries.h>
-#include <qpieslice.h>
-#include <qpiemodelmapper.h>
-#include <QStandardItemModel>
+#include <QtCharts/QChartView>
+#include <QtCharts/QChart>
+#include <QtCharts/QPieSeries>
+#include <QtCharts/QPieSlice>
+#include <QtCharts/QPieModelMapper>
+#include <QtGui/QStandardItemModel>
 #include <tst_definitions.h>
 
 QT_CHARTS_USE_NAMESPACE

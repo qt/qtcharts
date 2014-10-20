@@ -21,7 +21,7 @@
 #ifndef INSPECTORWIDGET_H
 #define INSPECTORWIDGET_H
 
-#include <QWidget>
+#include <QtWidgets/QWidget>
 
 class InspectorWidget : public QWidget
 {

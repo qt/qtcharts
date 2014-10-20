@@ -20,8 +20,8 @@
 
 #include "declarativebarseries.h"
 #include "declarativeboxplotseries.h"
-#include "qboxset.h"
-#include "qvboxplotmodelmapper.h"
+#include <QtCharts/QBoxSet>
+#include <QtCharts/QVBoxPlotModelMapper>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

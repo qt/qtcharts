@@ -18,15 +18,15 @@
  **
  ****************************************************************************/
 
-#include "xychart_p.h"
-#include "qxyseries.h"
-#include "qxyseries_p.h"
-#include "chartpresenter_p.h"
-#include "abstractdomain_p.h"
-#include "qxymodelmapper.h"
-#include "qabstractaxis_p.h"
-#include <QPainter>
-#include <QAbstractItemModel>
+#include <private/xychart_p.h>
+#include <QtCharts/QXYSeries>
+#include <private/qxyseries_p.h>
+#include <private/chartpresenter_p.h>
+#include <private/abstractdomain_p.h>
+#include <QtCharts/QXYModelMapper>
+#include <private/qabstractaxis_p.h>
+#include <QtGui/QPainter>
+#include <QtCore/QAbstractItemModel>
 
 
 QT_CHARTS_BEGIN_NAMESPACE

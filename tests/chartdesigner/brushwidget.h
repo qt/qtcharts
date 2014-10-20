@@ -21,7 +21,7 @@
 #ifndef BRUSHWIDGET_H
 #define BRUSHWIDGET_H
 
-#include <QWidget>
+#include <QtWidgets/QWidget>
 
 class BrushWidget: public QWidget
 {

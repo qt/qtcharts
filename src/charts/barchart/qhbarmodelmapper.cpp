@@ -18,7 +18,7 @@
 **
 ****************************************************************************/
 
-#include "qhbarmodelmapper.h"
+#include <QtCharts/QHBarModelMapper>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

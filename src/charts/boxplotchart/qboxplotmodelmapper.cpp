@@ -18,12 +18,12 @@
 **
 ****************************************************************************/
 
-#include "qboxplotmodelmapper.h"
-#include "qboxplotmodelmapper_p.h"
-#include "qboxplotseries.h"
-#include "qboxset.h"
-#include "qchart.h"
-#include <QAbstractItemModel>
+#include <QtCharts/QBoxPlotModelMapper>
+#include <private/qboxplotmodelmapper_p.h>
+#include <QtCharts/QBoxPlotSeries>
+#include <QtCharts/QBoxSet>
+#include <QtCharts/QChart>
+#include <QtCore/QAbstractItemModel>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

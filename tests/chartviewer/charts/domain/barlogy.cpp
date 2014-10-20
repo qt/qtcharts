@@ -19,11 +19,11 @@
 ****************************************************************************/
 
 #include "charts.h"
-#include "qchart.h"
-#include "qbarseries.h"
-#include "qbarset.h"
-#include "qlogvalueaxis.h"
-#include "qbarcategoryaxis.h"
+#include <QtCharts/QChart>
+#include <QtCharts/QBarSeries>
+#include <QtCharts/QBarSet>
+#include <QtCharts/QLogValueAxis>
+#include <QtCharts/QBarCategoryAxis>
 
 class BarLogY: public Chart
 {

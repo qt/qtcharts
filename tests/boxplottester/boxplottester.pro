@@ -4,6 +4,7 @@
 
 TEMPLATE = app
 
+QT += charts
 QT += core gui
 contains(QT_MAJOR_VERSION, 5) {
     QT += widgets

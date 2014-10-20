@@ -30,8 +30,8 @@
 #ifndef BAR_H
 #define BAR_H
 
-#include "qchartglobal.h"
-#include <QGraphicsRectItem>
+#include <QtCharts/QChartGlobal>
+#include <QtWidgets/QGraphicsRectItem>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

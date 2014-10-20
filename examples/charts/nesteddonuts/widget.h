@@ -20,8 +20,8 @@
 #ifndef WIDGET_H
 #define WIDGET_H
 
-#include <QWidget>
-#include <QPieSeries>
+#include <QtWidgets/QWidget>
+#include <QtCharts/QPieSeries>
 
 class QTimer;
 

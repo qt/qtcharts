@@ -30,8 +30,8 @@
 #ifndef SPLINECHARTITEM_P_H
 #define SPLINECHARTITEM_P_H
 
-#include "qsplineseries.h"
-#include "xychart_p.h"
+#include <QtCharts/QSplineSeries>
+#include <private/xychart_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

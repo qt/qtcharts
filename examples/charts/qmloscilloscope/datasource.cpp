@@ -19,12 +19,12 @@
 ****************************************************************************/
 
 #include "datasource.h"
-#include <QXYSeries>
-#include <QAreaSeries>
+#include <QtCharts/QXYSeries>
+#include <QtCharts/QAreaSeries>
 #include <QtQuick/QQuickView>
 #include <QtQuick/QQuickItem>
-#include <QDebug>
-#include <qmath.h>
+#include <QtCore/QDebug>
+#include <QtCore/QtMath>
 
 QT_CHARTS_USE_NAMESPACE
 

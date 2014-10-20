@@ -19,8 +19,8 @@
 ****************************************************************************/
 
 #include "charts.h"
-#include "qchart.h"
-#include "qpieseries.h"
+#include <QtCharts/QChart>
+#include <QtCharts/QPieSeries>
 
 class DonutChart: public Chart
 {

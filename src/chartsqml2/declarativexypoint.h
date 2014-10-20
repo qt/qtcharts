@@ -21,9 +21,9 @@
 #ifndef DECLARATIVE_XY_POINT_H
 #define DECLARATIVE_XY_POINT_H
 
-#include "qchartglobal.h"
-#include <QObject>
-#include <QPointF>
+#include <QtCharts/QChartGlobal>
+#include <QtCore/QObject>
+#include <QtCore/QPointF>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

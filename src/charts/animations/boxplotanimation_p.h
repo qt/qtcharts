@@ -30,10 +30,10 @@
 #ifndef BOXPLOTANIMATION_P_H
 #define BOXPLOTANIMATION_P_H
 
-#include "chartanimation_p.h"
-#include "boxwhiskers_p.h"
-#include "boxwhiskersdata_p.h"
-#include "boxwhiskersanimation_p.h"
+#include <private/chartanimation_p.h>
+#include <private/boxwhiskers_p.h>
+#include <private/boxwhiskersdata_p.h>
+#include <private/boxwhiskersanimation_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

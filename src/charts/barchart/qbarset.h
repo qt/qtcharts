@@ -21,10 +21,10 @@
 #ifndef QBARSET_H
 #define QBARSET_H
 
-#include <QtCharts/qchartglobal.h>
-#include <QPen>
-#include <QBrush>
-#include <QFont>
+#include <QtCharts/QChartGlobal>
+#include <QtGui/QPen>
+#include <QtGui/QBrush>
+#include <QtGui/QFont>
 
 QT_CHARTS_BEGIN_NAMESPACE
 class QBarSetPrivate;

@@ -21,8 +21,8 @@
 #ifndef CHARTVIEW_H
 #define CHARTVIEW_H
 
-#include <QChartView>
-#include <QTimer>
+#include <QtCharts/QChartView>
+#include <QtCore/QTimer>
 
 QT_CHARTS_USE_NAMESPACE
 

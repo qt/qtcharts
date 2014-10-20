@@ -19,8 +19,8 @@
  ****************************************************************************/
 
 #include "../qabstractaxis/tst_qabstractaxis.h"
-#include <qdatetimeaxis.h>
-#include <qlineseries.h>
+#include <QtCharts/QDateTimeAxis>
+#include <QtCharts/QLineSeries>
 
 class tst_QDateTimeAxis : public QObject//: public tst_QAbstractAxis
 {

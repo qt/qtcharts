@@ -18,15 +18,15 @@
  **
  ****************************************************************************/
 
-#include "qlegendmarker.h"
-#include "qlegendmarker_p.h"
-#include "legendmarkeritem_p.h"
-#include "qlegend.h"
-#include "qlegend_p.h"
-#include "legendlayout_p.h"
-#include <QFontMetrics>
-#include <QGraphicsSceneEvent>
-#include <QAbstractSeries>
+#include <QtCharts/QLegendMarker>
+#include <private/qlegendmarker_p.h>
+#include <private/legendmarkeritem_p.h>
+#include <QtCharts/QLegend>
+#include <private/qlegend_p.h>
+#include <private/legendlayout_p.h>
+#include <QtGui/QFontMetrics>
+#include <QtWidgets/QGraphicsSceneEvent>
+#include <QtCharts/QAbstractSeries>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

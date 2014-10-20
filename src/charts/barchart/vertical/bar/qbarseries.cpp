@@ -18,13 +18,13 @@
 **
 ****************************************************************************/
 
-#include "qbarseries.h"
-#include "qbarseries_p.h"
-#include "barchartitem_p.h"
-#include "chartdataset_p.h"
-#include "charttheme_p.h"
-#include "qvalueaxis.h"
-#include "qbarcategoryaxis.h"
+#include <QtCharts/QBarSeries>
+#include <private/qbarseries_p.h>
+#include <private/barchartitem_p.h>
+#include <private/chartdataset_p.h>
+#include <private/charttheme_p.h>
+#include <QtCharts/QValueAxis>
+#include <QtCharts/QBarCategoryAxis>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

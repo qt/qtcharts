@@ -20,7 +20,7 @@
 
 #ifndef VIEW_H
 #define VIEW_H
-#include <QGraphicsView>
+#include <QtWidgets/QGraphicsView>
 
 class QGraphicsScene;
 class QResizeEvent;

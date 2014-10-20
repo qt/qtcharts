@@ -19,10 +19,10 @@
 ****************************************************************************/
 
 #include <QtTest/QtTest>
-#include <qbarseries.h>
-#include <qbarset.h>
-#include <qchartview.h>
-#include <qchart.h>
+#include <QtCharts/QBarSeries>
+#include <QtCharts/QBarSet>
+#include <QtCharts/QChartView>
+#include <QtCharts/QChart>
 #include "tst_definitions.h"
 
 QT_CHARTS_USE_NAMESPACE

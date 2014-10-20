@@ -22,8 +22,8 @@
 #define GRID_H_
 
 #include "model.h"
-#include <QGraphicsWidget>
-#include <QChartGlobal>
+#include <QtWidgets/QGraphicsWidget>
+#include <QtCharts/QChartGlobal>
 
 class QGraphicsGridLayout;
 class Chart;

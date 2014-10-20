@@ -18,12 +18,12 @@
 **
 ****************************************************************************/
 
-#include "polarchartlogvalueaxisangular_p.h"
-#include "abstractchartlayout_p.h"
-#include "chartpresenter_p.h"
-#include "qlogvalueaxis.h"
-#include <qmath.h>
-#include <QDebug>
+#include <private/polarchartlogvalueaxisangular_p.h>
+#include <private/abstractchartlayout_p.h>
+#include <private/chartpresenter_p.h>
+#include <QtCharts/QLogValueAxis>
+#include <QtCore/QtMath>
+#include <QtCore/QDebug>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

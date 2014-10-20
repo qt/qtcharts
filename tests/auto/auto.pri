@@ -2,7 +2,7 @@
     error( "Couldn't find the tests.pri file!" )
 }
 
-    QT += testlib widgets
+QT += testlib widgets
 
 !contains(TARGET, ^tst_.*):TARGET = $$join(TARGET,,"tst_")
 

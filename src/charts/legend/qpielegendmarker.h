@@ -21,7 +21,7 @@
 #ifndef QPIELEGENDMARKER_H
 #define QPIELEGENDMARKER_H
 
-#include <QtCharts/qchartglobal.h>
+#include <QtCharts/QChartGlobal>
 #include <QtCharts/QLegendMarker>
 #include <QtCharts/QPieSeries>
 #include <QtCharts/QPieSlice>

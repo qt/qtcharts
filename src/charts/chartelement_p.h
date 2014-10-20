@@ -30,9 +30,9 @@
 #ifndef CHARTELEMENT_H
 #define CHARTELEMENT_H
 
-#include "qchartglobal.h"
-#include <QObject>
-#include <QRect>
+#include <QtCharts/QChartGlobal>
+#include <QtCore/QObject>
+#include <QtCore/QRect>
 #include <QGraphicsObject>
 
 QT_CHARTS_BEGIN_NAMESPACE

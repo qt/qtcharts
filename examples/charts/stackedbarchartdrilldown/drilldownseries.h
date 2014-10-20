@@ -21,8 +21,8 @@
 #ifndef DRILLDOWNSERIES_H
 #define DRILLDOWNSERIES_H
 
-#include <QStackedBarSeries>
-#include <QMap>
+#include <QtCharts/QStackedBarSeries>
+#include <QtCore/QMap>
 
 QT_CHARTS_USE_NAMESPACE
 

@@ -30,11 +30,12 @@
 #ifndef QAREASERIES_P_H
 #define QAREASERIES_P_H
 
-#include "qabstractseries_p.h"
+#include <private/qabstractseries_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 class QAreaSeries;
+class QLineSeries;
 
 class QAreaSeriesPrivate: public QAbstractSeriesPrivate
 {

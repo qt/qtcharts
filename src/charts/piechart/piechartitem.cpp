@@ -18,17 +18,17 @@
 **
 ****************************************************************************/
 
-#include "piechartitem_p.h"
-#include "piesliceitem_p.h"
-#include "qpieslice.h"
-#include "qpieslice_p.h"
-#include "qpieseries.h"
-#include "qpieseries_p.h"
-#include "chartpresenter_p.h"
-#include "chartdataset_p.h"
-#include "pieanimation_p.h"
-#include <QPainter>
-#include <QTimer>
+#include <private/piechartitem_p.h>
+#include <private/piesliceitem_p.h>
+#include <QtCharts/QPieSlice>
+#include <private/qpieslice_p.h>
+#include <QtCharts/QPieSeries>
+#include <private/qpieseries_p.h>
+#include <private/chartpresenter_p.h>
+#include <private/chartdataset_p.h>
+#include <private/pieanimation_p.h>
+#include <QtGui/QPainter>
+#include <QtCore/QTimer>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

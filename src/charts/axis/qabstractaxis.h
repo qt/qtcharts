@@ -21,10 +21,10 @@
 #ifndef QABSTRACTAXIS_H
 #define QABSTRACTAXIS_H
 
-#include <QtCharts/qchartglobal.h>
-#include <QPen>
-#include <QFont>
-#include <QVariant>
+#include <QtCharts/QChartGlobal>
+#include <QtGui/QPen>
+#include <QtGui/QFont>
+#include <QtCore/QVariant>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

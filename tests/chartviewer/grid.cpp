@@ -20,10 +20,10 @@
 
 #include "grid.h"
 #include "charts.h"
-#include <qchart.h>
-#include <QGraphicsGridLayout>
-#include <QGraphicsSceneMouseEvent>
-#include <QDebug>
+#include <QtCharts/QChart>
+#include <QtWidgets/QGraphicsGridLayout>
+#include <QtWidgets/QGraphicsSceneMouseEvent>
+#include <QtCore/QDebug>
 
 Grid::Grid(int size, QGraphicsItem *parent)
     : QGraphicsWidget(parent),

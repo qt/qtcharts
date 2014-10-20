@@ -21,9 +21,9 @@
 #ifndef CHARTVIEW_H
 #define CHARTVIEW_H
 
-#include <QChartGlobal>
-#include <QChartView>
-#include <QScatterSeries>
+#include <QtCharts/QChartGlobal>
+#include <QtCharts/QChartView>
+#include <QtCharts/QScatterSeries>
 
 QT_CHARTS_USE_NAMESPACE
 

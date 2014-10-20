@@ -21,7 +21,7 @@
 #ifndef DECLARATIVECATEGORYAXIS_H
 #define DECLARATIVECATEGORYAXIS_H
 
-#include "qcategoryaxis.h"
+#include <QtCharts/QCategoryAxis>
 
 #include <QtQml/QQmlListProperty>
 #include <QtQml/QQmlParserStatus>

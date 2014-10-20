@@ -18,17 +18,17 @@
 **
 ****************************************************************************/
 
-#include "qchart.h"
-#include "qchart_p.h"
-#include "legendscroller_p.h"
-#include "qlegend_p.h"
-#include "chartbackground_p.h"
-#include "qabstractaxis.h"
-#include "abstractchartlayout_p.h"
-#include "charttheme_p.h"
-#include "chartpresenter_p.h"
-#include "chartdataset_p.h"
-#include <QGraphicsScene>
+#include <QtCharts/QChart>
+#include <private/qchart_p.h>
+#include <private/legendscroller_p.h>
+#include <private/qlegend_p.h>
+#include <private/chartbackground_p.h>
+#include <QtCharts/QAbstractAxis>
+#include <private/abstractchartlayout_p.h>
+#include <private/charttheme_p.h>
+#include <private/chartpresenter_p.h>
+#include <private/chartdataset_p.h>
+#include <QtWidgets/QGraphicsScene>
 #include <QGraphicsSceneResizeEvent>
 
 QT_CHARTS_BEGIN_NAMESPACE

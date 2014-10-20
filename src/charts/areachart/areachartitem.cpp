@@ -18,15 +18,15 @@
 **
 ****************************************************************************/
 
-#include "areachartitem_p.h"
-#include "qareaseries.h"
-#include "qareaseries_p.h"
-#include "qlineseries.h"
-#include "chartpresenter_p.h"
-#include "abstractdomain_p.h"
-#include <QPainter>
-#include <QGraphicsSceneMouseEvent>
-#include <QDebug>
+#include <private/areachartitem_p.h>
+#include <QtCharts/QAreaSeries>
+#include <private/qareaseries_p.h>
+#include <QtCharts/QLineSeries>
+#include <private/chartpresenter_p.h>
+#include <private/abstractdomain_p.h>
+#include <QtGui/QPainter>
+#include <QtWidgets/QGraphicsSceneMouseEvent>
+#include <QtCore/QDebug>
 
 
 QT_CHARTS_BEGIN_NAMESPACE

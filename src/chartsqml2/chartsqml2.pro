@@ -1,7 +1,7 @@
 
 TARGET = qtchartsqml2
 QT += qml quick
-QT += charts
+QT += charts charts-private
 TARGETPATH = QtCharts
 
 IMPORT_VERSION = $$MODULE_VERSION

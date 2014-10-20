@@ -30,7 +30,7 @@
 #ifndef CHARTVALUEAXISX_H
 #define CHARTVALUEAXISX_H
 
-#include "horizontalaxis_p.h"
+#include <private/horizontalaxis_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
