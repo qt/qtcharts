@@ -28,7 +28,7 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-static const char *labelFormatMatchString = "%[\\-\\+#\\s\\d\\.lhjztL]*([dicuoxfegXFEG])";
+static const char *labelFormatMatchString = "%[\\-\\+#\\s\\d\\.\\'lhjztL]*([dicuoxfegXFEG])";
 static const char *labelFormatMatchLocalizedString = "^([^%]*)%\\.(\\d+)([defgiEG])(.*)$";
 static QRegExp *labelFormatMatcher = 0;
 static QRegExp *labelFormatMatcherLocalized = 0;
