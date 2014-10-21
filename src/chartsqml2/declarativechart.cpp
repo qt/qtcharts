@@ -375,14 +375,39 @@ void DeclarativeChart::componentComplete()
     QQuickItem::componentComplete();
 }
 
+void DeclarativeChart::seriesAxisAttachHelper(QAbstractSeries *series, QAbstractAxis *axis,
+                                              Qt::Orientations orientation,
+                                              Qt::Alignment alignment)
+{
+    if (!series->attachedAxes().contains(axis)) {
+        // Remove & delete old axes that are not attached to any other series
+        foreach (QAbstractAxis* oldAxis, m_chart->axes(orientation, series)) {
+            bool otherAttachments = false;
+            if (oldAxis != axis) {
+                foreach (QAbstractSeries *oldSeries, m_chart->series()) {
+                    if (oldSeries != series && oldSeries->attachedAxes().contains(oldAxis)) {
+                        otherAttachments = true;
+                        break;
+                    }
+                }
+                if (!otherAttachments) {
+                    m_chart->removeAxis(oldAxis);
+                    delete oldAxis;
+                }
+            }
+        }
+        if (!m_chart->axes(orientation).contains(axis))
+            m_chart->addAxis(axis, alignment);
+
+        series->attachAxis(axis);
+    }
+}
+
 void DeclarativeChart::handleAxisXSet(QAbstractAxis *axis)
 {
     QAbstractSeries *s = qobject_cast<QAbstractSeries *>(sender());
     if (axis && s) {
-        if (!m_chart->axes(Qt::Horizontal).contains(axis))
-            m_chart->setAxisX(axis, s);
-        if (!s->attachedAxes().contains(axis))
-            s->attachAxis(axis);
+        seriesAxisAttachHelper(s, axis, Qt::Horizontal, Qt::AlignBottom);
     } else {
         qWarning() << "Trying to set axisX to null.";
     }
@@ -392,16 +417,7 @@ void DeclarativeChart::handleAxisXTopSet(QAbstractAxis *axis)
 {
     QAbstractSeries *s = qobject_cast<QAbstractSeries *>(sender());
     if (axis && s) {
-        if (!m_chart->axes(Qt::Horizontal).contains(axis)) {
-            QList<QAbstractAxis *> oldAxes = m_chart->axes(Qt::Horizontal, s);
-            foreach (QAbstractAxis* a, oldAxes) {
-                    m_chart->removeAxis(a);
-                    delete a;
-            }
-            m_chart->addAxis(axis, Qt::AlignTop);
-        }
-        if (!s->attachedAxes().contains(axis))
-            s->attachAxis(axis);
+        seriesAxisAttachHelper(s, axis, Qt::Horizontal, Qt::AlignTop);
     } else {
         qWarning() << "Trying to set axisXTop to null.";
     }
@@ -411,10 +427,7 @@ void DeclarativeChart::handleAxisYSet(QAbstractAxis *axis)
 {
     QAbstractSeries *s = qobject_cast<QAbstractSeries *>(sender());
     if (axis && s) {
-        if (!m_chart->axes(Qt::Vertical).contains(axis))
-            m_chart->setAxisY(axis, s);
-        if (!s->attachedAxes().contains(axis))
-            s->attachAxis(axis);
+        seriesAxisAttachHelper(s, axis, Qt::Vertical, Qt::AlignLeft);
     } else {
         qWarning() << "Trying to set axisY to null.";
     }
@@ -424,16 +437,7 @@ void DeclarativeChart::handleAxisYRightSet(QAbstractAxis *axis)
 {
     QAbstractSeries *s = qobject_cast<QAbstractSeries *>(sender());
     if (axis && s) {
-        if (!m_chart->axes(Qt::Vertical).contains(axis)) {
-            QList<QAbstractAxis *> oldAxes = m_chart->axes((Qt::Vertical), s);
-            foreach (QAbstractAxis* a, oldAxes) {
-                m_chart->removeAxis(a);
-                delete a;
-            }
-            m_chart->addAxis(axis, Qt::AlignRight);
-        }
-        if (!s->attachedAxes().contains(axis))
-            s->attachAxis(axis);
+        seriesAxisAttachHelper(s, axis, Qt::Vertical, Qt::AlignRight);
     } else {
         qWarning() << "Trying to set axisYRight to null.";
     }
@@ -932,13 +936,13 @@ QAbstractSeries *DeclarativeChart::createSeries(int type, QString name, QAbstrac
         series->setName(name);
         m_chart->addSeries(series);
 
+        if (!axisX || !axisY)
+            initializeAxes(series);
+
         if (axisX)
             setAxisX(axisX, series);
         if (axisY)
             setAxisY(axisY, series);
-
-        if (series->attachedAxes().count() < 2)
-            initializeAxes(series);
     }
 
     return series;
@@ -954,14 +958,14 @@ void DeclarativeChart::removeSeries(QAbstractSeries *series)
 
 void DeclarativeChart::setAxisX(QAbstractAxis *axis, QAbstractSeries *series)
 {
-    if (axis)
-        m_chart->setAxisX(axis, series);
+    if (axis && series)
+        seriesAxisAttachHelper(series, axis, Qt::Horizontal, Qt::AlignBottom);
 }
 
 void DeclarativeChart::setAxisY(QAbstractAxis *axis, QAbstractSeries *series)
 {
-    if (axis)
-        m_chart->setAxisY(axis, series);
+    if (axis && series)
+        seriesAxisAttachHelper(series, axis, Qt::Vertical, Qt::AlignLeft);
 }
 
 void DeclarativeChart::createDefaultAxes()
