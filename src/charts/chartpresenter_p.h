@@ -169,6 +169,9 @@ public Q_SLOTS:
     void handleAxisAdded(QAbstractAxis *axis);
     void handleAxisRemoved(QAbstractAxis *axis);
 
+signals:
+    void plotAreaChanged(const QRectF &plotArea);
+
 private:
     QChart *m_chart;
     QList<ChartItem *> m_chartItems;

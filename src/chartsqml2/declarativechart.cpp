@@ -265,13 +265,6 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
-  \qmlsignal ChartView::onPlotAreaChanged(rect plotArea)
-  The plot area of the chart has changed. This may happen for example, if you modify minimumMargins
-  or if you resize the chart, or if you modify font size related properties of the legend or chart
-  title.
-*/
-
-/*!
   \qmlsignal ChartView::seriesAdded(AbstractSeries series)
   The \a series has been added to the chart.
 */
@@ -327,6 +320,7 @@ void DeclarativeChart::initChart(QChart::ChartType type)
     connect(m_margins, SIGNAL(rightChanged(int,int,int,int)), this, SLOT(changeMinimumMargins(int,int,int,int)));
     connect(m_chart->d_ptr->m_dataset, SIGNAL(seriesAdded(QAbstractSeries*)), this, SLOT(handleSeriesAdded(QAbstractSeries*)));
     connect(m_chart->d_ptr->m_dataset, SIGNAL(seriesRemoved(QAbstractSeries*)), this, SIGNAL(seriesRemoved(QAbstractSeries*)));
+    connect(m_chart, &QChart::plotAreaChanged, this, &DeclarativeChart::plotAreaChanged);
 }
 
 void DeclarativeChart::handleSeriesAdded(QAbstractSeries *series)
@@ -338,7 +332,6 @@ void DeclarativeChart::changeMinimumMargins(int top, int bottom, int left, int r
 {
     m_chart->setMargins(QMargins(left, top, right, bottom));
     emit minimumMarginsChanged();
-    emit plotAreaChanged(m_chart->plotArea());
 }
 
 DeclarativeChart::~DeclarativeChart()
@@ -454,11 +447,6 @@ void DeclarativeChart::geometryChanged(const QRectF &newGeometry, const QRectF &
         }
     }
     QQuickItem::geometryChanged(newGeometry, oldGeometry);
-
-    // It would be better to trigger the plotAreaChanged signal from QChart::plotAreaChanged or
-    // similar. Since that kind of a signal is not clearly needed in the C++ API the work-around is
-    // to implement it here for the QML API purposes.
-    emit plotAreaChanged(m_chart->plotArea());
 }
 
 void DeclarativeChart::sceneChanged(QList<QRectF> region)

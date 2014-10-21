@@ -51,6 +51,7 @@ class QT_CHARTS_EXPORT QChart : public QGraphicsWidget
     Q_PROPERTY(bool plotAreaBackgroundVisible READ isPlotAreaBackgroundVisible WRITE setPlotAreaBackgroundVisible)
     Q_PROPERTY(bool localizeNumbers READ localizeNumbers WRITE setLocalizeNumbers)
     Q_PROPERTY(QLocale locale READ locale WRITE setLocale)
+    Q_PROPERTY(QRectF plotArea READ plotArea NOTIFY plotAreaChanged)
     Q_ENUMS(ChartTheme)
     Q_ENUMS(AnimationOption)
     Q_ENUMS(ChartType)
@@ -162,6 +163,9 @@ public:
     QPointF mapToPosition(const QPointF &value, QAbstractSeries *series = 0);
 
     ChartType chartType() const;
+
+signals:
+    void plotAreaChanged(const QRectF &plotArea);
 
 protected:
     explicit QChart(QChart::ChartType type, QGraphicsItem *parent, Qt::WindowFlags wFlags);

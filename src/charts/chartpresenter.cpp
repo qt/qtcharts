@@ -67,6 +67,7 @@ void ChartPresenter::setGeometry(const QRectF rect)
             chart->domain()->setSize(rect.size());
             chart->setPos(rect.topLeft());
         }
+        emit plotAreaChanged(m_rect);
     }
 }
 

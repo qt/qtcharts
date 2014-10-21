@@ -169,6 +169,12 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
+  \property QChart::plotArea
+  Holds the rectangle within which the drawing of the chart is done.
+  It does not include the area defined by margins.
+*/
+
+/*!
  \internal
  Constructs a chart object of \a type which is a child of a \a parent.
  Parameter \a wFlags is passed to the QGraphicsWidget constructor.
@@ -526,10 +532,6 @@ QChart::ChartType QChart::chartType() const
     return d_ptr->m_type;
 }
 
-/*!
-    Returns the the rectangle within which the drawing of the chart is done.
-    It does not include the area defined by margins.
- */
 QRectF QChart::plotArea() const
 {
     return d_ptr->m_presenter->geometry();
@@ -762,6 +764,7 @@ QChartPrivate::QChartPrivate(QChart *q, QChart::ChartType type):
     QObject::connect(m_dataset, SIGNAL(seriesRemoved(QAbstractSeries*)), m_themeManager, SLOT(handleSeriesRemoved(QAbstractSeries*)));
     QObject::connect(m_dataset, SIGNAL(axisAdded(QAbstractAxis*)), m_themeManager, SLOT(handleAxisAdded(QAbstractAxis*)));
     QObject::connect(m_dataset, SIGNAL(axisRemoved(QAbstractAxis*)), m_themeManager, SLOT(handleAxisRemoved(QAbstractAxis*)));
+    QObject::connect(m_presenter, &ChartPresenter::plotAreaChanged, q, &QChart::plotAreaChanged);
 }
 
 QChartPrivate::~QChartPrivate()
