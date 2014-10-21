@@ -52,14 +52,14 @@ public:
     void setAxisX(QAbstractAxis *axis) { m_axes->setAxisX(axis); }
     QAbstractAxis *axisY() { return m_axes->axisY(); }
     void setAxisY(QAbstractAxis *axis) { m_axes->setAxisY(axis); }
-    Q_REVISION(2) QAbstractAxis *axisXTop() { return m_axes->axisXTop(); }
-    Q_REVISION(2) void setAxisXTop(QAbstractAxis *axis) { m_axes->setAxisXTop(axis); }
-    Q_REVISION(2) QAbstractAxis *axisYRight() { return m_axes->axisYRight(); }
-    Q_REVISION(2) void setAxisYRight(QAbstractAxis *axis) { m_axes->setAxisYRight(axis); }
-    Q_REVISION(3) QAbstractAxis *axisAngular() { return m_axes->axisX(); }
-    Q_REVISION(3) void setAxisAngular(QAbstractAxis *axis) { m_axes->setAxisX(axis); }
-    Q_REVISION(3) QAbstractAxis *axisRadial() { return m_axes->axisY(); }
-    Q_REVISION(3) void setAxisRadial(QAbstractAxis *axis) { m_axes->setAxisY(axis); }
+    QAbstractAxis *axisXTop() { return m_axes->axisXTop(); }
+    void setAxisXTop(QAbstractAxis *axis) { m_axes->setAxisXTop(axis); }
+    QAbstractAxis *axisYRight() { return m_axes->axisYRight(); }
+    void setAxisYRight(QAbstractAxis *axis) { m_axes->setAxisYRight(axis); }
+    QAbstractAxis *axisAngular() { return m_axes->axisX(); }
+    void setAxisAngular(QAbstractAxis *axis) { m_axes->setAxisX(axis); }
+    QAbstractAxis *axisRadial() { return m_axes->axisY(); }
+    void setAxisRadial(QAbstractAxis *axis) { m_axes->setAxisY(axis); }
     qreal borderWidth() const;
     void setBorderWidth(qreal borderWidth);
     QString brushFilename() const;

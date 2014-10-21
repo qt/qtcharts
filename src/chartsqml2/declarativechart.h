@@ -131,18 +131,18 @@ public:
     QColor titleColor();
     void setBackgroundColor(QColor color);
     QColor backgroundColor();
-    Q_REVISION(3) void setPlotAreaColor(QColor color);
-    Q_REVISION(3) QColor plotAreaColor();
-    Q_REVISION(4) void setLocalizeNumbers(bool localize);
-    Q_REVISION(4) bool localizeNumbers() const;
-    Q_REVISION(4) void setLocale(const QLocale &locale);
-    Q_REVISION(4) QLocale locale() const;
+    void setPlotAreaColor(QColor color);
+    QColor plotAreaColor();
+    void setLocalizeNumbers(bool localize);
+    bool localizeNumbers() const;
+    void setLocale(const QLocale &locale);
+    QLocale locale() const;
 
     int count();
     void setDropShadowEnabled(bool enabled);
     bool dropShadowEnabled();
-    Q_REVISION(3) qreal backgroundRoundness() const;
-    Q_REVISION(3) void setBackgroundRoundness(qreal diameter);
+    qreal backgroundRoundness() const;
+    void setBackgroundRoundness(qreal diameter);
 
     // Margins & plotArea
     qreal topMargin();
@@ -150,7 +150,7 @@ public:
     qreal leftMargin();
     qreal rightMargin();
     DeclarativeMargins *minimumMargins() { return m_margins; }
-    Q_REVISION(2) DeclarativeMargins *margins() { return m_margins; }
+    DeclarativeMargins *margins() { return m_margins; }
     QRectF plotArea() { return m_chart->plotArea(); }
 
     // Axis handling

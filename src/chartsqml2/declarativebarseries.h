@@ -91,10 +91,10 @@ public:
     void setAxisX(QAbstractAxis *axis) { m_axes->setAxisX(axis); }
     QAbstractAxis *axisY() { return m_axes->axisY(); }
     void setAxisY(QAbstractAxis *axis) { m_axes->setAxisY(axis); }
-    Q_REVISION(2) QAbstractAxis *axisXTop() { return m_axes->axisXTop(); }
-    Q_REVISION(2) void setAxisXTop(QAbstractAxis *axis) { m_axes->setAxisXTop(axis); }
-    Q_REVISION(2) QAbstractAxis *axisYRight() { return m_axes->axisYRight(); }
-    Q_REVISION(2) void setAxisYRight(QAbstractAxis *axis) { m_axes->setAxisYRight(axis); }
+    QAbstractAxis *axisXTop() { return m_axes->axisXTop(); }
+    void setAxisXTop(QAbstractAxis *axis) { m_axes->setAxisXTop(axis); }
+    QAbstractAxis *axisYRight() { return m_axes->axisYRight(); }
+    void setAxisYRight(QAbstractAxis *axis) { m_axes->setAxisYRight(axis); }
     QQmlListProperty<QObject> seriesChildren();
 
 public:
@@ -138,10 +138,10 @@ public:
     void setAxisX(QAbstractAxis *axis) { m_axes->setAxisX(axis); }
     QAbstractAxis *axisY() { return m_axes->axisY(); }
     void setAxisY(QAbstractAxis *axis) { m_axes->setAxisY(axis); }
-    Q_REVISION(2) QAbstractAxis *axisXTop() { return m_axes->axisXTop(); }
-    Q_REVISION(2) void setAxisXTop(QAbstractAxis *axis) { m_axes->setAxisXTop(axis); }
-    Q_REVISION(2) QAbstractAxis *axisYRight() { return m_axes->axisYRight(); }
-    Q_REVISION(2) void setAxisYRight(QAbstractAxis *axis) { m_axes->setAxisYRight(axis); }
+    QAbstractAxis *axisXTop() { return m_axes->axisXTop(); }
+    void setAxisXTop(QAbstractAxis *axis) { m_axes->setAxisXTop(axis); }
+    QAbstractAxis *axisYRight() { return m_axes->axisYRight(); }
+    void setAxisYRight(QAbstractAxis *axis) { m_axes->setAxisYRight(axis); }
     QQmlListProperty<QObject> seriesChildren();
 
 public:
@@ -185,10 +185,10 @@ public:
     void setAxisX(QAbstractAxis *axis) { m_axes->setAxisX(axis); }
     QAbstractAxis *axisY() { return m_axes->axisY(); }
     void setAxisY(QAbstractAxis *axis) { m_axes->setAxisY(axis); }
-    Q_REVISION(2) QAbstractAxis *axisXTop() { return m_axes->axisXTop(); }
-    Q_REVISION(2) void setAxisXTop(QAbstractAxis *axis) { m_axes->setAxisXTop(axis); }
-    Q_REVISION(2) QAbstractAxis *axisYRight() { return m_axes->axisYRight(); }
-    Q_REVISION(2) void setAxisYRight(QAbstractAxis *axis) { m_axes->setAxisYRight(axis); }
+    QAbstractAxis *axisXTop() { return m_axes->axisXTop(); }
+    void setAxisXTop(QAbstractAxis *axis) { m_axes->setAxisXTop(axis); }
+    QAbstractAxis *axisYRight() { return m_axes->axisYRight(); }
+    void setAxisYRight(QAbstractAxis *axis) { m_axes->setAxisYRight(axis); }
     QQmlListProperty<QObject> seriesChildren();
 
 public:
@@ -232,10 +232,10 @@ public:
     void setAxisX(QAbstractAxis *axis) { m_axes->setAxisX(axis); }
     QAbstractAxis *axisY() { return m_axes->axisY(); }
     void setAxisY(QAbstractAxis *axis) { m_axes->setAxisY(axis); }
-    Q_REVISION(2) QAbstractAxis *axisXTop() { return m_axes->axisXTop(); }
-    Q_REVISION(2) void setAxisXTop(QAbstractAxis *axis) { m_axes->setAxisXTop(axis); }
-    Q_REVISION(2) QAbstractAxis *axisYRight() { return m_axes->axisYRight(); }
-    Q_REVISION(2) void setAxisYRight(QAbstractAxis *axis) { m_axes->setAxisYRight(axis); }
+    QAbstractAxis *axisXTop() { return m_axes->axisXTop(); }
+    void setAxisXTop(QAbstractAxis *axis) { m_axes->setAxisXTop(axis); }
+    QAbstractAxis *axisYRight() { return m_axes->axisYRight(); }
+    void setAxisYRight(QAbstractAxis *axis) { m_axes->setAxisYRight(axis); }
     QQmlListProperty<QObject> seriesChildren();
 
 public:
@@ -279,10 +279,10 @@ public:
     void setAxisX(QAbstractAxis *axis) { m_axes->setAxisX(axis); }
     QAbstractAxis *axisY() { return m_axes->axisY(); }
     void setAxisY(QAbstractAxis *axis) { m_axes->setAxisY(axis); }
-    Q_REVISION(2) QAbstractAxis *axisXTop() { return m_axes->axisXTop(); }
-    Q_REVISION(2) void setAxisXTop(QAbstractAxis *axis) { m_axes->setAxisXTop(axis); }
-    Q_REVISION(2) QAbstractAxis *axisYRight() { return m_axes->axisYRight(); }
-    Q_REVISION(2) void setAxisYRight(QAbstractAxis *axis) { m_axes->setAxisYRight(axis); }
+    QAbstractAxis *axisXTop() { return m_axes->axisXTop(); }
+    void setAxisXTop(QAbstractAxis *axis) { m_axes->setAxisXTop(axis); }
+    QAbstractAxis *axisYRight() { return m_axes->axisYRight(); }
+    void setAxisYRight(QAbstractAxis *axis) { m_axes->setAxisYRight(axis); }
     QQmlListProperty<QObject> seriesChildren();
 
 public:
@@ -326,10 +326,10 @@ public:
     void setAxisX(QAbstractAxis *axis) { m_axes->setAxisX(axis); }
     QAbstractAxis *axisY() { return m_axes->axisY(); }
     void setAxisY(QAbstractAxis *axis) { m_axes->setAxisY(axis); }
-    Q_REVISION(2) QAbstractAxis *axisXTop() { return m_axes->axisXTop(); }
-    Q_REVISION(2) void setAxisXTop(QAbstractAxis *axis) { m_axes->setAxisXTop(axis); }
-    Q_REVISION(2) QAbstractAxis *axisYRight() { return m_axes->axisYRight(); }
-    Q_REVISION(2) void setAxisYRight(QAbstractAxis *axis) { m_axes->setAxisYRight(axis); }
+    QAbstractAxis *axisXTop() { return m_axes->axisXTop(); }
+    void setAxisXTop(QAbstractAxis *axis) { m_axes->setAxisXTop(axis); }
+    QAbstractAxis *axisYRight() { return m_axes->axisYRight(); }
+    void setAxisYRight(QAbstractAxis *axis) { m_axes->setAxisYRight(axis); }
     QQmlListProperty<QObject> seriesChildren();
 
 public:
