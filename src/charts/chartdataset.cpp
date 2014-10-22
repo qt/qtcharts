@@ -316,22 +316,8 @@ void ChartDataSet::createDefaultAxes()
         typeY |= s->d_ptr->defaultAxisType(Qt::Vertical);
     }
 
-    // Create the axes of the types selected
-    // As long as AxisType enum balues are sequential a check to see if there are series of
-    // different types is needed. In such cases AxisTypeNoAxis is used to create separate axes
-    // for the types.
-    if (typeX != QAbstractAxis::AxisTypeNoAxis) {
-        if (typeX != m_seriesList.first()->d_ptr->defaultAxisType(Qt::Horizontal))
-            typeX = QAbstractAxis::AxisTypeNoAxis;
-        createAxes(typeX, Qt::Horizontal);
-    }
-
-    if (typeY != QAbstractAxis::AxisTypeNoAxis) {
-        if (typeY != m_seriesList.first()->d_ptr->defaultAxisType(Qt::Vertical))
-            typeY = QAbstractAxis::AxisTypeNoAxis;
-        createAxes(typeY, Qt::Vertical);
-    }
-
+    createAxes(typeX, Qt::Horizontal);
+    createAxes(typeY, Qt::Vertical);
 }
 
 void ChartDataSet::createAxes(QAbstractAxis::AxisTypes type, Qt::Orientation orientation)
@@ -370,9 +356,8 @@ void ChartDataSet::createAxes(QAbstractAxis::AxisTypes type, Qt::Orientation ori
             attachAxis(s,axis);
         }
         axis->setRange(min,max);
-    }
-    else if (type.testFlag(QAbstractAxis::AxisTypeNoAxis)) {
-        //create separate axis
+    } else {
+        // Create separate axis for each series
         foreach(QAbstractSeries *s, m_seriesList) {
             QAbstractAxis *axis = s->d_ptr->createDefaultAxis(orientation);
             if(axis) {

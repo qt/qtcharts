@@ -55,7 +55,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \enum QAbstractAxis::AxisType
 
-    The type of the series object.
+    The type of the axis object.
 
     \value AxisTypeNoAxis
     \value AxisTypeValue

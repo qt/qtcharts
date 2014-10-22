@@ -72,9 +72,9 @@ public:
         AxisTypeNoAxis = 0x0,
         AxisTypeValue = 0x1,
         AxisTypeBarCategory = 0x2,
-        AxisTypeCategory = 0x3,
-        AxisTypeDateTime = 0x4,
-        AxisTypeLogValue = 0x5
+        AxisTypeCategory = 0x4,
+        AxisTypeDateTime = 0x8,
+        AxisTypeLogValue = 0x10
     };
 
     Q_DECLARE_FLAGS(AxisTypes, AxisType)
