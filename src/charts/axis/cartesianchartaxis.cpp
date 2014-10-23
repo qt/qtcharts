@@ -56,6 +56,10 @@ void CartesianChartAxis::createItems(int count)
             QGraphicsLineItem *item = new QGraphicsLineItem(this);
             item->setPen(axis()->gridLinePen());
             gridGroup()->addToGroup(item);
+            QGraphicsRectItem *shades = new QGraphicsRectItem(this);
+            shades->setPen(axis()->shadesPen());
+            shades->setBrush(axis()->shadesBrush());
+            shadeGroup()->addToGroup(shades);
         }
     }
 
@@ -78,14 +82,13 @@ void CartesianChartAxis::createItems(int count)
         gridGroup()->addToGroup(grid);
         labelGroup()->addToGroup(label);
 
-        if ((gridItems().size()) % 2 && gridItems().size() > 2) {
-            QGraphicsRectItem* shades = new QGraphicsRectItem(this);
+        if (gridItems().size() == 1 || (((gridItems().size() + 1) % 2) && gridItems().size() > 0)) {
+            QGraphicsRectItem *shades = new QGraphicsRectItem(this);
             shades->setPen(axis()->shadesPen());
             shades->setBrush(axis()->shadesBrush());
             shadeGroup()->addToGroup(shades);
         }
     }
-
 }
 
 void CartesianChartAxis::deleteItems(int count)
@@ -96,7 +99,7 @@ void CartesianChartAxis::deleteItems(int count)
     QList<QGraphicsItem *> axis = arrowItems();
 
     for (int i = 0; i < count; ++i) {
-        if (lines.size() % 2 && lines.size() > 1)
+        if (lines.size() == 1 || (((lines.size() + 1) % 2) && lines.size() > 0))
             delete(shades.takeLast());
         delete(lines.takeLast());
         delete(labels.takeLast());

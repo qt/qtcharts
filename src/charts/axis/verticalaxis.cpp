@@ -165,15 +165,31 @@ void VerticalAxis::updateGeometry()
         }
 
         //shades
-        if ((i + 1) % 2 && i > 1) {
-            QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem *>(shades.at(i / 2 - 1));
-            qreal lowerBound = qMin(layout[i - 1], gridRect.bottom());
-            qreal upperBound = qMax(layout[i], gridRect.top());
-            rectItem->setRect(gridRect.left(), upperBound, gridRect.width(), lowerBound - upperBound);
-            if (rectItem->rect().height() <= 0.0)
-                rectItem->setVisible(false);
+        QGraphicsRectItem *shadeItem = 0;
+        if (i == 0)
+            shadeItem = static_cast<QGraphicsRectItem *>(shades.at(0));
+        else if (i % 2)
+            shadeItem = static_cast<QGraphicsRectItem *>(shades.at((i / 2) + 1));
+        if (shadeItem) {
+            qreal lowerBound;
+            qreal upperBound;
+            if (i == 0) {
+                lowerBound = gridRect.bottom();
+                upperBound = layout[0];
+            } else {
+                lowerBound = layout[i];
+                if (i == layout.size() - 1)
+                    upperBound = gridRect.top();
+                else
+                    upperBound = qMax(layout[i + 1], gridRect.top());
+
+            }
+            shadeItem->setRect(gridRect.left(), upperBound, gridRect.width(),
+                               lowerBound - upperBound);
+            if (shadeItem->rect().height() <= 0.0)
+                shadeItem->setVisible(false);
             else
-                rectItem->setVisible(true);
+                shadeItem->setVisible(true);
         }
 
         // check if the grid line and the axis tick should be shown
