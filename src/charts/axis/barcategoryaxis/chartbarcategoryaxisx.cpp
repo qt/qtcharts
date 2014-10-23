@@ -72,7 +72,7 @@ QStringList ChartBarCategoryAxisX::createCategoryLabels(const QVector<qreal>& la
 
     for (int i = 0; i < layout.count() - 1; ++i) {
         qreal x = qFloor((((layout[i] + layout[i + 1]) / 2 - gridRect.left()) * d + min() + 0.5));
-        if ((x < m_categoriesAxis->categories().count()) && (x >= 0)) {
+        if (x < max() && (x >= 0)) {
             result << m_categoriesAxis->categories().at(x);
         } else {
             // No label for x coordinate
