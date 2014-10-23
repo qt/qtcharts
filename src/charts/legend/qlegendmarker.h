@@ -92,12 +92,14 @@ protected:
     explicit QLegendMarker(QLegendMarkerPrivate &d, QObject *parent = 0);
 
     QScopedPointer<QLegendMarkerPrivate> d_ptr;
-    Q_DISABLE_COPY(QLegendMarker)
     friend class QLegendPrivate;
     friend class QLegendMarkerPrivate;
     friend class LegendMarkerItem;
     friend class LegendLayout;
     friend class LegendScroller;
+
+private:
+    Q_DISABLE_COPY(QLegendMarker)
 };
 
 QT_CHARTS_END_NAMESPACE

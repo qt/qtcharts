@@ -179,13 +179,15 @@ Q_SIGNALS:
 
 protected:
     QScopedPointer<QAbstractAxisPrivate> d_ptr;
-    Q_DISABLE_COPY(QAbstractAxis)
     friend class ChartDataSet;
     friend class ChartPresenter;
     friend class ChartThemeManager;
     friend class AbstractDomain;
     friend class ChartAxisElement;
     friend class XYChart;
+
+private:
+    Q_DISABLE_COPY(QAbstractAxis)
 };
 
 QT_CHARTS_END_NAMESPACE

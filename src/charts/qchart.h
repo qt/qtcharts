@@ -177,6 +177,8 @@ protected:
     friend class ChartThemeManager;
     friend class QAbstractSeries;
     friend class QBoxPlotSeriesPrivate;
+
+private:
     Q_DISABLE_COPY(QChart)
 };
 

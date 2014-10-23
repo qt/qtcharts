@@ -51,7 +51,7 @@ public:
 
     static PolarOrientation axisPolarOrientation(QAbstractAxis *axis);
 
-protected:
+private:
     Q_DISABLE_COPY(QPolarChart)
 };
 

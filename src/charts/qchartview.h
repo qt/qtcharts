@@ -64,8 +64,9 @@ protected:
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
 
-protected:
     QScopedPointer<QChartViewPrivate> d_ptr;
+
+private:
     Q_DISABLE_COPY(QChartView)
 };
 
