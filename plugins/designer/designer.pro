@@ -2,7 +2,7 @@ CONFIG += plugin
 
 TEMPLATE = lib
 
-TARGET = qtchartsdesigner
+TARGET = $$qtLibraryTarget(qtchartsdesigner)
 
 QT += charts
 QT += designer
