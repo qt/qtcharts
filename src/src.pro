@@ -1,4 +1,6 @@
 TEMPLATE = subdirs
 CONFIG += ordered
-SUBDIRS += charts \
-           chartsqml2
+SUBDIRS += charts
+qtHaveModule(quick) {
+    SUBDIRS += chartsqml2
+}
