@@ -36,10 +36,8 @@ Bar::Bar(QBarSet *barset, int index, QGraphicsItem *parent) : QGraphicsRectItem(
 Bar::~Bar()
 {
     // End hover event, if bar is deleted during it
-    if (m_hovering) {
-        emit hovered(false, m_barset);
+    if (m_hovering)
         emit hovered(false, m_index, m_barset);
-    }
 }
 
 void Bar::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -53,7 +51,6 @@ void Bar::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
     Q_UNUSED(event)
     m_hovering = true;
-    emit hovered(true, m_barset);
     emit hovered(true, m_index, m_barset);
 
 }
@@ -62,7 +59,6 @@ void Bar::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
     Q_UNUSED(event)
     m_hovering = false;
-    emit hovered(false, m_barset);
     emit hovered(false, m_index, m_barset);
 }
 

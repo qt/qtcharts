@@ -211,14 +211,6 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QAbstractBarSeries::hovered(bool status, QBarSet* barset)
-
-    The signal is emitted if mouse is hovered on top of series.
-    Parameter \a barset is the pointer of barset, where hover happened.
-    Parameter \a status is true, if mouse entered on top of series, false if mouse left from top of series.
-*/
-
-/*!
     \fn void QAbstractBarSeries::hovered(bool status, int index, QBarSet* barset)
 
     The signal is emitted if mouse is hovered on top of series.

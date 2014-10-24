@@ -308,7 +308,6 @@ void tst_QPercentBarSeries::mousehovered()
 
     QList<QBarSet*> barSets = series->barSets();
 
-    QSignalSpy seriesSpy(series,SIGNAL(hovered(bool,QBarSet*)));
     QSignalSpy seriesIndexSpy(series, SIGNAL(hovered(bool, int, QBarSet*)));
     QSignalSpy setIndexSpy1(set1, SIGNAL(hovered(bool, int)));
     QSignalSpy setIndexSpy2(set2, SIGNAL(hovered(bool, int)));
@@ -359,21 +358,14 @@ void tst_QPercentBarSeries::mousehovered()
 // move mouse to left border
     QTest::mouseMove(view.viewport(), QPoint(0, layout.at(0).center().y()));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 10000);
-    TRY_COMPARE(seriesSpy.count(), 0);
     TRY_COMPARE(seriesIndexSpy.count(), 0);
 
 //=======================================================================
 // move mouse on top of set1
     QTest::mouseMove(view.viewport(), layout.at(0).center().toPoint());
-    TRY_COMPARE(seriesSpy.count(), 1);
     TRY_COMPARE(seriesIndexSpy.count(), 1);
     TRY_COMPARE(setIndexSpy1.count(), 1);
     TRY_COMPARE(setIndexSpy2.count(), 0);
-
-    QList<QVariant> seriesSpyArg = seriesSpy.takeFirst();
-    QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set1);
-    QVERIFY(seriesSpyArg.at(0).type() ==  QVariant::Bool);
-    QVERIFY(seriesSpyArg.at(0).toBool() == true);
 
     QList<QVariant> seriesIndexSpyArg = seriesIndexSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesIndexSpyArg.at(2)), set1);
@@ -387,17 +379,11 @@ void tst_QPercentBarSeries::mousehovered()
 //=======================================================================
 // move mouse from top of set1 to top of set2
     QTest::mouseMove(view.viewport(), layout.at(1).center().toPoint());
-    TRY_COMPARE(seriesSpy.count(), 2);
     TRY_COMPARE(seriesIndexSpy.count(), 2);
     TRY_COMPARE(setIndexSpy1.count(), 1);
     TRY_COMPARE(setIndexSpy2.count(), 1);
 
     // should leave set1
-    seriesSpyArg = seriesSpy.takeFirst();
-    QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set1);
-    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Bool);
-    QVERIFY(seriesSpyArg.at(0).toBool() == false);
-
     seriesIndexSpyArg = seriesIndexSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesIndexSpyArg.at(2)), set1);
     QVERIFY(seriesIndexSpyArg.at(0).type() == QVariant::Bool);
@@ -408,11 +394,6 @@ void tst_QPercentBarSeries::mousehovered()
     QVERIFY(setIndexSpyArg.at(0).toBool() == false);
 
     // should enter set2
-    seriesSpyArg = seriesSpy.takeFirst();
-    QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set2);
-    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Bool);
-    QVERIFY(seriesSpyArg.at(0).toBool() == true);
-
     seriesIndexSpyArg = seriesIndexSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesIndexSpyArg.at(2)), set2);
     QVERIFY(seriesIndexSpyArg.at(0).type() == QVariant::Bool);
@@ -425,17 +406,11 @@ void tst_QPercentBarSeries::mousehovered()
 //=======================================================================
 // move mouse from top of set2 to background
     QTest::mouseMove(view.viewport(), QPoint(layout.at(1).center().x(), 0));
-    TRY_COMPARE(seriesSpy.count(), 1);
     TRY_COMPARE(seriesIndexSpy.count(), 1);
     TRY_COMPARE(setIndexSpy1.count(), 0);
     TRY_COMPARE(setIndexSpy2.count(), 1);
 
     // should leave set2
-    seriesSpyArg = seriesSpy.takeFirst();
-    QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set2);
-    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Bool);
-    QVERIFY(seriesSpyArg.at(0).toBool() == false);
-
     seriesIndexSpyArg = seriesIndexSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesIndexSpyArg.at(2)), set2);
     QVERIFY(seriesIndexSpyArg.at(0).type() == QVariant::Bool);
@@ -449,17 +424,11 @@ void tst_QPercentBarSeries::mousehovered()
 // move mouse on top of set1, bar0 to check the index (hover into set1)
     QTest::mouseMove(view.viewport(), layout.at(0).center().toPoint());
 
-    TRY_COMPARE(seriesSpy.count(), 1);
     TRY_COMPARE(seriesIndexSpy.count(), 1);
     TRY_COMPARE(setIndexSpy1.count(), 1);
     TRY_COMPARE(setIndexSpy2.count(), 0);
 
     //should enter set1, bar0
-    seriesSpyArg = seriesSpy.takeFirst();
-    QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set1);
-    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Bool);
-    QVERIFY(seriesSpyArg.at(0).toBool() == true);
-
     seriesIndexSpyArg = seriesIndexSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesIndexSpyArg.at(2)), set1);
     QVERIFY(seriesIndexSpyArg.at(0).type() == QVariant::Bool);
@@ -478,17 +447,11 @@ void tst_QPercentBarSeries::mousehovered()
 // hover in set2)
     QTest::mouseMove(view.viewport(), layout.at(1).center().toPoint());
 
-    TRY_COMPARE(seriesSpy.count(), 2);
     TRY_COMPARE(seriesIndexSpy.count(), 2);
     TRY_COMPARE(setIndexSpy1.count(), 1);
     TRY_COMPARE(setIndexSpy2.count(), 1);
 
     //should leave set1, bar0
-    seriesSpyArg = seriesSpy.takeFirst();
-    QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set1);
-    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Bool);
-    QVERIFY(seriesSpyArg.at(0).toBool() == false);
-
     seriesIndexSpyArg = seriesIndexSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesIndexSpyArg.at(2)), set1);
     QVERIFY(seriesIndexSpyArg.at(0).type() == QVariant::Bool);
@@ -503,11 +466,6 @@ void tst_QPercentBarSeries::mousehovered()
     QVERIFY(setIndexSpyArg.at(1).toInt() == 0);
 
     //should enter set2, bar0
-    seriesSpyArg = seriesSpy.takeFirst();
-    QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set2);
-    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Bool);
-    QVERIFY(seriesSpyArg.at(0).toBool() == true);
-
     seriesIndexSpyArg = seriesIndexSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesIndexSpyArg.at(2)), set2);
     QVERIFY(seriesIndexSpyArg.at(0).type() == QVariant::Bool);
@@ -526,17 +484,11 @@ void tst_QPercentBarSeries::mousehovered()
 // hover in set1)
     QTest::mouseMove(view.viewport(), layout.at(2).center().toPoint());
 
-    TRY_COMPARE(seriesSpy.count(), 2);
     TRY_COMPARE(seriesIndexSpy.count(), 2);
     TRY_COMPARE(setIndexSpy1.count(), 1);
     TRY_COMPARE(setIndexSpy2.count(), 1);
 
     //should leave set2, bar0
-    seriesSpyArg = seriesSpy.takeFirst();
-    QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set2);
-    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Bool);
-    QVERIFY(seriesSpyArg.at(0).toBool() == false);
-
     seriesIndexSpyArg = seriesIndexSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesIndexSpyArg.at(2)), set2);
     QVERIFY(seriesIndexSpyArg.at(0).type() == QVariant::Bool);
@@ -551,11 +503,6 @@ void tst_QPercentBarSeries::mousehovered()
     QVERIFY(setIndexSpyArg.at(1).toInt() == 0);
 
     //should enter set1, bar1
-    seriesSpyArg = seriesSpy.takeFirst();
-    QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set1);
-    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Bool);
-    QVERIFY(seriesSpyArg.at(0).toBool() == true);
-
     seriesIndexSpyArg = seriesIndexSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesIndexSpyArg.at(2)), set1);
     QVERIFY(seriesIndexSpyArg.at(0).type() == QVariant::Bool);
@@ -575,17 +522,11 @@ void tst_QPercentBarSeries::mousehovered()
                                              layout.at(2).top()));
 
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
-    TRY_COMPARE(seriesSpy.count(), 1);
     TRY_COMPARE(seriesIndexSpy.count(), 1);
     TRY_COMPARE(setIndexSpy1.count(), 1);
     TRY_COMPARE(setIndexSpy2.count(), 0);
 
     //should leave set1, bar1
-    seriesSpyArg = seriesSpy.takeFirst();
-    QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set1);
-    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Bool);
-    QVERIFY(seriesSpyArg.at(0).toBool() == false);
-
     seriesIndexSpyArg = seriesIndexSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesIndexSpyArg.at(2)), set1);
     QVERIFY(seriesIndexSpyArg.at(0).type() == QVariant::Bool);
@@ -603,17 +544,11 @@ void tst_QPercentBarSeries::mousehovered()
 // move mouse on top of set2, bar1 to check the index (hover in set2)
     QTest::mouseMove(view.viewport(), layout.at(3).center().toPoint());
 
-    TRY_COMPARE(seriesSpy.count(), 1);
     TRY_COMPARE(seriesIndexSpy.count(), 1);
     TRY_COMPARE(setIndexSpy1.count(), 0);
     TRY_COMPARE(setIndexSpy2.count(), 1);
 
     //should enter set2, bar1
-    seriesSpyArg = seriesSpy.takeFirst();
-    QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set2);
-    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Bool);
-    QVERIFY(seriesSpyArg.at(0).toBool() == true);
-
     seriesIndexSpyArg = seriesIndexSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesIndexSpyArg.at(2)), set2);
     QVERIFY(seriesIndexSpyArg.at(0).type() == QVariant::Bool);
@@ -633,17 +568,11 @@ void tst_QPercentBarSeries::mousehovered()
                                              layout.at(2).top()));
 
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
-    TRY_COMPARE(seriesSpy.count(), 1);
     TRY_COMPARE(seriesIndexSpy.count(), 1);
     TRY_COMPARE(setIndexSpy1.count(), 0);
     TRY_COMPARE(setIndexSpy2.count(), 1);
 
     //should leave set1, bar1
-    seriesSpyArg = seriesSpy.takeFirst();
-    QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set2);
-    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Bool);
-    QVERIFY(seriesSpyArg.at(0).toBool() == false);
-
     seriesIndexSpyArg = seriesIndexSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesIndexSpyArg.at(2)), set2);
     QVERIFY(seriesIndexSpyArg.at(0).type() == QVariant::Bool);

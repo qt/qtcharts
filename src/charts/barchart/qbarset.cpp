@@ -134,13 +134,6 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QBarSet::hovered(bool status)
-
-    The signal is emitted if mouse is hovered on top of bar set.
-    Parameter \a status is true, if mouse entered on top of bar set, false if mouse left from top of bar set.
-*/
-
-/*!
     \fn void QBarSet::hovered(bool status, int index)
 
     The signal is emitted if mouse is hovered on top of bar set.
