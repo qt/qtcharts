@@ -51,7 +51,7 @@ qhp.QtCharts.subprojects.classes.sortPages  = true
 
 qhp.QtCharts.subprojects.types.title      = QML Types
 qhp.QtCharts.subprojects.types.indexTitle = Qt Charts QML Types
-qhp.QtCharts.subprojects.types.selectors  = fake:qmlclass
+qhp.QtCharts.subprojects.types.selectors  = qmlclass
 qhp.QtCharts.subprojects.types.sortPages  = true
 
 qhp.QtCharts.subprojects.examples.title      = Examples
