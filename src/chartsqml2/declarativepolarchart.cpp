@@ -28,6 +28,8 @@ QT_CHARTS_BEGIN_NAMESPACE
     \instantiates DeclarativePolarChart
     \inqmlmodule QtCharts
 
+    \brief Polar chart element.
+
     PolarChartView element is the parent that is responsible for showing different chart series
     types in a polar chart.
 

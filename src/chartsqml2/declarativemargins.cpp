@@ -28,6 +28,8 @@ QT_CHARTS_BEGIN_NAMESPACE
     \qmltype Margins
     \inqmlmodule QtCharts
 
+    \brief Type is used to define margins.
+
     Uncreatable type that is used to define top, bottom, left and right margins.
 */
 

@@ -8,12 +8,16 @@ project = Qt Charts
 description = Qt Charts Reference Documentation
 version = 2.0.0
 
-sourcedirs += ..
-headerdirs += ..
+sourcedirs += .. \
+              ../../chartsqml2
+headerdirs += .. \
+              ../../chartsqml2
 exampledirs += ../../../examples/charts \
                snippets
 imagedirs += images
 examplesinstallpath = charts
+
+sources.fileextensions  = "*.cpp *.qdoc"
 
 indexes +=  $QT_INSTALL_DOCS/qtcore/qtcore.index \
             $QT_INSTALL_DOCS/qtgui/qtgui.index \

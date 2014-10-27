@@ -55,6 +55,8 @@ QT_CHARTS_BEGIN_NAMESPACE
     \instantiates DeclarativeChart
     \inqmlmodule QtCharts
 
+    \brief Chart element.
+
     ChartView element is the parent that is responsible for showing different chart series types.
 
     The following QML shows how to create a simple chart with one pie series:

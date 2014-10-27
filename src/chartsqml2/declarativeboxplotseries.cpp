@@ -30,6 +30,8 @@ QT_CHARTS_BEGIN_NAMESPACE
     \instantiates QBoxSet
     \inqmlmodule QtCharts
 
+    \brief Building block for box-and-whiskers chart.
+
     BoxSet represents one box-and-whiskers item. It takes five values to create a graphical
     representation of range and three medians. There are two ways to give the values. The first one
     is with constructor or with append method. In these the values have to be given in the following
@@ -102,6 +104,8 @@ QT_CHARTS_BEGIN_NAMESPACE
     \inqmlmodule QtCharts
 
     \inherits AbstractSeries
+
+    \brief Series for creating box-and-whiskers chart.
 
     BoxPlotSeries represents a series of data shown as box-and-whiskers bars. The purpose of this
     class is to act as a container for single box-and-whiskers items. Each item is drawn to own
