@@ -75,6 +75,15 @@ void XYDomain::zoomIn(const QRectF &rect)
     minY = maxY - dy * rect.bottom();
     maxY = maxY - dy * rect.top();
 
+    if ((maxX - minX) == spanX()) {
+        minX = m_minX;
+        maxX = m_maxX;
+    }
+    if ((maxY - minY) == spanY()) {
+        minY = m_minY;
+        maxY = m_maxY;
+    }
+
     setRange(minX, maxX, minY, maxY);
 }
 
@@ -93,6 +102,15 @@ void XYDomain::zoomOut(const QRectF &rect)
     maxX = minX + dx * m_size.width();
     maxY = minY + dy * rect.bottom();
     minY = maxY - dy * m_size.height();
+
+    if ((maxX - minX) == spanX()) {
+        minX = m_minX;
+        maxX = m_maxX;
+    }
+    if ((maxY - minY) == spanY()) {
+        minY = m_minY;
+        maxY = m_maxY;
+    }
 
     setRange(minX, maxX, minY, maxY);
 }
