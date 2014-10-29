@@ -22,7 +22,8 @@ SUBDIRS += \
            qbarcategoryaxis \
            domain \
            chartdataset \
-           qlegend
+           qlegend \
+           cmake
 
 !linux-arm*: {
     SUBDIRS += \

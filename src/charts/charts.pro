@@ -13,7 +13,6 @@ MODULE_INCNAME = QtCharts
 QMAKE_DOCS = $$PWD/doc/qtcharts.qdocconf
 
 load(qt_module)
-CONFIG -= create_cmake
 
 ############################# SOURCES ##########################################
 
