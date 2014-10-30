@@ -4,10 +4,7 @@
 
 TEMPLATE = app
 
-QT += core gui opengl
-contains(QT_MAJOR_VERSION, 5) {
-    QT += widgets
-}
+QT += core gui opengl widgets
 
 SOURCES += main.cpp \
     mainwidget.cpp \

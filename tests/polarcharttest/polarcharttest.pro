@@ -2,9 +2,7 @@
     error( "Couldn't find the test.pri file!" )
 }
 
-QT       += core gui
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT       += core gui widgets
 
 TARGET = polarcharttest
 TEMPLATE = app
