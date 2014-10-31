@@ -31,6 +31,7 @@
 #define SCROLLER_P_H
 
 #include <QtCharts/QChartGlobal>
+#include <QtCore/QObject>
 #include <QtCore/QBasicTimer>
 #include <QtCore/QTime>
 #include <QtCore/QPointF>
