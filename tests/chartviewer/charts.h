@@ -24,6 +24,7 @@
 #include "model.h"
 #include <QtCore/QList>
 #include <QtCore/QString>
+#include <QtCore/QSharedPointer>
 #include <QtCharts/QChartGlobal>
 
 QT_CHARTS_BEGIN_NAMESPACE

@@ -284,19 +284,6 @@ void tst_ChartDataSet::attachAxis_data()
     QTest::addColumn<QAbstractAxis*>("attachAxis");
     QTest::addColumn<bool>("success");
 
-    //QAbstractSeries* area = new QAreaSeries(static_cast<QLineSeries*>(line));
-    QAbstractSeries* scatter = new QScatterSeries(this);
-    QAbstractSeries* spline = new QSplineSeries(this);
-    QAbstractSeries* pie = new QPieSeries(this);
-    QAbstractSeries* bar = new QBarSeries(this);
-    QAbstractSeries* percent = new QPercentBarSeries(this);
-    QAbstractSeries* stacked = new QStackedBarSeries(this);
-
-    QAbstractAxis* category = new QCategoryAxis(this);
-    QAbstractAxis* barcategory = new QBarCategoryAxis(this);
-#ifndef Q_WS_QWS
-    QAbstractAxis* datetime = new QDateTimeAxis(this);
-#endif
     {
      QList<QAbstractSeries*> series;
      QList<QAbstractAxis*> axes;
