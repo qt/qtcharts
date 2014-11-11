@@ -85,3 +85,8 @@ msvc {
     # builds resulting from usage of str::sort
     QMAKE_CXXFLAGS_WARN_ON += -wd4267
 }
+
+win32:!winrt {
+    # ChartThemeSystem uses Windows native API
+    LIBS += user32.lib
+}
