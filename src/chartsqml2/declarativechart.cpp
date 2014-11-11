@@ -888,7 +888,9 @@ QAbstractSeries *DeclarativeChart::createSeries(int type, QString name, QAbstrac
         break;
     case DeclarativeChart::SeriesTypeArea: {
         DeclarativeAreaSeries *area = new DeclarativeAreaSeries();
-        area->setUpperSeries(new DeclarativeLineSeries());
+        DeclarativeLineSeries *line = new DeclarativeLineSeries();
+        line->setParent(area);
+        area->setUpperSeries(line);
         series = area;
         break;
     }
