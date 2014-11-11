@@ -125,7 +125,7 @@ void tst_QChart::initTestCase()
 
 void tst_QChart::cleanupTestCase()
 {
-
+    QTest::qWait(1); // Allow final deleteLaters to run
 }
 
 void tst_QChart::init()
@@ -197,7 +197,7 @@ void tst_QChart::addSeries_data()
     QTest::addColumn<QAbstractSeries *>("series");
 
     QAbstractSeries* line = new QLineSeries(this);
-    QAbstractSeries* area = new QAreaSeries(static_cast<QLineSeries*>(line));
+    QAbstractSeries* area = new QAreaSeries(new QLineSeries(this));
     QAbstractSeries* scatter = new QScatterSeries(this);
     QAbstractSeries* spline = new QSplineSeries(this);
 
@@ -240,6 +240,7 @@ void tst_QChart::addSeries()
     m_chart->removeSeries(series);
     QVERIFY(!series->chart());
     QCOMPARE(m_chart->series().count(), 0);
+    delete series;
 }
 
 void tst_QChart::animationOptions_data()
@@ -535,6 +536,7 @@ void tst_QChart::removeSeries()
     QVERIFY(m_chart->axisY() != 0);
     QVERIFY(m_chart->axisY(series)==0);
     QCOMPARE(deleteSpy.count(), 0);
+    delete series;
 }
 
 void tst_QChart::scroll_right_data()
@@ -1010,6 +1012,7 @@ void tst_QChart::createDefaultAxesForLineSeries()
     QCOMPARE(xAxis->max(), overallmaxX);
     QCOMPARE(yAxis->min(), overallminY);
     QCOMPARE(yAxis->max(), overallmaxY);
+    delete chart;
 }
 
 void tst_QChart::axisPolarOrientation()

@@ -71,6 +71,7 @@ void tst_QBarSet::initTestCase()
 
 void tst_QBarSet::cleanupTestCase()
 {
+    QTest::qWait(1); // Allow final deleteLaters to run
 }
 
 void tst_QBarSet::init()

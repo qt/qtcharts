@@ -65,6 +65,7 @@ void tst_QHorizontalPercentBarSeries::initTestCase()
 
 void tst_QHorizontalPercentBarSeries::cleanupTestCase()
 {
+    QTest::qWait(1); // Allow final deleteLaters to run
 }
 
 void tst_QHorizontalPercentBarSeries::init()
@@ -86,6 +87,7 @@ void tst_QHorizontalPercentBarSeries::qhorizontalpercentbarseries()
 {
     QHorizontalPercentBarSeries *barseries = new QHorizontalPercentBarSeries();
     QVERIFY(barseries != 0);
+    delete barseries;
 }
 
 void tst_QHorizontalPercentBarSeries::type_data()

@@ -45,6 +45,11 @@ CustomTableModel::CustomTableModel(QObject *parent) :
     }
 }
 
+CustomTableModel::~CustomTableModel()
+{
+    qDeleteAll(m_data);
+}
+
 int CustomTableModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)

@@ -150,6 +150,7 @@ void tst_Domain::initTestCase()
 
 void tst_Domain::cleanupTestCase()
 {
+    QTest::qWait(1); // Allow final deleteLaters to run
 }
 
 void tst_Domain::init()
@@ -449,6 +450,9 @@ void tst_Domain::operatorEquals()
     TRY_COMPARE(spy0.count(), 0);
     TRY_COMPARE(spy1.count(), 0);
     TRY_COMPARE(spy2.count(), 0);
+
+    delete domain1;
+    delete domain2;
 }
 
 void tst_Domain::setRange_data()

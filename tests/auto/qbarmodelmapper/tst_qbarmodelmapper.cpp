@@ -76,6 +76,7 @@ class tst_qbarmodelmapper : public QObject
 
     QBarSeries *m_series;
     QChart *m_chart;
+    QChartView *m_chartView;
 };
 
 tst_qbarmodelmapper::tst_qbarmodelmapper():
@@ -85,7 +86,8 @@ tst_qbarmodelmapper::tst_qbarmodelmapper():
     m_vMapper(0),
     m_hMapper(0),
     m_series(0),
-    m_chart(0)
+    m_chart(0),
+    m_chartView(0)
 {
 }
 
@@ -146,12 +148,14 @@ void tst_qbarmodelmapper::cleanup()
 void tst_qbarmodelmapper::initTestCase()
 {
     m_chart = new QChart;
-    QChartView *chartView = new QChartView(m_chart);
-    chartView->show();
+    m_chartView = new QChartView(m_chart);
+    m_chartView->show();
 }
 
 void tst_qbarmodelmapper::cleanupTestCase()
 {
+    delete m_chartView;
+    QTest::qWait(1); // Allow final deleteLaters to run
 }
 
 void tst_qbarmodelmapper::verticalMapper_data()
@@ -173,22 +177,23 @@ void tst_qbarmodelmapper::verticalMapper()
     QFETCH(int, lastBarSetColumn);
     QFETCH(int, expectedBarSetCount);
 
-    m_series = new QBarSeries;
+    QBarSeries *series = new QBarSeries;
 
     QVBarModelMapper *mapper = new QVBarModelMapper;
     mapper->setFirstBarSetColumn(firstBarSetColumn);
     mapper->setLastBarSetColumn(lastBarSetColumn);
     mapper->setModel(m_model);
-    mapper->setSeries(m_series);
+    mapper->setSeries(series);
 
-    m_chart->addSeries(m_series);
+    m_chart->addSeries(series);
 
-    QCOMPARE(m_series->count(), expectedBarSetCount);
+    QCOMPARE(series->count(), expectedBarSetCount);
     QCOMPARE(mapper->firstBarSetColumn(), qMax(-1, firstBarSetColumn));
     QCOMPARE(mapper->lastBarSetColumn(), qMax(-1, lastBarSetColumn));
 
     delete mapper;
-    mapper = 0;
+    m_chart->removeSeries(series);
+    delete series;
 }
 
 void tst_qbarmodelmapper::verticalMapperCustomMapping_data()
@@ -216,32 +221,33 @@ void tst_qbarmodelmapper::verticalMapperCustomMapping()
     QFETCH(int, expectedBarSetCount);
     QFETCH(int, expectedCount);
 
-    m_series = new QBarSeries;
+    QBarSeries *series = new QBarSeries;
 
-    QCOMPARE(m_series->count(), 0);
+    QCOMPARE(series->count(), 0);
 
     QVBarModelMapper *mapper = new QVBarModelMapper;
     mapper->setFirstBarSetColumn(0);
     mapper->setLastBarSetColumn(1);
     mapper->setModel(m_model);
-    mapper->setSeries(m_series);
+    mapper->setSeries(series);
     mapper->setFirstRow(first);
     mapper->setRowCount(countLimit);
-    m_chart->addSeries(m_series);
+    m_chart->addSeries(series);
 
-    QCOMPARE(m_series->count(), expectedBarSetCount);
+    QCOMPARE(series->count(), expectedBarSetCount);
 
     if (expectedBarSetCount > 0)
-        QCOMPARE(m_series->barSets().first()->count(), expectedCount);
+        QCOMPARE(series->barSets().first()->count(), expectedCount);
 
     // change values column mapping to invalid
     mapper->setFirstBarSetColumn(-1);
     mapper->setLastBarSetColumn(1);
 
-    QCOMPARE(m_series->count(), 0);
+    QCOMPARE(series->count(), 0);
 
     delete mapper;
-    mapper = 0;
+    m_chart->removeSeries(series);
+    delete series;
 }
 
 void tst_qbarmodelmapper::horizontalMapper_data()
@@ -263,22 +269,23 @@ void tst_qbarmodelmapper::horizontalMapper()
     QFETCH(int, lastBarSetRow);
     QFETCH(int, expectedBarSetCount);
 
-    m_series = new QBarSeries;
+    QBarSeries *series = new QBarSeries;
 
     QHBarModelMapper *mapper = new QHBarModelMapper;
     mapper->setFirstBarSetRow(firstBarSetRow);
     mapper->setLastBarSetRow(lastBarSetRow);
     mapper->setModel(m_model);
-    mapper->setSeries(m_series);
+    mapper->setSeries(series);
 
-    m_chart->addSeries(m_series);
+    m_chart->addSeries(series);
 
-    QCOMPARE(m_series->count(), expectedBarSetCount);
+    QCOMPARE(series->count(), expectedBarSetCount);
     QCOMPARE(mapper->firstBarSetRow(), qMax(-1, firstBarSetRow));
     QCOMPARE(mapper->lastBarSetRow(), qMax(-1, lastBarSetRow));
 
     delete mapper;
-    mapper = 0;
+    m_chart->removeSeries(series);
+    delete series;
 }
 
 void tst_qbarmodelmapper::horizontalMapperCustomMapping_data()
@@ -306,32 +313,33 @@ void tst_qbarmodelmapper::horizontalMapperCustomMapping()
     QFETCH(int, expectedBarSetCount);
     QFETCH(int, expectedCount);
 
-    m_series = new QBarSeries;
+    QBarSeries *series = new QBarSeries;
 
-    QCOMPARE(m_series->count(), 0);
+    QCOMPARE(series->count(), 0);
 
     QHBarModelMapper *mapper = new QHBarModelMapper;
     mapper->setFirstBarSetRow(0);
     mapper->setLastBarSetRow(1);
     mapper->setModel(m_model);
-    mapper->setSeries(m_series);
+    mapper->setSeries(series);
     mapper->setFirstColumn(first);
     mapper->setColumnCount(countLimit);
-    m_chart->addSeries(m_series);
+    m_chart->addSeries(series);
 
-    QCOMPARE(m_series->count(), expectedBarSetCount);
+    QCOMPARE(series->count(), expectedBarSetCount);
 
     if (expectedBarSetCount > 0)
-        QCOMPARE(m_series->barSets().first()->count(), expectedCount);
+        QCOMPARE(series->barSets().first()->count(), expectedCount);
 
     // change values column mapping to invalid
     mapper->setFirstBarSetRow(-1);
     mapper->setLastBarSetRow(1);
 
-    QCOMPARE(m_series->count(), 0);
+    QCOMPARE(series->count(), 0);
 
     delete mapper;
-    mapper = 0;
+    m_chart->removeSeries(series);
+    delete series;
 }
 
 void tst_qbarmodelmapper::seriesUpdated()
@@ -636,6 +644,7 @@ void tst_qbarmodelmapper::verticalMapperSignals()
     QCOMPARE(spy4.count(), 1);
     QCOMPARE(spy5.count(), 1);
 
+    delete mapper;
 }
 
 void tst_qbarmodelmapper::horizontalMapperSignals()
@@ -662,6 +671,8 @@ void tst_qbarmodelmapper::horizontalMapperSignals()
     QCOMPARE(spy3.count(), 1);
     QCOMPARE(spy4.count(), 1);
     QCOMPARE(spy5.count(), 1);
+
+    delete mapper;
 }
 
 QTEST_MAIN(tst_qbarmodelmapper)

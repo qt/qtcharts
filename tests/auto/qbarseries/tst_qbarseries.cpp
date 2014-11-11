@@ -87,6 +87,7 @@ void tst_QBarSeries::initTestCase()
 
 void tst_QBarSeries::cleanupTestCase()
 {
+    QTest::qWait(1); // Allow final deleteLaters to run
 }
 
 void tst_QBarSeries::init()
@@ -121,6 +122,7 @@ void tst_QBarSeries::qbarseries()
 {
     QBarSeries *barseries = new QBarSeries();
     QVERIFY(barseries != 0);
+    delete barseries;
 }
 
 void tst_QBarSeries::type_data()
@@ -281,6 +283,7 @@ void tst_QBarSeries::appendList()
     ret = m_barseries->append(invalidList);
     QVERIFY(ret == false);
     QVERIFY(m_barseries->count() == count);
+    delete invalidList.at(0);
 
     // Try append list with null pointers (should fail, count remains same)
     QList<QBarSet*> invalidList2;

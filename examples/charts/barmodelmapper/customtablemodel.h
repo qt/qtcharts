@@ -30,6 +30,7 @@ class CustomTableModel : public QAbstractTableModel
     Q_OBJECT
 public:
     explicit CustomTableModel(QObject *parent = 0);
+    virtual ~CustomTableModel();
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     int columnCount(const QModelIndex &parent = QModelIndex()) const;

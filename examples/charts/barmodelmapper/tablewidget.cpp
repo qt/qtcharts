@@ -19,7 +19,6 @@
 ****************************************************************************/
 
 #include "tablewidget.h"
-#include "customtablemodel.h"
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QTableView>
 #include <QtCharts/QChart>
@@ -40,16 +39,17 @@ TableWidget::TableWidget(QWidget *parent)
     // create simple model for storing data
     // user's table data model
     //! [1]
-    CustomTableModel *model = new CustomTableModel;
+    m_model = new CustomTableModel;
     //! [1]
 
     //! [2]
     // create table view and add model to it
     QTableView *tableView = new QTableView;
-    tableView->setModel(model);
+    tableView->setModel(m_model);
     tableView->setMinimumWidth(300);
     tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     tableView->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    m_model->setParent(tableView);
     //! [2]
 
     //! [3]
@@ -69,7 +69,7 @@ TableWidget::TableWidget(QWidget *parent)
     mapper->setFirstRow(first);
     mapper->setRowCount(count);
     mapper->setSeries(series);
-    mapper->setModel(model);
+    mapper->setModel(m_model);
     chart->addSeries(series);
     //! [4]
 
@@ -81,7 +81,7 @@ TableWidget::TableWidget(QWidget *parent)
     QList<QBarSet *> barsets = series->barSets();
     for (int i = 0; i < barsets.count(); i++) {
         seriesColorHex = "#" + QString::number(barsets.at(i)->brush().color().rgb(), 16).right(6).toUpper();
-        model->addMapping(seriesColorHex, QRect(1 + i, first, 1, barsets.at(i)->count()));
+        m_model->addMapping(seriesColorHex, QRect(1 + i, first, 1, barsets.at(i)->count()));
     }
     //! [5]
 

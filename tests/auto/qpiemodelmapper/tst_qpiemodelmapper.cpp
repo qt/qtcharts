@@ -75,6 +75,7 @@ class tst_qpiemodelmapper : public QObject
 
     QPieSeries *m_series;
     QChart *m_chart;
+    QChartView *m_chartView;
 };
 
 tst_qpiemodelmapper::tst_qpiemodelmapper():
@@ -84,7 +85,8 @@ tst_qpiemodelmapper::tst_qpiemodelmapper():
     m_vMapper(0),
     m_hMapper(0),
     m_series(0),
-    m_chart(0)
+    m_chart(0),
+    m_chartView(0)
 {
 }
 
@@ -145,13 +147,14 @@ void tst_qpiemodelmapper::cleanup()
 void tst_qpiemodelmapper::initTestCase()
 {
     m_chart = new QChart;
-    QChartView *chartView = new QChartView(m_chart);
-    chartView->show();
+    m_chartView = new QChartView(m_chart);
+    m_chartView->show();
 }
 
 void tst_qpiemodelmapper::cleanupTestCase()
 {
-    //
+    delete m_chartView;
+    QTest::qWait(1); // Allow final deleteLaters to run
 }
 
 void tst_qpiemodelmapper::verticalMapper_data()
@@ -550,6 +553,7 @@ void tst_qpiemodelmapper::verticalMapperSignals()
     QCOMPARE(spy4.count(), 1);
     QCOMPARE(spy5.count(), 1);
 
+    delete mapper;
 }
 
 void tst_qpiemodelmapper::horizontalMapperSignals()

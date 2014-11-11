@@ -47,6 +47,7 @@ void tst_QScatterSeries::initTestCase()
 
 void tst_QScatterSeries::cleanupTestCase()
 {
+    QTest::qWait(1); // Allow final deleteLaters to run
 }
 
 void tst_QScatterSeries::init()

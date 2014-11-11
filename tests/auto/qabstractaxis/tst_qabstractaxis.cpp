@@ -29,6 +29,7 @@ void tst_QAbstractAxis::initTestCase()
 
 void tst_QAbstractAxis::cleanupTestCase()
 {
+    QTest::qWait(1); // Allow final deleteLaters to run
 }
 
 void tst_QAbstractAxis::init(QAbstractAxis* axis, QAbstractSeries* series)

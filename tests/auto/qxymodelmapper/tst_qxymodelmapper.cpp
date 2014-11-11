@@ -77,6 +77,7 @@ class tst_qxymodelmapper : public QObject
 
     QXYSeries *m_series;
     QChart *m_chart;
+    QChartView *m_chartView;
 };
 
 tst_qxymodelmapper::tst_qxymodelmapper():
@@ -86,7 +87,8 @@ tst_qxymodelmapper::tst_qxymodelmapper():
     m_hMapper(0),
     m_vMapper(0),
     m_series(0),
-    m_chart(0)
+    m_chart(0),
+    m_chartView(0)
 {
 }
 
@@ -147,13 +149,14 @@ void tst_qxymodelmapper::cleanup()
 void tst_qxymodelmapper::initTestCase()
 {
     m_chart = newQChartOrQPolarChart();
-    QChartView *chartView = new QChartView(m_chart);
-    chartView->show();
+    m_chartView = new QChartView(m_chart);
+    m_chartView->show();
 }
 
 void tst_qxymodelmapper::cleanupTestCase()
 {
-    //
+    delete m_chartView;
+    QTest::qWait(1); // Allow final deleteLaters to run
 }
 
 void tst_qxymodelmapper::verticalMapper_data()
@@ -552,6 +555,7 @@ void tst_qxymodelmapper::verticalMapperSignals()
     QCOMPARE(spy4.count(), 1);
     QCOMPARE(spy5.count(), 1);
 
+    delete mapper;
 }
 
 void tst_qxymodelmapper::horizontalMapperSignals()
@@ -578,6 +582,8 @@ void tst_qxymodelmapper::horizontalMapperSignals()
     QCOMPARE(spy3.count(), 1);
     QCOMPARE(spy4.count(), 1);
     QCOMPARE(spy5.count(), 1);
+
+    delete mapper;
 }
 
 QTEST_MAIN(tst_qxymodelmapper)

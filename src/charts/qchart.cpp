@@ -769,6 +769,7 @@ QChartPrivate::QChartPrivate(QChart *q, QChart::ChartType type):
 
 QChartPrivate::~QChartPrivate()
 {
+    delete m_themeManager;
 }
 
 // Hackish solution to the problem of explicitly assigning the default pen/brush/font

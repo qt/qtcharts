@@ -80,6 +80,11 @@ CustomTableModel::CustomTableModel(QObject *parent) :
     m_data.append(dataVec_Jun);
 }
 
+CustomTableModel::~CustomTableModel()
+{
+    qDeleteAll(m_data);
+}
+
 int CustomTableModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)

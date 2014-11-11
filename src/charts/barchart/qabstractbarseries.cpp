@@ -405,6 +405,8 @@ bool QAbstractBarSeries::append(QList<QBarSet *> sets)
     Q_D(QAbstractBarSeries);
     bool success = d->append(sets);
     if (success) {
+        foreach (QBarSet *set, sets)
+            set->setParent(this);
         emit barsetsAdded(sets);
         emit countChanged();
     }

@@ -46,6 +46,7 @@ void tst_QLineSeries::initTestCase()
 
 void tst_QLineSeries::cleanupTestCase()
 {
+    QTest::qWait(1); // Allow final deleteLaters to run
 }
 
 void tst_QLineSeries::init()

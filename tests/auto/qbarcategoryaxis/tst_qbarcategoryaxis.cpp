@@ -87,6 +87,7 @@ void tst_QBarCategoriesAxis::initTestCase()
 
 void tst_QBarCategoriesAxis::cleanupTestCase()
 {
+    QTest::qWait(1); // Allow final deleteLaters to run
 }
 
 void tst_QBarCategoriesAxis::init()

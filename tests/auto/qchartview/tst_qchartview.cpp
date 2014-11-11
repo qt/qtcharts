@@ -63,6 +63,7 @@ void tst_QChartView::initTestCase()
 
 void tst_QChartView::cleanupTestCase()
 {
+    QTest::qWait(1); // Allow final deleteLaters to run
 }
 
 void tst_QChartView::init()

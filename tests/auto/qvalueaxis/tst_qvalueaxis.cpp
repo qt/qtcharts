@@ -73,6 +73,7 @@ void tst_QValueAxis::initTestCase()
 
 void tst_QValueAxis::cleanupTestCase()
 {
+    QTest::qWait(1); // Allow final deleteLaters to run
 }
 
 void tst_QValueAxis::init()

@@ -28,6 +28,7 @@ void tst_QXYSeries::initTestCase()
 
 void tst_QXYSeries::cleanupTestCase()
 {
+    QTest::qWait(1); // Allow final deleteLaters to run
 }
 
 void tst_QXYSeries::init()

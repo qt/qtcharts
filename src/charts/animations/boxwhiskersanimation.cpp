@@ -32,6 +32,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 BoxWhiskersAnimation::BoxWhiskersAnimation(BoxWhiskers *box, BoxPlotAnimation *boxPlotAnimation)
     : ChartAnimation(box),
       m_box(box),
+      m_changeAnimation(false),
       m_boxPlotAnimation(boxPlotAnimation)
 {
     setDuration(ChartAnimationDuration);

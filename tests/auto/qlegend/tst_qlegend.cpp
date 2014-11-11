@@ -71,6 +71,7 @@ void tst_QLegend::initTestCase()
 
 void tst_QLegend::cleanupTestCase()
 {
+    QTest::qWait(1); // Allow final deleteLaters to run
 }
 
 void tst_QLegend::init()
@@ -144,8 +145,8 @@ void tst_QLegend::qareaLegendMarker()
     QLegend *legend = m_chart->legend();
     QAreaSeries *series = new QAreaSeries();
 
-    QLineSeries *upper = new QLineSeries();
-    QLineSeries *lower = new QLineSeries();
+    QLineSeries *upper = new QLineSeries(series);
+    QLineSeries *lower = new QLineSeries(series);
 
     upper->append(1,1);
     lower->append(1,0);
@@ -257,8 +258,8 @@ void tst_QLegend::markers()
     m_chart->addSeries(line);
 
     QAreaSeries *area = new QAreaSeries();
-    QLineSeries *upper = new QLineSeries();
-    QLineSeries *lower = new QLineSeries();
+    QLineSeries *upper = new QLineSeries(area);
+    QLineSeries *lower = new QLineSeries(area);
     upper->append(1,1);
     lower->append(1,0);
     area->setUpperSeries(upper);
@@ -294,6 +295,8 @@ void tst_QLegend::addAndRemoveSeries()
 
     markers = legend->markers();
     QVERIFY(markers.count() == 0);
+
+    delete pie;
 }
 
 void tst_QLegend::pieMarkerProperties()
@@ -381,8 +384,8 @@ void tst_QLegend::areaMarkerProperties()
 
     QAreaSeries *area = new QAreaSeries();
     area->setName(QString("Area"));
-    QLineSeries *upper = new QLineSeries();
-    QLineSeries *lower = new QLineSeries();
+    QLineSeries *upper = new QLineSeries(area);
+    QLineSeries *lower = new QLineSeries(area);
     upper->append(1,1);
     lower->append(1,0);
     area->setUpperSeries(upper);
@@ -522,8 +525,8 @@ void tst_QLegend::markerSignals()
 
     QAreaSeries *area = new QAreaSeries();
     area->setName(QString("Area 1"));
-    QLineSeries *upper = new QLineSeries();
-    QLineSeries *lower = new QLineSeries();
+    QLineSeries *upper = new QLineSeries(area);
+    QLineSeries *lower = new QLineSeries(area);
     upper->append(2,2);
     lower->append(1,1);
     area->setUpperSeries(upper);

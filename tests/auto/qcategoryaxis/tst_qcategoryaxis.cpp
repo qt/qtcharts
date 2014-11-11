@@ -69,6 +69,7 @@ void tst_QCategoryAxis::initTestCase()
 
 void tst_QCategoryAxis::cleanupTestCase()
 {
+    QTest::qWait(1); // Allow final deleteLaters to run
 }
 
 void tst_QCategoryAxis::init()

@@ -65,6 +65,7 @@ void tst_QPercentBarSeries::initTestCase()
 
 void tst_QPercentBarSeries::cleanupTestCase()
 {
+    QTest::qWait(1); // Allow final deleteLaters to run
 }
 
 void tst_QPercentBarSeries::init()
@@ -86,6 +87,7 @@ void tst_QPercentBarSeries::qpercentbarseries()
 {
     QPercentBarSeries *barseries = new QPercentBarSeries();
     QVERIFY(barseries != 0);
+    delete barseries;
 }
 
 void tst_QPercentBarSeries::type_data()

@@ -22,6 +22,7 @@
 #define TABLEWIDGET_H
 
 #include <QtWidgets/QWidget>
+#include "customtablemodel.h"
 
 class TableWidget : public QWidget
 {
@@ -29,6 +30,9 @@ class TableWidget : public QWidget
 
 public:
     TableWidget(QWidget *parent = 0);
+
+private:
+    CustomTableModel *m_model;
 };
 
 #endif // TABLEWIDGET_H

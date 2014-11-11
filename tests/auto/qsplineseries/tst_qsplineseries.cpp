@@ -45,6 +45,7 @@ void tst_QSplineSeries::initTestCase()
 
 void tst_QSplineSeries::cleanupTestCase()
 {
+    QTest::qWait(1); // Allow final deleteLaters to run
 }
 
 void tst_QSplineSeries::init()

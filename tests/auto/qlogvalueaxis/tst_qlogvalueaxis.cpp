@@ -71,6 +71,7 @@ void tst_QLogValueAxis::initTestCase()
 
 void tst_QLogValueAxis::cleanupTestCase()
 {
+    QTest::qWait(1); // Allow final deleteLaters to run
 }
 
 void tst_QLogValueAxis::init()

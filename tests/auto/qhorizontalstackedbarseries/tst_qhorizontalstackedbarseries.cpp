@@ -64,6 +64,7 @@ void tst_QHorizontalStackedBarSeries::initTestCase()
 
 void tst_QHorizontalStackedBarSeries::cleanupTestCase()
 {
+    QTest::qWait(1); // Allow final deleteLaters to run
 }
 
 void tst_QHorizontalStackedBarSeries::init()
@@ -85,6 +86,7 @@ void tst_QHorizontalStackedBarSeries::qhorizontalstackedbarseries()
 {
     QHorizontalStackedBarSeries *barseries = new QHorizontalStackedBarSeries();
     QVERIFY(barseries != 0);
+    delete barseries;
 }
 
 void tst_QHorizontalStackedBarSeries::type_data()

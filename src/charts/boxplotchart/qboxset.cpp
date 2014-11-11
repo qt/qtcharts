@@ -277,6 +277,7 @@ QBoxSetPrivate::QBoxSetPrivate(const QString label, QBoxSet *parent) : QObject(p
 
 QBoxSetPrivate::~QBoxSetPrivate()
 {
+    delete[] m_values;
 }
 
 bool QBoxSetPrivate::append(qreal value)

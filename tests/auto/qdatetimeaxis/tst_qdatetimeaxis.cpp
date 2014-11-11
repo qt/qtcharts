@@ -69,6 +69,7 @@ void tst_QDateTimeAxis::initTestCase()
 
 void tst_QDateTimeAxis::cleanupTestCase()
 {
+    QTest::qWait(1); // Allow final deleteLaters to run
 }
 
 void tst_QDateTimeAxis::init()

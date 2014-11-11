@@ -64,6 +64,7 @@ void tst_QStackedBarSeries::initTestCase()
 
 void tst_QStackedBarSeries::cleanupTestCase()
 {
+    QTest::qWait(1); // Allow final deleteLaters to run
 }
 
 void tst_QStackedBarSeries::init()
@@ -85,6 +86,7 @@ void tst_QStackedBarSeries::qstackedbarseries()
 {
     QStackedBarSeries *barseries = new QStackedBarSeries();
     QVERIFY(barseries != 0);
+    delete barseries;
 }
 
 void tst_QStackedBarSeries::type_data()

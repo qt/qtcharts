@@ -140,7 +140,7 @@ QLineSeriesPrivate::QLineSeriesPrivate(QLineSeries *q)
     : QXYSeriesPrivate(q)
 {
 
-};
+}
 
 void QLineSeriesPrivate::initializeGraphics(QGraphicsItem *parent)
 {
