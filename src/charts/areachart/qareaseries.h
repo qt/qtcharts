@@ -85,6 +85,9 @@ public:
 Q_SIGNALS:
     void clicked(const QPointF &point);
     void hovered(const QPointF &point, bool state);
+    void pressed(const QPointF &point);
+    void released(const QPointF &point);
+    void doubleClicked(const QPointF &point);
     void selected();
     void colorChanged(QColor color);
     void borderColorChanged(QColor color);

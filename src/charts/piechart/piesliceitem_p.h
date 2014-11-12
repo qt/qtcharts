@@ -61,6 +61,8 @@ public:
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
 
     void setLayout(const PieSliceData &sliceData);
     static QPointF sliceCenter(QPointF point, qreal radius, QPieSlice *slice);
@@ -68,6 +70,9 @@ public:
 Q_SIGNALS:
     void clicked(Qt::MouseButtons buttons);
     void hovered(bool state);
+    void pressed(Qt::MouseButtons buttons);
+    void released(Qt::MouseButtons buttons);
+    void doubleClicked(Qt::MouseButtons buttons);
 
 private:
     void updateGeometry();
@@ -82,6 +87,9 @@ private:
     QRectF m_labelTextRect;
     bool m_hovered;
     QGraphicsTextItem *m_labelItem;
+
+    QPointF m_lastMousePos;
+    bool m_mousePressed;
 
     friend class PieSliceAnimation;
 };

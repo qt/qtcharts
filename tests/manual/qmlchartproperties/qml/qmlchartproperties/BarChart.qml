@@ -51,6 +51,10 @@ ChartView {
             onValuesAdded:              console.log("barset.onValuesAdded: " + index + ", " + count);
             onValuesRemoved:            console.log("barset.onValuesRemoved: " + index + ", " + count);
             onValueChanged:             console.log("barset.onValuesChanged: " + index);
+            onPressed:                  console.log("barset.onPressed: " + index);
+            onReleased:                 console.log("barset.onReleased: " + index);
+            onDoubleClicked:            console.log("barset.onDoubleClicked: " + index);
+
         }
         BarSet { label: "Susan"; values: [5, 1, 2, 4, 1, 7] }
         BarSet { label: "James"; values: [3, 5, 8, 13, 5, 8] }
@@ -65,6 +69,9 @@ ChartView {
         onCountChanged:             console.log("barSeries.onCountChanged: " + count);
         onLabelsFormatChanged:      console.log("barSeries.onLabelsFormatChanged: " + format);
         onLabelsPositionChanged:    console.log("barSeries.onLabelsPositionChanged: " + series.labelsPosition);
+        onPressed:              console.log("barSeries.onPressed: " + barset + " " + index);
+        onReleased:             console.log("barSeries.onReleased: " + barset + " " + index);
+        onDoubleClicked:        console.log("barSeries.onDoubleClicked: " + barset + " " + index);
 
         function changeLabelsPosition() {
             if (labelsPosition === BarSeries.LabelsCenter)

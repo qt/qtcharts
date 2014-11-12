@@ -49,15 +49,25 @@ public:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
+
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
 
 Q_SIGNALS:
     void clicked(int index, QBarSet *barset);
     void hovered(bool status, int index, QBarSet *barset);
+    void pressed(int index, QBarSet *barset);
+    void released(int index, QBarSet *barset);
+    void doubleClicked(int index, QBarSet *barset);
 
 private:
     int m_index;
     QBarSet *m_barset;
     bool m_hovering;
+
+    QPointF m_lastMousePos;
+    bool m_mousePressed;
 };
 
 QT_CHARTS_END_NAMESPACE

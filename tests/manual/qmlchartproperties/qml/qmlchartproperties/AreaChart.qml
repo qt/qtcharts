@@ -81,6 +81,9 @@ ChartView {
                                                      + font.family);
         onPointLabelsColorChanged:       console.log(name + ".onPointLabelsColorChanged: "
                                                      + color);
+        onPressed:          console.log(name + ".onPressed: " + point.x + ", " + point.y);
+        onReleased:         console.log(name + ".onReleased: " + point.x + ", " + point.y);
+        onDoubleClicked:    console.log(name + ".onDoubleClicked: " + point.x + ", " + point.y);
     }
 
     AreaSeries {
@@ -107,5 +110,8 @@ ChartView {
         onSelected:                 console.log(name + ".onSelected");
         onColorChanged:             console.log(name + ".onColorChanged: " + color);
         onBorderColorChanged:       console.log(name + ".onBorderColorChanged: " + borderColor);
+        onPressed:          console.log(name + ".onPressed: " + point.x + ", " + point.y);
+        onReleased:         console.log(name + ".onReleased: " + point.x + ", " + point.y);
+        onDoubleClicked:    console.log(name + ".onDoubleClicked: " + point.x + ", " + point.y);
     }
 }

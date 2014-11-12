@@ -89,6 +89,9 @@ public:
 
 Q_SIGNALS:
     void clicked(int index, QBarSet *barset);
+    void pressed(int index, QBarSet *barset);
+    void released(int index, QBarSet *barset);
+    void doubleClicked(int index, QBarSet *barset);
     void updatedBars();
     void updatedLayout();
     void restructuredBars();

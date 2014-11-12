@@ -306,6 +306,18 @@ Module {
             Parameter { name: "boxset"; type: "DeclarativeBoxSet"; isPointer: true }
         }
         Signal {
+            name: "pressed"
+            Parameter { name: "boxset"; type: "DeclarativeBoxSet"; isPointer: true }
+        }
+        Signal {
+            name: "released"
+            Parameter { name: "boxset"; type: "DeclarativeBoxSet"; isPointer: true }
+        }
+        Signal {
+            name: "doubleClicked"
+            Parameter { name: "boxset"; type: "DeclarativeBoxSet"; isPointer: true }
+        }
+        Signal {
             name: "brushFilenameChanged"
             revision: 1
             Parameter { name: "brushFilename"; type: "string" }
@@ -322,6 +334,18 @@ Module {
         }
         Method {
             name: "onClicked"
+            Parameter { name: "boxset"; type: "QBoxSet"; isPointer: true }
+        }
+        Method {
+            name: "onPressed"
+            Parameter { name: "boxset"; type: "QBoxSet"; isPointer: true }
+        }
+        Method {
+            name: "onReleased"
+            Parameter { name: "boxset"; type: "QBoxSet"; isPointer: true }
+        }
+        Method {
+            name: "onDoubleClicked"
             Parameter { name: "boxset"; type: "QBoxSet"; isPointer: true }
         }
         Method {
@@ -1615,11 +1639,21 @@ Module {
         Signal {
             name: "hovered"
             Parameter { name: "status"; type: "bool" }
+            Parameter { name: "index"; type: "int" }
             Parameter { name: "barset"; type: "QBarSet"; isPointer: true }
         }
         Signal {
-            name: "hovered"
-            Parameter { name: "status"; type: "bool" }
+            name: "pressed"
+            Parameter { name: "index"; type: "int" }
+            Parameter { name: "barset"; type: "QBarSet"; isPointer: true }
+        }
+        Signal {
+            name: "released"
+            Parameter { name: "index"; type: "int" }
+            Parameter { name: "barset"; type: "QBarSet"; isPointer: true }
+        }
+        Signal {
+            name: "doubleClicked"
             Parameter { name: "index"; type: "int" }
             Parameter { name: "barset"; type: "QBarSet"; isPointer: true }
         }
@@ -1690,6 +1724,18 @@ Module {
             name: "hovered"
             Parameter { name: "point"; type: "QPointF" }
             Parameter { name: "state"; type: "bool" }
+        }
+        Signal {
+            name: "pressed"
+            Parameter { name: "point"; type: "QPointF" }
+        }
+        Signal {
+            name: "released"
+            Parameter { name: "point"; type: "QPointF" }
+        }
+        Signal {
+            name: "doubleClicked"
+            Parameter { name: "point"; type: "QPointF" }
         }
         Signal { name: "selected" }
         Signal {
@@ -1777,10 +1823,18 @@ Module {
         Signal {
             name: "hovered"
             Parameter { name: "status"; type: "bool" }
+            Parameter { name: "index"; type: "int" }
         }
         Signal {
-            name: "hovered"
-            Parameter { name: "status"; type: "bool" }
+            name: "pressed"
+            Parameter { name: "index"; type: "int" }
+        }
+        Signal {
+            name: "released"
+            Parameter { name: "index"; type: "int" }
+        }
+        Signal {
+            name: "doubleClicked"
             Parameter { name: "index"; type: "int" }
         }
         Signal {
@@ -1834,6 +1888,18 @@ Module {
             Parameter { name: "status"; type: "bool" }
             Parameter { name: "boxset"; type: "QBoxSet"; isPointer: true }
         }
+        Signal {
+            name: "pressed"
+            Parameter { name: "boxset"; type: "QBoxSet"; isPointer: true }
+        }
+        Signal {
+            name: "released"
+            Parameter { name: "boxset"; type: "QBoxSet"; isPointer: true }
+        }
+        Signal {
+            name: "doubleClicked"
+            Parameter { name: "boxset"; type: "QBoxSet"; isPointer: true }
+        }
         Signal { name: "boxOutlineVisibilityChanged" }
         Signal {
             name: "boxsetsAdded"
@@ -1854,6 +1920,9 @@ Module {
             name: "hovered"
             Parameter { name: "status"; type: "bool" }
         }
+        Signal { name: "pressed" }
+        Signal { name: "released" }
+        Signal { name: "doubleClicked" }
         Signal { name: "valuesChanged" }
         Signal {
             name: "valueChanged"
@@ -2073,6 +2142,18 @@ Module {
             Parameter { name: "slice"; type: "QPieSlice"; isPointer: true }
             Parameter { name: "state"; type: "bool" }
         }
+        Signal {
+            name: "pressed"
+            Parameter { name: "slice"; type: "QPieSlice"; isPointer: true }
+        }
+        Signal {
+            name: "released"
+            Parameter { name: "slice"; type: "QPieSlice"; isPointer: true }
+        }
+        Signal {
+            name: "doubleClicked"
+            Parameter { name: "slice"; type: "QPieSlice"; isPointer: true }
+        }
     }
     Component {
         name: "QtCharts::QPieSlice"
@@ -2111,6 +2192,9 @@ Module {
             name: "hovered"
             Parameter { name: "state"; type: "bool" }
         }
+        Signal { name: "pressed" }
+        Signal { name: "released" }
+        Signal { name: "doubleClicked" }
     }
     Component {
         name: "QtCharts::QScatterSeries"
@@ -2267,6 +2351,18 @@ Module {
             name: "hovered"
             Parameter { name: "point"; type: "QPointF" }
             Parameter { name: "state"; type: "bool" }
+        }
+        Signal {
+            name: "pressed"
+            Parameter { name: "point"; type: "QPointF" }
+        }
+        Signal {
+            name: "released"
+            Parameter { name: "point"; type: "QPointF" }
+        }
+        Signal {
+            name: "doubleClicked"
+            Parameter { name: "point"; type: "QPointF" }
         }
         Signal {
             name: "pointReplaced"

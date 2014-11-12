@@ -66,6 +66,22 @@ QT_CHARTS_BEGIN_NAMESPACE
     \fn void QBoxSet::clicked()
     The signal is emitted if the user clicks with a mouse on top of box-and-whisker item.
 */
+
+/*!
+    \fn void QBoxSet::pressed()
+    The signal is emitted if the user presses with a mouse on top of box-and-whisker item.
+*/
+
+/*!
+    \fn void QBoxSet::released()
+    The signal is emitted if the user releases with a mouse on top of box-and-whisker item.
+*/
+
+/*!
+    \fn void QBoxSet::doubleClicked()
+    The signal is emitted if the user doubleclicks with a mouse on top of box-and-whisker item.
+*/
+
 /*!
     \fn void QBoxSet::hovered(bool status)
 

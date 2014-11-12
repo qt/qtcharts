@@ -62,6 +62,18 @@ QT_CHARTS_BEGIN_NAMESPACE
     \brief Signal is emitted when the user clicks the \a boxset on the chart.
 */
 /*!
+    \fn QBoxPlotSeries::pressed(QBoxSet *boxset)
+    \brief Signal is emitted when the user presses the \a boxset on the chart.
+*/
+/*!
+    \fn QBoxPlotSeries::released(QBoxSet *boxset)
+    \brief Signal is emitted when the user releases the \a boxset on the chart.
+*/
+/*!
+    \fn QBoxPlotSeries::doubleClicked(QBoxSet *boxset)
+    \brief Signal is emitted when the user doubleclicks the \a boxset on the chart.
+*/
+/*!
     \fn QBoxPlotSeries::hovered(bool status, QBoxSet *boxset)
     \brief Signal is emitted when there is change in hover \a status over \a boxset.
 */

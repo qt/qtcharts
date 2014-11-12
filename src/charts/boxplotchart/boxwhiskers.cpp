@@ -21,16 +21,19 @@
 #include <private/boxwhiskers_p.h>
 #include <QtGui/QPainter>
 #include <QtWidgets/QWidget>
+#include <QtWidgets/QGraphicsSceneMouseEvent>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 BoxWhiskers::BoxWhiskers(QBoxSet *set, AbstractDomain *domain, QGraphicsObject *parent) :
     QGraphicsObject(parent),
     m_boxSet(set),
-    m_domain(domain)
+    m_domain(domain),
+    m_mousePressed(false)
 {
     setAcceptHoverEvents(true);
     setAcceptedMouseButtons(Qt::MouseButtonMask);
+    setFlag(QGraphicsObject::ItemIsSelectable);
 }
 
 BoxWhiskers::~BoxWhiskers()
@@ -39,8 +42,9 @@ BoxWhiskers::~BoxWhiskers()
 
 void BoxWhiskers::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    Q_UNUSED(event)
-    emit clicked(m_boxSet);
+    emit pressed(m_boxSet);
+    m_lastMousePos = event->pos();
+    m_mousePressed = true;
 }
 
 void BoxWhiskers::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
@@ -53,6 +57,21 @@ void BoxWhiskers::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
     Q_UNUSED(event)
     emit hovered(false, m_boxSet);
+}
+
+void BoxWhiskers::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+    emit released(m_boxSet);
+    if (m_lastMousePos == event->pos() && m_mousePressed)
+        emit clicked(m_boxSet);
+}
+
+void BoxWhiskers::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
+{
+    Q_UNUSED(event)
+    // For Box a press signal needs to be explicitly fired for mouseDoubleClickEvent
+    emit pressed(m_boxSet);
+    emit doubleClicked(m_boxSet);
 }
 
 void BoxWhiskers::setBrush(const QBrush &brush)

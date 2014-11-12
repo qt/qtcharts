@@ -78,6 +78,9 @@ protected:
 Q_SIGNALS:
     void clicked(int index, QBarSet *barset);
     void hovered(bool status, int index, QBarSet *barset);
+    void pressed(int index, QBarSet *barset);
+    void released(int index, QBarSet *barset);
+    void doubleClicked(int index, QBarSet *barset);
     void countChanged();
     void labelsVisibleChanged();
     void labelsFormatChanged(const QString &format);

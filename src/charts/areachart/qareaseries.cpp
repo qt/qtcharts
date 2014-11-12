@@ -168,6 +168,33 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QAreaSeries::pressed(const QPointF& point)
+    \brief Signal is emitted when user presses the \a point on area chart.
+*/
+/*!
+    \qmlsignal AreaSeries::onPressed(QPointF point)
+    Signal is emitted when user presses the \a point on area chart.
+*/
+
+/*!
+    \fn void QAreaSeries::released(const QPointF& point)
+    \brief Signal is emitted when user releases the \a point on area chart.
+*/
+/*!
+    \qmlsignal AreaSeries::onReleased(QPointF point)
+    Signal is emitted when user releases the \a point on area chart.
+*/
+
+/*!
+    \fn void QAreaSeries::doubleClicked(const QPointF& point)
+    \brief Signal is emitted when user doubleclicks the \a point on area chart.
+*/
+/*!
+    \qmlsignal AreaSeries::onDoubleClicked(QPointF point)
+    Signal is emitted when user doubleclicks the \a point on area chart.
+*/
+
+/*!
     \fn void QAreaSeries::selected()
     The signal is emitted if the user selects/deselects the XY series. The logic for maintaining selections should be
     implemented by the user of QAreaSeries API.

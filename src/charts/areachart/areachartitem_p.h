@@ -63,10 +63,15 @@ protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
 
 Q_SIGNALS:
     void clicked(const QPointF &point);
     void hovered(const QPointF &point, bool state);
+    void pressed(const QPointF &point);
+    void released(const QPointF &point);
+    void doubleClicked(const QPointF &point);
 
 public Q_SLOTS:
     void handleUpdated();
@@ -87,6 +92,9 @@ private:
     QString m_pointLabelsFormat;
     QFont m_pointLabelsFont;
     QColor m_pointLabelsColor;
+
+    QPointF m_lastMousePos;
+    bool m_mousePressed;
 
 };
 

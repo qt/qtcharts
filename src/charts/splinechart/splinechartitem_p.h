@@ -66,6 +66,8 @@ protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
 
 private:
     QSplineSeries *m_series;
@@ -85,6 +87,9 @@ private:
     QString m_pointLabelsFormat;
     QFont m_pointLabelsFont;
     QColor m_pointLabelsColor;
+
+    QPointF m_lastMousePos;
+    bool m_mousePressed;
 
     friend class SplineAnimation;
 };

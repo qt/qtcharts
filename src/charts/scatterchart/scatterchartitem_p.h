@@ -34,6 +34,7 @@
 #include <private/xychart_p.h>
 #include <QtWidgets/QGraphicsEllipseItem>
 #include <QtGui/QPen>
+#include <QtWidgets/QGraphicsSceneMouseEvent>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -56,6 +57,15 @@ public:
 
     void markerSelected(QGraphicsItem *item);
     void markerHovered(QGraphicsItem *item, bool state);
+    void markerPressed(QGraphicsItem *item);
+    void markerReleased(QGraphicsItem *item);
+    void markerDoubleClicked(QGraphicsItem *item);
+
+    void setLastMousePosition(const QPointF pos) {m_lastMousePos = pos;}
+    QPointF lastMousePosition() const {return m_lastMousePos;}
+    void setMousePressed(bool pressed = true) {m_mousePressed = pressed;}
+    bool mousePressed() {return m_mousePressed;}
+
 
 public Q_SLOTS:
     void handleUpdated();
@@ -80,6 +90,9 @@ private:
     QString m_pointLabelsFormat;
     QFont m_pointLabelsFont;
     QColor m_pointLabelsColor;
+
+    QPointF m_lastMousePos;
+    bool m_mousePressed;
 };
 
 class CircleMarker: public QGraphicsEllipseItem
@@ -91,13 +104,16 @@ public:
           m_parent(parent)
     {
         setAcceptHoverEvents(true);
+        setFlag(QGraphicsItem::ItemIsSelectable);
     }
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event)
     {
         QGraphicsEllipseItem::mousePressEvent(event);
-        m_parent->markerSelected(this);
+        m_parent->markerPressed(this);
+        m_parent->setLastMousePosition(event->pos());
+        m_parent->setMousePressed();
     }
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event)
     {
@@ -108,6 +124,19 @@ protected:
     {
         QGraphicsEllipseItem::hoverLeaveEvent(event);
         m_parent->markerHovered(this, false);
+    }
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+    {
+        QGraphicsEllipseItem::mouseReleaseEvent(event);
+        m_parent->markerReleased(this);
+        if (m_parent->lastMousePosition() == event->pos() && m_parent->mousePressed())
+            m_parent->markerSelected(this);
+        m_parent->setMousePressed(false);
+    }
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
+    {
+        QGraphicsEllipseItem::mouseDoubleClickEvent(event);
+        m_parent->markerDoubleClicked(this);
     }
 
 private:
@@ -123,13 +152,16 @@ public:
           m_parent(parent)
     {
         setAcceptHoverEvents(true);
+        setFlag(QGraphicsItem::ItemIsSelectable);
     }
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event)
     {
         QGraphicsRectItem::mousePressEvent(event);
-        m_parent->markerSelected(this);
+        m_parent->markerPressed(this);
+        m_parent->setLastMousePosition(event->pos());
+        m_parent->setMousePressed();
     }
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event)
     {
@@ -140,6 +172,19 @@ protected:
     {
         QGraphicsRectItem::hoverLeaveEvent(event);
         m_parent->markerHovered(this, false);
+    }
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+    {
+        QGraphicsRectItem::mouseReleaseEvent(event);
+        m_parent->markerReleased(this);
+        if (m_parent->lastMousePosition() == event->pos() && m_parent->mousePressed())
+            m_parent->markerSelected(this);
+        m_parent->setMousePressed(false);
+    }
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
+    {
+        QGraphicsRectItem::mouseDoubleClickEvent(event);
+        m_parent->markerDoubleClicked(this);
     }
 
 private:

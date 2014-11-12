@@ -47,6 +47,9 @@ ChartView {
             onAngleSpanChanged:     console.log("slice.onAngleSpanChanged: " + angleSpan);
             onClicked:              console.log("slice.onClicked: " + label);
             onHovered:              console.log("slice.onHovered: " + state);
+            onPressed:              console.log("slice.onPressed: " + label);
+            onReleased:             console.log("slice.onReleased: " + label);
+            onDoubleClicked:        console.log("slice.onDoubleClicked: " + label);
         }
         PieSlice { label: "slice2"; value: 22 }
         PieSlice { label: "slice3"; value: 33 }
@@ -63,5 +66,8 @@ ChartView {
         onSliceRemoved:             console.log("pieSeries.onSliceRemoved: " + slice.label);
         onCountChanged:             console.log("pieSeries.onCountChanged: " + count);
         onSumChanged:               console.log("pieSeries.onSumChanged: " + sum);
+        onPressed:                  console.log("pieSeries.onPressed: " + slice.label);
+        onReleased:                 console.log("pieSeries.onReleased: " + slice.label);
+        onDoubleClicked:            console.log("pieSeries.onDoubleClicked: " + slice.label);
     }
 }

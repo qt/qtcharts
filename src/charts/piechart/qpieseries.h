@@ -89,6 +89,9 @@ Q_SIGNALS:
     void removed(QList<QPieSlice *> slices);
     void clicked(QPieSlice *slice);
     void hovered(QPieSlice *slice, bool state);
+    void pressed(QPieSlice *slice);
+    void released(QPieSlice *slice);
+    void doubleClicked(QPieSlice *slice);
     void countChanged();
     void sumChanged();
 

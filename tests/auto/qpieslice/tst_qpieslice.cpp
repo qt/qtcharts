@@ -43,6 +43,9 @@ private slots:
     void customize();
     void clickedSignal();
     void hoverSignal();
+    void pressedSignal();
+    void releasedSignal();
+    void doubleClickedSignal();
 
 private:
     QList<QPoint> slicePoints(QRectF rect);
@@ -333,6 +336,114 @@ QList<QPoint> tst_qpieslice::slicePoints(QRectF rect)
     points << QPoint(x1, y2);
     points << QPoint(x1, y1);
     return points;
+}
+
+void tst_qpieslice::pressedSignal()
+{
+    // NOTE:
+    // This test is the same as tst_qpieseries::pressedSignal()
+    // Just for different signals.
+
+    SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
+
+    // create a pie series
+    QPieSeries *series = new QPieSeries();
+    QPieSlice *s1 = series->append("slice 1", 1);
+    QPieSlice *s2 = series->append("slice 2", 1);
+    QPieSlice *s3 = series->append("slice 3", 1);
+    QPieSlice *s4 = series->append("slice 4", 1);
+    QSignalSpy clickSpy1(s1, SIGNAL(pressed()));
+    QSignalSpy clickSpy2(s2, SIGNAL(pressed()));
+    QSignalSpy clickSpy3(s3, SIGNAL(pressed()));
+    QSignalSpy clickSpy4(s4, SIGNAL(pressed()));
+
+    // add series to the chart
+    QChartView view;
+    view.chart()->legend()->setVisible(false);
+    view.chart()->addSeries(series);
+    view.show();
+    QTest::qWaitForWindowShown(&view);
+
+    // simulate clicks
+    series->setPieSize(1.0);
+    QRectF pieRect = view.chart()->plotArea();
+    QList<QPoint> points = slicePoints(pieRect);
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, points.at(0));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, points.at(1));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, points.at(2));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, points.at(3));
+    QCOMPARE(clickSpy1.count(), 1);
+    QCOMPARE(clickSpy2.count(), 1);
+    QCOMPARE(clickSpy3.count(), 1);
+    QCOMPARE(clickSpy4.count(), 1);
+}
+
+void tst_qpieslice::releasedSignal()
+{
+    // NOTE:
+    // This test is the same as tst_qpieseries::releasedSignal()
+    // Just for different signals.
+
+    SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
+
+    // create a pie series
+    QPieSeries *series = new QPieSeries();
+    QPieSlice *s1 = series->append("slice 1", 1);
+    QPieSlice *s2 = series->append("slice 2", 1);
+    QPieSlice *s3 = series->append("slice 3", 1);
+    QPieSlice *s4 = series->append("slice 4", 1);
+    QSignalSpy clickSpy1(s1, SIGNAL(released()));
+    QSignalSpy clickSpy2(s2, SIGNAL(released()));
+    QSignalSpy clickSpy3(s3, SIGNAL(released()));
+    QSignalSpy clickSpy4(s4, SIGNAL(released()));
+
+    // add series to the chart
+    QChartView view;
+    view.chart()->legend()->setVisible(false);
+    view.chart()->addSeries(series);
+    view.show();
+    QTest::qWaitForWindowShown(&view);
+
+    // simulate clicks
+    series->setPieSize(1.0);
+    QRectF pieRect = view.chart()->plotArea();
+    QList<QPoint> points = slicePoints(pieRect);
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, points.at(0));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, points.at(1));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, points.at(2));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, points.at(3));
+    QCOMPARE(clickSpy1.count(), 1);
+    QCOMPARE(clickSpy2.count(), 1);
+    QCOMPARE(clickSpy3.count(), 1);
+    QCOMPARE(clickSpy4.count(), 1);
+}
+
+void tst_qpieslice::doubleClickedSignal()
+{
+    // NOTE:
+    // This test is the same as tst_qpieseries::doubleClickedSignal()
+    // Just for different signals.
+
+    SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
+
+    // create a pie series
+    QPieSeries *series = new QPieSeries();
+    QPieSlice *s1 = series->append("slice 1", 1);
+    QSignalSpy clickSpy1(s1, SIGNAL(doubleClicked()));
+
+    // add series to the chart
+    QChartView view;
+    view.chart()->legend()->setVisible(false);
+    view.chart()->addSeries(series);
+    view.show();
+    QTest::qWaitForWindowShown(&view);
+
+    // simulate clicks
+    series->setPieSize(1.0);
+    QRectF pieRect = view.chart()->plotArea();
+    QList<QPoint> points = slicePoints(pieRect);
+    QTest::mouseDClick(view.viewport(), Qt::LeftButton, 0, points.at(0));
+    QCOMPARE(clickSpy1.count(), 1);
 }
 
 QTEST_MAIN(tst_qpieslice)

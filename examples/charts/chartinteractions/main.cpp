@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
     chart->setAxisY(axisY, series);
     axisY->setRange(0, 13);
 
-    QObject::connect(series, SIGNAL(clicked(QPointF)), chart, SLOT(clickPoint(QPointF)));
+    QObject::connect(series, SIGNAL(pressed(QPointF)), chart, SLOT(clickPoint(QPointF)));
 
     ChartView *chartView = new ChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);

@@ -41,11 +41,13 @@ QPointF offset(qreal angle, qreal length)
 
 PieSliceItem::PieSliceItem(QGraphicsItem *parent)
     : QGraphicsObject(parent),
-      m_hovered(false)
+      m_hovered(false),
+      m_mousePressed(false)
 {
     setAcceptHoverEvents(true);
     setAcceptedMouseButtons(Qt::MouseButtonMask);
     setZValue(ChartPresenter::PieSeriesZValue);
+    setFlag(QGraphicsItem::ItemIsSelectable);
     m_labelItem = new QGraphicsTextItem(this);
     m_labelItem->document()->setDocumentMargin(1.0);
 }
@@ -108,7 +110,23 @@ void PieSliceItem::hoverLeaveEvent(QGraphicsSceneHoverEvent * /*event*/)
 
 void PieSliceItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    emit clicked(event->buttons());
+    emit pressed(event->buttons());
+    m_lastMousePos = event->pos();
+    m_mousePressed = true;
+}
+
+void PieSliceItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+    emit released(event->buttons());
+    if (m_lastMousePos == event->pos() && m_mousePressed)
+        emit clicked(event->buttons());
+}
+
+void PieSliceItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
+{
+    // For Pie slice a press signal needs to be explicitly fired for mouseDoubleClickEvent
+    emit pressed(event->buttons());
+    emit doubleClicked(event->buttons());
 }
 
 void PieSliceItem::setLayout(const PieSliceData &sliceData)

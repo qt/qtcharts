@@ -211,6 +211,39 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QAbstractBarSeries::pressed(int index, QBarSet *barset)
+    The signal is emitted if the user presses with a mouse on top of QBarSet \a barset.
+    Pressed bar inside set is indexed by \a index
+*/
+/*!
+    \qmlsignal AbstractBarSeries::onPressed(int index, BarSet barset)
+    The signal is emitted if the user presses with a mouse on top of BarSet.
+    Pressed bar inside set is indexed by \a index
+*/
+
+/*!
+    \fn void QAbstractBarSeries::released(int index, QBarSet *barset)
+    The signal is emitted if the user releases with a mouse on top of QBarSet \a barset.
+    Released bar inside set is indexed by \a index
+*/
+/*!
+    \qmlsignal AbstractBarSeries::onReleased(int index, BarSet barset)
+    The signal is emitted if the user releases with a mouse on top of BarSet.
+    Released bar inside set is indexed by \a index
+*/
+
+/*!
+    \fn void QAbstractBarSeries::doubleClicked(int index, QBarSet *barset)
+    The signal is emitted if the user doubleclicks with a mouse on top of QBarSet \a barset.
+    DoubleClicked bar inside set is indexed by \a index
+*/
+/*!
+    \qmlsignal AbstractBarSeries::onDoubleClicked(int index, BarSet barset)
+    The signal is emitted if the user doubleclicks with a mouse on top of BarSet.
+    Doubleclicked bar inside set is indexed by \a index
+*/
+
+/*!
     \fn void QAbstractBarSeries::hovered(bool status, int index, QBarSet* barset)
 
     The signal is emitted if mouse is hovered on top of series.

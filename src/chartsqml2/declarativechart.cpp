@@ -588,6 +588,31 @@ void DeclarativeChart::hoverMoveEvent(QHoverEvent *event)
     QApplication::sendEvent(m_scene, &mouseEvent);
 }
 
+void DeclarativeChart::mouseDoubleClickEvent(QMouseEvent *event)
+{
+    m_mousePressScenePoint = event->pos();
+    m_mousePressScreenPoint = event->globalPos();
+    m_lastMouseMoveScenePoint = m_mousePressScenePoint;
+    m_lastMouseMoveScreenPoint = m_mousePressScreenPoint;
+    m_mousePressButton = event->button();
+    m_mousePressButtons = event->buttons();
+
+    QGraphicsSceneMouseEvent mouseEvent(QEvent::GraphicsSceneMouseDoubleClick);
+    mouseEvent.setWidget(0);
+    mouseEvent.setButtonDownScenePos(m_mousePressButton, m_mousePressScenePoint);
+    mouseEvent.setButtonDownScreenPos(m_mousePressButton, m_mousePressScreenPoint);
+    mouseEvent.setScenePos(m_mousePressScenePoint);
+    mouseEvent.setScreenPos(m_mousePressScreenPoint);
+    mouseEvent.setLastScenePos(m_lastMouseMoveScenePoint);
+    mouseEvent.setLastScreenPos(m_lastMouseMoveScreenPoint);
+    mouseEvent.setButtons(m_mousePressButtons);
+    mouseEvent.setButton(m_mousePressButton);
+    mouseEvent.setModifiers(event->modifiers());
+    mouseEvent.setAccepted(false);
+
+    QApplication::sendEvent(m_scene, &mouseEvent);
+}
+
 void DeclarativeChart::handleAntialiasingChanged(bool enable)
 {
     setAntialiasing(enable);

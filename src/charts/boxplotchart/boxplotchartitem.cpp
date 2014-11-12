@@ -78,8 +78,15 @@ void BoxPlotChartItem::handleDataStructureChanged()
             m_boxTable.insert(set, box);
             connect(box, SIGNAL(clicked(QBoxSet *)), m_series, SIGNAL(clicked(QBoxSet *)));
             connect(box, SIGNAL(hovered(bool, QBoxSet *)), m_series, SIGNAL(hovered(bool, QBoxSet *)));
+            connect(box, SIGNAL(pressed(QBoxSet *)), m_series, SIGNAL(pressed(QBoxSet *)));
+            connect(box, SIGNAL(released(QBoxSet *)), m_series, SIGNAL(released(QBoxSet *)));
+            connect(box, SIGNAL(doubleClicked(QBoxSet *)),
+                    m_series, SIGNAL(doubleClicked(QBoxSet *)));
             connect(box, SIGNAL(clicked(QBoxSet *)), set, SIGNAL(clicked()));
             connect(box, SIGNAL(hovered(bool, QBoxSet *)), set, SIGNAL(hovered(bool)));
+            connect(box, SIGNAL(pressed(QBoxSet *)), set, SIGNAL(pressed()));
+            connect(box, SIGNAL(released(QBoxSet *)), set, SIGNAL(released()));
+            connect(box, SIGNAL(doubleClicked(QBoxSet *)), set, SIGNAL(doubleClicked()));
 
             // Set the decorative issues for the newly created box
             // so that the brush and pen already defined for the set are kept.

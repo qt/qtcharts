@@ -63,6 +63,8 @@ protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
     void suppressPoints() { m_pointsVisible = false; }
     void forceChartType(QChart::ChartType chartType) { m_chartType = chartType; }
 
@@ -84,6 +86,9 @@ private:
     QString m_pointLabelsFormat;
     QFont m_pointLabelsFont;
     QColor m_pointLabelsColor;
+
+    QPointF m_lastMousePos;
+    bool m_mousePressed;
 };
 
 QT_CHARTS_END_NAMESPACE

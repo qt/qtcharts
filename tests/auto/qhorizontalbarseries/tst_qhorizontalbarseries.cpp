@@ -64,6 +64,9 @@ private slots:
     void mousehovered_data();
     void mousehovered();
     void clearWithAnimations();
+    void mousePressed();
+    void mouseReleased();
+    void mouseDoubleClicked();
 
 private:
     QHorizontalBarSeries* m_barseries;
@@ -859,6 +862,409 @@ void tst_QHorizontalBarSeries::clearWithAnimations()
     series->clear();
 }
 
+void tst_QHorizontalBarSeries::mousePressed()
+{
+    SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
+
+    QHorizontalBarSeries* series = new QHorizontalBarSeries();
+
+    QBarSet* set1 = new QBarSet(QString("set 1"));
+    *set1 << 10 << 10 << 10;
+    series->append(set1);
+
+    QBarSet* set2 = new QBarSet(QString("set 2"));
+    *set2 << 10 << 10 << 10;
+    series->append(set2);
+    QList<QBarSet*> barSets = series->barSets();
+
+    QSignalSpy seriesSpy(series,SIGNAL(pressed(int,QBarSet*)));
+    QSignalSpy setSpy1(set1, SIGNAL(pressed(int)));
+    QSignalSpy setSpy2(set2, SIGNAL(pressed(int)));
+
+    QChartView view(new QChart());
+    view.resize(400,300);
+    view.chart()->addSeries(series);
+    view.show();
+    QTest::qWaitForWindowShown(&view);
+
+    // Calculate expected layout for bars
+    QRectF plotArea = view.chart()->plotArea();
+    qreal width = plotArea.width();
+    qreal height = plotArea.height();
+    qreal rangeX = 10;  // From 0 to 10 because of maximum value in set is 10
+    qreal rangeY = 3; // 3 values per set
+    qreal scaleY = (height / rangeY);
+    qreal scaleX = (width / rangeX);
+
+    qreal setCount = series->count();
+    qreal domainMinY = -0.5;    // These come from internal domain used by barseries.
+    qreal domainMinX = 0;       // No access to domain from outside, so use hard coded values.
+    qreal rectHeight = (scaleY / setCount) * series->barWidth(); // On horizontal chart barWidth of the barseries means height of the rect.
+
+    QVector<QRectF> layout;
+
+    // 3 = count of values in set
+    // Note that rects in this vector will be interleaved (set1 bar0, set2 bar0, set1 bar1, set2 bar1, etc.)
+    for (int i = 0; i < 3; i++) {
+        qreal xPos = -scaleX * domainMinX + plotArea.left();
+        for (int set = 0; set < setCount; set++) {
+            qreal yPos = plotArea.bottom() + (domainMinY - i) * scaleY;
+            yPos += setCount*rectHeight/2;
+            yPos -= set*rectHeight;
+
+            qreal rectWidth = barSets.at(set)->at(i) * scaleX;
+            QRectF rect(xPos, yPos - rectHeight, rectWidth, rectHeight);
+            layout.append(rect);
+        }
+    }
+
+//====================================================================================
+// barset 1, bar 0
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.at(0).center().toPoint());
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
+
+    QCOMPARE(seriesSpy.count(), 1);
+    QCOMPARE(setSpy1.count(), 1);
+    QCOMPARE(setSpy2.count(), 0);
+
+    QList<QVariant> seriesSpyArg = seriesSpy.takeFirst();
+    QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set1);
+    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(0).toInt() == 0);
+
+    QList<QVariant> setSpyArg = setSpy1.takeFirst();
+    QVERIFY(setSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(setSpyArg.at(0).toInt() == 0);
+
+//====================================================================================
+// barset 1, bar 1
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.at(2).center().toPoint());
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
+
+    QCOMPARE(seriesSpy.count(), 1);
+    QCOMPARE(setSpy1.count(), 1);
+    QCOMPARE(setSpy2.count(), 0);
+
+    seriesSpyArg = seriesSpy.takeFirst();
+    QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set1);
+    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(0).toInt() == 1);
+
+    setSpyArg = setSpy1.takeFirst();
+    QVERIFY(setSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(setSpyArg.at(0).toInt() == 1);
+
+//====================================================================================
+// barset 1, bar 2
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.at(4).center().toPoint());
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
+
+    QCOMPARE(seriesSpy.count(), 1);
+    QCOMPARE(setSpy1.count(), 1);
+    QCOMPARE(setSpy2.count(), 0);
+
+    seriesSpyArg = seriesSpy.takeFirst();
+    QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set1);
+    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(0).toInt() == 2);
+
+    setSpyArg = setSpy1.takeFirst();
+    QVERIFY(setSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(setSpyArg.at(0).toInt() == 2);
+
+//====================================================================================
+// barset 2, bar 0
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.at(1).center().toPoint());
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
+
+    QCOMPARE(seriesSpy.count(), 1);
+    QCOMPARE(setSpy1.count(), 0);
+    QCOMPARE(setSpy2.count(), 1);
+
+    seriesSpyArg = seriesSpy.takeFirst();
+    QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set2);
+    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(0).toInt() == 0);
+
+    setSpyArg = setSpy2.takeFirst();
+    QVERIFY(setSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(setSpyArg.at(0).toInt() == 0);
+
+//====================================================================================
+// barset 2, bar 1
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.at(3).center().toPoint());
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
+
+    QCOMPARE(seriesSpy.count(), 1);
+    QCOMPARE(setSpy1.count(), 0);
+    QCOMPARE(setSpy2.count(), 1);
+
+    seriesSpyArg = seriesSpy.takeFirst();
+    QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set2);
+    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(0).toInt() == 1);
+
+    setSpyArg = setSpy2.takeFirst();
+    QVERIFY(setSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(setSpyArg.at(0).toInt() == 1);
+
+//====================================================================================
+// barset 2, bar 2
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.at(5).center().toPoint());
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
+
+    QCOMPARE(seriesSpy.count(), 1);
+    QCOMPARE(setSpy1.count(), 0);
+    QCOMPARE(setSpy2.count(), 1);
+
+    seriesSpyArg = seriesSpy.takeFirst();
+    QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set2);
+    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(0).toInt() == 2);
+
+    setSpyArg = setSpy2.takeFirst();
+    QVERIFY(setSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(setSpyArg.at(0).toInt() == 2);
+}
+
+void tst_QHorizontalBarSeries::mouseReleased()
+{
+    SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
+
+    QHorizontalBarSeries* series = new QHorizontalBarSeries();
+
+    QBarSet* set1 = new QBarSet(QString("set 1"));
+    *set1 << 10 << 10 << 10;
+    series->append(set1);
+
+    QBarSet* set2 = new QBarSet(QString("set 2"));
+    *set2 << 10 << 10 << 10;
+    series->append(set2);
+    QList<QBarSet*> barSets = series->barSets();
+
+    QSignalSpy seriesSpy(series,SIGNAL(released(int,QBarSet*)));
+    QSignalSpy setSpy1(set1, SIGNAL(released(int)));
+    QSignalSpy setSpy2(set2, SIGNAL(released(int)));
+
+    QChartView view(new QChart());
+    view.resize(400,300);
+    view.chart()->addSeries(series);
+    view.show();
+    QTest::qWaitForWindowShown(&view);
+
+    // Calculate expected layout for bars
+    QRectF plotArea = view.chart()->plotArea();
+    qreal width = plotArea.width();
+    qreal height = plotArea.height();
+    qreal rangeX = 10;  // From 0 to 10 because of maximum value in set is 10
+    qreal rangeY = 3; // 3 values per set
+    qreal scaleY = (height / rangeY);
+    qreal scaleX = (width / rangeX);
+
+    qreal setCount = series->count();
+    qreal domainMinY = -0.5;    // These come from internal domain used by barseries.
+    qreal domainMinX = 0;       // No access to domain from outside, so use hard coded values.
+    qreal rectHeight = (scaleY / setCount) * series->barWidth(); // On horizontal chart barWidth of the barseries means height of the rect.
+
+    QVector<QRectF> layout;
+
+    // 3 = count of values in set
+    // Note that rects in this vector will be interleaved (set1 bar0, set2 bar0, set1 bar1, set2 bar1, etc.)
+    for (int i = 0; i < 3; i++) {
+        qreal xPos = -scaleX * domainMinX + plotArea.left();
+        for (int set = 0; set < setCount; set++) {
+            qreal yPos = plotArea.bottom() + (domainMinY - i) * scaleY;
+            yPos += setCount*rectHeight/2;
+            yPos -= set*rectHeight;
+
+            qreal rectWidth = barSets.at(set)->at(i) * scaleX;
+            QRectF rect(xPos, yPos - rectHeight, rectWidth, rectHeight);
+            layout.append(rect);
+        }
+    }
+
+//====================================================================================
+// barset 1, bar 0
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.at(0).center().toPoint());
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
+
+    QCOMPARE(seriesSpy.count(), 1);
+    QCOMPARE(setSpy1.count(), 1);
+    QCOMPARE(setSpy2.count(), 0);
+
+    QList<QVariant> seriesSpyArg = seriesSpy.takeFirst();
+    QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set1);
+    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(0).toInt() == 0);
+
+    QList<QVariant> setSpyArg = setSpy1.takeFirst();
+    QVERIFY(setSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(setSpyArg.at(0).toInt() == 0);
+
+//====================================================================================
+// barset 1, bar 1
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.at(2).center().toPoint());
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
+
+    QCOMPARE(seriesSpy.count(), 1);
+    QCOMPARE(setSpy1.count(), 1);
+    QCOMPARE(setSpy2.count(), 0);
+
+    seriesSpyArg = seriesSpy.takeFirst();
+    QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set1);
+    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(0).toInt() == 1);
+
+    setSpyArg = setSpy1.takeFirst();
+    QVERIFY(setSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(setSpyArg.at(0).toInt() == 1);
+
+//====================================================================================
+// barset 1, bar 2
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.at(4).center().toPoint());
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
+
+    QCOMPARE(seriesSpy.count(), 1);
+    QCOMPARE(setSpy1.count(), 1);
+    QCOMPARE(setSpy2.count(), 0);
+
+    seriesSpyArg = seriesSpy.takeFirst();
+    QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set1);
+    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(0).toInt() == 2);
+
+    setSpyArg = setSpy1.takeFirst();
+    QVERIFY(setSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(setSpyArg.at(0).toInt() == 2);
+
+//====================================================================================
+// barset 2, bar 0
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.at(1).center().toPoint());
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
+
+    QCOMPARE(seriesSpy.count(), 1);
+    QCOMPARE(setSpy1.count(), 0);
+    QCOMPARE(setSpy2.count(), 1);
+
+    seriesSpyArg = seriesSpy.takeFirst();
+    QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set2);
+    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(0).toInt() == 0);
+
+    setSpyArg = setSpy2.takeFirst();
+    QVERIFY(setSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(setSpyArg.at(0).toInt() == 0);
+
+//====================================================================================
+// barset 2, bar 1
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.at(3).center().toPoint());
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
+
+    QCOMPARE(seriesSpy.count(), 1);
+    QCOMPARE(setSpy1.count(), 0);
+    QCOMPARE(setSpy2.count(), 1);
+
+    seriesSpyArg = seriesSpy.takeFirst();
+    QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set2);
+    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(0).toInt() == 1);
+
+    setSpyArg = setSpy2.takeFirst();
+    QVERIFY(setSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(setSpyArg.at(0).toInt() == 1);
+
+//====================================================================================
+// barset 2, bar 2
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.at(5).center().toPoint());
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
+
+    QCOMPARE(seriesSpy.count(), 1);
+    QCOMPARE(setSpy1.count(), 0);
+    QCOMPARE(setSpy2.count(), 1);
+
+    seriesSpyArg = seriesSpy.takeFirst();
+    QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set2);
+    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(0).toInt() == 2);
+
+    setSpyArg = setSpy2.takeFirst();
+    QVERIFY(setSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(setSpyArg.at(0).toInt() == 2);
+}
+
+void tst_QHorizontalBarSeries::mouseDoubleClicked()
+{
+    SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
+
+    QHorizontalBarSeries* series = new QHorizontalBarSeries();
+
+    QBarSet* set1 = new QBarSet(QString("set 1"));
+    *set1 << 10 << 10 << 10;
+    series->append(set1);
+
+    QBarSet* set2 = new QBarSet(QString("set 2"));
+    *set2 << 10 << 10 << 10;
+    series->append(set2);
+    QList<QBarSet*> barSets = series->barSets();
+
+    QSignalSpy seriesSpy(series,SIGNAL(doubleClicked(int,QBarSet*)));
+    QSignalSpy setSpy1(set1, SIGNAL(doubleClicked(int)));
+    QSignalSpy setSpy2(set2, SIGNAL(doubleClicked(int)));
+
+    QChartView view(new QChart());
+    view.resize(400,300);
+    view.chart()->addSeries(series);
+    view.show();
+    QTest::qWaitForWindowShown(&view);
+
+    // Calculate expected layout for bars
+    QRectF plotArea = view.chart()->plotArea();
+    qreal width = plotArea.width();
+    qreal height = plotArea.height();
+    qreal rangeX = 10;  // From 0 to 10 because of maximum value in set is 10
+    qreal rangeY = 3; // 3 values per set
+    qreal scaleY = (height / rangeY);
+    qreal scaleX = (width / rangeX);
+
+    qreal setCount = series->count();
+    qreal domainMinY = -0.5;    // These come from internal domain used by barseries.
+    qreal domainMinX = 0;       // No access to domain from outside, so use hard coded values.
+    qreal rectHeight = (scaleY / setCount) * series->barWidth(); // On horizontal chart barWidth of the barseries means height of the rect.
+
+    QVector<QRectF> layout;
+
+    // 3 = count of values in set
+    // Note that rects in this vector will be interleaved (set1 bar0, set2 bar0, set1 bar1, set2 bar1, etc.)
+    for (int i = 0; i < 3; i++) {
+        qreal xPos = -scaleX * domainMinX + plotArea.left();
+        for (int set = 0; set < setCount; set++) {
+            qreal yPos = plotArea.bottom() + (domainMinY - i) * scaleY;
+            yPos += setCount*rectHeight/2;
+            yPos -= set*rectHeight;
+
+            qreal rectWidth = barSets.at(set)->at(i) * scaleX;
+            QRectF rect(xPos, yPos - rectHeight, rectWidth, rectHeight);
+            layout.append(rect);
+        }
+    }
+
+    // barset 1, bar 0
+    QTest::mouseDClick(view.viewport(), Qt::LeftButton, 0, layout.at(0).center().toPoint());
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
+
+    QCOMPARE(seriesSpy.count(), 1);
+    QCOMPARE(setSpy1.count(), 1);
+    QCOMPARE(setSpy2.count(), 0);
+
+    QList<QVariant> seriesSpyArg = seriesSpy.takeFirst();
+    QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set1);
+    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(0).toInt() == 0);
+
+    QList<QVariant> setSpyArg = setSpy1.takeFirst();
+    QVERIFY(setSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(setSpyArg.at(0).toInt() == 0);
+}
 QTEST_MAIN(tst_QHorizontalBarSeries)
 
 #include "tst_qhorizontalbarseries.moc"

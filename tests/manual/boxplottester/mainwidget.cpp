@@ -250,8 +250,15 @@ void MainWidget::addSeries()
     m_series[m_seriesCount]->setName("Box & Whiskers");
 
     connect(m_series[m_seriesCount], SIGNAL(clicked(QBoxSet*)), this, SLOT(boxClicked(QBoxSet*)));
+    connect(m_series[m_seriesCount], SIGNAL(pressed(QBoxSet*)), this, SLOT(boxPressed(QBoxSet*)));
+    connect(m_series[m_seriesCount], SIGNAL(released(QBoxSet*)), this, SLOT(boxReleased(QBoxSet*)));
+    connect(m_series[m_seriesCount], SIGNAL(doubleClicked(QBoxSet*)),
+            this, SLOT(boxDoubleClicked(QBoxSet*)));
     connect(m_series[m_seriesCount], SIGNAL(hovered(bool, QBoxSet*)), this, SLOT(boxHovered(bool, QBoxSet*)));
     connect(set1, SIGNAL(clicked()), this, SLOT(singleBoxClicked()));
+    connect(set1, SIGNAL(pressed()), this, SLOT(singleBoxPressed()));
+    connect(set1, SIGNAL(released()), this, SLOT(singleBoxReleased()));
+    connect(set1, SIGNAL(doubleClicked()), this, SLOT(singleBoxDoubleClicked()));
     connect(set2, SIGNAL(hovered(bool)), this, SLOT(singleBoxHovered(bool)));
 
     m_series[m_seriesCount]->setBoxOutlineVisible(m_boxOutlined->checkState());
@@ -453,9 +460,39 @@ void MainWidget::boxHovered(bool state, QBoxSet *set)
         qDebug() << "box median " << set->at(QBoxSet::Median) << " hover ended";
 }
 
+void MainWidget::boxPressed(QBoxSet *set)
+{
+    qDebug() << "boxPressed, median = " << set->at(QBoxSet::Median);
+}
+
+void MainWidget::boxReleased(QBoxSet *set)
+{
+    qDebug() << "boxReleased, median = " << set->at(QBoxSet::Median);
+}
+
+void MainWidget::boxDoubleClicked(QBoxSet *set)
+{
+    qDebug() << "boxDoubleClicked, median = " << set->at(QBoxSet::Median);
+}
+
 void MainWidget::singleBoxClicked()
 {
     qDebug() << "singleBoxClicked";
+}
+
+void MainWidget::singleBoxPressed()
+{
+    qDebug() << "singleBoxPressed";
+}
+
+void MainWidget::singleBoxReleased()
+{
+    qDebug() << "singleBoxReleased";
+}
+
+void MainWidget::singleBoxDoubleClicked()
+{
+    qDebug() << "singleBoxDoubleClicked";
 }
 
 void MainWidget::singleBoxHovered(bool state)

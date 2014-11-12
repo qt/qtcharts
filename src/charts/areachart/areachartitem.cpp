@@ -40,9 +40,11 @@ AreaChartItem::AreaChartItem(QAreaSeries *areaSeries, QGraphicsItem* item)
       m_pointLabelsVisible(false),
       m_pointLabelsFormat(areaSeries->pointLabelsFormat()),
       m_pointLabelsFont(areaSeries->pointLabelsFont()),
-      m_pointLabelsColor(areaSeries->pointLabelsColor())
+      m_pointLabelsColor(areaSeries->pointLabelsColor()),
+      m_mousePressed(false)
 {
     setAcceptHoverEvents(true);
+    setFlag(QGraphicsItem::ItemIsSelectable, true);
     setZValue(ChartPresenter::LineChartZValue);
     if (m_series->upperSeries())
         m_upper = new AreaBoundItem(this, m_series->upperSeries());
@@ -54,6 +56,10 @@ AreaChartItem::AreaChartItem(QAreaSeries *areaSeries, QGraphicsItem* item)
     QObject::connect(m_series, SIGNAL(opacityChanged()), this, SLOT(handleUpdated()));
     QObject::connect(this, SIGNAL(clicked(QPointF)), areaSeries, SIGNAL(clicked(QPointF)));
     QObject::connect(this, SIGNAL(hovered(QPointF,bool)), areaSeries, SIGNAL(hovered(QPointF,bool)));
+    QObject::connect(this, SIGNAL(pressed(QPointF)), areaSeries, SIGNAL(pressed(QPointF)));
+    QObject::connect(this, SIGNAL(released(QPointF)), areaSeries, SIGNAL(released(QPointF)));
+    QObject::connect(this, SIGNAL(doubleClicked(QPointF)),
+                     areaSeries, SIGNAL(doubleClicked(QPointF)));
     QObject::connect(areaSeries, SIGNAL(pointLabelsFormatChanged(QString)),
                      this, SLOT(handleUpdated()));
     QObject::connect(areaSeries, SIGNAL(pointLabelsVisibilityChanged(bool)),
@@ -239,7 +245,9 @@ void AreaChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 
 void AreaChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    emit clicked(m_upper->domain()->calculateDomainPoint(event->pos()));
+    emit pressed(m_upper->domain()->calculateDomainPoint(event->pos()));
+    m_lastMousePos = event->pos();
+    m_mousePressed = true;
     ChartItem::mousePressEvent(event);
 }
 
@@ -255,6 +263,21 @@ void AreaChartItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
     emit hovered(domain()->calculateDomainPoint(event->pos()), false);
     event->accept();
 //    QGraphicsItem::hoverEnterEvent(event);
+}
+
+void AreaChartItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+    emit released(m_upper->domain()->calculateDomainPoint(event->pos()));
+    if (m_lastMousePos == event->pos() && m_mousePressed)
+        emit clicked(m_upper->domain()->calculateDomainPoint(event->pos()));
+    m_mousePressed = false;
+    ChartItem::mouseReleaseEvent(event);
+}
+
+void AreaChartItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
+{
+    emit doubleClicked(m_upper->domain()->calculateDomainPoint(event->pos()));
+    ChartItem::mouseDoubleClickEvent(event);
 }
 
 #include "moc_areachartitem_p.cpp"

@@ -72,6 +72,18 @@ QT_CHARTS_BEGIN_NAMESPACE
     This signal is emitted when the user clicks with a mouse on top of box-and-whiskers item.
 */
 /*!
+    \qmlsignal BoxSet::onPressed()
+    This signal is emitted when the user presses with a mouse on top of box-and-whiskers item.
+*/
+/*!
+    \qmlsignal BoxSet::onReleased()
+    This signal is emitted when the user releases with a mouse on top of box-and-whiskers item.
+*/
+/*!
+    \qmlsignal BoxSet::onDoubleClicked()
+    This signal is emitted when the user doubleclicks with a mouse on top of box-and-whiskers item.
+*/
+/*!
     \qmlsignal BoxSet::onHovered(bool status)
     The signal is emitted if mouse is hovered on top of box-and-whiskers item.
     Parameter \a status is true, if mouse entered on top of the item, and false if mouse left from top of the item.
@@ -335,6 +347,9 @@ DeclarativeBoxPlotSeries::DeclarativeBoxPlotSeries(QQuickItem *parent) :
     connect(this, SIGNAL(hovered(bool, QBoxSet*)), this, SLOT(onHovered(bool, QBoxSet*)));
     connect(this, SIGNAL(clicked(QBoxSet*)), this, SLOT(onClicked(QBoxSet*)));
     connect(this, SIGNAL(brushChanged()), this, SLOT(handleBrushChanged()));
+    connect(this, SIGNAL(pressed(QBoxSet*)), this, SLOT(onPressed(QBoxSet*)));
+    connect(this, SIGNAL(released(QBoxSet*)), this, SLOT(onReleased(QBoxSet*)));
+    connect(this, SIGNAL(doubleClicked(QBoxSet*)), this, SLOT(onDoubleClicked(QBoxSet*)));
 }
 
 void DeclarativeBoxPlotSeries::classBegin()
@@ -392,6 +407,21 @@ void DeclarativeBoxPlotSeries::onHovered(bool status, QBoxSet *boxset)
 void DeclarativeBoxPlotSeries::onClicked(QBoxSet *boxset)
 {
     emit clicked(qobject_cast<DeclarativeBoxSet *>(boxset));
+}
+
+void DeclarativeBoxPlotSeries::onPressed(QBoxSet *boxset)
+{
+    emit pressed(qobject_cast<DeclarativeBoxSet *>(boxset));
+}
+
+void DeclarativeBoxPlotSeries::onReleased(QBoxSet *boxset)
+{
+    emit released(qobject_cast<DeclarativeBoxSet *>(boxset));
+}
+
+void DeclarativeBoxPlotSeries::onDoubleClicked(QBoxSet *boxset)
+{
+    emit doubleClicked(qobject_cast<DeclarativeBoxSet *>(boxset));
 }
 
 QString DeclarativeBoxPlotSeries::brushFilename() const

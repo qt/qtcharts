@@ -36,9 +36,11 @@ SplineChartItem::SplineChartItem(QSplineSeries *series, QGraphicsItem *item)
       m_pointLabelsVisible(false),
       m_pointLabelsFormat(series->pointLabelsFormat()),
       m_pointLabelsFont(series->pointLabelsFont()),
-      m_pointLabelsColor(series->pointLabelsColor())
+      m_pointLabelsColor(series->pointLabelsColor()),
+      m_mousePressed(false)
 {
     setAcceptHoverEvents(true);
+    setFlag(QGraphicsItem::ItemIsSelectable);
     setZValue(ChartPresenter::SplineChartZValue);
     QObject::connect(m_series->d_func(), SIGNAL(updated()), this, SLOT(handleUpdated()));
     QObject::connect(series, SIGNAL(visibleChanged()), this, SLOT(handleUpdated()));
@@ -464,7 +466,9 @@ void SplineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
 
 void SplineChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    emit XYChart::clicked(domain()->calculateDomainPoint(event->pos()));
+    emit XYChart::pressed(domain()->calculateDomainPoint(event->pos()));
+    m_lastMousePos = event->pos();
+    m_mousePressed = true;
     QGraphicsItem::mousePressEvent(event);
 }
 
@@ -478,6 +482,21 @@ void SplineChartItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
     emit XYChart::hovered(domain()->calculateDomainPoint(event->pos()), false);
     QGraphicsItem::hoverLeaveEvent(event);
+}
+
+void SplineChartItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+    emit XYChart::released(domain()->calculateDomainPoint(event->pos()));
+    if (m_lastMousePos == event->pos() && m_mousePressed)
+        emit XYChart::clicked(domain()->calculateDomainPoint(event->pos()));
+    m_mousePressed = false;
+    QGraphicsItem::mouseReleaseEvent(event);
+}
+
+void SplineChartItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
+{
+    emit XYChart::doubleClicked(domain()->calculateDomainPoint(event->pos()));
+    QGraphicsItem::mouseDoubleClickEvent(event);
 }
 
 #include "moc_splinechartitem_p.cpp"

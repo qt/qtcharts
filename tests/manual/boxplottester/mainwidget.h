@@ -66,8 +66,14 @@ private slots:
     void changeChartTheme(int themeIndex);
     void boxClicked(QBoxSet *set);
     void boxHovered(bool state, QBoxSet *set);
+    void boxPressed(QBoxSet *set);
+    void boxReleased(QBoxSet *set);
+    void boxDoubleClicked(QBoxSet *set);
     void singleBoxClicked();
     void singleBoxHovered(bool state);
+    void singleBoxPressed();
+    void singleBoxReleased();
+    void singleBoxDoubleClicked();
     void changePen();
     void antialiasingToggled(bool);
     void boxOutlineToggled(bool);

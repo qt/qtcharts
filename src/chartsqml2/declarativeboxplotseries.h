@@ -119,12 +119,18 @@ Q_SIGNALS:
     void axisYRightChanged(QAbstractAxis *axis);
     void clicked(DeclarativeBoxSet *boxset);
     void hovered(bool status, DeclarativeBoxSet *boxset);
+    void pressed(DeclarativeBoxSet *boxset);
+    void released(DeclarativeBoxSet *boxset);
+    void doubleClicked(DeclarativeBoxSet *boxset);
     Q_REVISION(1) void brushFilenameChanged(const QString &brushFilename);
 
 public Q_SLOTS:
     static void appendSeriesChildren(QQmlListProperty<QObject> *list, QObject *element);
     void onHovered(bool status, QBoxSet *boxset);
     void onClicked(QBoxSet *boxset);
+    void onPressed(QBoxSet *boxset);
+    void onReleased(QBoxSet *boxset);
+    void onDoubleClicked(QBoxSet *boxset);
 
 private Q_SLOTS:
     void handleBrushChanged();

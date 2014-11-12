@@ -134,6 +134,27 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QBarSet::pressed(int index)
+
+    The signal is emitted if the user presses with a mouse on top of bar set.
+    Pressed bar inside set is indexed by \a index
+*/
+
+/*!
+    \fn void QBarSet::released(int index)
+
+    The signal is emitted if the user releases with a mouse on top of bar set.
+    Released bar inside set is indexed by \a index
+*/
+
+/*!
+    \fn void QBarSet::doubleClicked(int index)
+
+    The signal is emitted if the user doubleclicks with a mouse on top of bar set.
+    Doubleclicked bar inside set is indexed by \a index
+*/
+
+/*!
     \fn void QBarSet::hovered(bool status, int index)
 
     The signal is emitted if mouse is hovered on top of bar set.

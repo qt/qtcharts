@@ -64,6 +64,9 @@ public:
 Q_SIGNALS:
     void clicked(QBoxSet *boxset);
     void hovered(bool status, QBoxSet *boxset);
+    void pressed(QBoxSet *boxset);
+    void released(QBoxSet *boxset);
+    void doubleClicked(QBoxSet *boxset);
     void countChanged();
     void penChanged();
     void brushChanged();

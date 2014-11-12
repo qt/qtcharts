@@ -255,6 +255,54 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QXYSeries::pressed(const QPointF& point)
+    \brief Signal is emitted when user presses the \a point on chart.
+*/
+/*!
+    \qmlsignal XYSeries::onPressed(QPointF point)
+    Signal is emitted when user presses the \a point on chart. For example:
+    \code
+    LineSeries {
+        XYPoint { x: 0; y: 0 }
+        XYPoint { x: 1.1; y: 2.1 }
+        onPressed: console.log("onPressed: " + point.x + ", " + point.y);
+    }
+    \endcode
+*/
+
+/*!
+    \fn void QXYSeries::released(const QPointF& point)
+    \brief Signal is emitted when user releases the \a point on chart.
+*/
+/*!
+    \qmlsignal XYSeries::onReleased(QPointF point)
+    Signal is emitted when user releases the \a point on chart. For example:
+    \code
+    LineSeries {
+        XYPoint { x: 0; y: 0 }
+        XYPoint { x: 1.1; y: 2.1 }
+        onReleased: console.log("onReleased: " + point.x + ", " + point.y);
+    }
+    \endcode
+*/
+
+/*!
+    \fn void QXYSeries::doubleClicked(const QPointF& point)
+    \brief Signal is emitted when user doubleclicks the \a point on chart.
+*/
+/*!
+    \qmlsignal XYSeries::onDoubleClicked(QPointF point)
+    Signal is emitted when user doubleclicks the \a point on chart. For example:
+    \code
+    LineSeries {
+        XYPoint { x: 0; y: 0 }
+        XYPoint { x: 1.1; y: 2.1 }
+        onDoubleClicked: console.log("onDoubleClicked: " + point.x + ", " + point.y);
+    }
+    \endcode
+*/
+
+/*!
     \fn void QXYSeries::pointReplaced(int index)
     Signal is emitted when a point has been replaced at \a index.
     \sa replace()
@@ -288,6 +336,7 @@ QT_CHARTS_BEGIN_NAMESPACE
     Signal is emitted when a point has been removed from \a index.
     \sa remove()
 */
+
 /*!
     \qmlsignal XYSeries::onPointRemoved(int index)
     Signal is emitted when a point has been removed from \a index.

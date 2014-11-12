@@ -41,7 +41,8 @@ ScatterChartItem::ScatterChartItem(QScatterSeries *series, QGraphicsItem *item)
       m_pointLabelsVisible(false),
       m_pointLabelsFormat(series->pointLabelsFormat()),
       m_pointLabelsFont(series->pointLabelsFont()),
-      m_pointLabelsColor(series->pointLabelsColor())
+      m_pointLabelsColor(series->pointLabelsColor()),
+      m_mousePressed(false)
 {
     QObject::connect(m_series->d_func(), SIGNAL(updated()), this, SLOT(handleUpdated()));
     QObject::connect(m_series, SIGNAL(visibleChanged()), this, SLOT(handleUpdated()));
@@ -55,6 +56,7 @@ ScatterChartItem::ScatterChartItem(QScatterSeries *series, QGraphicsItem *item)
 
     setZValue(ChartPresenter::ScatterSeriesZValue);
     setFlags(QGraphicsItem::ItemClipsChildrenToShape);
+    setFlag(QGraphicsItem::ItemIsSelectable);
 
     handleUpdated();
 
@@ -110,6 +112,21 @@ void ScatterChartItem::markerSelected(QGraphicsItem *marker)
 void ScatterChartItem::markerHovered(QGraphicsItem *marker, bool state)
 {
     emit XYChart::hovered(m_markerMap[marker], state);
+}
+
+void ScatterChartItem::markerPressed(QGraphicsItem *marker)
+{
+    emit XYChart::pressed(m_markerMap[marker]);
+}
+
+void ScatterChartItem::markerReleased(QGraphicsItem *marker)
+{
+    emit XYChart::released(m_markerMap[marker]);
+}
+
+void ScatterChartItem::markerDoubleClicked(QGraphicsItem *marker)
+{
+    emit XYChart::doubleClicked(m_markerMap[marker]);
 }
 
 void ScatterChartItem::updateGeometry()

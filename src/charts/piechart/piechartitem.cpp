@@ -53,6 +53,8 @@ PieChartItem::PieChartItem(QPieSeries *series, QGraphicsItem* item)
     setZValue(ChartPresenter::PieSeriesZValue);
 
     // Note: will not create slice items until we have a proper rectangle to draw on.
+
+    setFlag(QGraphicsItem::ItemIsSelectable);
 }
 
 PieChartItem::~PieChartItem()
@@ -153,6 +155,9 @@ void PieChartItem::handleSlicesAdded(QList<QPieSlice *> slices)
 
         connect(sliceItem, SIGNAL(clicked(Qt::MouseButtons)), slice, SIGNAL(clicked()));
         connect(sliceItem, SIGNAL(hovered(bool)), slice, SIGNAL(hovered(bool)));
+        connect(sliceItem, SIGNAL(pressed(Qt::MouseButtons)), slice, SIGNAL(pressed()));
+        connect(sliceItem, SIGNAL(released(Qt::MouseButtons)), slice, SIGNAL(released()));
+        connect(sliceItem, SIGNAL(doubleClicked(Qt::MouseButtons)), slice, SIGNAL(doubleClicked()));
 
         PieSliceData sliceData = updateSliceGeometry(slice);
         if (m_animation)

@@ -36,6 +36,9 @@ private slots:
     void qscatterseries_data();
     void qscatterseries();
     void scatterChangedSignals();
+    void pressedSignal();
+    void releasedSignal();
+    void doubleClickedSignal();
 
 protected:
     void pointsVisible_data();
@@ -124,6 +127,99 @@ void tst_QScatterSeries::scatterChangedSignals()
     b.setColor("lime");
     series->setBrush(b);
     TRY_COMPARE(colorSpy.count(), 2);
+}
+
+void tst_QScatterSeries::pressedSignal()
+{
+    SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
+
+    QPointF scatterPoint(4, 12);
+    QScatterSeries *scatterSeries = new QScatterSeries();
+    scatterSeries->append(QPointF(2, 1));
+    scatterSeries->append(scatterPoint);
+    scatterSeries->append(QPointF(6, 12));
+
+    QChartView view;
+    view.chart()->legend()->setVisible(false);
+    view.chart()->addSeries(scatterSeries);
+    view.show();
+    QTest::qWaitForWindowShown(&view);
+
+    QSignalSpy seriesSpy(scatterSeries, SIGNAL(pressed(QPointF)));
+
+    QPointF checkPoint = view.chart()->mapToPosition(scatterPoint);
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, checkPoint.toPoint());
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
+
+    QCOMPARE(seriesSpy.count(), 1);
+    QList<QVariant> seriesSpyArg = seriesSpy.takeFirst();
+    // checkPoint is QPointF and for the mouseClick it it's changed to QPoint
+    // this causes small distinction in decimals so we round it before comparing
+    QPointF signalPoint = qvariant_cast<QPointF>(seriesSpyArg.at(0));
+    QCOMPARE(qRound(signalPoint.x()), qRound(scatterPoint.x()));
+    QCOMPARE(qRound(signalPoint.y()), qRound(scatterPoint.y()));
+}
+
+void tst_QScatterSeries::releasedSignal()
+{
+    SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
+
+    QPointF scatterPoint(4, 12);
+    QScatterSeries *scatterSeries = new QScatterSeries();
+    scatterSeries->append(QPointF(2, 1));
+    scatterSeries->append(scatterPoint);
+    scatterSeries->append(QPointF(6, 12));
+
+    QChartView view;
+    view.chart()->legend()->setVisible(false);
+    view.chart()->addSeries(scatterSeries);
+    view.show();
+    QTest::qWaitForWindowShown(&view);
+
+    QSignalSpy seriesSpy(scatterSeries, SIGNAL(released(QPointF)));
+
+    QPointF checkPoint = view.chart()->mapToPosition(scatterPoint);
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, checkPoint.toPoint());
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
+
+    QCOMPARE(seriesSpy.count(), 1);
+    QList<QVariant> seriesSpyArg = seriesSpy.takeFirst();
+    // checkPoint is QPointF and for the mouseClick it it's changed to QPoint
+    // this causes small distinction in decimals so we round it before comparing
+    QPointF signalPoint = qvariant_cast<QPointF>(seriesSpyArg.at(0));
+    QCOMPARE(qRound(signalPoint.x()), qRound(scatterPoint.x()));
+    QCOMPARE(qRound(signalPoint.y()), qRound(scatterPoint.y()));
+}
+
+void tst_QScatterSeries::doubleClickedSignal()
+{
+    SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
+
+    QPointF scatterPoint(4, 12);
+    QScatterSeries *scatterSeries = new QScatterSeries();
+    scatterSeries->append(QPointF(2, 1));
+    scatterSeries->append(scatterPoint);
+    scatterSeries->append(QPointF(6, 12));
+
+    QChartView view;
+    view.chart()->legend()->setVisible(false);
+    view.chart()->addSeries(scatterSeries);
+    view.show();
+    QTest::qWaitForWindowShown(&view);
+
+    QSignalSpy seriesSpy(scatterSeries, SIGNAL(doubleClicked(QPointF)));
+
+    QPointF checkPoint = view.chart()->mapToPosition(scatterPoint);
+    QTest::mouseDClick(view.viewport(), Qt::LeftButton, 0, checkPoint.toPoint());
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
+
+    QCOMPARE(seriesSpy.count(), 1);
+    QList<QVariant> seriesSpyArg = seriesSpy.takeFirst();
+    // checkPoint is QPointF and for the mouseClick it it's changed to QPoint
+    // this causes small distinction in decimals so we round it before comparing
+    QPointF signalPoint = qvariant_cast<QPointF>(seriesSpyArg.at(0));
+    QCOMPARE(qRound(signalPoint.x()), qRound(scatterPoint.x()));
+    QCOMPARE(qRound(signalPoint.y()), qRound(scatterPoint.y()));
 }
 
 QTEST_MAIN(tst_QScatterSeries)

@@ -121,6 +121,9 @@ public:
 Q_SIGNALS:
     void clicked();
     void hovered(bool state);
+    void pressed();
+    void released();
+    void doubleClicked();
     void labelChanged();
     void valueChanged();
     void labelVisibleChanged();

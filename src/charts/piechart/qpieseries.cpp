@@ -316,6 +316,36 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QPieSeries::pressed(QPieSlice* slice)
+    This signal is emitted when a \a slice has been pressed.
+    \sa QPieSlice::pressed()
+*/
+/*!
+    \qmlsignal PieSeries::onPressed(PieSlice slice)
+    This signal is emitted when a \a slice has been pressed.
+*/
+
+/*!
+    \fn void QPieSeries::released(QPieSlice* slice)
+    This signal is emitted when a \a slice has been released.
+    \sa QPieSlice::released()
+*/
+/*!
+    \qmlsignal PieSeries::onReleased(PieSlice slice)
+    This signal is emitted when a \a slice has been released.
+*/
+
+/*!
+    \fn void QPieSeries::doubleClicked(QPieSlice* slice)
+    This signal is emitted when a \a slice has been doubleClicked.
+    \sa QPieSlice::doubleClicked()
+*/
+/*!
+    \qmlsignal PieSeries::onDoubleClicked(PieSlice slice)
+    This signal is emitted when a \a slice has been doubleClicked.
+*/
+
+/*!
     \fn void QPieSeries::hovered(QPieSlice* slice, bool state)
     This signal is emitted when user has hovered over or away from the \a slice.
     \a state is true when user has hovered over the slice and false when hover has moved away from the slice.
@@ -424,6 +454,9 @@ bool QPieSeries::append(QList<QPieSlice *> slices)
         connect(s, SIGNAL(valueChanged()), d, SLOT(sliceValueChanged()));
         connect(s, SIGNAL(clicked()), d, SLOT(sliceClicked()));
         connect(s, SIGNAL(hovered(bool)), d, SLOT(sliceHovered(bool)));
+        connect(s, SIGNAL(pressed()), d, SLOT(slicePressed()));
+        connect(s, SIGNAL(released()), d, SLOT(sliceReleased()));
+        connect(s, SIGNAL(doubleClicked()), d, SLOT(sliceDoubleClicked()));
     }
 
     emit added(slices);
@@ -490,6 +523,9 @@ bool QPieSeries::insert(int index, QPieSlice *slice)
     connect(slice, SIGNAL(valueChanged()), d, SLOT(sliceValueChanged()));
     connect(slice, SIGNAL(clicked()), d, SLOT(sliceClicked()));
     connect(slice, SIGNAL(hovered(bool)), d, SLOT(sliceHovered(bool)));
+    connect(slice, SIGNAL(pressed()), d, SLOT(slicePressed()));
+    connect(slice, SIGNAL(released()), d, SLOT(sliceReleased()));
+    connect(slice, SIGNAL(doubleClicked()), d, SLOT(sliceDoubleClicked()));
 
     emit added(QList<QPieSlice *>() << slice);
     emit countChanged();
@@ -852,6 +888,30 @@ void QPieSeriesPrivate::sliceHovered(bool state)
         Q_Q(QPieSeries);
         emit q->hovered(slice, state);
     }
+}
+
+void QPieSeriesPrivate::slicePressed()
+{
+    QPieSlice *slice = qobject_cast<QPieSlice *>(sender());
+    Q_ASSERT(m_slices.contains(slice));
+    Q_Q(QPieSeries);
+    emit q->pressed(slice);
+}
+
+void QPieSeriesPrivate::sliceReleased()
+{
+    QPieSlice *slice = qobject_cast<QPieSlice *>(sender());
+    Q_ASSERT(m_slices.contains(slice));
+    Q_Q(QPieSeries);
+    emit q->released(slice);
+}
+
+void QPieSeriesPrivate::sliceDoubleClicked()
+{
+    QPieSlice *slice = qobject_cast<QPieSlice *>(sender());
+    Q_ASSERT(m_slices.contains(slice));
+    Q_Q(QPieSeries);
+    emit q->doubleClicked(slice);
 }
 
 void QPieSeriesPrivate::initializeDomain()

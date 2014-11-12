@@ -112,6 +112,7 @@ protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
     void hoverMoveEvent(QHoverEvent *event);
+    void mouseDoubleClickEvent(QMouseEvent *event);
 private Q_SLOTS:
     void handleAntialiasingChanged(bool enable);
     void sceneChanged(QList<QRectF> region);

@@ -36,6 +36,9 @@ public slots:
 private slots:
     void qlineseries_data();
     void qlineseries();
+    void pressedSignal();
+    void releasedSignal();
+    void doubleClickedSignal();
 protected:
     void pointsVisible_data();
 };
@@ -100,6 +103,99 @@ void tst_QLineSeries::qlineseries()
     m_chart->addSeries(&series);
     m_view->show();
     QTest::qWaitForWindowShown(m_view);
+}
+
+void tst_QLineSeries::pressedSignal()
+{
+    SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
+
+    QPointF linePoint(4, 12);
+    QLineSeries *lineSeries = new QLineSeries();
+    lineSeries->append(QPointF(2, 1));
+    lineSeries->append(linePoint);
+    lineSeries->append(QPointF(6, 12));
+
+    QChartView view;
+    view.chart()->legend()->setVisible(false);
+    view.chart()->addSeries(lineSeries);
+    view.show();
+    QTest::qWaitForWindowShown(&view);
+
+    QSignalSpy seriesSpy(lineSeries, SIGNAL(pressed(QPointF)));
+
+    QPointF checkPoint = view.chart()->mapToPosition(linePoint);
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, checkPoint.toPoint());
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
+
+    QCOMPARE(seriesSpy.count(), 1);
+    QList<QVariant> seriesSpyArg = seriesSpy.takeFirst();
+    // checkPoint is QPointF and for the mouseClick it it's changed to QPoint
+    // this causes small distinction in decimals so we round it before comparing
+    QPointF signalPoint = qvariant_cast<QPointF>(seriesSpyArg.at(0));
+    QCOMPARE(qRound(signalPoint.x()), qRound(linePoint.x()));
+    QCOMPARE(qRound(signalPoint.y()), qRound(linePoint.y()));
+}
+
+void tst_QLineSeries::releasedSignal()
+{
+    SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
+
+    QPointF linePoint(4, 12);
+    QLineSeries *lineSeries = new QLineSeries();
+    lineSeries->append(QPointF(2, 20));
+    lineSeries->append(linePoint);
+    lineSeries->append(QPointF(6, 12));
+
+    QChartView view;
+    view.chart()->legend()->setVisible(false);
+    view.chart()->addSeries(lineSeries);
+    view.show();
+    QTest::qWaitForWindowShown(&view);
+
+    QSignalSpy seriesSpy(lineSeries, SIGNAL(released(QPointF)));
+
+    QPointF checkPoint = view.chart()->mapToPosition(linePoint);
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, checkPoint.toPoint());
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
+
+    QCOMPARE(seriesSpy.count(), 1);
+    QList<QVariant> seriesSpyArg = seriesSpy.takeFirst();
+    // checkPoint is QPointF and for the mouseClick it it's changed to QPoint
+    // this causes small distinction in decimals so we round it before comparing
+    QPointF signalPoint = qvariant_cast<QPointF>(seriesSpyArg.at(0));
+    QCOMPARE(qRound(signalPoint.x()), qRound(linePoint.x()));
+    QCOMPARE(qRound(signalPoint.y()), qRound(linePoint.y()));
+}
+
+void tst_QLineSeries::doubleClickedSignal()
+{
+    SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
+
+    QPointF linePoint(4, 12);
+    QLineSeries *lineSeries = new QLineSeries();
+    lineSeries->append(QPointF(2, 20));
+    lineSeries->append(linePoint);
+    lineSeries->append(QPointF(6, 12));
+
+    QChartView view;
+    view.chart()->legend()->setVisible(false);
+    view.chart()->addSeries(lineSeries);
+    view.show();
+    QTest::qWaitForWindowShown(&view);
+
+    QSignalSpy seriesSpy(lineSeries, SIGNAL(doubleClicked(QPointF)));
+
+    QPointF checkPoint = view.chart()->mapToPosition(linePoint);
+    QTest::mouseDClick(view.viewport(), Qt::LeftButton, 0, checkPoint.toPoint());
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
+
+    QCOMPARE(seriesSpy.count(), 1);
+    QList<QVariant> seriesSpyArg = seriesSpy.takeFirst();
+    // checkPoint is QPointF and for the mouseClick it it's changed to QPoint
+    // this causes small distinction in decimals so we round it before comparing
+    QPointF signalPoint = qvariant_cast<QPointF>(seriesSpyArg.at(0));
+    QCOMPARE(qRound(signalPoint.x()), qRound(linePoint.x()));
+    QCOMPARE(qRound(signalPoint.y()), qRound(linePoint.y()));
 }
 
 QTEST_MAIN(tst_QLineSeries)

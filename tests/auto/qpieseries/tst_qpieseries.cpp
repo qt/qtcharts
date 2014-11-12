@@ -57,6 +57,9 @@ private slots:
     void hoverSignal();
     void sliceSeries();
     void destruction();
+    void pressedSignal();
+    void releasedSignal();
+    void doubleClickedSignal();
 
 private:
     void verifyCalculatedData(const QPieSeries &series, bool *ok);
@@ -650,6 +653,139 @@ QList<QPoint> tst_qpieseries::slicePoints(QRectF rect)
     points << QPoint(x1, y2);
     points << QPoint(x1, y1);
     return points;
+}
+
+void tst_qpieseries::pressedSignal()
+{
+    // NOTE:
+    // This test is the same as tst_qpieslice::pressedSignal()
+    // Just for different signals.
+
+    SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
+
+    // add some slices
+    QPieSlice *s1 = m_series->append("slice 1", 1);
+    QPieSlice *s2 = m_series->append("slice 2", 1);
+    QPieSlice *s3 = m_series->append("slice 3", 1);
+    QPieSlice *s4 = m_series->append("slice 4", 1);
+    QSignalSpy clickSpy(m_series, SIGNAL(pressed(QPieSlice*)));
+
+    // add series to the chart
+    m_view->chart()->legend()->setVisible(false);
+    m_view->chart()->addSeries(m_series);
+    m_view->show();
+    QTest::qWaitForWindowShown(m_view);
+
+    // test maximum size
+    m_series->setPieSize(1.0);
+    QRectF pieRect = m_view->chart()->plotArea();
+    QList<QPoint> points = slicePoints(pieRect);
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, points.at(0));
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, points.at(1));
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, points.at(2));
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, points.at(3));
+    TRY_COMPARE(clickSpy.count(), 4);
+    QCOMPARE(qvariant_cast<QPieSlice*>(clickSpy.at(0).at(0)), s1);
+    QCOMPARE(qvariant_cast<QPieSlice*>(clickSpy.at(1).at(0)), s2);
+    QCOMPARE(qvariant_cast<QPieSlice*>(clickSpy.at(2).at(0)), s3);
+    QCOMPARE(qvariant_cast<QPieSlice*>(clickSpy.at(3).at(0)), s4);
+    clickSpy.clear();
+
+    // test half size
+    m_series->setPieSize(0.5);
+    m_series->setVerticalPosition(0.25);
+    m_series->setHorizontalPosition(0.25);
+    pieRect = QRectF(m_view->chart()->plotArea().topLeft(), m_view->chart()->plotArea().center());
+    points = slicePoints(pieRect);
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, points.at(0));
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, points.at(1));
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, points.at(2));
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, points.at(3));
+    TRY_COMPARE(clickSpy.count(), 4);
+    QCOMPARE(qvariant_cast<QPieSlice*>(clickSpy.at(0).at(0)), s1);
+    QCOMPARE(qvariant_cast<QPieSlice*>(clickSpy.at(1).at(0)), s2);
+    QCOMPARE(qvariant_cast<QPieSlice*>(clickSpy.at(2).at(0)), s3);
+    QCOMPARE(qvariant_cast<QPieSlice*>(clickSpy.at(3).at(0)), s4);
+}
+
+void tst_qpieseries::releasedSignal()
+{
+    // NOTE:
+    // This test is the same as tst_qpieslice::pressedSignal()
+    // Just for different signals.
+
+    SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
+
+    // add some slices
+    QPieSlice *s1 = m_series->append("slice 1", 1);
+    QPieSlice *s2 = m_series->append("slice 2", 1);
+    QPieSlice *s3 = m_series->append("slice 3", 1);
+    QPieSlice *s4 = m_series->append("slice 4", 1);
+    QSignalSpy clickSpy(m_series, SIGNAL(released(QPieSlice*)));
+
+    // add series to the chart
+    m_view->chart()->legend()->setVisible(false);
+    m_view->chart()->addSeries(m_series);
+    m_view->show();
+    QTest::qWaitForWindowShown(m_view);
+
+    // test maximum size
+    m_series->setPieSize(1.0);
+    QRectF pieRect = m_view->chart()->plotArea();
+    QList<QPoint> points = slicePoints(pieRect);
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, points.at(0));
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, points.at(1));
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, points.at(2));
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, points.at(3));
+    TRY_COMPARE(clickSpy.count(), 4);
+    QCOMPARE(qvariant_cast<QPieSlice*>(clickSpy.at(0).at(0)), s1);
+    QCOMPARE(qvariant_cast<QPieSlice*>(clickSpy.at(1).at(0)), s2);
+    QCOMPARE(qvariant_cast<QPieSlice*>(clickSpy.at(2).at(0)), s3);
+    QCOMPARE(qvariant_cast<QPieSlice*>(clickSpy.at(3).at(0)), s4);
+    clickSpy.clear();
+
+    // test half size
+    m_series->setPieSize(0.5);
+    m_series->setVerticalPosition(0.25);
+    m_series->setHorizontalPosition(0.25);
+    pieRect = QRectF(m_view->chart()->plotArea().topLeft(), m_view->chart()->plotArea().center());
+    points = slicePoints(pieRect);
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, points.at(0));
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, points.at(1));
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, points.at(2));
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, points.at(3));
+    TRY_COMPARE(clickSpy.count(), 4);
+    QCOMPARE(qvariant_cast<QPieSlice*>(clickSpy.at(0).at(0)), s1);
+    QCOMPARE(qvariant_cast<QPieSlice*>(clickSpy.at(1).at(0)), s2);
+    QCOMPARE(qvariant_cast<QPieSlice*>(clickSpy.at(2).at(0)), s3);
+    QCOMPARE(qvariant_cast<QPieSlice*>(clickSpy.at(3).at(0)), s4);
+}
+
+void tst_qpieseries::doubleClickedSignal()
+{
+    // NOTE:
+    // This test is the same as tst_qpieslice::pressedSignal()
+    // Just for different signals.
+
+    SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
+
+    // add some slices
+    QPieSlice *s1 = m_series->append("slice 1", 1);
+    QSignalSpy clickSpy(m_series, SIGNAL(doubleClicked(QPieSlice*)));
+
+    // add series to the chart
+    m_view->chart()->legend()->setVisible(false);
+    m_view->chart()->addSeries(m_series);
+    m_view->show();
+    QTest::qWaitForWindowShown(m_view);
+
+    // test maximum size
+    m_series->setPieSize(1.0);
+    QRectF pieRect = m_view->chart()->plotArea();
+    QList<QPoint> points = slicePoints(pieRect);
+    QTest::mouseDClick(m_view->viewport(), Qt::LeftButton, 0, points.at(0));
+    TRY_COMPARE(clickSpy.count(), 1);
+    QCOMPARE(qvariant_cast<QPieSlice*>(clickSpy.at(0).at(0)), s1);
 }
 
 QTEST_MAIN(tst_qpieseries)

@@ -61,6 +61,9 @@ ChartView {
                                                      + font.family);
         onPointLabelsColorChanged:       console.log("splineSeries.onPointLabelsColorChanged: "
                                                      + color);
+        onPressed:          console.log(name + ".onPressed: " + point.x + ", " + point.y);
+        onReleased:         console.log(name + ".onReleased: " + point.x + ", " + point.y);
+        onDoubleClicked:    console.log(name + ".onDoubleClicked: " + point.x + ", " + point.y);
     }
 
     SplineSeries {
@@ -73,5 +76,8 @@ ChartView {
         XYPoint { x: 4.1; y: 2.3 }
         onClicked:                  console.log(name + ".onClicked: " + point.x + ", " + point.y);
         onHovered:                  console.log(name + ".onHovered: " + point.x + ", " + point.y);
+        onPressed:          console.log(name + ".onPressed: " + point.x + ", " + point.y);
+        onReleased:         console.log(name + ".onReleased: " + point.x + ", " + point.y);
+        onDoubleClicked:    console.log(name + ".onDoubleClicked: " + point.x + ", " + point.y);
     }
 }

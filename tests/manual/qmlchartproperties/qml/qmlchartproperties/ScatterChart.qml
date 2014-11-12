@@ -59,6 +59,9 @@ ChartView {
                                                      + font.family);
         onPointLabelsColorChanged:       console.log("lineSeries.onPointLabelsColorChanged: "
                                                      + color);
+        onPressed:          console.log(name + ".onPressed: " + point.x + ", " + point.y);
+        onReleased:         console.log(name + ".onReleased: " + point.x + ", " + point.y);
+        onDoubleClicked:    console.log(name + ".onDoubleClicked: " + point.x + ", " + point.y);
     }
 
     ScatterSeries {
@@ -71,5 +74,8 @@ ChartView {
         XYPoint { x: 2.67; y: 2.65 }
         onClicked:                  console.log(name + ".onClicked: " + point.x + ", " + point.y);
         onHovered:                  console.log(name + ".onHovered: " + point.x + ", " + point.y);
+        onPressed:          console.log(name + ".onPressed: " + point.x + ", " + point.y);
+        onReleased:         console.log(name + ".onReleased: " + point.x + ", " + point.y);
+        onDoubleClicked:    console.log(name + ".onDoubleClicked: " + point.x + ", " + point.y);
     }
 }

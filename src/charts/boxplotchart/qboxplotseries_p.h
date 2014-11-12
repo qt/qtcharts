@@ -74,6 +74,9 @@ private:
 Q_SIGNALS:
     void updated();
     void clicked(int index, QBoxSet *barset);
+    void pressed(int index, QBoxSet *barset);
+    void released(int index, QBoxSet *barset);
+    void doubleClicked(int index, QBoxSet *barset);
     void updatedBoxes();
     void updatedLayout();
     void restructuredBoxes();

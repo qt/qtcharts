@@ -60,6 +60,8 @@ public:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
@@ -72,6 +74,9 @@ protected:
 Q_SIGNALS:
     void clicked(QBoxSet *boxset);
     void hovered(bool status, QBoxSet *boxset);
+    void pressed(QBoxSet *boxset);
+    void released(QBoxSet *boxset);
+    void doubleClicked(QBoxSet *boxset);
 
 private:
     friend class BoxPlotChartItem;
@@ -95,6 +100,9 @@ private:
     qreal m_geometryMedian;
     qreal m_geometryLeft;
     qreal m_geometryRight;
+
+    QPointF m_lastMousePos;
+    bool m_mousePressed;
 };
 
 QT_CHARTS_END_NAMESPACE

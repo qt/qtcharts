@@ -42,6 +42,7 @@ AbstractBarChartItem::AbstractBarChartItem(QAbstractBarSeries *series, QGraphics
 {
 
     setFlag(ItemClipsChildrenToShape);
+    setFlag(QGraphicsItem::ItemIsSelectable);
     connect(series->d_func(), SIGNAL(updatedLayout()), this, SLOT(handleLayoutChanged()));
     connect(series->d_func(), SIGNAL(updatedBars()), this, SLOT(handleUpdatedBars()));
     connect(series->d_func(), SIGNAL(labelsVisibleChanged(bool)), this, SLOT(handleLabelsVisibleChanged(bool)));
@@ -163,8 +164,16 @@ void AbstractBarChartItem::handleDataStructureChanged()
             m_bars.append(bar);
             connect(bar, SIGNAL(clicked(int,QBarSet*)), m_series, SIGNAL(clicked(int,QBarSet*)));
             connect(bar, SIGNAL(hovered(bool, int, QBarSet*)), m_series, SIGNAL(hovered(bool, int, QBarSet*)));
+            connect(bar, SIGNAL(pressed(int, QBarSet*)), m_series, SIGNAL(pressed(int, QBarSet*)));
+            connect(bar, SIGNAL(released(int, QBarSet*)),
+                    m_series, SIGNAL(released(int, QBarSet*)));
+            connect(bar, SIGNAL(doubleClicked(int, QBarSet*)),
+                    m_series, SIGNAL(doubleClicked(int, QBarSet*)));
             connect(bar, SIGNAL(clicked(int,QBarSet*)), set, SIGNAL(clicked(int)));
             connect(bar, SIGNAL(hovered(bool, int, QBarSet*)), set, SIGNAL(hovered(bool, int)));
+            connect(bar, SIGNAL(pressed(int, QBarSet*)), set, SIGNAL(pressed(int)));
+            connect(bar, SIGNAL(released(int, QBarSet*)), set, SIGNAL(released(int)));
+            connect(bar, SIGNAL(doubleClicked(int, QBarSet*)), set, SIGNAL(doubleClicked(int)));
             //            m_layout.append(QRectF(0, 0, 1, 1));
 
             // Labels

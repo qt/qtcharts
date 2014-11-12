@@ -21,16 +21,20 @@
 #include <private/bar_p.h>
 #include <QtGui/QPainter>
 #include <QtWidgets/QGraphicsSceneEvent>
+#include <QtWidgets/QStyleOptionGraphicsItem>
+#include <QtWidgets/QStyle>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 Bar::Bar(QBarSet *barset, int index, QGraphicsItem *parent) : QGraphicsRectItem(parent),
     m_index(index),
     m_barset(barset),
-    m_hovering(false)
+    m_hovering(false),
+    m_mousePressed(false)
 {
     setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
     setAcceptHoverEvents(true);
+    setFlag(QGraphicsItem::ItemIsSelectable);
 }
 
 Bar::~Bar()
@@ -42,8 +46,9 @@ Bar::~Bar()
 
 void Bar::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    Q_UNUSED(event)
-    emit clicked(m_index, m_barset);
+    emit pressed(m_index, m_barset);
+    m_lastMousePos = event->pos();
+    m_mousePressed = true;
     QGraphicsItem::mousePressEvent(event);
 }
 
@@ -60,6 +65,29 @@ void Bar::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
     Q_UNUSED(event)
     m_hovering = false;
     emit hovered(false, m_index, m_barset);
+}
+
+void Bar::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+    emit released(m_index, m_barset);
+    if (m_lastMousePos == event->pos() && m_mousePressed)
+        emit clicked(m_index, m_barset);
+    m_mousePressed = false;
+    QGraphicsItem::mouseReleaseEvent(event);
+}
+
+void Bar::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
+{
+    emit doubleClicked(m_index, m_barset);
+    QGraphicsItem::mouseDoubleClickEvent(event);
+}
+
+void Bar::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    // Remove selection border around bar
+    QStyleOptionGraphicsItem barOption(*option);
+    barOption.state &= ~QStyle::State_Selected;
+    QGraphicsRectItem::paint(painter, &barOption, widget);
 }
 
 #include "moc_bar_p.cpp"

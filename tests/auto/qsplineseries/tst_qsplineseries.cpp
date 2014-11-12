@@ -35,6 +35,9 @@ public slots:
 private slots:
     void qsplineseries_data();
     void qsplineseries();
+    void pressedSignal();
+    void releasedSignal();
+    void doubleClickedSignal();
 protected:
     void pointsVisible_data();
 };
@@ -95,6 +98,98 @@ void tst_QSplineSeries::qsplineseries()
     QTest::qWaitForWindowShown(m_view);
 }
 
+void tst_QSplineSeries::pressedSignal()
+{
+    SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
+
+    QPointF splinePoint(4, 12);
+    QSplineSeries *splineSeries = new QSplineSeries();
+    splineSeries->append(QPointF(2, 1));
+    splineSeries->append(splinePoint);
+    splineSeries->append(QPointF(6, 12));
+
+    QChartView view;
+    view.chart()->legend()->setVisible(false);
+    view.chart()->addSeries(splineSeries);
+    view.show();
+    QTest::qWaitForWindowShown(&view);
+
+    QSignalSpy seriesSpy(splineSeries, SIGNAL(pressed(QPointF)));
+
+    QPointF checkPoint = view.chart()->mapToPosition(splinePoint);
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, checkPoint.toPoint());
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
+
+    QCOMPARE(seriesSpy.count(), 1);
+    QList<QVariant> seriesSpyArg = seriesSpy.takeFirst();
+    // checkPoint is QPointF and for the mouseClick it it's changed to QPoint
+    // this causes small distinction in decimals so we round it before comparing
+    QPointF signalPoint = qvariant_cast<QPointF>(seriesSpyArg.at(0));
+    QCOMPARE(qRound(signalPoint.x()), qRound(splinePoint.x()));
+    QCOMPARE(qRound(signalPoint.y()), qRound(splinePoint.y()));
+}
+
+void tst_QSplineSeries::releasedSignal()
+{
+    SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
+
+    QPointF splinePoint(4, 12);
+    QSplineSeries *splineSeries = new QSplineSeries();
+    splineSeries->append(QPointF(2, 20));
+    splineSeries->append(splinePoint);
+    splineSeries->append(QPointF(6, 12));
+
+    QChartView view;
+    view.chart()->legend()->setVisible(false);
+    view.chart()->addSeries(splineSeries);
+    view.show();
+    QTest::qWaitForWindowShown(&view);
+
+    QSignalSpy seriesSpy(splineSeries, SIGNAL(released(QPointF)));
+
+    QPointF checkPoint = view.chart()->mapToPosition(splinePoint);
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, checkPoint.toPoint());
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
+
+    QCOMPARE(seriesSpy.count(), 1);
+    QList<QVariant> seriesSpyArg = seriesSpy.takeFirst();
+    // checkPoint is QPointF and for the mouseClick it it's changed to QPoint
+    // this causes small distinction in decimals so we round it before comparing
+    QPointF signalPoint = qvariant_cast<QPointF>(seriesSpyArg.at(0));
+    QCOMPARE(qRound(signalPoint.x()), qRound(splinePoint.x()));
+    QCOMPARE(qRound(signalPoint.y()), qRound(splinePoint.y()));
+}
+
+void tst_QSplineSeries::doubleClickedSignal()
+{
+    SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
+
+    QPointF splinePoint(4, 12);
+    QSplineSeries *splineSeries = new QSplineSeries();
+    splineSeries->append(QPointF(2, 20));
+    splineSeries->append(splinePoint);
+    splineSeries->append(QPointF(6, 12));
+
+    QChartView view;
+    view.chart()->legend()->setVisible(false);
+    view.chart()->addSeries(splineSeries);
+    view.show();
+    QTest::qWaitForWindowShown(&view);
+
+    QSignalSpy seriesSpy(splineSeries, SIGNAL(doubleClicked(QPointF)));
+
+    QPointF checkPoint = view.chart()->mapToPosition(splinePoint);
+    QTest::mouseDClick(view.viewport(), Qt::LeftButton, 0, checkPoint.toPoint());
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
+
+    QCOMPARE(seriesSpy.count(), 1);
+    QList<QVariant> seriesSpyArg = seriesSpy.takeFirst();
+    // checkPoint is QPointF and for the mouseClick it it's changed to QPoint
+    // this causes small distinction in decimals so we round it before comparing
+    QPointF signalPoint = qvariant_cast<QPointF>(seriesSpyArg.at(0));
+    QCOMPARE(qRound(signalPoint.x()), qRound(splinePoint.x()));
+    QCOMPARE(qRound(signalPoint.y()), qRound(splinePoint.y()));
+}
 QTEST_MAIN(tst_QSplineSeries)
 
 #include "tst_qsplineseries.moc"

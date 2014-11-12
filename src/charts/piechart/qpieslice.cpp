@@ -432,6 +432,36 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QPieSlice::pressed()
+    This signal is emitted when user has pressed the slice.
+    \sa QPieSeries::pressed()
+*/
+/*!
+    \qmlsignal PieSlice::onPressed()
+    This signal is emitted when user has pressed the slice.
+*/
+
+/*!
+    \fn void QPieSlice::released()
+    This signal is emitted when user has released the slice.
+    \sa QPieSeries::released()
+*/
+/*!
+    \qmlsignal PieSlice::onReleased()
+    This signal is emitted when user has released the slice.
+*/
+
+/*!
+    \fn void QPieSlice::doubleClicked()
+    This signal is emitted when user has doubleclicked the slice.
+    \sa QPieSeries::doubleClicked()
+*/
+/*!
+    \qmlsignal PieSlice::onDoubleClicked()
+    This signal is emitted when user has doubleclicked the slice.
+*/
+
+/*!
     \fn void QPieSlice::hovered(bool state)
     This signal is emitted when user has hovered over or away from the slice.
     \a state is true when user has hovered over the slice and false when hover has moved away from the slice.

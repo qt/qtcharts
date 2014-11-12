@@ -71,6 +71,9 @@ public Q_SLOTS:
 Q_SIGNALS:
     void clicked(const QPointF &point);
     void hovered(const QPointF &point, bool state);
+    void pressed(const QPointF &point);
+    void released(const QPointF &point);
+    void doubleClicked(const QPointF &point);
 
 protected:
     virtual void updateChart(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints, int index = -1);
