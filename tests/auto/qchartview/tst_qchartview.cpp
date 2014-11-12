@@ -120,11 +120,11 @@ void tst_QChartView::rubberBand_data()
     QTest::addColumn<QPoint>("max");
 
     if (isPolarTest()) {
-        QTest::newRow("HorizonalRubberBand") << QChartView::RubberBands(QChartView::HorizonalRubberBand) << 0 << 0 << QPoint(5,5) << QPoint(5,5);
+        QTest::newRow("HorizontalRubberBand") << QChartView::RubberBands(QChartView::HorizontalRubberBand) << 0 << 0 << QPoint(5,5) << QPoint(5,5);
         QTest::newRow("VerticalRubberBand") <<  QChartView::RubberBands(QChartView::VerticalRubberBand) << 0 << 0 << QPoint(5,5) << QPoint(5,5);
         QTest::newRow("RectangleRubberBand") <<  QChartView::RubberBands(QChartView::RectangleRubberBand) << 0 << 0 << QPoint(5,5) << QPoint(5,5);
     } else {
-        QTest::newRow("HorizonalRubberBand") << QChartView::RubberBands(QChartView::HorizonalRubberBand) << 0 << 1 << QPoint(5,5) << QPoint(5,5);
+        QTest::newRow("HorizontalRubberBand") << QChartView::RubberBands(QChartView::HorizontalRubberBand) << 0 << 1 << QPoint(5,5) << QPoint(5,5);
         QTest::newRow("VerticalRubberBand") <<  QChartView::RubberBands(QChartView::VerticalRubberBand) << 1 << 0 << QPoint(5,5) << QPoint(5,5);
         QTest::newRow("RectangleRubberBand") <<  QChartView::RubberBands(QChartView::RectangleRubberBand) << 1 << 1 << QPoint(5,5) << QPoint(5,5);
     }

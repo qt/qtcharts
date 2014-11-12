@@ -92,12 +92,6 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
-  \property QAbstractAxis::labelsPen
-  \deprecated
-  The pen of the labels.
-*/
-
-/*!
   \property QAbstractAxis::labelsBrush
   The brush of the labels. Only the color of the brush is relevant.
 */
@@ -220,12 +214,6 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
-  \property QAbstractAxis::titlePen
-  \deprecated
-  The pen of the title text.
-*/
-
-/*!
   \property QAbstractAxis::titleBrush
   The brush of the title text. Only the color of the brush is relevant.
 */
@@ -299,12 +287,6 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
-  \fn void QAbstractAxis::labelsPenChanged(const QPen& pen)
-  \deprecated
-  The pen of the axis labels has changed to \a pen.
-*/
-
-/*!
   \fn void QAbstractAxis::labelsBrushChanged(const QBrush& brush)
   The brush of the axis labels has changed to \a brush.
 */
@@ -366,12 +348,6 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
   \qmlsignal AbstractAxis::onTitleTextChanged(String text)
   The text of the axis title has changed to \a text.
-*/
-
-/*!
-  \fn void QAbstractAxis::titlePenChanged(const QPen& pen)
-  \deprecated
-  The pen of the axis shades has changed to \a pen.
 */
 
 /*!
@@ -548,22 +524,6 @@ bool QAbstractAxis::labelsVisible() const
     return d_ptr->m_labelsVisible;
 }
 
-void QAbstractAxis::setLabelsPen(const QPen &pen)
-{
-    if (d_ptr->m_labelsPen != pen) {
-        d_ptr->m_labelsPen = pen;
-        emit labelsPenChanged(pen);
-    }
-}
-
-QPen QAbstractAxis::labelsPen() const
-{
-    if (d_ptr->m_labelsPen == QChartPrivate::defaultPen())
-        return QPen();
-    else
-        return d_ptr->m_labelsPen;
-}
-
 /*!
   Sets \a brush used to draw labels.
  */
@@ -646,22 +606,6 @@ void QAbstractAxis::setTitleVisible(bool visible)
 bool QAbstractAxis::isTitleVisible() const
 {
     return d_ptr->m_titleVisible;
-}
-
-void QAbstractAxis::setTitlePen(const QPen &pen)
-{
-    if (d_ptr->m_titlePen != pen) {
-        d_ptr->m_titlePen = pen;
-        emit titlePenChanged(pen);
-    }
-}
-
-QPen QAbstractAxis::titlePen() const
-{
-    if (d_ptr->m_titlePen == QChartPrivate::defaultPen())
-        return QPen();
-    else
-        return d_ptr->m_titlePen;
 }
 
 /*!
@@ -877,7 +821,7 @@ void QAbstractAxis::setRange(const QVariant &min, const QVariant &max)
 /*!
   Returns the orientation in which the axis is being used (Vertical or Horizontal)
 */
-Qt::Orientation QAbstractAxis::orientation()
+Qt::Orientation QAbstractAxis::orientation() const
 {
     return d_ptr->orientation();
 }
@@ -901,12 +845,10 @@ QAbstractAxisPrivate::QAbstractAxisPrivate(QAbstractAxis *q)
       m_gridLineVisible(true),
       m_gridLinePen(QChartPrivate::defaultPen()),
       m_labelsVisible(true),
-      m_labelsPen(QChartPrivate::defaultPen()),
       m_labelsBrush(QChartPrivate::defaultBrush()),
       m_labelsFont(QChartPrivate::defaultFont()),
       m_labelsAngle(0),
       m_titleVisible(true),
-      m_titlePen(QChartPrivate::defaultPen()),
       m_titleBrush(QChartPrivate::defaultBrush()),
       m_titleFont(QChartPrivate::defaultFont()),
       m_shadesVisible(false),
@@ -949,15 +891,11 @@ void QAbstractAxisPrivate::initializeTheme(ChartTheme* theme, bool forced)
 
     if (forced || QChartPrivate::defaultBrush() == m_labelsBrush)
         q_ptr->setLabelsBrush(theme->labelBrush());
-    if (forced || QChartPrivate::defaultPen() == m_labelsPen)
-        q_ptr->setLabelsPen(Qt::NoPen); // NoPen for performance reasons
     if (forced || QChartPrivate::defaultFont() == m_labelsFont)
         q_ptr->setLabelsFont(theme->labelFont());
 
     if (forced || QChartPrivate::defaultBrush() == m_titleBrush)
         q_ptr->setTitleBrush(theme->labelBrush());
-    if (forced || QChartPrivate::defaultPen() == m_titlePen)
-        q_ptr->setTitlePen(Qt::NoPen); // NoPen for performance reasons
     if (forced || QChartPrivate::defaultFont() == m_titleFont) {
         QFont font(m_labelsFont);
         font.setBold(true);

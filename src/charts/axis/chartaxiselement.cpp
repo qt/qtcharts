@@ -80,7 +80,6 @@ void ChartAxisElement::connectSlots()
     QObject::connect(axis(), SIGNAL(shadesVisibleChanged(bool)), this, SLOT(handleShadesVisibleChanged(bool)));
     QObject::connect(axis(), SIGNAL(labelsAngleChanged(int)), this, SLOT(handleLabelsAngleChanged(int)));
     QObject::connect(axis(), SIGNAL(linePenChanged(const QPen&)), this, SLOT(handleArrowPenChanged(const QPen&)));
-    QObject::connect(axis(), SIGNAL(labelsPenChanged(const QPen&)), this, SLOT(handleLabelsPenChanged(const QPen&)));
     QObject::connect(axis(), SIGNAL(labelsBrushChanged(const QBrush&)), this, SLOT(handleLabelsBrushChanged(const QBrush&)));
     QObject::connect(axis(), SIGNAL(labelsFontChanged(const QFont&)), this, SLOT(handleLabelsFontChanged(const QFont&)));
     QObject::connect(axis(), SIGNAL(gridLinePenChanged(const QPen&)), this, SLOT(handleGridPenChanged(const QPen&)));
@@ -88,7 +87,6 @@ void ChartAxisElement::connectSlots()
     QObject::connect(axis(), SIGNAL(shadesBrushChanged(const QBrush&)), this, SLOT(handleShadesBrushChanged(const QBrush&)));
     QObject::connect(axis(), SIGNAL(titleTextChanged(const QString&)), this, SLOT(handleTitleTextChanged(const QString&)));
     QObject::connect(axis(), SIGNAL(titleFontChanged(const QFont&)), this, SLOT(handleTitleFontChanged(const QFont&)));
-    QObject::connect(axis(), SIGNAL(titlePenChanged(const QPen&)), this, SLOT(handleTitlePenChanged(const QPen&)));
     QObject::connect(axis(), SIGNAL(titleBrushChanged(const QBrush&)), this, SLOT(handleTitleBrushChanged(const QBrush&)));
     QObject::connect(axis(), SIGNAL(titleVisibleChanged(bool)), this, SLOT(handleTitleVisibleChanged(bool)));
     QObject::connect(axis()->d_ptr.data(), SIGNAL(rangeChanged(qreal, qreal)), this, SLOT(handleRangeChanged(qreal, qreal)));
@@ -132,11 +130,6 @@ void ChartAxisElement::handleLabelsAngleChanged(int angle)
     presenter()->layout()->invalidate();
 }
 
-void ChartAxisElement::handleLabelsPenChanged(const QPen &pen)
-{
-    Q_UNUSED(pen)
-}
-
 void ChartAxisElement::handleLabelsBrushChanged(const QBrush &brush)
 {
     foreach (QGraphicsItem *item, m_labels->childItems())
@@ -157,11 +150,6 @@ void ChartAxisElement::handleTitleTextChanged(const QString &title)
     presenter()->layout()->invalidate();
     if (title.isEmpty() || !m_title->isVisible())
         m_title->setHtml(title);
-}
-
-void ChartAxisElement::handleTitlePenChanged(const QPen &pen)
-{
-    Q_UNUSED(pen)
 }
 
 void ChartAxisElement::handleTitleBrushChanged(const QBrush &brush)

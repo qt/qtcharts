@@ -47,11 +47,6 @@ class DeclarativeChart : public QQuickPaintedItem
     Q_PROPERTY(QColor backgroundColor READ backgroundColor WRITE setBackgroundColor NOTIFY backgroundColorChanged)
     Q_PROPERTY(bool dropShadowEnabled READ dropShadowEnabled WRITE setDropShadowEnabled NOTIFY dropShadowEnabledChanged)
     Q_PROPERTY(qreal backgroundRoundness READ backgroundRoundness WRITE setBackgroundRoundness NOTIFY backgroundRoundnessChanged REVISION 3)
-    Q_PROPERTY(qreal topMargin READ topMargin)
-    Q_PROPERTY(qreal bottomMargin READ bottomMargin)
-    Q_PROPERTY(qreal leftMargin READ leftMargin)
-    Q_PROPERTY(qreal rightMargin READ rightMargin)
-    Q_PROPERTY(DeclarativeMargins *minimumMargins READ minimumMargins NOTIFY minimumMarginsChanged REVISION 1)
     Q_PROPERTY(DeclarativeMargins *margins READ margins NOTIFY marginsChanged REVISION 2)
     Q_PROPERTY(QRectF plotArea READ plotArea NOTIFY plotAreaChanged REVISION 1)
     Q_PROPERTY(QColor plotAreaColor READ plotAreaColor WRITE setPlotAreaColor NOTIFY plotAreaColorChanged REVISION 3)
@@ -144,11 +139,6 @@ public:
     void setBackgroundRoundness(qreal diameter);
 
     // Margins & plotArea
-    qreal topMargin();
-    qreal bottomMargin();
-    qreal leftMargin();
-    qreal rightMargin();
-    DeclarativeMargins *minimumMargins() { return m_margins; }
     DeclarativeMargins *margins() { return m_margins; }
     QRectF plotArea() { return m_chart->plotArea(); }
 
@@ -170,7 +160,6 @@ public:
     Q_INVOKABLE void removeAllSeries() { m_chart->removeAllSeries(); }
     Q_INVOKABLE void setAxisX(QAbstractAxis *axis, QAbstractSeries *series = 0);
     Q_INVOKABLE void setAxisY(QAbstractAxis *axis, QAbstractSeries *series = 0);
-    Q_INVOKABLE void createDefaultAxes();
     Q_INVOKABLE QAbstractAxis *axisX(QAbstractSeries *series = 0);
     Q_INVOKABLE QAbstractAxis *axisY(QAbstractSeries *series = 0);
     Q_INVOKABLE void zoom(qreal factor);
@@ -184,7 +173,6 @@ Q_SIGNALS:
     void titleColorChanged(QColor color);
     void backgroundColorChanged();
     void dropShadowEnabledChanged(bool enabled);
-    void minimumMarginsChanged();
     Q_REVISION(2) void marginsChanged();
     void plotAreaChanged(QRectF plotArea);
     void seriesAdded(QAbstractSeries *series);
@@ -195,7 +183,7 @@ Q_SIGNALS:
     Q_REVISION(4) void localeChanged();
 
 private Q_SLOTS:
-    void changeMinimumMargins(int top, int bottom, int left, int right);
+    void changeMargins(int top, int bottom, int left, int right);
     void handleAxisXSet(QAbstractAxis *axis);
     void handleAxisYSet(QAbstractAxis *axis);
     void handleAxisXTopSet(QAbstractAxis *axis);

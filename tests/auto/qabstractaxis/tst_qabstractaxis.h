@@ -57,8 +57,6 @@ private slots:
     void labelsColor();
     void labelsFont_data();
     void labelsFont();
-    void labelsPen_data();
-    void labelsPen();
     void labelsVisible_data();
     void labelsVisible();
     void orientation_data();

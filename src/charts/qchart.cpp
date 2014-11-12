@@ -102,14 +102,6 @@ QT_CHARTS_BEGIN_NAMESPACE
  */
 
 /*!
- \property QChart::minimumMargins
- Minimum margins between the plot area (axes) and the edge of the chart widget.
- This property is deprecated; use margins property instead.
-
- \sa margins
- */
-
-/*!
  \property QChart::margins
  Margins between the plot area (axes) and the edge of the chart widget.
  */
@@ -501,18 +493,6 @@ void QChart::createDefaultAxes()
 QLegend *QChart::legend() const
 {
     return d_ptr->m_legend;
-}
-
-void QChart::setMinimumMargins(const QMargins &margins)
-{
-    qWarning() << "QChart::setMinimumMargins is deprecated. Use QChart::setMargins instead.";
-    d_ptr->m_presenter->layout()->setMargins(margins);
-}
-
-QMargins QChart::minimumMargins() const
-{
-    qWarning() << "QChart::minimumMargins is deprecated. Use QChart::margins instead.";
-    return d_ptr->m_presenter->layout()->margins();
 }
 
 void QChart::setMargins(const QMargins &margins)

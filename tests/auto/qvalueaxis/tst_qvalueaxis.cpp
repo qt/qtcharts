@@ -103,7 +103,6 @@ void tst_QValueAxis::qvalueaxis()
 
     QVERIFY(qFuzzyCompare(m_valuesaxis->max(), 0));
     QVERIFY(qFuzzyCompare(m_valuesaxis->min(), 0));
-    QCOMPARE(m_valuesaxis->niceNumbersEnabled(), false);
     QCOMPARE(m_valuesaxis->tickCount(), 5);
     QCOMPARE(m_valuesaxis->type(), QAbstractAxis::AxisTypeValue);
 
@@ -113,7 +112,6 @@ void tst_QValueAxis::qvalueaxis()
 
     QVERIFY(!qFuzzyCompare(m_valuesaxis->max(), 0));
     QVERIFY(!qFuzzyCompare(m_valuesaxis->min(), 0));
-    QCOMPARE(m_valuesaxis->niceNumbersEnabled(), false);
     QCOMPARE(m_valuesaxis->tickCount(), 5);
 }
 

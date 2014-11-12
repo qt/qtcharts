@@ -172,17 +172,6 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
-  \property QValueAxis::niceNumbersEnabled
-  \obsolete
-  Using this function can lead to unexpected behavior. Use applyNiceNumbers() instead.
-*/
-
-/*!
-  \qmlproperty bool ValueAxis::niceNumbersEnabled
-  Deprecated; Using this function can lead to unexpected behavior. Use applyNiceNumbers() instead.
-*/
-
-/*!
     Constructs an axis object which is a child of \a parent.
 */
 QValueAxis::QValueAxis(QObject *parent) :
@@ -259,31 +248,6 @@ int QValueAxis::tickCount() const
     return d->m_tickCount;
 }
 
-void QValueAxis::setNiceNumbersEnabled(bool enable)
-{
-    Q_D(QValueAxis);
-    qWarning() << "Deprecated; Using this function can lead to unexpected behavior. " \
-                  "Use applyNiceNumbers() instead.";
-    if(enable) {
-        QObject::connect(this,SIGNAL(rangeChanged(qreal,qreal)),this,SLOT(applyNiceNumbers()));
-        QObject::connect(this,SIGNAL(tickCountChanged(int)),this,SLOT(applyNiceNumbers()));
-        applyNiceNumbers();
-    }
-    else {
-        QObject::disconnect(this,SIGNAL(rangeChanged(qreal,qreal)),this,SLOT(applyNiceNumbers()));
-        QObject::disconnect(this,SIGNAL(tickCountChanged(int)),this,SLOT(applyNiceNumbers()));
-    }
-    d->m_niceNumbersEnabled=enable;
-}
-
-bool QValueAxis::niceNumbersEnabled() const
-{
-    Q_D(const QValueAxis);
-    qWarning() << "Deprecated; Using this function can lead to unexpected behavior. " \
-                  "Use applyNiceNumbers() instead.";
-    return d->m_niceNumbersEnabled;
-}
-
 void QValueAxis::setLabelFormat(const QString &format)
 {
     Q_D(QValueAxis);
@@ -333,8 +297,7 @@ QValueAxisPrivate::QValueAxisPrivate(QValueAxis *q)
       m_max(0),
       m_tickCount(5),
       m_format(QString::null),
-      m_applying(false),
-      m_niceNumbersEnabled(false)
+      m_applying(false)
 {
 
 }

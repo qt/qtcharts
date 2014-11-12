@@ -60,8 +60,6 @@ MainWindow::MainWindow(QWidget *parent) :
     m_plotAreaBackgroundBrush(new QBrush(Qt::NoBrush)),
     m_angularShadesPen(new QPen(Qt::NoPen)),
     m_radialShadesPen(new QPen(Qt::NoPen)),
-    m_labelPen(new QPen(Qt::NoPen)),
-    m_titlePen(new QPen(Qt::NoPen)),
     m_gridPen(new QPen(QRgb(0x010101))),  // Note: Pure black is default color, so it gets overridden by
     m_arrowPen(new QPen(QRgb(0x010101))), // default theme if set to that initially. This is an example of workaround.
     m_backgroundPen(new QPen(Qt::NoPen)),
@@ -429,14 +427,12 @@ void MainWindow::setAngularAxis(MainWindow::AxisMode mode)
     m_angularAxis->setLabelsAngle(m_labelsAngle);
     m_angularAxis->setLabelsFont(m_currentLabelFont);
     m_angularAxis->setLabelsBrush(*m_labelBrush);
-    m_angularAxis->setLabelsPen(*m_labelPen);
     m_angularAxis->setLabelsVisible(m_labelsVisible);
     m_angularAxis->setShadesBrush(*m_angularShadesBrush);
     m_angularAxis->setShadesPen(*m_angularShadesPen);
     m_angularAxis->setShadesVisible(m_angularShadesVisible);
     m_angularAxis->setTitleFont(m_currentTitleFont);
     m_angularAxis->setTitleBrush(*m_titleBrush);
-    m_angularAxis->setTitlePen(*m_titlePen);
     m_angularAxis->setTitleVisible(m_titleVisible);
     m_angularAxis->setTitleText(m_angularTitle);
     m_angularAxis->setGridLinePen(*m_gridPen);
@@ -499,14 +495,12 @@ void MainWindow::setRadialAxis(MainWindow::AxisMode mode)
     m_radialAxis->setLabelsAngle(m_labelsAngle);
     m_radialAxis->setLabelsFont(m_currentLabelFont);
     m_radialAxis->setLabelsBrush(*m_labelBrush);
-    m_radialAxis->setLabelsPen(*m_labelPen);
     m_radialAxis->setLabelsVisible(m_labelsVisible);
     m_radialAxis->setShadesBrush(*m_radialShadesBrush);
     m_radialAxis->setShadesPen(*m_radialShadesPen);
     m_radialAxis->setShadesVisible(m_radialShadesVisible);
     m_radialAxis->setTitleFont(m_currentTitleFont);
     m_radialAxis->setTitleBrush(*m_titleBrush);
-    m_radialAxis->setTitlePen(*m_titlePen);
     m_radialAxis->setTitleVisible(m_titleVisible);
     m_radialAxis->setTitleText(m_radialTitle);
     m_radialAxis->setGridLinePen(*m_gridPen);
@@ -750,22 +744,18 @@ void MainWindow::animationIndexChanged(int index)
 void MainWindow::labelsIndexChanged(int index)
 {
     delete m_labelBrush;
-    delete m_labelPen;
 
     switch (index) {
     case 0:
         m_labelBrush = new QBrush(Qt::NoBrush);
-        m_labelPen = new QPen(Qt::NoPen);
         m_labelsVisible = false;
         break;
     case 1:
         m_labelBrush = new QBrush(Qt::black);
-        m_labelPen = new QPen(Qt::NoPen);
         m_labelsVisible = true;
         break;
     case 2:
         m_labelBrush = new QBrush(Qt::white);
-        m_labelPen = new QPen(Qt::blue);
         m_labelsVisible = true;
         break;
     default:
@@ -773,50 +763,42 @@ void MainWindow::labelsIndexChanged(int index)
     }
 
     m_radialAxis->setLabelsBrush(*m_labelBrush);
-    m_radialAxis->setLabelsPen(*m_labelPen);
     m_radialAxis->setLabelsVisible(m_labelsVisible);
     m_angularAxis->setLabelsBrush(*m_labelBrush);
-    m_angularAxis->setLabelsPen(*m_labelPen);
     m_angularAxis->setLabelsVisible(m_labelsVisible);
 }
 
 void MainWindow::titleIndexChanged(int index)
 {
     delete m_titleBrush;
-    delete m_titlePen;
 
     switch (index) {
     case 0:
         m_titleBrush = new QBrush(Qt::NoBrush);
-        m_titlePen = new QPen(Qt::NoPen);
         m_titleVisible = false;
         m_angularTitle = QString();
         m_radialTitle = QString();
         break;
     case 1:
         m_titleBrush = new QBrush(Qt::NoBrush);
-        m_titlePen = new QPen(Qt::NoPen);
         m_titleVisible = true;
         m_angularTitle = QString();
         m_radialTitle = QString();
         break;
     case 2:
         m_titleBrush = new QBrush(Qt::NoBrush);
-        m_titlePen = new QPen(Qt::NoPen);
         m_titleVisible = false;
         m_angularTitle = QString("Invisible Ang. Title!");
         m_radialTitle = QString("Invisible Rad. Title!");
         break;
     case 3:
         m_titleBrush = new QBrush(Qt::black);
-        m_titlePen = new QPen(Qt::NoPen);
         m_titleVisible = true;
         m_angularTitle = QString("Angular Title");
         m_radialTitle = QString("Radial Title");
         break;
     case 4:
         m_titleBrush = new QBrush(Qt::white);
-        m_titlePen = new QPen(Qt::blue);
         m_titleVisible = true;
         m_angularTitle = QString("Angular Blue Title");
         m_radialTitle = QString("Radial Blue Title");
@@ -826,11 +808,9 @@ void MainWindow::titleIndexChanged(int index)
     }
 
     m_radialAxis->setTitleBrush(*m_titleBrush);
-    m_radialAxis->setTitlePen(*m_titlePen);
     m_radialAxis->setTitleVisible(m_titleVisible);
     m_radialAxis->setTitleText(m_radialTitle);
     m_angularAxis->setTitleBrush(*m_titleBrush);
-    m_angularAxis->setTitlePen(*m_titlePen);
     m_angularAxis->setTitleVisible(m_titleVisible);
     m_angularAxis->setTitleText(m_angularTitle);
 }

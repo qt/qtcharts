@@ -105,10 +105,6 @@ Row {
 
             onClicked: axis.tickCount--;
         }
-        Button {
-            text: "axis nice nmb"
-            onClicked: axis.niceNumbersEnabled = !axis.niceNumbersEnabled;
-        }
 
         FontEditor {
             id: fontEditor

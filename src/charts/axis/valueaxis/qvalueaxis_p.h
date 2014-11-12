@@ -44,8 +44,8 @@ public:
     void initializeGraphics(QGraphicsItem* parent);
     void initializeDomain(AbstractDomain *domain);
 
-    qreal min() { return m_min; };
-    qreal max() { return m_max; };
+    qreal min() { return m_min; }
+    qreal max() { return m_max; }
     void setRange(qreal min,qreal max);
 
 protected:
@@ -59,7 +59,6 @@ private:
     int m_tickCount;
     QString m_format;
     bool m_applying;
-    bool m_niceNumbersEnabled;
     Q_DECLARE_PUBLIC(QValueAxis)
 };
 

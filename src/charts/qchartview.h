@@ -40,7 +40,7 @@ public:
     enum  RubberBand {
         NoRubberBand = 0x0,
         VerticalRubberBand = 0x1,
-        HorizonalRubberBand = 0x2,
+        HorizontalRubberBand = 0x2,
         RectangleRubberBand = 0x3
     };
 

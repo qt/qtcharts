@@ -68,7 +68,7 @@ MainWidget::MainWidget(QWidget *parent) :
 
     // Create chart view with the chart
     m_chartView = new QChartView(m_chart, this);
-    m_chartView->setRubberBand(QChartView::HorizonalRubberBand);
+    m_chartView->setRubberBand(QChartView::HorizontalRubberBand);
 
     // Another grid layout as a main layout
     QGridLayout *mainLayout = new QGridLayout();

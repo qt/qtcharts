@@ -56,7 +56,6 @@ void tst_QAbstractAxis::qabstractaxis()
     QCOMPARE(m_axis->labelsAngle(), 0);
     QCOMPARE(m_axis->labelsBrush(), QBrush());
     QCOMPARE(m_axis->labelsFont(), QFont());
-    QCOMPARE(m_axis->labelsPen(), QPen());
     QCOMPARE(m_axis->labelsVisible(), true);
     QCOMPARE(m_axis->orientation(), Qt::Orientation(0));
     m_axis->setLineVisible(false);
@@ -68,7 +67,6 @@ void tst_QAbstractAxis::qabstractaxis()
     m_axis->setLabelsBrush(QBrush());
     m_axis->setLabelsColor(QColor());
     m_axis->setLabelsFont(QFont());
-    m_axis->setLabelsPen(QPen());
     m_axis->setLabelsVisible(false);
     m_axis->setMax(QVariant());
     m_axis->setMin(QVariant());
@@ -441,48 +439,6 @@ void tst_QAbstractAxis::labelsFont()
     QTest::qWaitForWindowShown(m_view);
     QCOMPARE(m_axis->labelsFont(), labelsFont);
 
-}
-
-void tst_QAbstractAxis::labelsPen_data()
-{
-    QTest::addColumn<QPen>("labelsPen");
-    QTest::newRow("null") << QPen();
-    QTest::newRow("blue") << QPen(Qt::blue);
-    QTest::newRow("black") << QPen(Qt::black);
-    QTest::newRow("red") << QPen(Qt::red);
-}
-
-void tst_QAbstractAxis::labelsPen()
-{
-    QFETCH(QPen, labelsPen);
-
-    QSignalSpy spy0(m_axis, SIGNAL(lineVisibleChanged(bool)));
-    QSignalSpy spy1(m_axis, SIGNAL(colorChanged(QColor)));
-    QSignalSpy spy2(m_axis, SIGNAL(gridVisibleChanged(bool)));
-    QSignalSpy spy3(m_axis, SIGNAL(labelsColorChanged(QColor)));
-    QSignalSpy spy4(m_axis, SIGNAL(labelsVisibleChanged(bool)));
-    QSignalSpy spy5(m_axis, SIGNAL(shadesBorderColorChanged(QColor)));
-    QSignalSpy spy6(m_axis, SIGNAL(shadesColorChanged(QColor)));
-    QSignalSpy spy7(m_axis, SIGNAL(shadesVisibleChanged(bool)));
-    QSignalSpy spy8(m_axis, SIGNAL(visibleChanged(bool)));
-
-    m_axis->setLabelsPen(labelsPen);
-    QCOMPARE(m_axis->labelsPen(), labelsPen);
-
-    QCOMPARE(spy0.count(), 0);
-    QCOMPARE(spy1.count(), 0);
-    QCOMPARE(spy2.count(), 0);
-    QCOMPARE(spy3.count(), 0);
-    QCOMPARE(spy4.count(), 0);
-    QCOMPARE(spy5.count(), 0);
-    QCOMPARE(spy6.count(), 0);
-    QCOMPARE(spy7.count(), 0);
-    QCOMPARE(spy8.count(), 0);
-
-    m_chart->setAxisX(m_axis, m_series);
-    m_view->show();
-    QTest::qWaitForWindowShown(m_view);
-    //TODO QCOMPARE(m_axis->labelsPen(), labelsPen);
 }
 
 void tst_QAbstractAxis::labelsVisible_data()

@@ -44,7 +44,6 @@ ChartView {
             titleText: "EUR"
             min: 0
             max: 40000
-            niceNumbersEnabled: true
             labelFormat: "%.0f"
             tickCount: 5
         }
@@ -70,6 +69,7 @@ ChartView {
         }
         chartViewHighlighted.title = selectedSeries.name;
         axisY.max = maxVal;
+        axisY.applyNiceNumbers()
     }
 }
 

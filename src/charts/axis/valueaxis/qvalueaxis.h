@@ -29,7 +29,6 @@ class QT_CHARTS_EXPORT QValueAxis : public QAbstractAxis
 {
     Q_OBJECT
     Q_PROPERTY(int tickCount READ tickCount WRITE setTickCount NOTIFY tickCountChanged)
-    Q_PROPERTY(bool niceNumbersEnabled READ niceNumbersEnabled WRITE setNiceNumbersEnabled)
     Q_PROPERTY(qreal min READ min WRITE setMin NOTIFY minChanged)
     Q_PROPERTY(qreal max READ max WRITE setMax NOTIFY maxChanged)
     Q_PROPERTY(QString labelFormat READ labelFormat WRITE setLabelFormat NOTIFY labelFormatChanged)
@@ -57,9 +56,6 @@ public:
 
     void setLabelFormat(const QString &format);
     QString labelFormat() const;
-
-    void setNiceNumbersEnabled(bool enable = true);
-    bool niceNumbersEnabled() const;
 
 public Q_SLOTS:
     void applyNiceNumbers();

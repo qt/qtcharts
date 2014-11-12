@@ -85,10 +85,6 @@ Rectangle {
                 text: "Default + User defined"
                 onClicked: viewName = "DefaultAndUserDefined";
             }
-            Button {
-                text: "Legacy"
-                onClicked: viewName = "Legacy";
-            }
         }
     }
 }

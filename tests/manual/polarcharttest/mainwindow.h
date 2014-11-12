@@ -125,8 +125,6 @@ private:
     QBrush *m_plotAreaBackgroundBrush;
     QPen *m_angularShadesPen;
     QPen *m_radialShadesPen;
-    QPen *m_labelPen;
-    QPen *m_titlePen;
     QPen *m_gridPen;
     QPen *m_arrowPen;
     QPen *m_backgroundPen;

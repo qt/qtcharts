@@ -100,13 +100,11 @@ private:
     QPen m_gridLinePen;
 
     bool m_labelsVisible;
-    QPen m_labelsPen;
     QBrush m_labelsBrush;
     QFont m_labelsFont;
     int m_labelsAngle;
 
     bool m_titleVisible;
-    QPen m_titlePen;
     QBrush m_titleBrush;
     QFont m_titleFont;
     QString m_title;

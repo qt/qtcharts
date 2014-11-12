@@ -95,10 +95,10 @@ ChartView {
         color: "transparent"
         border.color: "red"
         anchors.fill: parent
-        anchors.topMargin: chartView.minimumMargins.top
-        anchors.bottomMargin: chartView.minimumMargins.bottom
-        anchors.leftMargin: chartView.minimumMargins.left
-        anchors.rightMargin: chartView.minimumMargins.right
+        anchors.topMargin: chartView.margins.top
+        anchors.bottomMargin: chartView.margins.bottom
+        anchors.leftMargin: chartView.margins.left
+        anchors.rightMargin: chartView.margins.right
         opacity: 0.0
         onOpacityChanged: if (opacity > 0.9) opacity = 0.0;
         Behavior on opacity {

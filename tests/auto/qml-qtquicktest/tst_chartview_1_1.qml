@@ -32,10 +32,6 @@ Rectangle {
         function test_chartViewProperties() {
             compare(chartView.animationOptions, ChartView.NoAnimation, "ChartView.animationOptions");
             verify(chartView.backgroundColor != undefined);
-            verify(chartView.bottomMargin > 0, "ChartView.bottomMargin");
-            verify(chartView.topMargin > 0, "ChartView.topMargin");
-            verify(chartView.leftMargin > 0, "ChartView.leftMargin");
-            verify(chartView.rightMargin > 0, "ChartView.rightMargin");
             compare(chartView.count, 0, "ChartView.count");
             compare(chartView.dropShadowEnabled, false, "ChartView.dropShadowEnabled");
             verify(chartView.plotArea.height > 0, "ChartView.plotArea.height");

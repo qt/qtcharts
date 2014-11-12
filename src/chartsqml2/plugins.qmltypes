@@ -522,17 +522,6 @@ Module {
         Property { name: "backgroundColor"; type: "QColor" }
         Property { name: "dropShadowEnabled"; type: "bool" }
         Property { name: "backgroundRoundness"; revision: 3; type: "double" }
-        Property { name: "topMargin"; type: "double"; isReadonly: true }
-        Property { name: "bottomMargin"; type: "double"; isReadonly: true }
-        Property { name: "leftMargin"; type: "double"; isReadonly: true }
-        Property { name: "rightMargin"; type: "double"; isReadonly: true }
-        Property {
-            name: "minimumMargins"
-            revision: 1
-            type: "DeclarativeMargins"
-            isReadonly: true
-            isPointer: true
-        }
         Property {
             name: "margins"
             revision: 2
@@ -634,7 +623,6 @@ Module {
             name: "setAxisY"
             Parameter { name: "axis"; type: "QAbstractAxis"; isPointer: true }
         }
-        Method { name: "createDefaultAxes" }
         Method {
             name: "axisX"
             type: "QAbstractAxis*"
@@ -1500,7 +1488,6 @@ Module {
         Property { name: "linePen"; type: "QPen" }
         Property { name: "color"; type: "QColor" }
         Property { name: "labelsVisible"; type: "bool" }
-        Property { name: "labelsPen"; type: "QPen" }
         Property { name: "labelsBrush"; type: "QBrush" }
         Property { name: "labelsAngle"; type: "int" }
         Property { name: "labelsFont"; type: "QFont" }
@@ -1513,7 +1500,6 @@ Module {
         Property { name: "shadesPen"; type: "QPen" }
         Property { name: "shadesBrush"; type: "QBrush" }
         Property { name: "titleText"; type: "string" }
-        Property { name: "titlePen"; type: "QPen" }
         Property { name: "titleBrush"; type: "QBrush" }
         Property { name: "titleVisible"; type: "bool" }
         Property { name: "titleFont"; type: "QFont" }
@@ -1534,10 +1520,6 @@ Module {
         Signal {
             name: "labelsVisibleChanged"
             Parameter { name: "visible"; type: "bool" }
-        }
-        Signal {
-            name: "labelsPenChanged"
-            Parameter { name: "pen"; type: "QPen" }
         }
         Signal {
             name: "labelsBrushChanged"
@@ -1570,10 +1552,6 @@ Module {
         Signal {
             name: "titleTextChanged"
             Parameter { name: "title"; type: "string" }
-        }
-        Signal {
-            name: "titlePenChanged"
-            Parameter { name: "pen"; type: "QPen" }
         }
         Signal {
             name: "titleBrushChanged"
@@ -2297,7 +2275,6 @@ Module {
         ]
         exportMetaObjectRevisions: [0, 0, 0]
         Property { name: "tickCount"; type: "int" }
-        Property { name: "niceNumbersEnabled"; type: "bool" }
         Property { name: "min"; type: "double" }
         Property { name: "max"; type: "double" }
         Property { name: "labelFormat"; type: "string" }

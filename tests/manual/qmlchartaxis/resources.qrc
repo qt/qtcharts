@@ -13,6 +13,5 @@
         <file>qml/qmlchartaxis/CreatingDynamically.qml</file>
         <file>qml/qmlchartaxis/SwitchingDynamically.qml</file>
         <file>qml/qmlchartaxis/DefaultAndUserDefined.qml</file>
-        <file>qml/qmlchartaxis/Legacy.qml</file>
     </qresource>
 </RCC>

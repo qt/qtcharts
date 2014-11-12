@@ -132,40 +132,10 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
-  \qmlproperty real ChartView::topMargin
-  Deprecated; use margins instead.
-*/
-
-/*!
-  \qmlproperty real ChartView::bottomMargin
-  Deprecated; use margins instead.
-*/
-
-/*!
-  \qmlproperty real ChartView::leftMargin
-  Deprecated; use margins instead.
-*/
-
-/*!
-  \qmlproperty real ChartView::rightMargin
-  Deprecated; use margins instead.
-*/
-
-/*!
-  \qmlproperty Margins ChartView::minimumMargins
-  Deprecated; use margins instead.
-  The minimum margins allowed between the outer bounds and the plotArea of the ChartView. Margins
-  area of ChartView is used for drawing title, axes and legend. Please note that setting the
-  properties of minimumMargins may be bigger than the defined value, depending on other ChartView
-  properties that affect it's layout. If you need to know the actual plotting area used at any
-  given time, you can check ChartView::plotArea instead.
-*/
-
-/*!
   \qmlproperty rect ChartView::plotArea
   The area on the ChartView that is used for drawing series. This is the ChartView rect without the
   margins.
-  \sa ChartView::minimumMargins
+  \sa ChartView::margins
 */
 
 /*!
@@ -314,10 +284,14 @@ void DeclarativeChart::initChart(QChart::ChartType type)
     m_margins->setLeft(m_chart->margins().left());
     m_margins->setRight(m_chart->margins().right());
     m_margins->setBottom(m_chart->margins().bottom());
-    connect(m_margins, SIGNAL(topChanged(int,int,int,int)), this, SLOT(changeMinimumMargins(int,int,int,int)));
-    connect(m_margins, SIGNAL(bottomChanged(int,int,int,int)), this, SLOT(changeMinimumMargins(int,int,int,int)));
-    connect(m_margins, SIGNAL(leftChanged(int,int,int,int)), this, SLOT(changeMinimumMargins(int,int,int,int)));
-    connect(m_margins, SIGNAL(rightChanged(int,int,int,int)), this, SLOT(changeMinimumMargins(int,int,int,int)));
+    connect(m_margins, SIGNAL(topChanged(int,int,int,int)),
+            this, SLOT(changeMargins(int,int,int,int)));
+    connect(m_margins, SIGNAL(bottomChanged(int,int,int,int)),
+            this, SLOT(changeMargins(int,int,int,int)));
+    connect(m_margins, SIGNAL(leftChanged(int,int,int,int)),
+            this, SLOT(changeMargins(int,int,int,int)));
+    connect(m_margins, SIGNAL(rightChanged(int,int,int,int)),
+            this, SLOT(changeMargins(int,int,int,int)));
     connect(m_chart->d_ptr->m_dataset, SIGNAL(seriesAdded(QAbstractSeries*)), this, SLOT(handleSeriesAdded(QAbstractSeries*)));
     connect(m_chart->d_ptr->m_dataset, SIGNAL(seriesRemoved(QAbstractSeries*)), this, SIGNAL(seriesRemoved(QAbstractSeries*)));
     connect(m_chart, &QChart::plotAreaChanged, this, &DeclarativeChart::plotAreaChanged);
@@ -328,10 +302,10 @@ void DeclarativeChart::handleSeriesAdded(QAbstractSeries *series)
     emit seriesAdded(series);
 }
 
-void DeclarativeChart::changeMinimumMargins(int top, int bottom, int left, int right)
+void DeclarativeChart::changeMargins(int top, int bottom, int left, int right)
 {
     m_chart->setMargins(QMargins(left, top, right, bottom));
-    emit minimumMarginsChanged();
+    emit marginsChanged();
 }
 
 DeclarativeChart::~DeclarativeChart()
@@ -793,30 +767,6 @@ void DeclarativeChart::setBackgroundRoundness(qreal diameter)
     }
 }
 
-qreal DeclarativeChart::topMargin()
-{
-    qWarning() << "ChartView.topMargin is deprecated. Use margins instead.";
-    return m_chart->margins().top();
-}
-
-qreal DeclarativeChart::bottomMargin()
-{
-    qWarning() << "ChartView.bottomMargin is deprecated. Use margins instead.";
-    return m_chart->margins().bottom();
-}
-
-qreal DeclarativeChart::leftMargin()
-{
-    qWarning() << "ChartView.leftMargin is deprecated. Use margins instead.";
-    return m_chart->margins().left();
-}
-
-qreal DeclarativeChart::rightMargin()
-{
-    qWarning() << "ChartView.rightMargin is deprecated. Use margins instead.";
-    return m_chart->margins().right();
-}
-
 void DeclarativeChart::zoom(qreal factor)
 {
     m_chart->zoom(factor);
@@ -993,11 +943,6 @@ void DeclarativeChart::setAxisY(QAbstractAxis *axis, QAbstractSeries *series)
 {
     if (axis && series)
         seriesAxisAttachHelper(series, axis, Qt::Vertical, Qt::AlignLeft);
-}
-
-void DeclarativeChart::createDefaultAxes()
-{
-    qWarning() << "ChartView.createDefaultAxes() is deprecated. Axes are created automatically.";
 }
 
 QAbstractAxis *DeclarativeChart::defaultAxis(Qt::Orientation orientation, QAbstractSeries *series)

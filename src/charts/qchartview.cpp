@@ -29,7 +29,7 @@
 
     \value NoRubberBand
     \value VerticalRubberBand
-    \value HorizonalRubberBand
+    \value HorizontalRubberBand
     \value RectangleRubberBand
 */
 
@@ -170,7 +170,7 @@ void QChartView::mouseMoveEvent(QMouseEvent *event)
             d_ptr->m_rubberBandOrigin.setY(rect.top());
             height = rect.height();
         }
-        if (!d_ptr->m_rubberBandFlags.testFlag(HorizonalRubberBand)) {
+        if (!d_ptr->m_rubberBandFlags.testFlag(HorizontalRubberBand)) {
             d_ptr->m_rubberBandOrigin.setX(rect.left());
             width = rect.width();
         }
@@ -201,7 +201,7 @@ void QChartView::mouseReleaseEvent(QMouseEvent *event)
             if (d_ptr->m_rubberBandFlags == VerticalRubberBand) {
                 rect.setX(d_ptr->m_chart->plotArea().x());
                 rect.setWidth(d_ptr->m_chart->plotArea().width());
-            } else if (d_ptr->m_rubberBandFlags == HorizonalRubberBand) {
+            } else if (d_ptr->m_rubberBandFlags == HorizontalRubberBand) {
                 rect.setY(d_ptr->m_chart->plotArea().y());
                 rect.setHeight(d_ptr->m_chart->plotArea().height());
             }
@@ -214,12 +214,12 @@ void QChartView::mouseReleaseEvent(QMouseEvent *event)
             // Since there is no suitable API for that, use zoomIn with rect bigger than the
             // plot area.
             if (d_ptr->m_rubberBandFlags == VerticalRubberBand
-                || d_ptr->m_rubberBandFlags == HorizonalRubberBand) {
+                || d_ptr->m_rubberBandFlags == HorizontalRubberBand) {
                 QRectF rect = d_ptr->m_chart->plotArea();
                 if (d_ptr->m_rubberBandFlags == VerticalRubberBand) {
                     qreal adjustment = rect.height() / 2;
                     rect.adjust(0, -adjustment, 0, adjustment);
-                } else if (d_ptr->m_rubberBandFlags == HorizonalRubberBand) {
+                } else if (d_ptr->m_rubberBandFlags == HorizontalRubberBand) {
                     qreal adjustment = rect.width() / 2;
                     rect.adjust(-adjustment, 0, adjustment, 0);
                 }

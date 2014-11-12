@@ -39,7 +39,6 @@ class QT_CHARTS_EXPORT QAbstractAxis : public QObject
     Q_PROPERTY(QColor color READ linePenColor WRITE setLinePenColor NOTIFY colorChanged)
     //labels
     Q_PROPERTY(bool labelsVisible READ labelsVisible WRITE setLabelsVisible NOTIFY labelsVisibleChanged)
-    Q_PROPERTY(QPen labelsPen READ labelsPen WRITE setLabelsPen NOTIFY labelsPenChanged)
     Q_PROPERTY(QBrush labelsBrush READ labelsBrush WRITE setLabelsBrush NOTIFY labelsBrushChanged)
     Q_PROPERTY(int labelsAngle READ labelsAngle WRITE setLabelsAngle NOTIFY labelsAngleChanged)
     Q_PROPERTY(QFont labelsFont READ labelsFont WRITE setLabelsFont NOTIFY labelsFontChanged)
@@ -55,7 +54,6 @@ class QT_CHARTS_EXPORT QAbstractAxis : public QObject
     Q_PROPERTY(QBrush shadesBrush READ shadesBrush WRITE setShadesBrush NOTIFY shadesBrushChanged)
     //title
     Q_PROPERTY(QString titleText READ titleText WRITE setTitleText NOTIFY titleTextChanged)
-    Q_PROPERTY(QPen titlePen READ titlePen WRITE setTitlePen NOTIFY titlePenChanged)
     Q_PROPERTY(QBrush titleBrush READ titleBrush WRITE setTitleBrush NOTIFY titleBrushChanged)
     Q_PROPERTY(bool titleVisible READ isTitleVisible WRITE setTitleVisible NOTIFY titleVisibleChanged)
     Q_PROPERTY(QFont titleFont READ titleFont WRITE setTitleFont NOTIFY titleFontChanged)
@@ -108,8 +106,6 @@ public:
     //labels handling
     bool labelsVisible() const;
     void setLabelsVisible(bool visible = true);
-    void setLabelsPen(const QPen &pen);
-    QPen labelsPen() const;
     void setLabelsBrush(const QBrush &brush);
     QBrush labelsBrush() const;
     void setLabelsFont(const QFont &font);
@@ -122,8 +118,6 @@ public:
     //title handling
     bool isTitleVisible() const;
     void setTitleVisible(bool visible = true);
-    void setTitlePen(const QPen &pen);
-    QPen titlePen() const;
     void setTitleBrush(const QBrush &brush);
     QBrush titleBrush() const;
     void setTitleFont(const QFont &font);
@@ -143,7 +137,7 @@ public:
     void setShadesBorderColor(QColor color);
     QColor shadesBorderColor() const;
 
-    Qt::Orientation orientation();
+    Qt::Orientation orientation() const;
     Qt::Alignment alignment() const;
 
     //range handling
@@ -156,7 +150,6 @@ Q_SIGNALS:
     void linePenChanged(const QPen &pen);
     void lineVisibleChanged(bool visible);
     void labelsVisibleChanged(bool visible);
-    void labelsPenChanged(const QPen &pen);
     void labelsBrushChanged(const QBrush &brush);
     void labelsFontChanged(const QFont &pen);
     void labelsAngleChanged(int angle);
@@ -165,7 +158,6 @@ Q_SIGNALS:
     void colorChanged(QColor color);
     void labelsColorChanged(QColor color);
     void titleTextChanged(const QString &title);
-    void titlePenChanged(const QPen &pen);
     void titleBrushChanged(const QBrush &brush);
     void titleVisibleChanged(bool visible);
     void titleFontChanged(const QFont &font);
