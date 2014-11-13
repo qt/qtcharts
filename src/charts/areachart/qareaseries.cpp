@@ -145,11 +145,15 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \fn void QAreaSeries::clicked(const QPointF& point)
-    \brief Signal is emitted when user clicks the \a point on area chart.
+    \brief Signal is emitted when user clicks the \a point on area chart. The \a point is the point
+    where the press was triggered.
+    \sa pressed, released, doubleClicked
 */
 /*!
     \qmlsignal AreaSeries::onClicked(QPointF point)
-    Signal is emitted when user clicks the \a point on area chart.
+    Signal is emitted when user clicks the \a point on area chart. The \a point is the point where
+    the press was triggered.
+    \sa onPressed, onReleased, onDoubleClicked
 */
 
 /*!
@@ -168,28 +172,37 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \fn void QAreaSeries::pressed(const QPointF& point)
     \brief Signal is emitted when user presses the \a point on area chart.
+    \sa clicked, released, doubleClicked
 */
 /*!
     \qmlsignal AreaSeries::onPressed(QPointF point)
     Signal is emitted when user presses the \a point on area chart.
+    \sa onClicked, onReleased, onDoubleClicked
 */
 
 /*!
     \fn void QAreaSeries::released(const QPointF& point)
-    \brief Signal is emitted when user releases the \a point on area chart.
+    \brief Signal is emitted when user releases a press that was triggered on a \a point on area
+    chart.
+    \sa pressed, clicked, doubleClicked
 */
 /*!
     \qmlsignal AreaSeries::onReleased(QPointF point)
-    Signal is emitted when user releases the \a point on area chart.
+    Signal is emitted when user releases a press that was triggered on a \a point on area chart.
+    \sa onPressed, onClicked, onDoubleClicked
 */
 
 /*!
     \fn void QAreaSeries::doubleClicked(const QPointF& point)
-    \brief Signal is emitted when user doubleclicks the \a point on area chart.
+    \brief Signal is emitted when user doubleclicks the \a point on area chart. The \a point is the
+    point where the first press was triggered.
+    \sa pressed, released, clicked
 */
 /*!
     \qmlsignal AreaSeries::onDoubleClicked(QPointF point)
-    Signal is emitted when user doubleclicks the \a point on area chart.
+    Signal is emitted when user doubleclicks the \a point on area chart. The \a point is the point
+    where the first press was triggered.
+    \sa onPressed, onReleased, onClicked
 */
 
 /*!

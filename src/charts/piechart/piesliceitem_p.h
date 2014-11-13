@@ -86,7 +86,6 @@ private:
     bool m_hovered;
     QGraphicsTextItem *m_labelItem;
 
-    QPointF m_lastMousePos;
     bool m_mousePressed;
 
     friend class PieSliceAnimation;

@@ -304,7 +304,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QPieSeries::clicked(QPieSlice* slice)
+    \fn void QPieSeries::clicked(QPieSlice *slice)
     This signal is emitted when a \a slice has been clicked.
     \sa QPieSlice::clicked()
 */
@@ -314,7 +314,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QPieSeries::pressed(QPieSlice* slice)
+    \fn void QPieSeries::pressed(QPieSlice *slice)
     This signal is emitted when a \a slice has been pressed.
     \sa QPieSlice::pressed()
 */
@@ -324,7 +324,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QPieSeries::released(QPieSlice* slice)
+    \fn void QPieSeries::released(QPieSlice *slice)
     This signal is emitted when a \a slice has been released.
     \sa QPieSlice::released()
 */
@@ -334,7 +334,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QPieSeries::doubleClicked(QPieSlice* slice)
+    \fn void QPieSeries::doubleClicked(QPieSlice *slice)
     This signal is emitted when a \a slice has been doubleClicked.
     \sa QPieSlice::doubleClicked()
 */

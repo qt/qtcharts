@@ -109,14 +109,13 @@ void PieSliceItem::hoverLeaveEvent(QGraphicsSceneHoverEvent * /*event*/)
 void PieSliceItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     emit pressed(event->buttons());
-    m_lastMousePos = event->pos();
     m_mousePressed = true;
 }
 
 void PieSliceItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     emit released(event->buttons());
-    if (m_lastMousePos == event->pos() && m_mousePressed)
+    if (m_mousePressed)
         emit clicked(event->buttons());
 }
 

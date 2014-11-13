@@ -59,8 +59,6 @@ public:
     void markerReleased(QGraphicsItem *item);
     void markerDoubleClicked(QGraphicsItem *item);
 
-    void setLastMousePosition(const QPointF pos) {m_lastMousePos = pos;}
-    QPointF lastMousePosition() const {return m_lastMousePos;}
     void setMousePressed(bool pressed = true) {m_mousePressed = pressed;}
     bool mousePressed() {return m_mousePressed;}
 
@@ -89,7 +87,6 @@ private:
     QFont m_pointLabelsFont;
     QColor m_pointLabelsColor;
 
-    QPointF m_lastMousePos;
     bool m_mousePressed;
 };
 
@@ -110,7 +107,6 @@ protected:
     {
         QGraphicsEllipseItem::mousePressEvent(event);
         m_parent->markerPressed(this);
-        m_parent->setLastMousePosition(event->pos());
         m_parent->setMousePressed();
     }
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event)
@@ -127,7 +123,7 @@ protected:
     {
         QGraphicsEllipseItem::mouseReleaseEvent(event);
         m_parent->markerReleased(this);
-        if (m_parent->lastMousePosition() == event->pos() && m_parent->mousePressed())
+        if (m_parent->mousePressed())
             m_parent->markerSelected(this);
         m_parent->setMousePressed(false);
     }
@@ -158,7 +154,6 @@ protected:
     {
         QGraphicsRectItem::mousePressEvent(event);
         m_parent->markerPressed(this);
-        m_parent->setLastMousePosition(event->pos());
         m_parent->setMousePressed();
     }
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event)
@@ -175,7 +170,7 @@ protected:
     {
         QGraphicsRectItem::mouseReleaseEvent(event);
         m_parent->markerReleased(this);
-        if (m_parent->lastMousePosition() == event->pos() && m_parent->mousePressed())
+        if (m_parent->mousePressed())
             m_parent->markerSelected(this);
         m_parent->setMousePressed(false);
     }

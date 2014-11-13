@@ -484,16 +484,16 @@ void SplineChartItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 
 void SplineChartItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    emit XYChart::released(domain()->calculateDomainPoint(event->pos()));
-    if (m_lastMousePos == event->pos() && m_mousePressed)
-        emit XYChart::clicked(domain()->calculateDomainPoint(event->pos()));
+    emit XYChart::released(domain()->calculateDomainPoint(m_lastMousePos));
+    if (m_mousePressed)
+        emit XYChart::clicked(domain()->calculateDomainPoint(m_lastMousePos));
     m_mousePressed = false;
     QGraphicsItem::mouseReleaseEvent(event);
 }
 
 void SplineChartItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
-    emit XYChart::doubleClicked(domain()->calculateDomainPoint(event->pos()));
+    emit XYChart::doubleClicked(domain()->calculateDomainPoint(m_lastMousePos));
     QGraphicsItem::mouseDoubleClickEvent(event);
 }
 

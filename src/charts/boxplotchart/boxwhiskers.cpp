@@ -40,8 +40,8 @@ BoxWhiskers::~BoxWhiskers()
 
 void BoxWhiskers::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    Q_UNUSED(event)
     emit pressed(m_boxSet);
-    m_lastMousePos = event->pos();
     m_mousePressed = true;
 }
 
@@ -59,8 +59,9 @@ void BoxWhiskers::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 
 void BoxWhiskers::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
+    Q_UNUSED(event)
     emit released(m_boxSet);
-    if (m_lastMousePos == event->pos() && m_mousePressed)
+    if (m_mousePressed)
         emit clicked(m_boxSet);
 }
 

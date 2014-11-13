@@ -45,7 +45,6 @@ Bar::~Bar()
 void Bar::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     emit pressed(m_index, m_barset);
-    m_lastMousePos = event->pos();
     m_mousePressed = true;
     QGraphicsItem::mousePressEvent(event);
 }
@@ -68,7 +67,7 @@ void Bar::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 void Bar::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     emit released(m_index, m_barset);
-    if (m_lastMousePos == event->pos() && m_mousePressed)
+    if (m_mousePressed)
         emit clicked(m_index, m_barset);
     m_mousePressed = false;
     QGraphicsItem::mouseReleaseEvent(event);

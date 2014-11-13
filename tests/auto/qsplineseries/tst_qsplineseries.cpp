@@ -177,6 +177,8 @@ void tst_QSplineSeries::doubleClickedSignal()
     QSignalSpy seriesSpy(splineSeries, SIGNAL(doubleClicked(QPointF)));
 
     QPointF checkPoint = view.chart()->mapToPosition(splinePoint);
+    // mouseClick needed first to save the position
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, checkPoint.toPoint());
     QTest::mouseDClick(view.viewport(), Qt::LeftButton, 0, checkPoint.toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 

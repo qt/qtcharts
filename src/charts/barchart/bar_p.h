@@ -64,7 +64,6 @@ private:
     QBarSet *m_barset;
     bool m_hovering;
 
-    QPointF m_lastMousePos;
     bool m_mousePressed;
 };
 

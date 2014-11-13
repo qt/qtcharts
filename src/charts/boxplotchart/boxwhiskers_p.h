@@ -99,7 +99,6 @@ private:
     qreal m_geometryLeft;
     qreal m_geometryRight;
 
-    QPointF m_lastMousePos;
     bool m_mousePressed;
 };
 

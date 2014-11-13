@@ -265,16 +265,16 @@ void AreaChartItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 
 void AreaChartItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    emit released(m_upper->domain()->calculateDomainPoint(event->pos()));
-    if (m_lastMousePos == event->pos() && m_mousePressed)
-        emit clicked(m_upper->domain()->calculateDomainPoint(event->pos()));
+    emit released(m_upper->domain()->calculateDomainPoint(m_lastMousePos));
+    if (m_mousePressed)
+        emit clicked(m_upper->domain()->calculateDomainPoint(m_lastMousePos));
     m_mousePressed = false;
     ChartItem::mouseReleaseEvent(event);
 }
 
 void AreaChartItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
-    emit doubleClicked(m_upper->domain()->calculateDomainPoint(event->pos()));
+    emit doubleClicked(m_upper->domain()->calculateDomainPoint(m_lastMousePos));
     ChartItem::mouseDoubleClickEvent(event);
 }
 

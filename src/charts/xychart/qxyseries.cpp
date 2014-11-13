@@ -225,11 +225,14 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \fn void QXYSeries::clicked(const QPointF& point)
-    \brief Signal is emitted when user clicks the \a point on chart.
+    \brief Signal is emitted when user clicks the \a point on chart. The \a point is the point
+    where the press was triggered.
+    \sa pressed, released, doubleClicked
 */
 /*!
     \qmlsignal XYSeries::onClicked(QPointF point)
-    Signal is emitted when user clicks the \a point on chart. For example:
+    Signal is emitted when user clicks the \a point on chart. The \a point is the point where the
+    press was triggered. For example:
     \code
     LineSeries {
         XYPoint { x: 0; y: 0 }
@@ -237,6 +240,7 @@ QT_CHARTS_BEGIN_NAMESPACE
         onClicked: console.log("onClicked: " + point.x + ", " + point.y);
     }
     \endcode
+    \sa onPressed, onReleased, onDoubleClicked
 */
 
 /*!
@@ -255,6 +259,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \fn void QXYSeries::pressed(const QPointF& point)
     \brief Signal is emitted when user presses the \a point on chart.
+    \sa clicked, released, doubleClicked
 */
 /*!
     \qmlsignal XYSeries::onPressed(QPointF point)
@@ -266,15 +271,18 @@ QT_CHARTS_BEGIN_NAMESPACE
         onPressed: console.log("onPressed: " + point.x + ", " + point.y);
     }
     \endcode
+    \sa onClicked, onReleased, onDoubleClicked
 */
 
 /*!
     \fn void QXYSeries::released(const QPointF& point)
-    \brief Signal is emitted when user releases the \a point on chart.
+    \brief Signal is emitted when user releases a press that was triggered on a \a point on chart.
+    \sa pressed, clicked, doubleClicked
 */
 /*!
     \qmlsignal XYSeries::onReleased(QPointF point)
-    Signal is emitted when user releases the \a point on chart. For example:
+    Signal is emitted when user releases a press that was triggered on a \a point on chart.
+    For example:
     \code
     LineSeries {
         XYPoint { x: 0; y: 0 }
@@ -282,15 +290,19 @@ QT_CHARTS_BEGIN_NAMESPACE
         onReleased: console.log("onReleased: " + point.x + ", " + point.y);
     }
     \endcode
+    \sa onPressed, onClicked, onDoubleClicked
 */
 
 /*!
     \fn void QXYSeries::doubleClicked(const QPointF& point)
-    \brief Signal is emitted when user doubleclicks the \a point on chart.
+    \brief Signal is emitted when user doubleclicks the \a point on chart. The \a point is the
+    point where the first press was triggered.
+    \sa pressed, released, clicked
 */
 /*!
     \qmlsignal XYSeries::onDoubleClicked(QPointF point)
-    Signal is emitted when user doubleclicks the \a point on chart. For example:
+    Signal is emitted when user doubleclicks the \a point on chart. The \a point is the point where
+    the first press was triggered. For example:
     \code
     LineSeries {
         XYPoint { x: 0; y: 0 }
@@ -298,6 +310,7 @@ QT_CHARTS_BEGIN_NAMESPACE
         onDoubleClicked: console.log("onDoubleClicked: " + point.x + ", " + point.y);
     }
     \endcode
+    \sa onPressed, onReleased, onClicked
 */
 
 /*!

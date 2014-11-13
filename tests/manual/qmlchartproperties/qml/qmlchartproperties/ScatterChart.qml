@@ -49,13 +49,13 @@ ChartView {
         onBorderColorChanged:       console.log("scatterSeries.onBorderColorChanged: " + borderColor);
         onBorderWidthChanged:       console.log("scatterSeries.onBorderChanged: " + borderWidth);
         onCountChanged:             console.log("scatterSeries.onCountChanged: " + count);
-        onPointLabelsVisibilityChanged:  console.log("lineSeries.onPointLabelsVisibilityChanged: "
+        onPointLabelsVisibilityChanged:  console.log("scatterSeries.onPointLabelsVisibilityChanged: "
                                                      + visible);
-        onPointLabelsFormatChanged:      console.log("lineSeries.onPointLabelsFormatChanged: "
+        onPointLabelsFormatChanged:      console.log("scatterSeries.onPointLabelsFormatChanged: "
                                                      + format);
-        onPointLabelsFontChanged:        console.log("lineSeries.onPointLabelsFontChanged: "
+        onPointLabelsFontChanged:        console.log("scatterSeries.onPointLabelsFontChanged: "
                                                      + font.family);
-        onPointLabelsColorChanged:       console.log("lineSeries.onPointLabelsColorChanged: "
+        onPointLabelsColorChanged:       console.log("scatterSeries.onPointLabelsColorChanged: "
                                                      + color);
         onPressed:          console.log(name + ".onPressed: " + point.x + ", " + point.y);
         onReleased:         console.log(name + ".onReleased: " + point.x + ", " + point.y);
@@ -76,4 +76,5 @@ ChartView {
         onReleased:         console.log(name + ".onReleased: " + point.x + ", " + point.y);
         onDoubleClicked:    console.log(name + ".onDoubleClicked: " + point.x + ", " + point.y);
     }
+
 }
