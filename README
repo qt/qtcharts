@@ -1,117 +1,73 @@
-----------------------
-Qt Charts Add-on 1.4.0
-----------------------
+---------------
+Qt Charts 2.0.0
+---------------
 
-What's in Qt Charts
+Qt Charts module provides a set of easy to use chart components. It uses
+the Qt Graphics View Framework, therefore charts can be easily integrated
+to modern user interfaces.
+
+System Requirements
 ===================
 
-Directory structure:
-
-src/
-    Source code of the Qt Charts
-plugins/
-    QML bindings plugins and QtCreator plugin
-examples/
-    Some examples of using Qt Charts
-demos/
-    More versatile example applications showing how to customize charts,
-    combine several chart types and implement interaction in charts
-doc/
-    Documentation
-licenses/
-    Licensing information
+- Qt 5.4 or newer
+- For QML applications QtQuick 2 is required
+- Manipulating Qt Charts graphs with QML Designer requires Qt Creator 3.2 or newer
 
 Building
 ========
 
-Please note that if you have already installed a previous version of
-Qt Charts, you should first uninstall it with
-    make uninstall
+Configure the project with qmake:
+    qmake
 
-Configure project with qmake and build project with make:
-    (Linux) make 
+After running qmake, build the project with make:
+    (Linux) make
     (Windows with MinGw) mingw32-make
-    (Visual Studio) nmake
-    (OSX) make
+    (Windows with Visual Studio) nmake
+    (OS X) make
+
+The above generates the default makefiles for your configuration, which is typically
+the release build if you are using precompiled binary Qt distribution. To build both
+debug and release, or one specifically, use one of the following qmake lines instead.
 
 For debug builds:
-    qmake CONFIG+=debug; make
-    or 
-    qmake CONFIG+=debug_and_release; make debug
-    
-For release builds:    
-    qmake CONFIG+=release; make
-    or 
-    qmake CONFIG+=debug_and_release; make release
-    
-For both builds:
-    qmake CONFIG+="debug_and_release build_all"; make
+    qmake CONFIG+=debug
+    make
+  or
+    qmake CONFIG+=debug_and_release
+    make debug
 
-If you want to leave out demos and examples from the build you can use
-the following config with qmake:
-    CONFIG+=nomake_demos_examples
-For some embedded environments, such as VxWorks, all examples and demos
-may not be applicable. There it's recommended to use the above mentioned
-config option.
+For release builds:
+    qmake CONFIG+=release
+    make
+  or
+    qmake CONFIG+=debug_and_release
+    make release
 
-If you want to install the libraries to your Qt library directory use:
+For both builds (Windows/OS X only):
+    qmake CONFIG+="debug_and_release build_all"
+    make
+
+After building, install the module to your Qt directory:
     make install
 
-If you want to uninstall the libraries:
+If you want to uninstall the module:
     make uninstall
 
 Building as a statically linked library
 =======================================
 
-The same as above applies, you will just have to add staticlib to the CONFIG:
-    qmake CONFIG+=staticlib
+The same as above applies, you will just have to add static to the CONFIG:
+    qmake CONFIG+=static
 
 Documentation
 =============
 
-Documentation can be found from doc/html and doc/qch directories. The documentation
-can also be generated with:
+The documentation can be generated with:
     make docs
 
-The documentation provided with Charts is generated with qdoc and the creation of the
-documentation is prioritized for Qt5. We recommend building the documentation using Qt5,
-if you want to do it yourself. Creating the documentation using Qt4 also works, but some
-pages are not generated correctly, such as the 'List of All Members' page for all C++ and
-QML APIs in .qch documentation.
+The documentation is generated into the doc folder under the build folder.
+Both Qt Assistant (qtcharts.qch) and in HTML format (qtcharts subfolder)
+documentation is generated.
 
-Main Changes between 1.3.1 and 1.4.0
-====================================
-
-- New: Added possibility to set brush image for AreaSeries, BarSet, BoxPlotSeries,
-    BoxSet, PieSlice and ScatterSeries by specifying 'brushFilename'
-- New: Added possibility to show series point values for line, spline and scatter series
-- New: Added possibility to position the bar value labels
-
-Bug Fixes and minor new features
-================================
-
-- New: Added count property for QBoxPlotSeries
-- New: Added option to set markers in legend in reverse order
-- New: Install the plugins.qmltypes file for Qt Quick 2 requested by Qt Creator
-- New: Added clear function for BarCategoryAxis
-- Fixed: Assert failure with percent bar series zero values
-- Fixed: Updated files generated with Qt Creator for demos
-- Fixed: DeclarativeChart::legend property marked as constant
-- Fixed: Crash with ScatterChartItem mouse events
-- Fixed: Build for iOS and for building the QtQuick2 plugin statically
-- Fixed: Setting values for BarSet using Qt.point
-- Fixed: Bar category rendering for empty category
-- Fixed: QBoxSet color setting
-- Fixed: Mouse event handling for pie
-- Fixed: Legend truncation
-- Fixed: Scatter series color
-- Fixed: Crash in ChartDataSet::attachAxis()
-- Fixed: Added missing library directory
-- Fixed: Added Charts directory to include path
-- Fixed: NOMINMAX definition
-
-Known issues
-============
-
-- Zooming too far or too close may eventually freeze the zooming and scrolling.
-- Qt Quick 1 is not supported on iOS.
+Please refer to the generated documentation for more information:
+    doc/qtcharts/index.html
