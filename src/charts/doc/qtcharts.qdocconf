@@ -4,7 +4,7 @@ include($QT_INSTALL_DOCS/global/compat.qdocconf)
 include($QT_INSTALL_DOCS/global/fileextensions.qdocconf)
 include($QT_INSTALL_DOCS/global/qt-html-templates-offline.qdocconf)
 
-project = Qt Charts
+project = QtCharts
 description = Qt Charts Reference Documentation
 version = 2.0.0
 
