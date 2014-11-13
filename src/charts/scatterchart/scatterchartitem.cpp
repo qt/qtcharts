@@ -54,7 +54,6 @@ ScatterChartItem::ScatterChartItem(QScatterSeries *series, QGraphicsItem *item)
 
     setZValue(ChartPresenter::ScatterSeriesZValue);
     setFlags(QGraphicsItem::ItemClipsChildrenToShape);
-    setFlag(QGraphicsItem::ItemIsSelectable);
 
     handleUpdated();
 
