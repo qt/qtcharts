@@ -11,7 +11,7 @@ System Requirements
 
 - Qt 5.4 or newer
 - For QML applications QtQuick 2 is required
-- Manipulating Qt Charts graphs with QML Designer requires Qt Creator 3.2 or newer
+- Manipulating Qt Charts graphs with QML Designer requires Qt Creator 3.3 or newer
 
 Building
 ========
