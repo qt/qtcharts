@@ -23,31 +23,21 @@
 
     \brief This is a demonstration on how to use a polar chart in your QML application.
 
-    \table
-        \row
-            \li \br
-                We begin with a chart that has a spline series and a scatter series with random
-                data. Both series use the same axes.
-                \br
-                \br
-                \snippet qmlpolarchart/qml/qmlpolarchart/View1.qml 1
-            \li \inlineimage examples_qmlpolarchart1.png
-        \row
-            \li \br
-                The next example shows a chart with some accurate historical data for which we need
-                to use a DateTimeAxis
-                and a AreaSeries.
-                \br
-                \br
-                \snippet qmlpolarchart/qml/qmlpolarchart/View2.qml 1
-            \li \inlineimage examples_qmlpolarchart2.png
-        \row
-            \li \br
-                And the final example with a chart that uses a CategoryAxis to make the data easier
-                to understand.
-                \br
-                \br
-                \snippet qmlpolarchart/qml/qmlpolarchart/View3.qml 1
-            \li \inlineimage examples_qmlpolarchart3.png
-    \endtable
+    We begin with a chart that has a spline series and a scatter series with random
+    data. Both series use the same axes.
+
+    \image examples_qmlpolarchart1.png
+    \snippet qmlpolarchart/qml/qmlpolarchart/View1.qml 1
+
+    The next example shows a chart with some accurate historical data for which we need
+    to use a DateTimeAxis and a AreaSeries.
+
+    \image examples_qmlpolarchart2.png
+    \snippet qmlpolarchart/qml/qmlpolarchart/View2.qml 1
+
+    And the final example with a chart that uses a CategoryAxis to make the data easier
+    to understand.
+
+    \image examples_qmlpolarchart3.png
+    \snippet qmlpolarchart/qml/qmlpolarchart/View3.qml 1
 */

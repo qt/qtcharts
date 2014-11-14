@@ -18,7 +18,7 @@
 
 /*!
      \example barmodelmapper
-     \title BarModelMapper example
+     \title BarModelMapper Example
      \ingroup qtcharts_examples
 
      \brief This example shows how to use QAbstractItemModel derived model as the data for the bar

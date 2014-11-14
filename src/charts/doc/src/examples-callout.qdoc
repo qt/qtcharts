@@ -18,7 +18,7 @@
 
 /*!
      \example callout
-     \title Callout example
+     \title Callout Example
      \ingroup qtcharts_examples
 
      \brief This example shows how to draw an additional element (a callout) on top of the chart.

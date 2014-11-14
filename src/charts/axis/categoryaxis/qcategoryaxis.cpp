@@ -37,28 +37,22 @@ QT_CHARTS_BEGIN_NAMESPACE
     Unlike with the QBarCategoryAxis the QCategoryAxis allows the categories ranges widths to be specified freely.
 
     Example code on how to use QCategoryAxis:
-    \table
-        \row
-            \li  \br
-                \br
-                \code
-                QChartView *chartView = new QChartView;
-                QLineSeries *series = new QLineSeries;
-                // ...
-                chartView->chart()->addSeries(series);
+    \image api_category_axis.png
+    \code
+    QChartView *chartView = new QChartView;
+    QLineSeries *series = new QLineSeries;
+    // ...
+    chartView->chart()->addSeries(series);
 
-                QCategoryAxis *axisY = new QCategoryAxis;
-                axisY->setMin(0);
-                axisY->setMax(52);
-                axisY->setStartValue(15);
-                axisY->append("First", 20);
-                axisY->append("Second", 37);
-                axisY->append("Third", 52);
-                chartView->chart()->setAxisY(axisY, series);
-                \endcode
-            \li \br
-               \inlineimage api_category_axis.png
-    \endtable
+    QCategoryAxis *axisY = new QCategoryAxis;
+    axisY->setMin(0);
+    axisY->setMax(52);
+    axisY->setStartValue(15);
+    axisY->append("First", 20);
+    axisY->append("Second", 37);
+    axisY->append("Third", 52);
+    chartView->chart()->setAxisY(axisY, series);
+    \endcode
 */
 /*!
     \qmltype CategoryAxis
@@ -69,14 +63,8 @@ QT_CHARTS_BEGIN_NAMESPACE
     \brief CategoryAxis allows putting a named ranges on the axis.
 
     For example:
-    \table
-        \row
-            \li \br
-                \br
-                \br
-                \snippet qmlaxes/qml/qmlaxes/View3.qml 1
-            \li \inlineimage examples_qmlaxes3.png
-    \endtable
+    \image examples_qmlaxes3.png
+    \snippet qmlaxes/qml/qmlaxes/View3.qml 1
 */
 
 /*!

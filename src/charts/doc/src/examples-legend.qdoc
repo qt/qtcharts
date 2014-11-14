@@ -34,11 +34,8 @@
     alignment can be modified.
     When the legend is detached, it can be resized and positioned freely.
 
-    \table
-        \row
-            \li \inlineimage examples_legend_detach.png
-            \li \inlineimage examples_legend_detach2.png
-    \endtable
+    \image examples_legend_detach.png
+    \image examples_legend_detach2.png
 
     Here we turn the legend visible and set its alignment to the bottom of the chart.
 

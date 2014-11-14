@@ -18,7 +18,7 @@
 
 /*!
      \example nesteddonuts
-     \title Nested donuts example
+     \title Nested Donuts Example
      \ingroup qtcharts_examples
 
      \brief This example shows how to create a nested donuts chart using the QPieSeries API.

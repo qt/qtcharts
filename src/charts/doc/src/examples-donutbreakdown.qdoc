@@ -18,7 +18,7 @@
 
 /*!
      \example donutbreakdown
-     \title Donut chart breakdown example
+     \title Donut Chart Breakdown Example
      \ingroup qtcharts_examples
 
      \brief This example shows how to use create a donut breakdown chart using QPieSeries API.

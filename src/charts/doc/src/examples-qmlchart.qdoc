@@ -18,126 +18,65 @@
 
 /*!
     \example qmlchart
-    \title Qml charts example
+    \title Qml Charts Example
     \ingroup qtcharts_examples
 
     \brief This basic demonstration shows how to use the different chart types by using qml.
 
     Creating each chart type begins with the creation of a ChartView.
 
-    \table
-        \row
-            \li \br
-                To create a pie, we use the PieSeries API together with a few PieSlices:
-                \br
-                \br
-                \snippet qmlchart/qml/qmlchart/View1.qml 1
-            \li \inlineimage examples_qmlchart1.png
-    \endtable
+    To create a pie, we use the PieSeries API together with a few PieSlices:
 
-    \table
-        \row
-            \li \br
-                To create a chart with a line series:
-                \br
-                \br
-                \snippet qmlchart/qml/qmlchart/View2.qml 1
-            \li \inlineimage examples_qmlchart2.png
-    \endtable
+    \image examples_qmlchart1.png
+    \snippet qmlchart/qml/qmlchart/View1.qml 1
 
-    \table
-        \row
-            \li \br
-                And spline series:
-                \br
-                \br
-                \snippet qmlchart/qml/qmlchart/View3.qml 1
-            \li \inlineimage examples_qmlchart3.png
-    \endtable
+    To create a chart with a line series:
 
-    \table
-        \row
-            \li \br
-                Then we create a chart that illustrates the NHL All-Star player selections by using
-                three area series:
-                \br
-                \br
-                \snippet qmlchart/qml/qmlchart/View4.qml 1
-                \dots
-            \li \inlineimage examples_qmlchart4.png
-    \endtable
+    \image examples_qmlchart2.png
+    \snippet qmlchart/qml/qmlchart/View2.qml 1
 
-    \table
-        \row
-            \li \br
-                Then a couple of scatter series:
-                \br
-                \br
-                \snippet qmlchart/qml/qmlchart/View5.qml 1
-                \dots
-            \li \inlineimage examples_qmlchart5.png
-    \endtable
+    And spline series:
+
+    \image examples_qmlchart3.png
+    \snippet qmlchart/qml/qmlchart/View3.qml 1
+
+    Then we create a chart that illustrates the NHL All-Star player selections by using
+    three area series:
+
+    \image examples_qmlchart4.png
+    \snippet qmlchart/qml/qmlchart/View4.qml 1
+    \dots
+
+    Then a couple of scatter series:
+
+    \image examples_qmlchart5.png
+    \snippet qmlchart/qml/qmlchart/View5.qml 1
+    \dots
 
     And a few different bar series:
-    \table
-        \row
-            \li \br
-                \br
-                \br
-                \snippet qmlchart/qml/qmlchart/View6.qml 1
-            \li \inlineimage examples_qmlchart6.png
-    \endtable
-    \table
-        \row
-            \li \br
-                \br
-                \br
-                \snippet qmlchart/qml/qmlchart/View7.qml 1
-            \li \inlineimage examples_qmlchart7.png
-    \endtable
-    \table
-        \row
-            \li \br
-                \br
-                \br
-                \snippet qmlchart/qml/qmlchart/View8.qml 1
-            \li \inlineimage examples_qmlchart8.png
-    \endtable
-    \table
-        \row
-            \li \br
-                \br
-                \br
-                \snippet qmlchart/qml/qmlchart/View9.qml 1
-            \li \inlineimage examples_qmlchart9.png
-    \endtable
-    \table
-        \row
-            \li \br
-                \br
-                \br
-                \snippet qmlchart/qml/qmlchart/View10.qml 1
-            \li \inlineimage examples_qmlchart10.png
-    \endtable
-    \table
-        \row
-            \li \br
-                \br
-                \br
-                \snippet qmlchart/qml/qmlchart/View11.qml 1
-            \li \inlineimage examples_qmlchart11.png
-    \endtable
 
-    \table
-        \row
-            \li \br
-                And finally an example demonstrating how to create a donut chart with two pie
-                series:
-                \br
-                \br
-                \snippet qmlchart/qml/qmlchart/View12.qml 1
-            \li \inlineimage examples_qmlchart12.png
-    \endtable
+    \image examples_qmlchart6.png
+    \snippet qmlchart/qml/qmlchart/View6.qml 1
+
+    \image examples_qmlchart7.png
+    \snippet qmlchart/qml/qmlchart/View7.qml 1
+
+    \image examples_qmlchart8.png
+    \snippet qmlchart/qml/qmlchart/View8.qml 1
+
+    \image examples_qmlchart9.png
+    \snippet qmlchart/qml/qmlchart/View9.qml 1
+
+    \image examples_qmlchart10.png
+    \snippet qmlchart/qml/qmlchart/View10.qml 1
+
+    \image examples_qmlchart11.png
+    \snippet qmlchart/qml/qmlchart/View11.qml 1
+
+    And finally an example demonstrating how to create a donut chart with two pie series:
+
+    \image examples_qmlchart12.png
+    \snippet qmlchart/qml/qmlchart/View12.qml 1
 
     Additionally, antialiasing is set with the qml property in Qt Quick 2.
 */

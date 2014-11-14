@@ -48,11 +48,8 @@ QT_CHARTS_BEGIN_NAMESPACE
     Full pie is 360 degrees where 0 is at 12 a'clock.
 
     See the \l {PieChart Example} {pie chart example} or \l {DonutChart Example} {donut chart example} to learn how to use QPieSeries.
-    \table 100%
-    \row
-    \li \image examples_piechart.png
-    \li \image examples_donutchart.png
-    \endtable
+    \image examples_piechart.png
+    \image examples_donutchart.png
 */
 /*!
     \qmltype PieSeries

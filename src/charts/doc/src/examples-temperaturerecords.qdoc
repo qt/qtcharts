@@ -18,7 +18,7 @@
 
 /*!
     \example temperaturerecords
-    \title Temperature records example
+    \title Temperature Records Example
     \ingroup qtcharts_examples
 
     \brief The example shows how to create a bar chart with negative bars.
