@@ -79,7 +79,7 @@ Column {
             rows: 2
             Label {
                 text: qsTr("backgroundRoundness")
-                toolTip: qsTr("Diameter of the rounding circle at the corners")
+                tooltip: qsTr("Diameter of the rounding circle at the corners")
                 Layout.fillWidth: true
             }
 
@@ -96,7 +96,7 @@ Column {
 
             Label {
                 text: qsTr("dropShadowEnabled")
-                toolTip: qsTr("Enable border drop shadow")
+                tooltip: qsTr("Enable border drop shadow")
                 Layout.fillWidth: true
             }
 
@@ -142,7 +142,7 @@ Column {
             rows: 1
             Label {
                 text: qsTr("localizeNumbers")
-                toolTip: qsTr("Localize numbers")
+                tooltip: qsTr("Localize numbers")
                 Layout.fillWidth: true
             }
 
