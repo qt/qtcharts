@@ -71,3 +71,8 @@ documentation is generated.
 
 Please refer to the generated documentation for more information:
     doc/qtcharts/index.html
+
+Known issues
+============
+
+- Zooming too far or too close may eventually freeze the zooming and scrolling.
