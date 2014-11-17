@@ -36,11 +36,15 @@ QT_CHARTS_BEGIN_NAMESPACE
 
     \mainclass
 
-    An area chart is used to show quantitative data. It is based on line chart, in the way that area between axis and the line
-    is emphasized with color. Since the area chart is based on line chart, QAreaSeries constructor needs QLineSeries instance,
-    which defines "upper" boundary of the area. "Lower" boundary is defined by default by axis X. Instead of axis X "lower" boundary can be specified by other line.
-    In that case QAreaSeries should be initiated with two QLineSeries instances. Please note terms "upper" and "lower" boundary can be misleading in cases
-    where "lower" boundary had bigger values than the "upper" one, however the main point that area between these two boundary lines will be filled.
+    An area series is used to show quantitative data. It is based on line series, in the way that
+    the area between the boundary lines is emphasized with color. Since the area series is based on
+    line series, QAreaSeries constructor needs a QLineSeries instance, which defines "upper"
+    boundary of the area. The area chart is drawn using the bottom of the plot area as the "lower"
+    boundary by default. Instead of the bottom of the plot area, the "lower" boundary can be
+    specified by another line. In that case QAreaSeries should be initialized with two QLineSeries
+    instances. Please note that the terms "upper" and "lower" boundary can be misleading in cases
+    where the "lower" boundary has bigger values than the "upper" one. The main point is that the
+    area between these two boundary lines will be filled.
 
     See the \l {AreaChart Example} {area chart example} to learn how to create a simple area chart.
     \image examples_areachart.png
