@@ -181,6 +181,18 @@ QT_CHARTS_BEGIN_NAMESPACE
     Signal is emitted when there is change in hover \a status over \a boxset.
 */
 /*!
+    \qmlsignal BoxPlotSeries::onPressed(BoxSet boxset)
+    This signal is emitted when the user presses the \a boxset on the chart.
+*/
+/*!
+    \qmlsignal BoxPlotSeries::onReleased(BoxSet boxset)
+    This signal is emitted when the user releases the \a boxset on the chart.
+*/
+/*!
+    \qmlsignal BoxPlotSeries::onDoubleClicked(BoxSet boxset)
+    This signal is emitted when the user doubleclicks the \a boxset on the chart.
+*/
+/*!
     \qmlsignal BoxPlotSeries::onCountChanged();
     Signal is emitted when there is change in count of box-and-whiskers items in the series.
 */
@@ -253,14 +265,6 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \qmlsignal BoxPlotSeries::onBrushChanged()
     Signal is emitted when the brush for box-and-whiskers items has changed.
-*/
-/*!
-    \qmlsignal BoxPlotSeries::onClicked(BoxSet boxset)
-    Signal is emitted when the user clicks the \a boxset on the chart.
-*/
-/*!
-    \qmlsignal BoxPlotSeries::onHovered(bool status, BoxSet boxset)
-    Signal is emitted when there is change in hover \a status over \a boxset.
 */
 /*!
     \qmlsignal BoxPlotSeries::onAxisXChanged(AbstractAxis axis)
