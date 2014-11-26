@@ -89,7 +89,7 @@ void DonutBreakdownChart::recalculateAngles()
 void DonutBreakdownChart::updateLegendMarkers()
 {
     // go through all markers
-    foreach (QAbstractSeries *series, QChart::series()) {
+    foreach (QAbstractSeries *series, series()) {
         foreach (QLegendMarker *marker, legend()->markers(series)) {
             QPieLegendMarker *pieMarker = qobject_cast<QPieLegendMarker *>(marker);
             if (series == m_mainSeries) {
