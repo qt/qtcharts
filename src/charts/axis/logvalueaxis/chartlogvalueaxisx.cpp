@@ -48,10 +48,10 @@ QVector<qreal> ChartLogValueAxisX::calculateLayout() const
     qreal ceilEdge = ceil(leftEdge);
     int tickCount = qAbs(ceil(logMax) - ceil(logMin));
 
-    points.resize(tickCount);
+    points.resize(tickCount + 1);
     const QRectF &gridRect = gridGeometry();
     const qreal deltaX = gridRect.width() / qAbs(logMax - logMin);
-    for (int i = 0; i < tickCount; ++i)
+    for (int i = 0; i <= tickCount; ++i)
         points[i] = (ceilEdge + qreal(i)) * deltaX - leftEdge * deltaX + gridRect.left();
 
     return points;
