@@ -146,8 +146,7 @@ void VerticalAxis::updateGeometry()
             const qreal delta = lowerBound - upperBound;
             // Hide label in case visible part of the category at the grid edge is too narrow
             if (delta < boundingRect.height()
-                && (lowerBound == gridRect.bottom() || upperBound == gridRect.top())
-                && !intervalAxis()) {
+                && (lowerBound == gridRect.bottom() || upperBound == gridRect.top())) {
                 forceHide = true;
             } else {
                 labelItem->setPos(labelItem->pos().x() , lowerBound - (delta / 2.0) - center.y());
@@ -185,6 +184,10 @@ void VerticalAxis::updateGeometry()
                     upperBound = qMax(layout[i + 1], gridRect.top());
 
             }
+            if (lowerBound > gridRect.bottom())
+                lowerBound = gridRect.bottom();
+            if (upperBound < gridRect.top())
+                upperBound = gridRect.top();
             shadeItem->setRect(gridRect.left(), upperBound, gridRect.width(),
                                lowerBound - upperBound);
             if (shadeItem->rect().height() <= 0.0)
