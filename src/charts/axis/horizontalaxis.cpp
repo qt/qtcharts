@@ -37,14 +37,12 @@ void HorizontalAxis::updateGeometry()
 {
     const QVector<qreal> &layout = ChartAxisElement::layout();
 
-    if (layout.isEmpty())
+    if (layout.isEmpty() && axis()->type() != QAbstractAxis::AxisTypeLogValue)
         return;
 
     QStringList labelList = labels();
 
-    QList<QGraphicsItem *> lines = gridItems();
     QList<QGraphicsItem *> labels = labelItems();
-    QList<QGraphicsItem *> shades = shadeItems();
     QList<QGraphicsItem *> arrow = arrowItems();
     QGraphicsTextItem *title = titleItem();
 
@@ -89,6 +87,12 @@ void HorizontalAxis::updateGeometry()
 
         availableSpace -= titleBoundingRect.height();
     }
+
+    if (layout.isEmpty() && axis()->type() == QAbstractAxis::AxisTypeLogValue)
+        return;
+
+    QList<QGraphicsItem *> lines = gridItems();
+    QList<QGraphicsItem *> shades = shadeItems();
 
     for (int i = 0; i < layout.size(); ++i) {
         //items
