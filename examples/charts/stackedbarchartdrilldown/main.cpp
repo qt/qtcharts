@@ -33,7 +33,6 @@ int main(int argc, char *argv[])
 
 //! [1]
     DrilldownChart *drilldownChart =  new DrilldownChart();
-    drilldownChart->setTheme(QChart::ChartThemeBlueIcy);
     drilldownChart->setAnimationOptions(QChart::SeriesAnimations);
 //! [1]
 
