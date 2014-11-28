@@ -32,8 +32,8 @@ Rectangle {
         id: chartView
         title: "Weather forecast"
     //![1]
+        height: parent.height / 4 * 3
         anchors.top: parent.top
-        anchors.bottom: weatherImageRow.top
         anchors.left: parent.left
         anchors.right: parent.right
         legend.alignment: Qt.AlignTop
@@ -126,12 +126,12 @@ Rectangle {
 
     Row {
         id: weatherImageRow
+        anchors.top: chartView.bottom
+        anchors.topMargin: 5
         anchors.bottom: poweredByText.top
-        anchors.bottomMargin: 10
-        anchors.left: parent.left
-        anchors.leftMargin: 25
-        anchors.right: parent.right
-        anchors.rightMargin: 25
+        anchors.bottomMargin: 5
+        anchors.horizontalCenter: parent.horizontalCenter
+        height: parent.height - chartView.height - anchors.topMargin
 
         ListModel {
             id: weatherImageModel
@@ -142,7 +142,7 @@ Rectangle {
             model: weatherImageModel
             delegate: Image {
                 source: imageSource
-                width: weatherImageRow.width / weatherImageModel.count
+                width: weatherImageRow.height
                 height: width
                 fillMode: Image.PreserveAspectCrop
             }
@@ -152,9 +152,10 @@ Rectangle {
     Text {
         id: poweredByText
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 10
+        anchors.bottomMargin: 5
         anchors.left: parent.left
         anchors.leftMargin: 25
+        height: parent.height / 25
         text: "Powered by World Weather Online"
     }
 
