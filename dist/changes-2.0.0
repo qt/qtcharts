@@ -45,3 +45,6 @@ Fixed issues
 - Fixed android build errors
 - Fixed memory leaks
 - Fixed build issue with dynamic OpenGL configurations
+- Fixed documentation issues
+- Fixed QLogValueAxis update on resize
+- Fixed category axis shades and labels for categories that span over the grid
