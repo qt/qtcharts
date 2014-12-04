@@ -47,7 +47,7 @@ qtHaveModule(quick) {
            qmloscilloscope
 }
 
-contains(QT_CONFIG, multimedia) {
+qtHaveModule(multimedia) {
     SUBDIRS += audio
 } else {
     message("QtMultimedia library not available. Some examples are disabled")
