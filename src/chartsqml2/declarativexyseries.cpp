@@ -108,7 +108,7 @@ QPointF DeclarativeXySeries::at(int index)
 {
     QXYSeries *series = qobject_cast<QXYSeries *>(xySeries());
     Q_ASSERT(series);
-    if (index >= 0 || index < series->count())
+    if (index >= 0 && index < series->count())
         return series->points().at(index);
     return QPointF(0, 0);
 }
