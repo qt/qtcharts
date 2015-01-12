@@ -840,10 +840,10 @@ void QXYSeriesPrivate::drawSeriesPointLabels(QPainter *painter, const QVector<QP
     painter->setPen(QPen(m_pointLabelsColor));
     QFontMetrics fm(painter->font());
 
-    for (int i(0); i < m_points.size(); i++) {
+    for (int i(0); i < points.size(); i++) {
         QString pointLabel = m_pointLabelsFormat;
-        pointLabel.replace(xPointTag, presenter()->numberToString(m_points.at(i).x()));
-        pointLabel.replace(yPointTag, presenter()->numberToString(m_points.at(i).y()));
+        pointLabel.replace(xPointTag, presenter()->numberToString(points.at(i).x()));
+        pointLabel.replace(yPointTag, presenter()->numberToString(points.at(i).y()));
 
         // Position text in relation to the point
         int pointLabelWidth = fm.width(pointLabel);
