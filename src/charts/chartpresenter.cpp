@@ -120,6 +120,8 @@ void ChartPresenter::handleSeriesRemoved(QAbstractSeries *series)
     chart->hide();
     chart->disconnect();
     chart->deleteLater();
+    if (chart->animation())
+        chart->animation()->stopAndDestroyLater();
     m_chartItems.removeAll(chart);
     m_series.removeAll(series);
     m_layout->invalidate();
