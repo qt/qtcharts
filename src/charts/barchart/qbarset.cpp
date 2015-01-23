@@ -575,7 +575,7 @@ void QBarSet::setLabelColor(QColor color)
     if (b == QBrush())
         b.setStyle(Qt::SolidPattern);
 
-    if (b.color() != color) {
+    if (d_ptr->m_labelBrush.color() != color) {
         b.setColor(color);
         setLabelBrush(b);
         emit labelColorChanged(color);
