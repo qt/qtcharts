@@ -37,6 +37,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \class QLegend
     \inmodule Qt Charts
+    \inherits QGraphicsWidget
     \brief Legend object.
     \mainclass
 
@@ -56,7 +57,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
     \brief Legend is part of Qt Chart QML API.
 
-    Legend is a graphical object, whics displays legend of the chart. Legend state is updated by
+    Legend is a graphical object, which displays legend of the chart. Legend state is updated by
     ChartView, when series have been changed. Legend is used via ChartView class. For example:
     \code
         ChartView {
@@ -96,6 +97,14 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \qmlproperty bool Legend::backgroundVisible
     Whether the legend background is visible or not.
+*/
+
+/*!
+    \qmlproperty bool Legend::visible
+    \brief Whether the legend is visible or not.
+
+    By default, this property is \c true.
+    \sa QGraphicsObject::visible
 */
 
 /*!

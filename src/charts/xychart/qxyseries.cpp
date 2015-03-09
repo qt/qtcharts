@@ -330,6 +330,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 /*!
     \qmlsignal XYSeries::onPointsReplaced()
+    Signal is emitted when all points have been replaced with other points.
 */
 
 /*!

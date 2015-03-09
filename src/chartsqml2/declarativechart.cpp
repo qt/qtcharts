@@ -127,6 +127,11 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
+  \qmlproperty list<AbstractAxis> ChartView::axes
+  The axes of the ChartView.
+*/
+
+/*!
   \qmlproperty bool ChartView::dropShadowEnabled
   The chart's border drop shadow. Set to true to enable drop shadow.
 */
@@ -205,12 +210,22 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
+  \qmlmethod ChartView::setAxisX(AbstractAxis axis, AbstractSeries series)
+  Set the x-axis of the series.
+*/
+
+/*!
   \qmlmethod Axis ChartView::axisY(AbstractSeries series)
   The y-axis of the series.
 */
 
 /*!
-  \qmlmethod ChartView::zoomY(real factor)
+  \qmlmethod ChartView::setAxisY(AbstractAxis axis, AbstractSeries series)
+  Set the y-axis of the series.
+*/
+
+/*!
+  \qmlmethod ChartView::zoom(real factor)
   Zooms in by \a factor on the center of the chart.
 */
 

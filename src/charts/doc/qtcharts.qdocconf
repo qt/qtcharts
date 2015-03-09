@@ -67,4 +67,6 @@ navigation.landingpage = Qt Charts
 navigation.cppclassespage = Qt Charts C++ Classes
 navigation.qmltypespage = Qt Charts QML Types
 
+depends = qtwidgets
+
 buildversion = Qt Charts $QT_VERSION Reference Documentation
