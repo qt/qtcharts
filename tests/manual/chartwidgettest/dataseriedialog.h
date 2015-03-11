@@ -21,8 +21,10 @@
 
 #include <QtWidgets/QDialog>
 
+QT_BEGIN_NAMESPACE
 class QGroupBox;
 class QCheckBox;
+QT_END_NAMESPACE
 
 class DataSerieDialog : public QDialog
 {

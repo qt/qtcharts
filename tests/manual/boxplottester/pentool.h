@@ -21,9 +21,11 @@
 #include <QtWidgets/QWidget>
 #include <QtGui/QPen>
 
+QT_BEGIN_NAMESPACE
 class QPushButton;
 class QDoubleSpinBox;
 class QComboBox;
+QT_END_NAMESPACE
 
 class PenTool : public QWidget
 {

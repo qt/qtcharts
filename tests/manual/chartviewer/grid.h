@@ -23,7 +23,10 @@
 #include <QtWidgets/QGraphicsWidget>
 #include <QtCharts/QChartGlobal>
 
+QT_BEGIN_NAMESPACE
 class QGraphicsGridLayout;
+QT_END_NAMESPACE
+
 class Chart;
 
 QT_CHARTS_BEGIN_NAMESPACE

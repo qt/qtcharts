@@ -32,7 +32,9 @@
 #include <QtCharts/QChart>
 #include <private/abstractdomain_p.h>
 
+QT_BEGIN_NAMESPACE
 class QGraphicsItem;
+QT_END_NAMESPACE
 
 QT_CHARTS_BEGIN_NAMESPACE
 

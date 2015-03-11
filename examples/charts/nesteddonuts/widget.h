@@ -21,7 +21,9 @@
 #include <QtWidgets/QWidget>
 #include <QtCharts/QPieSeries>
 
+QT_BEGIN_NAMESPACE
 class QTimer;
+QT_END_NAMESPACE
 
 QT_CHARTS_USE_NAMESPACE
 

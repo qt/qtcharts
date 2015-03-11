@@ -23,6 +23,7 @@
 #include <QtTest/QtTest>
 #include <QtWidgets/QPushButton>
 
+QT_BEGIN_NAMESPACE
 namespace QTest
 {
     // This was deprecated in Qt5. This is a small hack for the sake of compatibility.
@@ -31,6 +32,7 @@ namespace QTest
         return QTest::qWaitForWindowExposed(window);
     }
 }
+QT_END_NAMESPACE
 
 #define TRY_COMPARE(actual, expected) { \
     do { \

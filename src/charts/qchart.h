@@ -24,7 +24,9 @@
 #include <QtWidgets/QGraphicsWidget>
 #include <QtCore/QMargins>
 
+QT_BEGIN_NAMESPACE
 class QGraphicsSceneResizeEvent;
+QT_END_NAMESPACE
 
 QT_CHARTS_BEGIN_NAMESPACE
 

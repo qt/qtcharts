@@ -30,7 +30,10 @@ QT_CHARTS_END_NAMESPACE
 QT_CHARTS_USE_NAMESPACE
 
 class XYSeriesIODevice;
+
+QT_BEGIN_NAMESPACE
 class QAudioInput;
+QT_END_NAMESPACE
 
 class Widget : public QWidget
 {

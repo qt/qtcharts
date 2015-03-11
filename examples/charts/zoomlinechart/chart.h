@@ -21,7 +21,9 @@
 
 #include <QtCharts/QChart>
 
+QT_BEGIN_NAMESPACE
 class QGestureEvent;
+QT_END_NAMESPACE
 
 QT_CHARTS_USE_NAMESPACE
 

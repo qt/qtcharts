@@ -21,8 +21,10 @@
 #include <QtWidgets/QWidget>
 #include <QtGui/QBrush>
 
+QT_BEGIN_NAMESPACE
 class QPushButton;
 class QComboBox;
+QT_END_NAMESPACE
 
 class BrushTool : public QWidget
 {

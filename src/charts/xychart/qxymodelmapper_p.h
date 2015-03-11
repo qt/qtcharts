@@ -31,9 +31,11 @@
 #include <QtCharts/QXYModelMapper>
 #include <QtCore/QObject>
 
+QT_BEGIN_NAMESPACE
 class QModelIndex;
 class QAbstractItemModel;
 class QPointF;
+QT_END_NAMESPACE
 
 QT_CHARTS_BEGIN_NAMESPACE
 

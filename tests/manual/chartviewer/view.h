@@ -20,8 +20,10 @@
 #define VIEW_H
 #include <QtWidgets/QGraphicsView>
 
+QT_BEGIN_NAMESPACE
 class QGraphicsScene;
 class QResizeEvent;
+QT_END_NAMESPACE
 
 class View: public QGraphicsView
 {

@@ -29,7 +29,10 @@
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QDoubleSpinBox>
 
+QT_BEGIN_NAMESPACE
 class QGridLayout;
+QT_END_NAMESPACE
+
 class CustomTableModel;
 class PenTool;
 

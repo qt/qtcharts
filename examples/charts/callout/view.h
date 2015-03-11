@@ -21,14 +21,17 @@
 #include <QtWidgets/QGraphicsView>
 #include <QtCharts/QChartGlobal>
 
+QT_BEGIN_NAMESPACE
+class QGraphicsScene;
+class QMouseEvent;
+class QResizeEvent;
+QT_END_NAMESPACE
+
 QT_CHARTS_BEGIN_NAMESPACE
 class QChart;
 QT_CHARTS_END_NAMESPACE
 
-class QGraphicsScene;
-class QResizeEvent;
 class Callout;
-class QMouseEvent;
 
 QT_CHARTS_USE_NAMESPACE
 

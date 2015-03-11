@@ -31,7 +31,10 @@
 #include <QtCharts/QChartGlobal>
 #include <QtWidgets/QGraphicsRectItem>
 
+QT_BEGIN_NAMESPACE
 class QGraphicsDropShadowEffect;
+QT_END_NAMESPACE
+
 QT_CHARTS_BEGIN_NAMESPACE
 
 class ChartBackground: public QGraphicsRectItem

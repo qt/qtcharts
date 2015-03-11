@@ -23,15 +23,17 @@
 #include <QtCore/QHash>
 #include <QtWidgets/QComboBox>
 
+QT_BEGIN_NAMESPACE
 class QCheckBox;
+class QGraphicsLinearLayout;
 class QGraphicsRectItem;
 class QGraphicsScene;
 class QGraphicsWidget;
+QT_END_NAMESPACE
+
 class View;
-class QGraphicsLinearLayout;
 class Chart;
 class Grid;
-class QPushButton;
 
 QT_CHARTS_BEGIN_NAMESPACE
 class QChart;

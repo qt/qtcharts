@@ -34,7 +34,9 @@
 #include <QtCore/QTime>
 #include <QtCore/QPointF>
 
+QT_BEGIN_NAMESPACE
 class QGraphicsSceneMouseEvent;
+QT_END_NAMESPACE
 
 QT_CHARTS_BEGIN_NAMESPACE
 

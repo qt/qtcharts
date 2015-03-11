@@ -22,8 +22,10 @@
 #include <QtWidgets/QWidget>
 #include <QtCharts/QChartGlobal>
 
+QT_BEGIN_NAMESPACE
 class QComboBox;
 class QCheckBox;
+QT_END_NAMESPACE
 
 QT_CHARTS_BEGIN_NAMESPACE
 class QChartView;

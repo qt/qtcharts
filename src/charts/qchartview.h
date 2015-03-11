@@ -24,8 +24,10 @@
 #include <QtCharts/QChart>
 #include <QtWidgets/QGraphicsView>
 
+QT_BEGIN_NAMESPACE
 class QGraphicsScene;
 class QRubberBand;
+QT_END_NAMESPACE
 
 QT_CHARTS_BEGIN_NAMESPACE
 

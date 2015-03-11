@@ -21,7 +21,9 @@
 
 #include <QtCharts/QAbstractAxis>
 
+QT_BEGIN_NAMESPACE
 class QDateTime;
+QT_END_NAMESPACE
 
 QT_CHARTS_BEGIN_NAMESPACE
 

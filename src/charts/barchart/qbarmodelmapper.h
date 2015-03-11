@@ -22,7 +22,9 @@
 #include <QtCharts/QChartGlobal>
 #include <QtCore/QObject>
 
+QT_BEGIN_NAMESPACE
 class QAbstractItemModel;
+QT_END_NAMESPACE
 
 QT_CHARTS_BEGIN_NAMESPACE
 

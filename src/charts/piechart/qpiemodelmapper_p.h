@@ -31,7 +31,9 @@
 #include <QtCore/QObject>
 #include <QtCharts/QPieModelMapper>
 
+QT_BEGIN_NAMESPACE
 class QModelIndex;
+QT_END_NAMESPACE
 
 QT_CHARTS_BEGIN_NAMESPACE
 

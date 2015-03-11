@@ -24,9 +24,11 @@
 #include <QtCharts/QChartView>
 #include <QtWidgets/QWidget>
 
+QT_BEGIN_NAMESPACE
 class QSpinBox;
 class QCheckBox;
 class QGridLayout;
+QT_END_NAMESPACE
 
 QT_CHARTS_USE_NAMESPACE
 

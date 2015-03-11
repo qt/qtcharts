@@ -21,11 +21,14 @@
 #include <QtWidgets/QWidget>
 #include <QtCharts/QChartGlobal>
 
+QT_BEGIN_NAMESPACE
 class QLineEdit;
 class QPushButton;
 class QCheckBox;
 class QComboBox;
 class QDoubleSpinBox;
+QT_END_NAMESPACE
+
 class PenTool;
 class BrushTool;
 class CustomSlice;

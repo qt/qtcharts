@@ -28,14 +28,17 @@
 #include <QtCharts/QSplineSeries>
 #include <QtCharts/QAreaSeries>
 
+QT_BEGIN_NAMESPACE
+class QBrush;
+class QPen;
+
 namespace Ui {
 class MainWindow;
 }
+QT_END_NAMESPACE
+
 
 QT_CHARTS_USE_NAMESPACE
-
-class QBrush;
-class QPen;
 
 class MainWindow : public QMainWindow
 {
