@@ -62,6 +62,7 @@ void QXYModelMapper::setModel(QAbstractItemModel *model)
     connect(d->m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), d, SLOT(modelRowsRemoved(QModelIndex,int,int)));
     connect(d->m_model, SIGNAL(columnsInserted(QModelIndex,int,int)), d, SLOT(modelColumnsAdded(QModelIndex,int,int)));
     connect(d->m_model, SIGNAL(columnsRemoved(QModelIndex,int,int)), d, SLOT(modelColumnsRemoved(QModelIndex,int,int)));
+    connect(d->m_model, SIGNAL(modelReset()), d, SLOT(initializeXYFromModel()));
     connect(d->m_model, SIGNAL(destroyed()), d, SLOT(handleModelDestroyed()));
 }
 
