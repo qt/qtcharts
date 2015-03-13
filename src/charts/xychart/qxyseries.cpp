@@ -541,6 +541,7 @@ void QXYSeries::insert(int index, const QPointF &point)
 {
     Q_D(QXYSeries);
     if (isValidValue(point)) {
+        index = qMax(0, qMin(index, d->m_points.size()));
         d->m_points.insert(index, point);
         emit pointAdded(index);
     }

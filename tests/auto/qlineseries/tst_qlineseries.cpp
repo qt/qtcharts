@@ -37,6 +37,7 @@ private slots:
     void pressedSignal();
     void releasedSignal();
     void doubleClickedSignal();
+    void insert();
 protected:
     void pointsVisible_data();
 };
@@ -163,6 +164,28 @@ void tst_QLineSeries::releasedSignal()
     QPointF signalPoint = qvariant_cast<QPointF>(seriesSpyArg.at(0));
     QCOMPARE(qRound(signalPoint.x()), qRound(linePoint.x()));
     QCOMPARE(qRound(signalPoint.y()), qRound(linePoint.y()));
+}
+
+void tst_QLineSeries::insert()
+{
+    QLineSeries lineSeries;
+    QSignalSpy insertSpy(&lineSeries, &QXYSeries::pointAdded);
+    lineSeries.insert(0, QPoint(3, 3));
+    QCOMPARE(insertSpy.count(), 1);
+    QVariantList arguments = insertSpy.takeFirst();
+    QCOMPARE(arguments.first().toInt(), 0);
+    lineSeries.insert(0, QPoint(1, 1));
+    arguments = insertSpy.takeFirst();
+    QCOMPARE(arguments.first().toInt(), 0);
+    lineSeries.insert(1, QPoint(2, 2));
+    arguments = insertSpy.takeFirst();
+    QCOMPARE(arguments.first().toInt(), 1);
+    lineSeries.insert(42, QPoint(0, 0));
+    arguments = insertSpy.takeFirst();
+    QCOMPARE(arguments.first().toInt(), 3);
+    lineSeries.insert(-42, QPoint(0, 0));
+    arguments = insertSpy.takeFirst();
+    QCOMPARE(arguments.first().toInt(), 0);
 }
 
 void tst_QLineSeries::doubleClickedSignal()
