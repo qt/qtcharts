@@ -160,9 +160,14 @@ void LineChartItem::updateGeometry()
                 }
 
                 bool dummyOk; // We know points are ok, but this is needed
-                qreal currentAngle = static_cast<PolarDomain *>(domain())->toAngularCoordinate(currentSeriesPoint.x(), dummyOk);
-                qreal previousAngle = static_cast<PolarDomain *>(domain())->toAngularCoordinate(m_series->at(i - 1).x(), dummyOk);
-
+                qreal currentAngle = 0;
+                qreal previousAngle = 0;
+                if (const PolarDomain *pd = qobject_cast<const PolarDomain *>(domain())) {
+                    currentAngle = pd->toAngularCoordinate(currentSeriesPoint.x(), dummyOk);
+                    previousAngle = pd->toAngularCoordinate(m_series->at(i - 1).x(), dummyOk);
+                } else {
+                    qWarning() << Q_FUNC_INFO << "Unexpected domain: " << domain();
+                }
                 if ((qAbs(currentAngle - previousAngle) > 180.0)) {
                     // If the angle between two points is over 180 degrees (half X range),
                     // any direct segment between them becomes meaningless.
