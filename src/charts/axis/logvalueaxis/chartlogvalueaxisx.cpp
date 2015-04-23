@@ -23,6 +23,7 @@
 #include <QtWidgets/QGraphicsLayout>
 #include <QtCore/QtMath>
 #include <QtCore/QDebug>
+#include <cmath>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -42,11 +43,11 @@ QVector<qreal> ChartLogValueAxisX::calculateLayout() const
 {
     QVector<qreal> points;
 
-    qreal logMax = log10(m_axis->max()) / log10(m_axis->base());
-    qreal logMin = log10(m_axis->min()) / log10(m_axis->base());
+    qreal logMax = std::log10(m_axis->max()) / std::log10(m_axis->base());
+    qreal logMin = std::log10(m_axis->min()) / std::log10(m_axis->base());
     qreal leftEdge = logMin < logMax ? logMin : logMax;
-    qreal ceilEdge = ceil(leftEdge);
-    int tickCount = qAbs(ceil(logMax) - ceil(logMin));
+    qreal ceilEdge = qCeil(leftEdge);
+    int tickCount = qAbs(qCeil(logMax) - qCeil(logMin));
 
     points.resize(tickCount);
     const QRectF &gridRect = gridGeometry();
@@ -86,9 +87,9 @@ QSizeF ChartLogValueAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint
 
     QSizeF base = HorizontalAxis::sizeHint(which, constraint);
     QStringList ticksList;
-    qreal logMax = log10(m_axis->max()) / log10(m_axis->base());
-    qreal logMin = log10(m_axis->min()) / log10(m_axis->base());
-    int tickCount = qAbs(ceil(logMax) - ceil(logMin));
+    qreal logMax = std::log10(m_axis->max()) / std::log10(m_axis->base());
+    qreal logMin = std::log10(m_axis->min()) / std::log10(m_axis->base());
+    int tickCount = qAbs(qCeil(logMax) - qCeil(logMin));
     if (m_axis->max() > m_axis->min() && tickCount > 0)
         ticksList = createLogValueLabels(m_axis->min(), m_axis->max(), m_axis->base(), tickCount, m_axis->labelFormat());
     else

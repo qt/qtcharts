@@ -20,6 +20,7 @@
 #include <private/qabstractaxis_p.h>
 #include <QtCharts/QLogValueAxis>
 #include <QtCore/QtMath>
+#include <cmath>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -46,8 +47,8 @@ void LogXYPolarDomain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY)
         m_minX = minX;
         m_maxX = maxX;
         axisXChanged = true;
-        qreal logMinX = log10(m_minX) / log10(m_logBaseX);
-        qreal logMaxX = log10(m_maxX) / log10(m_logBaseX);
+        qreal logMinX = std::log10(m_minX) / std::log10(m_logBaseX);
+        qreal logMaxX = std::log10(m_maxX) / std::log10(m_logBaseX);
         m_logLeftX = logMinX < logMaxX ? logMinX : logMaxX;
         m_logRightX = logMinX > logMaxX ? logMinX : logMaxX;
         if (!m_signalsBlocked)
@@ -136,7 +137,7 @@ qreal LogXYPolarDomain::toAngularCoordinate(qreal value, bool &ok) const
     } else {
         ok =  true;
         const qreal tickSpan = 360.0 / qAbs(m_logRightX - m_logLeftX);
-        const qreal logValue = log10(value) / log10(m_logBaseX);
+        const qreal logValue = std::log10(value) / std::log10(m_logBaseX);
         const qreal valueDelta = logValue - m_logLeftX;
 
         retVal = valueDelta * tickSpan;
@@ -201,8 +202,8 @@ bool LogXYPolarDomain::detachAxis(QAbstractAxis *axis)
 void LogXYPolarDomain::handleHorizontalAxisBaseChanged(qreal baseX)
 {
     m_logBaseX = baseX;
-    qreal logMinX = log10(m_minX) / log10(m_logBaseX);
-    qreal logMaxX = log10(m_maxX) / log10(m_logBaseX);
+    qreal logMinX = std::log10(m_minX) / std::log10(m_logBaseX);
+    qreal logMaxX = std::log10(m_maxX) / std::log10(m_logBaseX);
     m_logLeftX = logMinX < logMaxX ? logMinX : logMaxX;
     m_logRightX = logMinX > logMaxX ? logMinX : logMaxX;
     emit updated();

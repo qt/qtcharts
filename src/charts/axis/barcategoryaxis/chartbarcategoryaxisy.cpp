@@ -48,7 +48,7 @@ QVector<qreal> ChartBarCategoryAxisY::calculateLayout() const
         return points;
 
     qreal adjustedMin = min() + 0.5;
-    qreal offset = (ceil(adjustedMin) - adjustedMin) * delta;
+    qreal offset = (qCeil(adjustedMin) - adjustedMin) * delta;
 
     int count = qFloor(range);
     if (count < 1)

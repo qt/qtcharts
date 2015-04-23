@@ -20,6 +20,7 @@
 #include <private/qabstractaxis_p.h>
 #include <QtCharts/QLogValueAxis>
 #include <QtCore/QtMath>
+#include <cmath>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -54,8 +55,8 @@ void XLogYPolarDomain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY)
         m_minY = minY;
         m_maxY = maxY;
         axisYChanged = true;
-        qreal logMinY = log10(m_minY) / log10(m_logBaseY);
-        qreal logMaxY = log10(m_maxY) / log10(m_logBaseY);
+        qreal logMinY = std::log10(m_minY) / std::log10(m_logBaseY);
+        qreal logMaxY = std::log10(m_maxY) / std::log10(m_logBaseY);
         m_logInnerY = logMinY < logMaxY ? logMinY : logMaxY;
         m_logOuterY = logMinY > logMaxY ? logMinY : logMaxY;
         if (!m_signalsBlocked)
@@ -144,7 +145,7 @@ qreal XLogYPolarDomain::toRadialCoordinate(qreal value, bool &ok) const
     } else {
         ok =  true;
         const qreal tickSpan = m_radius / qAbs(m_logOuterY - m_logInnerY);
-        const qreal logValue = log10(value) / log10(m_logBaseY);
+        const qreal logValue = std::log10(value) / std::log10(m_logBaseY);
         const qreal valueDelta = logValue - m_logInnerY;
 
         retVal = valueDelta * tickSpan;
@@ -196,8 +197,8 @@ bool XLogYPolarDomain::detachAxis(QAbstractAxis *axis)
 void XLogYPolarDomain::handleVerticalAxisBaseChanged(qreal baseY)
 {
     m_logBaseY = baseY;
-    qreal logMinY = log10(m_minY) / log10(m_logBaseY);
-    qreal logMaxY = log10(m_maxY) / log10(m_logBaseY);
+    qreal logMinY = std::log10(m_minY) / std::log10(m_logBaseY);
+    qreal logMaxY = std::log10(m_maxY) / std::log10(m_logBaseY);
     m_logInnerY = logMinY < logMaxY ? logMinY : logMaxY;
     m_logOuterY = logMinY > logMaxY ? logMinY : logMaxY;
     emit updated();

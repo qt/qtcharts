@@ -19,6 +19,7 @@
 #include <private/abstractdomain_p.h>
 #include <private/qabstractaxis_p.h>
 #include <QtCore/QtMath>
+#include <cmath>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -173,7 +174,7 @@ void AbstractDomain::looseNiceNumbers(qreal &min, qreal &max, int &ticksCount)
 
 qreal AbstractDomain::niceNumber(qreal x, bool ceiling)
 {
-    qreal z = qPow(10, qFloor(log10(x))); //find corresponding number of the form of 10^n than is smaller than x
+    qreal z = qPow(10, qFloor(std::log10(x))); //find corresponding number of the form of 10^n than is smaller than x
     qreal q = x / z; //q<10 && q>=1;
 
     if (ceiling) {

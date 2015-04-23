@@ -22,6 +22,7 @@
 #include <QtCharts/QLogValueAxis>
 #include <QtCore/QtMath>
 #include <QtCore/QDebug>
+#include <cmath>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -39,12 +40,12 @@ PolarChartLogValueAxisAngular::~PolarChartLogValueAxisAngular()
 QVector<qreal> PolarChartLogValueAxisAngular::calculateLayout() const
 {
     QLogValueAxis *logValueAxis = static_cast<QLogValueAxis *>(axis());
-    const qreal logMax = log10(logValueAxis->max()) / log10(logValueAxis->base());
-    const qreal logMin = log10(logValueAxis->min()) / log10(logValueAxis->base());
+    const qreal logMax = std::log10(logValueAxis->max()) / std::log10(logValueAxis->base());
+    const qreal logMin = std::log10(logValueAxis->min()) / std::log10(logValueAxis->base());
     const qreal startEdge = logMin < logMax ? logMin : logMax;
     const qreal delta = 360.0 / qAbs(logMax - logMin);
-    const qreal initialSpan = (ceil(startEdge) - startEdge) * delta;
-    int tickCount = qAbs(ceil(logMax) - ceil(logMin));
+    const qreal initialSpan = (qCeil(startEdge) - startEdge) * delta;
+    int tickCount = qAbs(qCeil(logMax) - qCeil(logMin));
 
     QVector<qreal> points;
     points.resize(tickCount);

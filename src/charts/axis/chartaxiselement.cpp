@@ -23,6 +23,7 @@
 #include <QtCore/QtMath>
 #include <QtCore/QDateTime>
 #include <QtGui/QTextDocument>
+#include <cmath>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -271,7 +272,7 @@ QStringList ChartAxisElement::createValueLabels(qreal min, qreal max, int ticks,
         return labels;
 
     if (format.isNull()) {
-        int n = qMax(int(-qFloor(log10((max - min) / (ticks - 1)))), 0) + 1;
+        int n = qMax(int(-qFloor(std::log10((max - min) / (ticks - 1)))), 0) + 1;
         for (int i = 0; i < ticks; i++) {
             qreal value = min + (i * (max - min) / (ticks - 1));
             labels << presenter()->numberToString(value, 'f', n);
@@ -318,14 +319,14 @@ QStringList ChartAxisElement::createLogValueLabels(qreal min, qreal max, qreal b
 
     int firstTick;
     if (base > 1)
-        firstTick = ceil(log10(min) / log10(base));
+        firstTick = qCeil(std::log10(min) / std::log10(base));
     else
-        firstTick = ceil(log10(max) / log10(base));
+        firstTick = qCeil(std::log10(max) / std::log10(base));
 
     if (format.isNull()) {
         int n = 0;
         if (ticks > 1)
-            n = qMax(int(-qFloor(log10((max - min) / (ticks - 1)))), 0);
+            n = qMax(int(-qFloor(std::log10((max - min) / (ticks - 1)))), 0);
         n++;
         for (int i = firstTick; i < ticks + firstTick; i++) {
             qreal value = qPow(base, i);
@@ -371,7 +372,7 @@ QStringList ChartAxisElement::createDateTimeLabels(qreal min, qreal max,int tick
     if (max <= min || ticks < 1)
         return labels;
 
-    int n = qMax(int(-floor(log10((max - min) / (ticks - 1)))), 0);
+    int n = qMax(int(-qFloor(std::log10((max - min) / (ticks - 1)))), 0);
     n++;
     for (int i = 0; i < ticks; i++) {
         qreal value = min + (i * (max - min) / (ticks - 1));
