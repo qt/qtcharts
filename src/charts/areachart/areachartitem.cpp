@@ -201,10 +201,11 @@ void AreaChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
         painter->setPen(QPen(m_pointLabelsColor));
         QFontMetrics fm(painter->font());
 
-        QString pointLabel = m_pointLabelsFormat;
+        QString pointLabel;
 
         if (m_series->upperSeries()) {
             for (int i(0); i < m_series->upperSeries()->count(); i++) {
+                pointLabel = m_pointLabelsFormat;
                 pointLabel.replace(xPointTag,
                                    presenter()->numberToString(m_series->upperSeries()->at(i).x()));
                 pointLabel.replace(yPointTag,
@@ -222,6 +223,7 @@ void AreaChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 
         if (m_series->lowerSeries()) {
             for (int i(0); i < m_series->lowerSeries()->count(); i++) {
+                pointLabel = m_pointLabelsFormat;
                 pointLabel.replace(xPointTag,
                                    presenter()->numberToString(m_series->lowerSeries()->at(i).x()));
                 pointLabel.replace(yPointTag,
@@ -232,7 +234,6 @@ void AreaChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
                 QPointF position(m_lower->geometryPoints().at(i));
                 position.setX(position.x() - pointLabelWidth / 2);
                 position.setY(position.y() - m_series->lowerSeries()->pen().width() / 2 - labelOffset);
-
                 painter->drawText(position, pointLabel);
             }
         }
