@@ -93,6 +93,20 @@ void DeclarativeCategoryAxis::appendAxisChildren(QQmlListProperty<QObject> *list
     Q_UNUSED(element)
 }
 
+DeclarativeCategoryAxis::AxisLabelsPosition DeclarativeCategoryAxis::labelsPosition() const
+{
+    return (DeclarativeCategoryAxis::AxisLabelsPosition) QCategoryAxis::labelsPosition();
+}
+
+void DeclarativeCategoryAxis::setLabelsPosition(AxisLabelsPosition position)
+{
+    QCategoryAxis::AxisLabelsPosition labelsPosition = (QCategoryAxis::AxisLabelsPosition) position;
+    if (labelsPosition != m_labelsPosition) {
+        QCategoryAxis::setLabelsPosition(labelsPosition);
+        emit labelsPositionChanged(position);
+    }
+}
+
 #include "moc_declarativecategoryaxis.cpp"
 
 QT_CHARTS_END_NAMESPACE

@@ -19,6 +19,7 @@
 #include <private/verticalaxis_p.h>
 #include <QtCharts/QAbstractAxis>
 #include <private/chartpresenter_p.h>
+#include <QtCharts/QCategoryAxis>
 #include <QtCore/QDebug>
 
 QT_CHARTS_BEGIN_NAMESPACE
@@ -140,23 +141,43 @@ void VerticalAxis::updateGeometry()
 
         //label in between
         bool forceHide = false;
+        bool labelOnValue = false;
         if (intervalAxis() && (i + 1) != layout.size()) {
             qreal lowerBound = qMin(layout[i], gridRect.bottom());
             qreal upperBound = qMax(layout[i + 1], gridRect.top());
             const qreal delta = lowerBound - upperBound;
-            // Hide label in case visible part of the category at the grid edge is too narrow
-            if (delta < boundingRect.height()
-                && (lowerBound == gridRect.bottom() || upperBound == gridRect.top())) {
-                forceHide = true;
+            if (axis()->type() != QAbstractAxis::AxisTypeCategory) {
+                // Hide label in case visible part of the category at the grid edge is too narrow
+                if (delta < boundingRect.height()
+                    && (lowerBound == gridRect.bottom() || upperBound == gridRect.top())) {
+                    forceHide = true;
+                } else {
+                    labelItem->setPos(labelItem->pos().x(),
+                                      lowerBound - (delta / 2.0) - center.y());
+                }
             } else {
-                labelItem->setPos(labelItem->pos().x() , lowerBound - (delta / 2.0) - center.y());
+                QCategoryAxis *categoryAxis = static_cast<QCategoryAxis *>(axis());
+                if (categoryAxis->labelsPosition() == QCategoryAxis::AxisLabelsPositionCenter) {
+                    if (delta < boundingRect.height()
+                        && (lowerBound == gridRect.bottom() || upperBound == gridRect.top())) {
+                        forceHide = true;
+                    } else {
+                        labelItem->setPos(labelItem->pos().x(),
+                                          lowerBound - (delta / 2.0) - center.y());
+                    }
+                } else if (categoryAxis->labelsPosition()
+                           == QCategoryAxis::AxisLabelsPositionOnValue) {
+                    labelOnValue = true;
+                    labelItem->setPos(labelItem->pos().x(), upperBound - center.y());
+                }
             }
         }
 
         //label overlap detection - compensate one pixel for rounding errors
         if (labelItem->pos().y() + boundingRect.height() > height || forceHide ||
-            (labelItem->pos().y() + (heightDiff / 2.0) - 1.0) > axisRect.bottom() ||
-            labelItem->pos().y() + (heightDiff / 2.0) < (axisRect.top() - 1.0)) {
+            ((labelItem->pos().y() + (heightDiff / 2.0) - 1.0) > axisRect.bottom()
+             && !labelOnValue) ||
+            (labelItem->pos().y() + (heightDiff / 2.0) < (axisRect.top() - 1.0) && !labelOnValue)) {
             labelItem->setVisible(false);
         }
         else {

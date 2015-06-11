@@ -50,14 +50,30 @@ class DeclarativeCategoryAxis : public QCategoryAxis, public QQmlParserStatus
     Q_INTERFACES(QQmlParserStatus)
     Q_PROPERTY(QQmlListProperty<QObject> axisChildren READ axisChildren)
     Q_CLASSINFO("DefaultProperty", "axisChildren")
+    Q_PROPERTY(AxisLabelsPosition labelsPosition READ labelsPosition WRITE setLabelsPosition NOTIFY labelsPositionChanged REVISION 1)
+    Q_ENUMS(AxisLabelsPosition)
 
 public:
+    // duplicating enums from QChart to make the QML api namings 1-to-1 with the C++ api
+    enum AxisLabelsPosition {
+        AxisLabelsPositionCenter = 0x0,
+        AxisLabelsPositionOnValue = 0x1
+    };
+
     explicit DeclarativeCategoryAxis(QObject *parent = 0);
     QQmlListProperty<QObject> axisChildren();
+
 
 public: // from QDeclarativeParserStatus
     void classBegin();
     void componentComplete();
+
+public:
+    AxisLabelsPosition labelsPosition() const;
+    void setLabelsPosition(AxisLabelsPosition position);
+
+Q_SIGNALS:
+    Q_REVISION(1) void labelsPositionChanged(AxisLabelsPosition position);
 
 public Q_SLOTS:
     Q_INVOKABLE void append(const QString &label, qreal categoryEndValue);
@@ -67,6 +83,9 @@ public Q_SLOTS:
 
 private:
     static bool endValueLessThan(const QPair<QString, qreal> &value1, const QPair<QString, qreal> &value2);
+
+private:
+    AxisLabelsPosition m_labelsPosition;
 };
 
 QT_CHARTS_END_NAMESPACE

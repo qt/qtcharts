@@ -52,6 +52,7 @@ private slots:
     void range();
     void range_animation_data();
     void range_animation();
+    void labels_position();
 
     void interval_data();
     void interval();
@@ -63,6 +64,7 @@ private:
 
 void tst_QCategoryAxis::initTestCase()
 {
+    qRegisterMetaType<QCategoryAxis::AxisLabelsPosition>("QCategoryAxis::AxisLabelsPosition");
 }
 
 void tst_QCategoryAxis::cleanupTestCase()
@@ -100,6 +102,7 @@ void tst_QCategoryAxis::qcategoryaxis()
     QVERIFY(qFuzzyCompare(m_categoryaxis->max(), 0));
     QVERIFY(qFuzzyCompare(m_categoryaxis->min(), 0));
     QCOMPARE(m_categoryaxis->type(), QAbstractAxis::AxisTypeCategory);
+    QCOMPARE(m_categoryaxis->labelsPosition(), QCategoryAxis::AxisLabelsPositionCenter);
 
     m_chart->setAxisX(m_categoryaxis, m_series);
     m_view->show();
@@ -299,6 +302,15 @@ void tst_QCategoryAxis::interval()
     QCOMPARE(m_categoryaxis->count(), 2);
     QCOMPARE(m_categoryaxis->startValue("replaced"), (qreal)0); // second interval should extend to firstInterval minimum
     QCOMPARE(m_categoryaxis->endValue("replaced"), (qreal)75);
+}
+
+void tst_QCategoryAxis::labels_position()
+{
+    QSignalSpy spy(m_categoryaxis,
+                   SIGNAL(labelsPositionChanged(QCategoryAxis::AxisLabelsPosition)));
+    m_categoryaxis->setLabelsPosition(QCategoryAxis::AxisLabelsPositionOnValue);
+    QCOMPARE(m_categoryaxis->labelsPosition(), QCategoryAxis::AxisLabelsPositionOnValue);
+    QCOMPARE(spy.count(), 1);
 }
 
 QTEST_MAIN(tst_QCategoryAxis)

@@ -38,6 +38,7 @@ private:
     QString imports_1_3();
     QString imports_1_4();
     QString imports_2_0();
+    QString imports_2_1();
 
 };
 
@@ -76,6 +77,12 @@ QString tst_qml::imports_2_0()
 {
     return "import QtQuick 2.0 \n"
            "import QtCharts 2.0 \n";
+}
+
+QString tst_qml::imports_2_1()
+{
+    return "import QtQuick 2.1 \n"
+           "import QtCharts 2.1 \n";
 }
 
 void tst_qml::initTestCase()
@@ -168,6 +175,8 @@ void tst_qml::checkPlugin_data()
     QTest::newRow("LogValueAxis_2_0") <<  imports_2_0() + "LogValueAxis{}";
     QTest::newRow("BoxPlotSeries_2_0") <<  imports_2_0() + "BoxPlotSeries{}";
     QTest::newRow("BoxSet_2_0") <<  imports_2_0() + "BoxSet{}";
+
+    QTest::newRow("CategoryAxis") << imports_2_1() + "CategoryAxis{}";
 }
 
 void tst_qml::checkPlugin()

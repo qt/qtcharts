@@ -50,6 +50,7 @@ private:
     QMap<QString , Range> m_categoriesMap;
     QStringList m_categories;
     qreal m_categoryMinimum;
+    QCategoryAxis::AxisLabelsPosition m_labelsPosition;
 
 private:
     Q_DECLARE_PUBLIC(QCategoryAxis)

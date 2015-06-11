@@ -99,6 +99,25 @@ QT_CHARTS_BEGIN_NAMESPACE
   Axis emits signal when the categories of the axis have changed.
 */
 
+/*!
+ \enum QCategoryAxis::AxisLabelsPosition
+
+ This enum describes the position of the category labels.
+
+ \value AxisLabelsPositionCenter Labels are centered to category.
+ \value AxisLabelsPositionOnValue Labels are positioned to the high end limit of the category.
+ */
+/*!
+  \property QCategoryAxis::labelsPosition
+  Defines the position of the category labels. The labels in the beginning and in the end of the
+  axes may overlap other axes labels when positioned on value.
+*/
+/*!
+  \qmlproperty AxisLabelsPosition CategoryAxis::labelsPosition
+  Defines the position of the category labels. The labels in the beginning and in the end of the
+  axes may overlap other axes labels when positioned on value.
+*/
+
 
 /*!
     Constructs an axis object which is a child of \a parent.
@@ -284,11 +303,27 @@ QAbstractAxis::AxisType QCategoryAxis::type() const
     return QAbstractAxis::AxisTypeCategory;
 }
 
+void QCategoryAxis::setLabelsPosition(QCategoryAxis::AxisLabelsPosition position)
+{
+    Q_D(QCategoryAxis);
+    if (d->m_labelsPosition != position) {
+        d->m_labelsPosition = position;
+        emit labelsPositionChanged(position);
+    }
+}
+
+QCategoryAxis::AxisLabelsPosition QCategoryAxis::labelsPosition() const
+{
+    Q_D(const QCategoryAxis);
+    return d->m_labelsPosition;
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QCategoryAxisPrivate::QCategoryAxisPrivate(QCategoryAxis *q)
     : QValueAxisPrivate(q),
-      m_categoryMinimum(0)
+      m_categoryMinimum(0),
+      m_labelsPosition(QCategoryAxis::AxisLabelsPositionCenter)
 {
 
 }

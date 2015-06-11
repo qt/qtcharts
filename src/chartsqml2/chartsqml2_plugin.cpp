@@ -300,7 +300,11 @@ public:
                                                     QLatin1String("Trying to create uncreatable: DeclarativeAxes."));
         qmlRegisterUncreatableType<DeclarativeMargins>(uri, 2, 0, "Margins",
                                                        QLatin1String("Trying to create uncreatable: Margins."));
+
+        // QtCharts 2.1
+        qmlRegisterType<DeclarativeCategoryAxis, 1>(uri, 2, 1, "CategoryAxis");
     }
+
 };
 
 QT_CHARTS_END_NAMESPACE

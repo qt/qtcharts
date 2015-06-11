@@ -430,9 +430,26 @@ Module {
         name: "QtCharts::DeclarativeCategoryAxis"
         defaultProperty: "axisChildren"
         prototype: "QtCharts::QCategoryAxis"
-        exports: ["QtCharts/CategoryAxis 1.1", "QtCharts/CategoryAxis 2.0"]
-        exportMetaObjectRevisions: [0, 0]
+        exports: [
+            "QtCharts/CategoryAxis 1.1",
+            "QtCharts/CategoryAxis 2.0",
+            "QtCharts/CategoryAxis 2.1"
+        ]
+        exportMetaObjectRevisions: [0, 0, 1]
+        Enum {
+            name: "AxisLabelsPosition"
+            values: {
+                "AxisLabelsPositionCenter": 0,
+                "AxisLabelsPositionOnValue": 1
+            }
+        }
         Property { name: "axisChildren"; type: "QObject"; isList: true; isReadonly: true }
+        Property { name: "labelsPosition"; revision: 1; type: "AxisLabelsPosition" }
+        Signal {
+            name: "labelsPositionChanged"
+            revision: 1
+            Parameter { name: "position"; type: "AxisLabelsPosition" }
+        }
         Method {
             name: "append"
             Parameter { name: "label"; type: "string" }
@@ -1911,10 +1928,22 @@ Module {
     Component {
         name: "QtCharts::QCategoryAxis"
         prototype: "QtCharts::QValueAxis"
+        Enum {
+            name: "AxisLabelsPosition"
+            values: {
+                "AxisLabelsPositionCenter": 0,
+                "AxisLabelsPositionOnValue": 1
+            }
+        }
         Property { name: "startValue"; type: "double" }
         Property { name: "count"; type: "int"; isReadonly: true }
         Property { name: "categoriesLabels"; type: "QStringList"; isReadonly: true }
+        Property { name: "labelsPosition"; type: "AxisLabelsPosition" }
         Signal { name: "categoriesChanged" }
+        Signal {
+            name: "labelsPositionChanged"
+            Parameter { name: "position"; type: "QCategoryAxis::AxisLabelsPosition" }
+        }
     }
     Component {
         name: "QtCharts::QDateTimeAxis"

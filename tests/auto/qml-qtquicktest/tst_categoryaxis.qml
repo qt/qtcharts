@@ -18,7 +18,7 @@
 
 import QtQuick 2.0
 import QtTest 1.0
-import QtCharts 2.0
+import QtCharts 2.1
 
 Rectangle {
     width: 400
@@ -42,6 +42,16 @@ Rectangle {
             compare(lineSeries1.axisY.categoriesLabels[0], "label0", "AxisY categories labels");
             compare(lineSeries1.axisY.categoriesLabels[1], "label1", "AxisY categories labels");
             compare(lineSeries1.axisY.categoriesLabels[2], "label2", "AxisY categories labels");
+        }
+
+        function test_properties() {
+            compare(lineSeries1.axisY.labelsPosition, CategoryAxis.AxisLabelsPositionCenter);
+        }
+
+        function test_signals() {
+            axisLabelsPositionSpy.clear();
+            lineSeries1.axisY.labelsPosition = CategoryAxis.AxisLabelsPositionOnValue;
+            compare(axisLabelsPositionSpy.count, 1, "onLabelsPositionChanged")
         }
     }
 
@@ -72,6 +82,11 @@ Rectangle {
                 CategoryRange {
                     label: "label2"
                     endValue: 10
+                }
+                SignalSpy {
+                    id: axisLabelsPositionSpy
+                    target: axisY
+                    signalName: "labelsPositionChanged"
                 }
             }
             XYPoint { x: -1; y: -1 }

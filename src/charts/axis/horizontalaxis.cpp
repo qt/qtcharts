@@ -19,6 +19,7 @@
 #include <private/horizontalaxis_p.h>
 #include <private/qabstractaxis_p.h>
 #include <private/chartpresenter_p.h>
+#include <QtCharts/QCategoryAxis>
 #include <QtCore/QtMath>
 #include <QtCore/QDebug>
 
@@ -142,12 +143,28 @@ void HorizontalAxis::updateGeometry()
             qreal leftBound = qMax(layout[i], gridRect.left());
             qreal rightBound = qMin(layout[i + 1], gridRect.right());
             const qreal delta = rightBound - leftBound;
-            // Hide label in case visible part of the category at the grid edge is too narrow
-            if (delta < boundingRect.width()
-                && (leftBound == gridRect.left() || rightBound == gridRect.right())) {
-                forceHide = true;
+            if (axis()->type() != QAbstractAxis::AxisTypeCategory) {
+                // Hide label in case visible part of the category at the grid edge is too narrow
+                if (delta < boundingRect.width()
+                    && (leftBound == gridRect.left() || rightBound == gridRect.right())) {
+                    forceHide = true;
+                } else {
+                    labelItem->setPos(leftBound + (delta / 2.0) - center.x(), labelItem->pos().y());
+                }
             } else {
-                labelItem->setPos(leftBound + (delta / 2.0) - center.x(), labelItem->pos().y());
+                QCategoryAxis *categoryAxis = static_cast<QCategoryAxis *>(axis());
+                if (categoryAxis->labelsPosition() == QCategoryAxis::AxisLabelsPositionCenter) {
+                    if (delta < boundingRect.width()
+                        && (leftBound == gridRect.left() || rightBound == gridRect.right())) {
+                        forceHide = true;
+                    } else {
+                        labelItem->setPos(leftBound + (delta / 2.0) - center.x(),
+                                          labelItem->pos().y());
+                    }
+                } else if (categoryAxis->labelsPosition()
+                           == QCategoryAxis::AxisLabelsPositionOnValue) {
+                    labelItem->setPos(rightBound - center.x(), labelItem->pos().y());
+                }
             }
         }
 
