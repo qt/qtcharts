@@ -61,6 +61,7 @@ class QT_CHARTS_EXPORT QAbstractAxis : public QObject
     Q_PROPERTY(Qt::Orientation orientation READ orientation)
     //aligment
     Q_PROPERTY(Qt::Alignment alignment READ alignment)
+    Q_PROPERTY(bool reverse READ isReverse WRITE setReverse NOTIFY reverseChanged)
 
 public:
 
@@ -145,6 +146,10 @@ public:
     void setMax(const QVariant &max);
     void setRange(const QVariant &min, const QVariant &max);
 
+    //reverse handling
+    void setReverse(bool reverse = true);
+    bool isReverse() const;
+
 Q_SIGNALS:
     void visibleChanged(bool visible);
     void linePenChanged(const QPen &pen);
@@ -166,6 +171,7 @@ Q_SIGNALS:
     void shadesBorderColorChanged(QColor color);
     void shadesPenChanged(const QPen &pen);
     void shadesBrushChanged(const QBrush &brush);
+    void reverseChanged(bool reverse);
 
 protected:
     QScopedPointer<QAbstractAxisPrivate> d_ptr;

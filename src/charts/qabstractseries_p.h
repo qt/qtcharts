@@ -77,6 +77,8 @@ public:
     ChartPresenter *presenter() const;
 
     QChart* chart() { return m_chart; }
+    bool reverseXAxis();
+    bool reverseYAxis();
 
 Q_SIGNALS:
     void countChanged();
@@ -86,6 +88,7 @@ protected:
     QChart *m_chart;
     QScopedPointer<ChartItem> m_item;
     QList<QAbstractAxis*> m_axes;
+
 private:
     QScopedPointer<AbstractDomain> m_domain;
     QString m_name;

@@ -1497,9 +1497,13 @@ Module {
     Component {
         name: "QtCharts::QAbstractAxis"
         prototype: "QObject"
-        exports: ["QtCharts/AbstractAxis 1.0", "QtCharts/AbstractAxis 2.0"]
+        exports: [
+            "QtCharts/AbstractAxis 1.0",
+            "QtCharts/AbstractAxis 2.0",
+            "QtCharts/AbstractAxis 2.1"
+        ]
         isCreatable: false
-        exportMetaObjectRevisions: [0, 0]
+        exportMetaObjectRevisions: [0, 0, 0]
         Property { name: "visible"; type: "bool" }
         Property { name: "lineVisible"; type: "bool" }
         Property { name: "linePen"; type: "QPen" }
@@ -1522,6 +1526,7 @@ Module {
         Property { name: "titleFont"; type: "QFont" }
         Property { name: "orientation"; type: "Qt::Orientation"; isReadonly: true }
         Property { name: "alignment"; type: "Qt::Alignment"; isReadonly: true }
+        Property { name: "reverse"; type: "bool" }
         Signal {
             name: "visibleChanged"
             Parameter { name: "visible"; type: "bool" }
@@ -1601,6 +1606,10 @@ Module {
         Signal {
             name: "shadesBrushChanged"
             Parameter { name: "brush"; type: "QBrush" }
+        }
+        Signal {
+            name: "reverseChanged"
+            Parameter { name: "reverse"; type: "bool" }
         }
     }
     Component {

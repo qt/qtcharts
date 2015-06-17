@@ -24,10 +24,12 @@ ChartView {
     title: "chart axes reverted"
 
     ValueAxis {
+        id: valueAxisX
         min: 0
         max: 10
     }
     ValueAxis {
+        id: valueAxisY
         min: 0
         max: 5
     }
@@ -43,6 +45,8 @@ ChartView {
         XYPoint { x: 2; y: 2 }
         XYPoint { x: 3; y: 3 }
         XYPoint { x: 4; y: 4 }
+        axisX: valueAxisX
+        axisY: valueAxisY
     }
 
     LineSeries {
@@ -52,5 +56,7 @@ ChartView {
         XYPoint { x: 2; y: 2 }
         XYPoint { x: 3; y: 3 }
         XYPoint { x: 4; y: 4 }
+        axisX: valueAxisX
+        axisY: valueAxisY
     }
 }

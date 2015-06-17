@@ -59,6 +59,7 @@ private slots:
     void noautoscale();
     void autoscale_data();
     void autoscale();
+    void reverse();
 
 private:
     QValueAxis* m_valuesaxis;
@@ -113,6 +114,8 @@ void tst_QValueAxis::qvalueaxis()
     QVERIFY(!qFuzzyCompare(m_valuesaxis->max(), 0));
     QVERIFY(!qFuzzyCompare(m_valuesaxis->min(), 0));
     QCOMPARE(m_valuesaxis->tickCount(), 5);
+
+    QCOMPARE(m_valuesaxis->isReverse(), false);
 }
 
 void tst_QValueAxis::max_raw_data()
@@ -404,6 +407,22 @@ void tst_QValueAxis::autoscale()
     QTest::qWaitForWindowShown(m_view);
     QVERIFY2(qFuzzyCompare(m_valuesaxis->min(), -100), "Min not equal");
     QVERIFY2(qFuzzyCompare(m_valuesaxis->max(), 100), "Max not equal");
+}
+
+void tst_QValueAxis::reverse()
+{
+    QSignalSpy spy(m_valuesaxis, SIGNAL(reverseChanged(bool)));
+    QCOMPARE(m_valuesaxis->isReverse(), false);
+
+    m_valuesaxis->setReverse();
+    QCOMPARE(m_valuesaxis->isReverse(), true);
+
+    m_chart->setAxisX(m_valuesaxis, m_series);
+    QCOMPARE(spy.count(), 1);
+
+    m_view->show();
+    QTest::qWaitForWindowShown(m_view);
+    QCOMPARE(m_valuesaxis->isReverse(), true);
 }
 
 QTEST_MAIN(tst_QValueAxis)

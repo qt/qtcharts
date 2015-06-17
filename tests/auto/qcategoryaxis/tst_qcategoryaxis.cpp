@@ -56,6 +56,7 @@ private slots:
 
     void interval_data();
     void interval();
+    void reverse();
 
 private:
     QCategoryAxis* m_categoryaxis;
@@ -110,6 +111,8 @@ void tst_QCategoryAxis::qcategoryaxis()
 
     QVERIFY(!qFuzzyCompare(m_categoryaxis->max(), 0));
     QVERIFY(!qFuzzyCompare(m_categoryaxis->min(), 0));
+
+    QCOMPARE(m_categoryaxis->isReverse(), false);
 }
 
 void tst_QCategoryAxis::max_raw_data()
@@ -311,6 +314,22 @@ void tst_QCategoryAxis::labels_position()
     m_categoryaxis->setLabelsPosition(QCategoryAxis::AxisLabelsPositionOnValue);
     QCOMPARE(m_categoryaxis->labelsPosition(), QCategoryAxis::AxisLabelsPositionOnValue);
     QCOMPARE(spy.count(), 1);
+}
+
+void tst_QCategoryAxis::reverse()
+{
+    QSignalSpy spy(m_categoryaxis, SIGNAL(reverseChanged(bool)));
+    QCOMPARE(m_categoryaxis->isReverse(), false);
+
+    m_categoryaxis->setReverse();
+    QCOMPARE(m_categoryaxis->isReverse(), true);
+
+    m_chart->setAxisX(m_categoryaxis, m_series);
+    QCOMPARE(spy.count(), 1);
+
+    m_view->show();
+    QTest::qWaitForWindowShown(m_view);
+    QCOMPARE(m_categoryaxis->isReverse(), true);
 }
 
 QTEST_MAIN(tst_QCategoryAxis)

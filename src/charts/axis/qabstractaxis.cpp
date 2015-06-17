@@ -246,6 +246,23 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
+  \property QAbstractAxis::reverse
+  The reverse property defines if reverse axis is used. By default the value is false.
+
+  Reverse axis is supported with line, spline, scatter and area series with cartesian chart.
+  All axes of the same orientation attached to same series must be reversed if one is reversed or
+  the behavior is undefined.
+*/
+/*!
+  \qmlproperty alignment AbstractAxis::reverse
+  The reverse property defines if reverse axis is used. By default the value is false.
+
+  Reverse axis is supported with line, spline, scatter and area series with cartesian chart.
+  All axes of the same orientation attached to same series must be reversed if one is reversed or
+  the behavior is undefined.
+*/
+
+/*!
   \fn void QAbstractAxis::visibleChanged(bool visible)
   Visibility of the axis has changed to \a visible.
 */
@@ -831,6 +848,19 @@ Qt::Alignment QAbstractAxis::alignment() const
     return d_ptr->alignment();
 }
 
+bool QAbstractAxis::isReverse() const
+{
+    return d_ptr->m_reverse;
+}
+
+void QAbstractAxis::setReverse(bool reverse)
+{
+    if (d_ptr->m_reverse != reverse && type() != QAbstractAxis::AxisTypeBarCategory) {
+        d_ptr->m_reverse = reverse;
+        emit reverseChanged(reverse);
+    }
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QAbstractAxisPrivate::QAbstractAxisPrivate(QAbstractAxis *q)
@@ -855,7 +885,8 @@ QAbstractAxisPrivate::QAbstractAxisPrivate(QAbstractAxis *q)
       m_shadesPen(QChartPrivate::defaultPen()),
       m_shadesBrush(QChartPrivate::defaultBrush()),
       m_shadesOpacity(1.0),
-      m_dirty(false)
+      m_dirty(false),
+      m_reverse(false)
 {
 }
 

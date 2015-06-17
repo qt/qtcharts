@@ -34,6 +34,8 @@ ChartView {
         XYPoint { x: 2.9; y: 4.9 }
         XYPoint { x: 3.4; y: 3.0 }
         XYPoint { x: 4.1; y: 3.3 }
+        axisX: axisX
+        axisY: axisY
     }
 
     onVisibleChanged:                  console.log("chart.onVisibleChanged: " + visible);
@@ -65,6 +67,7 @@ ChartView {
     }
 
     ValueAxis{
+        id: axisX
         onColorChanged:               console.log("axisX.onColorChanged: " + color);
         onLabelsVisibleChanged:       console.log("axisX.onLabelsVisibleChanged: " + visible);
         onLabelsColorChanged:         console.log("axisX.onLabelsColorChanged: " + color);
@@ -75,9 +78,11 @@ ChartView {
         onShadesBorderColorChanged:   console.log("axisX.onShadesBorderColorChanged: " + color);
         onMinChanged:                 console.log("axisX.onMinChanged: " + min);
         onMaxChanged:                 console.log("axisX.onMaxChanged: " + max);
+        onReverseChanged:             console.log("axisX.onReverseChanged: " + reverse);
     }
 
     ValueAxis{
+        id: axisY
         onColorChanged:               console.log("axisY.onColorChanged: " + color);
         onLabelsVisibleChanged:       console.log("axisY.onLabelsVisibleChanged: " + visible);
         onLabelsColorChanged:         console.log("axisY.onLabelsColorChanged: " + color);
@@ -88,6 +93,7 @@ ChartView {
         onShadesBorderColorChanged:   console.log("axisY.onShadesBorderColorChanged: " + color);
         onMinChanged:                 console.log("axisY.onMinChanged: " + min);
         onMaxChanged:                 console.log("axisY.onMaxChanged: " + max);
+        onReverseChanged:             console.log("axisY.onReverseChanged: " + reverse);
     }
 
     Rectangle {

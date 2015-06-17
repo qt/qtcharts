@@ -104,10 +104,20 @@ void VerticalAxis::updateGeometry()
         QGraphicsTextItem *labelItem = static_cast<QGraphicsTextItem *>(labels.at(i));
 
         //grid line
-        gridItem->setLine(gridRect.left(), layout[i], gridRect.right(), layout[i]);
+        if (axis()->isReverse()) {
+            gridItem->setLine(gridRect.left(), gridRect.top() + gridRect.bottom() - layout[i],
+                              gridRect.right(), gridRect.top() + gridRect.bottom() - layout[i]);
+        } else {
+            gridItem->setLine(gridRect.left(), layout[i], gridRect.right(), layout[i]);
+        }
 
         //label text wrapping
-        QString text = labelList.at(i);
+        QString text;
+        if (axis()->isReverse() && axis()->type() != QAbstractAxis::AxisTypeCategory)
+            text = labelList.at(labelList.count() - i - 1);
+        else
+            text = labelList.at(i);
+
         QRectF boundingRect;
         // don't truncate empty labels
         if (text.isEmpty()) {
@@ -132,19 +142,54 @@ void VerticalAxis::updateGeometry()
 
         //ticks and label position
         if (axis()->alignment() == Qt::AlignLeft) {
-            labelItem->setPos(axisRect.right() - rect.width() + (widthDiff / 2.0) - labelPadding(), layout[i] - center.y());
-            tickItem->setLine(axisRect.right() - labelPadding(), layout[i], axisRect.right(), layout[i]);
+            if (axis()->isReverse()) {
+                labelItem->setPos(axisRect.right() - rect.width() + (widthDiff / 2.0)
+                                  - labelPadding(),
+                                  gridRect.top() + gridRect.bottom()
+                                  - layout[layout.size() - i - 1] - center.y());
+                tickItem->setLine(axisRect.right() - labelPadding(),
+                                  gridRect.top() + gridRect.bottom() - layout[i],
+                                  axisRect.right(),
+                                  gridRect.top() + gridRect.bottom() - layout[i]);
+            } else {
+                labelItem->setPos(axisRect.right() - rect.width() + (widthDiff / 2.0)
+                                  - labelPadding(),
+                                  layout[i] - center.y());
+                tickItem->setLine(axisRect.right() - labelPadding(), layout[i],
+                                  axisRect.right(), layout[i]);
+            }
         } else if (axis()->alignment() == Qt::AlignRight) {
-            labelItem->setPos(axisRect.left() + labelPadding() - (widthDiff / 2.0), layout[i] - center.y());
-            tickItem->setLine(axisRect.left(), layout[i], axisRect.left() + labelPadding(), layout[i]);
+            if (axis()->isReverse()) {
+                tickItem->setLine(axisRect.left(),
+                                  gridRect.top() + gridRect.bottom() - layout[i],
+                                  axisRect.left() + labelPadding(),
+                                  gridRect.top() + gridRect.bottom() - layout[i]);
+                labelItem->setPos(axisRect.left() + labelPadding() - (widthDiff / 2.0),
+                                  gridRect.top() + gridRect.bottom()
+                                  - layout[layout.size() - i - 1] - center.y());
+            } else {
+                labelItem->setPos(axisRect.left() + labelPadding() - (widthDiff / 2.0),
+                                  layout[i] - center.y());
+                tickItem->setLine(axisRect.left(), layout[i],
+                                  axisRect.left() + labelPadding(), layout[i]);
+            }
         }
 
         //label in between
         bool forceHide = false;
         bool labelOnValue = false;
         if (intervalAxis() && (i + 1) != layout.size()) {
-            qreal lowerBound = qMin(layout[i], gridRect.bottom());
-            qreal upperBound = qMax(layout[i + 1], gridRect.top());
+            qreal lowerBound;
+            qreal upperBound;
+            if (axis()->isReverse()) {
+                lowerBound = qMax(gridRect.top() + gridRect.bottom() - layout[i + 1],
+                        gridRect.top());
+                upperBound = qMin(gridRect.top() + gridRect.bottom() - layout[i],
+                                  gridRect.bottom());
+            } else {
+                lowerBound = qMin(layout[i], gridRect.bottom());
+                upperBound = qMax(layout[i + 1], gridRect.top());
+            }
             const qreal delta = lowerBound - upperBound;
             if (axis()->type() != QAbstractAxis::AxisTypeCategory) {
                 // Hide label in case visible part of the category at the grid edge is too narrow
@@ -168,13 +213,21 @@ void VerticalAxis::updateGeometry()
                 } else if (categoryAxis->labelsPosition()
                            == QCategoryAxis::AxisLabelsPositionOnValue) {
                     labelOnValue = true;
-                    labelItem->setPos(labelItem->pos().x(), upperBound - center.y());
+                    if (axis()->isReverse()) {
+                        labelItem->setPos(labelItem->pos().x(), gridRect.top() + gridRect.bottom()
+                                          - layout[i + 1] - center.y());
+                    } else {
+                        labelItem->setPos(labelItem->pos().x(), upperBound - center.y());
+                    }
                 }
             }
         }
 
         //label overlap detection - compensate one pixel for rounding errors
-        if (labelItem->pos().y() + boundingRect.height() > height || forceHide ||
+        if (axis()->isReverse()) {
+            if (forceHide)
+                labelItem->setVisible(false);
+        } else if (labelItem->pos().y() + boundingRect.height() > height || forceHide ||
             ((labelItem->pos().y() + (heightDiff / 2.0) - 1.0) > axisRect.bottom()
              && !labelOnValue) ||
             (labelItem->pos().y() + (heightDiff / 2.0) < (axisRect.top() - 1.0) && !labelOnValue)) {
@@ -195,14 +248,29 @@ void VerticalAxis::updateGeometry()
             qreal lowerBound;
             qreal upperBound;
             if (i == 0) {
-                lowerBound = gridRect.bottom();
-                upperBound = layout[0];
-            } else {
-                lowerBound = layout[i];
-                if (i == layout.size() - 1)
+                if (axis()->isReverse()) {
                     upperBound = gridRect.top();
-                else
-                    upperBound = qMax(layout[i + 1], gridRect.top());
+                    lowerBound = gridRect.top() + gridRect.bottom() - layout[i];
+                } else {
+                    lowerBound = gridRect.bottom();
+                    upperBound = layout[0];
+                }
+            } else {
+                if (axis()->isReverse()) {
+                        upperBound = gridRect.top() + gridRect.bottom() - layout[i];
+                    if (i == layout.size() - 1) {
+                        lowerBound = gridRect.bottom();
+                    } else {
+                        lowerBound = qMax(gridRect.top() + gridRect.bottom() - layout[i + 1],
+                                gridRect.top());
+                    }
+                } else {
+                    lowerBound = layout[i];
+                    if (i == layout.size() - 1)
+                        upperBound = gridRect.top();
+                    else
+                        upperBound = qMax(layout[i + 1], gridRect.top());
+                }
 
             }
             if (lowerBound > gridRect.bottom())

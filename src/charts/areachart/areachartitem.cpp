@@ -183,6 +183,9 @@ void AreaChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
         painter->setClipRegion(QRegion(clipRect.toRect(), QRegion::Ellipse));
     else
         painter->setClipRect(clipRect);
+
+    reversePainter(painter, clipRect);
+
     painter->drawPath(m_path);
     if (m_pointsVisible) {
         painter->setPen(m_pointPen);
@@ -190,6 +193,8 @@ void AreaChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
         if (m_lower)
             painter->drawPoints(m_lower->geometryPoints());
     }
+
+    reversePainter(painter, clipRect);
 
     // Draw series point label
     if (m_pointLabelsVisible) {
@@ -214,9 +219,17 @@ void AreaChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
                 // Position text in relation to the point
                 int pointLabelWidth = fm.width(pointLabel);
                 QPointF position(m_upper->geometryPoints().at(i));
-                position.setX(position.x() - pointLabelWidth / 2);
-                position.setY(position.y() - m_series->upperSeries()->pen().width() / 2 - labelOffset);
-
+                if (!seriesPrivate()->reverseXAxis())
+                    position.setX(position.x() - pointLabelWidth / 2);
+                else
+                    position.setX(domain()->size().width() - position.x() - pointLabelWidth / 2);
+                if (!seriesPrivate()->reverseYAxis()) {
+                    position.setY(position.y() - m_series->upperSeries()->pen().width() / 2
+                                  - labelOffset);
+                } else {
+                    position.setY(domain()->size().height() - position.y()
+                                  - m_series->upperSeries()->pen().width() / 2 - labelOffset);
+                }
                 painter->drawText(position, pointLabel);
             }
         }
@@ -232,8 +245,17 @@ void AreaChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
                 // Position text in relation to the point
                 int pointLabelWidth = fm.width(pointLabel);
                 QPointF position(m_lower->geometryPoints().at(i));
-                position.setX(position.x() - pointLabelWidth / 2);
-                position.setY(position.y() - m_series->lowerSeries()->pen().width() / 2 - labelOffset);
+                if (!seriesPrivate()->reverseXAxis())
+                    position.setX(position.x() - pointLabelWidth / 2);
+                else
+                    position.setX(domain()->size().width() - position.x() - pointLabelWidth / 2);
+                if (!seriesPrivate()->reverseYAxis()) {
+                    position.setY(position.y() - m_series->lowerSeries()->pen().width() / 2
+                                  - labelOffset);
+                } else {
+                    position.setY(domain()->size().height() - position.y()
+                                  - m_series->lowerSeries()->pen().width() / 2 - labelOffset);
+                }
                 painter->drawText(position, pointLabel);
             }
         }

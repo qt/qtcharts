@@ -123,6 +123,7 @@ public Q_SLOTS:
     void handleTitleTextChanged(const QString &title);
     void handleTitleVisibleChanged(bool visible);
     void handleRangeChanged(qreal min, qreal max);
+    void handleReverseChanged(bool reverse);
 
 Q_SIGNALS:
     void clicked();

@@ -23,23 +23,13 @@ ChartView {
     id: chartView
     title: "chart axes"
 
-    // TODO: Do we need a property for orientation or properties "axisX" and "axisY" on ChartView
-    // to make an axis the default axis for all series with no other axes defined...?
-//    ValueAxis {
-//        orientation: ValueAxis.AxisX
-//        min: 0
-//        max: 10
-//    }
-//    axisX: ValueAxis {
-//        min: 0
-//        max: 10
-//    }
-    // ...Now that we don't have this implementation, the following axes won't have any affect:
     ValueAxis {
+        id: valueAxisX
         min: 0
         max: 10
     }
     ValueAxis {
+        id: valueAxisY
         min: 0
         max: 5
     }
@@ -51,6 +41,8 @@ ChartView {
         XYPoint { x: 2; y: 2 }
         XYPoint { x: 3; y: 3 }
         XYPoint { x: 4; y: 4 }
+        axisX: valueAxisX
+        axisY: valueAxisY
     }
 
     ScatterSeries {
@@ -64,6 +56,8 @@ ChartView {
         XYPoint { x: 2; y: 2 }
         XYPoint { x: 3; y: 3 }
         XYPoint { x: 4; y: 4 }
+        axisX: valueAxisX
+        axisY: valueAxisY
     }
 
 //    Component.onCompleted: {

@@ -105,6 +105,10 @@ Row {
 
             onClicked: axis.tickCount--;
         }
+        Button {
+            text: "axis reverse"
+            onClicked: axis.reverse = !axis.reverse;
+        }
 
         FontEditor {
             id: fontEditor

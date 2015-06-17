@@ -40,10 +40,16 @@ Rectangle {
             verify(axisX.tickCount == 5, "AxisX tick count");
             verify(axisY.tickCount == 5, "AxisY tick count");
             verify(axisX.labelFormat == "", "label format");
+            verify(axisX.reverse == false, "AxisX reverse");
+            verify(axisY.reverse == false, "AxisY reverse");
 
             // Modify properties
             axisX.tickCount = 3;
             verify(axisX.tickCount == 3, "set tick count");
+            axisX.reverse = true;
+            verify(axisX.reverse == true, "AxisX reverse");
+            axisX.reverse = false;
+            verify(axisX.reverse == false, "AxisX reverse");
         }
 
         function test_functions() {
@@ -67,6 +73,8 @@ Rectangle {
         function test_signals() {
             minChangedSpy.clear();
             maxChangedSpy.clear();
+            reverseChangedSpy.clear();
+
             axisX.min = 2;
             compare(minChangedSpy.count, 1, "onMinChanged");
             compare(maxChangedSpy.count, 0, "onMaxChanged");
@@ -75,11 +83,16 @@ Rectangle {
             compare(minChangedSpy.count, 1, "onMinChanged");
             compare(maxChangedSpy.count, 1, "onMaxChanged");
 
+            axisX.reverse = true;
+            compare(reverseChangedSpy.count, 1, "onReverseChanged");
+
             // restore original values
             axisX.min = 0;
             axisX.max = 10;
+            axisX.reverse = false;
             compare(minChangedSpy.count, 2, "onMinChanged");
             compare(maxChangedSpy.count, 2, "onMaxChanged");
+            compare(reverseChangedSpy.count, 2, "onReverseChanged");
         }
     }
 
@@ -109,6 +122,11 @@ Rectangle {
             id: maxChangedSpy
             target: axisX
             signalName: "maxChanged"
+        }
+        SignalSpy {
+            id: reverseChangedSpy
+            target: axisX
+            signalName: "reverseChanged"
         }
     }
 }

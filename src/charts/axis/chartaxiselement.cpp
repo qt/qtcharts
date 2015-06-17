@@ -91,6 +91,7 @@ void ChartAxisElement::connectSlots()
     QObject::connect(axis(), SIGNAL(titleBrushChanged(const QBrush&)), this, SLOT(handleTitleBrushChanged(const QBrush&)));
     QObject::connect(axis(), SIGNAL(titleVisibleChanged(bool)), this, SLOT(handleTitleVisibleChanged(bool)));
     QObject::connect(axis()->d_ptr.data(), SIGNAL(rangeChanged(qreal, qreal)), this, SLOT(handleRangeChanged(qreal, qreal)));
+    QObject::connect(axis(), SIGNAL(reverseChanged(bool)), this, SLOT(handleReverseChanged(bool)));
 }
 
 void ChartAxisElement::handleArrowVisibleChanged(bool visible)
@@ -206,6 +207,14 @@ void ChartAxisElement::handleRangeChanged(qreal min, qreal max)
             presenter()->layout()->setGeometry(presenter()->layout()->geometry());
         }
     }
+}
+
+void ChartAxisElement::handleReverseChanged(bool reverse)
+{
+    Q_UNUSED(reverse);
+
+    QGraphicsLayoutItem::updateGeometry();
+    presenter()->layout()->invalidate();
 }
 
 bool ChartAxisElement::isEmpty()

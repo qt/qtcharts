@@ -46,12 +46,28 @@ Rectangle {
 
         function test_properties() {
             compare(lineSeries1.axisY.labelsPosition, CategoryAxis.AxisLabelsPositionCenter);
+            verify(lineSeries1.axisX.reverse == false, "AxisX reverse");
+            verify(lineSeries1.axisY.reverse == false, "AxisY reverse");
+
+            // Modify properties
+            lineSeries1.axisX.reverse = true;
+            verify(lineSeries1.axisX.reverse == true, "AxisX reverse");
+            lineSeries1.axisX.reverse = false;
+            verify(lineSeries1.axisX.reverse == false, "AxisX reverse");
         }
 
         function test_signals() {
             axisLabelsPositionSpy.clear();
+            reverseChangedSpy.clear();
             lineSeries1.axisY.labelsPosition = CategoryAxis.AxisLabelsPositionOnValue;
-            compare(axisLabelsPositionSpy.count, 1, "onLabelsPositionChanged")
+            compare(axisLabelsPositionSpy.count, 1, "onLabelsPositionChanged");
+
+            lineSeries1.axisX.reverse = true;
+            compare(reverseChangedSpy.count, 1, "onReverseChanged");
+
+            // restore original values
+            lineSeries1.axisX.reverse = false;
+            compare(reverseChangedSpy.count, 2, "onReverseChanged");
         }
     }
 
@@ -92,6 +108,11 @@ Rectangle {
             XYPoint { x: -1; y: -1 }
             XYPoint { x: 0; y: 0 }
             XYPoint { x: 5; y: 5 }
+        }
+        SignalSpy {
+            id: reverseChangedSpy
+            target: axisX
+            signalName: "reverseChanged"
         }
     }
 }

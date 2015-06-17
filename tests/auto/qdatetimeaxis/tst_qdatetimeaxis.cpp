@@ -52,6 +52,7 @@ private slots:
     void range();
     void range_animation_data();
     void range_animation();
+    void reverse();
 
 private:
     QDateTimeAxis *m_dateTimeAxisX;
@@ -113,6 +114,9 @@ void tst_QDateTimeAxis::qdatetimeaxis()
 
     QVERIFY(m_dateTimeAxisX->max().toMSecsSinceEpoch() != 0);
     QVERIFY(m_dateTimeAxisX->min().toMSecsSinceEpoch() != 0);
+
+    QCOMPARE(m_dateTimeAxisX->isReverse(), false);
+    QCOMPARE(m_dateTimeAxisY->isReverse(), false);
 }
 
 void tst_QDateTimeAxis::max_raw_data()
@@ -305,6 +309,20 @@ void tst_QDateTimeAxis::range_animation()
 {
     m_chart->setAnimationOptions(QChart::GridAxisAnimations);
     range();
+}
+
+void tst_QDateTimeAxis::reverse()
+{
+    QSignalSpy spy(m_dateTimeAxisX, SIGNAL(reverseChanged(bool)));
+    QCOMPARE(m_dateTimeAxisX->isReverse(), false);
+
+    m_dateTimeAxisX->setReverse();
+    QCOMPARE(m_dateTimeAxisX->isReverse(), true);
+    QCOMPARE(spy.count(), 1);
+
+    m_view->show();
+    QTest::qWaitForWindowShown(m_view);
+    QCOMPARE(m_dateTimeAxisX->isReverse(), true);
 }
 
 QTEST_MAIN(tst_QDateTimeAxis)

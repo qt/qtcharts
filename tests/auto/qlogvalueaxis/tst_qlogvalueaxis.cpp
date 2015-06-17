@@ -57,6 +57,7 @@ private slots:
     void autoscale_data();
     void autoscale();
     void zoom();
+    void reverse();
 
 private:
     QLogValueAxis* m_logvaluesaxis;
@@ -109,6 +110,8 @@ void tst_QLogValueAxis::qlogvalueaxis()
 
     QCOMPARE(m_logvaluesaxis->max(), (qreal)100);
     QCOMPARE(m_logvaluesaxis->min(), (qreal)1);
+
+    QCOMPARE(m_logvaluesaxis->isReverse(), false);
 }
 
 void tst_QLogValueAxis::max_raw_data()
@@ -313,8 +316,6 @@ void tst_QLogValueAxis::noautoscale()
     QCOMPARE(spy0.count(), 1);
     QCOMPARE(spy1.count(), 1);
     QCOMPARE(spy2.count(), 1);
-
-    m_chart->setAxisX(m_logvaluesaxis, m_series);
     m_view->show();
     QTest::qWaitForWindowShown(m_view);
     QCOMPARE(m_logvaluesaxis->min(), min);
@@ -379,6 +380,20 @@ void tst_QLogValueAxis::zoom()
     QCOMPARE(m_logvaluesaxis->min(), (qreal)4);
     QCOMPARE(m_logvaluesaxis->max(), (qreal)256.0);
 
+}
+
+void tst_QLogValueAxis::reverse()
+{
+    QSignalSpy spy(m_logvaluesaxis, SIGNAL(reverseChanged(bool)));
+    QCOMPARE(m_logvaluesaxis->isReverse(), false);
+
+    m_logvaluesaxis->setReverse();
+    QCOMPARE(m_logvaluesaxis->isReverse(), true);
+    QCOMPARE(spy.count(), 1);
+
+    m_view->show();
+    QTest::qWaitForWindowShown(m_view);
+    QCOMPARE(m_logvaluesaxis->isReverse(), true);
 }
 
 QTEST_MAIN(tst_QLogValueAxis)

@@ -303,6 +303,8 @@ public:
 
         // QtCharts 2.1
         qmlRegisterType<DeclarativeCategoryAxis, 1>(uri, 2, 1, "CategoryAxis");
+        qmlRegisterUncreatableType<QAbstractAxis>(uri, 2, 1, "AbstractAxis",
+                                                  QLatin1String("Trying to create uncreatable: AbstractAxis. Use specific types of axis instead."));
     }
 
 };

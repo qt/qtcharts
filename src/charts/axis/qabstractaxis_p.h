@@ -118,6 +118,8 @@ private:
 
     bool m_dirty;
 
+    bool m_reverse;
+
     friend class QAbstractAxis;
     friend class ChartDataSet;
     friend class ChartPresenter;
