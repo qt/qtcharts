@@ -31,7 +31,6 @@ QT_CHARTS_BEGIN_NAMESPACE
     \class QCategoryAxis
     \inmodule Qt Charts
     \brief The QCategoryAxis class allows putting a named ranges on the axis.
-    \mainclass
 
     This class can be used when the underlying data needs to be given extra meaning.
     Unlike with the QBarCategoryAxis the QCategoryAxis allows the categories ranges widths to be specified freely.

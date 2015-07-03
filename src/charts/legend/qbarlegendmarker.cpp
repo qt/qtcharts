@@ -27,7 +27,6 @@ QT_CHARTS_BEGIN_NAMESPACE
     \class QBarLegendMarker
     \inmodule Qt Charts
     \brief QLegendMarker subclass for bar series.
-    \mainclass
 
     QBarLegendMarker is related to QAbstractBarSeries derived classes. With bar series, each marker is related to one QBarSet.
 

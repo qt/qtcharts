@@ -27,7 +27,6 @@ QT_CHARTS_BEGIN_NAMESPACE
     \class QXYLegendMarker
     \inmodule Qt Charts
     \brief QLegendMarker subclass for QXYSeries.
-    \mainclass
 
     QXYLegendMarker is related to QXYSeries derived classes. Each marker is related to one series.
 

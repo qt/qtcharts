@@ -33,8 +33,6 @@ QT_CHARTS_BEGIN_NAMESPACE
     lower quartile, median, upper quartile and upper extreme. The Second method is to create an empty QBoxSet instance and
     give the values using setValue method.
 
-    \mainclass
-
     \sa QBoxPlotSeries
 */
 /*!

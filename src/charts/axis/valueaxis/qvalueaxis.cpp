@@ -33,7 +33,6 @@ QT_CHARTS_BEGIN_NAMESPACE
     \class QValueAxis
     \inmodule Qt Charts
     \brief The QValueAxis class is used for manipulating chart's axis.
-    \mainclass
 
     ValueAxis can be setup to show axis line with tick marks, grid lines and shades.
     Values of axis are drawn to position of ticks.

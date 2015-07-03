@@ -33,8 +33,6 @@ QT_CHARTS_BEGIN_NAMESPACE
     If set has fewer values than there are categories, then the missing values are assumed to be
     at the end of set. For missing values in middle of a set, numerical value of zero is used.
 
-    \mainclass
-
     \sa QAbstractBarSeries, QBarSeries, QStackedBarSeries, QPercentBarSeries
 */
 /*!

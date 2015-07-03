@@ -29,8 +29,6 @@ QT_CHARTS_BEGIN_NAMESPACE
     \inmodule Qt Charts
     \brief The QLineSeries class is used for making line charts.
 
-    \mainclass
-
     A line chart is used to show information as a series of data points
     connected by straight lines.
 

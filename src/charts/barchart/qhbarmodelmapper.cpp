@@ -24,7 +24,6 @@ QT_CHARTS_BEGIN_NAMESPACE
     \class QHBarModelMapper
     \inmodule Qt Charts
     \brief Horizontal model mapper for bar series.
-    \mainclass
 
     Model mappers allow you to use QAbstractItemModel derived models as a data source for a chart series.
     Horizontal model mapper is used to create a connection between QAbstractBarSeries and QAbstractItemModel derived model object.

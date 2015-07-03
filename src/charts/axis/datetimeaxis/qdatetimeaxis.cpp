@@ -32,7 +32,6 @@ QT_CHARTS_BEGIN_NAMESPACE
     \class QDateTimeAxis
     \inmodule Qt Charts
     \brief The QDateTimeAxis class is used for manipulating chart's axis.
-    \mainclass
 
     The labels can be configured by setting an appropriate DateTime format.
     QDateTimeAxis works correctly with dates from 4714 BCE to 287396 CE.

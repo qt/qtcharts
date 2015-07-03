@@ -36,7 +36,6 @@ QT_CHARTS_BEGIN_NAMESPACE
     \class QBoxPlotSeries
     \inmodule Qt Charts
     \brief Series for creating box-and-whiskers chart.
-    \mainclass
 
     QBoxPlotSeries represents a series of data shown as box-and-whisker bars. The purpose of this class is to act as
     a container for single box-and-whisker items. Each item is drawn to own slot. If chart includes multiple instances of

@@ -27,7 +27,6 @@ QT_CHARTS_BEGIN_NAMESPACE
     \class QPieLegendMarker
     \inmodule Qt Charts
     \brief QLegendMarker subclass for pie series.
-    \mainclass
 
     QPieLegendMarker is related to QPieSeries. With QPieSeries, each slice of pie is related to one marker in QLegend.
 

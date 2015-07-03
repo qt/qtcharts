@@ -24,7 +24,6 @@ QT_CHARTS_BEGIN_NAMESPACE
     \class QVXYModelMapper
     \inmodule Qt Charts
     \brief Vertical model mapper for QXYSeries.
-    \mainclass
 
     Model mappers allow you to use QAbstractItemModel derived models as a data source for a chart series.
     Vertical model mapper is used to create a connection between QXYSeries and QAbstractItemModel derived model object.

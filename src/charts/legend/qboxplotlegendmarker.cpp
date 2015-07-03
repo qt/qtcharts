@@ -27,7 +27,6 @@ QT_CHARTS_BEGIN_NAMESPACE
     \class QBoxPlotLegendMarker
     \inmodule Qt Charts
     \brief QLegendMarker subclass for box plot series.
-    \mainclass
 
     QBoxPlotLegendMarker is related to QBoxPlotSeries classes.
 

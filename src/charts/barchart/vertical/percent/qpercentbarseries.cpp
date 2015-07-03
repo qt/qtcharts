@@ -29,7 +29,6 @@ QT_CHARTS_BEGIN_NAMESPACE
     \class QPercentBarSeries
     \inmodule Qt Charts
     \brief Series for creating percent bar chart.
-    \mainclass
 
     QPercentBarSeries represents a series of data shown as bars. The purpose of this class is to
     draw bars as stacks, where each bar is shown as percentage of all bars in that category.

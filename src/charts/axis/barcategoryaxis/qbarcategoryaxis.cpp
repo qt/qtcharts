@@ -29,7 +29,6 @@ QT_CHARTS_BEGIN_NAMESPACE
     \class QBarCategoryAxis
     \inmodule Qt Charts
     \brief The QBarCategoryAxis class is used for manipulating chart's axis.
-    \mainclass
 
     QBarCategoryAxis can be setup to show axis line with tick marks, grid lines and shades.
     Categories are drawn between ticks. Note that you can use this also with lineseries too.

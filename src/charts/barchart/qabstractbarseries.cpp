@@ -36,7 +36,6 @@ QT_CHARTS_BEGIN_NAMESPACE
     \class QAbstractBarSeries
     \inmodule Qt Charts
     \brief Series for creating a bar chart.
-    \mainclass
 
     QAbstractBarSeries represents a series of data shown as bars. The purpose of this class is to draw bars to
     the position defined by data. Single bar is defined by QPointF, where x value is the x-coordinate of the bar

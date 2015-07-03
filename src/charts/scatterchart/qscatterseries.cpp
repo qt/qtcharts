@@ -29,8 +29,6 @@
     \inmodule Qt Charts
     \brief The QScatterSeries class is used for making scatter charts.
 
-    \mainclass
-
     The scatter data is displayed as a collection of points on the chart. Each point determines the position on the horizontal axis
     and the vertical axis.
 

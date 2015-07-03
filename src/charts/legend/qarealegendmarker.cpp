@@ -27,7 +27,6 @@ QT_CHARTS_BEGIN_NAMESPACE
     \class QAreaLegendMarker
     \inmodule Qt Charts
     \brief QLegendMarker subclass for area series.
-    \mainclass
 
     QAreaLegendMarker is related to QAreaSeries. One QAreaSeries results in one marker.
 

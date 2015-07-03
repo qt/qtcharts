@@ -31,7 +31,6 @@ QT_CHARTS_BEGIN_NAMESPACE
     \class QHorizontalBarSeries
     \inmodule Qt Charts
     \brief Series for creating horizontal bar chart.
-    \mainclass
 
     QHorizontalBarSeries represents a series of data shown as bars. The purpose of this class is to draw bars
     as groups, where bars in same category are grouped next to each other. QHorizontalBarSeries groups the data

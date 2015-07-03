@@ -33,7 +33,6 @@ QT_CHARTS_BEGIN_NAMESPACE
     \class QAbstractSeries
     \inmodule Qt Charts
     \brief Base class for all Qt Chart series.
-    \mainclass
 
     Usually you use the series type specific inherited classes instead of the base class.
     \sa QXYSeries, QLineSeries, QSplineSeries, QScatterSeries, QAreaSeries, QAbstractBarSeries, QStackedBarSeries,

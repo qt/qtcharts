@@ -29,7 +29,6 @@ QT_CHARTS_BEGIN_NAMESPACE
     \class QStackedBarSeries
     \inmodule Qt Charts
     \brief Series for creating stacked bar chart.
-    \mainclass
 
     QStackedBarSeries represents a series of data shown as bars. The purpose of this class is to draw bars
     as stacks, where bars in same category are stacked on top of each other.

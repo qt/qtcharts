@@ -34,8 +34,6 @@ QT_CHARTS_BEGIN_NAMESPACE
     \inmodule Qt Charts
     \brief The QAreaSeries class is used for making area charts.
 
-    \mainclass
-
     An area series is used to show quantitative data. It is based on line series, in the way that
     the area between the boundary lines is emphasized with color. Since the area series is based on
     line series, QAreaSeries constructor needs a QLineSeries instance, which defines "upper"

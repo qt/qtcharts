@@ -28,7 +28,6 @@ QT_CHARTS_BEGIN_NAMESPACE
     \class QAbstractAxis
     \inmodule Qt Charts
     \brief The QAbstractAxis class is used for manipulating chart's axis.
-    \mainclass
 
     Each series can be bound to one or more horizontal and vertical axes, but mixing axis types
     that would result in different domains is not supported, such as specifying

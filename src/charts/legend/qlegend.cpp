@@ -39,7 +39,6 @@ QT_CHARTS_BEGIN_NAMESPACE
     \inmodule Qt Charts
     \inherits QGraphicsWidget
     \brief Legend object.
-    \mainclass
 
     QLegend is a graphical object for displaying the legend of the chart. Legend state is updated by QChart, when
     series have been changed. By default, legend is drawn by QChart, but user can set a new parent to legend and

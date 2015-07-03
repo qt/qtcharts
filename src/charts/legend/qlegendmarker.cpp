@@ -32,7 +32,6 @@ QT_CHARTS_BEGIN_NAMESPACE
     \class QLegendMarker
     \inmodule Qt Charts
     \brief LegendMarker object.
-    \mainclass
 
     QLegendMarker is abstract object that can be used to access markers inside QLegend. Legend marker consists of two
     items: The colored box, which reflects the color of series and label, which is the name of series (or label of slice/barset

@@ -31,7 +31,6 @@ QT_CHARTS_BEGIN_NAMESPACE
     \class QLogValueAxis
     \inmodule Qt Charts
     \brief The QLogValueAxis class is used for manipulating chart's axis.
-    \mainclass
 
     \note If a QLogValueAxis is attached to a series with one or more points with
     negative or zero values on the associated dimension, the series will not be
