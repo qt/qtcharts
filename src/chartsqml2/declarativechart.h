@@ -206,6 +206,8 @@ private:
     void initChart(QChart::ChartType type);
     void seriesAxisAttachHelper(QAbstractSeries *series, QAbstractAxis *axis,
                                 Qt::Orientations orientation, Qt::Alignment alignment);
+    void findMinMaxForSeries(QAbstractSeries *series,Qt::Orientations orientation,
+                             qreal &min, qreal &max);
     // Extending QChart with DeclarativeChart is not possible because QObject does not support
     // multi inheritance, so we now have a QChart as a member instead
     QChart *m_chart;

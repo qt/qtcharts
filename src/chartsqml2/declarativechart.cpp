@@ -1077,21 +1077,47 @@ void DeclarativeChart::initializeAxes(QAbstractSeries *series)
 
 void DeclarativeChart::doInitializeAxes(QAbstractSeries *series, DeclarativeAxes *axes)
 {
+    qreal min;
+    qreal max;
     // Initialize axis X
-    if (axes->axisX())
+    if (axes->axisX()) {
         axes->emitAxisXChanged();
-    else if (axes->axisXTop())
+    } else if (axes->axisXTop()) {
         axes->emitAxisXTopChanged();
-    else
+    } else {
         axes->setAxisX(defaultAxis(Qt::Horizontal, series));
+        findMinMaxForSeries(series, Qt::Horizontal, min, max);
+        axes->axisX()->setRange(min, max);
+    }
 
     // Initialize axis Y
-    if (axes->axisY())
+    if (axes->axisY()) {
         axes->emitAxisYChanged();
-    else if (axes->axisYRight())
+    } else if (axes->axisYRight()) {
         axes->emitAxisYRightChanged();
-    else
+    } else {
         axes->setAxisY(defaultAxis(Qt::Vertical, series));
+        findMinMaxForSeries(series, Qt::Vertical, min, max);
+        axes->axisY()->setRange(min, max);
+    }
+}
+
+void DeclarativeChart::findMinMaxForSeries(QAbstractSeries *series, Qt::Orientations orientation,
+                                           qreal &min, qreal &max)
+{
+    if (!series) {
+        min = 0.5;
+        max = 0.5;
+    } else {
+        AbstractDomain *domain = series->d_ptr->domain();
+        min = (orientation == Qt::Vertical) ? domain->minY() : domain->minX();
+        max = (orientation == Qt::Vertical) ? domain->maxY() : domain->maxX();
+
+        if (min == max) {
+            min -= 0.5;
+            max += 0.5;
+        }
+    }
 }
 
 QPointF DeclarativeChart::mapToValue(const QPointF &position, QAbstractSeries *series)
