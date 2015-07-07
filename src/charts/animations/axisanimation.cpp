@@ -71,6 +71,8 @@ void AxisAnimation::setValues(QVector<qreal> &oldLayout, QVector<qreal> &newLayo
         int index = qMin(oldLayout.count() * (m_axis->axis()->orientation() == Qt::Horizontal ? m_point.x() : (1 - m_point.y())), newLayout.count() - (qreal)1.0);
         oldLayout.resize(newLayout.count());
 
+        if (index < 0)
+            break;
         for (int i = 0; i < oldLayout.count(); i++)
             oldLayout[i] = oldLayout[index];
     }
