@@ -18,7 +18,7 @@
 
 import QtQuick 2.0
 import QtTest 1.0
-import QtCharts 2.1
+import QtCharts 2.0
 
 Rectangle {
     width: 400
@@ -28,7 +28,6 @@ Rectangle {
         id: tc1
         name: "tst_qml-qtquicktest ChartView Functions"
         when: windowShown
-        property rect zoomRect
 
         function test_chartViewSeriesAndAxes() {
             // Create XY series
@@ -82,11 +81,6 @@ Rectangle {
             chartView.axisY().min = 1.0;
             chartView.axisY().max = 2.0;
 
-            var xMaxOriginal = chartView.axisX().max;
-            var xMinOriginal = chartView.axisX().min;
-            var yMaxOriginal = chartView.axisY().max;
-            var yMinOriginal = chartView.axisY().min;
-
             var xMax = chartView.axisX().max;
             var xMin = chartView.axisX().min;
             var yMax = chartView.axisY().max;
@@ -109,62 +103,6 @@ Rectangle {
             verify(chartView.axisX().min < xMin);
             verify(chartView.axisY().max > yMax);
             verify(chartView.axisY().min < yMin);
-            xMax = chartView.axisX().max;
-            xMin = chartView.axisX().min;
-            yMax = chartView.axisY().max;
-            yMin = chartView.axisY().min;
-
-            // zoom x -1
-            // negative value has no effect
-            chartView.zoom(-1);
-            verify(chartView.axisX().max === xMax);
-            verify(chartView.axisX().min === xMin);
-            verify(chartView.axisY().max === yMax);
-            verify(chartView.axisY().min === yMin);
-
-            // zoom in
-            chartView.zoomIn();
-            verify(chartView.axisX().max < xMax);
-            verify(chartView.axisX().min > xMin);
-            verify(chartView.axisY().max < yMax);
-            verify(chartView.axisY().min > yMin);
-            xMax = chartView.axisX().max;
-            xMin = chartView.axisX().min;
-            yMax = chartView.axisY().max;
-            yMin = chartView.axisY().min;
-
-            // zoom in rect
-            zoomRect.x = 100;
-            zoomRect.y = 100;
-            zoomRect.width = 120;
-            zoomRect.height = 120;
-            chartView.zoomIn(zoomRect);
-            verify(chartView.axisX().max < xMax);
-            verify(chartView.axisX().min > xMin);
-            verify(chartView.axisY().max < yMax);
-            verify(chartView.axisY().min > yMin);
-            xMax = chartView.axisX().max;
-            xMin = chartView.axisX().min;
-            yMax = chartView.axisY().max;
-            yMin = chartView.axisY().min;
-
-            // zoom out
-            chartView.zoomOut();
-            verify(chartView.axisX().max > xMax);
-            verify(chartView.axisX().min < xMin);
-            verify(chartView.axisY().max > yMax);
-            verify(chartView.axisY().min < yMin);
-            xMax = chartView.axisX().max;
-            xMin = chartView.axisX().min;
-            yMax = chartView.axisY().max;
-            yMin = chartView.axisY().min;
-
-            // zoom reset
-            chartView.zoomReset();
-            verify(chartView.axisX().max === xMaxOriginal);
-            verify(chartView.axisX().min === xMinOriginal);
-            verify(chartView.axisY().max === yMaxOriginal);
-            verify(chartView.axisY().min === yMinOriginal);
             xMax = chartView.axisX().max;
             xMin = chartView.axisX().min;
             yMax = chartView.axisY().max;

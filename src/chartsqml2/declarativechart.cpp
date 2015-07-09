@@ -227,6 +227,32 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
   \qmlmethod ChartView::zoom(real factor)
   Zooms in by \a factor on the center of the chart.
+
+  A factor over 1.0 zooms the view in and factor between 0.0 and 1.0 zooms out.
+*/
+
+/*!
+  \qmlmethod ChartView::zoomIn()
+  Zooms in the view by a factor of two.
+*/
+
+/*!
+  \qmlmethod ChartView::zoomIn(rect rectangle)
+  Zooms in the view to a maximum level at which \a rectangle is still fully visible.
+  \note This is not supported for polar charts.
+*/
+
+/*!
+  \qmlmethod ChartView::zoomOut()
+  Zooms out the view by a factor of two.
+*/
+
+/*!
+  \qmlmethod ChartView::zoomReset()
+  Resets the series domains to what they were before any zoom method was called.
+  Note that this will also reset any scrolls and explicit axis range settings done between
+  the first zoom operation and calling this method. If no zoom operation has been
+  done, this method does nothing.
 */
 
 /*!
@@ -796,6 +822,26 @@ void DeclarativeChart::setBackgroundRoundness(qreal diameter)
 void DeclarativeChart::zoom(qreal factor)
 {
     m_chart->zoom(factor);
+}
+
+void DeclarativeChart::zoomIn()
+{
+    m_chart->zoomIn();
+}
+
+void DeclarativeChart::zoomIn(const QRectF &rectangle)
+{
+    m_chart->zoomIn(rectangle);
+}
+
+void DeclarativeChart::zoomOut()
+{
+    m_chart->zoomOut();
+}
+
+void DeclarativeChart::zoomReset()
+{
+    m_chart->zoomReset();
 }
 
 void DeclarativeChart::scrollLeft(qreal pixels)

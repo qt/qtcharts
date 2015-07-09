@@ -163,6 +163,10 @@ public:
     Q_INVOKABLE QAbstractAxis *axisX(QAbstractSeries *series = 0);
     Q_INVOKABLE QAbstractAxis *axisY(QAbstractSeries *series = 0);
     Q_INVOKABLE void zoom(qreal factor);
+    Q_REVISION(5) Q_INVOKABLE void zoomIn();
+    Q_REVISION(5) Q_INVOKABLE void zoomIn(const QRectF &rectangle);
+    Q_REVISION(5) Q_INVOKABLE void zoomOut();
+    Q_REVISION(5) Q_INVOKABLE void zoomReset();
     Q_INVOKABLE void scrollLeft(qreal pixels);
     Q_INVOKABLE void scrollRight(qreal pixels);
     Q_INVOKABLE void scrollUp(qreal pixels);
