@@ -1114,6 +1114,32 @@ Module {
             name: "scrollDown"
             Parameter { name: "pixels"; type: "double" }
         }
+        Method {
+            name: "mapToValue"
+            revision: 5
+            type: "QPointF"
+            Parameter { name: "position"; type: "QPointF" }
+            Parameter { name: "series"; type: "QAbstractSeries"; isPointer: true }
+        }
+        Method {
+            name: "mapToValue"
+            revision: 5
+            type: "QPointF"
+            Parameter { name: "position"; type: "QPointF" }
+        }
+        Method {
+            name: "mapToPosition"
+            revision: 5
+            type: "QPointF"
+            Parameter { name: "value"; type: "QPointF" }
+            Parameter { name: "series"; type: "QAbstractSeries"; isPointer: true }
+        }
+        Method {
+            name: "mapToPosition"
+            revision: 5
+            type: "QPointF"
+            Parameter { name: "value"; type: "QPointF" }
+        }
     }
     Component {
         name: "QtCharts::DeclarativeHorizontalBarSeries"

@@ -167,6 +167,11 @@ public:
     Q_INVOKABLE void scrollRight(qreal pixels);
     Q_INVOKABLE void scrollUp(qreal pixels);
     Q_INVOKABLE void scrollDown(qreal pixels);
+    Q_REVISION(5) Q_INVOKABLE QPointF mapToValue(const QPointF &position,
+                                                 QAbstractSeries *series = 0);
+    Q_REVISION(5) Q_INVOKABLE QPointF mapToPosition(const QPointF &value,
+                                                    QAbstractSeries *series = 0);
+
 
 Q_SIGNALS:
     void axisLabelsChanged();

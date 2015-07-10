@@ -111,4 +111,22 @@ ChartView {
             NumberAnimation { duration: 800 }
         }
     }
+
+    MouseArea {
+        id: zoomArea
+        anchors.fill: parent
+        acceptedButtons: Qt.LeftButton
+        property point mousePoint;
+        property point valuePoint;
+
+        onPressed: {
+            mousePoint.x = mouse.x
+            mousePoint.y = mouse.y
+            valuePoint = chart.mapToValue(mousePoint, series("line"));
+            // Mouse point and position should be the same!
+            console.log("mouse point: " + mouse.x + ", " + mouse.y);
+            console.log("value point: " + valuePoint);
+            console.log("position: " + chart.mapToPosition(valuePoint, series("line")));
+        }
+    }
 }

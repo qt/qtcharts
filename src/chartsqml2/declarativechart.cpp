@@ -250,6 +250,17 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
+  \qmlmethod point ChartView::mapToValue(point position, AbstractSeries series)
+  Returns the value in the \a series domain that corresponds to the \a position relative to the
+  chart.
+*/
+
+/*!
+  \qmlmethod point ChartView::mapToPosition(point value, AbstractSeries series)
+  Returns the position on the chart that corresponds to the \a value in the \a series domain.
+*/
+
+/*!
   \qmlsignal ChartView::seriesAdded(AbstractSeries series)
   The \a series has been added to the chart.
 */
@@ -1035,6 +1046,16 @@ void DeclarativeChart::doInitializeAxes(QAbstractSeries *series, DeclarativeAxes
         axes->emitAxisYRightChanged();
     else
         axes->setAxisY(defaultAxis(Qt::Vertical, series));
+}
+
+QPointF DeclarativeChart::mapToValue(const QPointF &position, QAbstractSeries *series)
+{
+    return m_chart->mapToValue(position, series);
+}
+
+QPointF DeclarativeChart::mapToPosition(const QPointF &value, QAbstractSeries *series)
+{
+    return m_chart->mapToPosition(value, series);
 }
 
 #include "moc_declarativechart.cpp"
