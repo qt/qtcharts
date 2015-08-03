@@ -116,7 +116,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
   \qmlproperty real ChartView::backgroundRoundness
-  The diameter of the rounding cirle at the corners of the chart background.
+  The diameter of the rounding circle at the corners of the chart background.
 */
 
 /*!
