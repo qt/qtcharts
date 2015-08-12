@@ -63,6 +63,9 @@ QT_CHARTS_BEGIN_NAMESPACE
     \image examples_qmlchart4.png
     \endfloat
     \clearfloat
+
+    \note Adding the same line series to chart and area series is not supported. The series used as
+    boundary lines should be defined only for the area series.
 */
 
 /*!
