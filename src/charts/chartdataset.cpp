@@ -78,6 +78,15 @@ void ChartDataSet::addSeries(QAbstractSeries *series)
             return;
         }
         series->d_ptr->setDomain(new XYPolarDomain());
+        // Set the correct domain for upper and lower series too
+        if (series->type() == QAbstractSeries::SeriesTypeArea) {
+            foreach (QObject *child, series->children()) {
+                if (qobject_cast<QAbstractSeries *>(child)) {
+                    QAbstractSeries *childSeries = qobject_cast<QAbstractSeries *>(child);
+                    childSeries->d_ptr->setDomain(new XYPolarDomain());
+                }
+            }
+        }
     } else {
         series->d_ptr->setDomain(new XYDomain());
     }
