@@ -19,6 +19,7 @@
 #include <private/polarchartaxis_p.h>
 #include <private/qabstractaxis_p.h>
 #include <private/chartpresenter_p.h>
+#include <QtCharts/QValueAxis>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -76,6 +77,8 @@ void PolarChartAxis::updateLayout(QVector<qreal> &layout)
         deleteItems(diff);
     else if (diff < 0)
         createItems(-diff);
+
+    updateMinorTickItems();
 
     if (animation()) {
         animation()->setValues(ChartAxisElement::layout(), layout);

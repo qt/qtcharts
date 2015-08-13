@@ -43,10 +43,14 @@ private slots:
     void axisPenColor();
     void gridLinePen_data();
     void gridLinePen();
+    void minorGridLinePen_data();
+    void minorGridLinePen();
     void lineVisible_data();
     void lineVisible();
     void gridLineVisible_data();
     void gridLineVisible();
+    void minorGridLineVisible_data();
+    void minorGridLineVisible();
     void visible_data();
     void visible();
     void labelsAngle_data();

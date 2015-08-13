@@ -60,10 +60,13 @@ public Q_SLOTS:
     virtual void handleGridPenChanged(const QPen &pen);
     virtual void handleShadesBrushChanged(const QBrush &brush);
     virtual void handleShadesPenChanged(const QPen &pen);
+    virtual void handleMinorArrowPenChanged(const QPen &pen);
+    virtual void handleMinorGridPenChanged(const QPen &pen);
 
 private:
     void createItems(int count);
     void deleteItems(int count);
+    void updateMinorTickItems();
 
 private:
     QRectF m_gridRect;

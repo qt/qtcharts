@@ -32,6 +32,7 @@ class QT_CHARTS_EXPORT QValueAxis : public QAbstractAxis
     Q_PROPERTY(qreal min READ min WRITE setMin NOTIFY minChanged)
     Q_PROPERTY(qreal max READ max WRITE setMax NOTIFY maxChanged)
     Q_PROPERTY(QString labelFormat READ labelFormat WRITE setLabelFormat NOTIFY labelFormatChanged)
+    Q_PROPERTY(int minorTickCount READ minorTickCount WRITE setMinorTickCount NOTIFY minorTickCountChanged)
 
 public:
     explicit QValueAxis(QObject *parent = 0);
@@ -53,6 +54,8 @@ public:
     //ticks handling
     void setTickCount(int count);
     int tickCount() const;
+    void setMinorTickCount(int count);
+    int minorTickCount() const;
 
     void setLabelFormat(const QString &format);
     QString labelFormat() const;
@@ -65,6 +68,7 @@ Q_SIGNALS:
     void maxChanged(qreal max);
     void rangeChanged(qreal min, qreal max);
     void tickCountChanged(int tickCount);
+    void minorTickCountChanged(int tickCount);
     void labelFormatChanged(const QString &format);
 
 private:

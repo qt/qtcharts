@@ -54,6 +54,7 @@ protected:
 protected: // virtual functions
     virtual void createItems(int count) = 0;
     virtual void createAxisLabels(const QVector<qreal> &layout) = 0;
+    virtual void updateMinorTickItems() = 0;
 
 public Q_SLOTS:
     virtual void handleShadesBrushChanged(const QBrush &brush);

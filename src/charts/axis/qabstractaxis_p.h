@@ -100,6 +100,8 @@ private:
 
     bool m_gridLineVisible;
     QPen m_gridLinePen;
+    bool m_minorGridLineVisible;
+    QPen m_minorGridLinePen;
 
     bool m_labelsVisible;
     QBrush m_labelsBrush;

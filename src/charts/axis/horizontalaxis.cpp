@@ -94,6 +94,8 @@ void HorizontalAxis::updateGeometry()
 
     QList<QGraphicsItem *> lines = gridItems();
     QList<QGraphicsItem *> shades = shadeItems();
+    QList<QGraphicsItem *> minorLines = minorGridItems();
+    QList<QGraphicsItem *> minorArrows = minorArrowItems();
 
     for (int i = 0; i < layout.size(); ++i) {
         //items
@@ -279,6 +281,54 @@ void HorizontalAxis::updateGeometry()
             tickItem->setVisible(true);
         }
 
+        // add minor ticks
+        QValueAxis *valueAxis = qobject_cast<QValueAxis *>(axis());
+        if ((i + 1) != layout.size() && valueAxis) {
+            int minorTickCount = valueAxis->minorTickCount();
+            if (minorTickCount != 0) {
+                qreal minorTickDistance = (layout[i] - layout[i + 1]) / qreal(minorTickCount + 1);
+                for (int j = 0; j < minorTickCount; j++) {
+                    QGraphicsLineItem *minorGridItem =
+                        static_cast<QGraphicsLineItem *>(minorLines.at(i * minorTickCount + j));
+                    QGraphicsLineItem *minorArrowItem =
+                        static_cast<QGraphicsLineItem *>(minorArrows.at(i * minorTickCount + j));
+                    if (i == 0) {
+                        minorGridItem->setLine(gridRect.left() - minorTickDistance * qreal(j + 1),
+                                               gridRect.top(),
+                                               gridRect.left() - minorTickDistance * qreal(j + 1),
+                                               gridRect.bottom());
+                    } else {
+                        minorGridItem->setLine(gridItem->line().p1().x()
+                                               - minorTickDistance * qreal(j + 1),
+                                               gridRect.top(),
+                                               gridItem->line().p1().x()
+                                               - minorTickDistance * qreal(j + 1),
+                                               gridRect.bottom());
+                    }
+                    if (axis()->alignment() == Qt::AlignTop) {
+                        minorArrowItem->setLine(minorGridItem->line().p1().x(),
+                                                axisRect.bottom(),
+                                                minorGridItem->line().p1().x(),
+                                                axisRect.bottom() - labelPadding() / 2);
+                    } else if (axis()->alignment() == Qt::AlignBottom){
+                        minorArrowItem->setLine(minorGridItem->line().p1().x(),
+                                                axisRect.top(),
+                                                minorGridItem->line().p1().x(),
+                                                axisRect.top() + labelPadding() / 2);
+                    }
+
+                    // check if the minor grid line and the axis tick should be shown
+                    qreal minorXPos = minorGridItem->line().p1().x();
+                    if (minorXPos < gridRect.left() || minorXPos > gridRect.right()) {
+                        minorGridItem->setVisible(false);
+                        minorArrowItem->setVisible(false);
+                    } else {
+                        minorGridItem->setVisible(true);
+                        minorArrowItem->setVisible(true);
+                    }
+                }
+            }
+        }
     }
 
     //begin/end grid line in case labels between

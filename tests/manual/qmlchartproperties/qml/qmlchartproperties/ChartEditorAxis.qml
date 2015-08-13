@@ -61,6 +61,10 @@ Row {
             onClicked: axis.gridVisible = !axis.gridVisible;
         }
         Button {
+            text: "axis minor grid visible"
+            onClicked: axis.minorGridVisible = !axis.minorGridVisible;
+        }
+        Button {
             text: "axis shades visible"
             onClicked: axis.shadesVisible = !axis.shadesVisible;
         }
@@ -102,8 +106,15 @@ Row {
         }
         Button {
             text: "axis tick count -"
-
             onClicked: axis.tickCount--;
+        }
+        Button {
+            text: "axis minor tick count +"
+            onClicked: axis.minorTickCount++;
+        }
+        Button {
+            text: "axis minor tick count -"
+            onClicked: axis.minorTickCount--;
         }
         Button {
             text: "axis reverse"

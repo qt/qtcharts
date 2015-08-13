@@ -89,6 +89,35 @@ void CartesianChartAxis::createItems(int count)
     }
 }
 
+void CartesianChartAxis::updateMinorTickItems()
+{
+    QValueAxis *valueAxis = qobject_cast<QValueAxis *>(this->axis());
+    if (valueAxis) {
+        int currentCount = minorArrowItems().size();
+        int expectedCount = valueAxis->minorTickCount() * (valueAxis->tickCount() - 1);
+        int diff = expectedCount - currentCount;
+        if (diff > 0) {
+            for (int i = 0; i < diff; i++) {
+                QGraphicsLineItem *minorArrow = new QGraphicsLineItem(this);
+                QGraphicsLineItem *minorGrid = new QGraphicsLineItem(this);
+                minorArrow->setPen(valueAxis->linePen());
+                minorGrid->setPen(valueAxis->minorGridLinePen());
+                minorArrowGroup()->addToGroup(minorArrow);
+                minorGridGroup()->addToGroup(minorGrid);
+            }
+        } else {
+            QList<QGraphicsItem *> minorGridLines = minorGridItems();
+            QList<QGraphicsItem *> minorArrows = minorArrowItems();
+            for (int i = 0; i > diff; i--) {
+                if (!minorGridLines.isEmpty())
+                    delete(minorGridLines.takeLast());
+                if (!minorArrows.isEmpty())
+                    delete(minorArrows.takeLast());
+            }
+        }
+    }
+}
+
 void CartesianChartAxis::deleteItems(int count)
 {
     QList<QGraphicsItem *> lines = gridItems();
@@ -113,6 +142,8 @@ void CartesianChartAxis::updateLayout(QVector<qreal> &layout)
         deleteItems(diff);
     else if (diff < 0)
         createItems(-diff);
+
+    updateMinorTickItems();
 
     if (animation()) {
         switch (presenter()->state()) {
@@ -179,6 +210,18 @@ void CartesianChartAxis::handleArrowPenChanged(const QPen &pen)
 void CartesianChartAxis::handleGridPenChanged(const QPen &pen)
 {
     foreach (QGraphicsItem *item, gridItems())
+        static_cast<QGraphicsLineItem *>(item)->setPen(pen);
+}
+
+void CartesianChartAxis::handleMinorArrowPenChanged(const QPen &pen)
+{
+    foreach (QGraphicsItem *item, minorArrowItems())
+        static_cast<QGraphicsLineItem *>(item)->setPen(pen);
+}
+
+void CartesianChartAxis::handleMinorGridPenChanged(const QPen &pen)
+{
+    foreach (QGraphicsItem *item, minorGridItems())
         static_cast<QGraphicsLineItem *>(item)->setPen(pen);
 }
 

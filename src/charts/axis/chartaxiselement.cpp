@@ -48,6 +48,8 @@ ChartAxisElement::ChartAxisElement(QAbstractAxis *axis, QGraphicsItem *item, boo
       m_animation(0),
       m_grid(new QGraphicsItemGroup(item)),
       m_arrow(new QGraphicsItemGroup(item)),
+      m_minorGrid(new QGraphicsItemGroup(item)),
+      m_minorArrow(new QGraphicsItemGroup(item)),
       m_shades(new QGraphicsItemGroup(item)),
       m_labels(new QGraphicsItemGroup(item)),
       m_title(new QGraphicsTextItem(item)),
@@ -57,9 +59,12 @@ ChartAxisElement::ChartAxisElement(QAbstractAxis *axis, QGraphicsItem *item, boo
     //initial initialization
     m_arrow->setHandlesChildEvents(false);
     m_arrow->setZValue(ChartPresenter::AxisZValue);
+    m_minorArrow->setHandlesChildEvents(false);
+    m_minorArrow->setZValue(ChartPresenter::AxisZValue);
     m_labels->setZValue(ChartPresenter::AxisZValue);
     m_shades->setZValue(ChartPresenter::ShadesZValue);
     m_grid->setZValue(ChartPresenter::GridZValue);
+    m_minorGrid->setZValue(ChartPresenter::GridZValue);
     m_title->setZValue(ChartPresenter::GridZValue);
     m_title->document()->setDocumentMargin(ChartPresenter::textMargin());
     handleVisibleChanged(axis->isVisible());
@@ -92,6 +97,14 @@ void ChartAxisElement::connectSlots()
     QObject::connect(axis(), SIGNAL(titleVisibleChanged(bool)), this, SLOT(handleTitleVisibleChanged(bool)));
     QObject::connect(axis()->d_ptr.data(), SIGNAL(rangeChanged(qreal, qreal)), this, SLOT(handleRangeChanged(qreal, qreal)));
     QObject::connect(axis(), SIGNAL(reverseChanged(bool)), this, SLOT(handleReverseChanged(bool)));
+    QObject::connect(axis(), SIGNAL(lineVisibleChanged(bool)),
+                     this, SLOT(handleMinorArrowVisibleChanged(bool)));
+    QObject::connect(axis(), SIGNAL(linePenChanged(const QPen&)), this,
+                     SLOT(handleMinorArrowPenChanged(const QPen&)));
+    QObject::connect(axis(), SIGNAL(minorGridVisibleChanged(bool)),
+                     this, SLOT(handleMinorGridVisibleChanged(bool)));
+    QObject::connect(axis(), SIGNAL(minorGridLinePenChanged(const QPen&)),
+                     this, SLOT(handleMinorGridPenChanged(const QPen&)));
 }
 
 void ChartAxisElement::handleArrowVisibleChanged(bool visible)
@@ -99,9 +112,19 @@ void ChartAxisElement::handleArrowVisibleChanged(bool visible)
     m_arrow->setVisible(visible);
 }
 
+void ChartAxisElement::handleMinorArrowVisibleChanged(bool visible)
+{
+    m_minorArrow->setVisible(visible);
+}
+
 void ChartAxisElement::handleGridVisibleChanged(bool visible)
 {
     m_grid->setVisible(visible);
+}
+
+void ChartAxisElement::handleMinorGridVisibleChanged(bool visible)
+{
+    m_minorGrid->setVisible(visible);
 }
 
 void ChartAxisElement::handleLabelsVisibleChanged(bool visible)
@@ -174,12 +197,16 @@ void ChartAxisElement::handleVisibleChanged(bool visible)
     if (!visible) {
         m_grid->setVisible(visible);
         m_arrow->setVisible(visible);
+        m_minorGrid->setVisible(visible);
+        m_minorArrow->setVisible(visible);
         m_shades->setVisible(visible);
         m_labels->setVisible(visible);
         m_title->setVisible(visible);
     } else {
         m_grid->setVisible(axis()->isGridLineVisible());
         m_arrow->setVisible(axis()->isLineVisible());
+        m_minorGrid->setVisible(axis()->isMinorGridLineVisible());
+        m_minorArrow->setVisible(axis()->isLineVisible());
         m_shades->setVisible(axis()->shadesVisible());
         m_labels->setVisible(axis()->labelsVisible());
         m_title->setVisible(axis()->isTitleVisible());

@@ -45,12 +45,15 @@ public:
 
     virtual void updateGeometry();
     virtual void createItems(int count);
+    virtual void updateMinorTickItems();
 
     qreal preferredAxisRadius(const QSizeF &maxSize);
 
 public Q_SLOTS:
     virtual void handleArrowPenChanged(const QPen &pen);
     virtual void handleGridPenChanged(const QPen &pen);
+    virtual void handleMinorArrowPenChanged(const QPen &pen);
+    virtual void handleMinorGridPenChanged(const QPen &pen);
 
 private:
     QRectF moveLabelToPosition(qreal angularCoordinate, QPointF labelPoint, QRectF labelRect) const;

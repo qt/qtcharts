@@ -61,6 +61,9 @@ public:
         m_axisLinePen.setWidth(1);
         m_gridLinePen = QPen(QRgb(0xd7d6d5));
         m_gridLinePen.setWidth(1);
+        m_minorGridLinePen = QPen(QRgb(0xd7d6d5));
+        m_minorGridLinePen.setWidth(1);
+        m_minorGridLinePen.setStyle(Qt::DashLine);
         m_backgroundShades = BackgroundShadesNone;
         m_outlinePen = QPen(QRgb(0x35322f));
         m_outlinePen.setWidthF(2.0);

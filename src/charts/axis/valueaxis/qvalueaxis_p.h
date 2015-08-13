@@ -57,6 +57,7 @@ private:
     qreal m_min;
     qreal m_max;
     int m_tickCount;
+    int m_minorTickCount;
     QString m_format;
     bool m_applying;
     Q_DECLARE_PUBLIC(QValueAxis)

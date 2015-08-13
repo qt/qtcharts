@@ -47,6 +47,7 @@ protected:
     void updateGeometry();
 private Q_SLOTS:
     void handleTickCountChanged(int tick);
+    void handleMinorTickCountChanged(int tick);
     void handleLabelFormatChanged(const QString &format);
 
 private:

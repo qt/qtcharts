@@ -22,6 +22,7 @@
 #include <QtCharts/QChartGlobal>
 #include <QtCore/QHash>
 #include <QtWidgets/QComboBox>
+#include <QtWidgets/QSpinBox>
 
 QT_BEGIN_NAMESPACE
 class QCheckBox;
@@ -69,6 +70,10 @@ private:
     inline void checkTheme();
     inline void checkState();
     inline void checkTemplate();
+    inline void checkXTick();
+    inline void checkYTick();
+    inline void checkMinorXTick();
+    inline void checkMinorYTick();
     QMenu *createMenu();
     QAction *createMenuAction(QMenu *menu, const QIcon &icon, const QString &text, const QVariant &data);
     void initializeFromParamaters(const QVariantHash &parameters);
@@ -80,6 +85,10 @@ private:
 
     QGraphicsWidget *m_form;
     QComboBox *m_themeComboBox;
+    QSpinBox *m_xTickSpinBox;
+    QSpinBox *m_yTickSpinBox;
+    QSpinBox *m_minorXTickSpinBox;
+    QSpinBox *m_minorYTickSpinBox;
     QCheckBox *m_antialiasCheckBox;
     QComboBox *m_animatedComboBox;
     QComboBox *m_legendComboBox;

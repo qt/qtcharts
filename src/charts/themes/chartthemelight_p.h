@@ -60,6 +60,9 @@ public:
         m_labelBrush = QBrush(QRgb(0x404044));
         m_gridLinePen = QPen(QRgb(0xe2e2e2));
         m_gridLinePen.setWidth(1);
+        m_minorGridLinePen = QPen(QRgb(0xe2e2e2));
+        m_minorGridLinePen.setWidth(1);
+        m_minorGridLinePen.setStyle(Qt::DashLine);
         m_backgroundShades = BackgroundShadesNone;
         m_outlinePen = QPen(0x4d4d4d);
         m_outlinePen.setWidthF(2.0);

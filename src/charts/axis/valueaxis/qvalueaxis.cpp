@@ -99,13 +99,24 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
   \property QValueAxis::tickCount
-  Defines the number of ticks on the axis. This indicates how many grid lines are draw on the chart.
-  The default value is 5, and it can not be below 2.
+  Defines the number of ticks on the axis. This indicates how many grid lines are drawn on the
+  chart. The default value is 5, and it can not be below 2.
 */
 /*!
-  \qmlproperty real ValueAxis::tickCount
-   Defines the number of ticks on the axis. This indicates how many grid lines are draw on the chart.
-   The default value is 5, and it can not be below 2.
+  \qmlproperty int ValueAxis::tickCount
+   Defines the number of ticks on the axis. This indicates how many grid lines are drawn on the
+  chart. The default value is 5, and it can not be below 2.
+*/
+
+/*!
+  \property QValueAxis::minorTickCount
+  Defines the number of minor ticks on the axis. This indicates how many grid lines are drawn
+  between major ticks on the chart. Labels are not drawn for minor ticks. The default value is 0.
+*/
+/*!
+  \qmlproperty int ValueAxis::minorTickCount
+  Defines the number of minor ticks on the axis. This indicates how many grid lines are drawn
+  between major ticks on the chart. Labels are not drawn for minor ticks. The default value is 0.
 */
 
 /*!
@@ -154,6 +165,15 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
   \qmlsignal ValueAxis::tickCountChanged(int tickCount)
   Axis emits signal when \a tickCount of axis has changed.
+*/
+
+/*!
+  \fn void QValueAxis::minorTickCountChanged(int minorTickCount)
+  Axis emits signal when \a minorTickCount of axis has changed.
+*/
+/*!
+  \qmlsignal ValueAxis::minorTickCountChanged(int minorTickCount)
+  Axis emits signal when \a minorTickCount of axis has changed.
 */
 
 /*!
@@ -247,6 +267,21 @@ int QValueAxis::tickCount() const
     return d->m_tickCount;
 }
 
+void QValueAxis::setMinorTickCount(int count)
+{
+    Q_D(QValueAxis);
+    if (d->m_minorTickCount != count && count >= 0) {
+        d->m_minorTickCount = count;
+        emit minorTickCountChanged(count);
+    }
+}
+
+int QValueAxis::minorTickCount() const
+{
+    Q_D(const QValueAxis);
+    return d->m_minorTickCount;
+}
+
 void QValueAxis::setLabelFormat(const QString &format)
 {
     Q_D(QValueAxis);
@@ -295,6 +330,7 @@ QValueAxisPrivate::QValueAxisPrivate(QValueAxis *q)
       m_min(0),
       m_max(0),
       m_tickCount(5),
+      m_minorTickCount(0),
       m_format(QString::null),
       m_applying(false)
 {

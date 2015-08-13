@@ -52,6 +52,8 @@ MainWindow::MainWindow(QWidget *parent) :
     m_titleVisible(true),
     m_gridVisible(true),
     m_arrowVisible(true),
+    m_minorGridVisible(true),
+    m_minorArrowVisible(true),
     m_angularShadesBrush(new QBrush(Qt::NoBrush)),
     m_radialShadesBrush(new QBrush(Qt::NoBrush)),
     m_labelBrush(new QBrush(Qt::black)),
@@ -62,6 +64,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_radialShadesPen(new QPen(Qt::NoPen)),
     m_gridPen(new QPen(QRgb(0x010101))),  // Note: Pure black is default color, so it gets overridden by
     m_arrowPen(new QPen(QRgb(0x010101))), // default theme if set to that initially. This is an example of workaround.
+    m_minorGridPen(new QPen(QBrush(QRgb(0x010101)), 1, Qt::DashLine)),
     m_backgroundPen(new QPen(Qt::NoPen)),
     m_plotAreaBackgroundPen(new QPen(Qt::NoPen)),
     m_labelFormat(QString("%.2f")),
@@ -126,6 +129,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->angularTicksSpin, SIGNAL(valueChanged(int)), this, SLOT(angularTicksChanged(int)));
     connect(ui->radialTicksSpin, SIGNAL(valueChanged(int)), this, SLOT(radialTicksChanged(int)));
+    connect(ui->angularMinorTicksSpin, SIGNAL(valueChanged(int)), this, SLOT(angularMinorTicksChanged(int)));
+    connect(ui->radialMinorTicksSpin, SIGNAL(valueChanged(int)), this, SLOT(radialMinorTicksChanged(int)));
     connect(ui->anglesSpin, SIGNAL(valueChanged(int)), this, SLOT(anglesChanged(int)));
     connect(ui->radialMinSpin, SIGNAL(valueChanged(double)), this, SLOT(radialMinChanged(double)));
     connect(ui->radialMaxSpin, SIGNAL(valueChanged(double)), this, SLOT(radialMaxChanged(double)));
@@ -142,6 +147,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->titleFontSizeSpin, SIGNAL(valueChanged(int)), this, SLOT(titleFontSizeChanged(int)));
     connect(ui->titleComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(titleIndexChanged(int)));
     connect(ui->gridComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(gridIndexChanged(int)));
+    connect(ui->minorGridComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(minorGridIndexChanged(int)));
     connect(ui->arrowComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(arrowIndexChanged(int)));
     connect(ui->logBaseSpin, SIGNAL(valueChanged(double)), this, SLOT(logBaseChanged(double)));
     connect(ui->angularAxisComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(angularAxisIndexChanged(int)));
@@ -439,6 +445,8 @@ void MainWindow::setAngularAxis(MainWindow::AxisMode mode)
     m_angularAxis->setGridLineVisible(m_gridVisible);
     m_angularAxis->setLinePen(*m_arrowPen);
     m_angularAxis->setLineVisible(m_arrowVisible);
+    m_angularAxis->setMinorGridLinePen(*m_minorGridPen);
+    m_angularAxis->setMinorGridLineVisible(m_minorGridVisible);
 
     m_chart->addAxis(m_angularAxis, QPolarChart::PolarOrientationAngular);
 
@@ -507,6 +515,8 @@ void MainWindow::setRadialAxis(MainWindow::AxisMode mode)
     m_radialAxis->setGridLineVisible(m_gridVisible);
     m_radialAxis->setLinePen(*m_arrowPen);
     m_radialAxis->setLineVisible(m_arrowVisible);
+    m_radialAxis->setMinorGridLinePen(*m_minorGridPen);
+    m_radialAxis->setMinorGridLineVisible(m_minorGridVisible);
 
     m_chart->addAxis(m_radialAxis, QPolarChart::PolarOrientationRadial);
 
@@ -570,6 +580,22 @@ void MainWindow::radialTicksChanged(int value)
         static_cast<QValueAxis *>(m_radialAxis)->setTickCount(m_radialTickCount);
     else if (m_radialAxisMode == AxisModeDateTime)
         static_cast<QDateTimeAxis *>(m_radialAxis)->setTickCount(m_radialTickCount);
+}
+
+void MainWindow::angularMinorTicksChanged(int value)
+{
+    // Minor tick valid only for QValueAxis
+    m_angularMinorTickCount = value;
+    if (m_angularAxisMode == AxisModeValue)
+        static_cast<QValueAxis *>(m_angularAxis)->setMinorTickCount(m_angularMinorTickCount);
+}
+
+void MainWindow::radialMinorTicksChanged(int value)
+{
+    // Minor tick valid only for QValueAxis
+    m_radialMinorTickCount = value;
+    if (m_radialAxisMode == AxisModeValue)
+        static_cast<QValueAxis *>(m_radialAxis)->setMinorTickCount(m_radialMinorTickCount);
 }
 
 void MainWindow::anglesChanged(int value)
@@ -860,6 +886,36 @@ void MainWindow::gridIndexChanged(int index)
     m_radialAxis->setGridLineVisible(m_gridVisible);
 }
 
+void MainWindow::minorGridIndexChanged(int index)
+{
+    delete m_minorGridPen;
+
+    switch (index) {
+    case 0:
+        m_minorGridPen = new QPen(Qt::NoPen);
+        m_minorGridVisible = false;
+        break;
+    case 1:
+        m_minorGridPen = new QPen(Qt::black);
+        m_minorGridPen->setStyle(Qt::DashLine);
+        m_minorGridVisible = true;
+        break;
+    case 2:
+        m_minorGridPen = new QPen(Qt::green);
+        m_minorGridPen->setStyle(Qt::DotLine);
+        m_minorGridPen->setWidth(1);
+        m_minorGridVisible = true;
+        break;
+    default:
+        break;
+    }
+
+    m_angularAxis->setMinorGridLinePen(*m_minorGridPen);
+    m_angularAxis->setMinorGridLineVisible(m_minorGridVisible);
+    m_radialAxis->setMinorGridLinePen(*m_minorGridPen);
+    m_radialAxis->setMinorGridLineVisible(m_minorGridVisible);
+}
+
 void MainWindow::arrowIndexChanged(int index)
 {
     delete m_arrowPen;
@@ -913,6 +969,7 @@ void MainWindow::angularAxisIndexChanged(int index)
         break;
     case 1:
         setAngularAxis(AxisModeValue);
+        angularMinorTicksChanged(ui->angularMinorTicksSpin->value());
         break;
     case 2:
         setAngularAxis(AxisModeLogValue);
@@ -936,6 +993,7 @@ void MainWindow::radialAxisIndexChanged(int index)
         break;
     case 1:
         setRadialAxis(AxisModeValue);
+        radialMinorTicksChanged(ui->radialMinorTicksSpin->value());
         break;
     case 2:
         setRadialAxis(AxisModeLogValue);

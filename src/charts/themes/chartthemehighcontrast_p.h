@@ -59,6 +59,9 @@ public:
         m_axisLinePen.setWidth(2);
         m_gridLinePen = QPen(QRgb(0x8c8c8c));
         m_gridLinePen.setWidth(1);
+        m_minorGridLinePen = QPen(QRgb(0x8c8c8c));
+        m_minorGridLinePen.setWidth(1);
+        m_minorGridLinePen.setStyle(Qt::DashLine);
         m_backgroundShadesBrush = QBrush(QRgb(0xffeecd));
         m_backgroundShades = BackgroundShadesHorizontal;
         m_outlinePen = QPen(QColor(Qt::black));

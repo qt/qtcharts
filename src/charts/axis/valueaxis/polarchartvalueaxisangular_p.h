@@ -29,6 +29,7 @@
 #define POLARCHARTVALUEAXISANGULAR_P_H
 
 #include <private/polarchartaxisangular_p.h>
+#include <QtCharts/QValueAxis>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -46,6 +47,7 @@ public:
 
 private Q_SLOTS:
     void handleTickCountChanged(int tick);
+    void handleMinorTickCountChanged(int tick);
     void handleLabelFormatChanged(const QString &format);
 };
 

@@ -66,6 +66,7 @@ public:
     BackgroundShadesMode backgroundShades() const { return m_backgroundShades; }
     bool isBackgroundDropShadowEnabled() const { return m_backgroundDropShadowEnabled; }
     QPen girdLinePen() const { return m_gridLinePen; }
+    QPen minorGridLinePen() const { return m_minorGridLinePen; }
 
 protected:
     QChart::ChartTheme m_id;
@@ -83,6 +84,7 @@ protected:
     BackgroundShadesMode m_backgroundShades;
     bool m_backgroundDropShadowEnabled;
     QPen m_gridLinePen;
+    QPen m_minorGridLinePen;
 
 };
 

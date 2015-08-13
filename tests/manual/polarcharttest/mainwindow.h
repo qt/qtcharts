@@ -51,6 +51,8 @@ public:
 public slots:
     void angularTicksChanged(int value);
     void radialTicksChanged(int value);
+    void angularMinorTicksChanged(int value);
+    void radialMinorTicksChanged(int value);
     void anglesChanged(int value);
     void angularMinChanged(double value);
     void angularMaxChanged(double value);
@@ -67,6 +69,7 @@ public slots:
     void titleFontChanged(const QFont &font);
     void titleFontSizeChanged(int value);
     void gridIndexChanged(int index);
+    void minorGridIndexChanged(int index);
     void arrowIndexChanged(int index);
     void angularRangeChanged(qreal min, qreal max);
     void radialRangeChanged(qreal min, qreal max);
@@ -109,6 +112,8 @@ private:
 
     int m_angularTickCount;
     int m_radialTickCount;
+    int m_angularMinorTickCount;
+    int m_radialMinorTickCount;
     qreal m_labelsAngle;
     qreal m_angularMin;
     qreal m_angularMax;
@@ -120,6 +125,8 @@ private:
     bool m_titleVisible;
     bool m_gridVisible;
     bool m_arrowVisible;
+    bool m_minorGridVisible;
+    bool m_minorArrowVisible;
     QBrush *m_angularShadesBrush;
     QBrush *m_radialShadesBrush;
     QBrush *m_labelBrush;
@@ -130,6 +137,7 @@ private:
     QPen *m_radialShadesPen;
     QPen *m_gridPen;
     QPen *m_arrowPen;
+    QPen *m_minorGridPen;
     QPen *m_backgroundPen;
     QPen *m_plotAreaBackgroundPen;
     QString m_labelFormat;

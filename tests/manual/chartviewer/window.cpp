@@ -23,6 +23,7 @@
 #include <QtCharts/QChartView>
 #include <QtCharts/QAreaSeries>
 #include <QtCharts/QLegend>
+#include <QtCharts/QValueAxis>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QFormLayout>
 #include <QtWidgets/QComboBox>
@@ -50,6 +51,10 @@ Window::Window(const QVariantHash &parameters, QWidget *parent)
       m_legendComboBox(0),
       m_templateComboBox(0),
       m_viewComboBox(0),
+      m_xTickSpinBox(0),
+      m_yTickSpinBox(0),
+      m_minorXTickSpinBox(0),
+      m_minorYTickSpinBox(0),
       m_openGLCheckBox(0),
       m_zoomCheckBox(0),
       m_scrollCheckBox(0),
@@ -78,6 +83,14 @@ Window::Window(const QVariantHash &parameters, QWidget *parent)
     settingsLayout->addItem(m_widgetHash["templateComboBox"]);
     settingsLayout->addItem(m_widgetHash["scrollCheckBox"]);
     settingsLayout->addItem(m_widgetHash["zoomCheckBox"]);
+    settingsLayout->addItem(m_widgetHash["xTickLabel"]);
+    settingsLayout->addItem(m_widgetHash["xTickSpinBox"]);
+    settingsLayout->addItem(m_widgetHash["yTickLabel"]);
+    settingsLayout->addItem(m_widgetHash["yTickSpinBox"]);
+    settingsLayout->addItem(m_widgetHash["minorXTickLabel"]);
+    settingsLayout->addItem(m_widgetHash["minorXTickSpinBox"]);
+    settingsLayout->addItem(m_widgetHash["minorYTickLabel"]);
+    settingsLayout->addItem(m_widgetHash["minorYTickSpinBox"]);
     settingsLayout->addStretch();
 
     m_baseLayout->setOrientation(Qt::Horizontal);
@@ -114,6 +127,10 @@ void Window::connectSignals()
     QObject::connect(m_form, SIGNAL(geometryChanged()), this , SLOT(handleGeometryChanged()));
     QObject::connect(m_viewComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateUI()));
     QObject::connect(m_themeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateUI()));
+    QObject::connect(m_xTickSpinBox, SIGNAL(valueChanged(int)), this, SLOT(updateUI()));
+    QObject::connect(m_yTickSpinBox, SIGNAL(valueChanged(int)), this, SLOT(updateUI()));
+    QObject::connect(m_minorXTickSpinBox, SIGNAL(valueChanged(int)), this, SLOT(updateUI()));
+    QObject::connect(m_minorYTickSpinBox, SIGNAL(valueChanged(int)), this, SLOT(updateUI()));
     QObject::connect(m_antialiasCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateUI()));
     QObject::connect(m_openGLCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateUI()));
     QObject::connect(m_zoomCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateUI()));
@@ -128,6 +145,14 @@ void Window::createProxyWidgets()
 {
     m_themeComboBox = createThemeBox();
     m_viewComboBox = createViewBox();
+    m_xTickSpinBox = new QSpinBox();
+    m_xTickSpinBox->setMinimum(2);
+    m_xTickSpinBox->setValue(5);
+    m_yTickSpinBox = new QSpinBox();
+    m_yTickSpinBox->setMinimum(2);
+    m_yTickSpinBox->setValue(5);
+    m_minorXTickSpinBox = new QSpinBox();
+    m_minorYTickSpinBox = new QSpinBox();
     m_antialiasCheckBox = new QCheckBox(tr("Anti-aliasing"));
     m_animatedComboBox = createAnimationBox();
     m_legendComboBox = createLegendBox();
@@ -141,6 +166,14 @@ void Window::createProxyWidgets()
     m_widgetHash["antialiasCheckBox"] = m_scene->addWidget(m_antialiasCheckBox);
     m_widgetHash["animatedComboBox"] = m_scene->addWidget(m_animatedComboBox);
     m_widgetHash["legendComboBox"] = m_scene->addWidget(m_legendComboBox);
+    m_widgetHash["xTickLabel"] = m_scene->addWidget(new QLabel("X Tick"));
+    m_widgetHash["xTickSpinBox"] = m_scene->addWidget(m_xTickSpinBox);
+    m_widgetHash["yTickLabel"] = m_scene->addWidget(new QLabel("Y Tick"));
+    m_widgetHash["yTickSpinBox"] = m_scene->addWidget(m_yTickSpinBox);
+    m_widgetHash["minorXTickLabel"] = m_scene->addWidget(new QLabel("Minor X Tick"));
+    m_widgetHash["minorXTickSpinBox"] = m_scene->addWidget(m_minorXTickSpinBox);
+    m_widgetHash["minorYTickLabel"] = m_scene->addWidget(new QLabel("Minor Y Tick"));
+    m_widgetHash["minorYTickSpinBox"] = m_scene->addWidget(m_minorYTickSpinBox);
     m_widgetHash["openGLCheckBox"] = m_scene->addWidget(m_openGLCheckBox);
     m_widgetHash["themeLabel"] = m_scene->addWidget(new QLabel("Theme"));
     m_widgetHash["animationsLabel"] = m_scene->addWidget(new QLabel("Animations"));
@@ -288,6 +321,10 @@ void Window::updateUI()
     checkAnimationOptions();
     checkLegend();
     checkState();
+    checkXTick();
+    checkYTick();
+    checkMinorXTick();
+    checkMinorYTick();
 }
 
 void Window::checkView()
@@ -296,6 +333,50 @@ void Window::checkView()
     if(m_grid->size()!=count){
         m_grid->setSize(count);
         m_template = 0;
+    }
+}
+
+void Window::checkXTick()
+{
+    foreach (QChart *chart, m_grid->charts()) {
+        if (qobject_cast<QValueAxis *>(chart->axisX())) {
+            QValueAxis *valueAxis = qobject_cast<QValueAxis *>(chart->axisX());
+            valueAxis->setGridLineVisible();
+            valueAxis->setTickCount(m_xTickSpinBox->value());
+        }
+    }
+}
+
+void Window::checkYTick()
+{
+    foreach (QChart *chart, m_grid->charts()) {
+        if (qobject_cast<QValueAxis *>(chart->axisY())) {
+            QValueAxis *valueAxis = qobject_cast<QValueAxis *>(chart->axisY());
+            valueAxis->setGridLineVisible();
+            valueAxis->setTickCount(m_yTickSpinBox->value());
+        }
+    }
+}
+
+void Window::checkMinorXTick()
+{
+    foreach (QChart *chart, m_grid->charts()) {
+        if (qobject_cast<QValueAxis *>(chart->axisX())) {
+            QValueAxis *valueAxis = qobject_cast<QValueAxis *>(chart->axisX());
+            valueAxis->setMinorGridLineVisible();
+            valueAxis->setMinorTickCount(m_minorXTickSpinBox->value());
+        }
+    }
+}
+
+void Window::checkMinorYTick()
+{
+    foreach (QChart *chart, m_grid->charts()) {
+        if (qobject_cast<QValueAxis *>(chart->axisY())) {
+            QValueAxis *valueAxis = qobject_cast<QValueAxis *>(chart->axisY());
+            valueAxis->setMinorGridLineVisible();
+            valueAxis->setMinorTickCount(m_minorYTickSpinBox->value());
+        }
     }
 }
 

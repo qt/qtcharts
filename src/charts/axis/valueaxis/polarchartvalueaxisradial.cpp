@@ -26,6 +26,8 @@ PolarChartValueAxisRadial::PolarChartValueAxisRadial(QValueAxis *axis, QGraphics
     : PolarChartAxisRadial(axis, item)
 {
     QObject::connect(axis, SIGNAL(tickCountChanged(int)), this, SLOT(handleTickCountChanged(int)));
+    QObject::connect(axis, SIGNAL(minorTickCountChanged(int)),
+                     this, SLOT(handleMinorTickCountChanged(int)));
     QObject::connect(axis, SIGNAL(labelFormatChanged(QString)), this, SLOT(handleLabelFormatChanged(QString)));
 }
 
@@ -57,6 +59,14 @@ void PolarChartValueAxisRadial::createAxisLabels(const QVector<qreal> &layout)
 }
 
 void PolarChartValueAxisRadial::handleTickCountChanged(int tick)
+{
+    Q_UNUSED(tick);
+    QGraphicsLayoutItem::updateGeometry();
+    if (presenter())
+        presenter()->layout()->invalidate();
+}
+
+void PolarChartValueAxisRadial::handleMinorTickCountChanged(int tick)
 {
     Q_UNUSED(tick);
     QGraphicsLayoutItem::updateGeometry();

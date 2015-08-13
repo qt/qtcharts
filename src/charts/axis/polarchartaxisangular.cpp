@@ -51,6 +51,8 @@ void PolarChartAxisAngular::updateGeometry()
     QList<QGraphicsItem *> gridItemList = gridItems();
     QList<QGraphicsItem *> labelItemList = labelItems();
     QList<QGraphicsItem *> shadeItemList = shadeItems();
+    QList<QGraphicsItem *> minorGridItemList = minorGridItems();
+    QList<QGraphicsItem *> minorArrowItemList = minorArrowItems();
     QGraphicsTextItem *title = titleItem();
 
     QGraphicsEllipseItem *axisLine = static_cast<QGraphicsEllipseItem *>(arrowItemList.at(0));
@@ -217,6 +219,36 @@ void PolarChartAxisAngular::updateGeometry()
             shadeItem->setVisible(true);
             firstShade = false;
         }
+
+        // Minor ticks
+        QValueAxis *valueAxis = qobject_cast<QValueAxis *>(axis());
+        if ((i + 1) != layout.size() && valueAxis) {
+            int minorTickCount = valueAxis->minorTickCount();
+            if (minorTickCount != 0) {
+                qreal minorAngularCoordinate = (layout[i + 1] - layout[i])
+                        / qreal(minorTickCount + 1);
+                for (int j = 0; j < minorTickCount; j++) {
+                    QGraphicsLineItem *minorGridItem =
+                            static_cast<QGraphicsLineItem *>(minorGridItemList.at(i * minorTickCount + j));
+                    QGraphicsLineItem *minorTickItem =
+                            static_cast<QGraphicsLineItem *>(minorArrowItemList.at(i * minorTickCount + j));
+                    qreal minorAngle = 90.0 - angularCoordinate
+                            - minorAngularCoordinate * qreal(j + 1);
+                    QLineF minorGridLine = QLineF::fromPolar(radius, minorAngle);
+                    minorGridLine.translate(center);
+                    minorGridItem->setLine(minorGridLine);
+                    minorGridItem->setVisible(true);
+
+                    QLineF minorTickLine(QLineF::fromPolar(radius - tickWidth() + 1,
+                                                           minorAngle).p2(),
+                                         QLineF::fromPolar(radius + tickWidth() - 1,
+                                                           minorAngle).p2());
+                    minorTickLine.translate(center);
+                    minorTickItem->setLine(minorTickLine);
+                    minorTickItem->setVisible(true);
+                }
+            }
+        }
     }
 
     // Title, centered above the chart
@@ -296,6 +328,19 @@ void PolarChartAxisAngular::handleArrowPenChanged(const QPen &pen)
 void PolarChartAxisAngular::handleGridPenChanged(const QPen &pen)
 {
     foreach (QGraphicsItem *item, gridItems())
+        static_cast<QGraphicsLineItem *>(item)->setPen(pen);
+}
+
+void PolarChartAxisAngular::handleMinorArrowPenChanged(const QPen &pen)
+{
+    foreach (QGraphicsItem *item, minorArrowItems()) {
+        static_cast<QGraphicsLineItem *>(item)->setPen(pen);
+    }
+}
+
+void PolarChartAxisAngular::handleMinorGridPenChanged(const QPen &pen)
+{
+    foreach (QGraphicsItem *item, minorGridItems())
         static_cast<QGraphicsLineItem *>(item)->setPen(pen);
 }
 
@@ -425,6 +470,36 @@ QRectF PolarChartAxisAngular::moveLabelToPosition(qreal angularCoordinate, QPoin
         labelRect.moveCenter(labelPoint + QPointF(0, -labelRect.height() / 2.0));
     return labelRect;
 }
+
+void PolarChartAxisAngular::updateMinorTickItems()
+{
+    QValueAxis *valueAxis = qobject_cast<QValueAxis *>(this->axis());
+    if (valueAxis) {
+        int currentCount = minorArrowItems().size();
+        int expectedCount = valueAxis->minorTickCount() * (valueAxis->tickCount() - 1);
+        int diff = expectedCount - currentCount;
+        if (diff > 0) {
+            for (int i = 0; i < diff; i++) {
+                QGraphicsLineItem *minorArrow = new QGraphicsLineItem(presenter()->rootItem());
+                QGraphicsLineItem *minorGrid = new QGraphicsLineItem(presenter()->rootItem());
+                minorArrow->setPen(valueAxis->linePen());
+                minorGrid->setPen(valueAxis->minorGridLinePen());
+                minorArrowGroup()->addToGroup(minorArrow);
+                minorGridGroup()->addToGroup(minorGrid);
+            }
+        } else {
+            QList<QGraphicsItem *> minorGridLines = minorGridItems();
+            QList<QGraphicsItem *> minorArrows = minorArrowItems();
+            for (int i = 0; i > diff; i--) {
+                if (!minorGridLines.isEmpty())
+                    delete(minorGridLines.takeLast());
+                if (!minorArrows.isEmpty())
+                    delete(minorArrows.takeLast());
+            }
+        }
+    }
+}
+
 
 #include "moc_polarchartaxisangular_p.cpp"
 

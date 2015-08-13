@@ -114,6 +114,15 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
+  \property QAbstractAxis::minorGridVisible
+  The visibility of the minor grid lines. Applies only to QValueAxis.
+*/
+/*!
+  \qmlproperty bool AbstractAxis::minorGridVisible
+  The visibility of the minor grid lines. Applies only to QValueAxis.
+*/
+
+/*!
   \property QAbstractAxis::color
   The color of the axis and ticks.
 */
@@ -125,6 +134,11 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
   \property QAbstractAxis::gridLinePen
   The pen of the grid line.
+*/
+
+/*!
+  \property QAbstractAxis::minorGridLinePen
+  The pen of the minor grid line. Applies only to QValueAxis.
 */
 
 /*!
@@ -326,8 +340,22 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
+  \fn void QAbstractAxis::minorGridVisibleChanged(bool visible)
+  Visibility of the minor grid lines of the axis has changed to \a visible.
+*/
+/*!
+  \qmlsignal AbstractAxis::onMinorGridVisibleChanged(bool visible)
+  Visibility of the minor grid lines of the axis has changed to \a visible.
+*/
+
+/*!
   \fn void QAbstractAxis::gridLinePenChanged(const QPen& pen)
   The pen of the grid line has changed to \a pen.
+*/
+
+/*!
+  \fn void QAbstractAxis::minorGridLinePenChanged(const QPen& pen)
+  The pen of the minor grid line has changed to \a pen.
 */
 
 /*!
@@ -505,6 +533,19 @@ bool QAbstractAxis::isGridLineVisible() const
     return d_ptr->m_gridLineVisible;
 }
 
+void QAbstractAxis::setMinorGridLineVisible(bool visible)
+{
+    if (d_ptr->m_minorGridLineVisible != visible) {
+        d_ptr->m_minorGridLineVisible = visible;
+        emit minorGridVisibleChanged(visible);
+    }
+}
+
+bool QAbstractAxis::isMinorGridLineVisible() const
+{
+    return d_ptr->m_minorGridLineVisible;
+}
+
 /*!
   Sets \a pen used to draw grid line.
 */
@@ -525,6 +566,22 @@ QPen QAbstractAxis::gridLinePen() const
         return QPen();
     else
         return d_ptr->m_gridLinePen;
+}
+
+void QAbstractAxis::setMinorGridLinePen(const QPen &pen)
+{
+    if (d_ptr->m_minorGridLinePen != pen) {
+        d_ptr->m_minorGridLinePen = pen;
+        emit minorGridLinePenChanged(pen);
+    }
+}
+
+QPen QAbstractAxis::minorGridLinePen() const
+{
+    if (d_ptr->m_minorGridLinePen == QChartPrivate::defaultPen())
+        return QPen();
+    else
+        return d_ptr->m_minorGridLinePen;
 }
 
 void QAbstractAxis::setLabelsVisible(bool visible)
@@ -873,6 +930,8 @@ QAbstractAxisPrivate::QAbstractAxisPrivate(QAbstractAxis *q)
       m_axisBrush(QChartPrivate::defaultBrush()),
       m_gridLineVisible(true),
       m_gridLinePen(QChartPrivate::defaultPen()),
+      m_minorGridLineVisible(true),
+      m_minorGridLinePen(QChartPrivate::defaultPen()),
       m_labelsVisible(true),
       m_labelsBrush(QChartPrivate::defaultBrush()),
       m_labelsFont(QChartPrivate::defaultFont()),
@@ -918,6 +977,8 @@ void QAbstractAxisPrivate::initializeTheme(ChartTheme* theme, bool forced)
 
     if (forced || QChartPrivate::defaultPen() == m_gridLinePen)
         q_ptr->setGridLinePen(theme->girdLinePen());
+    if (forced || QChartPrivate::defaultPen() == m_minorGridLinePen)
+        q_ptr->setMinorGridLinePen(theme->minorGridLinePen());
 
     if (forced || QChartPrivate::defaultBrush() == m_labelsBrush)
         q_ptr->setLabelsBrush(theme->labelBrush());

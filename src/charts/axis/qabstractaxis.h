@@ -46,6 +46,8 @@ class QT_CHARTS_EXPORT QAbstractAxis : public QObject
     //grid
     Q_PROPERTY(bool gridVisible READ isGridLineVisible WRITE setGridLineVisible NOTIFY gridVisibleChanged)
     Q_PROPERTY(QPen gridLinePen READ gridLinePen WRITE setGridLinePen NOTIFY gridLinePenChanged)
+    Q_PROPERTY(bool minorGridVisible READ isMinorGridLineVisible WRITE setMinorGridLineVisible NOTIFY minorGridVisibleChanged)
+    Q_PROPERTY(QPen minorGridLinePen READ minorGridLinePen WRITE setMinorGridLinePen NOTIFY minorGridLinePenChanged)
     //shades
     Q_PROPERTY(bool shadesVisible READ shadesVisible WRITE setShadesVisible NOTIFY shadesVisibleChanged)
     Q_PROPERTY(QColor shadesColor READ shadesColor WRITE setShadesColor NOTIFY shadesColorChanged)
@@ -103,6 +105,10 @@ public:
     void setGridLineVisible(bool visible = true);
     void setGridLinePen(const QPen &pen);
     QPen gridLinePen() const;
+    bool isMinorGridLineVisible() const;
+    void setMinorGridLineVisible(bool visible = true);
+    void setMinorGridLinePen(const QPen &pen);
+    QPen minorGridLinePen() const;
 
     //labels handling
     bool labelsVisible() const;
@@ -160,6 +166,8 @@ Q_SIGNALS:
     void labelsAngleChanged(int angle);
     void gridLinePenChanged(const QPen &pen);
     void gridVisibleChanged(bool visible);
+    void minorGridVisibleChanged(bool visible);
+    void minorGridLinePenChanged(const QPen &pen);
     void colorChanged(QColor color);
     void labelsColorChanged(QColor color);
     void titleTextChanged(const QString &title);

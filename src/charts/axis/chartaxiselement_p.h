@@ -96,14 +96,18 @@ protected:
     virtual void updateLayout(QVector<qreal> &layout) = 0;
 
     QList<QGraphicsItem *> gridItems() { return m_grid->childItems(); }
+    QList<QGraphicsItem *> minorGridItems() { return m_minorGrid->childItems(); }
     QList<QGraphicsItem *> labelItems() { return m_labels->childItems(); }
     QList<QGraphicsItem *> shadeItems() { return m_shades->childItems(); }
     QList<QGraphicsItem *> arrowItems() { return m_arrow->childItems(); }
+    QList<QGraphicsItem *> minorArrowItems() { return m_minorArrow->childItems(); }
     QGraphicsTextItem *titleItem() const { return m_title.data(); }
     QGraphicsItemGroup *gridGroup() { return m_grid.data(); }
+    QGraphicsItemGroup *minorGridGroup() { return m_minorGrid.data(); }
     QGraphicsItemGroup *labelGroup() { return m_labels.data(); }
     QGraphicsItemGroup *shadeGroup() { return m_shades.data(); }
     QGraphicsItemGroup *arrowGroup() { return m_arrow.data(); }
+    QGraphicsItemGroup *minorArrowGroup() { return m_minorArrow.data(); }
 
 public Q_SLOTS:
     void handleVisibleChanged(bool visible);
@@ -116,6 +120,8 @@ public Q_SLOTS:
     virtual void handleShadesPenChanged(const QPen &pen) = 0;
     virtual void handleArrowPenChanged(const QPen &pen) = 0;
     virtual void handleGridPenChanged(const QPen &pen) = 0;
+    virtual void handleMinorArrowPenChanged(const QPen &pen) = 0;
+    virtual void handleMinorGridPenChanged(const QPen &pen) = 0;
     void handleLabelsBrushChanged(const QBrush &brush);
     void handleLabelsFontChanged(const QFont &font);
     void handleTitleBrushChanged(const QBrush &brush);
@@ -124,6 +130,9 @@ public Q_SLOTS:
     void handleTitleVisibleChanged(bool visible);
     void handleRangeChanged(qreal min, qreal max);
     void handleReverseChanged(bool reverse);
+    void handleMinorArrowVisibleChanged(bool visible);
+    void handleMinorGridVisibleChanged(bool visible);
+
 
 Q_SIGNALS:
     void clicked();
@@ -141,6 +150,8 @@ private:
     QRectF m_axisRect;
     QScopedPointer<QGraphicsItemGroup> m_grid;
     QScopedPointer<QGraphicsItemGroup> m_arrow;
+    QScopedPointer<QGraphicsItemGroup> m_minorGrid;
+    QScopedPointer<QGraphicsItemGroup> m_minorArrow;
     QScopedPointer<QGraphicsItemGroup> m_shades;
     QScopedPointer<QGraphicsItemGroup> m_labels;
     QScopedPointer<QGraphicsTextItem> m_title;
