@@ -101,6 +101,10 @@
     qmake
     \endcode
 
+    qmake should be run from the folder where Qt has been installed. For example,
+    if Qt is built with -prefix /opt/MyXCompiledQt, then qmake should be run
+    from /opt/MyXCompiledQt/bin/qmake.
+
     After running qmake, build the project with make:
     \table
     \header
