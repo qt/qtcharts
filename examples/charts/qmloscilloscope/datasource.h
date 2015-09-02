@@ -34,7 +34,7 @@ class DataSource : public QObject
 public:
     explicit DataSource(QQuickView *appViewer, QObject *parent = 0);
 
-signals:
+Q_SIGNALS:
 
 public slots:
     void generateData(int type, int rowCount, int colCount);

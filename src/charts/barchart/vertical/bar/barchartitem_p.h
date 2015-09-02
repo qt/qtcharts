@@ -41,7 +41,7 @@ class BarChartItem : public AbstractBarChartItem
 public:
     BarChartItem(QAbstractBarSeries *series, QGraphicsItem* item = 0);
 
-private slots:
+private Q_SLOTS:
     void handleLabelsPositionChanged();
     void positionLabels();
 

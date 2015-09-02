@@ -21,6 +21,9 @@
 
 // this is needed by the designer plugin.
 
+#ifdef QT_CHARTS_USE_NAMESPACE
 QT_CHARTS_USE_NAMESPACE
+#endif
+
 
 #endif /* CHARTSNAMESPACE_H */

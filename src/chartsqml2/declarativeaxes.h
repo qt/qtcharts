@@ -52,7 +52,7 @@ public:
     void emitAxisXTopChanged() { emit axisXTopChanged(m_axisXTop); }
     void emitAxisYRightChanged() { emit axisYRightChanged(m_axisYRight); }
 
-signals:
+Q_SIGNALS:
     void axisXChanged(QAbstractAxis *axis);
     void axisYChanged(QAbstractAxis *axis);
     void axisXTopChanged(QAbstractAxis *axis);

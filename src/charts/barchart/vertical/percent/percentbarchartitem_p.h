@@ -43,7 +43,7 @@ public:
     PercentBarChartItem(QAbstractBarSeries *series, QGraphicsItem* item = 0);
     void handleUpdatedBars();
 
-private slots:
+private Q_SLOTS:
     void handleLabelsPositionChanged();
     void positionLabels();
 

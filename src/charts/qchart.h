@@ -160,7 +160,7 @@ public:
 
     ChartType chartType() const;
 
-signals:
+Q_SIGNALS:
     void plotAreaChanged(const QRectF &plotArea);
 
 protected:

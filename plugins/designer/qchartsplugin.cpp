@@ -48,7 +48,7 @@ QString QChartsPlugin::includeFile() const
     QString myNewLine = QStringLiteral("\n");
 #endif
     return QStringLiteral("<QtCharts/QChartView>") + myNewLine
-            + QStringLiteral("#include <chartsnamespace.h>");
+            + QStringLiteral("#include <QtCharts/chartsnamespace.h>");
 }
 
 QString QChartsPlugin::group() const

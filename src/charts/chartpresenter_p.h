@@ -167,7 +167,7 @@ public Q_SLOTS:
     void handleAxisAdded(QAbstractAxis *axis);
     void handleAxisRemoved(QAbstractAxis *axis);
 
-signals:
+Q_SIGNALS:
     void plotAreaChanged(const QRectF &plotArea);
 
 private:

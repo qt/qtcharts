@@ -79,7 +79,7 @@ Q_SIGNALS:
     void updatedLayout();
     void restructuredBoxes();
 
-private slots:
+private Q_SLOTS:
     void handleSeriesChange(QAbstractSeries *series);
     void handleSeriesRemove(QAbstractSeries *series);
 

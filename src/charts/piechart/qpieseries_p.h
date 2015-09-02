@@ -58,7 +58,7 @@ public:
 
     static QPieSeriesPrivate *fromSeries(QPieSeries *series);
 
-signals:
+Q_SIGNALS:
     void calculatedDataChanged();
     void pieSizeChanged();
     void pieStartAngleChanged();
