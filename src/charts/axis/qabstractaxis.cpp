@@ -976,7 +976,7 @@ void QAbstractAxisPrivate::initializeTheme(ChartTheme* theme, bool forced)
         q_ptr->setLinePen(theme->axisLinePen());
 
     if (forced || QChartPrivate::defaultPen() == m_gridLinePen)
-        q_ptr->setGridLinePen(theme->girdLinePen());
+        q_ptr->setGridLinePen(theme->gridLinePen());
     if (forced || QChartPrivate::defaultPen() == m_minorGridLinePen)
         q_ptr->setMinorGridLinePen(theme->minorGridLinePen());
 

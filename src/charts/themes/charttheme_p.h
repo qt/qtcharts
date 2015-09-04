@@ -65,7 +65,7 @@ public:
     QBrush backgroundShadesBrush() const { return m_backgroundShadesBrush; }
     BackgroundShadesMode backgroundShades() const { return m_backgroundShades; }
     bool isBackgroundDropShadowEnabled() const { return m_backgroundDropShadowEnabled; }
-    QPen girdLinePen() const { return m_gridLinePen; }
+    QPen gridLinePen() const { return m_gridLinePen; }
     QPen minorGridLinePen() const { return m_minorGridLinePen; }
 
 protected:
