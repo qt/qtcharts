@@ -54,7 +54,7 @@ void AbstractChartLayout::setGeometry(const QRectF &rect)
 
         contentGeometry = calculateContentGeometry(contentGeometry);
 
-        if (title && title->isVisible())
+        if (title && title->isVisible() && !title->text().isEmpty())
             contentGeometry = calculateTitleGeometry(contentGeometry, title);
 
         if (legend->isAttachedToChart() && legend->isVisible())
