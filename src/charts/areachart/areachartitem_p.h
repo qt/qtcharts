@@ -110,14 +110,17 @@ public:
 
     void updateGeometry()
     {
-        // Turn off points drawing from component line chart item, as that
-        // messes up the fill for area series.
-        suppressPoints();
-        // Component lineseries are not necessarily themselves on the chart,
-        // so get the chart type for them from area chart.
-        forceChartType(m_item->series()->chart()->chartType());
-        LineChartItem::updateGeometry();
-        m_item->updatePath();
+        // Make sure the series is in a chart before trying to update
+        if (m_item->series()->chart()) {
+            // Turn off points drawing from component line chart item, as that
+            // messes up the fill for area series.
+            suppressPoints();
+            // Component lineseries are not necessarily themselves on the chart,
+            // so get the chart type for them from area chart.
+            forceChartType(m_item->series()->chart()->chartType());
+            LineChartItem::updateGeometry();
+            m_item->updatePath();
+        }
     }
 
 private:
