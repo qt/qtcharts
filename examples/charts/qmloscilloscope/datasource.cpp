@@ -48,7 +48,7 @@ void DataSource::update(QAbstractSeries *series)
         if (m_index > m_data.count() - 1)
             m_index = 0;
 
-        QList<QPointF> points = m_data.at(m_index);
+        QVector<QPointF> points = m_data.at(m_index);
         // Use replace instead of clear + append, it's optimized for performance
         xySeries->replace(points);
     }
@@ -57,13 +57,14 @@ void DataSource::update(QAbstractSeries *series)
 void DataSource::generateData(int type, int rowCount, int colCount)
 {
     // Remove previous data
-    foreach (QList<QPointF> row, m_data)
+    foreach (QVector<QPointF> row, m_data)
         row.clear();
     m_data.clear();
 
     // Append the new data depending on the type
     for (int i(0); i < rowCount; i++) {
-        QList<QPointF> points;
+        QVector<QPointF> points;
+        points.reserve(colCount);
         for (int j(0); j < colCount; j++) {
             qreal x(0);
             qreal y(0);

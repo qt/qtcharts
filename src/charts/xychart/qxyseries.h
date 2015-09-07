@@ -93,6 +93,7 @@ public:
     QColor pointLabelsColor() const;
 
     void replace(QList<QPointF> points);
+    void replace(QVector<QPointF> points);
 
 Q_SIGNALS:
     void clicked(const QPointF &point);
