@@ -100,9 +100,8 @@ DeclarativeCategoryAxis::AxisLabelsPosition DeclarativeCategoryAxis::labelsPosit
 
 void DeclarativeCategoryAxis::setLabelsPosition(AxisLabelsPosition position)
 {
-    QCategoryAxis::AxisLabelsPosition labelsPosition = (QCategoryAxis::AxisLabelsPosition) position;
-    if (labelsPosition != m_labelsPosition) {
-        QCategoryAxis::setLabelsPosition(labelsPosition);
+    if (position != m_labelsPosition) {
+        QCategoryAxis::setLabelsPosition((QCategoryAxis::AxisLabelsPosition)position);
         emit labelsPositionChanged(position);
     }
 }
