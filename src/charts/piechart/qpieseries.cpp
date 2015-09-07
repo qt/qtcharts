@@ -286,8 +286,8 @@ QT_CHARTS_BEGIN_NAMESPACE
     \sa append(), insert()
 */
 /*!
-    \qmlsignal PieSeries::onAdded(PieSlice slice)
-    Emitted when \a slice has been added to the series.
+    \qmlsignal PieSeries::onAdded(list<PieSlice> slices)
+    Emitted when \a slices have been added to the series.
 */
 
 /*!
@@ -296,7 +296,17 @@ QT_CHARTS_BEGIN_NAMESPACE
     \sa remove()
 */
 /*!
-    \qmlsignal PieSeries::onRemoved(PieSlice slice)
+    \qmlsignal PieSeries::onRemoved(list<PieSlice> slices)
+    Emitted when \a slices have been removed from the series.
+*/
+
+/*!
+    \qmlsignal PieSeries::onSliceAdded(PieSlice slice)
+    Emitted when \a slice has been added to the series.
+*/
+
+/*!
+    \qmlsignal PieSeries::onSliceRemoved(PieSlice slice)
     Emitted when \a slice has been removed from the series.
 */
 
