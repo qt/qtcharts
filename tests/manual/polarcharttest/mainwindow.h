@@ -79,6 +79,7 @@ public slots:
     void niceNumbersChecked();
     void dateFormatEdited(const QString &text);
     void moreCategoriesChecked();
+    void categoryLabelLocationChecked();
     void series1CheckBoxChecked();
     void series2CheckBoxChecked();
     void series3CheckBoxChecked();

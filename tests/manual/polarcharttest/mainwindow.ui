@@ -688,23 +688,23 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>692</y>
-         <width>198</width>
-         <height>19</height>
+         <y>680</y>
+         <width>191</width>
+         <height>31</height>
         </rect>
        </property>
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
-        <item>
-         <widget class="QCheckBox" name="niceNumbersCheckBox">
-          <property name="text">
-           <string>Nice Numbers</string>
-          </property>
-         </widget>
-        </item>
-        <item>
+       <layout class="QGridLayout" name="gridLayout_6">
+        <item row="0" column="1">
          <widget class="QCheckBox" name="moreCategoriesCheckBox">
           <property name="text">
            <string>More Categories</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QCheckBox" name="niceNumbersCheckBox">
+          <property name="text">
+           <string>Nice Numbers</string>
           </property>
          </widget>
         </item>
@@ -714,7 +714,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>729</y>
+         <y>740</y>
          <width>221</width>
          <height>22</height>
         </rect>
@@ -898,6 +898,19 @@
          <string>Custom minor grid pen</string>
         </property>
        </item>
+      </widget>
+      <widget class="QCheckBox" name="categoryLabelLocationCheckBox">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>710</y>
+         <width>142</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Category Label On Tick</string>
+       </property>
       </widget>
      </widget>
     </item>

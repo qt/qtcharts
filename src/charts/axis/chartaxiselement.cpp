@@ -20,6 +20,7 @@
 #include <private/qabstractaxis_p.h>
 #include <private/chartpresenter_p.h>
 #include <private/abstractchartlayout_p.h>
+#include <QtCharts/QCategoryAxis>
 #include <QtCore/QtMath>
 #include <QtCore/QDateTime>
 #include <QtGui/QTextDocument>
@@ -105,6 +106,13 @@ void ChartAxisElement::connectSlots()
                      this, SLOT(handleMinorGridVisibleChanged(bool)));
     QObject::connect(axis(), SIGNAL(minorGridLinePenChanged(const QPen&)),
                      this, SLOT(handleMinorGridPenChanged(const QPen&)));
+
+    if (axis()->type() == QAbstractAxis::AxisTypeCategory) {
+        QCategoryAxis *categoryAxis = static_cast<QCategoryAxis *>(axis());
+        QObject::connect(categoryAxis,
+                         SIGNAL(labelsPositionChanged(QCategoryAxis::AxisLabelsPosition)),
+                         this, SLOT(handleLabelsPositionChanged()));
+    }
 }
 
 void ChartAxisElement::handleArrowVisibleChanged(bool visible)
@@ -125,6 +133,12 @@ void ChartAxisElement::handleGridVisibleChanged(bool visible)
 void ChartAxisElement::handleMinorGridVisibleChanged(bool visible)
 {
     m_minorGrid->setVisible(visible);
+}
+
+void ChartAxisElement::handleLabelsPositionChanged()
+{
+    QGraphicsLayoutItem::updateGeometry();
+    presenter()->layout()->invalidate();
 }
 
 void ChartAxisElement::handleLabelsVisibleChanged(bool visible)

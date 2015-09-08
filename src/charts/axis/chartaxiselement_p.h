@@ -132,7 +132,7 @@ public Q_SLOTS:
     void handleReverseChanged(bool reverse);
     void handleMinorArrowVisibleChanged(bool visible);
     void handleMinorGridVisibleChanged(bool visible);
-
+    void handleLabelsPositionChanged();
 
 Q_SIGNALS:
     void clicked();

@@ -127,44 +127,84 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->angularAxisComboBox->setCurrentIndex(int(m_angularAxisMode));
     ui->radialAxisComboBox->setCurrentIndex(int(m_radialAxisMode));
 
-    connect(ui->angularTicksSpin, SIGNAL(valueChanged(int)), this, SLOT(angularTicksChanged(int)));
-    connect(ui->radialTicksSpin, SIGNAL(valueChanged(int)), this, SLOT(radialTicksChanged(int)));
-    connect(ui->angularMinorTicksSpin, SIGNAL(valueChanged(int)), this, SLOT(angularMinorTicksChanged(int)));
-    connect(ui->radialMinorTicksSpin, SIGNAL(valueChanged(int)), this, SLOT(radialMinorTicksChanged(int)));
-    connect(ui->anglesSpin, SIGNAL(valueChanged(int)), this, SLOT(anglesChanged(int)));
-    connect(ui->radialMinSpin, SIGNAL(valueChanged(double)), this, SLOT(radialMinChanged(double)));
-    connect(ui->radialMaxSpin, SIGNAL(valueChanged(double)), this, SLOT(radialMaxChanged(double)));
-    connect(ui->angularMinSpin, SIGNAL(valueChanged(double)), this, SLOT(angularMinChanged(double)));
-    connect(ui->angularMaxSpin, SIGNAL(valueChanged(double)), this, SLOT(angularMaxChanged(double)));
-    connect(ui->angularShadesComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(angularShadesIndexChanged(int)));
-    connect(ui->radialShadesComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(radialShadesIndexChanged(int)));
-    connect(ui->animationsComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(animationIndexChanged(int)));
-    connect(ui->labelFormatEdit, SIGNAL(textEdited(QString)), this, SLOT(labelFormatEdited(QString)));
-    connect(ui->labelFontComboBox, SIGNAL(currentFontChanged(QFont)), this, SLOT(labelFontChanged(QFont)));
-    connect(ui->labelFontSizeSpin, SIGNAL(valueChanged(int)), this, SLOT(labelFontSizeChanged(int)));
-    connect(ui->labelComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(labelsIndexChanged(int)));
-    connect(ui->titleFontComboBox, SIGNAL(currentFontChanged(QFont)), this, SLOT(titleFontChanged(QFont)));
-    connect(ui->titleFontSizeSpin, SIGNAL(valueChanged(int)), this, SLOT(titleFontSizeChanged(int)));
-    connect(ui->titleComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(titleIndexChanged(int)));
-    connect(ui->gridComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(gridIndexChanged(int)));
-    connect(ui->minorGridComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(minorGridIndexChanged(int)));
-    connect(ui->arrowComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(arrowIndexChanged(int)));
-    connect(ui->logBaseSpin, SIGNAL(valueChanged(double)), this, SLOT(logBaseChanged(double)));
-    connect(ui->angularAxisComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(angularAxisIndexChanged(int)));
-    connect(ui->radialAxisComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(radialAxisIndexChanged(int)));
-    connect(ui->niceNumbersCheckBox, SIGNAL(clicked()), this, SLOT(niceNumbersChecked()));
-    connect(ui->dateFormatEdit, SIGNAL(textEdited(QString)), this, SLOT(dateFormatEdited(QString)));
-    connect(ui->moreCategoriesCheckBox, SIGNAL(clicked()), this, SLOT(moreCategoriesChecked()));
-    connect(ui->series1checkBox, SIGNAL(clicked()), this, SLOT(series1CheckBoxChecked()));
-    connect(ui->series2checkBox, SIGNAL(clicked()), this, SLOT(series2CheckBoxChecked()));
-    connect(ui->series3checkBox, SIGNAL(clicked()), this, SLOT(series3CheckBoxChecked()));
-    connect(ui->series4checkBox, SIGNAL(clicked()), this, SLOT(series4CheckBoxChecked()));
-    connect(ui->series5checkBox, SIGNAL(clicked()), this, SLOT(series5CheckBoxChecked()));
-    connect(ui->series6checkBox, SIGNAL(clicked()), this, SLOT(series6CheckBoxChecked()));
-    connect(ui->series7checkBox, SIGNAL(clicked()), this, SLOT(series7CheckBoxChecked()));
-    connect(ui->themeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(themeIndexChanged(int)));
-    connect(ui->backgroundComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(backgroundIndexChanged(int)));
-    connect(ui->plotAreaComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(plotAreaIndexChanged(int)));
+    connect(ui->angularTicksSpin, SIGNAL(valueChanged(int)),
+            this, SLOT(angularTicksChanged(int)));
+    connect(ui->radialTicksSpin, SIGNAL(valueChanged(int)),
+            this, SLOT(radialTicksChanged(int)));
+    connect(ui->angularMinorTicksSpin, SIGNAL(valueChanged(int)),
+            this, SLOT(angularMinorTicksChanged(int)));
+    connect(ui->radialMinorTicksSpin, SIGNAL(valueChanged(int)),
+            this, SLOT(radialMinorTicksChanged(int)));
+    connect(ui->anglesSpin, SIGNAL(valueChanged(int)),
+            this, SLOT(anglesChanged(int)));
+    connect(ui->radialMinSpin, SIGNAL(valueChanged(double)),
+            this, SLOT(radialMinChanged(double)));
+    connect(ui->radialMaxSpin, SIGNAL(valueChanged(double)),
+            this, SLOT(radialMaxChanged(double)));
+    connect(ui->angularMinSpin, SIGNAL(valueChanged(double)),
+            this, SLOT(angularMinChanged(double)));
+    connect(ui->angularMaxSpin, SIGNAL(valueChanged(double)),
+            this, SLOT(angularMaxChanged(double)));
+    connect(ui->angularShadesComboBox, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(angularShadesIndexChanged(int)));
+    connect(ui->radialShadesComboBox, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(radialShadesIndexChanged(int)));
+    connect(ui->animationsComboBox, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(animationIndexChanged(int)));
+    connect(ui->labelFormatEdit, SIGNAL(textEdited(QString)),
+            this, SLOT(labelFormatEdited(QString)));
+    connect(ui->labelFontComboBox, SIGNAL(currentFontChanged(QFont)),
+            this, SLOT(labelFontChanged(QFont)));
+    connect(ui->labelFontSizeSpin, SIGNAL(valueChanged(int)),
+            this, SLOT(labelFontSizeChanged(int)));
+    connect(ui->labelComboBox, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(labelsIndexChanged(int)));
+    connect(ui->titleFontComboBox, SIGNAL(currentFontChanged(QFont)),
+            this, SLOT(titleFontChanged(QFont)));
+    connect(ui->titleFontSizeSpin, SIGNAL(valueChanged(int)),
+            this, SLOT(titleFontSizeChanged(int)));
+    connect(ui->titleComboBox, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(titleIndexChanged(int)));
+    connect(ui->gridComboBox, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(gridIndexChanged(int)));
+    connect(ui->minorGridComboBox, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(minorGridIndexChanged(int)));
+    connect(ui->arrowComboBox, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(arrowIndexChanged(int)));
+    connect(ui->logBaseSpin, SIGNAL(valueChanged(double)),
+            this, SLOT(logBaseChanged(double)));
+    connect(ui->angularAxisComboBox, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(angularAxisIndexChanged(int)));
+    connect(ui->radialAxisComboBox, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(radialAxisIndexChanged(int)));
+    connect(ui->niceNumbersCheckBox, SIGNAL(clicked()),
+            this, SLOT(niceNumbersChecked()));
+    connect(ui->dateFormatEdit, SIGNAL(textEdited(QString)),
+            this, SLOT(dateFormatEdited(QString)));
+    connect(ui->moreCategoriesCheckBox, SIGNAL(clicked()),
+            this, SLOT(moreCategoriesChecked()));
+    connect(ui->categoryLabelLocationCheckBox, SIGNAL(clicked()),
+            this, SLOT(categoryLabelLocationChecked()));
+    connect(ui->series1checkBox, SIGNAL(clicked()),
+            this, SLOT(series1CheckBoxChecked()));
+    connect(ui->series2checkBox, SIGNAL(clicked()),
+            this, SLOT(series2CheckBoxChecked()));
+    connect(ui->series3checkBox, SIGNAL(clicked()),
+            this, SLOT(series3CheckBoxChecked()));
+    connect(ui->series4checkBox, SIGNAL(clicked()),
+            this, SLOT(series4CheckBoxChecked()));
+    connect(ui->series5checkBox, SIGNAL(clicked()),
+            this, SLOT(series5CheckBoxChecked()));
+    connect(ui->series6checkBox, SIGNAL(clicked()),
+            this, SLOT(series6CheckBoxChecked()));
+    connect(ui->series7checkBox, SIGNAL(clicked()),
+            this, SLOT(series7CheckBoxChecked()));
+    connect(ui->themeComboBox, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(themeIndexChanged(int)));
+    connect(ui->backgroundComboBox, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(backgroundIndexChanged(int)));
+    connect(ui->plotAreaComboBox, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(plotAreaIndexChanged(int)));
 
     ui->chartView->setChart(m_chart);
     ui->chartView->setRenderHint(QPainter::Antialiasing);
@@ -1039,6 +1079,11 @@ void MainWindow::moreCategoriesChecked()
     m_moreCategories = ui->moreCategoriesCheckBox->isChecked();
 }
 
+void MainWindow::categoryLabelLocationChecked()
+{
+    applyCategories();
+}
+
 void MainWindow::series1CheckBoxChecked()
 {
     if (ui->series1checkBox->isChecked())
@@ -1206,6 +1251,10 @@ void MainWindow::applyCategories()
             angCatAxis->remove("Cat D");
             angCatAxis->remove("Cat E");
         }
+        if (ui->categoryLabelLocationCheckBox->isChecked())
+            angCatAxis->setLabelsPosition(QCategoryAxis::AxisLabelsPositionOnValue);
+        else
+            angCatAxis->setLabelsPosition(QCategoryAxis::AxisLabelsPositionCenter);
     }
 
     if (m_radialAxisMode == AxisModeCategory) {
@@ -1231,5 +1280,9 @@ void MainWindow::applyCategories()
             radCatAxis->remove("Cat 4");
             radCatAxis->remove("Cat 5");
         }
+        if (ui->categoryLabelLocationCheckBox->isChecked())
+            radCatAxis->setLabelsPosition(QCategoryAxis::AxisLabelsPositionOnValue);
+        else
+            radCatAxis->setLabelsPosition(QCategoryAxis::AxisLabelsPositionCenter);
     }
 }

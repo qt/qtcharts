@@ -21,6 +21,7 @@
 #include <private/abstractchartlayout_p.h>
 #include <private/qabstractaxis_p.h>
 #include <private/linearrowitem_p.h>
+#include <QtCharts/QCategoryAxis>
 #include <QtGui/QTextDocument>
 
 QT_CHARTS_BEGIN_NAMESPACE
@@ -85,8 +86,9 @@ void PolarChartAxisRadial::updateGeometry()
         }
 
         qreal labelCoordinate = radialCoordinate;
-        qreal labelVisible = currentTickVisible;
+        bool labelVisible = currentTickVisible;
         qreal labelPad = labelPadding() / 2.0;
+        bool centeredLabel = true; // Only used with interval axes
         if (intervalAxis()) {
             qreal farEdge;
             if (i == (layout.size() - 1))
@@ -98,11 +100,21 @@ void PolarChartAxisRadial::updateGeometry()
             if (nextTickVisible)
                 labelCoordinate = qMax(qreal(0.0), labelCoordinate);
 
-            labelCoordinate = (labelCoordinate + farEdge) / 2.0;
-            if (labelCoordinate > 0.0 && labelCoordinate < radius)
-                labelVisible =  true;
-            else
-                labelVisible = false;
+            if (axis()->type() == QAbstractAxis::AxisTypeCategory) {
+                QCategoryAxis *categoryAxis = static_cast<QCategoryAxis *>(axis());
+                if (categoryAxis->labelsPosition() == QCategoryAxis::AxisLabelsPositionOnValue)
+                    centeredLabel = false;
+            }
+            if (centeredLabel) {
+                labelCoordinate = (labelCoordinate + farEdge) / 2.0;
+                if (labelCoordinate > 0.0 && labelCoordinate < radius)
+                    labelVisible =  true;
+                else
+                    labelVisible = false;
+            } else {
+                labelVisible = nextTickVisible;
+                labelCoordinate = farEdge;
+            }
         }
 
         // Radial axis label
@@ -118,7 +130,7 @@ void PolarChartAxisRadial::updateGeometry()
             boundingRect.moveCenter(labelCenter);
             QPointF positionDiff(labelRect.topLeft() - boundingRect.topLeft());
             QPointF labelPoint = center;
-            if (intervalAxis())
+            if (intervalAxis() && centeredLabel)
                 labelPoint += QPointF(labelPad, -labelCoordinate - (boundingRect.height() / 2.0));
             else
                 labelPoint += QPointF(labelPad, labelPad - labelCoordinate);

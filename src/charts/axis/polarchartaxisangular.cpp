@@ -20,6 +20,7 @@
 #include <private/chartpresenter_p.h>
 #include <private/abstractchartlayout_p.h>
 #include <QtCharts/QAbstractAxis>
+#include <QtCharts/QCategoryAxis>
 #include <private/qabstractaxis_p.h>
 #include <QtCore/QDebug>
 #include <QtCore/QtMath>
@@ -93,7 +94,7 @@ void PolarChartAxisAngular::updateGeometry()
         }
 
         qreal labelCoordinate = angularCoordinate;
-        qreal labelVisible = currentTickVisible;
+        bool labelVisible = currentTickVisible;
         if (intervalAxis()) {
             qreal farEdge;
             if (i == (layout.size() - 1))
@@ -105,12 +106,23 @@ void PolarChartAxisAngular::updateGeometry()
             if (nextTickVisible)
                 labelCoordinate = qMax(qreal(0.0), labelCoordinate);
 
-            labelCoordinate = (labelCoordinate + farEdge) / 2.0;
-            // Don't display label once the category gets too small near the axis
-            if (labelCoordinate < 5.0 || labelCoordinate > 355.0)
-                labelVisible = false;
-            else
-                labelVisible = true;
+            bool centeredLabel = true;
+            if (axis()->type() == QAbstractAxis::AxisTypeCategory) {
+                QCategoryAxis *categoryAxis = static_cast<QCategoryAxis *>(axis());
+                if (categoryAxis->labelsPosition() == QCategoryAxis::AxisLabelsPositionOnValue)
+                    centeredLabel = false;
+            }
+            if (centeredLabel) {
+                labelCoordinate = (labelCoordinate + farEdge) / 2.0;
+                // Don't display label once the category gets too small near the axis
+                if (labelCoordinate < 5.0 || labelCoordinate > 355.0)
+                    labelVisible = false;
+                else
+                    labelVisible = true;
+            } else {
+                labelVisible = nextTickVisible;
+                labelCoordinate = farEdge;
+            }
         }
 
         // Need this also in label calculations, so determine it first
