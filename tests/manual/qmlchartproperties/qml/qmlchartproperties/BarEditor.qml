@@ -186,6 +186,14 @@ Row {
             text: "set 1 label color"
             onClicked: series.at(0).labelColor = main.nextColor();
         }
+        Button {
+            text: "labels angle +"
+            onClicked: series.labelsAngle = series.labelsAngle + 5;
+        }
+        Button {
+            text: "labels angle -"
+            onClicked: series.labelsAngle = series.labelsAngle - 5;
+        }
         FontEditor {
             id: fontEditor
             fontDescription: "label"

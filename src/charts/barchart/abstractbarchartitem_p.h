@@ -72,6 +72,7 @@ public Q_SLOTS:
     virtual void positionLabels();
 
 protected:
+    void positionLabelsVertical();
 
     qreal m_domainMinX;
     qreal m_domainMaxX;

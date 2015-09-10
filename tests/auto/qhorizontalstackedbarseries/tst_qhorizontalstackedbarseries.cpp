@@ -45,6 +45,7 @@ private slots:
     void type();
     void setLabelsFormat();
     void setLabelsPosition();
+    void setLabelsAngle();
     void mouseclicked_data();
     void mouseclicked();
     void mousehovered_data();
@@ -152,6 +153,19 @@ void tst_QHorizontalStackedBarSeries::setLabelsPosition()
     QVERIFY(arguments.at(0).value<QAbstractBarSeries::LabelsPosition>()
             == QHorizontalStackedBarSeries::LabelsCenter);
     QCOMPARE(m_barseries->labelsPosition(), QHorizontalStackedBarSeries::LabelsCenter);
+}
+
+void tst_QHorizontalStackedBarSeries::setLabelsAngle()
+{
+    QSignalSpy labelsAngleSpy(m_barseries,
+                             SIGNAL(labelsAngleChanged(qreal)));
+    QCOMPARE(m_barseries->labelsAngle(), 0.0);
+
+    m_barseries->setLabelsAngle(55.0);
+    TRY_COMPARE(labelsAngleSpy.count(), 1);
+    QList<QVariant> arguments = labelsAngleSpy.takeFirst();
+    QVERIFY(arguments.at(0).value<qreal>() == 55.0);
+    QCOMPARE(m_barseries->labelsAngle(), 55.0);
 }
 
 void tst_QHorizontalStackedBarSeries::mouseclicked_data()

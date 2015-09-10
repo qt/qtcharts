@@ -85,6 +85,8 @@ public:
 
     bool blockBarUpdate();
 
+    qreal labelsAngle() const;
+
 Q_SIGNALS:
     void clicked(int index, QBarSet *barset);
     void pressed(int index, QBarSet *barset);
@@ -107,6 +109,7 @@ protected:
     bool m_blockBarUpdate;
     QString m_labelsFormat;
     QAbstractBarSeries::LabelsPosition m_labelsPosition;
+    qreal m_labelsAngle;
 
 private:
     Q_DECLARE_PUBLIC(QAbstractBarSeries)

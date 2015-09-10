@@ -51,6 +51,7 @@ AbstractBarChartItem::AbstractBarChartItem(QAbstractBarSeries *series, QGraphics
     connect(series, SIGNAL(labelsFormatChanged(QString)), this, SLOT(positionLabels()));
     connect(series, SIGNAL(labelsPositionChanged(QAbstractBarSeries::LabelsPosition)),
             this, SLOT(handleLabelsPositionChanged()));
+    connect(series, SIGNAL(labelsAngleChanged(qreal)), this, SLOT(positionLabels()));
     setZValue(ChartPresenter::BarSeriesZValue);
     handleDataStructureChanged();
     handleVisibleChanged();
@@ -249,20 +250,101 @@ void AbstractBarChartItem::handleLabelsPositionChanged()
 
 void AbstractBarChartItem::positionLabels()
 {
+    // By default position labels on horizontal bar series
+    // Vertical bar series overload positionLabels() to call positionLabelsVertical()
+
+    QTransform transform;
+    const qreal angle = m_series->d_func()->labelsAngle();
+    if (angle != 0.0)
+        transform.rotate(angle);
+
     for (int i = 0; i < m_layout.count(); i++) {
         QGraphicsTextItem *label = m_labels.at(i);
+
+        QRectF labelRect = label->boundingRect();
+        QPointF center = labelRect.center();
+
         qreal xPos = 0;
-        qreal yPos = m_layout.at(i).center().y() - label->boundingRect().center().y();
+        qreal yPos = m_layout.at(i).center().y() - center.y();
+
+        int xDiff = 0;
+        if (angle != 0.0) {
+            label->setTransformOriginPoint(center.x(), center.y());
+            label->setRotation(m_series->d_func()->labelsAngle());
+            qreal oldWidth = labelRect.width();
+            labelRect = transform.mapRect(labelRect);
+            xDiff = (labelRect.width() - oldWidth) / 2;
+        }
 
         int offset = m_bars.at(i)->pen().width() / 2 + 2;
-        if (m_series->labelsPosition() == QAbstractBarSeries::LabelsCenter)
-            xPos = m_layout.at(i).center().x() - label->boundingRect().center().x();
-        else if (m_series->labelsPosition() == QAbstractBarSeries::LabelsInsideEnd)
-            xPos = m_layout.at(i).right() - label->boundingRect().width() - offset;
-        else if (m_series->labelsPosition() == QAbstractBarSeries::LabelsInsideBase)
-            xPos = m_layout.at(i).left() + offset;
-        else if (m_series->labelsPosition() == QAbstractBarSeries::LabelsOutsideEnd)
-            xPos = m_layout.at(i).right() + offset;
+
+        switch (m_series->labelsPosition()) {
+        case QAbstractBarSeries::LabelsCenter:
+            xPos = m_layout.at(i).center().x() - center.x();
+            break;
+        case QAbstractBarSeries::LabelsInsideEnd:
+            xPos = m_layout.at(i).right() - labelRect.width() - offset + xDiff;
+            break;
+        case QAbstractBarSeries::LabelsInsideBase:
+            xPos = m_layout.at(i).left() + offset + xDiff;
+            break;
+        case QAbstractBarSeries::LabelsOutsideEnd:
+            xPos = m_layout.at(i).right() + offset + xDiff;
+            break;
+        default:
+            // Invalid position, never comes here
+            break;
+        }
+
+        label->setPos(xPos, yPos);
+        label->setZValue(zValue() + 1);
+    }
+}
+
+void AbstractBarChartItem::positionLabelsVertical()
+{
+    QTransform transform;
+    const qreal angle = m_series->d_func()->labelsAngle();
+    if (angle != 0.0)
+        transform.rotate(angle);
+
+    for (int i = 0; i < m_layout.count(); i++) {
+        QGraphicsTextItem *label = m_labels.at(i);
+
+        QRectF labelRect = label->boundingRect();
+        QPointF center = labelRect.center();
+
+        qreal xPos = m_layout.at(i).center().x() - center.x();
+        qreal yPos = 0;
+
+        int yDiff = 0;
+        if (angle != 0.0) {
+            label->setTransformOriginPoint(center.x(), center.y());
+            label->setRotation(m_series->d_func()->labelsAngle());
+            qreal oldHeight = labelRect.height();
+            labelRect = transform.mapRect(labelRect);
+            yDiff = (labelRect.height() - oldHeight) / 2;
+        }
+
+        int offset = m_bars.at(i)->pen().width() / 2 + 2;
+
+        switch (m_series->labelsPosition()) {
+        case QAbstractBarSeries::LabelsCenter:
+            yPos = m_layout.at(i).center().y() - center.y();
+            break;
+        case QAbstractBarSeries::LabelsInsideEnd:
+            yPos = m_layout.at(i).top() + offset + yDiff;
+            break;
+        case QAbstractBarSeries::LabelsInsideBase:
+            yPos = m_layout.at(i).bottom() - labelRect.height() - offset + yDiff;
+            break;
+        case QAbstractBarSeries::LabelsOutsideEnd:
+            yPos = m_layout.at(i).top() - labelRect.height() - offset + yDiff;
+            break;
+        default:
+            // Invalid position, never comes here
+            break;
+        }
 
         label->setPos(xPos, yPos);
         label->setZValue(zValue() + 1);

@@ -197,6 +197,23 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
+    \property QAbstractBarSeries::labelsAngle
+    The angle of the value labels in degrees.
+*/
+/*!
+    \qmlproperty qreal QAbstractBarSeries::labelsAngle
+    The angle of the value labels in degrees.
+*/
+/*!
+    \fn void QAbstractBarSeries::labelsAngleChanged(qreal angle)
+    Signal is emitted when the \a angle of the value labels is changed.
+*/
+/*!
+    \qmlsignal AbstractBarSeries::onLabelsAngleChanged(qreal angle)
+    Signal is emitted when the \a angle of the value labels is changed.
+*/
+
+/*!
     \fn void QAbstractBarSeries::clicked(int index, QBarSet *barset)
     The signal is emitted if the user clicks with a mouse on top of QBarSet \a barset.
     Clicked bar inside set is indexed by \a index
@@ -531,6 +548,21 @@ QString QAbstractBarSeries::labelsFormat() const
     return d->m_labelsFormat;
 }
 
+void QAbstractBarSeries::setLabelsAngle(qreal angle)
+{
+    Q_D(QAbstractBarSeries);
+    if (d->m_labelsAngle != angle) {
+        d->m_labelsAngle = angle;
+        emit labelsAngleChanged(angle);
+    }
+}
+
+qreal QAbstractBarSeries::labelsAngle() const
+{
+    Q_D(const QAbstractBarSeries);
+    return d->m_labelsAngle;
+}
+
 void QAbstractBarSeries::setLabelsPosition(QAbstractBarSeries::LabelsPosition position)
 {
     Q_D(QAbstractBarSeries);
@@ -555,7 +587,8 @@ QAbstractBarSeriesPrivate::QAbstractBarSeriesPrivate(QAbstractBarSeries *q) :
     m_visible(true),
     m_blockBarUpdate(false),
     m_labelsFormat(),
-    m_labelsPosition(QAbstractBarSeries::LabelsCenter)
+    m_labelsPosition(QAbstractBarSeries::LabelsCenter),
+    m_labelsAngle(0)
 {
 }
 
@@ -797,6 +830,11 @@ qreal QAbstractBarSeriesPrivate::bottom()
 bool QAbstractBarSeriesPrivate::blockBarUpdate()
 {
     return m_blockBarUpdate;
+}
+
+qreal QAbstractBarSeriesPrivate::labelsAngle() const
+{
+    return m_labelsAngle;
 }
 
 void QAbstractBarSeriesPrivate::initializeDomain()

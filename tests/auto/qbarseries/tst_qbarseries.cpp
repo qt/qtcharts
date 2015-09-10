@@ -60,6 +60,7 @@ private slots:
     void setLabelsVisible();
     void setLabelsFormat();
     void setLabelsPosition();
+    void setLabelsAngle();
     void opacity();
     void mouseclicked_data();
     void mouseclicked();
@@ -403,6 +404,19 @@ void tst_QBarSeries::setLabelsPosition()
     QVERIFY(arguments.at(0).value<QAbstractBarSeries::LabelsPosition>()
             == QBarSeries::LabelsCenter);
     QCOMPARE(m_barseries->labelsPosition(), QBarSeries::LabelsCenter);
+}
+
+void tst_QBarSeries::setLabelsAngle()
+{
+    QSignalSpy labelsAngleSpy(m_barseries,
+                             SIGNAL(labelsAngleChanged(qreal)));
+    QCOMPARE(m_barseries->labelsAngle(), 0.0);
+
+    m_barseries->setLabelsAngle(55.0);
+    TRY_COMPARE(labelsAngleSpy.count(), 1);
+    QList<QVariant> arguments = labelsAngleSpy.takeFirst();
+    QVERIFY(arguments.at(0).value<qreal>() == 55.0);
+    QCOMPARE(m_barseries->labelsAngle(), 55.0);
 }
 
 void tst_QBarSeries::opacity()

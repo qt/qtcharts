@@ -110,24 +110,7 @@ void StackedBarChartItem::handleLabelsPositionChanged()
 
 void StackedBarChartItem::positionLabels()
 {
-    for (int i = 0; i < m_layout.count(); i++) {
-        QGraphicsTextItem *label = m_labels.at(i);
-        qreal xPos = m_layout.at(i).center().x() - label->boundingRect().center().x();
-        qreal yPos = 0;
-
-        int offset = m_bars.at(i)->pen().width() / 2 + 2;
-        if (m_series->labelsPosition() == QAbstractBarSeries::LabelsCenter)
-            yPos = m_layout.at(i).center().y() - label->boundingRect().center().y();
-        else if (m_series->labelsPosition() == QAbstractBarSeries::LabelsInsideEnd)
-            yPos = m_layout.at(i).top() - offset;
-        else if (m_series->labelsPosition() == QAbstractBarSeries::LabelsInsideBase)
-            yPos = m_layout.at(i).bottom() - label->boundingRect().height() + offset;
-        else if (m_series->labelsPosition() == QAbstractBarSeries::LabelsOutsideEnd)
-            yPos = m_layout.at(i).top() - label->boundingRect().height() + offset;
-
-        label->setPos(xPos, yPos);
-        label->setZValue(zValue() + 1);
-    }
+    positionLabelsVertical();
 }
 
 #include "moc_stackedbarchartitem_p.cpp"
