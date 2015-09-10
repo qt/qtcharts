@@ -62,6 +62,7 @@ public:
 public Q_SLOTS:
     void handlePointAdded(int index);
     void handlePointRemoved(int index);
+    void handlePointsRemoved(int index, int count);
     void handlePointReplaced(int index);
     void handlePointsReplaced();
     void handleDomainUpdated();

@@ -61,6 +61,7 @@ public Q_SLOTS:
     // for the series
     void handlePointAdded(int pointPos);
     void handlePointRemoved(int pointPos);
+    void handlePointsRemoved(int pointPos, int count);
     void handlePointReplaced(int pointPos);
     void handleSeriesDestroyed();
 

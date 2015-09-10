@@ -42,6 +42,7 @@ public:
     void replace(int index, qreal newX, qreal newY);
     void remove(qreal x, qreal y);
     void remove(int index);
+    void removePoints(int index, int count);
     void insert(int index, qreal x, qreal y);
     void clear();
     QPointF at(int index);

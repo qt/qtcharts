@@ -329,6 +329,10 @@ void tst_qxymodelmapper::seriesUpdated()
     QCOMPARE(m_series->count(), m_modelRowCount);
     QCOMPARE(m_vMapper->rowCount(), -1); // the value should not change as it indicates 'all' items there are in the model
 
+    m_series->removePoints(1, m_modelRowCount - 4);
+    QCOMPARE(m_series->count(), 4);
+    QCOMPARE(m_vMapper->rowCount(), -1); // the value should not change as it indicates 'all' items there are in the model
+
     m_series->replace(m_series->points().first(), QPointF(25.0, 75.0));
     QCOMPARE(m_model->data(m_model->index(0, 0)).toReal(), 25.0);
     QCOMPARE(m_model->data(m_model->index(0, 1)).toReal(), 75.0);

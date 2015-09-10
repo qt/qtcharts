@@ -90,6 +90,13 @@ void DeclarativeXySeries::remove(int index)
     series->remove(index);
 }
 
+void DeclarativeXySeries::removePoints(int index, int count)
+{
+    QXYSeries *series = qobject_cast<QXYSeries *>(xySeries());
+    Q_ASSERT(series);
+    series->removePoints(index, count);
+}
+
 void DeclarativeXySeries::insert(int index, qreal x, qreal y)
 {
     QXYSeries *series = qobject_cast<QXYSeries *>(xySeries());

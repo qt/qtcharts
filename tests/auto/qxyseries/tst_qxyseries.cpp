@@ -316,6 +316,16 @@ void tst_QXYSeries::remove_raw()
         QCOMPARE(m_series->points().count(), i);
     }
     QCOMPARE(m_series->points().count(), 0);
+
+    // Multiple removal using index
+    for (int i = 0; i < 10; i++)
+        bunchOfPoints.append(QPointF(i, (qreal) rand() / (qreal) RAND_MAX));
+    m_series->replace(bunchOfPoints);
+    m_series->removePoints(5, 2);
+    m_series->removePoints(0, 3);
+    QCOMPARE(m_series->points().count(), (bunchOfPoints.count() - 5));
+    m_series->removePoints(0, (bunchOfPoints.count() - 5));
+    QCOMPARE(m_series->points().count(), 0);
 }
 
 void tst_QXYSeries::remove_chart_data()

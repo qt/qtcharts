@@ -58,6 +58,7 @@ public:
     void remove(qreal x, qreal y);
     void remove(const QPointF &point);
     void remove(int index);
+    void removePoints(int index, int count);
     void insert(int index, const QPointF &point);
     void clear();
 
@@ -110,6 +111,7 @@ Q_SIGNALS:
     void pointLabelsVisibilityChanged(bool visible);
     void pointLabelsFontChanged(const QFont &font);
     void pointLabelsColorChanged(const QColor &color);
+    void pointsRemoved(int index, int count);
 
 private:
     Q_DECLARE_PRIVATE(QXYSeries)

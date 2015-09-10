@@ -39,6 +39,7 @@ XYChart::XYChart(QXYSeries *series, QGraphicsItem *item):
     QObject::connect(series, SIGNAL(pointsReplaced()), this, SLOT(handlePointsReplaced()));
     QObject::connect(series, SIGNAL(pointAdded(int)), this, SLOT(handlePointAdded(int)));
     QObject::connect(series, SIGNAL(pointRemoved(int)), this, SLOT(handlePointRemoved(int)));
+    QObject::connect(series, SIGNAL(pointsRemoved(int, int)), this, SLOT(handlePointsRemoved(int, int)));
     QObject::connect(this, SIGNAL(clicked(QPointF)), series, SIGNAL(clicked(QPointF)));
     QObject::connect(this, SIGNAL(hovered(QPointF,bool)), series, SIGNAL(hovered(QPointF,bool)));
     QObject::connect(this, SIGNAL(pressed(QPointF)), series, SIGNAL(pressed(QPointF)));
@@ -140,6 +141,23 @@ void XYChart::handlePointRemoved(int index)
     } else {
         points = m_points;
         points.remove(index);
+    }
+
+    updateChart(m_points, points, index);
+}
+
+void XYChart::handlePointsRemoved(int index, int count)
+{
+    Q_ASSERT(index <= m_series->count());
+    Q_ASSERT(index >= 0);
+
+    QVector<QPointF> points;
+
+    if (m_dirty || m_points.isEmpty()) {
+        points = domain()->calculateGeometryPoints(m_series->points());
+    } else {
+        points = m_points;
+        points.remove(index, count);
     }
 
     updateChart(m_points, points, index);

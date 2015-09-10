@@ -18,7 +18,7 @@
 
 import QtQuick 2.0
 import QtTest 1.0
-import QtCharts 2.1
+import QtCharts 2.0
 
 Rectangle {
     width: 400
@@ -133,36 +133,6 @@ Rectangle {
             compare(lineSeriesPointRemovedSpy.count, count);
             compare(splineSeriesPointRemovedSpy.count, count);
             compare(scatterSeriesPointRemovedSpy.count, count);
-
-            lineSeriesPointRemovedSpy.clear();
-            splineSeriesPointRemovedSpy.clear();
-            scatterSeriesPointRemovedSpy.clear();
-            lineSeriesPointsRemovedSpy.clear();
-            splineSeriesPointsRemovedSpy.clear();
-            scatterSeriesPointsRemovedSpy.clear();
-
-            count = append();
-            lineSeries.removePoints(2, count - 2);
-            splineSeries.removePoints(2, count - 2);
-            scatterSeries.removePoints(2, count - 2);
-
-            compare(lineSeries.count, 2);
-            compare(splineSeries.count, 2);
-            compare(scatterSeries.count, 2);
-
-            lineSeries.removePoints(0, 2);
-            splineSeries.removePoints(0, 2);
-            scatterSeries.removePoints(0, 2);
-
-            compare(lineSeries.count, 0);
-            compare(splineSeries.count, 0);
-            compare(scatterSeries.count, 0);
-            compare(lineSeriesPointRemovedSpy.count, 0);
-            compare(splineSeriesPointRemovedSpy.count, 0);
-            compare(scatterSeriesPointRemovedSpy.count, 0);
-            compare(lineSeriesPointsRemovedSpy.count, 2);
-            compare(splineSeriesPointsRemovedSpy.count, 2);
-            compare(scatterSeriesPointsRemovedSpy.count, 2);
         }
 
         // Not a test function, called from test functions
@@ -221,12 +191,6 @@ Rectangle {
                 target: lineSeries
                 signalName: "pointRemoved"
             }
-
-            SignalSpy {
-                id: lineSeriesPointsRemovedSpy
-                target: lineSeries
-                signalName: "pointsRemoved"
-            }
         }
 
         AreaSeries {
@@ -262,12 +226,6 @@ Rectangle {
                 target: splineSeries
                 signalName: "pointRemoved"
             }
-
-            SignalSpy {
-                id: splineSeriesPointsRemovedSpy
-                target: splineSeries
-                signalName: "pointsRemoved"
-            }
         }
 
         ScatterSeries {
@@ -296,12 +254,6 @@ Rectangle {
                 id: scatterSeriesPointRemovedSpy
                 target: scatterSeries
                 signalName: "pointRemoved"
-            }
-
-            SignalSpy {
-                id: scatterSeriesPointsRemovedSpy
-                target: scatterSeries
-                signalName: "pointsRemoved"
             }
         }
     }

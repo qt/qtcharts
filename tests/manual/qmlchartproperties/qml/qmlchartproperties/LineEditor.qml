@@ -111,6 +111,16 @@ Flow {
         onClicked: series.remove(series.count - 1);
     }
     Button {
+        text: "remove points"
+        onClicked: {
+            var count = 3;
+            if (series.count < 3)
+                count = series.count
+            var index = series.count - count;
+            series.removePoints(index, count);
+        }
+    }
+    Button {
         text: "insert point"
         onClicked: series.insert(series.count - 2, series.count - 2, series.count - 2);
     }

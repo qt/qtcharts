@@ -94,6 +94,7 @@ void QXYModelMapper::setSeries(QXYSeries *series)
     connect(d->m_series, SIGNAL(pointRemoved(int)), d, SLOT(handlePointRemoved(int)));
     connect(d->m_series, SIGNAL(pointReplaced(int)), d, SLOT(handlePointReplaced(int)));
     connect(d->m_series, SIGNAL(destroyed()), d, SLOT(handleSeriesDestroyed()));
+    connect(d->m_series, SIGNAL(pointsRemoved(int,int)), d, SLOT(handlePointsRemoved(int,int)));
 }
 
 /*!
@@ -306,6 +307,24 @@ void QXYModelMapperPrivate::handlePointRemoved(int pointPos)
         m_model->removeRow(pointPos + m_first);
     else
         m_model->removeColumn(pointPos + m_first);
+    blockModelSignals(false);
+}
+
+void QXYModelMapperPrivate::handlePointsRemoved(int pointPos, int count)
+{
+    if (m_seriesSignalsBlock)
+        return;
+
+    m_count -= count;
+
+    if (m_count < -1)
+        m_count = -1;
+
+    blockModelSignals();
+    if (m_orientation == Qt::Vertical)
+        m_model->removeRows(pointPos + m_first, count);
+    else
+        m_model->removeColumns(pointPos + m_first, count);
     blockModelSignals(false);
 }
 

@@ -306,6 +306,9 @@ public:
         qmlRegisterUncreatableType<QAbstractAxis>(uri, 2, 1, "AbstractAxis",
                                                   QLatin1String("Trying to create uncreatable: AbstractAxis. Use specific types of axis instead."));
         qmlRegisterType<DeclarativeChart, 5>(uri, 2, 1, "ChartView");
+        qmlRegisterType<DeclarativeScatterSeries, 5>(uri, 2, 1, "ScatterSeries");
+        qmlRegisterType<DeclarativeLineSeries, 4>(uri, 2, 1, "LineSeries");
+        qmlRegisterType<DeclarativeSplineSeries, 4>(uri, 2, 1, "SplineSeries");
     }
 
 };

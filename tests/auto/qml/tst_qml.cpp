@@ -176,7 +176,10 @@ void tst_qml::checkPlugin_data()
     QTest::newRow("BoxPlotSeries_2_0") <<  imports_2_0() + "BoxPlotSeries{}";
     QTest::newRow("BoxSet_2_0") <<  imports_2_0() + "BoxSet{}";
 
-    QTest::newRow("CategoryAxis") << imports_2_1() + "CategoryAxis{}";
+    QTest::newRow("CategoryAxis_2_1") << imports_2_1() + "CategoryAxis{}";
+    QTest::newRow("ScatterSeries_2_1") << imports_2_1() + "ScatterSeries{}";
+    QTest::newRow("LineSeries_2_1") << imports_2_1() + "LineSeries{}";
+    QTest::newRow("SplineSeries_2_1") << imports_2_1() + "SplineSeries{}";
 }
 
 void tst_qml::checkPlugin()

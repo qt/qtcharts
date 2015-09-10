@@ -111,7 +111,7 @@ QT_CHARTS_BEGIN_NAMESPACE
     \property QXYSeries::color
     The color of the series. This is line (pen) color in case of QLineSeries or QSplineSeries and
     fill (brush) color in case of QScatterSeries or QAreaSeries.
-    \sa QXYSeries::pen(), QXYSeries::brush()
+    \sa pen(), brush()
 */
 /*!
     \qmlproperty color XYSeries::color
@@ -141,13 +141,13 @@ QT_CHARTS_BEGIN_NAMESPACE
     area, labels on the edge of the plot area are cut. If the points are close to each other the
     labels may overlap.
 
-    \sa QXYSeries::pointLabelsVisible, QXYSeries::pointLabelsFont, QXYSeries::pointLabelsColor
+    \sa pointLabelsVisible, pointLabelsFont, pointLabelsColor
 */
 /*!
     \qmlproperty string XYSeries::pointLabelsFormat
     The \a format used for showing labels with series points.
 
-    \sa QXYSeries::pointLabelsFormat, pointLabelsVisible, pointLabelsFont, pointLabelsColor
+    \sa pointLabelsFormat, pointLabelsVisible, pointLabelsFont, pointLabelsColor
 */
 /*!
     \fn void QXYSeries::pointLabelsFormatChanged(const QString &format)
@@ -162,7 +162,7 @@ QT_CHARTS_BEGIN_NAMESPACE
     \property QXYSeries::pointLabelsVisible
     Defines the visibility for data point labels. False by default.
 
-    \sa QXYSeries::pointLabelsFormat
+    \sa pointLabelsFormat
 */
 /*!
     \qmlproperty bool XYSeries::pointLabelsVisible
@@ -183,7 +183,7 @@ QT_CHARTS_BEGIN_NAMESPACE
     \property QXYSeries::pointLabelsFont
     Defines the font used for data point labels.
 
-    \sa QXYSeries::pointLabelsFormat
+    \sa pointLabelsFormat
 */
 /*!
     \qmlproperty font XYSeries::pointLabelsFont
@@ -205,7 +205,7 @@ QT_CHARTS_BEGIN_NAMESPACE
     Defines the color used for data point labels. By default, the color is the color of the brush
     defined in theme for labels.
 
-    \sa QXYSeries::pointLabelsFormat
+    \sa pointLabelsFormat
 */
 /*!
     \qmlproperty font XYSeries::pointLabelsColor
@@ -355,6 +355,17 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QXYSeries::pointsRemoved(int index, int count)
+    Signal is emitted when a \a count of points has been removed starting at \a index.
+    \sa removePoints(), clear()
+*/
+
+/*!
+    \qmlsignal XYSeries::onPointsRemoved(int index, int count)
+    Signal is emitted when a \a count of points has been removed starting at \a index.
+*/
+
+/*!
     \fn void QXYSeries::colorChanged(QColor color)
     \brief Signal is emitted when the line (pen) color has changed to \a color.
 */
@@ -382,6 +393,16 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \qmlmethod XYSeries::remove(real x, real y)
     Removes point (\a x, \a y) from the series. Does nothing, if point (x, y) does not exist.
+*/
+
+/*!
+    \qmlmethod XYSeries::remove(int index)
+    Removes a point from the series at \a index.
+*/
+
+/*!
+    \qmlmethod XYSeries::removePoints(int index, int count)
+    Removes \a count points from the series starting at \a index.
 */
 
 /*!
@@ -448,7 +469,7 @@ void QXYSeries::append(const QList<QPointF> &points)
 
 /*!
   Replaces data point (\a oldX, \a oldY) with data point (\a newX, \a newY).
-  \sa QXYSeries::pointReplaced()
+  \sa pointReplaced()
 */
 void QXYSeries::replace(qreal oldX, qreal oldY, qreal newX, qreal newY)
 {
@@ -457,7 +478,7 @@ void QXYSeries::replace(qreal oldX, qreal oldY, qreal newX, qreal newY)
 
 /*!
   Replaces \a oldPoint with \a newPoint.
-  \sa QXYSeries::pointReplaced()
+  \sa pointReplaced()
 */
 void QXYSeries::replace(const QPointF &oldPoint, const QPointF &newPoint)
 {
@@ -470,7 +491,7 @@ void QXYSeries::replace(const QPointF &oldPoint, const QPointF &newPoint)
 
 /*!
   Replaces the point at \a index with data point (\a newX, \a newY).
-  \sa QXYSeries::pointReplaced()
+  \sa pointReplaced()
 */
 void QXYSeries::replace(int index, qreal newX, qreal newY)
 {
@@ -479,7 +500,7 @@ void QXYSeries::replace(int index, qreal newX, qreal newY)
 
 /*!
   Replaces the point at \a index with \a newPoint.
-  \sa QXYSeries::pointReplaced()
+  \sa pointReplaced()
 */
 void QXYSeries::replace(int index, const QPointF &newPoint)
 {
@@ -496,7 +517,7 @@ void QXYSeries::replace(int index, const QPointF &newPoint)
   or first clearing all data, and then appending the new data. Emits QXYSeries::pointsReplaced()
   when the points have been replaced. However, note that using the overload that takes
   \c{QVector<QPointF>} as parameter is slightly faster than using this overload.
-  \sa QXYSeries::pointsReplaced()
+  \sa pointsReplaced()
 */
 void QXYSeries::replace(QList<QPointF> points)
 {
@@ -508,7 +529,7 @@ void QXYSeries::replace(QList<QPointF> points)
   \note This is much faster than replacing data points one by one,
   or first clearing all data, and then appending the new data. Emits QXYSeries::pointsReplaced()
   when the points have been replaced.
-  \sa QXYSeries::pointsReplaced()
+  \sa pointsReplaced()
 */
 void QXYSeries::replace(QVector<QPointF> points)
 {
@@ -519,6 +540,7 @@ void QXYSeries::replace(QVector<QPointF> points)
 
 /*!
   Removes the point (\a x, \a y) from the series.
+  \sa pointRemoved()
 */
 void QXYSeries::remove(qreal x, qreal y)
 {
@@ -527,6 +549,7 @@ void QXYSeries::remove(qreal x, qreal y)
 
 /*!
   Removes the \a point from the series.
+  \sa pointRemoved()
 */
 void QXYSeries::remove(const QPointF &point)
 {
@@ -539,6 +562,7 @@ void QXYSeries::remove(const QPointF &point)
 
 /*!
   Removes the point at \a index from the series.
+  \sa pointRemoved()
 */
 void QXYSeries::remove(int index)
 {
@@ -548,7 +572,23 @@ void QXYSeries::remove(int index)
 }
 
 /*!
+  Removes \a count number of points from the series starting at \a index.
+  \sa pointsRemoved()
+*/
+void QXYSeries::removePoints(int index, int count)
+{
+    // This function doesn't overload remove as there is chance for it to get mixed up with
+    // remove(qreal, qreal) overload in some implicit casting cases.
+    Q_D(QXYSeries);
+    if (count > 0) {
+        d->m_points.remove(index, count);
+        emit pointsRemoved(index, count);
+    }
+}
+
+/*!
    Inserts a \a point in the series at \a index position.
+  \sa pointAdded()
 */
 void QXYSeries::insert(int index, const QPointF &point)
 {
@@ -561,13 +601,13 @@ void QXYSeries::insert(int index, const QPointF &point)
 }
 
 /*!
-    Removes all points from the series.
+  Removes all points from the series.
+  \sa pointsRemoved()
 */
 void QXYSeries::clear()
 {
     Q_D(QXYSeries);
-    for (int i = d->m_points.size() - 1; i >= 0; i--)
-        remove(d->m_points.at(i));
+    removePoints(0, d->m_points.size());
 }
 
 /*!

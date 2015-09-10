@@ -32,6 +32,7 @@ DeclarativeScatterSeries::DeclarativeScatterSeries(QObject *parent) :
     connect(m_axes, SIGNAL(axisYChanged(QAbstractAxis*)), this, SIGNAL(axisRadialChanged(QAbstractAxis*)));
     connect(this, SIGNAL(pointAdded(int)), this, SLOT(handleCountChanged(int)));
     connect(this, SIGNAL(pointRemoved(int)), this, SLOT(handleCountChanged(int)));
+    connect(this, SIGNAL(pointsRemoved(int, int)), this, SLOT(handleCountChanged(int)));
     connect(this, SIGNAL(brushChanged()), this, SLOT(handleBrushChanged()));
 }
 
