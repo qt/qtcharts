@@ -21,8 +21,16 @@ import QtQuick 2.0
 Flow {
     anchors.fill: parent
     property variant chart
+    property variant easingTypes: [Easing.Linear, Easing.InCubic, Easing.OutSine, Easing.OutInBack]
+    property int easingTypeIndex: 0
     flow: Flow.TopToBottom
     spacing: 5
+
+    function nextEasingType() {
+        easingTypeIndex++;
+        return easingTypes[easingTypeIndex % easingTypes.length];
+    }
+
     Button {
         text: "visible"
         onClicked: chart.visible = !chart.visible;
@@ -42,6 +50,18 @@ Flow {
     Button {
         text: "animation opt -"
         onClicked: chart.animationOptions--;
+    }
+    Button {
+        text: "animation duration +"
+        onClicked: chart.animationDuration = chart.animationDuration + 1000;
+    }
+    Button {
+        text: "animation duration -"
+        onClicked: chart.animationDuration = chart.animationDuration - 1000;
+    }
+    Button {
+        text: "animation curve"
+        onClicked: chart.animationEasingCurve.type = nextEasingType();
     }
     Button {
         text: "background color"

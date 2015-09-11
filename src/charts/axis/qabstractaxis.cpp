@@ -1018,7 +1018,8 @@ void QAbstractAxisPrivate::initializeGraphics(QGraphicsItem* parent)
     Q_UNUSED(parent);
 }
 
-void QAbstractAxisPrivate::initializeAnimations(QChart::AnimationOptions options)
+void QAbstractAxisPrivate::initializeAnimations(QChart::AnimationOptions options, int duration,
+                                                QEasingCurve &curve)
 {
     ChartAxisElement *axis = m_item.data();
     Q_ASSERT(axis);
@@ -1026,7 +1027,7 @@ void QAbstractAxisPrivate::initializeAnimations(QChart::AnimationOptions options
         axis->animation()->stopAndDestroyLater();
 
     if (options.testFlag(QChart::GridAxisAnimations))
-        axis->setAnimation(new AxisAnimation(axis));
+        axis->setAnimation(new AxisAnimation(axis, duration, curve));
     else
         axis->setAnimation(0);
 }

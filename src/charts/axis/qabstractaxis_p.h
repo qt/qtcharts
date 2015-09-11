@@ -61,7 +61,8 @@ public:
     virtual void initializeDomain(AbstractDomain *domain) = 0;
     virtual void initializeGraphics(QGraphicsItem *parent) = 0;
     virtual void initializeTheme(ChartTheme* theme, bool forced = false);
-    virtual void initializeAnimations(QChart::AnimationOptions options);
+    virtual void initializeAnimations(QChart::AnimationOptions options, int duration,
+                                      QEasingCurve &curve);
 
     //interface for manipulating range form base class
     virtual void setMin(const QVariant &min) = 0;

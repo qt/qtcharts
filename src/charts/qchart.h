@@ -45,6 +45,8 @@ class QT_CHARTS_EXPORT QChart : public QGraphicsWidget
     Q_PROPERTY(bool dropShadowEnabled READ isDropShadowEnabled WRITE setDropShadowEnabled)
     Q_PROPERTY(qreal backgroundRoundness READ backgroundRoundness WRITE setBackgroundRoundness)
     Q_PROPERTY(QChart::AnimationOptions animationOptions READ animationOptions WRITE setAnimationOptions)
+    Q_PROPERTY(int animationDuration READ animationDuration WRITE setAnimationDuration)
+    Q_PROPERTY(QEasingCurve animationEasingCurve READ animationEasingCurve WRITE setAnimationEasingCurve)
     Q_PROPERTY(QMargins margins READ margins WRITE setMargins)
     Q_PROPERTY(QChart::ChartType chartType READ chartType)
     Q_PROPERTY(bool plotAreaBackgroundVisible READ isPlotAreaBackgroundVisible WRITE setPlotAreaBackgroundVisible)
@@ -125,8 +127,13 @@ public:
     bool isDropShadowEnabled() const;
     void setBackgroundRoundness(qreal diameter);
     qreal backgroundRoundness() const;
+
     void setAnimationOptions(AnimationOptions options);
     AnimationOptions animationOptions() const;
+    void setAnimationDuration(int msecs);
+    int animationDuration() const;
+    void setAnimationEasingCurve(const QEasingCurve &curve);
+    QEasingCurve animationEasingCurve() const;
 
     void zoomIn();
     void zoomOut();

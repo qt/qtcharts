@@ -39,7 +39,7 @@ class AxisAnimation: public ChartAnimation
 {
 public:
     enum Animation { DefaultAnimation, ZoomOutAnimation, ZoomInAnimation, MoveForwardAnimation, MoveBackwordAnimation};
-    AxisAnimation(ChartAxisElement *axis);
+    AxisAnimation(ChartAxisElement *axis, int duration, QEasingCurve &curve);
     ~AxisAnimation();
     void setAnimationType(Animation type);
     void setAnimationPoint(const QPointF &point);

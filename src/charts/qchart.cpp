@@ -85,6 +85,16 @@ QT_CHARTS_BEGIN_NAMESPACE
  */
 
 /*!
+ \property QChart::animationDuration
+ The duration of the animation for the chart.
+ */
+
+/*!
+ \property QChart::animationEasingCurve
+ The easing curve of the animation for the chart.
+ */
+
+/*!
  \property QChart::backgroundVisible
  Specifies whether the chart background is visible or not.
  \sa setBackgroundBrush(), setBackgroundPen(), plotAreaBackgroundVisible
@@ -593,6 +603,26 @@ void QChart::setAnimationOptions(AnimationOptions options)
 QChart::AnimationOptions QChart::animationOptions() const
 {
     return d_ptr->m_presenter->animationOptions();
+}
+
+void QChart::setAnimationDuration(int msecs)
+{
+    d_ptr->m_presenter->setAnimationDuration(msecs);
+}
+
+int QChart::animationDuration() const
+{
+    return d_ptr->m_presenter->animationDuration();
+}
+
+void QChart::setAnimationEasingCurve(const QEasingCurve &curve)
+{
+    d_ptr->m_presenter->setAnimationEasingCurve(curve);
+}
+
+QEasingCurve QChart::animationEasingCurve() const
+{
+    return d_ptr->m_presenter->animationEasingCurve();
 }
 
 /*!

@@ -1072,7 +1072,8 @@ void QAbstractBarSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bo
     emit updatedBars();
 }
 
-void QAbstractBarSeriesPrivate::initializeAnimations(QChart::AnimationOptions options)
+void QAbstractBarSeriesPrivate::initializeAnimations(QChart::AnimationOptions options, int duration,
+                                                     QEasingCurve &curve)
 {
     AbstractBarChartItem *bar = static_cast<AbstractBarChartItem *>(m_item.data());
     Q_ASSERT(bar);
@@ -1080,10 +1081,10 @@ void QAbstractBarSeriesPrivate::initializeAnimations(QChart::AnimationOptions op
         bar->animation()->stopAndDestroyLater();
 
     if (options.testFlag(QChart::SeriesAnimations))
-        bar->setAnimation(new BarAnimation(bar));
+        bar->setAnimation(new BarAnimation(bar, duration, curve));
     else
         bar->setAnimation(0);
-    QAbstractSeriesPrivate::initializeAnimations(options);
+    QAbstractSeriesPrivate::initializeAnimations(options, duration, curve);
 }
 
 #include "moc_qabstractbarseries.cpp"

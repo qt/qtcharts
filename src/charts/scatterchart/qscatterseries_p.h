@@ -38,7 +38,8 @@ public:
     QScatterSeriesPrivate(QScatterSeries *q);
     void initializeGraphics(QGraphicsItem* parent);
     void initializeTheme(int index, ChartTheme* theme, bool forced = false);
-    void initializeAnimations(QtCharts::QChart::AnimationOptions options);
+    void initializeAnimations(QtCharts::QChart::AnimationOptions options, int duration,
+                              QEasingCurve &curve);
 
 private:
     QScatterSeries::MarkerShape m_shape;

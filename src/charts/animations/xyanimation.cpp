@@ -24,15 +24,15 @@ Q_DECLARE_METATYPE(QVector<QPointF>)
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-XYAnimation::XYAnimation(XYChart *item)
+XYAnimation::XYAnimation(XYChart *item, int duration, QEasingCurve &curve)
     : ChartAnimation(item),
       m_type(NewAnimation),
       m_dirty(false),
       m_index(-1),
       m_item(item)
 {
-    setDuration(ChartAnimationDuration);
-    setEasingCurve(QEasingCurve::OutQuart);
+    setDuration(duration);
+    setEasingCurve(curve);
 }
 
 XYAnimation::~XYAnimation()

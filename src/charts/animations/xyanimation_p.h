@@ -40,7 +40,7 @@ class XYAnimation : public ChartAnimation
 protected:
     enum Animation { AddPointAnimation, RemovePointAnimation, ReplacePointAnimation, NewAnimation };
 public:
-    XYAnimation(XYChart *item);
+    XYAnimation(XYChart *item, int duration, QEasingCurve &curve);
     ~XYAnimation();
     void setup(const QVector<QPointF> &oldPoints, const QVector<QPointF> &newPoints, int index = -1);
     Animation animationType() const { return m_type; };

@@ -23,9 +23,11 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-BoxPlotAnimation::BoxPlotAnimation(BoxPlotChartItem *item)
+BoxPlotAnimation::BoxPlotAnimation(BoxPlotChartItem *item, int duration, QEasingCurve &curve)
     : QObject(item),
-    m_item(item)
+    m_item(item),
+    m_animationDuration(duration),
+    m_animationCurve(curve)
 {
 }
 
@@ -37,7 +39,7 @@ void BoxPlotAnimation::addBox(BoxWhiskers *box)
 {
     BoxWhiskersAnimation *animation = m_animations.value(box);
     if (!animation) {
-        animation = new BoxWhiskersAnimation(box, this);
+        animation = new BoxWhiskersAnimation(box, this, m_animationDuration, m_animationCurve);
         m_animations.insert(box, animation);
         BoxWhiskersData start;
         start.m_lowerExtreme = box->m_data.m_median;
@@ -46,6 +48,7 @@ void BoxPlotAnimation::addBox(BoxWhiskers *box)
         start.m_upperQuartile = box->m_data.m_median;
         start.m_upperExtreme = box->m_data.m_median;
         animation->setup(start, box->m_data);
+
     } else {
         animation->stop();
         animation->setEndData(box->m_data);

@@ -41,7 +41,8 @@ public:
 
     void initializeTheme(int index, ChartTheme* theme, bool forced = false);
     void initializeGraphics(QGraphicsItem* parent);
-    void initializeAnimations(QtCharts::QChart::AnimationOptions options);
+    void initializeAnimations(QtCharts::QChart::AnimationOptions options, int duration,
+                              QEasingCurve &curve);
 
 private:
     Q_DECLARE_PUBLIC(QSplineSeries)

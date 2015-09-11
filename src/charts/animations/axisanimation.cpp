@@ -25,13 +25,13 @@ Q_DECLARE_METATYPE(QVector<qreal>)
 QT_CHARTS_BEGIN_NAMESPACE
 
 
-AxisAnimation::AxisAnimation(ChartAxisElement *axis)
+AxisAnimation::AxisAnimation(ChartAxisElement *axis, int duration, QEasingCurve &curve)
     : ChartAnimation(axis),
       m_axis(axis),
       m_type(DefaultAnimation)
 {
-    setDuration(ChartAnimationDuration);
-    setEasingCurve(QEasingCurve::OutQuart);
+    setDuration(duration);
+    setEasingCurve(curve);
 }
 
 AxisAnimation::~AxisAnimation()

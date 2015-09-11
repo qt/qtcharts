@@ -41,7 +41,7 @@ class PieAnimation : public ChartAnimation
     Q_OBJECT
 
 public:
-    PieAnimation(PieChartItem *item);
+    PieAnimation(PieChartItem *item, int duration, QEasingCurve &curve);
     ~PieAnimation();
     ChartAnimation *updateValue(PieSliceItem *sliceItem, const PieSliceData &newValue);
     ChartAnimation *addSlice(PieSliceItem *sliceItem, const PieSliceData &endValue, bool startupAnimation);
@@ -53,6 +53,8 @@ public: // from QVariantAnimation
 private:
     PieChartItem *m_item;
     QHash<PieSliceItem *, PieSliceAnimation *> m_animations;
+    int m_animationDuration;
+    QEasingCurve m_animationCurve;
 };
 
 QT_CHARTS_END_NAMESPACE

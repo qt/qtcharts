@@ -31,6 +31,8 @@ Rectangle {
 
         function test_chartViewProperties() {
             compare(chartView.animationOptions, ChartView.NoAnimation, "ChartView.animationOptions");
+            compare(chartView.animationDuration, 1000, "ChartView.animationDuration");
+            compare(chartView.animationEasingCurve.type, Easing.OutQuart, "ChartView.animationEasingCurve");
             verify(chartView.backgroundColor != undefined);
             verify(chartView.margins.bottom > 0, "ChartView.margins.bottom");
             verify(chartView.margins.top > 0, "ChartView.margins.top");

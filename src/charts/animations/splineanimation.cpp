@@ -25,8 +25,8 @@ Q_DECLARE_METATYPE(SplineVector)
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-SplineAnimation::SplineAnimation(SplineChartItem *item)
-    : XYAnimation(item),
+SplineAnimation::SplineAnimation(SplineChartItem *item, int duration, QEasingCurve &curve)
+    : XYAnimation(item, duration, curve),
       m_item(item),
       m_valid(false)
 {

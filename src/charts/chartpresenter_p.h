@@ -137,6 +137,10 @@ public:
 
     void setAnimationOptions(QChart::AnimationOptions options);
     QChart::AnimationOptions animationOptions() const;
+    void setAnimationDuration(int msecs);
+    int animationDuration() const { return m_animationDuration; }
+    void setAnimationEasingCurve(const QEasingCurve &curve);
+    QEasingCurve animationEasingCurve() const { return m_animationCurve; }
 
     void startAnimation(ChartAnimation *animation);
 
@@ -177,6 +181,8 @@ private:
     QList<QAbstractSeries *> m_series;
     QList<QAbstractAxis *> m_axes;
     QChart::AnimationOptions m_options;
+    int m_animationDuration;
+    QEasingCurve m_animationCurve;
     State m_state;
     QPointF m_statePoint;
     AbstractChartLayout *m_layout;

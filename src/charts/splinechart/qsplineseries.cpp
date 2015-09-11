@@ -143,7 +143,8 @@ void QSplineSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bool fo
     }
 }
 
-void QSplineSeriesPrivate::initializeAnimations(QtCharts::QChart::AnimationOptions options)
+void QSplineSeriesPrivate::initializeAnimations(QtCharts::QChart::AnimationOptions options,
+                                                int duration, QEasingCurve &curve)
 {
     SplineChartItem *item = static_cast<SplineChartItem *>(m_item.data());
     Q_ASSERT(item);
@@ -151,10 +152,10 @@ void QSplineSeriesPrivate::initializeAnimations(QtCharts::QChart::AnimationOptio
         item->animation()->stopAndDestroyLater();
 
     if (options.testFlag(QChart::SeriesAnimations))
-        item->setAnimation(new SplineAnimation(item));
+        item->setAnimation(new SplineAnimation(item, duration, curve));
     else
         item->setAnimation(0);
-    QAbstractSeriesPrivate::initializeAnimations(options);
+    QAbstractSeriesPrivate::initializeAnimations(options, duration, curve);
 }
 
 #include "moc_qsplineseries.cpp"

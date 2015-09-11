@@ -36,7 +36,7 @@ class ScatterChartItem;
 class ScatterAnimation : public XYAnimation
 {
 public:
-    ScatterAnimation(ScatterChartItem *item);
+    ScatterAnimation(ScatterChartItem *item, int duration, QEasingCurve &curve);
     ~ScatterAnimation();
 
 protected:

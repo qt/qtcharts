@@ -485,7 +485,8 @@ void QBoxPlotSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bool f
     }
 }
 
-void QBoxPlotSeriesPrivate::initializeAnimations(QChart::AnimationOptions options)
+void QBoxPlotSeriesPrivate::initializeAnimations(QChart::AnimationOptions options, int duration,
+                                                 QEasingCurve &curve)
 {
     BoxPlotChartItem *item = static_cast<BoxPlotChartItem *>(m_item.data());
     Q_ASSERT(item);
@@ -493,12 +494,15 @@ void QBoxPlotSeriesPrivate::initializeAnimations(QChart::AnimationOptions option
         item->animation()->stopAndDestroyLater();
 
     if (options.testFlag(QChart::SeriesAnimations))
-        m_animation = new BoxPlotAnimation(item);
+        m_animation = new BoxPlotAnimation(item, duration, curve);
     else
         m_animation = 0;
     item->setAnimation(m_animation);
 
-    QAbstractSeriesPrivate::initializeAnimations(options);
+    QAbstractSeriesPrivate::initializeAnimations(options, duration, curve);
+
+    // Make BoxPlotChartItem to instantiate box & whisker items
+    item->handleDataStructureChanged();
 }
 
 QList<QLegendMarker*> QBoxPlotSeriesPrivate::createLegendMarkers(QLegend *legend)

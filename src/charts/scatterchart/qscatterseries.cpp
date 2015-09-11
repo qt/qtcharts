@@ -311,7 +311,8 @@ void QScatterSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bool f
     }
 }
 
-void QScatterSeriesPrivate::initializeAnimations(QChart::AnimationOptions options)
+void QScatterSeriesPrivate::initializeAnimations(QChart::AnimationOptions options, int duration,
+                                                 QEasingCurve &curve)
 {
     ScatterChartItem *item = static_cast<ScatterChartItem *>(m_item.data());
     Q_ASSERT(item);
@@ -320,11 +321,11 @@ void QScatterSeriesPrivate::initializeAnimations(QChart::AnimationOptions option
         item->animation()->stopAndDestroyLater();
 
     if (options.testFlag(QChart::SeriesAnimations))
-        item->setAnimation(new ScatterAnimation(item));
+        item->setAnimation(new ScatterAnimation(item, duration, curve));
     else
         item->setAnimation(0);
 
-    QAbstractSeriesPrivate::initializeAnimations(options);
+    QAbstractSeriesPrivate::initializeAnimations(options, duration, curve);
 }
 
 #include "moc_qscatterseries.cpp"

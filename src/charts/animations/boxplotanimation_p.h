@@ -41,7 +41,7 @@ class BoxPlotAnimation : public QObject
 {
     Q_OBJECT
 public:
-    BoxPlotAnimation(BoxPlotChartItem *item);
+    BoxPlotAnimation(BoxPlotChartItem *item, int duration, QEasingCurve &curve);
     ~BoxPlotAnimation();
 
     void addBox(BoxWhiskers *box);
@@ -55,6 +55,8 @@ public:
 protected:
     BoxPlotChartItem *m_item;
     QHash<BoxWhiskers *, BoxWhiskersAnimation *> m_animations;
+    int m_animationDuration;
+    QEasingCurve m_animationCurve;
 };
 
 QT_CHARTS_END_NAMESPACE

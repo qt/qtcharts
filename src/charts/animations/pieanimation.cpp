@@ -22,9 +22,11 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-PieAnimation::PieAnimation(PieChartItem *item)
+PieAnimation::PieAnimation(PieChartItem *item, int duration, QEasingCurve &curve)
     : ChartAnimation(item),
-      m_item(item)
+      m_item(item),
+      m_animationDuration(duration),
+      m_animationCurve(curve)
 {
 }
 
@@ -37,14 +39,14 @@ ChartAnimation *PieAnimation::updateValue(PieSliceItem *sliceItem, const PieSlic
     PieSliceAnimation *animation = m_animations.value(sliceItem);
     if (!animation) {
         animation = new PieSliceAnimation(sliceItem);
+        animation->setDuration(m_animationDuration);
+        animation->setEasingCurve(m_animationCurve);
         m_animations.insert(sliceItem, animation);
     } else {
         animation->stop();
     }
 
     animation->updateValue(sliceData);
-    animation->setDuration(ChartAnimationDuration);
-    animation->setEasingCurve(QEasingCurve::OutQuart);
 
     return animation;
 }
@@ -52,6 +54,8 @@ ChartAnimation *PieAnimation::updateValue(PieSliceItem *sliceItem, const PieSlic
 ChartAnimation *PieAnimation::addSlice(PieSliceItem *sliceItem, const PieSliceData &sliceData, bool startupAnimation)
 {
     PieSliceAnimation *animation = new PieSliceAnimation(sliceItem);
+    animation->setDuration(m_animationDuration);
+    animation->setEasingCurve(m_animationCurve);
     m_animations.insert(sliceItem, animation);
 
     PieSliceData startValue = sliceData;
@@ -66,8 +70,6 @@ ChartAnimation *PieAnimation::addSlice(PieSliceItem *sliceItem, const PieSliceDa
         startValue.m_radius = sliceData.m_holeRadius;
 
     animation->setValue(startValue, sliceData);
-    animation->setDuration(ChartAnimationDuration);
-    animation->setEasingCurve(QEasingCurve::OutQuart);
 
     return animation;
 }
@@ -88,8 +90,6 @@ ChartAnimation *PieAnimation::removeSlice(PieSliceItem *sliceItem)
     endValue.m_isLabelVisible = false;
 
     animation->updateValue(endValue);
-    animation->setDuration(ChartAnimationDuration);
-    animation->setEasingCurve(QEasingCurve::OutQuart);
 
     // PieSliceItem is the parent of PieSliceAnimation so the animation will be deleted as well..
     connect(animation, SIGNAL(finished()), sliceItem, SLOT(deleteLater()));

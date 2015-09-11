@@ -620,7 +620,8 @@ void QAreaSeriesPrivate::initializeGraphics(QGraphicsItem* parent)
     m_item.reset(area);
     QAbstractSeriesPrivate::initializeGraphics(parent);
 }
-void  QAreaSeriesPrivate::initializeAnimations(QChart::AnimationOptions options)
+void  QAreaSeriesPrivate::initializeAnimations(QChart::AnimationOptions options, int duration,
+                                               QEasingCurve &curve)
 {
     Q_Q(QAreaSeries);
     AreaChartItem *area = static_cast<AreaChartItem *>(m_item.data());
@@ -631,16 +632,18 @@ void  QAreaSeriesPrivate::initializeAnimations(QChart::AnimationOptions options)
         area->lowerLineItem()->animation()->stopAndDestroyLater();
 
     if (options.testFlag(QChart::SeriesAnimations)) {
-        area->upperLineItem()->setAnimation(new XYAnimation(area->upperLineItem()));
+        area->upperLineItem()->setAnimation(new XYAnimation(area->upperLineItem(), duration,
+                                                            curve));
         if (q->lowerSeries())
-            area->lowerLineItem()->setAnimation(new XYAnimation(area->lowerLineItem()));
+            area->lowerLineItem()->setAnimation(new XYAnimation(area->lowerLineItem(), duration,
+                                                                curve));
     } else {
         if (q->upperSeries())
             area->upperLineItem()->setAnimation(0);
         if (q->lowerSeries())
                area->lowerLineItem()->setAnimation(0);
     }
-    QAbstractSeriesPrivate::initializeAnimations(options);
+    QAbstractSeriesPrivate::initializeAnimations(options, duration, curve);
 }
 
 QList<QLegendMarker*> QAreaSeriesPrivate::createLegendMarkers(QLegend* legend)

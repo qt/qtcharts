@@ -17,7 +17,7 @@
 ****************************************************************************/
 
 import QtQuick 2.0
-import QtCharts 2.0
+import QtCharts 2.1
 
 ChartView {
     id: chartView
@@ -45,7 +45,11 @@ ChartView {
     onBackgroundRoundnessChanged:      console.log("chart.onBackgroundRoundnessChanged: " + diameter);
     onSeriesAdded:                     console.log("chart.onSeriesAdded: " + series.name);
     onSeriesRemoved:                   console.log("chart.onSeriesRemoved: " + series.name);
-    onPlotAreaColorChanged:            console.log("chart.plotAreaColorChanged: " + chart.plotAreaColor);
+    onPlotAreaColorChanged:            console.log("chart.onPlotAreaColorChanged: " + chart.plotAreaColor);
+    onAnimationDurationChanged:        console.log("chart.onAnimationDurationChanged: "
+                                                   + chart.animationDuration);
+    onAnimationEasingCurveChanged:     console.log("chart.onAnimationEasingCurveChanged: "
+                                                   + chart.animationEasingCurve.type);
 
     legend.onVisibleChanged:           console.log("legend.onVisibleChanged: " + chart.legend.visible);
     legend.onBackgroundVisibleChanged: console.log("legend.onBackgroundVisibleChanged: " + visible);

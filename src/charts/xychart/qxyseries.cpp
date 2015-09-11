@@ -830,7 +830,8 @@ QAbstractAxis* QXYSeriesPrivate::createDefaultAxis(Qt::Orientation orientation) 
     return new QValueAxis;
 }
 
-void QXYSeriesPrivate::initializeAnimations(QtCharts::QChart::AnimationOptions options)
+void QXYSeriesPrivate::initializeAnimations(QtCharts::QChart::AnimationOptions options,
+                                            int duration, QEasingCurve &curve)
 {
     XYChart *item = static_cast<XYChart *>(m_item.data());
     Q_ASSERT(item);
@@ -838,10 +839,10 @@ void QXYSeriesPrivate::initializeAnimations(QtCharts::QChart::AnimationOptions o
         item->animation()->stopAndDestroyLater();
 
     if (options.testFlag(QChart::SeriesAnimations))
-        item->setAnimation(new XYAnimation(item));
+        item->setAnimation(new XYAnimation(item, duration, curve));
     else
         item->setAnimation(0);
-    QAbstractSeriesPrivate::initializeAnimations(options);
+    QAbstractSeriesPrivate::initializeAnimations(options, duration, curve);
 }
 
 void QXYSeriesPrivate::drawSeriesPointLabels(QPainter *painter, const QVector<QPointF> &points,

@@ -23,12 +23,12 @@ Q_DECLARE_METATYPE(QVector<QRectF>)
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-BarAnimation::BarAnimation(AbstractBarChartItem *item)
+BarAnimation::BarAnimation(AbstractBarChartItem *item, int duration, QEasingCurve &curve)
     : ChartAnimation(item),
       m_item(item)
 {
-    setDuration(ChartAnimationDuration);
-    setEasingCurve(QEasingCurve::OutQuart);
+    setDuration(duration);
+    setEasingCurve(curve);
 }
 
 BarAnimation::~BarAnimation()

@@ -81,6 +81,15 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
+ \qmlproperty int ChartView::animationDuration
+ The duration of the animation for the chart.
+ */
+
+/*!
+ \qmlproperty easing ChartView::animationEasingCurve
+ The easing curve of the animation for the chart.
+
+/*!
   \qmlproperty Font ChartView::titleFont
   The title font of the chart.
 
@@ -671,6 +680,32 @@ DeclarativeChart::Animation DeclarativeChart::animationOptions()
         return DeclarativeChart::SeriesAnimations;
     else
         return DeclarativeChart::NoAnimation;
+}
+
+void DeclarativeChart::setAnimationDuration(int msecs)
+{
+    if (msecs != m_chart->animationDuration()) {
+        m_chart->setAnimationDuration(msecs);
+        emit animationDurationChanged(msecs);
+    }
+}
+
+int DeclarativeChart::animationDuration() const
+{
+    return m_chart->animationDuration();
+}
+
+void DeclarativeChart::setAnimationEasingCurve(const QEasingCurve &curve)
+{
+    if (curve != m_chart->animationEasingCurve()) {
+        m_chart->setAnimationEasingCurve(curve);
+        emit animationEasingCurveChanged(curve);
+    }
+}
+
+QEasingCurve DeclarativeChart::animationEasingCurve() const
+{
+    return m_chart->animationEasingCurve();
 }
 
 void DeclarativeChart::setTitle(QString title)

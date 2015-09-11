@@ -61,7 +61,8 @@ public:
     virtual void initializeAxes() = 0;
     virtual void initializeTheme(int index, ChartTheme* theme, bool forced = false) = 0;
     virtual void initializeGraphics(QGraphicsItem* parent) = 0;
-    virtual void initializeAnimations(QChart::AnimationOptions options) = 0;
+    virtual void initializeAnimations(QChart::AnimationOptions options, int duration,
+                                      QEasingCurve &curve) = 0;
 
     virtual QList<QLegendMarker*> createLegendMarkers(QLegend* legend) = 0;
 

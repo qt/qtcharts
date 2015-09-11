@@ -39,7 +39,7 @@ class BarAnimation : public ChartAnimation
     Q_OBJECT
 
 public:
-    BarAnimation(AbstractBarChartItem *item);
+    BarAnimation(AbstractBarChartItem *item, int duration, QEasingCurve &curve);
     ~BarAnimation();
 
 public: // from QVariantAnimation

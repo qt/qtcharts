@@ -39,7 +39,7 @@ class SplineChartItem;
 class SplineAnimation : public XYAnimation
 {
 public:
-    SplineAnimation(SplineChartItem *item);
+    SplineAnimation(SplineChartItem *item, int duration, QEasingCurve &curve);
     ~SplineAnimation();
     void setup(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints, QVector<QPointF> &oldContorlPoints, QVector<QPointF> &newControlPoints, int index = -1);
 

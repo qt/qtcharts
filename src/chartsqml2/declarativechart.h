@@ -39,6 +39,8 @@ class DeclarativeChart : public QQuickPaintedItem
     Q_OBJECT
     Q_PROPERTY(Theme theme READ theme WRITE setTheme)
     Q_PROPERTY(Animation animationOptions READ animationOptions WRITE setAnimationOptions)
+    Q_PROPERTY(int animationDuration READ animationDuration WRITE setAnimationDuration NOTIFY animationDurationChanged REVISION 5)
+    Q_PROPERTY(QEasingCurve animationEasingCurve READ animationEasingCurve WRITE setAnimationEasingCurve NOTIFY animationEasingCurveChanged REVISION 5)
     Q_PROPERTY(QString title READ title WRITE setTitle)
     Q_PROPERTY(QFont titleFont READ titleFont WRITE setTitleFont)
     Q_PROPERTY(QColor titleColor READ titleColor WRITE setTitleColor NOTIFY titleColorChanged)
@@ -116,6 +118,10 @@ public:
     DeclarativeChart::Theme theme();
     void setAnimationOptions(DeclarativeChart::Animation animations);
     DeclarativeChart::Animation animationOptions();
+    void setAnimationDuration(int msecs);
+    int animationDuration() const;
+    void setAnimationEasingCurve(const QEasingCurve &curve);
+    QEasingCurve animationEasingCurve() const;
     void setTitle(QString title);
     QString title();
     QLegend *legend();
@@ -190,6 +196,8 @@ Q_SIGNALS:
     Q_REVISION(3) void backgroundRoundnessChanged(qreal diameter);
     Q_REVISION(4) void localizeNumbersChanged();
     Q_REVISION(4) void localeChanged();
+    Q_REVISION(5) void animationDurationChanged(int msecs);
+    Q_REVISION(5) void animationEasingCurveChanged(QEasingCurve curve);
 
 private Q_SLOTS:
     void changeMargins(int top, int bottom, int left, int right);

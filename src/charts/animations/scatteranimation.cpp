@@ -22,8 +22,8 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-ScatterAnimation::ScatterAnimation(ScatterChartItem *item)
-    : XYAnimation(item)
+ScatterAnimation::ScatterAnimation(ScatterChartItem *item, int duration, QEasingCurve &curve)
+    : XYAnimation(item, duration, curve)
 {
 }
 

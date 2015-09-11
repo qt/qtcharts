@@ -932,7 +932,8 @@ void QPieSeriesPrivate::initializeGraphics(QGraphicsItem* parent)
     QAbstractSeriesPrivate::initializeGraphics(parent);
 }
 
-void QPieSeriesPrivate::initializeAnimations(QtCharts::QChart::AnimationOptions options)
+void QPieSeriesPrivate::initializeAnimations(QtCharts::QChart::AnimationOptions options,
+                                             int duration, QEasingCurve &curve)
 {
     PieChartItem *item = static_cast<PieChartItem *>(m_item.data());
     Q_ASSERT(item);
@@ -940,10 +941,10 @@ void QPieSeriesPrivate::initializeAnimations(QtCharts::QChart::AnimationOptions 
         item->animation()->stopAndDestroyLater();
 
     if (options.testFlag(QChart::SeriesAnimations))
-        item->setAnimation(new PieAnimation(item));
+        item->setAnimation(new PieAnimation(item, duration, curve));
     else
         item->setAnimation(0);
-    QAbstractSeriesPrivate::initializeAnimations(options);
+    QAbstractSeriesPrivate::initializeAnimations(options, duration, curve);
 }
 
 QList<QLegendMarker*> QPieSeriesPrivate::createLegendMarkers(QLegend* legend)

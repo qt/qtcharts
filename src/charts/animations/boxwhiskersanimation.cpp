@@ -27,14 +27,15 @@ Q_DECLARE_METATYPE(qreal)
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-BoxWhiskersAnimation::BoxWhiskersAnimation(BoxWhiskers *box, BoxPlotAnimation *boxPlotAnimation)
+BoxWhiskersAnimation::BoxWhiskersAnimation(BoxWhiskers *box, BoxPlotAnimation *boxPlotAnimation,
+                                           int duration, QEasingCurve &curve)
     : ChartAnimation(box),
       m_box(box),
       m_changeAnimation(false),
       m_boxPlotAnimation(boxPlotAnimation)
 {
-    setDuration(ChartAnimationDuration);
-    setEasingCurve(QEasingCurve::OutQuart);
+    setDuration(duration);
+    setEasingCurve(curve);
 }
 
 BoxWhiskersAnimation::~BoxWhiskersAnimation()

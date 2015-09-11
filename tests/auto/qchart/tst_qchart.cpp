@@ -59,6 +59,9 @@ private slots:
     void addSeries();
     void animationOptions_data();
     void animationOptions();
+    void animationDuration();
+    void animationCurve_data();
+    void animationCurve();
     void axisX_data();
     void axisX();
     void axisY_data();
@@ -160,6 +163,8 @@ void tst_QChart::qchart()
     QVERIFY(m_chart->legend()->isVisible());
 
     QCOMPARE(m_chart->animationOptions(), QChart::NoAnimation);
+    QCOMPARE(m_chart->animationDuration(), 1000);
+    QCOMPARE(m_chart->animationEasingCurve(), QEasingCurve(QEasingCurve::OutQuart));
     QVERIFY(!m_chart->axisX());
     QVERIFY(!m_chart->axisY());
     QVERIFY(m_chart->backgroundBrush()!=QBrush());
@@ -256,6 +261,30 @@ void tst_QChart::animationOptions()
     QFETCH(QChart::AnimationOption, animationOptions);
     m_chart->setAnimationOptions(animationOptions);
     QCOMPARE(m_chart->animationOptions(), animationOptions);
+}
+
+void tst_QChart::animationDuration()
+{
+    createTestData();
+    m_chart->setAnimationDuration(2000);
+    QVERIFY(m_chart->animationDuration() == 2000);
+}
+
+void tst_QChart::animationCurve_data()
+{
+    QTest::addColumn<QEasingCurve>("animationCurve");
+    QTest::newRow("Linear") << QEasingCurve(QEasingCurve::Linear);
+    QTest::newRow("InCubic") << QEasingCurve(QEasingCurve::InCubic);
+    QTest::newRow("OutSine") << QEasingCurve(QEasingCurve::OutSine);
+    QTest::newRow("OutInBack") << QEasingCurve(QEasingCurve::OutInBack);
+}
+
+void tst_QChart::animationCurve()
+{
+    createTestData();
+    QFETCH(QEasingCurve, animationCurve);
+    m_chart->setAnimationEasingCurve(animationCurve);
+    QCOMPARE(m_chart->animationEasingCurve(), animationCurve);
 }
 
 void tst_QChart::axisX_data()

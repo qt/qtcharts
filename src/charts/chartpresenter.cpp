@@ -39,6 +39,8 @@ ChartPresenter::ChartPresenter(QChart *chart, QChart::ChartType type)
     : QObject(chart),
       m_chart(chart),
       m_options(QChart::NoAnimation),
+      m_animationDuration(ChartAnimationDuration),
+      m_animationCurve(QEasingCurve::OutQuart),
       m_state(ShowState),
       m_background(0),
       m_plotAreaBackground(0),
@@ -77,7 +79,7 @@ QRectF ChartPresenter::geometry() const
 void ChartPresenter::handleAxisAdded(QAbstractAxis *axis)
 {
     axis->d_ptr->initializeGraphics(rootItem());
-    axis->d_ptr->initializeAnimations(m_options);
+    axis->d_ptr->initializeAnimations(m_options, m_animationDuration, m_animationCurve);
     ChartAxisElement *item = axis->d_ptr->axisItem();
     item->setPresenter(this);
     item->setThemeManager(m_chart->d_ptr->m_themeManager);
@@ -101,7 +103,7 @@ void ChartPresenter::handleAxisRemoved(QAbstractAxis *axis)
 void ChartPresenter::handleSeriesAdded(QAbstractSeries *series)
 {
     series->d_ptr->initializeGraphics(rootItem());
-    series->d_ptr->initializeAnimations(m_options);
+    series->d_ptr->initializeAnimations(m_options, m_animationDuration, m_animationCurve);
     series->d_ptr->setPresenter(this);
     ChartItem *chart = series->d_ptr->chartItem();
     chart->setPresenter(this);
@@ -134,12 +136,37 @@ void ChartPresenter::setAnimationOptions(QChart::AnimationOptions options)
         m_options = options;
         if (options.testFlag(QChart::SeriesAnimations) != oldOptions.testFlag(QChart::SeriesAnimations)) {
             foreach (QAbstractSeries *series, m_series)
-                series->d_ptr->initializeAnimations(m_options);
+                series->d_ptr->initializeAnimations(m_options, m_animationDuration,
+                                                    m_animationCurve);
         }
         if (options.testFlag(QChart::GridAxisAnimations) != oldOptions.testFlag(QChart::GridAxisAnimations)) {
             foreach (QAbstractAxis *axis, m_axes)
-                axis->d_ptr->initializeAnimations(m_options);
+                axis->d_ptr->initializeAnimations(m_options, m_animationDuration, m_animationCurve);
         }
+        m_layout->invalidate(); // So that existing animations don't just stop halfway
+    }
+}
+
+void ChartPresenter::setAnimationDuration(int msecs)
+{
+    if (m_animationDuration != msecs) {
+        m_animationDuration = msecs;
+        foreach (QAbstractSeries *series, m_series)
+            series->d_ptr->initializeAnimations(m_options, m_animationDuration, m_animationCurve);
+        foreach (QAbstractAxis *axis, m_axes)
+            axis->d_ptr->initializeAnimations(m_options, m_animationDuration, m_animationCurve);
+        m_layout->invalidate(); // So that existing animations don't just stop halfway
+    }
+}
+
+void ChartPresenter::setAnimationEasingCurve(const QEasingCurve &curve)
+{
+    if (m_animationCurve != curve) {
+        m_animationCurve = curve;
+        foreach (QAbstractSeries *series, m_series)
+            series->d_ptr->initializeAnimations(m_options, m_animationDuration, m_animationCurve);
+        foreach (QAbstractAxis *axis, m_axes)
+            axis->d_ptr->initializeAnimations(m_options, m_animationDuration, m_animationCurve);
         m_layout->invalidate(); // So that existing animations don't just stop halfway
     }
 }

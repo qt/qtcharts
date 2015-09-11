@@ -312,9 +312,12 @@ void QAbstractSeriesPrivate::initializeGraphics(QGraphicsItem* parent)
     QObject::connect(m_domain.data(), SIGNAL(updated()),m_item.data(), SLOT(handleDomainUpdated()));
 }
 
-void QAbstractSeriesPrivate::initializeAnimations(QChart::AnimationOptions options)
+void QAbstractSeriesPrivate::initializeAnimations(QChart::AnimationOptions options, int duration,
+                                                  QEasingCurve &curve)
 {
     Q_UNUSED(options);
+    Q_UNUSED(duration);
+    Q_UNUSED(curve);
 }
 
 bool QAbstractSeriesPrivate::reverseXAxis()

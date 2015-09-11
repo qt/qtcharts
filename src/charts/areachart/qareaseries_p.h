@@ -46,7 +46,8 @@ public:
     void initializeAxes();
     void initializeGraphics(QGraphicsItem* parent);
     void initializeTheme(int index, ChartTheme* theme, bool forced = false);
-    void initializeAnimations(QChart::AnimationOptions options);
+    void initializeAnimations(QChart::AnimationOptions options, int duration,
+                              QEasingCurve &curve);
 
     QList<QLegendMarker *> createLegendMarkers(QLegend *legend);
 

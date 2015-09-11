@@ -42,7 +42,8 @@ class BoxWhiskersAnimation : public ChartAnimation
     Q_OBJECT
 
 public:
-    BoxWhiskersAnimation(BoxWhiskers *box, BoxPlotAnimation *boxPlotAnimation);
+    BoxWhiskersAnimation(BoxWhiskers *box, BoxPlotAnimation *boxPlotAnimation, int duration,
+                         QEasingCurve &curve);
     ~BoxWhiskersAnimation();
 
 public: // from QVariantAnimation

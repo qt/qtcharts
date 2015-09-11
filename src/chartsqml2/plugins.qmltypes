@@ -994,6 +994,8 @@ Module {
         Property { name: "axes"; revision: 2; type: "QAbstractAxis"; isList: true; isReadonly: true }
         Property { name: "localizeNumbers"; revision: 4; type: "bool" }
         Property { name: "locale"; revision: 4; type: "QLocale" }
+        Property { name: "animationDuration"; revision: 5; type: "int" }
+        Property { name: "animationEasingCurve"; revision: 5; type: "QEasingCurve" }
         Signal { name: "axisLabelsChanged" }
         Signal {
             name: "titleColorChanged"
@@ -1024,6 +1026,16 @@ Module {
         }
         Signal { name: "localizeNumbersChanged"; revision: 4 }
         Signal { name: "localeChanged"; revision: 4 }
+        Signal {
+            name: "animationDurationChanged"
+            revision: 5
+            Parameter { name: "msecs"; type: "int" }
+        }
+        Signal {
+            name: "animationEasingCurveChanged"
+            revision: 5
+            Parameter { name: "curve"; type: "QEasingCurve" }
+        }
         Method {
             name: "series"
             type: "QAbstractSeries*"
