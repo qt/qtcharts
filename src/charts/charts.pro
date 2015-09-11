@@ -14,6 +14,9 @@ QMAKE_DOCS = $$PWD/doc/qtcharts.qdocconf
 
 load(qt_module)
 
+QMAKE_TARGET_PRODUCT = "Qt Charts (Qt $$QT_VERSION)"
+QMAKE_TARGET_DESCRIPTION = "Charts component for Qt."
+
 ############################# SOURCES ##########################################
 
 SOURCES += \
