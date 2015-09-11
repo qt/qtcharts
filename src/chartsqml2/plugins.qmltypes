@@ -974,6 +974,8 @@ Module {
         }
         Property { name: "theme"; type: "Theme" }
         Property { name: "animationOptions"; type: "Animation" }
+        Property { name: "animationDuration"; revision: 5; type: "int" }
+        Property { name: "animationEasingCurve"; revision: 5; type: "QEasingCurve" }
         Property { name: "title"; type: "string" }
         Property { name: "titleFont"; type: "QFont" }
         Property { name: "titleColor"; type: "QColor" }
@@ -994,8 +996,6 @@ Module {
         Property { name: "axes"; revision: 2; type: "QAbstractAxis"; isList: true; isReadonly: true }
         Property { name: "localizeNumbers"; revision: 4; type: "bool" }
         Property { name: "locale"; revision: 4; type: "QLocale" }
-        Property { name: "animationDuration"; revision: 5; type: "int" }
-        Property { name: "animationEasingCurve"; revision: 5; type: "QEasingCurve" }
         Signal { name: "axisLabelsChanged" }
         Signal {
             name: "titleColorChanged"
@@ -1366,9 +1366,10 @@ Module {
             "QtCharts/LineSeries 1.1",
             "QtCharts/LineSeries 1.2",
             "QtCharts/LineSeries 1.3",
-            "QtCharts/LineSeries 2.0"
+            "QtCharts/LineSeries 2.0",
+            "QtCharts/LineSeries 2.1"
         ]
-        exportMetaObjectRevisions: [0, 1, 2, 3, 3]
+        exportMetaObjectRevisions: [0, 1, 2, 3, 3, 4]
         Property { name: "count"; type: "int"; isReadonly: true }
         Property { name: "axisX"; revision: 1; type: "QAbstractAxis"; isPointer: true }
         Property { name: "axisY"; revision: 1; type: "QAbstractAxis"; isPointer: true }
@@ -1466,6 +1467,12 @@ Module {
             name: "remove"
             revision: 3
             Parameter { name: "index"; type: "int" }
+        }
+        Method {
+            name: "removePoints"
+            revision: 4
+            Parameter { name: "index"; type: "int" }
+            Parameter { name: "count"; type: "int" }
         }
         Method {
             name: "insert"
@@ -1671,9 +1678,10 @@ Module {
             "QtCharts/ScatterSeries 1.2",
             "QtCharts/ScatterSeries 1.3",
             "QtCharts/ScatterSeries 1.4",
-            "QtCharts/ScatterSeries 2.0"
+            "QtCharts/ScatterSeries 2.0",
+            "QtCharts/ScatterSeries 2.1"
         ]
-        exportMetaObjectRevisions: [0, 1, 2, 3, 4, 4]
+        exportMetaObjectRevisions: [0, 1, 2, 3, 4, 4, 5]
         Property { name: "count"; type: "int"; isReadonly: true }
         Property { name: "axisX"; revision: 1; type: "QAbstractAxis"; isPointer: true }
         Property { name: "axisY"; revision: 1; type: "QAbstractAxis"; isPointer: true }
@@ -1769,6 +1777,12 @@ Module {
             Parameter { name: "index"; type: "int" }
         }
         Method {
+            name: "removePoints"
+            revision: 5
+            Parameter { name: "index"; type: "int" }
+            Parameter { name: "count"; type: "int" }
+        }
+        Method {
             name: "insert"
             Parameter { name: "index"; type: "int" }
             Parameter { name: "x"; type: "double" }
@@ -1790,9 +1804,10 @@ Module {
             "QtCharts/SplineSeries 1.1",
             "QtCharts/SplineSeries 1.2",
             "QtCharts/SplineSeries 1.3",
-            "QtCharts/SplineSeries 2.0"
+            "QtCharts/SplineSeries 2.0",
+            "QtCharts/SplineSeries 2.1"
         ]
-        exportMetaObjectRevisions: [0, 1, 2, 3, 3]
+        exportMetaObjectRevisions: [0, 1, 2, 3, 3, 4]
         Property { name: "count"; type: "int"; isReadonly: true }
         Property { name: "axisX"; revision: 1; type: "QAbstractAxis"; isPointer: true }
         Property { name: "axisY"; revision: 1; type: "QAbstractAxis"; isPointer: true }
@@ -1890,6 +1905,12 @@ Module {
             name: "remove"
             revision: 3
             Parameter { name: "index"; type: "int" }
+        }
+        Method {
+            name: "removePoints"
+            revision: 4
+            Parameter { name: "index"; type: "int" }
+            Parameter { name: "count"; type: "int" }
         }
         Method {
             name: "insert"
@@ -2134,6 +2155,7 @@ Module {
         Property { name: "labelsVisible"; type: "bool" }
         Property { name: "labelsFormat"; type: "string" }
         Property { name: "labelsPosition"; type: "LabelsPosition" }
+        Property { name: "labelsAngle"; type: "double" }
         Signal {
             name: "clicked"
             Parameter { name: "index"; type: "int" }
@@ -2167,6 +2189,10 @@ Module {
         Signal {
             name: "labelsPositionChanged"
             Parameter { name: "position"; type: "QAbstractBarSeries::LabelsPosition" }
+        }
+        Signal {
+            name: "labelsAngleChanged"
+            Parameter { name: "angle"; type: "double" }
         }
         Signal {
             name: "barsetsAdded"
@@ -2915,6 +2941,11 @@ Module {
         Signal {
             name: "pointLabelsColorChanged"
             Parameter { name: "color"; type: "QColor" }
+        }
+        Signal {
+            name: "pointsRemoved"
+            Parameter { name: "index"; type: "int" }
+            Parameter { name: "count"; type: "int" }
         }
     }
 }
