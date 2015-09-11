@@ -1992,6 +1992,8 @@ Module {
         Property { name: "labelsColor"; type: "QColor" }
         Property { name: "gridVisible"; type: "bool" }
         Property { name: "gridLinePen"; type: "QPen" }
+        Property { name: "minorGridVisible"; type: "bool" }
+        Property { name: "minorGridLinePen"; type: "QPen" }
         Property { name: "shadesVisible"; type: "bool" }
         Property { name: "shadesColor"; type: "QColor" }
         Property { name: "shadesBorderColor"; type: "QColor" }
@@ -2039,6 +2041,14 @@ Module {
         Signal {
             name: "gridVisibleChanged"
             Parameter { name: "visible"; type: "bool" }
+        }
+        Signal {
+            name: "minorGridVisibleChanged"
+            Parameter { name: "visible"; type: "bool" }
+        }
+        Signal {
+            name: "minorGridLinePenChanged"
+            Parameter { name: "pen"; type: "QPen" }
         }
         Signal {
             name: "colorChanged"
@@ -2793,6 +2803,7 @@ Module {
         Property { name: "min"; type: "double" }
         Property { name: "max"; type: "double" }
         Property { name: "labelFormat"; type: "string" }
+        Property { name: "minorTickCount"; type: "int" }
         Signal {
             name: "minChanged"
             Parameter { name: "min"; type: "double" }
@@ -2808,6 +2819,10 @@ Module {
         }
         Signal {
             name: "tickCountChanged"
+            Parameter { name: "tickCount"; type: "int" }
+        }
+        Signal {
+            name: "minorTickCountChanged"
             Parameter { name: "tickCount"; type: "int" }
         }
         Signal {
