@@ -70,6 +70,7 @@ public slots:
     void titleFontSizeChanged(int value);
     void gridIndexChanged(int index);
     void minorGridIndexChanged(int index);
+    void gridLineColorIndexChanged(int index);
     void arrowIndexChanged(int index);
     void angularRangeChanged(qreal min, qreal max);
     void radialRangeChanged(qreal min, qreal max);

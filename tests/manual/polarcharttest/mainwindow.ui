@@ -335,7 +335,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>814</y>
+         <y>810</y>
          <width>131</width>
          <height>20</height>
         </rect>
@@ -394,7 +394,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>840</y>
+         <y>830</y>
          <width>117</width>
          <height>16</height>
         </rect>
@@ -689,7 +689,7 @@
         <rect>
          <x>10</x>
          <y>680</y>
-         <width>191</width>
+         <width>198</width>
          <height>31</height>
         </rect>
        </property>
@@ -714,7 +714,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>740</y>
+         <y>730</y>
          <width>221</width>
          <height>22</height>
         </rect>
@@ -736,7 +736,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>766</y>
+         <y>760</y>
          <width>136</width>
          <height>42</height>
         </rect>
@@ -911,6 +911,40 @@
        <property name="text">
         <string>Category Label On Tick</string>
        </property>
+      </widget>
+      <widget class="QComboBox" name="gridLineColorComboBox">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>850</y>
+         <width>133</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>Black grid line</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Green grid line</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Red grid line</string>
+        </property>
+       </item>
       </widget>
      </widget>
     </item>

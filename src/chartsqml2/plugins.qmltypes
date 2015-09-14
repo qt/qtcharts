@@ -2027,6 +2027,8 @@ Module {
         Property { name: "gridLinePen"; type: "QPen" }
         Property { name: "minorGridVisible"; type: "bool" }
         Property { name: "minorGridLinePen"; type: "QPen" }
+        Property { name: "gridLineColor"; type: "QColor" }
+        Property { name: "minorGridLineColor"; type: "QColor" }
         Property { name: "shadesVisible"; type: "bool" }
         Property { name: "shadesColor"; type: "QColor" }
         Property { name: "shadesBorderColor"; type: "QColor" }
@@ -2082,6 +2084,14 @@ Module {
         Signal {
             name: "minorGridLinePenChanged"
             Parameter { name: "pen"; type: "QPen" }
+        }
+        Signal {
+            name: "gridLineColorChanged"
+            Parameter { name: "color"; type: "QColor" }
+        }
+        Signal {
+            name: "minorGridLineColorChanged"
+            Parameter { name: "color"; type: "QColor" }
         }
         Signal {
             name: "colorChanged"

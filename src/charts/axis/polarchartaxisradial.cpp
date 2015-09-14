@@ -332,6 +332,26 @@ void PolarChartAxisRadial::handleMinorGridPenChanged(const QPen &pen)
         static_cast<QGraphicsEllipseItem *>(item)->setPen(pen);
 }
 
+void PolarChartAxisRadial::handleGridLineColorChanged(const QColor &color)
+{
+    foreach (QGraphicsItem *item, gridItems()) {
+        QGraphicsEllipseItem *ellipseItem = static_cast<QGraphicsEllipseItem *>(item);
+        QPen pen = ellipseItem->pen();
+        pen.setColor(color);
+        ellipseItem->setPen(pen);
+    }
+}
+
+void PolarChartAxisRadial::handleMinorGridLineColorChanged(const QColor &color)
+{
+    foreach (QGraphicsItem *item, minorGridItems()) {
+        QGraphicsEllipseItem *ellipseItem = static_cast<QGraphicsEllipseItem *>(item);
+        QPen pen = ellipseItem->pen();
+        pen.setColor(color);
+        ellipseItem->setPen(pen);
+    }
+}
+
 QSizeF PolarChartAxisRadial::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
 {
     Q_UNUSED(which);

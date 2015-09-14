@@ -122,6 +122,8 @@ public Q_SLOTS:
     virtual void handleGridPenChanged(const QPen &pen) = 0;
     virtual void handleMinorArrowPenChanged(const QPen &pen) = 0;
     virtual void handleMinorGridPenChanged(const QPen &pen) = 0;
+    virtual void handleMinorGridLineColorChanged(const QColor &color) = 0;
+    virtual void handleGridLineColorChanged(const QColor &color) = 0;
     void handleLabelsBrushChanged(const QBrush &brush);
     void handleLabelsFontChanged(const QFont &font);
     void handleTitleBrushChanged(const QBrush &brush);

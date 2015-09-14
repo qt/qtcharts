@@ -72,11 +72,16 @@ ChartView {
 
     ValueAxis{
         id: axisX
+        minorGridVisible: false
+        minorTickCount: 2
         onColorChanged:               console.log("axisX.onColorChanged: " + color);
         onLabelsVisibleChanged:       console.log("axisX.onLabelsVisibleChanged: " + visible);
         onLabelsColorChanged:         console.log("axisX.onLabelsColorChanged: " + color);
         onVisibleChanged:             console.log("axisX.onVisibleChanged: " + visible);
         onGridVisibleChanged:         console.log("axisX.onGridVisibleChanged: " + visible);
+        onMinorGridVisibleChanged:    console.log("axisX.onMinorGridVisibleChanged: " + visible);
+        onGridLineColorChanged:       console.log("axisX.onGridLineColorChanged: " + color);
+        onMinorGridLineColorChanged:  console.log("axisX.onMinorGridLineColorChanged: " + color);
         onShadesVisibleChanged:       console.log("axisX.onShadesVisibleChanged: " + visible);
         onShadesColorChanged:         console.log("axisX.onShadesColorChanged: " + color);
         onShadesBorderColorChanged:   console.log("axisX.onShadesBorderColorChanged: " + color);
@@ -87,11 +92,16 @@ ChartView {
 
     ValueAxis{
         id: axisY
+        minorGridVisible: false
+        minorTickCount: 2
         onColorChanged:               console.log("axisY.onColorChanged: " + color);
         onLabelsVisibleChanged:       console.log("axisY.onLabelsVisibleChanged: " + visible);
         onLabelsColorChanged:         console.log("axisY.onLabelsColorChanged: " + color);
         onVisibleChanged:             console.log("axisY.onVisibleChanged: " + visible);
         onGridVisibleChanged:         console.log("axisY.onGridVisibleChanged: " + visible);
+        onMinorGridVisibleChanged:    console.log("axisX.onMinorGridVisibleChanged: " + visible);
+        onGridLineColorChanged:       console.log("axisX.onGridLineColorChanged: " + color);
+        onMinorGridLineColorChanged:  console.log("axisX.onMinorGridLineColorChanged: " + color);
         onShadesVisibleChanged:       console.log("axisY.onShadesVisibleChanged: " + visible);
         onShadesColorChanged:         console.log("axisY.onShadesColorChanged: " + color);
         onShadesBorderColorChanged:   console.log("axisY.onShadesBorderColorChanged: " + color);

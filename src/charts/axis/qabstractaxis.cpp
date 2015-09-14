@@ -142,6 +142,16 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
+  \property QAbstractAxis::gridLineColor
+  The color of the grid line.
+*/
+
+/*!
+  \property QAbstractAxis::minorGridLineColor
+  The color of the minor grid line. Applies only to QValueAxis.
+*/
+
+/*!
   \property QAbstractAxis::labelsFont
   The font of the axis labels.
 */
@@ -356,6 +366,16 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
   \fn void QAbstractAxis::minorGridLinePenChanged(const QPen& pen)
   The pen of the minor grid line has changed to \a pen.
+*/
+
+/*!
+  \fn void QAbstractAxis::gridLineColorChanged(const QColor &color)
+  The color of the pen of the grid line has changed to \a color.
+*/
+
+/*!
+  \fn void QAbstractAxis::minorGridLineColorChanged(const QColor &color)
+  The color of the pen of the minor grid line has changed to \a color.
 */
 
 /*!
@@ -582,6 +602,36 @@ QPen QAbstractAxis::minorGridLinePen() const
         return QPen();
     else
         return d_ptr->m_minorGridLinePen;
+}
+
+void QAbstractAxis::setGridLineColor(const QColor &color)
+{
+    QPen pen = d_ptr->m_gridLinePen;
+    if (color != pen.color()) {
+        pen.setColor(color);
+        d_ptr->m_gridLinePen = pen;
+        emit gridLineColorChanged(color);
+    }
+}
+
+QColor QAbstractAxis::gridLineColor()
+{
+    return d_ptr->m_gridLinePen.color();
+}
+
+void QAbstractAxis::setMinorGridLineColor(const QColor &color)
+{
+    QPen pen = d_ptr->m_minorGridLinePen;
+    if (color != pen.color()) {
+        pen.setColor(color);
+        d_ptr->m_minorGridLinePen = pen;
+        emit minorGridLineColorChanged(color);
+    }
+}
+
+QColor QAbstractAxis::minorGridLineColor()
+{
+    return d_ptr->m_minorGridLinePen.color();
 }
 
 void QAbstractAxis::setLabelsVisible(bool visible)

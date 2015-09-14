@@ -169,6 +169,8 @@ MainWindow::MainWindow(QWidget *parent) :
             this, SLOT(gridIndexChanged(int)));
     connect(ui->minorGridComboBox, SIGNAL(currentIndexChanged(int)),
             this, SLOT(minorGridIndexChanged(int)));
+    connect(ui->gridLineColorComboBox, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(gridLineColorIndexChanged(int)));
     connect(ui->arrowComboBox, SIGNAL(currentIndexChanged(int)),
             this, SLOT(arrowIndexChanged(int)));
     connect(ui->logBaseSpin, SIGNAL(valueChanged(double)),
@@ -954,6 +956,29 @@ void MainWindow::minorGridIndexChanged(int index)
     m_angularAxis->setMinorGridLineVisible(m_minorGridVisible);
     m_radialAxis->setMinorGridLinePen(*m_minorGridPen);
     m_radialAxis->setMinorGridLineVisible(m_minorGridVisible);
+}
+
+void MainWindow::gridLineColorIndexChanged(int index)
+{
+    QColor color;
+    switch (index) {
+    case 0:
+        color = Qt::black;
+        break;
+    case 1:
+        color = Qt::green;
+        break;
+    case 2:
+        color = Qt::red;
+        break;
+    default:
+        break;
+    }
+
+    m_angularAxis->setGridLineColor(color);
+    m_radialAxis->setGridLineColor(color);
+    m_angularAxis->setMinorGridLineColor(color);
+    m_radialAxis->setMinorGridLineColor(color);
 }
 
 void MainWindow::arrowIndexChanged(int index)

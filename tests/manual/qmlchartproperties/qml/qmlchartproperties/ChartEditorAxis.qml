@@ -65,6 +65,14 @@ Row {
             onClicked: axis.minorGridVisible = !axis.minorGridVisible;
         }
         Button {
+            text: "axis grid color"
+            onClicked: axis.gridLineColor = main.nextColor();
+        }
+        Button {
+            text: "axis minor grid color"
+            onClicked: axis.minorGridLineColor = main.nextColor();
+        }
+        Button {
             text: "axis shades visible"
             onClicked: axis.shadesVisible = !axis.shadesVisible;
         }

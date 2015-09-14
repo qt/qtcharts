@@ -225,6 +225,26 @@ void CartesianChartAxis::handleMinorGridPenChanged(const QPen &pen)
         static_cast<QGraphicsLineItem *>(item)->setPen(pen);
 }
 
+void CartesianChartAxis::handleGridLineColorChanged(const QColor &color)
+{
+    foreach (QGraphicsItem *item, gridItems()) {
+        QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem *>(item);
+        QPen pen = lineItem->pen();
+        pen.setColor(color);
+        lineItem->setPen(pen);
+    }
+}
+
+void CartesianChartAxis::handleMinorGridLineColorChanged(const QColor &color)
+{
+    foreach (QGraphicsItem *item, minorGridItems()) {
+        QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem *>(item);
+        QPen pen = lineItem->pen();
+        pen.setColor(color);
+        lineItem->setPen(pen);
+    }
+}
+
 void CartesianChartAxis::handleShadesBrushChanged(const QBrush &brush)
 {
     foreach (QGraphicsItem *item, shadeItems())

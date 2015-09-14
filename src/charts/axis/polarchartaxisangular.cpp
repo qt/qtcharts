@@ -356,6 +356,26 @@ void PolarChartAxisAngular::handleMinorGridPenChanged(const QPen &pen)
         static_cast<QGraphicsLineItem *>(item)->setPen(pen);
 }
 
+void PolarChartAxisAngular::handleGridLineColorChanged(const QColor &color)
+{
+    foreach (QGraphicsItem *item, gridItems()) {
+        QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem *>(item);
+        QPen pen = lineItem->pen();
+        pen.setColor(color);
+        lineItem->setPen(pen);
+    }
+}
+
+void PolarChartAxisAngular::handleMinorGridLineColorChanged(const QColor &color)
+{
+    foreach (QGraphicsItem *item, minorGridItems()) {
+        QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem *>(item);
+        QPen pen = lineItem->pen();
+        pen.setColor(color);
+        lineItem->setPen(pen);
+    }
+}
+
 QSizeF PolarChartAxisAngular::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
 {
     Q_UNUSED(which);

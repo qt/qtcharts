@@ -51,6 +51,10 @@ private slots:
     void gridLineVisible();
     void minorGridLineVisible_data();
     void minorGridLineVisible();
+    void gridLineColor_data();
+    void gridLineColor();
+    void minorGridLineColor_data();
+    void minorGridLineColor();
     void visible_data();
     void visible();
     void labelsAngle_data();

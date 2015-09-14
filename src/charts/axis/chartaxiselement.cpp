@@ -106,6 +106,10 @@ void ChartAxisElement::connectSlots()
                      this, SLOT(handleMinorGridVisibleChanged(bool)));
     QObject::connect(axis(), SIGNAL(minorGridLinePenChanged(const QPen&)),
                      this, SLOT(handleMinorGridPenChanged(const QPen&)));
+    QObject::connect(axis(), SIGNAL(gridLineColorChanged(const QColor&)),
+                     this, SLOT(handleGridLineColorChanged(const QColor&)));
+    QObject::connect(axis(), SIGNAL(minorGridLineColorChanged(const QColor&)),
+                     this, SLOT(handleMinorGridLineColorChanged(const QColor&)));
 
     if (axis()->type() == QAbstractAxis::AxisTypeCategory) {
         QCategoryAxis *categoryAxis = static_cast<QCategoryAxis *>(axis());

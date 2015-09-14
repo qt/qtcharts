@@ -62,6 +62,8 @@ public Q_SLOTS:
     virtual void handleShadesPenChanged(const QPen &pen);
     virtual void handleMinorArrowPenChanged(const QPen &pen);
     virtual void handleMinorGridPenChanged(const QPen &pen);
+    virtual void handleGridLineColorChanged(const QColor &color);
+    virtual void handleMinorGridLineColorChanged(const QColor &color);
 
 private:
     void createItems(int count);

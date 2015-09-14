@@ -48,6 +48,8 @@ class QT_CHARTS_EXPORT QAbstractAxis : public QObject
     Q_PROPERTY(QPen gridLinePen READ gridLinePen WRITE setGridLinePen NOTIFY gridLinePenChanged)
     Q_PROPERTY(bool minorGridVisible READ isMinorGridLineVisible WRITE setMinorGridLineVisible NOTIFY minorGridVisibleChanged)
     Q_PROPERTY(QPen minorGridLinePen READ minorGridLinePen WRITE setMinorGridLinePen NOTIFY minorGridLinePenChanged)
+    Q_PROPERTY(QColor gridLineColor READ gridLineColor WRITE setGridLineColor NOTIFY gridLineColorChanged)
+    Q_PROPERTY(QColor minorGridLineColor READ minorGridLineColor WRITE setMinorGridLineColor NOTIFY minorGridLineColorChanged)
     //shades
     Q_PROPERTY(bool shadesVisible READ shadesVisible WRITE setShadesVisible NOTIFY shadesVisibleChanged)
     Q_PROPERTY(QColor shadesColor READ shadesColor WRITE setShadesColor NOTIFY shadesColorChanged)
@@ -109,6 +111,10 @@ public:
     void setMinorGridLineVisible(bool visible = true);
     void setMinorGridLinePen(const QPen &pen);
     QPen minorGridLinePen() const;
+    void setGridLineColor(const QColor &color);
+    QColor gridLineColor();
+    void setMinorGridLineColor(const QColor &color);
+    QColor minorGridLineColor();
 
     //labels handling
     bool labelsVisible() const;
@@ -168,6 +174,8 @@ Q_SIGNALS:
     void gridVisibleChanged(bool visible);
     void minorGridVisibleChanged(bool visible);
     void minorGridLinePenChanged(const QPen &pen);
+    void gridLineColorChanged(const QColor &color);
+    void minorGridLineColorChanged(const QColor &color);
     void colorChanged(QColor color);
     void labelsColorChanged(QColor color);
     void titleTextChanged(const QString &title);
