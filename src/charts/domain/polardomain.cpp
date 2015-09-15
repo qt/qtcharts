@@ -53,7 +53,7 @@ QPointF PolarDomain::calculateGeometryPoint(const QPointF &point, bool &ok) cons
     }
 }
 
-QVector<QPointF> PolarDomain::calculateGeometryPoints(const QList<QPointF> &vector) const
+QVector<QPointF> PolarDomain::calculateGeometryPoints(const QVector<QPointF> &vector) const
 {
     QVector<QPointF> result;
     result.resize(vector.count());

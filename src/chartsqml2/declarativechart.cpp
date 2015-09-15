@@ -25,6 +25,8 @@
 #include "declarativesplineseries.h"
 #include "declarativeboxplotseries.h"
 #include "declarativescatterseries.h"
+#include "declarativechartnode.h"
+#include "declarativerendernode.h"
 #include <QtCharts/QBarCategoryAxis>
 #include <QtCharts/QValueAxis>
 #include <QtCharts/QLogValueAxis>
@@ -34,6 +36,7 @@
 #include <private/chartdataset_p.h>
 #include "declarativeaxes.h"
 #include <private/qchart_p.h>
+#include <private/chartpresenter_p.h>
 #include <QtCharts/QPolarChart>
 
 #ifndef QT_ON_ARM
@@ -88,6 +91,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
  \qmlproperty easing ChartView::animationEasingCurve
  The easing curve of the animation for the chart.
+*/
 
 /*!
   \qmlproperty Font ChartView::titleFont
@@ -312,34 +316,42 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 DeclarativeChart::DeclarativeChart(QQuickItem *parent)
-    : QQuickPaintedItem(parent)
+    : QQuickItem(parent)
 {
     initChart(QChart::ChartTypeCartesian);
 }
 
 DeclarativeChart::DeclarativeChart(QChart::ChartType type, QQuickItem *parent)
-    : QQuickPaintedItem(parent)
+    : QQuickItem(parent)
 {
     initChart(type);
 }
 
 void DeclarativeChart::initChart(QChart::ChartType type)
 {
-    m_currentSceneImage = 0;
+    m_sceneImage = 0;
+    m_sceneImageDirty = false;
     m_guiThreadId = QThread::currentThreadId();
     m_paintThreadId = 0;
     m_updatePending = false;
+
+    setFlag(ItemHasContents, true);
 
     if (type == QChart::ChartTypePolar)
         m_chart = new QPolarChart();
     else
         m_chart = new QChart();
 
+    m_chart->d_ptr->m_presenter->glSetUseWidget(false);
+    m_glXYDataManager = m_chart->d_ptr->m_dataset->glXYSeriesDataManager();
+
     m_scene = new QGraphicsScene(this);
     m_scene->addItem(m_chart);
 
     setAntialiasing(QQuickItem::antialiasing());
-    connect(m_scene, SIGNAL(changed(QList<QRectF>)), this, SLOT(sceneChanged(QList<QRectF>)));
+    connect(m_scene, &QGraphicsScene::changed, this, &DeclarativeChart::sceneChanged);
+    connect(this, &DeclarativeChart::needRender, this, &DeclarativeChart::renderScene,
+            Qt::QueuedConnection);
     connect(this, SIGNAL(antialiasingChanged(bool)), this, SLOT(handleAntialiasingChanged(bool)));
 
     setAcceptedMouseButtons(Qt::AllButtons);
@@ -377,10 +389,7 @@ void DeclarativeChart::changeMargins(int top, int bottom, int left, int right)
 DeclarativeChart::~DeclarativeChart()
 {
     delete m_chart;
-    m_sceneImageLock.lock();
-    delete m_currentSceneImage;
-    m_currentSceneImage = 0;
-    m_sceneImageLock.unlock();
+    delete m_sceneImage;
 }
 
 void DeclarativeChart::childEvent(QChildEvent *event)
@@ -493,19 +502,79 @@ void DeclarativeChart::geometryChanged(const QRectF &newGeometry, const QRectF &
     QQuickItem::geometryChanged(newGeometry, oldGeometry);
 }
 
+QSGNode *DeclarativeChart::updatePaintNode(QSGNode *oldNode, QQuickItem::UpdatePaintNodeData *)
+{
+    DeclarativeChartNode *node = static_cast<DeclarativeChartNode *>(oldNode);
+
+    if (!node) {
+        node =  new DeclarativeChartNode(window());
+        connect(window(), &QQuickWindow::beforeRendering,
+                node->glRenderNode(), &DeclarativeRenderNode::render);
+    }
+
+    const QRectF &bRect = boundingRect();
+
+    // Update GL data
+    if (m_glXYDataManager->dataMap().size() || m_glXYDataManager->mapDirty()) {
+        const QRectF &plotArea = m_chart->plotArea();
+        const QSizeF &chartAreaSize = m_chart->size();
+
+        // We can't use chart's plot area directly, as graphicscene has some internal minimum size
+        const qreal normalizedX = plotArea.x() / chartAreaSize.width();
+        const qreal normalizedY = plotArea.y() / chartAreaSize.height();
+        const qreal normalizedWidth = plotArea.width() / chartAreaSize.width();
+        const qreal normalizedHeight = plotArea.height() / chartAreaSize.height();
+
+        QRectF adjustedPlotArea(normalizedX * bRect.width(),
+                                normalizedY * bRect.height(),
+                                normalizedWidth * bRect.width(),
+                                normalizedHeight * bRect.height());
+
+        const QSize &adjustedPlotSize = adjustedPlotArea.size().toSize();
+        if (adjustedPlotSize != node->glRenderNode()->textureSize())
+            node->glRenderNode()->setTextureSize(adjustedPlotSize);
+
+        node->glRenderNode()->setRect(adjustedPlotArea);
+        node->glRenderNode()->setSeriesData(m_glXYDataManager->mapDirty(),
+                                            m_glXYDataManager->dataMap());
+
+        // Clear dirty flags from original xy data
+        m_glXYDataManager->clearAllDirty();
+    }
+
+    // Copy chart (if dirty) to chart node
+    if (m_sceneImageDirty) {
+        node->createTextureFromImage(*m_sceneImage);
+        m_sceneImageDirty = false;
+    }
+
+    node->setRect(bRect);
+
+    return node;
+}
+
 void DeclarativeChart::sceneChanged(QList<QRectF> region)
 {
-    Q_UNUSED(region);
-
-    if (m_guiThreadId == m_paintThreadId) {
-        // Rendering in gui thread, no need for shenannigans, just update
-        update();
-    } else {
-        // Multi-threaded rendering, need to ensure scene is actually rendered in gui thread
-        if (!m_updatePending) {
+    const int count = region.size();
+    const qreal limitSize = 0.01;
+    if (count && !m_updatePending) {
+        qreal totalSize = 0.0;
+        for (int i = 0; i < count; i++) {
+            const QRectF &reg = region.at(i);
+            totalSize += (reg.height() * reg.width());
+            if (totalSize >= limitSize)
+                break;
+        }
+        // Ignore region updates that change less than small fraction of a pixel, as there is
+        // little point regenerating the image in these cases. These are typically cases
+        // where OpenGL series are drawn to otherwise static chart.
+        if (totalSize >= limitSize) {
             m_updatePending = true;
             // Do async render to avoid some unnecessary renders.
-            QTimer::singleShot(0, this, SLOT(renderScene()));
+            emit needRender();
+        } else {
+            // We do want to call update to trigger possible gl series updates.
+            update();
         }
     }
 }
@@ -513,45 +582,22 @@ void DeclarativeChart::sceneChanged(QList<QRectF> region)
 void DeclarativeChart::renderScene()
 {
     m_updatePending = false;
-    m_sceneImageLock.lock();
-    delete m_currentSceneImage;
-    m_currentSceneImage = new QImage(m_chart->size().toSize(), QImage::Format_ARGB32);
-    m_currentSceneImage->fill(Qt::transparent);
-    QPainter painter(m_currentSceneImage);
-    if (antialiasing())
-        painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
-    QRect renderRect(QPoint(0, 0), m_chart->size().toSize());
+    m_sceneImageDirty = true;
+    QSize chartSize = m_chart->size().toSize();
+    if (!m_sceneImage || chartSize != m_sceneImage->size()) {
+        delete m_sceneImage;
+        m_sceneImage = new QImage(chartSize, QImage::Format_ARGB32);
+        m_sceneImage->fill(Qt::transparent);
+    }
+
+    QPainter painter(m_sceneImage);
+    if (antialiasing()) {
+        painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing
+                               | QPainter::SmoothPixmapTransform);
+    }
+    QRect renderRect(QPoint(0, 0), chartSize);
     m_scene->render(&painter, renderRect, renderRect);
-    m_sceneImageLock.unlock();
-
     update();
-}
-
-void DeclarativeChart::paint(QPainter *painter)
-{
-    if (!m_paintThreadId) {
-        m_paintThreadId = QThread::currentThreadId();
-        if (m_guiThreadId == m_paintThreadId) {
-            // No need for scene image in single threaded rendering, so delete
-            // the one that got made by default before the rendering type was
-            // detected.
-            delete m_currentSceneImage;
-            m_currentSceneImage = 0;
-        }
-    }
-
-    if (m_guiThreadId == m_paintThreadId) {
-        QRectF renderRect(QPointF(0, 0), m_chart->size());
-        m_scene->render(painter, renderRect, renderRect);
-    } else {
-        m_sceneImageLock.lock();
-        if (m_currentSceneImage) {
-            QRect imageRect(QPoint(0, 0), m_currentSceneImage->size());
-            QRect itemRect(QPoint(0, 0), QSize(width(), height()));
-            painter->drawImage(itemRect, *m_currentSceneImage, imageRect);
-        }
-        m_sceneImageLock.unlock();
-    }
 }
 
 void DeclarativeChart::mousePressEvent(QMouseEvent *event)

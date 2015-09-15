@@ -21,6 +21,8 @@
 #include <private/qxyseries_p.h>
 #include <private/chartpresenter_p.h>
 #include <private/abstractdomain_p.h>
+#include <private/chartdataset_p.h>
+#include <private/glxyseriesdata_p.h>
 #include <QtCharts/QXYModelMapper>
 #include <private/qabstractaxis_p.h>
 #include <QtGui/QPainter>
@@ -106,6 +108,13 @@ void XYChart::updateChart(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoin
     }
 }
 
+void XYChart::updateGlChart()
+{
+    presenter()->ensureGLWidget();
+    dataSet()->glXYSeriesDataManager()->setPoints(m_series, domain());
+    updateGeometry();
+}
+
 //handlers
 
 void XYChart::handlePointAdded(int index)
@@ -113,20 +122,23 @@ void XYChart::handlePointAdded(int index)
     Q_ASSERT(index < m_series->count());
     Q_ASSERT(index >= 0);
 
-    QVector<QPointF> points;
-
-    if (m_dirty || m_points.isEmpty()) {
-        points = domain()->calculateGeometryPoints(m_series->points());
+    if (m_series->useOpenGL()) {
+        updateGlChart();
     } else {
-        points = m_points;
-        QPointF point = domain()->calculateGeometryPoint(m_series->points()[index], m_validData);
-        if (!m_validData)
-            m_points.clear();
-        else
-            points.insert(index, point);
+        QVector<QPointF> points;
+        if (m_dirty || m_points.isEmpty()) {
+            points = domain()->calculateGeometryPoints(m_series->pointsVector());
+        } else {
+            points = m_points;
+            QPointF point = domain()->calculateGeometryPoint(m_series->pointsVector().at(index),
+                                                             m_validData);
+            if (!m_validData)
+                m_points.clear();
+            else
+                points.insert(index, point);
+        }
+        updateChart(m_points, points, index);
     }
-
-    updateChart(m_points, points, index);
 }
 
 void XYChart::handlePointRemoved(int index)
@@ -134,16 +146,18 @@ void XYChart::handlePointRemoved(int index)
     Q_ASSERT(index <= m_series->count());
     Q_ASSERT(index >= 0);
 
-    QVector<QPointF> points;
-
-    if (m_dirty || m_points.isEmpty()) {
-        points = domain()->calculateGeometryPoints(m_series->points());
+    if (m_series->useOpenGL()) {
+        updateGlChart();
     } else {
-        points = m_points;
-        points.remove(index);
+        QVector<QPointF> points;
+        if (m_dirty || m_points.isEmpty()) {
+            points = domain()->calculateGeometryPoints(m_series->pointsVector());
+        } else {
+            points = m_points;
+            points.remove(index);
+        }
+        updateChart(m_points, points, index);
     }
-
-    updateChart(m_points, points, index);
 }
 
 void XYChart::handlePointsRemoved(int index, int count)
@@ -151,16 +165,18 @@ void XYChart::handlePointsRemoved(int index, int count)
     Q_ASSERT(index <= m_series->count());
     Q_ASSERT(index >= 0);
 
-    QVector<QPointF> points;
-
-    if (m_dirty || m_points.isEmpty()) {
-        points = domain()->calculateGeometryPoints(m_series->points());
+    if (m_series->useOpenGL()) {
+        updateGlChart();
     } else {
-        points = m_points;
-        points.remove(index, count);
+        QVector<QPointF> points;
+        if (m_dirty || m_points.isEmpty()) {
+            points = domain()->calculateGeometryPoints(m_series->pointsVector());
+        } else {
+            points = m_points;
+            points.remove(index, count);
+        }
+        updateChart(m_points, points, index);
     }
-
-    updateChart(m_points, points, index);
 }
 
 void XYChart::handlePointReplaced(int index)
@@ -168,34 +184,45 @@ void XYChart::handlePointReplaced(int index)
     Q_ASSERT(index < m_series->count());
     Q_ASSERT(index >= 0);
 
-    QVector<QPointF> points;
-
-    if (m_dirty || m_points.isEmpty()) {
-        points = domain()->calculateGeometryPoints(m_series->points());
+    if (m_series->useOpenGL()) {
+        updateGlChart();
     } else {
-        QPointF point = domain()->calculateGeometryPoint(m_series->points()[index], m_validData);
-        if (!m_validData)
-            m_points.clear();
-        points = m_points;
-        if (m_validData)
-            points.replace(index, point);
+        QVector<QPointF> points;
+        if (m_dirty || m_points.isEmpty()) {
+            points = domain()->calculateGeometryPoints(m_series->pointsVector());
+        } else {
+            QPointF point = domain()->calculateGeometryPoint(m_series->pointsVector().at(index),
+                                                             m_validData);
+            if (!m_validData)
+                m_points.clear();
+            points = m_points;
+            if (m_validData)
+                points.replace(index, point);
+        }
+        updateChart(m_points, points, index);
     }
-
-    updateChart(m_points, points, index);
 }
 
 void XYChart::handlePointsReplaced()
 {
-    // All the points were replaced -> recalculate
-    QVector<QPointF> points =  domain()->calculateGeometryPoints(m_series->points());
-    updateChart(m_points, points, -1);
+    if (m_series->useOpenGL()) {
+        updateGlChart();
+    } else {
+        // All the points were replaced -> recalculate
+        QVector<QPointF> points = domain()->calculateGeometryPoints(m_series->pointsVector());
+        updateChart(m_points, points, -1);
+    }
 }
 
 void XYChart::handleDomainUpdated()
 {
-    if (isEmpty()) return;
-    QVector<QPointF> points =  domain()->calculateGeometryPoints(m_series->points());
-    updateChart(m_points, points);
+    if (m_series->useOpenGL()) {
+        updateGlChart();
+    } else {
+        if (isEmpty()) return;
+        QVector<QPointF> points = domain()->calculateGeometryPoints(m_series->pointsVector());
+        updateChart(m_points, points);
+    }
 }
 
 bool XYChart::isEmpty()

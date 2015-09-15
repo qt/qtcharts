@@ -43,7 +43,7 @@ public:
     void setSize(const QSizeF &size);
 
     QPointF calculateGeometryPoint(const QPointF &point, bool &ok) const;
-    QVector<QPointF> calculateGeometryPoints(const QList<QPointF> &vector) const;
+    QVector<QPointF> calculateGeometryPoints(const QVector<QPointF> &vector) const;
 
     virtual qreal toAngularCoordinate(qreal value, bool &ok) const = 0;
     virtual qreal toRadialCoordinate(qreal value, bool &ok) const = 0;

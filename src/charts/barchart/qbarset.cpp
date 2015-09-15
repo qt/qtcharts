@@ -546,7 +546,7 @@ QColor QBarSet::borderColor()
 }
 
 /*!
-    Sets the color of pen for this bar set.
+    Sets the \a color of pen for this bar set.
 */
 void QBarSet::setBorderColor(QColor color)
 {
@@ -567,7 +567,7 @@ QColor QBarSet::labelColor()
 }
 
 /*!
-    Sets the color of labels for this bar set.
+    Sets the \a color of labels for this bar set.
 */
 void QBarSet::setLabelColor(QColor color)
 {

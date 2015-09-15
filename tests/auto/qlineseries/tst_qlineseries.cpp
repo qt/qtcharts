@@ -19,8 +19,8 @@
 #include "../qxyseries/tst_qxyseries.h"
 #include <QtCharts/QLineSeries>
 
-
 Q_DECLARE_METATYPE(QList<QPointF>)
+Q_DECLARE_METATYPE(QVector<QPointF>)
 
 class tst_QLineSeries : public tst_QXYSeries
 {
@@ -76,6 +76,7 @@ void tst_QLineSeries::qlineseries()
     QCOMPARE(series.count(),0);
     QCOMPARE(series.brush(), QBrush());
     QCOMPARE(series.points(), QList<QPointF>());
+    QCOMPARE(series.pointsVector(), QVector<QPointF>());
     QCOMPARE(series.pen(), QPen());
     QCOMPARE(series.pointsVisible(), false);
     QCOMPARE(series.pointLabelsVisible(), false);

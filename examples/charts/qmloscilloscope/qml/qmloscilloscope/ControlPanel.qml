@@ -16,10 +16,11 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.0
+import QtQuick 2.1
 import QtQuick.Layouts 1.0
 
 ColumnLayout {
+    property alias openGLButton: openGLButton
     spacing: 8
     Layout.fillHeight: true
     signal animationsEnabled(bool enabled)
@@ -27,11 +28,20 @@ ColumnLayout {
     signal refreshRateChanged(variant rate);
     signal signalSourceChanged(string source, int signalCount, int sampleCount);
     signal antialiasingEnabled(bool enabled)
+    signal openGlChanged(bool enabled)
 
     Text {
         text: "Scope"
         font.pointSize: 18
         color: "white"
+    }
+
+    MultiButton {
+        id: openGLButton
+        text: "OpenGL: "
+        items: ["false", "true"]
+        currentSelection: 0
+        onSelectionChanged: openGlChanged(currentSelection == 1);
     }
 
     MultiButton {

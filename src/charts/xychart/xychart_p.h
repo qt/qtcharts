@@ -76,6 +76,7 @@ Q_SIGNALS:
 
 protected:
     virtual void updateChart(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints, int index = -1);
+    virtual void updateGlChart();
 
 private:
     inline bool isEmpty();

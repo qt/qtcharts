@@ -30,9 +30,11 @@
 
 #include <QtCharts/QChartGlobal>
 #include <QtCharts/QChart> //because of QChart::ChartThemeId
+#include <private/glwidget_p.h>
 #include <QtCore/QRectF>
 #include <QtCore/QMargins>
 #include <QtCore/QLocale>
+#include <QtCore/QPointer>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -160,6 +162,9 @@ public:
     QString numberToString(double value, char f = 'g', int prec = 6);
     QString numberToString(int value);
 
+    void ensureGLWidget();
+    void glSetUseWidget(bool enable) { m_glUseWidget = enable; }
+
 private:
     void createBackgroundItem();
     void createPlotAreaBackgroundItem();
@@ -192,6 +197,10 @@ private:
     QRectF m_rect;
     bool m_localizeNumbers;
     QLocale m_locale;
+#ifndef QT_NO_OPENGL
+    QPointer<GLWidget> m_glWidget;
+#endif
+    bool m_glUseWidget;
 };
 
 QT_CHARTS_END_NAMESPACE

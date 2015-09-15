@@ -345,7 +345,7 @@ QT_CHARTS_BEGIN_NAMESPACE
     \sa pointLabelsVisible
 */
 /*!
-    \fn void QAreaSeries::pointLabelsClippintChanged(bool clipping)
+    \fn void QAreaSeries::pointLabelsClippingChanged(bool clipping)
     The clipping of the data point labels is changed to \a clipping.
 */
 /*!
@@ -395,8 +395,10 @@ QAbstractSeries::SeriesType QAreaSeries::type() const
 void QAreaSeries::setUpperSeries(QLineSeries *series)
 {
     Q_D(QAreaSeries);
-    if (d->m_upperSeries != series)
+    if (d->m_upperSeries != series) {
+        series->d_ptr->setBlockOpenGL(true);
         d->m_upperSeries = series;
+    }
 }
 
 QLineSeries *QAreaSeries::upperSeries() const
@@ -411,6 +413,7 @@ QLineSeries *QAreaSeries::upperSeries() const
 void QAreaSeries::setLowerSeries(QLineSeries *series)
 {
     Q_D(QAreaSeries);
+    series->d_ptr->setBlockOpenGL(true);
     d->m_lowerSeries = series;
 }
 
@@ -624,7 +627,7 @@ void QAreaSeriesPrivate::initializeDomain()
     QLineSeries *lowerSeries = q->lowerSeries();
 
     if (upperSeries) {
-        const QList<QPointF>& points = upperSeries->points();
+        const QVector<QPointF> &points = upperSeries->pointsVector();
 
         for (int i = 0; i < points.count(); i++) {
             qreal x = points[i].x();
@@ -636,8 +639,7 @@ void QAreaSeriesPrivate::initializeDomain()
         }
     }
     if (lowerSeries) {
-
-        const QList<QPointF>& points = lowerSeries->points();
+        const QVector<QPointF> &points = lowerSeries->pointsVector();
 
         for (int i = 0; i < points.count(); i++) {
             qreal x = points[i].x();

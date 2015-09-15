@@ -146,7 +146,7 @@ QPointF LogXYDomain::calculateGeometryPoint(const QPointF &point, bool &ok) cons
     return QPointF(x, y);
 }
 
-QVector<QPointF> LogXYDomain::calculateGeometryPoints(const QList<QPointF> &vector) const
+QVector<QPointF> LogXYDomain::calculateGeometryPoints(const QVector<QPointF> &vector) const
 {
     const qreal deltaX = m_size.width() / (m_logRightX - m_logLeftX);
     const qreal deltaY = m_size.height() / (m_maxY - m_minY);

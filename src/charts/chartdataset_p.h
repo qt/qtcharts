@@ -37,6 +37,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 class QAbstractAxis;
 class ChartPresenter;
+class GLXYSeriesDataManager;
 
 class QT_CHARTS_AUTOTEST_EXPORT ChartDataSet : public QObject
 {
@@ -67,6 +68,8 @@ public:
     QPointF mapToValue(const QPointF &position, QAbstractSeries *series = 0);
     QPointF mapToPosition(const QPointF &value, QAbstractSeries *series = 0);
 
+    GLXYSeriesDataManager *glXYSeriesDataManager() { return m_glXYSeriesDataManager; }
+
 Q_SIGNALS:
     void axisAdded(QAbstractAxis* axis);
     void axisRemoved(QAbstractAxis* axis);
@@ -85,6 +88,7 @@ private:
     QList<QAbstractSeries *> m_seriesList;
     QList<QAbstractAxis *> m_axisList;
     QChart* m_chart;
+    GLXYSeriesDataManager *m_glXYSeriesDataManager;
 };
 
 QT_CHARTS_END_NAMESPACE

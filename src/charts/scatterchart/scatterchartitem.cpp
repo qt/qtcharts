@@ -130,6 +130,18 @@ void ScatterChartItem::markerDoubleClicked(QGraphicsItem *marker)
 
 void ScatterChartItem::updateGeometry()
 {
+    static const QRectF dummyRect = QRectF(0.0, 0.0, 0.001, 0.001);
+    if (m_series->useOpenGL()) {
+        if (m_items.childItems().count())
+            deletePoints(m_items.childItems().count());
+        // Fake a miniscule region, so we trigger changed signal.
+        if (m_rect.width() != dummyRect.width()) {
+            prepareGeometryChange();
+            m_rect = dummyRect;
+        }
+        update();
+        return;
+    }
 
     const QVector<QPointF>& points = geometryPoints();
 
@@ -198,6 +210,9 @@ void ScatterChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
 {
     Q_UNUSED(option)
     Q_UNUSED(widget)
+
+    if (m_series->useOpenGL())
+        return;
 
     QRectF clipRect = QRectF(QPointF(0, 0), domain()->size());
 

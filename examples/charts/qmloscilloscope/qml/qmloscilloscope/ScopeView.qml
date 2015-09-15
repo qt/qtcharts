@@ -17,13 +17,18 @@
 ****************************************************************************/
 
 import QtQuick 2.0
-import QtCharts 2.0
+import QtCharts 2.1
 
 //![1]
 ChartView {
     id: chartView
     animationOptions: ChartView.NoAnimation
     theme: ChartView.ChartThemeDark
+    property bool openGL: false
+    onOpenGLChanged: {
+        series("signal 1").useOpenGL = openGL;
+        series("signal 2").useOpenGL = openGL;
+    }
 
     ValueAxis {
         id: axisY1
@@ -40,7 +45,7 @@ ChartView {
     ValueAxis {
         id: axisX
         min: 0
-        max: 1000
+        max: 1024
     }
 
     LineSeries {
@@ -48,12 +53,14 @@ ChartView {
         name: "signal 1"
         axisX: axisX
         axisY: axisY1
+        useOpenGL: chartView.openGL
     }
     LineSeries {
         id: lineSeries2
         name: "signal 2"
         axisX: axisX
         axisYRight: axisY2
+        useOpenGL: chartView.openGL
     }
 //![1]
 
@@ -78,18 +85,28 @@ ChartView {
         // but the series have their own y-axes to make it possible to control the y-offset
         // of the "signal sources".
         if (type == "line") {
-            chartView.createSeries(ChartView.SeriesTypeLine, "signal 1", axisX, axisY1);
-            chartView.createSeries(ChartView.SeriesTypeLine, "signal 2", axisX, axisY2);
+            var series1 = chartView.createSeries(ChartView.SeriesTypeLine, "signal 1",
+                                                 axisX, axisY1);
+            series1.useOpenGL = chartView.openGL
+
+            var series2 = chartView.createSeries(ChartView.SeriesTypeLine, "signal 2",
+                                                 axisX, axisY2);
+            series2.useOpenGL = chartView.openGL
         } else if (type == "spline") {
             chartView.createSeries(ChartView.SeriesTypeSpline, "signal 1", axisX, axisY1);
             chartView.createSeries(ChartView.SeriesTypeSpline, "signal 2", axisX, axisY2);
         } else {
-            var series1 = chartView.createSeries(ChartView.SeriesTypeScatter, "signal 1", axisX, axisY1);
+            var series1 = chartView.createSeries(ChartView.SeriesTypeScatter, "signal 1",
+                                                 axisX, axisY1);
             series1.markerSize = 3;
             series1.borderColor = "transparent";
-            var series2 = chartView.createSeries(ChartView.SeriesTypeScatter, "signal 2", axisX, axisY2);
+            series1.useOpenGL = chartView.openGL
+
+            var series2 = chartView.createSeries(ChartView.SeriesTypeScatter, "signal 2",
+                                                 axisX, axisY2);
             series2.markerSize = 3;
             series2.borderColor = "transparent";
+            series2.useOpenGL = chartView.openGL
         }
     }
 

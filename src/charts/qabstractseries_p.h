@@ -81,6 +81,8 @@ public:
     bool reverseXAxis();
     bool reverseYAxis();
 
+    void setBlockOpenGL(bool enable);
+
 Q_SIGNALS:
     void countChanged();
 
@@ -96,6 +98,8 @@ private:
     bool m_visible;
     qreal m_opacity;
     ChartPresenter *m_presenter;
+    bool m_useOpenGL;
+    bool m_blockOpenGL;
 
     friend class QAbstractSeries;
     friend class ChartDataSet;

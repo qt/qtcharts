@@ -19,11 +19,11 @@
 #ifndef DECLARATIVECHART_H
 #define DECLARATIVECHART_H
 
+#include <private/glxyseriesdata_p.h>
+
 #include <QtCore/QtGlobal>
 #include <QtQuick/QQuickItem>
-#include <QtQuick/QQuickPaintedItem>
 #include <QtWidgets/QGraphicsScene>
-#include <QtCore/QMutex>
 
 #include <QtCharts/QChart>
 #include <QtCore/QLocale>
@@ -34,7 +34,7 @@ class DeclarativeMargins;
 class Domain;
 class DeclarativeAxes;
 
-class DeclarativeChart : public QQuickPaintedItem
+class DeclarativeChart : public QQuickItem
 {
     Q_OBJECT
     Q_PROPERTY(Theme theme READ theme WRITE setTheme)
@@ -102,7 +102,7 @@ public: // From parent classes
     void childEvent(QChildEvent *event);
     void componentComplete();
     void geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry);
-    void paint(QPainter *painter);
+    QSGNode *updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *);
 protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
@@ -199,6 +199,7 @@ Q_SIGNALS:
     Q_REVISION(4) void localeChanged();
     Q_REVISION(5) void animationDurationChanged(int msecs);
     Q_REVISION(5) void animationEasingCurveChanged(QEasingCurve curve);
+    void needRender();
 
 private Q_SLOTS:
     void changeMargins(int top, int bottom, int left, int right);
@@ -227,12 +228,13 @@ private:
     QPoint m_lastMouseMoveScreenPoint;
     Qt::MouseButton m_mousePressButton;
     Qt::MouseButtons m_mousePressButtons;
-    QMutex m_sceneImageLock;
-    QImage *m_currentSceneImage;
+    QImage *m_sceneImage;
+    bool m_sceneImageDirty;
     bool m_updatePending;
     Qt::HANDLE m_paintThreadId;
     Qt::HANDLE m_guiThreadId;
     DeclarativeMargins *m_margins;
+    GLXYSeriesDataManager *m_glXYDataManager;
 };
 
 QT_CHARTS_END_NAMESPACE

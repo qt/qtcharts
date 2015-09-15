@@ -36,6 +36,7 @@ class QT_CHARTS_EXPORT QAbstractSeries : public QObject
     Q_PROPERTY(bool visible READ isVisible WRITE setVisible NOTIFY visibleChanged)
     Q_PROPERTY(qreal opacity READ opacity WRITE setOpacity NOTIFY opacityChanged)
     Q_PROPERTY(SeriesType type READ type)
+    Q_PROPERTY(bool useOpenGL READ useOpenGL WRITE setUseOpenGL NOTIFY useOpenGLChanged)
     Q_ENUMS(SeriesType)
 
 public:
@@ -67,6 +68,8 @@ public:
     bool isVisible() const;
     qreal opacity() const;
     void setOpacity(qreal opacity);
+    void setUseOpenGL(bool enable = true);
+    bool useOpenGL() const;
 
     QChart *chart() const;
 
@@ -81,6 +84,7 @@ Q_SIGNALS:
     void nameChanged();
     void visibleChanged();
     void opacityChanged();
+    void useOpenGLChanged();
 
 protected:
     QScopedPointer<QAbstractSeriesPrivate> d_ptr;
@@ -89,6 +93,7 @@ protected:
     friend class ChartThemeManager;
     friend class QLegendPrivate;
     friend class DeclarativeChart;
+    friend class QAreaSeries;
 };
 
 QT_CHARTS_END_NAMESPACE

@@ -35,12 +35,12 @@ qint64 XYSeriesIODevice::readData(char * data, qint64 maxSize)
 qint64 XYSeriesIODevice::writeData(const char * data, qint64 maxSize)
 {
     qint64 range = 2000;
-    QList<QPointF> oldPoints = m_series->points();
-    QList<QPointF> points;
+    QVector<QPointF> oldPoints = m_series->pointsVector();
+    QVector<QPointF> points;
     int resolution = 4;
 
     if (oldPoints.count() < range) {
-        points = m_series->points();
+        points = m_series->pointsVector();
     } else {
         for (int i = maxSize/resolution; i < oldPoints.count(); i++)
             points.append(QPointF(i - maxSize/resolution, oldPoints.at(i).y()));

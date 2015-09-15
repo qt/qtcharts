@@ -135,6 +135,69 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
+    \property QAbstractSeries::useOpenGL
+    \brief Specifies whether or not the series drawing is accelerated with OpenGL.
+
+    Drawing series with OpenGL is supported only for QLineSeries and QScatterSeries.
+    Line series used as edge series for a QAreaSeries cannot use OpenGL acceleration.
+    When a chart contains any series that are drawn with OpenGL, a transparent QOpenGLWidget
+    is created on top of the chart plot area. Specified series are not drawn on the underlying
+    QGraphicsView, but are instead drawn on the created QOpenGLWidget.
+
+    Performance gained from using OpenGL to accelerate series drawing depends on the underlying
+    hardware, but in most cases it is significant. For example, on a standard desktop computer,
+    enabling OpenGL acceleration for a series typically allows rendering at least hundred times
+    more points without reduction on the frame rate.
+    Chart size also has less effect on the frame rate.
+
+    The OpenGL acceleration of series drawing is meant for use cases that need fast drawing of
+    large numbers of points. It is optimized for efficiency, and therefore the series using
+    it lack support for some features available to non-accelerated series.
+
+    There are the following restrictions imposed on charts and series when using OpenGL
+    acceleration:
+
+    \list
+    \li Series animations are not supported for accelerated series.
+    \li Antialiasing is not supported for accelerated series.
+    \li Pen styles and marker shapes are ignored for accelerated series.
+        Only solid lines and plain scatter dots are supported.
+        The scatter dots may be circular or rectangular, depending on the underlying graphics
+        hardware and drivers.
+    \li Polar charts are not supported for accelerated series.
+    \li Since the accelerated series are drawn on top of the entire graphics view, they get drawn
+        on top of any other graphics items that you may have on top chart in the same scene.
+    \li To enable QOpenGLWidget to be partially transparent, it needs to be stacked on top of
+        all other widgets. This means you cannot have other widgets partially covering the
+        chart.
+    \endlist
+
+    The default value is \c{false}.
+*/
+/*!
+    \qmlproperty bool AbstractSeries::useOpenGL
+    Specifies whether or not the series is drawn with OpenGL.
+
+    Drawing series with OpenGL is supported only for LineSeries and ScatterSeries.
+
+    For more details, see QAbstractSeries::useOpenGL documentation. QML applications have similar
+    restrictions as those listed in QAbstractSeries::useOpenGL documentation,
+    except there is no restriction about covering the ChartView partially with other
+    items due to different rendering mechanism.
+
+    The default value is \c{false}.
+*/
+
+/*!
+    \fn void QAbstractSeries::useOpenGLChanged()
+    Emitted when the useOpenGL property value changes.
+*/
+/*!
+    \qmlsignal AbstractSeries::onUseOpenGLChanged()
+    Emitted when the useOpenGL property value changes.
+*/
+
+/*!
     \internal
     \brief Constructs QAbstractSeries object with \a parent.
 */
@@ -190,6 +253,28 @@ void QAbstractSeries::setOpacity(qreal opacity)
         d_ptr->m_opacity = opacity;
         emit opacityChanged();
     }
+}
+
+void QAbstractSeries::setUseOpenGL(bool enable)
+{
+#ifdef QT_NO_OPENGL
+    Q_UNUSED(enable)
+#else
+    bool polarChart = d_ptr->m_chart && d_ptr->m_chart->chartType() == QChart::ChartTypePolar;
+    bool supportedSeries = (type() == SeriesTypeLine || type() == SeriesTypeScatter);
+    if ((!enable || !d_ptr->m_blockOpenGL)
+            && supportedSeries
+            && enable != d_ptr->m_useOpenGL
+            && (!enable || !polarChart)) {
+        d_ptr->m_useOpenGL = enable;
+        emit useOpenGLChanged();
+    }
+#endif
+}
+
+bool QAbstractSeries::useOpenGL() const
+{
+    return d_ptr->m_useOpenGL;
 }
 
 /*!
@@ -274,7 +359,9 @@ QAbstractSeriesPrivate::QAbstractSeriesPrivate(QAbstractSeries *q)
       m_item(0),
       m_domain(new XYDomain()),
       m_visible(true),
-      m_opacity(1.0)
+      m_opacity(1.0),
+      m_useOpenGL(false),
+      m_blockOpenGL(false)
 {
 }
 
@@ -352,6 +439,15 @@ bool QAbstractSeriesPrivate::reverseYAxis()
     }
 
     return reverseYAxis;
+}
+
+// This function can be used to explicitly block OpenGL use from some otherwise supported series,
+// such as the line series used as edge series of an area series.
+void QAbstractSeriesPrivate::setBlockOpenGL(bool enable)
+{
+    m_blockOpenGL = enable;
+    if (enable)
+        q_ptr->setUseOpenGL(false);
 }
 
 #include "moc_qabstractseries.cpp"

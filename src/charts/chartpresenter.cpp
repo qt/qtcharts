@@ -46,6 +46,10 @@ ChartPresenter::ChartPresenter(QChart *chart, QChart::ChartType type)
       m_plotAreaBackground(0),
       m_title(0),
       m_localizeNumbers(false)
+#ifndef QT_NO_OPENGL
+      , m_glWidget(0)
+      , m_glUseWidget(true)
+#endif
 {
     if (type == QChart::ChartTypeCartesian)
         m_layout = new CartesianChartLayout(this);
@@ -56,7 +60,9 @@ ChartPresenter::ChartPresenter(QChart *chart, QChart::ChartType type)
 
 ChartPresenter::~ChartPresenter()
 {
-
+#ifndef QT_NO_OPENGL
+    delete m_glWidget.data();
+#endif
 }
 
 void ChartPresenter::setGeometry(const QRectF rect)
@@ -67,6 +73,10 @@ void ChartPresenter::setGeometry(const QRectF rect)
             chart->domain()->setSize(rect.size());
             chart->setPos(rect.topLeft());
         }
+#ifndef QT_NO_OPENGL
+        if (!m_glWidget.isNull())
+            m_glWidget->setGeometry(m_rect.toRect());
+#endif
         emit plotAreaChanged(m_rect);
     }
 }
@@ -108,6 +118,7 @@ void ChartPresenter::handleSeriesAdded(QAbstractSeries *series)
     ChartItem *chart = series->d_ptr->chartItem();
     chart->setPresenter(this);
     chart->setThemeManager(m_chart->d_ptr->m_themeManager);
+    chart->setDataSet(m_chart->d_ptr->m_dataset);
     chart->domain()->setSize(m_rect.size());
     chart->setPos(m_rect.topLeft());
     chart->handleDomainUpdated(); //this could be moved to intializeGraphics when animator is refactored
@@ -529,6 +540,28 @@ QString ChartPresenter::numberToString(int value)
         return m_locale.toString(value);
     else
         return QString::number(value);
+}
+
+void ChartPresenter::ensureGLWidget()
+{
+#ifndef QT_NO_OPENGL
+    // GLWidget pointer is wrapped in QPointer as its parent is not in our control, and therefore
+    // can potentially get deleted unexpectedly.
+    if (m_glWidget.isNull() && m_glUseWidget && m_chart->scene()) {
+        QObject *parent = m_chart->scene()->parent();
+        while (parent) {
+            QWidget *parentWidget = qobject_cast<QWidget *>(parent);
+            if (parentWidget) {
+                m_glWidget = new GLWidget(m_chart->d_ptr->m_dataset->glXYSeriesDataManager(),
+                                          parentWidget);
+                m_glWidget->setGeometry(m_rect.toRect());
+                m_glWidget->show();
+                break;
+            }
+            parent = parent->parent();
+        }
+    }
+#endif
 }
 
 #include "moc_chartpresenter_p.cpp"

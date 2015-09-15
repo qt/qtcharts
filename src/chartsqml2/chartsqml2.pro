@@ -33,7 +33,9 @@ SOURCES += \
     declarativemargins.cpp \
     declarativeaxes.cpp \
     declarativepolarchart.cpp \
-    declarativeboxplotseries.cpp
+    declarativeboxplotseries.cpp \
+    declarativechartnode.cpp \
+    declarativerendernode.cpp
 
 HEADERS += \
     declarativechart.h \
@@ -49,7 +51,9 @@ HEADERS += \
     declarativemargins.h \
     declarativeaxes.h \
     declarativepolarchart.h \
-    declarativeboxplotseries.h
+    declarativeboxplotseries.h \
+    declarativechartnode.h \
+    declarativerendernode.h
 
 OTHER_FILES = qmldir
 

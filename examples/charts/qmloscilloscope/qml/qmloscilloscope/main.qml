@@ -21,8 +21,8 @@ import QtQuick 2.0
 //![1]
 Rectangle {
     id: main
-    width: 400
-    height: 300
+    width: 600
+    height: 400
     color: "#404040"
 
     ControlPanel {
@@ -39,11 +39,22 @@ Rectangle {
                 dataSource.generateData(0, signalCount, sampleCount);
             else
                 dataSource.generateData(1, signalCount, sampleCount);
+            scopeView.axisX().max = sampleCount;
         }
         onAnimationsEnabled: scopeView.setAnimations(enabled);
-        onSeriesTypeChanged: scopeView.changeSeriesType(type);
+        onSeriesTypeChanged: {
+            scopeView.changeSeriesType(type);
+            if (type === "spline") {
+                controlPanel.openGLButton.currentSelection = 0;
+                controlPanel.openGLButton.enabled = false;
+                scopeView.openGL = false;
+            } else {
+                controlPanel.openGLButton.enabled = true;
+            }
+        }
         onRefreshRateChanged: scopeView.changeRefreshRate(rate);
         onAntialiasingEnabled: scopeView.antialiasing = enabled;
+        onOpenGlChanged: scopeView.openGL = enabled;
     }
 
 //![2]
@@ -56,4 +67,5 @@ Rectangle {
         height: main.height
     }
 //![2]
+
 }

@@ -20,6 +20,7 @@
 #include <QtCharts/QSplineSeries>
 
 Q_DECLARE_METATYPE(QList<QPointF>)
+Q_DECLARE_METATYPE(QVector<QPointF>)
 
 class tst_QSplineSeries : public tst_QXYSeries
 {
@@ -73,6 +74,7 @@ void tst_QSplineSeries::qsplineseries()
     QCOMPARE(series.count(),0);
     QCOMPARE(series.brush(), QBrush());
     QCOMPARE(series.points(), QList<QPointF>());
+    QCOMPARE(series.pointsVector(), QVector<QPointF>());
     QCOMPARE(series.pen(), QPen());
     QCOMPARE(series.pointsVisible(), false);
 

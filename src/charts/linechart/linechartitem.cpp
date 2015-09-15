@@ -70,6 +70,17 @@ QPainterPath LineChartItem::shape() const
 
 void LineChartItem::updateGeometry()
 {
+    static const QRectF dummyRect = QRectF(0.0, 0.0, 0.001, 0.001);
+    if (m_series->useOpenGL()) {
+        // Fake a miniscule region, so we trigger changed signal.
+        if (m_rect.width() != dummyRect.width()) {
+            prepareGeometryChange();
+            m_rect = dummyRect;
+        }
+        update();
+        return;
+    }
+
     // Store the points to a local variable so that the old line gets properly cleared
     // when animation starts.
     m_linePoints = geometryPoints();
@@ -344,6 +355,9 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 {
     Q_UNUSED(widget)
     Q_UNUSED(option)
+
+    if (m_series->useOpenGL())
+        return;
 
     QRectF clipRect = QRectF(QPointF(0, 0), domain()->size());
 

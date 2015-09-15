@@ -883,7 +883,7 @@ bool QAbstractAxis::isVisible() const
 }
 
 /*!
-  Sets axis, shades, labels and grid lines to be visible.
+  Sets axis, shades, labels and grid lines visibility to \a visible.
 */
 void QAbstractAxis::setVisible(bool visible)
 {

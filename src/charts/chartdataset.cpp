@@ -38,6 +38,7 @@
 #include <private/xlogypolardomain_p.h>
 #include <private/logxypolardomain_p.h>
 #include <private/logxlogypolardomain_p.h>
+#include <private/glxyseriesdata_p.h>
 
 #ifndef QT_ON_ARM
 #include <QtCharts/QDateTimeAxis>
@@ -47,7 +48,8 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 ChartDataSet::ChartDataSet(QChart *chart)
     : QObject(chart),
-      m_chart(chart)
+      m_chart(chart),
+      m_glXYSeriesDataManager(new GLXYSeriesDataManager(this))
 {
 
 }
@@ -77,6 +79,8 @@ void ChartDataSet::addSeries(QAbstractSeries *series)
             qWarning() << QObject::tr("Can not add series. Series type is not supported by a polar chart.");
             return;
         }
+        // Disable OpenGL for series in polar charts
+        series->setUseOpenGL(false);
         series->d_ptr->setDomain(new XYPolarDomain());
         // Set the correct domain for upper and lower series too
         if (series->type() == QAbstractSeries::SeriesTypeArea) {
@@ -157,6 +161,10 @@ void ChartDataSet::removeSeries(QAbstractSeries *series)
     series->d_ptr->setDomain(new XYDomain());
     series->setParent(0);
     series->d_ptr->m_chart = 0;
+
+    QXYSeries *xySeries = qobject_cast<QXYSeries *>(series);
+    if (xySeries)
+        m_glXYSeriesDataManager->removeSeries(xySeries);
 }
 
 /*

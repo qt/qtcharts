@@ -19,13 +19,15 @@
 #include <private/chartelement_p.h>
 #include <private/chartpresenter_p.h>
 #include <private/abstractdomain_p.h>
+#include <private/chartdataset_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 ChartElement::ChartElement(QGraphicsItem* item):
       QGraphicsObject(item),
       m_presenter(0),
-      m_themeManager(0)
+      m_themeManager(0),
+      m_dataSet(0)
 {
 
 }
@@ -48,6 +50,16 @@ void ChartElement::setThemeManager(ChartThemeManager *manager)
 ChartThemeManager* ChartElement::themeManager() const
 {
     return m_themeManager;
+}
+
+void ChartElement::setDataSet(ChartDataSet *dataSet)
+{
+    m_dataSet = dataSet;
+}
+
+ChartDataSet *ChartElement::dataSet() const
+{
+    return m_dataSet;
 }
 
 QT_CHARTS_END_NAMESPACE

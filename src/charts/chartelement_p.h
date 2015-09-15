@@ -40,6 +40,7 @@ class ChartPresenter;
 class ChartAnimation;
 class ChartThemeManager;
 class AbstractDomain;
+class ChartDataSet;
 
 class ChartElement: public QGraphicsObject
 {
@@ -52,10 +53,13 @@ public:
     ChartPresenter *presenter() const;
     virtual void setThemeManager(ChartThemeManager *manager);
     ChartThemeManager* themeManager() const;
+    virtual void setDataSet(ChartDataSet *dataSet);
+    ChartDataSet *dataSet() const;
 
 private:
     ChartPresenter *m_presenter;
     ChartThemeManager *m_themeManager;
+    ChartDataSet *m_dataSet;
 };
 
 QT_CHARTS_END_NAMESPACE

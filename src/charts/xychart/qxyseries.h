@@ -65,6 +65,7 @@ public:
 
     int count() const;
     QList<QPointF> points() const;
+    QVector<QPointF> pointsVector() const;
     const QPointF &at(int index) const;
 
     QXYSeries &operator << (const QPointF &point);
@@ -117,6 +118,7 @@ Q_SIGNALS:
     void pointLabelsColorChanged(const QColor &color);
     void pointLabelsClippingChanged(bool clipping);
     void pointsRemoved(int index, int count);
+    void penChanged(const QPen &pen);
 
 private:
     Q_DECLARE_PRIVATE(QXYSeries)

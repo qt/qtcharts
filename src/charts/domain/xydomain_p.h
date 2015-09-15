@@ -54,7 +54,7 @@ public:
 
     QPointF calculateGeometryPoint(const QPointF &point, bool &ok) const;
     QPointF calculateDomainPoint(const QPointF &point) const;
-    QVector<QPointF> calculateGeometryPoints(const QList<QPointF> &vector) const;
+    QVector<QPointF> calculateGeometryPoints(const QVector<QPointF> &vector) const;
 };
 
 QT_CHARTS_END_NAMESPACE

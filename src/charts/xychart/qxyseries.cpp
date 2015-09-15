@@ -238,7 +238,7 @@ QT_CHARTS_BEGIN_NAMESPACE
     \sa pointLabelsVisible
 */
 /*!
-    \fn void QXYSeries::pointLabelsClippintChanged(bool clipping)
+    \fn void QXYSeries::pointLabelsClippingChanged(bool clipping)
     The clipping of the data point labels is changed to \a clipping.
 */
 /*!
@@ -398,6 +398,11 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QXYSeries::penChanged(const QPen &pen)
+    \brief Signal is emitted when the line pen has changed to \a pen.
+*/
+
+/*!
     \fn void QXYSeriesPrivate::updated()
     \brief \internal
 */
@@ -539,7 +544,7 @@ void QXYSeries::replace(int index, const QPointF &newPoint)
   \note This is much faster than replacing data points one by one,
   or first clearing all data, and then appending the new data. Emits QXYSeries::pointsReplaced()
   when the points have been replaced. However, note that using the overload that takes
-  \c{QVector<QPointF>} as parameter is slightly faster than using this overload.
+  \c{QVector<QPointF>} as parameter is faster than using this overload.
   \sa pointsReplaced()
 */
 void QXYSeries::replace(QList<QPointF> points)
@@ -634,12 +639,23 @@ void QXYSeries::clear()
 }
 
 /*!
-    Returns list of points in the series.
+    Returns the points in the series as a list.
+    Use QXYSeries::pointsVector() for better performance.
 */
 QList<QPointF> QXYSeries::points() const
 {
     Q_D(const QXYSeries);
     return d->m_points.toList();
+}
+
+/*!
+    Returns the points in the series as a vector.
+    This is more efficient that calling QXYSeries::points();
+*/
+QVector<QPointF> QXYSeries::pointsVector() const
+{
+    Q_D(const QXYSeries);
+    return d->m_points;
 }
 
 /*!
@@ -675,6 +691,7 @@ void QXYSeries::setPen(const QPen &pen)
         emit d->updated();
         if (emitColorChanged)
             emit colorChanged(pen.color());
+        emit penChanged(pen);
     }
 }
 
@@ -864,7 +881,7 @@ void QXYSeriesPrivate::initializeDomain()
 
     Q_Q(QXYSeries);
 
-    const QList<QPointF>& points = q->points();
+    const QVector<QPointF> &points = q->pointsVector();
 
     if (!points.isEmpty()) {
         minX = points[0].x();
