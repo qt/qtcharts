@@ -35,12 +35,6 @@
     experiment with the different configurable options of the example application to find the
     configuration that gives you the best performance in your environment.
 
-    Note: You can try if enabling OpenGL improves the performance with the following startup
-    parameter:
-    \code
-    -graphicssystem opengl
-    \endcode
-
     The application window is shared by control and scope views:
     \snippet qmloscilloscope/qml/qmloscilloscope/main.qml 1
     \dots
