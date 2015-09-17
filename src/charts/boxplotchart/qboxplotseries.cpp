@@ -37,14 +37,20 @@ QT_CHARTS_BEGIN_NAMESPACE
     \inmodule Qt Charts
     \brief Series for creating box-and-whiskers chart.
 
-    QBoxPlotSeries represents a series of data shown as box-and-whisker bars. The purpose of this class is to act as
-    a container for single box-and-whisker items. Each item is drawn to own slot. If chart includes multiple instances of
-    QBoxPlotSeries then box-and-whiskers items with the same index are drawn to same slot.
+    QBoxPlotSeries represents a series of data shown as box-and-whisker bars. The purpose of this
+    class is to act as a container for single box-and-whisker items. Each item is drawn to own slot.
+    If chart includes multiple instances of QBoxPlotSeries then box-and-whiskers items with the same
+    index are drawn to same slot.
 
-    See the \l {Box and Whiskers Example} {box-and-whiskers chart example} to learn how to create a box-and-whiskers chart.
+    \note The slot, each item in QBoxPlotSeries is drawn, represents a category in QBarCategoryAxis.
+    The category labels have to be unique. If same category label is defined for several
+    box-and-whisker items only the first one is drawn.
+
+    See the \l {Box and Whiskers Example} {box-and-whiskers chart example} to learn how to create a
+    box-and-whiskers chart.
     \image examples_boxplotchart.png
 
-    \sa QBoxSet
+    \sa QBoxSet, QBarCategoryAxis
 */
 /*!
     \fn QBoxPlotSeries::boxsetsAdded(QList<QBoxSet *> sets)

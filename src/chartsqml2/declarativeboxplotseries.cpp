@@ -43,7 +43,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 /*!
     \qmlproperty string BoxSet::label
-    Defines the label of the box-and-whiskers set.
+    Defines the label of the category of the box-and-whiskers set.
 */
 /*!
     \qmlproperty int BoxSet::count
@@ -122,6 +122,10 @@ QT_CHARTS_BEGIN_NAMESPACE
     slot. If chart includes multiple instances of BoxPlotSeries then box-and-whiskers items with the
     same index are drawn to same slot.
 
+    \note The slot, each item in BoxPlotSeries is drawn, represents a category in BarCategoryAxis.
+    The category labels have to be unique. If same category label is defined for several
+    box-and-whisker items only the first one is drawn.
+
     The following QML shows how to create a simple box-and-whiskers chart:
     \code
     import QtQuick 2.0
@@ -150,6 +154,8 @@ QT_CHARTS_BEGIN_NAMESPACE
     \image examples_qmlboxplot.png
     \endfloat
     \clearfloat
+
+    \sa BoxSet, BarCategoryAxis
 */
 
 /*!

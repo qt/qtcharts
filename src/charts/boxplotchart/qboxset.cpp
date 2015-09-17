@@ -162,7 +162,7 @@ void QBoxSet::append(const QList<qreal> &values)
 }
 
 /*!
-    Sets new \a label for set.
+    Sets new \a label for the category of the set.
 */
 void QBoxSet::setLabel(const QString label)
 {
@@ -170,7 +170,7 @@ void QBoxSet::setLabel(const QString label)
 }
 
 /*!
-    Returns label of the set.
+    Returns the label of the the category of the set.
 */
 QString QBoxSet::label() const
 {
