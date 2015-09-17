@@ -265,6 +265,11 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
+  \qmlmethod ChartView::isZoomed()
+  Returns true if any series has a zoomed domain.
+*/
+
+/*!
   \qmlmethod ChartView::scrollLeft(real pixels)
   Scrolls to left by \a pixels. This is a convenience function that suits for example for key navigation.
 */
@@ -877,6 +882,11 @@ void DeclarativeChart::zoomOut()
 void DeclarativeChart::zoomReset()
 {
     m_chart->zoomReset();
+}
+
+bool DeclarativeChart::isZoomed()
+{
+    return m_chart->isZoomed();
 }
 
 void DeclarativeChart::scrollLeft(qreal pixels)

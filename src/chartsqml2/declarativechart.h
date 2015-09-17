@@ -173,6 +173,7 @@ public:
     Q_REVISION(5) Q_INVOKABLE void zoomIn(const QRectF &rectangle);
     Q_REVISION(5) Q_INVOKABLE void zoomOut();
     Q_REVISION(5) Q_INVOKABLE void zoomReset();
+    Q_REVISION(5) Q_INVOKABLE bool isZoomed();
     Q_INVOKABLE void scrollLeft(qreal pixels);
     Q_INVOKABLE void scrollRight(qreal pixels);
     Q_INVOKABLE void scrollUp(qreal pixels);

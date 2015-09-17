@@ -1119,6 +1119,7 @@ Module {
         }
         Method { name: "zoomOut"; revision: 5 }
         Method { name: "zoomReset"; revision: 5 }
+        Method { name: "isZoomed"; revision: 5; type: "bool" }
         Method {
             name: "scrollLeft"
             Parameter { name: "pixels"; type: "double" }

@@ -94,6 +94,7 @@ Rectangle {
 
             // zoom x 2.5
             chartView.zoom(1.5);
+            verify(chartView.isZoomed());
             verify(chartView.axisX().max < xMax);
             verify(chartView.axisX().min > xMin);
             verify(chartView.axisY().max < yMax);
@@ -105,6 +106,7 @@ Rectangle {
 
             // zoom x 0.5
             chartView.zoom(0.5);
+            verify(chartView.isZoomed());
             verify(chartView.axisX().max > xMax);
             verify(chartView.axisX().min < xMin);
             verify(chartView.axisY().max > yMax);
@@ -117,6 +119,7 @@ Rectangle {
             // zoom x -1
             // negative value has no effect
             chartView.zoom(-1);
+            verify(chartView.isZoomed());
             verify(chartView.axisX().max === xMax);
             verify(chartView.axisX().min === xMin);
             verify(chartView.axisY().max === yMax);
@@ -124,6 +127,7 @@ Rectangle {
 
             // zoom in
             chartView.zoomIn();
+            verify(chartView.isZoomed());
             verify(chartView.axisX().max < xMax);
             verify(chartView.axisX().min > xMin);
             verify(chartView.axisY().max < yMax);
@@ -139,6 +143,7 @@ Rectangle {
             zoomRect.width = 120;
             zoomRect.height = 120;
             chartView.zoomIn(zoomRect);
+            verify(chartView.isZoomed());
             verify(chartView.axisX().max < xMax);
             verify(chartView.axisX().min > xMin);
             verify(chartView.axisY().max < yMax);
@@ -150,6 +155,7 @@ Rectangle {
 
             // zoom out
             chartView.zoomOut();
+            verify(chartView.isZoomed());
             verify(chartView.axisX().max > xMax);
             verify(chartView.axisX().min < xMin);
             verify(chartView.axisY().max > yMax);
@@ -161,6 +167,7 @@ Rectangle {
 
             // zoom reset
             chartView.zoomReset();
+            verify(!chartView.isZoomed());
             verify(chartView.axisX().max === xMaxOriginal);
             verify(chartView.axisX().min === xMinOriginal);
             verify(chartView.axisY().max === yMaxOriginal);
