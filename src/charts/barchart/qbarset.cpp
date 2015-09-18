@@ -32,6 +32,7 @@ QT_CHARTS_BEGIN_NAMESPACE
     First value of set is assumed to belong to first category, second to second category and so on.
     If set has fewer values than there are categories, then the missing values are assumed to be
     at the end of set. For missing values in middle of a set, numerical value of zero is used.
+    Labels for zero value sets are not shown.
 
     \sa QAbstractBarSeries, QBarSeries, QStackedBarSeries, QPercentBarSeries
 */
@@ -46,6 +47,7 @@ QT_CHARTS_BEGIN_NAMESPACE
     First value of set is assumed to belong to first category, second to second category and so on.
     If set has fewer values than there are categories, then the missing values are assumed to be
     at the end of set. For missing values in middle of a set, numerical value of zero is used.
+    Labels for zero value sets are not shown.
     \sa AbstractBarSeries, BarSeries, StackedBarSeries, PercentBarSeries
 */
 

@@ -225,12 +225,17 @@ void AbstractBarChartItem::handleUpdatedBars()
                 QGraphicsTextItem *label = m_labels.at(itemIndex);
                 QString valueLabel;
                 if (presenter()) { // At startup presenter is not yet set, yet somehow update comes
-                    if (m_series->labelsFormat().isEmpty()) {
-                        valueLabel = presenter()->numberToString(barSet->value(category));
+                    if (barSet->value(category) == 0) {
+                        label->setVisible(false);
                     } else {
-                        valueLabel = m_series->labelsFormat();
-                        valueLabel.replace(valueTag,
+                        label->setVisible(true);
+                        if (m_series->labelsFormat().isEmpty()) {
+                            valueLabel = presenter()->numberToString(barSet->value(category));
+                        } else {
+                            valueLabel = m_series->labelsFormat();
+                            valueLabel.replace(valueTag,
                                            presenter()->numberToString(barSet->value(category)));
+                        }
                     }
                 }
                 label->setHtml(valueLabel);
