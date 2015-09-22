@@ -42,6 +42,7 @@ class QT_CHARTS_EXPORT QXYSeries : public QAbstractSeries
     Q_PROPERTY(bool pointLabelsVisible READ pointLabelsVisible WRITE setPointLabelsVisible NOTIFY pointLabelsVisibilityChanged)
     Q_PROPERTY(QFont pointLabelsFont READ pointLabelsFont WRITE setPointLabelsFont NOTIFY pointLabelsFontChanged)
     Q_PROPERTY(QColor pointLabelsColor READ pointLabelsColor WRITE setPointLabelsColor NOTIFY pointLabelsColorChanged)
+    Q_PROPERTY(bool pointLabelsClipping READ pointLabelsClipping WRITE setPointLabelsClipping NOTIFY pointLabelsClippingChanged)
 
 protected:
     explicit QXYSeries(QXYSeriesPrivate &d, QObject *parent = 0);
@@ -93,6 +94,9 @@ public:
     void setPointLabelsColor(const QColor &color);
     QColor pointLabelsColor() const;
 
+    void setPointLabelsClipping(bool enabled = true);
+    bool pointLabelsClipping() const;
+
     void replace(QList<QPointF> points);
     void replace(QVector<QPointF> points);
 
@@ -111,6 +115,7 @@ Q_SIGNALS:
     void pointLabelsVisibilityChanged(bool visible);
     void pointLabelsFontChanged(const QFont &font);
     void pointLabelsColorChanged(const QColor &color);
+    void pointLabelsClippingChanged(bool clipping);
     void pointsRemoved(int index, int count);
 
 private:

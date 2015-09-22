@@ -162,13 +162,13 @@ QT_CHARTS_BEGIN_NAMESPACE
     \property QXYSeries::pointLabelsVisible
     Defines the visibility for data point labels. False by default.
 
-    \sa pointLabelsFormat
+    \sa pointLabelsFormat, pointLabelsClipping
 */
 /*!
     \qmlproperty bool XYSeries::pointLabelsVisible
     Defines the visibility for data point labels.
 
-    \sa pointLabelsFormat
+    \sa pointLabelsFormat, pointLabelsClipping
 */
 /*!
     \fn void QXYSeries::pointLabelsVisibilityChanged(bool visible)
@@ -221,6 +221,29 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \qmlsignal XYSeries::onPointLabelsColorChanged(Color color)
     The color used for data point labels is changed to \a color.
+*/
+
+/*!
+    \property QXYSeries::pointLabelsClipping
+    Defines the clipping for data point labels. True by default. The labels on the edge of the plot
+    area are cut when clipping is enabled.
+
+    \sa pointLabelsVisible
+*/
+/*!
+    \qmlproperty bool XYSeries::pointLabelsClipping
+    Defines the clipping for data point labels. True by default. The labels on the edge of the plot
+    area are cut when clipping is enabled.
+
+    \sa pointLabelsVisible
+*/
+/*!
+    \fn void QXYSeries::pointLabelsClippintChanged(bool clipping)
+    The clipping of the data point labels is changed to \a clipping.
+*/
+/*!
+    \qmlsignal XYSeries::onPointLabelsClippingChanged(bool clipping)
+    The clipping of the data point labels is changed to \a clipping.
 */
 
 /*!
@@ -779,6 +802,21 @@ QColor QXYSeries::pointLabelsColor() const
         return d->m_pointLabelsColor;
 }
 
+void QXYSeries::setPointLabelsClipping(bool enabled)
+{
+    Q_D(QXYSeries);
+    if (d->m_pointLabelsClipping != enabled) {
+        d->m_pointLabelsClipping = enabled;
+        emit pointLabelsClippingChanged(enabled);
+    }
+}
+
+bool QXYSeries::pointLabelsClipping() const
+{
+    Q_D(const QXYSeries);
+    return d->m_pointLabelsClipping;
+}
+
 /*!
     Stream operator for adding a data \a point to the series.
     \sa append()
@@ -812,7 +850,8 @@ QXYSeriesPrivate::QXYSeriesPrivate(QXYSeries *q)
       m_pointLabelsFormat(QLatin1String("@xPoint, @yPoint")),
       m_pointLabelsVisible(false),
       m_pointLabelsFont(QChartPrivate::defaultFont()),
-      m_pointLabelsColor(QChartPrivate::defaultPen().color())
+      m_pointLabelsColor(QChartPrivate::defaultPen().color()),
+      m_pointLabelsClipping(true)
 {
 }
 

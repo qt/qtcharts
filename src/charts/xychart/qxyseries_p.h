@@ -67,6 +67,7 @@ protected:
     bool m_pointLabelsVisible;
     QFont m_pointLabelsFont;
     QColor m_pointLabelsColor;
+    bool m_pointLabelsClipping;
 
 private:
     Q_DECLARE_PUBLIC(QXYSeries)

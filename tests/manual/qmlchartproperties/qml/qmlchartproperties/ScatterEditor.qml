@@ -69,6 +69,10 @@ Flow {
         onClicked: series.pointLabelsVisible = !series.pointLabelsVisible;
     }
     Button {
+        text: "point labels clipping"
+        onClicked: series.pointLabelsClipping = !series.pointLabelsClipping;
+    }
+    Button {
         text: "point labels format"
         onClicked: {
             if (series.pointLabelsFormat === "@xPoint, @yPoint")
@@ -89,6 +93,10 @@ Flow {
     Button {
         text: "point labels color"
         onClicked: series.pointLabelsColor = main.nextColor();
+    }
+    Button {
+        text: "point labels clipping"
+        onClicked: series.pointLabelsClipping = !series.pointLabelsClipping;
     }
     Button {
         text: "append point"

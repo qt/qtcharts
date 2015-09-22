@@ -57,6 +57,8 @@ ChartView {
                                                      + font.family);
         onPointLabelsColorChanged:       console.log("scatterSeries.onPointLabelsColorChanged: "
                                                      + color);
+        onPointLabelsClippingChanged:    console.log("scatterSeries.onPointLabelsClippingChanged: "
+                                                     + clipping);
         onPressed:          console.log(name + ".onPressed: " + point.x + ", " + point.y);
         onReleased:         console.log(name + ".onReleased: " + point.x + ", " + point.y);
         onDoubleClicked:    console.log(name + ".onDoubleClicked: " + point.x + ", " + point.y);

@@ -2256,6 +2256,7 @@ Module {
         Property { name: "pointLabelsVisible"; type: "bool" }
         Property { name: "pointLabelsFont"; type: "QFont" }
         Property { name: "pointLabelsColor"; type: "QColor" }
+        Property { name: "pointLabelsClipping"; type: "bool" }
         Signal {
             name: "clicked"
             Parameter { name: "point"; type: "QPointF" }
@@ -2301,6 +2302,10 @@ Module {
         Signal {
             name: "pointLabelsColorChanged"
             Parameter { name: "color"; type: "QColor" }
+        }
+        Signal {
+            name: "pointLabelsClippingChanged"
+            Parameter { name: "clipping"; type: "bool" }
         }
     }
     Component {
@@ -2899,6 +2904,7 @@ Module {
         Property { name: "pointLabelsVisible"; type: "bool" }
         Property { name: "pointLabelsFont"; type: "QFont" }
         Property { name: "pointLabelsColor"; type: "QColor" }
+        Property { name: "pointLabelsClipping"; type: "bool" }
         Signal {
             name: "clicked"
             Parameter { name: "point"; type: "QPointF" }
@@ -2952,6 +2958,10 @@ Module {
         Signal {
             name: "pointLabelsColorChanged"
             Parameter { name: "color"; type: "QColor" }
+        }
+        Signal {
+            name: "pointLabelsClippingChanged"
+            Parameter { name: "clipping"; type: "bool" }
         }
         Signal {
             name: "pointsRemoved"

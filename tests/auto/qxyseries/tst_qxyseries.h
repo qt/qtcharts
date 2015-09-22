@@ -44,6 +44,7 @@ private slots:
     void pointLabelsVisible();
     void pointLabelsFont();
     void pointLabelsColor();
+    void pointLabelsClipping();
     void seriesOpacity();
     void oper_data();
     void oper();

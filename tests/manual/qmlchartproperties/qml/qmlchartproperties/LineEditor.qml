@@ -96,6 +96,10 @@ Flow {
         onClicked: series.pointLabelsColor = main.nextColor();
     }
     Button {
+        text: "point labels clipping"
+        onClicked: series.pointLabelsClipping = !series.pointLabelsClipping;
+    }
+    Button {
         text: "append point"
         onClicked: series.append(series.count - 1, series.count - 1);
     }

@@ -152,6 +152,24 @@ void tst_QXYSeries::pointLabelsColor()
     QVERIFY(arguments.at(0).value<QColor>() == defaultColor);
 }
 
+void tst_QXYSeries::pointLabelsClipping()
+{
+    QSignalSpy labelsClippingSpy(m_series, SIGNAL(pointLabelsClippingChanged(bool)));
+    QCOMPARE(m_series->pointLabelsClipping(), true);
+
+    m_series->setPointLabelsClipping(false);
+    QCOMPARE(m_series->pointLabelsClipping(), false);
+    TRY_COMPARE(labelsClippingSpy.count(), 1);
+    QList<QVariant> arguments = labelsClippingSpy.takeFirst();
+    QVERIFY(arguments.at(0).toBool() == false);
+
+    m_series->setPointLabelsClipping();
+    QCOMPARE(m_series->pointLabelsClipping(), true);
+    TRY_COMPARE(labelsClippingSpy.count(), 1);
+    arguments = labelsClippingSpy.takeFirst();
+    QVERIFY(arguments.at(0).toBool() == true);
+}
+
 void tst_QXYSeries::append_data()
 {
     QTest::addColumn< QList<QPointF> >("points");

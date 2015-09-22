@@ -79,6 +79,10 @@ Flow {
         onClicked: series.pointLabelsColor = main.nextColor();
     }
     Button {
+        text: "point labels clipping"
+        onClicked: series.pointLabelsClipping = !series.pointLabelsClipping;
+    }
+    Button {
         id: upperButton
         text: "upper series"
         unpressedColor: "#79bd8f"

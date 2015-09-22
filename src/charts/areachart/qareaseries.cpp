@@ -269,13 +269,13 @@ QT_CHARTS_BEGIN_NAMESPACE
     \property QAreaSeries::pointLabelsVisible
     Defines the visibility for data point labels. False by default.
 
-    \sa QAreaSeries::pointLabelsFormat
+    \sa QAreaSeries::pointLabelsFormat, QAreaSeries::pointLabelsClipping
 */
 /*!
     \qmlproperty bool AreaSeries::pointLabelsVisible
     Defines the visibility for data point labels.
 
-    \sa pointLabelsFormat
+    \sa pointLabelsFormat, pointLabelsClipping
 */
 /*!
     \fn void QAreaSeries::pointLabelsVisibilityChanged(bool visible)
@@ -328,6 +328,29 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \qmlsignal AreaSeries::onPointLabelsColorChanged(Color color)
     The color used for data point labels is changed to \a color.
+*/
+
+/*!
+    \property QAreaSeries::pointLabelsClipping
+    Defines the clipping for data point labels. True by default. The labels on the edge of the plot
+    area are cut when clipping is enabled.
+
+    \sa pointLabelsVisible
+*/
+/*!
+    \qmlproperty bool AreaSeries::pointLabelsClipping
+    Defines the clipping for data point labels. True by default. The labels on the edge of the plot
+    area are cut when clipping is enabled.
+
+    \sa pointLabelsVisible
+*/
+/*!
+    \fn void QAreaSeries::pointLabelsClippintChanged(bool clipping)
+    The clipping of the data point labels is changed to \a clipping.
+*/
+/*!
+    \qmlsignal AreaSeries::onPointLabelsClippingChanged(bool clipping)
+    The clipping of the data point labels is changed to \a clipping.
 */
 
 /*!
@@ -556,6 +579,21 @@ QColor QAreaSeries::pointLabelsColor() const
         return d->m_pointLabelsColor;
 }
 
+void QAreaSeries::setPointLabelsClipping(bool enabled)
+{
+    Q_D(QAreaSeries);
+    if (d->m_pointLabelsClipping != enabled) {
+        d->m_pointLabelsClipping = enabled;
+        emit pointLabelsClippingChanged(enabled);
+    }
+}
+
+bool QAreaSeries::pointLabelsClipping() const
+{
+    Q_D(const QAreaSeries);
+    return d->m_pointLabelsClipping;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QAreaSeriesPrivate::QAreaSeriesPrivate(QLineSeries *upperSeries, QLineSeries *lowerSeries, QAreaSeries *q)
@@ -568,7 +606,8 @@ QAreaSeriesPrivate::QAreaSeriesPrivate(QLineSeries *upperSeries, QLineSeries *lo
       m_pointLabelsFormat(QLatin1String("@xPoint, @yPoint")),
       m_pointLabelsVisible(false),
       m_pointLabelsFont(QChartPrivate::defaultFont()),
-      m_pointLabelsColor(QChartPrivate::defaultPen().color())
+      m_pointLabelsColor(QChartPrivate::defaultPen().color()),
+      m_pointLabelsClipping(true)
 {
 }
 

@@ -85,6 +85,7 @@ private:
     QString m_pointLabelsFormat;
     QFont m_pointLabelsFont;
     QColor m_pointLabelsColor;
+    bool m_pointLabelsClipping;
 
     QPointF m_lastMousePos;
     bool m_mousePressed;

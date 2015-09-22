@@ -80,6 +80,7 @@ void tst_QLineSeries::qlineseries()
     QCOMPARE(series.pointsVisible(), false);
     QCOMPARE(series.pointLabelsVisible(), false);
     QCOMPARE(series.pointLabelsFormat(), QLatin1String("@xPoint, @yPoint"));
+    QCOMPARE(series.pointLabelsClipping(), true);
 
     series.append(QList<QPointF>());
     series.append(0.0,0.0);

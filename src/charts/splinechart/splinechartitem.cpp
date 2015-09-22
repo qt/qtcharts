@@ -35,6 +35,7 @@ SplineChartItem::SplineChartItem(QSplineSeries *series, QGraphicsItem *item)
       m_pointLabelsFormat(series->pointLabelsFormat()),
       m_pointLabelsFont(series->pointLabelsFont()),
       m_pointLabelsColor(series->pointLabelsColor()),
+      m_pointLabelsClipping(true),
       m_mousePressed(false)
 {
     setAcceptHoverEvents(true);
@@ -49,6 +50,7 @@ SplineChartItem::SplineChartItem(QSplineSeries *series, QGraphicsItem *item)
                      this, SLOT(handleUpdated()));
     QObject::connect(series, SIGNAL(pointLabelsFontChanged(QFont)), this, SLOT(handleUpdated()));
     QObject::connect(series, SIGNAL(pointLabelsColorChanged(QColor)), this, SLOT(handleUpdated()));
+    QObject::connect(series, SIGNAL(pointLabelsClippingChanged(bool)), this, SLOT(handleUpdated()));
     handleUpdated();
 }
 
@@ -414,6 +416,7 @@ void SplineChartItem::handleUpdated()
     m_pointLabelsVisible = m_series->pointLabelsVisible();
     m_pointLabelsFont = m_series->pointLabelsFont();
     m_pointLabelsColor = m_series->pointLabelsColor();
+    m_pointLabelsClipping = m_series->pointLabelsClipping();
     update();
 }
 
@@ -460,8 +463,13 @@ void SplineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
 
     reversePainter(painter, clipRect);
 
-    if (m_pointLabelsVisible)
+    if (m_pointLabelsVisible) {
+        if (m_pointLabelsClipping)
+            painter->setClipping(true);
+        else
+            painter->setClipping(false);
         m_series->d_func()->drawSeriesPointLabels(painter, m_points, m_linePen.width() / 2);
+    }
 
     painter->restore();
 }

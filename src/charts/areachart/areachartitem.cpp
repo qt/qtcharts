@@ -39,6 +39,7 @@ AreaChartItem::AreaChartItem(QAreaSeries *areaSeries, QGraphicsItem* item)
       m_pointLabelsFormat(areaSeries->pointLabelsFormat()),
       m_pointLabelsFont(areaSeries->pointLabelsFont()),
       m_pointLabelsColor(areaSeries->pointLabelsColor()),
+      m_pointLabelsClipping(true),
       m_mousePressed(false)
 {
     setAcceptHoverEvents(true);
@@ -65,6 +66,8 @@ AreaChartItem::AreaChartItem(QAreaSeries *areaSeries, QGraphicsItem* item)
     QObject::connect(areaSeries, SIGNAL(pointLabelsFontChanged(QFont)),
                      this, SLOT(handleUpdated()));
     QObject::connect(areaSeries, SIGNAL(pointLabelsColorChanged(QColor)),
+                     this, SLOT(handleUpdated()));
+    QObject::connect(areaSeries, SIGNAL(pointLabelsClippingChanged(bool)),
                      this, SLOT(handleUpdated()));
 
     handleUpdated();
@@ -151,6 +154,7 @@ void AreaChartItem::handleUpdated()
     m_pointLabelsVisible = m_series->pointLabelsVisible();
     m_pointLabelsFont = m_series->pointLabelsFont();
     m_pointLabelsColor = m_series->pointLabelsColor();
+    m_pointLabelsClipping = m_series->pointLabelsClipping();
     update();
 }
 
@@ -201,6 +205,11 @@ void AreaChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
         static const QString xPointTag(QLatin1String("@xPoint"));
         static const QString yPointTag(QLatin1String("@yPoint"));
         const int labelOffset = 2;
+
+        if (m_pointLabelsClipping)
+            painter->setClipping(true);
+        else
+            painter->setClipping(false);
 
         painter->setFont(m_pointLabelsFont);
         painter->setPen(QPen(m_pointLabelsColor));
