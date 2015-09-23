@@ -70,8 +70,7 @@ QPainterPath LineChartItem::shape() const
 
 void LineChartItem::updateGeometry()
 {
-    m_points = geometryPoints();
-    const QVector<QPointF> &points = m_points;
+    const QVector<QPointF> &points = geometryPoints();
 
     if (points.size() == 0) {
         prepareGeometryChange();
