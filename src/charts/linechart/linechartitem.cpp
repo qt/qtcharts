@@ -70,7 +70,10 @@ QPainterPath LineChartItem::shape() const
 
 void LineChartItem::updateGeometry()
 {
-    const QVector<QPointF> &points = geometryPoints();
+    // Store the points to a local variable so that the old line gets properly cleared
+    // when animation starts.
+    m_linePoints = geometryPoints();
+    const QVector<QPointF> &points = m_linePoints;
 
     if (points.size() == 0) {
         prepareGeometryChange();
@@ -377,8 +380,8 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
             // to ensure proper continuity of the pattern
             painter->drawPath(m_linePath);
         } else {
-            for (int i(1); i < m_points.size(); i++)
-                painter->drawLine(m_points.at(i - 1), m_points.at(i));
+            for (int i(1); i < m_linePoints.size(); i++)
+                painter->drawLine(m_linePoints.at(i - 1), m_linePoints.at(i));
         }
     }
 
@@ -389,7 +392,7 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
             painter->setClipping(true);
         else
             painter->setClipping(false);
-        m_series->d_func()->drawSeriesPointLabels(painter, m_points, m_linePen.width() / 2);
+        m_series->d_func()->drawSeriesPointLabels(painter, m_linePoints, m_linePen.width() / 2);
     }
 
     painter->restore();
