@@ -228,7 +228,7 @@ void AbstractBarChartItem::handleUpdatedBars()
                     if (barSet->value(category) == 0) {
                         label->setVisible(false);
                     } else {
-                        label->setVisible(true);
+                        label->setVisible(m_series->isLabelsVisible());
                         if (m_series->labelsFormat().isEmpty()) {
                             valueLabel = presenter()->numberToString(barSet->value(category));
                         } else {

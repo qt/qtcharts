@@ -124,7 +124,7 @@ void PercentBarChartItem::handleUpdatedBars()
             if (p == 0) {
                 label->setVisible(false);
             } else {
-                label->setVisible(true);
+                label->setVisible(m_series->isLabelsVisible());
                 if (m_series->labelsFormat().isEmpty()) {
                     vString.append(QStringLiteral("%"));
                     valueLabel = vString;
