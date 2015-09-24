@@ -28,12 +28,13 @@
 
     The oscilloscope application demonstrates how to use the Qt Charts QML API to implement an
     application with strict performance requirements. The application uses generated data with
-    configurable characteristics to mimic a simple oscilloscope user interface. To find out the
-    actual screen refresh performance of the application, you can set QML_SHOW_FRAMERATE = 1 to
-    your run environment settings to get the framerate shown in the application output console.
-    To do so go to Projects - Run - Run environment in Qt Creator and select Add. Then you can
-    experiment with the different configurable options of the example application to find the
-    configuration that gives you the best performance in your environment.
+    configurable characteristics to mimic a simple oscilloscope user interface.
+
+    To get information about actual rendering speed shown in the application output console, you can
+    set QSG_RENDER_TIMING = 1 to your run environment settings. To do so go to Projects - Run -
+    Run environment in Qt Creator and select Add. Then you can experiment with the different
+    configurable options of the example application to find the configuration that gives you the
+    best performance in your environment.
 
     The application window is shared by control and scope views:
     \snippet qmloscilloscope/qml/qmloscilloscope/main.qml 1
@@ -53,7 +54,4 @@
     signal sources. This is implemented by dynamically destroying and creating series:
     \snippet qmloscilloscope/qml/qmloscilloscope/ScopeView.qml 3
 
-    \note QML_SHOW_FRAMERATE environment variable doesn't work with Qt Quick 2.
-    From Qt 5.1.0 on, the QSG_RENDER_TIMING environment variable can be used
-    similarly to display rendering time.
 */
