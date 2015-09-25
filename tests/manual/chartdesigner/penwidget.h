@@ -20,7 +20,7 @@
 #define PENWIDGET_H
 
 #include <QtWidgets/QWidget>
-#include <QtWidgets/QPen>
+#include <QtGui/QPen>
 
 class QComboBox;
 class QSpinBox;
