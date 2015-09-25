@@ -1,5 +1,13 @@
 Qt Charts 2.1.0
 
+Performance Improvements
+--------------------
+Qt Charts now supports accelerating drawing of line and scatter series with
+OpenGL. In cases involving large amounts of points, this radically
+improves performance. For example, a high-end desktop system with a good GPU
+can draw a series with millions of points at a useful frame rate.
+See QAbstractSeries::useOpenGL documentation for more information.
+
 New features
 ------------
 - Added support for QAbstractSeries::useOpenGL property
@@ -8,6 +16,7 @@ New features
 - Added support for minor ticks to value axis
 - Added support for bar series value label angle
 - Added QXYSeries::replace(QVector<QPointF> points) overload
+- Added QXYSeries::pointsVector() to get series points as a QVector.
 - Added possibility to set duration and easing curve for chart animation
 - Added a method to remove more than one point to QXYSeries
 - Added option to set labels clipping
