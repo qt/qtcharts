@@ -477,23 +477,6 @@ Module {
         }
     }
     Component {
-        name: "QQuickPaintedItem"
-        defaultProperty: "data"
-        prototype: "QQuickItem"
-        Enum {
-            name: "RenderTarget"
-            values: {
-                "Image": 0,
-                "FramebufferObject": 1,
-                "InvertedYFramebufferObject": 2
-            }
-        }
-        Property { name: "contentsSize"; type: "QSize" }
-        Property { name: "fillColor"; type: "QColor" }
-        Property { name: "contentsScale"; type: "double" }
-        Property { name: "renderTarget"; type: "RenderTarget" }
-    }
-    Component {
         name: "QtCharts::DeclarativeAreaSeries"
         prototype: "QtCharts::QAreaSeries"
         exports: [
@@ -923,7 +906,7 @@ Module {
     Component {
         name: "QtCharts::DeclarativeChart"
         defaultProperty: "data"
-        prototype: "QQuickPaintedItem"
+        prototype: "QQuickItem"
         exports: [
             "QtCharts/ChartView 1.0",
             "QtCharts/ChartView 1.1",
@@ -1036,6 +1019,7 @@ Module {
             revision: 5
             Parameter { name: "curve"; type: "QEasingCurve" }
         }
+        Signal { name: "needRender" }
         Method {
             name: "series"
             type: "QAbstractSeries*"
@@ -2244,6 +2228,7 @@ Module {
         Property { name: "visible"; type: "bool" }
         Property { name: "opacity"; type: "double" }
         Property { name: "type"; type: "SeriesType"; isReadonly: true }
+        Property { name: "useOpenGL"; type: "bool" }
     }
     Component {
         name: "QtCharts::QAreaSeries"
@@ -2967,6 +2952,10 @@ Module {
             name: "pointsRemoved"
             Parameter { name: "index"; type: "int" }
             Parameter { name: "count"; type: "int" }
+        }
+        Signal {
+            name: "penChanged"
+            Parameter { name: "pen"; type: "QPen" }
         }
     }
 }
