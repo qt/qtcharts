@@ -26,7 +26,7 @@ Rectangle {
 
     TestCase {
         id: tc1
-        name: "tst_qml-qtquicktest CategoryAxis"
+        name: "tst_qml-qtquicktest CategoryAxis 2.0"
         when: windowShown
 
         function test_minMax() {

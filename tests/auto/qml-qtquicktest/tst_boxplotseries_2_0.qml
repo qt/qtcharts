@@ -18,7 +18,7 @@
 
 import QtQuick 2.0
 import QtTest 1.0
-import QtCharts 2.1
+import QtCharts 2.0
 
 Rectangle {
     width: 400
@@ -26,7 +26,7 @@ Rectangle {
 
     TestCase {
         id: tc1
-        name: "tst_qml-qtquicktest BoxPlotSeries"
+        name: "tst_qml-qtquicktest BoxPlotSeries 2.0"
         when: windowShown
 
         function test_properties() {

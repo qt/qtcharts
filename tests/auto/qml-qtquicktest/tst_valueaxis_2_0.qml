@@ -26,7 +26,7 @@ Rectangle {
 
     TestCase {
         id: tc1
-        name: "tst_qml-qtquicktest ValueAxis"
+        name: "tst_qml-qtquicktest ValueAxis 2.0"
         when: windowShown
 
         // test functions are run in alphabetical order, the name has 'a' so that it

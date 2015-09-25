@@ -26,7 +26,7 @@ Rectangle {
 
     TestCase {
         id: tc1
-        name: "tst_qml-qtquicktest XY Series"
+        name: "tst_qml-qtquicktest XY Series 2.0"
         when: windowShown
 
         function test_properties() {

@@ -26,7 +26,7 @@ Rectangle {
 
     TestCase {
         id: tc1
-        name: "tst_qml-qtquicktest ChartView Functions"
+        name: "tst_qml-qtquicktest ChartView Functions 2.0"
         when: windowShown
 
         function test_chartViewSeriesAndAxes() {
