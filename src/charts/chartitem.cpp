@@ -19,6 +19,7 @@
 #include <private/chartitem_p.h>
 #include <private/qabstractseries_p.h>
 #include <private/abstractdomain_p.h>
+#include <QtGui/QPainter>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

@@ -65,7 +65,7 @@ ColumnLayout {
     MultiButton {
         id: sampleCountButton
         text: "Samples: "
-        items: [6, 128, 1024, 10000]
+        items: ["6", "128", "1024", "10000"]
         currentSelection: 2
         onSelectionChanged: signalSourceChanged(
                                 signalSourceButton.items[signalSourceButton.currentSelection],
@@ -75,7 +75,7 @@ ColumnLayout {
 
     MultiButton {
         text: "Refresh rate: "
-        items: [1, 24, 60, 100]
+        items: ["1", "24", "60"]
         currentSelection: 2
         onSelectionChanged: refreshRateChanged(items[currentSelection]);
     }

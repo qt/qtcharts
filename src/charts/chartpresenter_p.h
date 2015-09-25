@@ -35,6 +35,7 @@
 #include <QtCore/QMargins>
 #include <QtCore/QLocale>
 #include <QtCore/QPointer>
+#include <QtCore/QEasingCurve>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

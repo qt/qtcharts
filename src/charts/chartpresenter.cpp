@@ -32,6 +32,7 @@
 #include <private/charttitle_p.h>
 #include <QtCore/QTimer>
 #include <QtGui/QTextDocument>
+#include <QtWidgets/QGraphicsScene>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

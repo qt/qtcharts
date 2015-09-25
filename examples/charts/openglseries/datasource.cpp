@@ -63,6 +63,7 @@ void DataSource::updateAllSeries()
         elapsed = m_fpsTimer.restart();
         qreal fps = qreal(0.1 * int(10000.0 * (qreal(frameCount) / qreal(elapsed))));
         m_fpsLabel->setText(labelText.arg(QString::number(fps, 'f', 1)));
+        m_fpsLabel->adjustSize();
         frameCount = 0;
     }
 }

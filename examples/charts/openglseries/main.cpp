@@ -148,11 +148,12 @@ int main(int argc, char *argv[])
     QLabel *countLabel = new QLabel(&window);
     QString countText = QStringLiteral("Total point count: %1");
     countLabel->setText(countText.arg(pointCount * seriesCount));
-    countLabel->resize(window.width(), countLabel->height());
-    fpsLabel->move(10,2);
+    countLabel->adjustSize();
+    fpsLabel->move(10, 2);
+    fpsLabel->adjustSize();
     fpsLabel->raise();
     fpsLabel->show();
-    countLabel->move(10, 14);
+    countLabel->move(10, fpsLabel->height());
     fpsLabel->raise();
     countLabel->show();
 
