@@ -307,10 +307,14 @@ void DeclarativeRenderNode::cleanXYSeriesResources(const QXYSeries *series)
 {
     if (series) {
         delete m_seriesBufferMap.take(series);
+        delete m_xyDataMap.take(series);
     } else {
         foreach (QOpenGLBuffer *buffer, m_seriesBufferMap.values())
             delete buffer;
         m_seriesBufferMap.clear();
+        foreach (GLXYSeriesData *data, m_xyDataMap.values())
+            delete data;
+        m_xyDataMap.clear();
     }
 }
 
