@@ -143,9 +143,10 @@ void VerticalAxis::updateGeometry()
         qreal heightDiff = rect.height() - boundingRect.height();
 
         //ticks and label position
+        QPointF labelPos;
         if (axis()->alignment() == Qt::AlignLeft) {
             if (axis()->isReverse()) {
-                labelItem->setPos(axisRect.right() - rect.width() + (widthDiff / 2.0)
+                labelPos = QPointF(axisRect.right() - rect.width() + (widthDiff / 2.0)
                                   - labelPadding(),
                                   gridRect.top() + gridRect.bottom()
                                   - layout[layout.size() - i - 1] - center.y());
@@ -154,7 +155,7 @@ void VerticalAxis::updateGeometry()
                                   axisRect.right(),
                                   gridRect.top() + gridRect.bottom() - layout[i]);
             } else {
-                labelItem->setPos(axisRect.right() - rect.width() + (widthDiff / 2.0)
+                labelPos = QPointF(axisRect.right() - rect.width() + (widthDiff / 2.0)
                                   - labelPadding(),
                                   layout[i] - center.y());
                 tickItem->setLine(axisRect.right() - labelPadding(), layout[i],
@@ -166,11 +167,11 @@ void VerticalAxis::updateGeometry()
                                   gridRect.top() + gridRect.bottom() - layout[i],
                                   axisRect.left() + labelPadding(),
                                   gridRect.top() + gridRect.bottom() - layout[i]);
-                labelItem->setPos(axisRect.left() + labelPadding() - (widthDiff / 2.0),
+                labelPos = QPointF(axisRect.left() + labelPadding() - (widthDiff / 2.0),
                                   gridRect.top() + gridRect.bottom()
                                   - layout[layout.size() - i - 1] - center.y());
             } else {
-                labelItem->setPos(axisRect.left() + labelPadding() - (widthDiff / 2.0),
+                labelPos = QPointF(axisRect.left() + labelPadding() - (widthDiff / 2.0),
                                   layout[i] - center.y());
                 tickItem->setLine(axisRect.left(), layout[i],
                                   axisRect.left() + labelPadding(), layout[i]);
@@ -199,8 +200,7 @@ void VerticalAxis::updateGeometry()
                     && (lowerBound == gridRect.bottom() || upperBound == gridRect.top())) {
                     forceHide = true;
                 } else {
-                    labelItem->setPos(labelItem->pos().x(),
-                                      lowerBound - (delta / 2.0) - center.y());
+                    labelPos.setY(lowerBound - (delta / 2.0) - center.y());
                 }
             } else {
                 QCategoryAxis *categoryAxis = static_cast<QCategoryAxis *>(axis());
@@ -209,21 +209,23 @@ void VerticalAxis::updateGeometry()
                         && (lowerBound == gridRect.bottom() || upperBound == gridRect.top())) {
                         forceHide = true;
                     } else {
-                        labelItem->setPos(labelItem->pos().x(),
-                                          lowerBound - (delta / 2.0) - center.y());
+                        labelPos.setY(lowerBound - (delta / 2.0) - center.y());
                     }
                 } else if (categoryAxis->labelsPosition()
                            == QCategoryAxis::AxisLabelsPositionOnValue) {
                     labelOnValue = true;
                     if (axis()->isReverse()) {
-                        labelItem->setPos(labelItem->pos().x(), gridRect.top() + gridRect.bottom()
+                        labelPos.setY(gridRect.top() + gridRect.bottom()
                                           - layout[i + 1] - center.y());
                     } else {
-                        labelItem->setPos(labelItem->pos().x(), upperBound - center.y());
+                        labelPos.setY(upperBound - center.y());
                     }
                 }
             }
         }
+
+        // Round to full pixel via QPoint to avoid one pixel clipping on the edge in some cases
+        labelItem->setPos(labelPos.toPoint());
 
         //label overlap detection - compensate one pixel for rounding errors
         if (axis()->isReverse()) {

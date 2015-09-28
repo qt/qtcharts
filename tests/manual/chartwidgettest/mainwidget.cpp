@@ -41,7 +41,7 @@
 #include <QtCore/QDebug>
 #include <QtGui/QStandardItemModel>
 #include <QtCharts/QBarCategoryAxis>
-#include <QtOpenGL/QGLWidget>
+#include <QtWidgets/QOpenGLWidget>
 
 QT_CHARTS_USE_NAMESPACE
 
@@ -164,7 +164,7 @@ void MainWidget::initCheckboxes(QGridLayout *grid)
     aliasCheckBox->setChecked(false);
     grid->addWidget(aliasCheckBox, grid->rowCount(), 0);
 
-    QCheckBox *openGLCheckBox = new QCheckBox("Use QGLWidget");
+    QCheckBox *openGLCheckBox = new QCheckBox("Use QOpenGLWidget");
     connect(openGLCheckBox, SIGNAL(toggled(bool)), this, SLOT(openGLToggled(bool)));
     openGLCheckBox->setChecked(false);
     grid->addWidget(openGLCheckBox, grid->rowCount(), 0);
@@ -178,11 +178,10 @@ void MainWidget::antiAliasToggled(bool enabled)
 void MainWidget::openGLToggled(bool enabled)
 {
     if (enabled) {
-        QGLFormat f = QGLFormat::defaultFormat();
-        f.setSampleBuffers(true);
+        QSurfaceFormat f = QSurfaceFormat::defaultFormat();
         f.setSamples(4);
-        QGLFormat::setDefaultFormat(f);
-        QGLWidget *g = new QGLWidget();
+        QSurfaceFormat::setDefaultFormat(f);
+        QOpenGLWidget *g = new QOpenGLWidget();
         m_chartView->setViewport(g);
     } else {
         m_chartView->setViewport(0);

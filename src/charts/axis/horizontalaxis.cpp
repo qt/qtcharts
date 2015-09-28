@@ -141,9 +141,10 @@ void HorizontalAxis::updateGeometry()
         qreal widthDiff = rect.width() - boundingRect.width();
 
         //ticks and label position
+        QPointF labelPos;
         if (axis()->alignment() == Qt::AlignTop) {
             if (axis()->isReverse()) {
-                labelItem->setPos(gridRect.right() - layout[layout.size() - i - 1]
+                labelPos = QPointF(gridRect.right() - layout[layout.size() - i - 1]
                         + gridRect.left() - center.x(),
                         axisRect.bottom() - rect.height()
                         + (heightDiff / 2.0) - labelPadding());
@@ -152,21 +153,21 @@ void HorizontalAxis::updateGeometry()
                                   gridRect.right() + gridRect.left() - layout[i],
                                   axisRect.bottom() - labelPadding());
             } else {
-                labelItem->setPos(layout[i] - center.x(), axisRect.bottom() - rect.height()
+                labelPos = QPointF(layout[i] - center.x(), axisRect.bottom() - rect.height()
                                   + (heightDiff / 2.0) - labelPadding());
                 tickItem->setLine(layout[i], axisRect.bottom(),
                                   layout[i], axisRect.bottom() - labelPadding());
             }
         } else if (axis()->alignment() == Qt::AlignBottom) {
             if (axis()->isReverse()) {
-                labelItem->setPos(gridRect.right() - layout[layout.size() - i - 1]
+                labelPos = QPointF(gridRect.right() - layout[layout.size() - i - 1]
                         + gridRect.left() - center.x(),
                         axisRect.top() - (heightDiff / 2.0) + labelPadding());
                 tickItem->setLine(gridRect.right() + gridRect.left() - layout[i], axisRect.top(),
                                   gridRect.right() + gridRect.left() - layout[i],
                                   axisRect.top() + labelPadding());
             } else {
-                labelItem->setPos(layout[i] - center.x(), axisRect.top() - (heightDiff / 2.0)
+                labelPos = QPointF(layout[i] - center.x(), axisRect.top() - (heightDiff / 2.0)
                                   + labelPadding());
                 tickItem->setLine(layout[i], axisRect.top(),
                                   layout[i], axisRect.top() + labelPadding());
@@ -193,7 +194,7 @@ void HorizontalAxis::updateGeometry()
                     && (leftBound == gridRect.left() || rightBound == gridRect.right())) {
                     forceHide = true;
                 } else {
-                    labelItem->setPos(leftBound + (delta / 2.0) - center.x(), labelItem->pos().y());
+                    labelPos.setX(leftBound + (delta / 2.0) - center.x());
                 }
             } else {
                 QCategoryAxis *categoryAxis = static_cast<QCategoryAxis *>(axis());
@@ -202,18 +203,20 @@ void HorizontalAxis::updateGeometry()
                         && (leftBound == gridRect.left() || rightBound == gridRect.right())) {
                         forceHide = true;
                     } else {
-                        labelItem->setPos(leftBound + (delta / 2.0) - center.x(),
-                                          labelItem->pos().y());
+                        labelPos.setX(leftBound + (delta / 2.0) - center.x());
                     }
                 } else if (categoryAxis->labelsPosition()
                            == QCategoryAxis::AxisLabelsPositionOnValue) {
                     if (axis()->isReverse())
-                        labelItem->setPos(leftBound - center.x(), labelItem->pos().y());
+                        labelPos.setX(leftBound - center.x());
                     else
-                        labelItem->setPos(rightBound - center.x(), labelItem->pos().y());
+                        labelPos.setX(rightBound - center.x());
                 }
             }
         }
+
+        // Round to full pixel via QPoint to avoid one pixel clipping on the edge in some cases
+        labelItem->setPos(labelPos.toPoint());
 
         //label overlap detection - compensate one pixel for rounding errors
         if ((labelItem->pos().x() < width && labelItem->toPlainText() == ellipsis) || forceHide ||

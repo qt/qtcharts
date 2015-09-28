@@ -34,7 +34,7 @@
 #include <QtWidgets/QGraphicsScene>
 #include <QtWidgets/QGraphicsLinearLayout>
 #include <QtWidgets/QGraphicsProxyWidget>
-#include <QtOpenGL/QGLWidget>
+#include <QtWidgets/QOpenGLWidget>
 #include <QtWidgets/QApplication>
 #include <QtCore/QDebug>
 #include <QtWidgets/QMenu>
@@ -398,11 +398,11 @@ void Window::checkLegend()
 void Window::checkOpenGL()
 {
     bool opengl = m_openGLCheckBox->isChecked();
-    bool isOpengl = qobject_cast<QGLWidget *>(m_view->viewport());
+    bool isOpengl = qobject_cast<QOpenGLWidget *>(m_view->viewport());
     if ((isOpengl && !opengl) || (!isOpengl && opengl)) {
         m_view->deleteLater();
         m_view = new View(m_scene, m_form);
-        m_view->setViewport(!opengl ? new QWidget() : new QGLWidget());
+        m_view->setViewport(!opengl ? new QWidget() : new QOpenGLWidget());
         setCentralWidget(m_view);
     }
 

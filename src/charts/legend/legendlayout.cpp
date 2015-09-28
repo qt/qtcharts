@@ -233,10 +233,13 @@ void LegendLayout::setAttachedGeometry(const QRectF &rect)
             // Delete structs from the container
             qDeleteAll(legendWidthList);
 
-            if (m_width < geometry.width())
-                m_legend->d_ptr->items()->setPos(geometry.width() / 2 - m_width / 2, geometry.top());
-            else
-                m_legend->d_ptr->items()->setPos(geometry.topLeft());
+            // Round to full pixel via QPoint to avoid one pixel clipping on the edge in some cases
+            if (m_width < geometry.width()) {
+                m_legend->d_ptr->items()->setPos(QPoint(geometry.width() / 2 - m_width / 2,
+                                                        geometry.top()));
+            } else {
+                m_legend->d_ptr->items()->setPos(geometry.topLeft().toPoint());
+            }
             m_height = size.height();
         }
         break;
@@ -262,10 +265,13 @@ void LegendLayout::setAttachedGeometry(const QRectF &rect)
                 }
             }
 
-            if (m_height < geometry.height())
-                m_legend->d_ptr->items()->setPos(geometry.left(), geometry.height() / 2 - m_height / 2);
-            else
-                m_legend->d_ptr->items()->setPos(geometry.topLeft());
+            // Round to full pixel via QPoint to avoid one pixel clipping on the edge in some cases
+            if (m_height < geometry.height()) {
+                m_legend->d_ptr->items()->setPos(QPoint(geometry.left(),
+                                                        geometry.height() / 2 - m_height / 2));
+            } else {
+                m_legend->d_ptr->items()->setPos(geometry.topLeft().toPoint());
+            }
             m_width = size.width();
             break;
             }

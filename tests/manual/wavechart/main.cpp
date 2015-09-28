@@ -19,7 +19,7 @@
 #include "wavechart.h"
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMainWindow>
-#include <QtOpenGL/QGLWidget>
+#include <QtWidgets/QOpenGLWidget>
 
 int main(int argc, char *argv[])
 {
@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
     QChart *chart = new QChart();
     WaveChart *waveChart = new WaveChart(chart,&window);
 
-    waveChart->setViewport( new QGLWidget() );
+    waveChart->setViewport( new QOpenGLWidget() );
     waveChart->setRenderHint(QPainter::Antialiasing);
     chart->setAnimationOptions(QChart::AllAnimations);
     chart->setTitle("This is wave generator.");
