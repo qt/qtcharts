@@ -160,16 +160,20 @@ QT_CHARTS_BEGIN_NAMESPACE
     \list
     \li Series animations are not supported for accelerated series.
     \li Antialiasing is not supported for accelerated series.
+    \li Point labels are not supported for accelerated series.
     \li Pen styles and marker shapes are ignored for accelerated series.
         Only solid lines and plain scatter dots are supported.
         The scatter dots may be circular or rectangular, depending on the underlying graphics
         hardware and drivers.
     \li Polar charts are not supported for accelerated series.
+    \li Mouse events are not supported for accelerated series.
     \li Since the accelerated series are drawn on top of the entire graphics view, they get drawn
         on top of any other graphics items that you may have on top chart in the same scene.
     \li To enable QOpenGLWidget to be partially transparent, it needs to be stacked on top of
         all other widgets. This means you cannot have other widgets partially covering the
         chart.
+    \li Enabling chart drop shadow is not recommended when using accelerated series,
+        as that can slow the frame rate down significantly.
     \endlist
 
     The default value is \c{false}.
