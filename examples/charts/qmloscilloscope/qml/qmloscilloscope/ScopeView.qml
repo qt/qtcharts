@@ -24,7 +24,7 @@ ChartView {
     id: chartView
     animationOptions: ChartView.NoAnimation
     theme: ChartView.ChartThemeDark
-    property bool openGL: false
+    property bool openGL: true
     onOpenGLChanged: {
         series("signal 1").useOpenGL = openGL;
         series("signal 2").useOpenGL = openGL;
@@ -92,19 +92,16 @@ ChartView {
             var series2 = chartView.createSeries(ChartView.SeriesTypeLine, "signal 2",
                                                  axisX, axisY2);
             series2.useOpenGL = chartView.openGL
-        } else if (type == "spline") {
-            chartView.createSeries(ChartView.SeriesTypeSpline, "signal 1", axisX, axisY1);
-            chartView.createSeries(ChartView.SeriesTypeSpline, "signal 2", axisX, axisY2);
         } else {
             var series1 = chartView.createSeries(ChartView.SeriesTypeScatter, "signal 1",
                                                  axisX, axisY1);
-            series1.markerSize = 3;
+            series1.markerSize = 2;
             series1.borderColor = "transparent";
             series1.useOpenGL = chartView.openGL
 
             var series2 = chartView.createSeries(ChartView.SeriesTypeScatter, "signal 2",
                                                  axisX, axisY2);
-            series2.markerSize = 3;
+            series2.markerSize = 2;
             series2.borderColor = "transparent";
             series2.useOpenGL = chartView.openGL
         }

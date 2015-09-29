@@ -21,6 +21,7 @@ import QtQuick.Layouts 1.0
 
 ColumnLayout {
     property alias openGLButton: openGLButton
+    property alias antialiasButton: antialiasButton
     spacing: 8
     Layout.fillHeight: true
     signal animationsEnabled(bool enabled)
@@ -40,13 +41,13 @@ ColumnLayout {
         id: openGLButton
         text: "OpenGL: "
         items: ["false", "true"]
-        currentSelection: 0
+        currentSelection: 1
         onSelectionChanged: openGlChanged(currentSelection == 1);
     }
 
     MultiButton {
         text: "Graph: "
-        items: ["line", "spline", "scatter"]
+        items: ["line", "scatter"]
         currentSelection: 0
         onSelectionChanged: seriesTypeChanged(items[currentSelection]);
     }
@@ -81,15 +82,10 @@ ColumnLayout {
     }
 
     MultiButton {
-        text: "Animations: "
-        items: ["OFF", "ON"]
-        currentSelection: 0
-        onSelectionChanged: animationsEnabled(currentSelection == 1);
-    }
-
-    MultiButton {
+        id: antialiasButton
         text: "Antialias: "
         items: ["OFF", "ON"]
+        enabled: false
         currentSelection: 0
         onSelectionChanged: antialiasingEnabled(currentSelection == 1);
     }

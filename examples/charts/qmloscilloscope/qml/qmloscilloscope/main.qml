@@ -41,20 +41,14 @@ Rectangle {
                 dataSource.generateData(1, signalCount, sampleCount);
             scopeView.axisX().max = sampleCount;
         }
-        onAnimationsEnabled: scopeView.setAnimations(enabled);
-        onSeriesTypeChanged: {
-            scopeView.changeSeriesType(type);
-            if (type === "spline") {
-                controlPanel.openGLButton.currentSelection = 0;
-                controlPanel.openGLButton.enabled = false;
-                scopeView.openGL = false;
-            } else {
-                controlPanel.openGLButton.enabled = true;
-            }
-        }
+        onSeriesTypeChanged: scopeView.changeSeriesType(type);
         onRefreshRateChanged: scopeView.changeRefreshRate(rate);
         onAntialiasingEnabled: scopeView.antialiasing = enabled;
-        onOpenGlChanged: scopeView.openGL = enabled;
+        onOpenGlChanged: {
+            scopeView.openGL = enabled;
+            antialiasButton.enabled = !enabled;
+            antialiasButton.currentSelection = 0;
+        }
     }
 
 //![2]
