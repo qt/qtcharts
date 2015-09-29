@@ -130,14 +130,13 @@ void ScatterChartItem::markerDoubleClicked(QGraphicsItem *marker)
 
 void ScatterChartItem::updateGeometry()
 {
-    static const QRectF dummyRect = QRectF(0.0, 0.0, 0.001, 0.001);
     if (m_series->useOpenGL()) {
         if (m_items.childItems().count())
             deletePoints(m_items.childItems().count());
-        // Fake a miniscule region, so we trigger changed signal.
-        if (m_rect.width() != dummyRect.width()) {
+        if (!m_rect.isEmpty()) {
             prepareGeometryChange();
-            m_rect = dummyRect;
+            // Changed signal seems to trigger even with empty region
+            m_rect = QRectF();
         }
         update();
         return;

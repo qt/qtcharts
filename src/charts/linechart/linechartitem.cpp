@@ -70,12 +70,11 @@ QPainterPath LineChartItem::shape() const
 
 void LineChartItem::updateGeometry()
 {
-    static const QRectF dummyRect = QRectF(0.0, 0.0, 0.001, 0.001);
     if (m_series->useOpenGL()) {
-        // Fake a miniscule region, so we trigger changed signal.
-        if (m_rect.width() != dummyRect.width()) {
+        if (!m_rect.isEmpty()) {
             prepareGeometryChange();
-            m_rect = dummyRect;
+            // Changed signal seems to trigger even with empty region
+            m_rect = QRectF();
         }
         update();
         return;
