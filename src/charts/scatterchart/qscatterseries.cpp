@@ -125,13 +125,17 @@
     \fn void QScatterSeries::colorChanged(QColor color)
     Signal is emitted when the fill (brush) color has changed to \a color.
 */
+/*!
+    \qmlsignal ScatterSeries::onColorChanged(color color)
+    Signal is emitted when the fill (brush) color has changed to \a color.
+*/
 
 /*!
     \fn void QScatterSeries::borderColorChanged(QColor color)
     Signal is emitted when the line (pen) color has changed to \a color.
 */
 /*!
-    \qmlsignal ScatterSeries::borderColorChanged(color color)
+    \qmlsignal ScatterSeries::onBorderColorChanged(color color)
     Signal is emitted when the line (pen) color has changed to \a color.
 */
 
@@ -139,6 +143,23 @@
     \fn QAbstractSeries::SeriesType QScatterSeries::type() const
     Returns QAbstractSeries::SeriesTypeScatter.
     \sa QAbstractSeries, SeriesType
+*/
+
+/*!
+    \fn void QScatterSeries::markerShapeChanged(MarkerShape shape)
+    Signal is emitted when the marker shape has changed to \a shape.
+*/
+/*!
+    \qmlsignal ScatterSeries::onMarkerShapeChanged(MarkerShape shape)
+    Signal is emitted when the marker shape has changed to \a shape.
+*/
+/*!
+    \fn void QScatterSeries::markerSizeChanged(qreal size)
+    Signal is emitted when the marker size has changed to \a size.
+*/
+/*!
+    \qmlsignal ScatterSeries::onMarkerSizeChanged(real size)
+    Signal is emitted when the marker size has changed to \a size.
 */
 
 QT_CHARTS_BEGIN_NAMESPACE
@@ -251,6 +272,7 @@ void QScatterSeries::setMarkerShape(MarkerShape shape)
     if (d->m_shape != shape) {
         d->m_shape = shape;
         emit d->updated();
+        emit markerShapeChanged(shape);
     }
 }
 
@@ -267,6 +289,7 @@ void QScatterSeries::setMarkerSize(qreal size)
     if (!qFuzzyCompare(d->m_size, size)) {
         d->m_size = size;
         emit d->updated();
+        emit markerSizeChanged(size);
     }
 }
 

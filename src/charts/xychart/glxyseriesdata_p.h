@@ -77,6 +77,8 @@ public Q_SLOTS:
     void cleanup();
     void handleSeriesPenChange();
     void handleSeriesOpenGLChange();
+    void handleScatterColorChange();
+    void handleScatterMarkerSizeChange();
 
 Q_SIGNALS:
     void seriesRemoved(const QXYSeries *series);

@@ -44,13 +44,17 @@ void GLXYSeriesDataManager::setPoints(QXYSeries *series, const AbstractDomain *d
             QScatterSeries *scatter = static_cast<QScatterSeries *>(series);
             data->width = float(scatter->markerSize());
             sc = scatter->color(); // Scatter overwrites color property
+            connect(scatter, &QScatterSeries::colorChanged, this,
+                    &GLXYSeriesDataManager::handleScatterColorChange);
+            connect(scatter, &QScatterSeries::markerSizeChanged, this,
+                    &GLXYSeriesDataManager::handleScatterMarkerSizeChange);
         } else {
             data->width = float(series->pen().widthF());
             sc = series->color();
+            connect(series, &QXYSeries::penChanged, this,
+                    &GLXYSeriesDataManager::handleSeriesPenChange);
         }
         data->color = QVector3D(float(sc.redF()), float(sc.greenF()), float(sc.blueF()));
-        connect(series, &QXYSeries::penChanged, this,
-                &GLXYSeriesDataManager::handleSeriesPenChange);
         connect(series, &QXYSeries::useOpenGLChanged, this,
                 &GLXYSeriesDataManager::handleSeriesOpenGLChange);
         m_seriesDataMap.insert(series, data);
@@ -133,6 +137,7 @@ void GLXYSeriesDataManager::handleSeriesPenChange()
             QColor sc = series->color();
             data->color = QVector3D(float(sc.redF()), float(sc.greenF()), float(sc.blueF()));
             data->width = float(series->pen().widthF());
+            data->dirty = true;
         }
     }
 }
@@ -144,4 +149,30 @@ void GLXYSeriesDataManager::handleSeriesOpenGLChange()
         removeSeries(series);
 }
 
+void GLXYSeriesDataManager::handleScatterColorChange()
+{
+    QScatterSeries *series = qobject_cast<QScatterSeries *>(sender());
+    if (series) {
+        GLXYSeriesData *data = m_seriesDataMap.value(series);
+        if (data) {
+            QColor sc = series->color();
+            data->color = QVector3D(float(sc.redF()), float(sc.greenF()), float(sc.blueF()));
+            data->dirty = true;
+        }
+    }
+}
+
+void GLXYSeriesDataManager::handleScatterMarkerSizeChange()
+{
+    QScatterSeries *series = qobject_cast<QScatterSeries *>(sender());
+    if (series) {
+        GLXYSeriesData *data = m_seriesDataMap.value(series);
+        if (data) {
+            data->width =float(series->markerSize());
+            data->dirty = true;
+        }
+    }
+}
+
 QT_CHARTS_END_NAMESPACE
+

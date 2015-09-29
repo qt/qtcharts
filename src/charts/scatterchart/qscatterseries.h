@@ -31,8 +31,8 @@ class QT_CHARTS_EXPORT QScatterSeries : public QXYSeries
     Q_OBJECT
     Q_PROPERTY(QColor color READ color WRITE setColor NOTIFY colorChanged)
     Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor NOTIFY borderColorChanged)
-    Q_PROPERTY(MarkerShape markerShape READ markerShape WRITE setMarkerShape)
-    Q_PROPERTY(qreal markerSize READ markerSize WRITE setMarkerSize)
+    Q_PROPERTY(MarkerShape markerShape READ markerShape WRITE setMarkerShape NOTIFY markerShapeChanged)
+    Q_PROPERTY(qreal markerSize READ markerSize WRITE setMarkerSize NOTIFY markerSizeChanged)
     Q_PROPERTY(QBrush brush READ brush WRITE setBrush)
     Q_ENUMS(MarkerShape)
 
@@ -61,6 +61,8 @@ public:
 Q_SIGNALS:
     void colorChanged(QColor color);
     void borderColorChanged(QColor color);
+    void markerShapeChanged(MarkerShape shape);
+    void markerSizeChanged(qreal size);
 
 private:
     Q_DECLARE_PRIVATE(QScatterSeries)
