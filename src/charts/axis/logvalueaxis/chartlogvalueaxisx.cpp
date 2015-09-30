@@ -49,6 +49,11 @@ QVector<qreal> ChartLogValueAxisX::calculateLayout() const
     qreal ceilEdge = qCeil(leftEdge);
     int tickCount = qAbs(qCeil(logMax) - qCeil(logMin));
 
+    // If the high edge sits exactly on the tick value, add a tick
+    qreal highValue = logMin < logMax ? logMax : logMin;
+    if (qFuzzyCompare(highValue, qreal(qCeil(highValue))))
+        tickCount++;
+
     points.resize(tickCount);
     const QRectF &gridRect = gridGeometry();
     const qreal deltaX = gridRect.width() / qAbs(logMax - logMin);
@@ -90,6 +95,12 @@ QSizeF ChartLogValueAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint
     qreal logMax = std::log10(m_axis->max()) / std::log10(m_axis->base());
     qreal logMin = std::log10(m_axis->min()) / std::log10(m_axis->base());
     int tickCount = qAbs(qCeil(logMax) - qCeil(logMin));
+
+    // If the high edge sits exactly on the tick value, add a tick
+    qreal highValue = logMin < logMax ? logMax : logMin;
+    if (qFuzzyCompare(highValue, qreal(qCeil(highValue))))
+        tickCount++;
+
     if (m_axis->max() > m_axis->min() && tickCount > 0)
         ticksList = createLogValueLabels(m_axis->min(), m_axis->max(), m_axis->base(), tickCount, m_axis->labelFormat());
     else
