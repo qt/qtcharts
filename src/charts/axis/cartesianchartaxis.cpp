@@ -187,8 +187,10 @@ void CartesianChartAxis::setGeometry(const QRectF &axis, const QRectF &grid)
     m_gridRect = grid;
     setAxisGeometry(axis);
 
-    if (isEmpty())
+    if (isEmpty()) {
+        prepareGeometryChange();
         return;
+    }
 
     QVector<qreal> layout = calculateLayout();
     updateLayout(layout);

@@ -38,8 +38,10 @@ void PolarChartAxis::setGeometry(const QRectF &axis, const QRectF &grid)
     Q_UNUSED(grid);
     setAxisGeometry(axis);
 
-    if (isEmpty())
+    if (isEmpty()) {
+        prepareGeometryChange();
         return;
+    }
 
     QVector<qreal> layout = calculateLayout();
     updateLayout(layout);
