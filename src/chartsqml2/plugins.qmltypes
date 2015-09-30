@@ -2761,6 +2761,14 @@ Module {
             name: "borderColorChanged"
             Parameter { name: "color"; type: "QColor" }
         }
+        Signal {
+            name: "markerShapeChanged"
+            Parameter { name: "shape"; type: "MarkerShape" }
+        }
+        Signal {
+            name: "markerSizeChanged"
+            Parameter { name: "size"; type: "double" }
+        }
     }
     Component { name: "QtCharts::QSplineSeries"; prototype: "QtCharts::QLineSeries" }
     Component { name: "QtCharts::QStackedBarSeries"; prototype: "QtCharts::QAbstractBarSeries" }
