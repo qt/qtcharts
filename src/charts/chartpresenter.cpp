@@ -101,7 +101,9 @@ void ChartPresenter::handleAxisAdded(QAbstractAxis *axis)
 
 void ChartPresenter::handleAxisRemoved(QAbstractAxis *axis)
 {
-    ChartAxisElement *item  = axis->d_ptr->m_item.take();
+    ChartAxisElement *item = axis->d_ptr->m_item.take();
+    if (item->animation())
+        item->animation()->stopAndDestroyLater();
     item->hide();
     item->disconnect();
     item->deleteLater();
