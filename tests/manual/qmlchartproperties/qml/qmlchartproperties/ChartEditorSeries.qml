@@ -17,7 +17,7 @@
 ****************************************************************************/
 
 import QtQuick 2.0
-import QtCharts 2.0
+import QtCharts 2.1
 
 Flow {
     anchors.fill: parent
@@ -27,15 +27,23 @@ Flow {
 
     Button {
         text: "add line"
-        onClicked: addXYSeries(ChartView.SeriesTypeLine, "line");
+        onClicked: addXYSeries(ChartView.SeriesTypeLine, "line", false);
+    }
+    Button {
+        text: "add GL line"
+        onClicked: addXYSeries(ChartView.SeriesTypeLine, "GL line", true);
     }
     Button {
         text: "add spline"
-        onClicked: addXYSeries(ChartView.SeriesTypeSpline, "spline");
+        onClicked: addXYSeries(ChartView.SeriesTypeSpline, "spline", false);
     }
     Button {
         text: "add scatter"
-        onClicked: addXYSeries(ChartView.SeriesTypeScatter, "scatter");
+        onClicked: addXYSeries(ChartView.SeriesTypeScatter, "scatter", false);
+    }
+    Button {
+        text: "add GL scatter"
+        onClicked: addXYSeries(ChartView.SeriesTypeScatter, "GL scatter", true);
     }
     Button {
         text: "remove last"
@@ -51,11 +59,16 @@ Flow {
         onClicked: chart.removeAllSeries();
     }
 
-    function addXYSeries(type, name) {
+    function addXYSeries(type, name, openGl) {
         var series = chart.createSeries(type, name + " " + chart.count);
-        for (var i = chart.axisX().min; i < chart.axisX().max; i++) {
+        var multiplier = 10;
+        if (openGl) {
+            series.useOpenGL = true;
+            multiplier = 100;
+        }
+        for (var i = chart.axisX().min * multiplier; i < chart.axisX().max * multiplier; i++) {
             var y = Math.random() * (chart.axisY().max - chart.axisY().min) + chart.axisY().min;
-            var x = Math.random() + i;
+            var x = (Math.random() + i) / multiplier;
             series.append(x, y);
         }
     }
