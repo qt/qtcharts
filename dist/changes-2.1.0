@@ -23,6 +23,7 @@ New features
 - Added grid color property for value axis
 - Added mapToPosition and mapToValue methods to ChartView
 - Added zooming functions to ChartView to correspond the ones available for QChart
+- Added changed signals to scatter series marker size and shape properties
 
 Fixed issues
 ------------
@@ -34,3 +35,7 @@ Fixed issues
 - Fixed axis zoom in animation crash issue
 - Fixed area series animation crash issue
 - Fixed documentation issues
+- Fixed label clipping issues when using QOpenGLWidget as graphics view viewport
+- Fixed crash when removing currently animating axis from the chart
+- Fixed drawing a ghost axis when the last axis was removed from orientation
+- Fixed missing tick and label when log axis tick was be exactly at edge of the range
