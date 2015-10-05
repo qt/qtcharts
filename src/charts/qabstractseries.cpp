@@ -141,7 +141,7 @@ QT_CHARTS_BEGIN_NAMESPACE
     Drawing series with OpenGL is supported only for QLineSeries and QScatterSeries.
     Line series used as edge series for a QAreaSeries cannot use OpenGL acceleration.
     When a chart contains any series that are drawn with OpenGL, a transparent QOpenGLWidget
-    is created on top of the chart plot area. Specified series are not drawn on the underlying
+    is created on top of the chart plot area. The accelerated series are not drawn on the underlying
     QGraphicsView, but are instead drawn on the created QOpenGLWidget.
 
     Performance gained from using OpenGL to accelerate series drawing depends on the underlying
@@ -152,10 +152,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
     The OpenGL acceleration of series drawing is meant for use cases that need fast drawing of
     large numbers of points. It is optimized for efficiency, and therefore the series using
-    it lack support for some features available to non-accelerated series.
-
-    There are the following restrictions imposed on charts and series when using OpenGL
-    acceleration:
+    it lack support for many features available to non-accelerated series:
 
     \list
     \li Series animations are not supported for accelerated series.
@@ -165,15 +162,27 @@ QT_CHARTS_BEGIN_NAMESPACE
         Only solid lines and plain scatter dots are supported.
         The scatter dots may be circular or rectangular, depending on the underlying graphics
         hardware and drivers.
-    \li Polar charts are not supported for accelerated series.
+    \li Polar charts do not support accelerated series.
     \li Mouse events are not supported for accelerated series.
-    \li Since the accelerated series are drawn on top of the entire graphics view, they get drawn
-        on top of any other graphics items that you may have on top chart in the same scene.
-    \li To enable QOpenGLWidget to be partially transparent, it needs to be stacked on top of
-        all other widgets. This means you cannot have other widgets partially covering the
-        chart.
     \li Enabling chart drop shadow is not recommended when using accelerated series,
         as that can slow the frame rate down significantly.
+    \endlist
+
+    These additional restrictions stem from the fact that the accelerated series is drawn on a
+    separate widget on top of the chart:
+
+    \list
+    \li If you draw any graphics items on top of a chart containing an accelerated series,
+        the accelerated series is drawn over those items.
+    \li To enable QOpenGLWidget to be partially transparent, it needs to be stacked on top of
+        all other widgets. This means you cannot have other widgets partially covering the
+        chart when using accelerated series.
+    \li Accelerated series are not supported for use cases where the graphics scene has more than
+        one graphics view attached to it.
+    \li Accelerated series are not supported for use cases where the chart doesn't fill the entire
+        graphics view or has non-default geometry. For example, scrolling the view with scroll
+        bars or adding transformations to the graphics view cause the accelerated series to
+        be drawn in incorrect position related to the chart.
     \endlist
 
     The default value is \c{false}.
@@ -183,11 +192,37 @@ QT_CHARTS_BEGIN_NAMESPACE
     Specifies whether or not the series is drawn with OpenGL.
 
     Drawing series with OpenGL is supported only for LineSeries and ScatterSeries.
+    Line series used as edge series for a AreaSeries cannot use OpenGL acceleration.
+    When a chart contains any series that are drawn with OpenGL, an additional transparent child
+    node is created for the ChartView node. The accelerated series are not drawn on the
+    ChartView node, but are instead drawn on the child node.
 
-    For more details, see QAbstractSeries::useOpenGL documentation. QML applications have similar
-    restrictions as those listed in QAbstractSeries::useOpenGL documentation,
-    except there is no restriction about covering the ChartView partially with other
-    items due to different rendering mechanism.
+    Performance gained from using OpenGL to accelerate series drawing depends on the underlying
+    hardware, but in most cases it is significant. For example, on a standard desktop computer,
+    enabling OpenGL acceleration for a series typically allows rendering at least hundred times
+    more points without reduction on the frame rate.
+    Chart size also has less effect on the frame rate.
+    The biggest performance sink when rendering ChartView is rendering and uploading the underlying
+    chart texture. If the underlying chart itself is not changing rapidly, significant extra
+    performance is gained from not needing to regenerate the chart texture for each frame.
+
+    The OpenGL acceleration of series drawing is meant for use cases that need fast drawing of
+    large numbers of points. It is optimized for efficiency, and therefore the series using
+    it lack support for many features available to non-accelerated series:
+
+    \list
+    \li Series animations are not supported for accelerated series.
+    \li Antialiasing is not supported for accelerated series.
+    \li Point labels are not supported for accelerated series.
+    \li Marker shapes are ignored for accelerated series.
+        Only plain scatter dots are supported.
+        The scatter dots may be circular or rectangular, depending on the underlying graphics
+        hardware and drivers.
+    \li Polar charts do not support accelerated series.
+    \li Mouse events are not supported for accelerated series.
+    \li Enabling chart drop shadow is not recommended when using accelerated series,
+        as that can slow the frame rate down significantly.
+    \endlist
 
     The default value is \c{false}.
 */
