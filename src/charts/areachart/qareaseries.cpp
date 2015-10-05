@@ -361,6 +361,10 @@ QT_CHARTS_BEGIN_NAMESPACE
 QAreaSeries::QAreaSeries(QLineSeries *upperSeries, QLineSeries *lowerSeries)
     : QAbstractSeries(*new QAreaSeriesPrivate(upperSeries, lowerSeries, this), upperSeries)
 {
+    if (upperSeries)
+        upperSeries->d_ptr->setBlockOpenGL(true);
+    if (lowerSeries)
+        lowerSeries->d_ptr->setBlockOpenGL(true);
 }
 
 /*!
