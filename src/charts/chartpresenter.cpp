@@ -551,17 +551,15 @@ void ChartPresenter::ensureGLWidget()
     // GLWidget pointer is wrapped in QPointer as its parent is not in our control, and therefore
     // can potentially get deleted unexpectedly.
     if (m_glWidget.isNull() && m_glUseWidget && m_chart->scene()) {
-        QObject *parent = m_chart->scene()->parent();
-        while (parent) {
-            QWidget *parentWidget = qobject_cast<QWidget *>(parent);
-            if (parentWidget) {
-                m_glWidget = new GLWidget(m_chart->d_ptr->m_dataset->glXYSeriesDataManager(),
-                                          parentWidget);
-                m_glWidget->setGeometry(m_rect.toRect());
-                m_glWidget->show();
-                break;
-            }
-            parent = parent->parent();
+        // Find the view of the scene. If the scene has multiple views, only the first view is
+        // chosen.
+        QList<QGraphicsView *> views = m_chart->scene()->views();
+        if (views.size()) {
+            QGraphicsView *firstView = views.at(0);
+            m_glWidget = new GLWidget(m_chart->d_ptr->m_dataset->glXYSeriesDataManager(),
+                                      firstView);
+            m_glWidget->setGeometry(m_rect.toRect());
+            m_glWidget->show();
         }
     }
 #endif
