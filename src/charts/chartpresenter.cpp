@@ -33,6 +33,7 @@
 #include <QtCore/QTimer>
 #include <QtGui/QTextDocument>
 #include <QtWidgets/QGraphicsScene>
+#include <QtWidgets/QGraphicsView>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
