@@ -36,13 +36,12 @@
 #include <QtWidgets/QOpenGLWidget>
 #include <QtGui/QOpenGLFunctions>
 #include <QtGui/QOpenGLVertexArrayObject>
+#include <QtGui/QOpenGLBuffer>
 #include <QtCore/QHash>
 #include <QtCharts/QAbstractSeries>
 #include <QtCharts/QXYSeries>
 
 QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
-
-class QOpenGLBuffer;
 
 QT_CHARTS_BEGIN_NAMESPACE
 

@@ -28,9 +28,8 @@
 #include <QtQuick/QQuickWindow>
 #include <QtGui/QOpenGLVertexArrayObject>
 #include <QtGui/QOpenGLFunctions>
-
-class QOpenGLFramebufferObject;
-class QOpenGLBuffer;
+#include <QtGui/QOpenGLFramebufferObject>
+#include <QtGui/QOpenGLBuffer>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
