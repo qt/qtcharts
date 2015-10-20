@@ -1,3 +1,4 @@
+QT += core gui widgets
 TARGET = demoLauncher
 SOURCES += main.cpp\
            widget.cpp \

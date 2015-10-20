@@ -22,7 +22,7 @@
 #ifndef GRAPHICSBUTTON_H
 #define GRAPHICSBUTTON_H
 
-#include <QWidget>
+#include <QtWidgets/QWidget>
 #include <QDir>
 
 class QProcess;

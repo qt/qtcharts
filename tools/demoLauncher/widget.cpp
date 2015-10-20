@@ -20,9 +20,9 @@
 ******************************************************************************/
 
 #include "widget.h"
-#include <QDir>
-#include <QGridLayout>
-#include <QApplication>
+#include <QtCore/QDir>
+#include <QtWidgets/QGridLayout>
+#include <QtWidgets/QApplication>
 #include "graphicsbutton.h"
 
 Widget::Widget(QWidget *parent)
@@ -41,6 +41,8 @@ Widget::Widget(QWidget *parent)
     QDir imageFolder = m_appFolder;
     imageFolder.cdUp();
     imageFolder.cdUp();
+    imageFolder.cd("src");
+    imageFolder.cd("charts");
     imageFolder.cd("doc");
     imageFolder.cd("images");
 

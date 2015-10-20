@@ -20,9 +20,9 @@
 ******************************************************************************/
 
 #include "graphicsbutton.h"
-#include <QPainter>
-#include <QProcess>
-#include <QMouseEvent>
+#include <QtGui/QPainter>
+#include <QtCore/QProcess>
+#include <QtGui/QMouseEvent>
 
 GraphicsButton::GraphicsButton(const QString &path,  QDir appFolder, const QString &app, QWidget *parent) :
     QWidget(parent),
