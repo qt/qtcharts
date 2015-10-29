@@ -334,6 +334,7 @@ void DeclarativeChart::initChart(QChart::ChartType type)
 {
     m_sceneImage = 0;
     m_sceneImageDirty = false;
+    m_sceneImageNeedsClear = false;
     m_guiThreadId = QThread::currentThreadId();
     m_paintThreadId = 0;
     m_updatePending = false;
@@ -590,9 +591,15 @@ void DeclarativeChart::renderScene()
     if (!m_sceneImage || chartSize != m_sceneImage->size()) {
         delete m_sceneImage;
         m_sceneImage = new QImage(chartSize, QImage::Format_ARGB32);
-        m_sceneImage->fill(Qt::transparent);
+        m_sceneImageNeedsClear = true;
     }
 
+    if (m_sceneImageNeedsClear) {
+        m_sceneImage->fill(Qt::transparent);
+        // Don't clear the flag if chart background has any transparent element to it
+        if (m_chart->backgroundBrush().color().alpha() == 0xff && !m_chart->isDropShadowEnabled())
+            m_sceneImageNeedsClear = false;
+    }
     QPainter painter(m_sceneImage);
     if (antialiasing()) {
         painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing
@@ -822,6 +829,8 @@ void DeclarativeChart::setBackgroundColor(QColor color)
 {
     QBrush b = m_chart->backgroundBrush();
     if (b.style() != Qt::SolidPattern || color != b.color()) {
+        if (color.alpha() < 0xff)
+            m_sceneImageNeedsClear = true;
         b.setStyle(Qt::SolidPattern);
         b.setColor(color);
         m_chart->setBackgroundBrush(b);
@@ -885,6 +894,7 @@ int DeclarativeChart::count()
 void DeclarativeChart::setDropShadowEnabled(bool enabled)
 {
     if (enabled != m_chart->isDropShadowEnabled()) {
+        m_sceneImageNeedsClear = true;
         m_chart->setDropShadowEnabled(enabled);
         dropShadowEnabledChanged(enabled);
     }
@@ -903,6 +913,7 @@ qreal DeclarativeChart::backgroundRoundness() const
 void DeclarativeChart::setBackgroundRoundness(qreal diameter)
 {
     if (m_chart->backgroundRoundness() != diameter) {
+        m_sceneImageNeedsClear = true;
         m_chart->setBackgroundRoundness(diameter);
         emit backgroundRoundnessChanged(diameter);
     }

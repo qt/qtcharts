@@ -167,8 +167,8 @@ QT_CHARTS_BEGIN_NAMESPACE
         hardware and drivers.
     \li Polar charts do not support accelerated series.
     \li Mouse events are not supported for accelerated series.
-    \li Enabling chart drop shadow is not recommended when using accelerated series,
-        as that can slow the frame rate down significantly.
+    \li Enabling chart drop shadow or using transparent chart background color is not recommended
+        when using accelerated series, as that can slow the frame rate down significantly.
     \endlist
 
     These additional restrictions stem from the fact that the accelerated series is drawn on a
@@ -223,8 +223,8 @@ QT_CHARTS_BEGIN_NAMESPACE
         hardware and drivers.
     \li Polar charts do not support accelerated series.
     \li Mouse events are not supported for accelerated series.
-    \li Enabling chart drop shadow is not recommended when using accelerated series,
-        as that can slow the frame rate down significantly.
+    \li Enabling chart drop shadow or using transparent chart background color is not recommended
+        when using accelerated series, as that can slow the frame rate down significantly.
     \endlist
 
     The default value is \c{false}.

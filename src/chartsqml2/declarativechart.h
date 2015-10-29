@@ -238,6 +238,7 @@ private:
     Qt::HANDLE m_guiThreadId;
     DeclarativeMargins *m_margins;
     GLXYSeriesDataManager *m_glXYDataManager;
+    bool m_sceneImageNeedsClear;
 };
 
 QT_CHARTS_END_NAMESPACE
