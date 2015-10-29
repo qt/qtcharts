@@ -22,7 +22,7 @@
 import QtQuick 2.0
 import QtCharts 2.0
 
-Rectangle {
+Item {
     width: 400
     height: 300
     property int __activeIndex: 1

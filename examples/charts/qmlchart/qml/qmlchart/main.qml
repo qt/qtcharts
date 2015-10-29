@@ -23,7 +23,7 @@
 import QtQuick 2.0
 //![1]
 
-Rectangle {
+Item {
     width: 600
     height: 400
     property bool sourceLoaded: false

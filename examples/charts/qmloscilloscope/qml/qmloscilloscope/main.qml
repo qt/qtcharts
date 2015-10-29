@@ -22,11 +22,10 @@
 import QtQuick 2.0
 
 //![1]
-Rectangle {
+Item {
     id: main
     width: 600
     height: 400
-    color: "#404040"
 
     ControlPanel {
         id: controlPanel

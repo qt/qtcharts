@@ -51,6 +51,7 @@ int main(int argc, char *argv[])
 
     viewer.setSource(QUrl("qrc:/qml/qmloscilloscope/main.qml"));
     viewer.setResizeMode(QQuickView::SizeRootObjectToView);
+    viewer.setColor(QColor("#404040"));
     viewer.show();
 
     return app.exec();

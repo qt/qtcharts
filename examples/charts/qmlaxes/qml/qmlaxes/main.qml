@@ -21,7 +21,7 @@
 
 import QtQuick 2.0
 
-Rectangle {
+Item {
     width: 440
     height: 330
     property bool sourceLoaded: false

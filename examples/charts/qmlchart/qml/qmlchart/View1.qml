@@ -24,7 +24,7 @@ import QtQuick 2.0
 //![2]
 import QtCharts 2.0
 
-Rectangle {
+Item {
     anchors.fill: parent
     property variant othersSlice: 0
 

@@ -22,7 +22,7 @@
 import QtQuick 2.0
 import QtCharts 2.0
 
-Rectangle {
+Item {
     id: chartViewSelector
     width: parent.width
     height: parent.height
