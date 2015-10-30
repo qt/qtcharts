@@ -293,24 +293,19 @@ void HorizontalAxis::updateGeometry()
             int minorTickCount = valueAxis->minorTickCount();
             if (minorTickCount != 0) {
                 qreal minorTickDistance = (layout[i] - layout[i + 1]) / qreal(minorTickCount + 1);
+                if (axis()->isReverse())
+                    minorTickDistance = -minorTickDistance;
                 for (int j = 0; j < minorTickCount; j++) {
                     QGraphicsLineItem *minorGridItem =
                         static_cast<QGraphicsLineItem *>(minorLines.at(i * minorTickCount + j));
                     QGraphicsLineItem *minorArrowItem =
                         static_cast<QGraphicsLineItem *>(minorArrows.at(i * minorTickCount + j));
-                    if (i == 0) {
-                        minorGridItem->setLine(gridRect.left() - minorTickDistance * qreal(j + 1),
-                                               gridRect.top(),
-                                               gridRect.left() - minorTickDistance * qreal(j + 1),
-                                               gridRect.bottom());
-                    } else {
-                        minorGridItem->setLine(gridItem->line().p1().x()
-                                               - minorTickDistance * qreal(j + 1),
-                                               gridRect.top(),
-                                               gridItem->line().p1().x()
-                                               - minorTickDistance * qreal(j + 1),
-                                               gridRect.bottom());
-                    }
+                    minorGridItem->setLine(gridItem->line().p1().x()
+                                           - minorTickDistance * qreal(j + 1),
+                                           gridRect.top(),
+                                           gridItem->line().p1().x()
+                                           - minorTickDistance * qreal(j + 1),
+                                           gridRect.bottom());
                     if (axis()->alignment() == Qt::AlignTop) {
                         minorArrowItem->setLine(minorGridItem->line().p1().x(),
                                                 axisRect.bottom(),
