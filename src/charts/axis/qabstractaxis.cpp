@@ -514,7 +514,7 @@ QPen QAbstractAxis::linePen() const
 
 void QAbstractAxis::setLinePenColor(QColor color)
 {
-    QPen p = d_ptr->m_axisPen;
+    QPen p = linePen();
     if (p.color() != color) {
         p.setColor(color);
         setLinePen(p);
@@ -609,7 +609,7 @@ QPen QAbstractAxis::minorGridLinePen() const
 
 void QAbstractAxis::setGridLineColor(const QColor &color)
 {
-    QPen pen = d_ptr->m_gridLinePen;
+    QPen pen = gridLinePen();
     if (color != pen.color()) {
         pen.setColor(color);
         d_ptr->m_gridLinePen = pen;
@@ -624,7 +624,7 @@ QColor QAbstractAxis::gridLineColor()
 
 void QAbstractAxis::setMinorGridLineColor(const QColor &color)
 {
-    QPen pen = d_ptr->m_minorGridLinePen;
+    QPen pen = minorGridLinePen();
     if (color != pen.color()) {
         pen.setColor(color);
         d_ptr->m_minorGridLinePen = pen;
@@ -708,7 +708,7 @@ int QAbstractAxis::labelsAngle() const
 }
 void QAbstractAxis::setLabelsColor(QColor color)
 {
-    QBrush b = d_ptr->m_labelsBrush;
+    QBrush b = labelsBrush();
     if (b.color() != color) {
         b.setColor(color);
         setLabelsBrush(b);
@@ -851,7 +851,7 @@ QBrush QAbstractAxis::shadesBrush() const
 
 void QAbstractAxis::setShadesColor(QColor color)
 {
-    QBrush b = d_ptr->m_shadesBrush;
+    QBrush b = shadesBrush();
     if (b.color() != color) {
         b.setColor(color);
         setShadesBrush(b);

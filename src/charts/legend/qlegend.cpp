@@ -237,12 +237,15 @@ void QLegend::setBrush(const QBrush &brush)
  */
 QBrush QLegend::brush() const
 {
-    return d_ptr->m_brush;
+    if (d_ptr->m_brush == QChartPrivate::defaultBrush())
+        return QBrush();
+    else
+        return d_ptr->m_brush;
 }
 
 void QLegend::setColor(QColor color)
 {
-    QBrush b = d_ptr->m_brush;
+    QBrush b = brush();
     if (b.style() != Qt::SolidPattern || b.color() != color) {
         b.setStyle(Qt::SolidPattern);
         b.setColor(color);
@@ -273,7 +276,10 @@ void QLegend::setPen(const QPen &pen)
 
 QPen QLegend::pen() const
 {
-    return d_ptr->m_pen;
+    if (d_ptr->m_pen == QChartPrivate::defaultPen())
+        return QPen();
+    else
+        return d_ptr->m_pen;
 }
 
 void QLegend::setFont(const QFont &font)
@@ -297,7 +303,7 @@ QFont QLegend::font() const
 
 void QLegend::setBorderColor(QColor color)
 {
-    QPen p = d_ptr->m_pen;
+    QPen p = pen();
     if (p.color() != color) {
         p.setColor(color);
         setPen(p);
@@ -331,12 +337,15 @@ void QLegend::setLabelBrush(const QBrush &brush)
 */
 QBrush QLegend::labelBrush() const
 {
-    return d_ptr->m_labelBrush;
+    if (d_ptr->m_labelBrush == QChartPrivate::defaultBrush())
+        return QBrush();
+    else
+        return d_ptr->m_labelBrush;
 }
 
 void QLegend::setLabelColor(QColor color)
 {
-    QBrush b = d_ptr->m_labelBrush;
+    QBrush b = labelBrush();
     if (b.style() != Qt::SolidPattern || b.color() != color) {
         b.setStyle(Qt::SolidPattern);
         b.setColor(color);
@@ -466,9 +475,9 @@ QLegendPrivate::QLegendPrivate(ChartPresenter *presenter, QChart *chart, QLegend
       m_chart(chart),
       m_items(new QGraphicsItemGroup(q)),
       m_alignment(Qt::AlignTop),
-      m_brush(QBrush()),
-      m_pen(QPen()),
-      m_labelBrush(QBrush()),
+      m_brush(QChartPrivate::defaultBrush()),
+      m_pen(QChartPrivate::defaultPen()),
+      m_labelBrush(QChartPrivate::defaultBrush()),
       m_diameter(5),
       m_attachedToChart(true),
       m_backgroundVisible(false),
