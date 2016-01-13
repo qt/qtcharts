@@ -44,7 +44,7 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class QT_CHARTS_AUTOTEST_EXPORT XLogYPolarDomain: public PolarDomain
+class Q_AUTOTEST_EXPORT XLogYPolarDomain: public PolarDomain
 {
     Q_OBJECT
 public:
@@ -55,9 +55,9 @@ public:
 
     void setRange(qreal minX, qreal maxX, qreal minY, qreal maxY);
 
-    friend bool QT_CHARTS_AUTOTEST_EXPORT operator== (const XLogYPolarDomain &domain1, const XLogYPolarDomain &domain2);
-    friend bool QT_CHARTS_AUTOTEST_EXPORT operator!= (const XLogYPolarDomain &domain1, const XLogYPolarDomain &domain2);
-    friend QDebug QT_CHARTS_AUTOTEST_EXPORT operator<<(QDebug dbg, const XLogYPolarDomain &domain);
+    friend bool Q_AUTOTEST_EXPORT operator== (const XLogYPolarDomain &domain1, const XLogYPolarDomain &domain2);
+    friend bool Q_AUTOTEST_EXPORT operator!= (const XLogYPolarDomain &domain1, const XLogYPolarDomain &domain2);
+    friend QDebug Q_AUTOTEST_EXPORT operator<<(QDebug dbg, const XLogYPolarDomain &domain);
 
     void zoomIn(const QRectF &rect);
     void zoomOut(const QRectF &rect);

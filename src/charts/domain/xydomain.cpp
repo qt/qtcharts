@@ -183,7 +183,7 @@ QPointF XYDomain::calculateDomainPoint(const QPointF &point) const
 
 // operators
 
-bool QT_CHARTS_AUTOTEST_EXPORT operator== (const XYDomain &domain1, const XYDomain &domain2)
+bool Q_AUTOTEST_EXPORT operator== (const XYDomain &domain1, const XYDomain &domain2)
 {
     return (qFuzzyCompare(domain1.m_maxX, domain2.m_maxX)
             && qFuzzyCompare(domain1.m_maxY, domain2.m_maxY)
@@ -192,13 +192,13 @@ bool QT_CHARTS_AUTOTEST_EXPORT operator== (const XYDomain &domain1, const XYDoma
 }
 
 
-bool QT_CHARTS_AUTOTEST_EXPORT operator!= (const XYDomain &domain1, const XYDomain &domain2)
+bool Q_AUTOTEST_EXPORT operator!= (const XYDomain &domain1, const XYDomain &domain2)
 {
     return !(domain1 == domain2);
 }
 
 
-QDebug QT_CHARTS_AUTOTEST_EXPORT operator<<(QDebug dbg, const XYDomain &domain)
+QDebug Q_AUTOTEST_EXPORT operator<<(QDebug dbg, const XYDomain &domain)
 {
 #ifdef QT_NO_TEXTSTREAM
     Q_UNUSED(domain)

@@ -44,7 +44,7 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class QT_CHARTS_AUTOTEST_EXPORT LogXLogYDomain: public AbstractDomain
+class Q_AUTOTEST_EXPORT LogXLogYDomain: public AbstractDomain
 {
     Q_OBJECT
 public:
@@ -55,9 +55,9 @@ public:
 
     void setRange(qreal minX, qreal maxX, qreal minY, qreal maxY);
 
-    friend bool QT_CHARTS_AUTOTEST_EXPORT operator== (const LogXLogYDomain &domain1, const LogXLogYDomain &domain2);
-    friend bool QT_CHARTS_AUTOTEST_EXPORT operator!= (const LogXLogYDomain &domain1, const LogXLogYDomain &domain2);
-    friend QDebug QT_CHARTS_AUTOTEST_EXPORT operator<<(QDebug dbg, const LogXLogYDomain &domain);
+    friend bool Q_AUTOTEST_EXPORT operator== (const LogXLogYDomain &domain1, const LogXLogYDomain &domain2);
+    friend bool Q_AUTOTEST_EXPORT operator!= (const LogXLogYDomain &domain1, const LogXLogYDomain &domain2);
+    friend QDebug Q_AUTOTEST_EXPORT operator<<(QDebug dbg, const LogXLogYDomain &domain);
 
     void zoomIn(const QRectF &rect);
     void zoomOut(const QRectF &rect);

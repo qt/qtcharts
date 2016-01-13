@@ -26,27 +26,6 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-#ifndef BUILD_PRIVATE_UNIT_TESTS
-#include <QtTest/QtTest>
-
-class tst_ChartDataSet: public QObject {
-
-    Q_OBJECT
-
-private Q_SLOTS:
-    void skip();
-
-};
-
-void tst_ChartDataSet::skip()
-{
-    QSKIP("This test requires the debug version of library");
-}
-
-QTEST_MAIN(tst_ChartDataSet)
-#include "tst_chartdataset.moc"
-
-#else
 
 #include <QtTest/QtTest>
 #include <QtCharts/QAbstractAxis>
@@ -404,4 +383,3 @@ void tst_ChartDataSet::detachAxis()
 
 QTEST_MAIN(tst_ChartDataSet)
 #include "tst_chartdataset.moc"
-#endif

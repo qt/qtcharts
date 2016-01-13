@@ -34,3 +34,8 @@ qtHaveModule(quick) {
     SUBDIRS += qml \
                qml-qtquicktest
 }
+
+!contains(QT_CONFIG, private_tests): SUBDIRS -= \
+    domain \
+    chartdataset
+

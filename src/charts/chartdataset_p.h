@@ -50,7 +50,7 @@ class QAbstractAxis;
 class ChartPresenter;
 class GLXYSeriesDataManager;
 
-class QT_CHARTS_AUTOTEST_EXPORT ChartDataSet : public QObject
+class Q_AUTOTEST_EXPORT ChartDataSet : public QObject
 {
     Q_OBJECT
 public:

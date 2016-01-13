@@ -221,7 +221,7 @@ void XLogYDomain::handleVerticalAxisBaseChanged(qreal baseY)
 
 // operators
 
-bool QT_CHARTS_AUTOTEST_EXPORT operator== (const XLogYDomain &domain1, const XLogYDomain &domain2)
+bool Q_AUTOTEST_EXPORT operator== (const XLogYDomain &domain1, const XLogYDomain &domain2)
 {
     return (qFuzzyIsNull(domain1.m_maxX - domain2.m_maxX)
             && qFuzzyIsNull(domain1.m_maxY - domain2.m_maxY)
@@ -230,13 +230,13 @@ bool QT_CHARTS_AUTOTEST_EXPORT operator== (const XLogYDomain &domain1, const XLo
 }
 
 
-bool QT_CHARTS_AUTOTEST_EXPORT operator!= (const XLogYDomain &domain1, const XLogYDomain &domain2)
+bool Q_AUTOTEST_EXPORT operator!= (const XLogYDomain &domain1, const XLogYDomain &domain2)
 {
     return !(domain1 == domain2);
 }
 
 
-QDebug QT_CHARTS_AUTOTEST_EXPORT operator<<(QDebug dbg, const XLogYDomain &domain)
+QDebug Q_AUTOTEST_EXPORT operator<<(QDebug dbg, const XLogYDomain &domain)
 {
 #ifdef QT_NO_TEXTSTREAM
     Q_UNUSED(domain)

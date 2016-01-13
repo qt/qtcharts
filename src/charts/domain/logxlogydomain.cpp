@@ -258,7 +258,7 @@ void LogXLogYDomain::handleHorizontalAxisBaseChanged(qreal baseX)
 
 // operators
 
-bool QT_CHARTS_AUTOTEST_EXPORT operator== (const LogXLogYDomain &domain1, const LogXLogYDomain &domain2)
+bool Q_AUTOTEST_EXPORT operator== (const LogXLogYDomain &domain1, const LogXLogYDomain &domain2)
 {
     return (qFuzzyIsNull(domain1.m_maxX - domain2.m_maxX)
             && qFuzzyIsNull(domain1.m_maxY - domain2.m_maxY)
@@ -267,13 +267,13 @@ bool QT_CHARTS_AUTOTEST_EXPORT operator== (const LogXLogYDomain &domain1, const 
 }
 
 
-bool QT_CHARTS_AUTOTEST_EXPORT operator!= (const LogXLogYDomain &domain1, const LogXLogYDomain &domain2)
+bool Q_AUTOTEST_EXPORT operator!= (const LogXLogYDomain &domain1, const LogXLogYDomain &domain2)
 {
     return !(domain1 == domain2);
 }
 
 
-QDebug QT_CHARTS_AUTOTEST_EXPORT operator<<(QDebug dbg, const LogXLogYDomain &domain)
+QDebug Q_AUTOTEST_EXPORT operator<<(QDebug dbg, const LogXLogYDomain &domain)
 {
 #ifdef QT_NO_TEXTSTREAM
     Q_UNUSED(domain)

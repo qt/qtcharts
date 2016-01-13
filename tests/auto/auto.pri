@@ -8,8 +8,3 @@ QT += testlib widgets
 
 INCLUDEPATH += ../inc
 HEADERS += ../inc/tst_definitions.h
-
-#Define for unit tests
-CONFIG(debug, debug|release) {
-    DEFINES += BUILD_PRIVATE_UNIT_TESTS
-}

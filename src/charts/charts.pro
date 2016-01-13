@@ -84,11 +84,6 @@ OTHER_FILES += doc/qtcharts.qdocconf \
                doc/src/* \
                doc/images/*
 
-#Define for unit tests
-CONFIG(debug, debug|release) {
-    DEFINES += BUILD_PRIVATE_UNIT_TESTS
-}
-
 msvc {
     # Suppress "conversion from 'size_t' to 'int', possible loss of data" warnings in 64bit
     # builds resulting from usage of str::sort

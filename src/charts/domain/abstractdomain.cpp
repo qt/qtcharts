@@ -234,7 +234,7 @@ bool AbstractDomain::detachAxis(QAbstractAxis *axis)
 
 // operators
 
-bool QT_CHARTS_AUTOTEST_EXPORT operator== (const AbstractDomain &domain1, const AbstractDomain &domain2)
+bool Q_AUTOTEST_EXPORT operator== (const AbstractDomain &domain1, const AbstractDomain &domain2)
 {
     return (qFuzzyIsNull(domain1.m_maxX - domain2.m_maxX)
             && qFuzzyIsNull(domain1.m_maxY - domain2.m_maxY)
@@ -243,13 +243,13 @@ bool QT_CHARTS_AUTOTEST_EXPORT operator== (const AbstractDomain &domain1, const 
 }
 
 
-bool QT_CHARTS_AUTOTEST_EXPORT operator!= (const AbstractDomain &domain1, const AbstractDomain &domain2)
+bool Q_AUTOTEST_EXPORT operator!= (const AbstractDomain &domain1, const AbstractDomain &domain2)
 {
     return !(domain1 == domain2);
 }
 
 
-QDebug QT_CHARTS_AUTOTEST_EXPORT operator<<(QDebug dbg, const AbstractDomain &domain)
+QDebug Q_AUTOTEST_EXPORT operator<<(QDebug dbg, const AbstractDomain &domain)
 {
 #ifdef QT_NO_TEXTSTREAM
     Q_UNUSED(domain)

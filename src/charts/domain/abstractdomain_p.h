@@ -47,7 +47,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 class QAbstractAxis;
 
-class QT_CHARTS_AUTOTEST_EXPORT AbstractDomain: public QObject
+class Q_AUTOTEST_EXPORT AbstractDomain: public QObject
 {
     Q_OBJECT
 public:
@@ -93,9 +93,9 @@ public:
     void storeZoomReset();
     bool isZoomed() { return m_zoomed; }
 
-    friend bool QT_CHARTS_AUTOTEST_EXPORT operator== (const AbstractDomain &domain1, const AbstractDomain &domain2);
-    friend bool QT_CHARTS_AUTOTEST_EXPORT operator!= (const AbstractDomain &domain1, const AbstractDomain &domain2);
-    friend QDebug QT_CHARTS_AUTOTEST_EXPORT operator<<(QDebug dbg, const AbstractDomain &domain);
+    friend bool Q_AUTOTEST_EXPORT operator== (const AbstractDomain &domain1, const AbstractDomain &domain2);
+    friend bool Q_AUTOTEST_EXPORT operator!= (const AbstractDomain &domain1, const AbstractDomain &domain2);
+    friend QDebug Q_AUTOTEST_EXPORT operator<<(QDebug dbg, const AbstractDomain &domain);
 
     virtual void zoomIn(const QRectF &rect) = 0;
     virtual void zoomOut(const QRectF &rect) = 0;

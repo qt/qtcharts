@@ -57,7 +57,7 @@ class QAbstractSeries;
 class ChartTheme;
 class ChartElement;
 
-class QT_CHARTS_AUTOTEST_EXPORT QAbstractAxisPrivate : public QObject
+class Q_AUTOTEST_EXPORT QAbstractAxisPrivate : public QObject
 {
     Q_OBJECT
 public:
