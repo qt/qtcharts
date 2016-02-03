@@ -70,7 +70,7 @@ Both Qt Assistant (qtcharts.qch) and in HTML format (qtcharts subfolder)
 documentation is generated.
 
 Please refer to the generated documentation for more information:
-    doc/qtcharts/index.html
+    doc/qtcharts/qtcharts-index.html
 
 Known issues
 ============

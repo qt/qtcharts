@@ -29,8 +29,7 @@
 
 /*!
     \title Qt Charts
-    \page index.html
-    \keyword About
+    \page qtcharts-index.html
 
     Qt Charts module provides a set of easy to use chart components. It uses the Qt Graphics View
     Framework, therefore charts can be easily integrated to modern user interfaces. Qt Charts can
