@@ -32,7 +32,7 @@
 #include <QtCharts/QValueAxis>
 #include <QtCharts/QBarCategoryAxis>
 #include <QtCharts/QCategoryAxis>
-#ifndef QT_ON_ARM
+#ifndef QT_QREAL_IS_FLOAT
 #include <QtCharts/QDateTimeAxis>
 #endif
 #include <QtCharts/QLineSeries>
@@ -208,14 +208,14 @@ void tst_ChartDataSet::addAxis_data()
     QAbstractAxis* value = new QValueAxis(this);
     QAbstractAxis* category = new QCategoryAxis(this);
     QAbstractAxis* barcategory = new QBarCategoryAxis(this);
-#ifndef Q_WS_QWS
+#ifndef QT_QREAL_IS_FLOAT
     QAbstractAxis* datetime = new QDateTimeAxis(this);
 #endif
 
     QTest::newRow("value") << value;
     QTest::newRow("category") << category;
     QTest::newRow("barcategory") << barcategory;
-#ifndef Q_WS_QWS
+#ifndef QT_QREAL_IS_FLOAT
     QTest::newRow("datetime") << datetime;
 #endif
 }

@@ -44,7 +44,7 @@ SOURCES += \
     $$PWD/domain/scatterlogxy.cpp \
     $$PWD/domain/scatterxlogy.cpp
 
-!linux-arm*: {
+!contains(QT_COORD_TYPE, float): {
 SOURCES += \
     $$PWD/axis/datetimeaxisx.cpp \
     $$PWD/axis/datetimeaxisy.cpp

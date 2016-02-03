@@ -3,6 +3,7 @@ TARGET = qtchartsqml2
 QT += qml quick
 QT += charts charts-private
 TARGETPATH = QtCharts
+contains(QT_COORD_TYPE, float): DEFINES += QT_QREAL_IS_FLOAT
 
 IMPORT_VERSION = $$MODULE_VERSION
 

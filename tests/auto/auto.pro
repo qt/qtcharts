@@ -25,7 +25,7 @@ SUBDIRS += \
            qlegend \
            cmake
 
-!linux-arm*: {
+!contains(QT_COORD_TYPE, float): {
     SUBDIRS += \
            qdatetimeaxis
 }

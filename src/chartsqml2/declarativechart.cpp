@@ -50,7 +50,7 @@
 #include <private/chartpresenter_p.h>
 #include <QtCharts/QPolarChart>
 
-#ifndef QT_ON_ARM
+#ifndef QT_QREAL_IS_FLOAT
     #include <QtCharts/QDateTimeAxis>
 #endif
 
@@ -1149,7 +1149,7 @@ QAbstractAxis *DeclarativeChart::defaultAxis(Qt::Orientation orientation, QAbstr
         return new QBarCategoryAxis(this);
     case QAbstractAxis::AxisTypeCategory:
         return new QCategoryAxis(this);
-#ifndef QT_ON_ARM
+#ifndef QT_QREAL_IS_FLOAT
     case QAbstractAxis::AxisTypeDateTime:
         return new QDateTimeAxis(this);
 #endif

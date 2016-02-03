@@ -81,7 +81,7 @@ PRIVATE_HEADERS += \
     $$PWD/categoryaxis/polarchartcategoryaxisangular_p.h \
     $$PWD/categoryaxis/polarchartcategoryaxisradial_p.h
 
-!linux-arm*: {
+!contains(QT_COORD_TYPE, float): {
 INCLUDEPATH += \
     $$PWD/datetimeaxis
 

@@ -57,7 +57,7 @@
 #include <QtCharts/QXYLegendMarker>
 #include <QtCharts/QBoxPlotModelMapper>
 #include <QtCharts/QVBoxPlotModelMapper>
-#ifndef QT_ON_ARM
+#ifndef QT_QREAL_IS_FLOAT
     #include <QtCharts/QDateTimeAxis>
 #endif
 #include <QtCore/QAbstractItemModel>
@@ -87,7 +87,9 @@ QML_DECLARE_TYPE(QAbstractAxis)
 QML_DECLARE_TYPE(QValueAxis)
 QML_DECLARE_TYPE(QBarCategoryAxis)
 QML_DECLARE_TYPE(QCategoryAxis)
-QML_DECLARE_TYPE(QDateTimeAxis)
+#ifndef QT_QREAL_IS_FLOAT
+    QML_DECLARE_TYPE(QDateTimeAxis)
+#endif
 QML_DECLARE_TYPE(QLogValueAxis)
 
 QML_DECLARE_TYPE(QLegend)
@@ -207,7 +209,7 @@ public:
         qmlRegisterType<DeclarativePieSeries>(uri, 1, 1, "PieSeries");
         qmlRegisterType<DeclarativeBarSet>(uri, 1, 1, "BarSet");
         qmlRegisterType<QValueAxis>(uri, 1, 1, "ValueAxis");
-#ifndef QT_ON_ARM
+#ifndef QT_QREAL_IS_FLOAT
         qmlRegisterType<QDateTimeAxis>(uri, 1, 1, "DateTimeAxis");
 #endif
         qmlRegisterType<DeclarativeCategoryAxis>(uri, 1, 1, "CategoryAxis");
@@ -271,7 +273,7 @@ public:
         qmlRegisterType<QHBarModelMapper>(uri, 2, 0, "HBarModelMapper");
         qmlRegisterType<QVBarModelMapper>(uri, 2, 0, "VBarModelMapper");
         qmlRegisterType<QValueAxis>(uri, 2, 0, "ValueAxis");
-#ifndef QT_ON_ARM
+#ifndef QT_QREAL_IS_FLOAT
         qmlRegisterType<QDateTimeAxis>(uri, 2, 0, "DateTimeAxis");
 #endif
         qmlRegisterType<DeclarativeCategoryAxis>(uri, 2, 0, "CategoryAxis");

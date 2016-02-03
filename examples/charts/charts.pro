@@ -59,7 +59,7 @@ contains(QT_CONFIG, opengl) {
     message("OpenGL not available. Some examples are disabled.")
 }
 
-!linux-arm*: {
+!contains(QT_COORD_TYPE, float): {
 SUBDIRS += \
     datetimeaxis
 }
