@@ -52,6 +52,7 @@ class QT_CHARTS_EXPORT QLegend : public QGraphicsWidget
     Q_PROPERTY(QFont font READ font WRITE setFont NOTIFY fontChanged)
     Q_PROPERTY(QColor labelColor READ labelColor WRITE setLabelColor NOTIFY labelColorChanged)
     Q_PROPERTY(bool reverseMarkers READ reverseMarkers WRITE setReverseMarkers NOTIFY reverseMarkersChanged)
+    Q_PROPERTY(bool showToolTips READ showToolTips WRITE setShowToolTips NOTIFY showToolTipsChanged)
 
 private:
     explicit QLegend(QChart *chart);
@@ -94,6 +95,8 @@ public:
     bool reverseMarkers();
     void setReverseMarkers(bool reverseMarkers = true);
 
+    bool showToolTips() const;
+    void setShowToolTips(bool show);
 protected:
     void hideEvent(QHideEvent *event);
     void showEvent(QShowEvent *event);
@@ -105,6 +108,7 @@ Q_SIGNALS:
     void fontChanged(QFont font);
     void labelColorChanged(QColor color);
     void reverseMarkersChanged(bool reverseMarkers);
+    void showToolTipsChanged(bool showToolTips);
 
 private:
     QScopedPointer<QLegendPrivate> d_ptr;

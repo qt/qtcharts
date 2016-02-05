@@ -124,9 +124,14 @@ void LegendMarkerItem::setGeometry(const QRectF &rect)
     qreal width = rect.width();
     qreal x = m_margin + m_markerRect.width() + m_space + m_margin;
     QRectF truncatedRect;
+    const QString html = ChartPresenter::truncatedText(m_textItem->font(), m_label, qreal(0.0),
+                                                       width - x, rect.height(), truncatedRect);
+    m_textItem->setHtml(html);
+    if (m_marker->m_legend->showToolTips() && html != m_label)
+        m_textItem->setToolTip(m_label);
+    else
+        m_textItem->setToolTip(QString());
 
-    m_textItem->setHtml(ChartPresenter::truncatedText(m_textItem->font(), m_label, qreal(0.0),
-                                                      width - x, rect.height(), truncatedRect));
     m_textItem->setTextWidth(truncatedRect.width());
 
     qreal y = qMax(m_markerRect.height() + 2 * m_margin, truncatedRect.height() + 2 * m_margin);
@@ -195,6 +200,15 @@ void LegendMarkerItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
     emit m_marker->q_ptr->hovered(false);
 }
 
+QString LegendMarkerItem::displayedLabel() const
+{
+    return m_textItem->toHtml();
+}
+
+void LegendMarkerItem::setToolTip(const QString &tip)
+{
+    m_textItem->setToolTip(tip);
+}
 
 #include "moc_legendmarkeritem_p.cpp"
 

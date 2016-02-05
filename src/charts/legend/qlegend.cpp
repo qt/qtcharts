@@ -164,6 +164,19 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
+    \property QLegend::showToolTips
+    Whether tooltips are shown when the text is truncated. This is false by default.
+
+    This will not have any effect when used in QML.
+*/
+
+/*!
+    \qmlproperty bool Legend::showToolTips
+    Whether tooltips are shown when the text is truncated. This is false by default.
+    This currently has no effect as there is no support for tooltips in QML.
+*/
+
+/*!
     \fn void QLegend::backgroundVisibleChanged(bool)
     The visibility of the legend background changed to \a visible.
 */
@@ -191,6 +204,11 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \fn void QLegend::reverseMarkersChanged(bool)
     The use of reverse order for the markers in legend is changed to \a reverseMarkers.
+*/
+
+/*!
+    \fn void QLegend::showToolTipsChanged(bool showToolTips)
+    This signal is emitted when the visibility of tooltips is changed to \a showToolTips.
 */
 
 QLegend::QLegend(QChart *chart): QGraphicsWidget(chart),
@@ -455,6 +473,31 @@ void QLegend::setReverseMarkers(bool reverseMarkers)
 }
 
 /*!
+    Returns whether the tooltips are shown or not for the legend labels
+    when they are elided.
+*/
+
+bool QLegend::showToolTips() const
+{
+    return d_ptr->m_showToolTips;
+}
+
+/*!
+    When \a show is true, the legend labels will show a tooltip when
+    the mouse hovers over them if the label itself is shown elided.
+    This is false by default.
+*/
+
+void QLegend::setShowToolTips(bool show)
+{
+    if (d_ptr->m_showToolTips != show) {
+        d_ptr->m_showToolTips = show;
+        d_ptr->updateToolTips();
+        emit showToolTipsChanged(show);
+    }
+}
+
+/*!
  \internal \a event see QGraphicsWidget for details
  */
 void QLegend::hideEvent(QHideEvent *event)
@@ -489,7 +532,8 @@ QLegendPrivate::QLegendPrivate(ChartPresenter *presenter, QChart *chart, QLegend
       m_diameter(5),
       m_attachedToChart(true),
       m_backgroundVisible(false),
-      m_reverseMarkers(false)
+      m_reverseMarkers(false),
+      m_showToolTips(false)
 {
     m_items->setHandlesChildEvents(false);
 }
@@ -651,7 +695,15 @@ void QLegendPrivate::decorateMarkers(QList<QLegendMarker *> markers)
     }
 }
 
-
+void QLegendPrivate::updateToolTips()
+{
+    foreach (QLegendMarker *m, m_markers) {
+        if (m->d_ptr->m_item->displayedLabel() != m->label())
+            m->d_ptr->m_item->setToolTip(m->label());
+        else
+            m->d_ptr->m_item->setToolTip(QString());
+    }
+}
 #include "moc_qlegend.cpp"
 #include "moc_qlegend_p.cpp"
 

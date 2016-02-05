@@ -75,6 +75,7 @@ private:
     void addMarkers(QList<QLegendMarker *> markers);
     void removeMarkers(QList<QLegendMarker *> markers);
     void decorateMarkers(QList<QLegendMarker *> markers);
+    void updateToolTips();
 
 private:
     QLegend *q_ptr;
@@ -92,6 +93,7 @@ private:
     bool m_attachedToChart;
     bool m_backgroundVisible;
     bool m_reverseMarkers;
+    bool m_showToolTips;
 
     QList<QLegendMarker *> m_markers;
     QList<QAbstractSeries *> m_series;

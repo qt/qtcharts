@@ -83,6 +83,8 @@ public:
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
 
+    QString displayedLabel() const;
+    void setToolTip(const QString &tooltip);
 protected:
     QLegendMarkerPrivate *m_marker; // Knows
     QRectF m_markerRect;
