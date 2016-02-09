@@ -74,16 +74,30 @@ void GLXYSeriesDataManager::setPoints(QXYSeries *series, const AbstractDomain *d
     QVector<float> &array = data->array;
 
     bool logAxis = false;
+    bool reverseX = false;
+    bool reverseY = false;
     foreach (QAbstractAxis* axis, series->attachedAxes()) {
         if (axis->type() == QAbstractAxis::AxisTypeLogValue) {
             logAxis = true;
-            break;
+        }
+        if (axis->isReverse()) {
+            if (axis->orientation() == Qt::Horizontal)
+                reverseX = true;
+            else
+                reverseY = true;
+            if (reverseX && reverseY)
+                break;
         }
     }
-
     int count = series->count();
     int index = 0;
     array.resize(count * 2);
+    QMatrix4x4 matrix;
+    if (reverseX)
+        matrix.scale(-1.0, 1.0);
+    if (reverseY)
+        matrix.scale(1.0, -1.0);
+    data->matrix = matrix;
     if (logAxis) {
         // Use domain to resolve geometry points. Not as fast as shaders, but simpler that way
         QVector<QPointF> geometryPoints = domain->calculateGeometryPoints(series->pointsVector());
@@ -181,6 +195,36 @@ void GLXYSeriesDataManager::handleScatterMarkerSizeChange()
         if (data) {
             data->width =float(series->markerSize());
             data->dirty = true;
+        }
+    }
+}
+
+void GLXYSeriesDataManager::handleAxisReverseChanged(const QList<QAbstractSeries *> &seriesList)
+{
+    bool reverseX = false;
+    bool reverseY = false;
+    foreach (QAbstractSeries *series, seriesList) {
+        if (QXYSeries *xyseries = qobject_cast<QXYSeries *>(series)) {
+            GLXYSeriesData *data = m_seriesDataMap.value(xyseries);
+            if (data) {
+                foreach (QAbstractAxis* axis, xyseries->attachedAxes()) {
+                    if (axis->isReverse()) {
+                        if (axis->orientation() == Qt::Horizontal)
+                            reverseX = true;
+                        else
+                            reverseY = true;
+                    }
+                    if (reverseX && reverseY)
+                        break;
+                }
+                QMatrix4x4 matrix;
+                if (reverseX)
+                    matrix.scale(-1.0, 1.0);
+                if (reverseY)
+                    matrix.scale(1.0, -1.0);
+                data->matrix = matrix;
+                data->dirty = true;
+            }
         }
     }
 }

@@ -96,9 +96,10 @@ static const char *vertexSource =
         "uniform highp vec2 min;\n"
         "uniform highp vec2 delta;\n"
         "uniform highp float pointSize;\n"
+        "uniform highp mat4 matrix;\n"
         "void main() {\n"
         "  vec2 normalPoint = vec2(-1, -1) + ((points - min) / delta);\n"
-        "  gl_Position = vec4(normalPoint, 0, 1);\n"
+        "  gl_Position = matrix * vec4(normalPoint, 0, 1);\n"
         "  gl_PointSize = pointSize;\n"
         "}";
 static const char *fragmentSource =
@@ -123,6 +124,7 @@ void DeclarativeRenderNode::initGL()
     m_minUniformLoc = m_program->uniformLocation("min");
     m_deltaUniformLoc = m_program->uniformLocation("delta");
     m_pointSizeUniformLoc = m_program->uniformLocation("pointSize");
+    m_matrixUniformLoc = m_program->uniformLocation("matrix");
 
     // Create a vertex array object. In OpenGL ES 2.0 and OpenGL 2.x
     // implementations this is optional and support may not be present
@@ -183,13 +185,7 @@ void DeclarativeRenderNode::setSeriesData(bool mapDirty, const GLXYDataMap &data
             const GLXYSeriesData *newData = i.value();
             if (!data || newData->dirty) {
                 data = new GLXYSeriesData;
-                data->array = newData->array;
-                data->color = newData->color;
-                data->dirty = newData->dirty;
-                data->width = newData->width;
-                data->type = newData->type;
-                data->min = newData->min;
-                data->delta = newData->delta;
+                *data = *newData;
             }
             m_xyDataMap.insert(i.key(), data);
         }
@@ -208,15 +204,8 @@ void DeclarativeRenderNode::setSeriesData(bool mapDirty, const GLXYDataMap &data
             const GLXYSeriesData *newData = i.value();
             if (i.value()->dirty) {
                 GLXYSeriesData *data = m_xyDataMap.value(i.key());
-                if (data) {
-                    data->array = newData->array;
-                    data->color = newData->color;
-                    data->dirty = newData->dirty;
-                    data->width = newData->width;
-                    data->type = newData->type;
-                    data->min = newData->min;
-                    data->delta = newData->delta;
-                }
+                if (data)
+                    *data = *newData;
             }
         }
     }
@@ -246,6 +235,7 @@ void DeclarativeRenderNode::renderGL()
         m_program->setUniformValue(m_colorUniformLoc, data->color);
         m_program->setUniformValue(m_minUniformLoc, data->min);
         m_program->setUniformValue(m_deltaUniformLoc, data->delta);
+        m_program->setUniformValue(m_matrixUniformLoc, data->matrix);
 
         if (!vbo) {
             vbo = new QOpenGLBuffer;

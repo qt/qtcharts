@@ -79,6 +79,7 @@ private:
     int m_minUniformLoc;
     int m_deltaUniformLoc;
     int m_pointSizeUniformLoc;
+    int m_matrixUniformLoc;
     QOpenGLVertexArrayObject m_vao;
 
     QHash<const QAbstractSeries *, QOpenGLBuffer *> m_seriesBufferMap;

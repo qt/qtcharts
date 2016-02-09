@@ -280,7 +280,7 @@ bool ChartDataSet::attachAxis(QAbstractSeries *series,QAbstractAxis *axis)
 
     series->d_ptr->initializeAxes();
     axis->d_ptr->initializeDomain(domain);
-
+    connect(axis, &QAbstractAxis::reverseChanged, this, &ChartDataSet::reverseChanged);
     foreach (AbstractDomain *blockedDomain, blockedDomains)
         blockedDomain->blockRangeSignals(false);
 
@@ -319,7 +319,7 @@ bool ChartDataSet::detachAxis(QAbstractSeries* series,QAbstractAxis *axis)
     domain->detachAxis(axis);
     series->d_ptr->m_axes.removeAll(axis);
     axis->d_ptr->m_series.removeAll(series);
-
+    disconnect(axis, &QAbstractAxis::reverseChanged, this, &ChartDataSet::reverseChanged);
     return true;
 }
 
@@ -643,6 +643,13 @@ AbstractDomain* ChartDataSet::createDomain(AbstractDomain::DomainType type)
     default:
         return 0;
     }
+}
+
+void ChartDataSet::reverseChanged()
+{
+    QAbstractAxis *axis = qobject_cast<QAbstractAxis *>(sender());
+    if (axis)
+        m_glXYSeriesDataManager->handleAxisReverseChanged(axis->d_ptr->m_series);
 }
 
 #include "moc_chartdataset_p.cpp"

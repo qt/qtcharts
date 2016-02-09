@@ -86,7 +86,8 @@ Q_SIGNALS:
     void axisRemoved(QAbstractAxis* axis);
     void seriesAdded(QAbstractSeries* series);
     void seriesRemoved(QAbstractSeries* series);
-
+public Q_SLOTS:
+    void reverseChanged();
 private:
     void createAxes(QAbstractAxis::AxisTypes type, Qt::Orientation orientation);
     QAbstractAxis *createAxis(QAbstractAxis::AxisType type, Qt::Orientation orientation);

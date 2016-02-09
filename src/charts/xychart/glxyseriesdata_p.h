@@ -44,6 +44,7 @@
 #include <QtCharts/QXYSeries>
 #include <QtGui/QVector3D>
 #include <QtGui/QVector2D>
+#include <QtGui/QMatrix4x4>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -57,6 +58,19 @@ struct GLXYSeriesData {
     QAbstractSeries::SeriesType type;
     QVector2D min;
     QVector2D delta;
+    QMatrix4x4 matrix;
+public:
+    GLXYSeriesData &operator=(const GLXYSeriesData &data) {
+        array = data.array;
+        dirty = data.dirty;
+        color = data.color;
+        width = data.width;
+        type = data.type;
+        min = data.min;
+        delta = data.delta;
+        matrix = data.matrix;
+        return *this;
+    }
 };
 
 typedef QMap<const QXYSeries *, GLXYSeriesData *> GLXYDataMap;
@@ -83,6 +97,7 @@ public:
         foreach (GLXYSeriesData *data, m_seriesDataMap.values())
             data->dirty = false;
     }
+    void handleAxisReverseChanged(const QList<QAbstractSeries *> &seriesList);
 
 public Q_SLOTS:
     void cleanup();
