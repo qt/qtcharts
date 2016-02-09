@@ -42,6 +42,7 @@
 #include "declarativescatterseries.h"
 #include "declarativebarseries.h"
 #include "declarativeboxplotseries.h"
+#include "declarativecandlestickseries.h"
 #include "declarativepieseries.h"
 #include "declarativeaxes.h"
 #include <QtCharts/QVXYModelMapper>
@@ -58,6 +59,9 @@
 #include <QtCharts/QBoxPlotModelMapper>
 #include <QtCharts/QHBoxPlotModelMapper>
 #include <QtCharts/QVBoxPlotModelMapper>
+#include <QtCharts/QCandlestickModelMapper>
+#include <QtCharts/QHCandlestickModelMapper>
+#include <QtCharts/QVCandlestickModelMapper>
 #ifndef QT_QREAL_IS_FLOAT
     #include <QtCharts/QDateTimeAxis>
 #endif
@@ -78,6 +82,8 @@ QML_DECLARE_TYPE(DeclarativeBarSeries)
 QML_DECLARE_TYPE(DeclarativeBarSet)
 QML_DECLARE_TYPE(DeclarativeBoxPlotSeries)
 QML_DECLARE_TYPE(DeclarativeBoxSet)
+QML_DECLARE_TYPE(DeclarativeCandlestickSeries)
+QML_DECLARE_TYPE(DeclarativeCandlestickSet)
 QML_DECLARE_TYPE(DeclarativeLineSeries)
 QML_DECLARE_TYPE(DeclarativePieSeries)
 QML_DECLARE_TYPE(DeclarativePieSlice)
@@ -112,6 +118,9 @@ QML_DECLARE_TYPE(QXYModelMapper)
 QML_DECLARE_TYPE(QBoxPlotModelMapper)
 QML_DECLARE_TYPE(QHBoxPlotModelMapper)
 QML_DECLARE_TYPE(QVBoxPlotModelMapper)
+QML_DECLARE_TYPE(QCandlestickModelMapper)
+QML_DECLARE_TYPE(QHCandlestickModelMapper)
+QML_DECLARE_TYPE(QVCandlestickModelMapper)
 
 QML_DECLARE_TYPE(QAbstractSeries)
 QML_DECLARE_TYPE(QXYSeries)
@@ -325,6 +334,14 @@ public:
         qmlRegisterType<DeclarativeScatterSeries, 5>(uri, 2, 1, "ScatterSeries");
         qmlRegisterType<DeclarativeLineSeries, 4>(uri, 2, 1, "LineSeries");
         qmlRegisterType<DeclarativeSplineSeries, 4>(uri, 2, 1, "SplineSeries");
+
+        // QtCharts 2.2
+        qmlRegisterType<DeclarativeCandlestickSeries>(uri, 2, 2, "CandlestickSeries");
+        qmlRegisterType<DeclarativeCandlestickSet>(uri, 2, 2, "CandlestickSet");
+        qmlRegisterUncreatableType<QCandlestickModelMapper>(uri, 2, 2, "CandlestickModelMapper",
+            QLatin1String("Trying to create uncreatable: CandlestickModelMapper."));
+        qmlRegisterType<QHCandlestickModelMapper>(uri, 2, 2, "HCandlestickModelMapper");
+        qmlRegisterType<QVCandlestickModelMapper>(uri, 2, 2, "VCandlestickModelMapper");
     }
 
 };

@@ -79,6 +79,7 @@ public:
         ScatterSeriesZValue = SeriesZValue,
         PieSeriesZValue = SeriesZValue,
         BoxPlotSeriesZValue = SeriesZValue,
+        CandlestickSeriesZValue = SeriesZValue,
         LegendZValue,
         TopMostZValue
     };

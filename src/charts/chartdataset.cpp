@@ -153,20 +153,19 @@ void ChartDataSet::addAxis(QAbstractAxis *axis, Qt::Alignment aligment)
  */
 void ChartDataSet::removeSeries(QAbstractSeries *series)
 {
-
     if (! m_seriesList.contains(series)) {
         qWarning() << QObject::tr("Can not remove series. Series not found on the chart.");
         return;
     }
 
-    QList<QAbstractAxis*> axes = series->d_ptr->m_axes;
+    QList<QAbstractAxis *> axes = series->d_ptr->m_axes;
 
-    foreach(QAbstractAxis* axis, axes) {
-        detachAxis(series,axis);
+    foreach (QAbstractAxis *axis, axes) {
+        detachAxis(series, axis);
     }
 
-    emit seriesRemoved(series);
     m_seriesList.removeAll(series);
+    emit seriesRemoved(series);
 
     // Reset domain to default
     series->d_ptr->setDomain(new XYDomain());

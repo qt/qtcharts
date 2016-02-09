@@ -35,6 +35,7 @@
 #include "declarativepieseries.h"
 #include "declarativesplineseries.h"
 #include "declarativeboxplotseries.h"
+#include "declarativecandlestickseries.h"
 #include "declarativescatterseries.h"
 #include "declarativechartnode.h"
 #include "declarativerendernode.h"
@@ -1077,6 +1078,9 @@ QAbstractSeries *DeclarativeChart::createSeries(int type, QString name, QAbstrac
     case DeclarativeChart::SeriesTypeBoxPlot:
         series = new DeclarativeBoxPlotSeries();
         break;
+    case DeclarativeChart::SeriesTypeCandlestick:
+        series = new DeclarativeCandlestickSeries();
+        break;
     case DeclarativeChart::SeriesTypePie:
         series = new DeclarativePieSeries();
         break;
@@ -1189,6 +1193,8 @@ void DeclarativeChart::initializeAxes(QAbstractSeries *series)
         doInitializeAxes(series, qobject_cast<DeclarativeHorizontalPercentBarSeries *>(series)->m_axes);
     else if (qobject_cast<DeclarativeBoxPlotSeries *>(series))
         doInitializeAxes(series, qobject_cast<DeclarativeBoxPlotSeries *>(series)->m_axes);
+    else if (qobject_cast<DeclarativeCandlestickSeries *>(series))
+        doInitializeAxes(series, qobject_cast<DeclarativeCandlestickSeries *>(series)->m_axes);
     // else: do nothing
 }
 

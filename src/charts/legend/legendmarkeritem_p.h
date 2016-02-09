@@ -56,7 +56,7 @@ class LegendMarkerItem : public QGraphicsObject, public QGraphicsLayoutItem
     Q_OBJECT
     Q_INTERFACES(QGraphicsLayoutItem)
 public:
-    explicit LegendMarkerItem(QLegendMarkerPrivate *marker, QGraphicsObject *parent = 0);
+    explicit LegendMarkerItem(QLegendMarkerPrivate *marker, QGraphicsObject *parent = nullptr);
     ~LegendMarkerItem();
 
     void setPen(const QPen &pen);
@@ -76,8 +76,9 @@ public:
 
     void setGeometry(const QRectF &rect);
     QRectF boundingRect() const;
+    QRectF markerRect() const;
 
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,QWidget *widget = nullptr);
     QSizeF sizeHint (Qt::SizeHint which, const QSizeF &constraint) const;
 
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
@@ -85,6 +86,10 @@ public:
 
     QString displayedLabel() const;
     void setToolTip(const QString &tooltip);
+
+Q_SIGNALS:
+    void markerRectChanged();
+
 protected:
     QLegendMarkerPrivate *m_marker; // Knows
     QRectF m_markerRect;

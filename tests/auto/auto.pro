@@ -23,7 +23,10 @@ SUBDIRS += \
            domain \
            chartdataset \
            qlegend \
-           cmake
+           cmake \
+           qcandlestickmodelmapper \
+           qcandlestickseries \
+           qcandlestickset
 
 !contains(QT_COORD_TYPE, float): {
     SUBDIRS += \

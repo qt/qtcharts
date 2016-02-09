@@ -11,6 +11,8 @@ SOURCES += \
     $$PWD/scatteranimation.cpp \
     $$PWD/boxplotanimation.cpp \
     $$PWD/boxwhiskersanimation.cpp \
+    $$PWD/candlestickanimation.cpp \
+    $$PWD/candlestickbodywicksanimation.cpp \
     $$PWD/chartanimation.cpp
 
 PRIVATE_HEADERS += \
@@ -23,4 +25,6 @@ PRIVATE_HEADERS += \
     $$PWD/baranimation_p.h \
     $$PWD/scatteranimation_p.h \
     $$PWD/boxplotanimation_p.h \
-    $$PWD/boxwhiskersanimation_p.h
+    $$PWD/boxwhiskersanimation_p.h \
+    $$PWD/candlestickanimation_p.h \
+    $$PWD/candlestickbodywicksanimation_p.h

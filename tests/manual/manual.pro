@@ -2,7 +2,8 @@ TEMPLATE = subdirs
 SUBDIRS += \
     presenterchart \
     polarcharttest \
-    boxplottester
+    boxplottester \
+    candlesticktester
 
 contains(QT_CONFIG, opengl) {
     SUBDIRS +=  chartwidgettest \

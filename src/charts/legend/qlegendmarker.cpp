@@ -63,6 +63,7 @@ QT_CHARTS_BEGIN_NAMESPACE
     \value LegendMarkerTypePie
     \value LegendMarkerTypeXY
     \value LegendMarkerTypeBoxPlot
+    \value LegendMarkerTypeCandlestick
 */
 
 /*!

@@ -14,6 +14,7 @@ SUBDIRS += areachart \
            modeldata \
            barchart \
            boxplotchart \
+           candlestickchart \
            legend \
            barmodelmapper \
            lineandbar \
@@ -36,6 +37,7 @@ SUBDIRS += areachart \
 
 qtHaveModule(quick) {
     SUBDIRS += qmlboxplot \
+           qmlcandlestick \
            qmlpiechart \
            qmlweather \
            qmlf1legends \

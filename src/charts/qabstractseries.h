@@ -63,11 +63,12 @@ public:
         SeriesTypeHorizontalBar,
         SeriesTypeHorizontalStackedBar,
         SeriesTypeHorizontalPercentBar,
-        SeriesTypeBoxPlot
+        SeriesTypeBoxPlot,
+        SeriesTypeCandlestick
     };
 
 protected:
-    QAbstractSeries(QAbstractSeriesPrivate &d, QObject *parent = Q_NULLPTR);
+    QAbstractSeries(QAbstractSeriesPrivate &d, QObject *parent = nullptr);
 
 public:
     ~QAbstractSeries();

@@ -77,6 +77,7 @@ include($$PWD/themes/themes.pri)
 include($$PWD/xychart/xychart.pri)
 include($$PWD/layout/layout.pri)
 include($$PWD/boxplotchart/boxplotchart.pri)
+include($$PWD/candlestickchart/candlestickchart.pri)
 
 HEADERS += $$PUBLIC_HEADERS
 HEADERS += $$PRIVATE_HEADERS

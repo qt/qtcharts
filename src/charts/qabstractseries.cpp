@@ -77,6 +77,7 @@ QT_CHARTS_BEGIN_NAMESPACE
     \value SeriesTypeHorizontalStackedBar
     \value SeriesTypeHorizontalPercentBar
     \value SeriesTypeBoxPlot
+    \value SeriesTypeCandlestick
 */
 
 /*!

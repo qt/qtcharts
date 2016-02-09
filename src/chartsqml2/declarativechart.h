@@ -97,6 +97,7 @@ public:
         SeriesTypeStackedBar,
         SeriesTypePercentBar,
         SeriesTypeBoxPlot,
+        SeriesTypeCandlestick,
         SeriesTypePie,
         SeriesTypeScatter,
         SeriesTypeSpline,

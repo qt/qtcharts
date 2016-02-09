@@ -36,7 +36,8 @@ SOURCES += \
     declarativepolarchart.cpp \
     declarativeboxplotseries.cpp \
     declarativechartnode.cpp \
-    declarativerendernode.cpp
+    declarativerendernode.cpp \
+    declarativecandlestickseries.cpp
 
 HEADERS += \
     declarativechart.h \
@@ -54,7 +55,8 @@ HEADERS += \
     declarativepolarchart.h \
     declarativeboxplotseries.h \
     declarativechartnode.h \
-    declarativerendernode.h
+    declarativerendernode.h \
+    declarativecandlestickseries.h
 
 OTHER_FILES = qmldir
 

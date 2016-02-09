@@ -11,8 +11,9 @@ SOURCES += \
     $$PWD/qxylegendmarker.cpp \
     $$PWD/qarealegendmarker.cpp \
     $$PWD/legendscroller.cpp \
-    $$PWD/qboxplotlegendmarker.cpp
-    
+    $$PWD/qboxplotlegendmarker.cpp \
+    $$PWD/qcandlesticklegendmarker.cpp
+
 PRIVATE_HEADERS += \
     $$PWD/legendscroller_p.h \
     $$PWD/qlegend_p.h  \
@@ -23,9 +24,9 @@ PRIVATE_HEADERS += \
     $$PWD/qbarlegendmarker_p.h \
     $$PWD/qxylegendmarker_p.h \
     $$PWD/qarealegendmarker_p.h \
-    $$PWD/qboxplotlegendmarker_p.h
-   
-    
+    $$PWD/qboxplotlegendmarker_p.h \
+    $$PWD/qcandlesticklegendmarker_p.h
+
 PUBLIC_HEADERS += \
     $$PWD/qlegend.h \
     $$PWD/qlegendmarker.h \
@@ -33,4 +34,5 @@ PUBLIC_HEADERS += \
     $$PWD/qbarlegendmarker.h \
     $$PWD/qxylegendmarker.h \
     $$PWD/qarealegendmarker.h \
-    $$PWD/qboxplotlegendmarker.h
+    $$PWD/qboxplotlegendmarker.h \
+    $$PWD/qcandlesticklegendmarker.h

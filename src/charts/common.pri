@@ -4,6 +4,7 @@ INCLUDEPATH += $$PWD/ \
                $$PWD/axis \
                $$PWD/barchart \
                $$PWD/boxplotchart \
+               $$PWD/candlestickchart \
                $$PWD/domain \
                $$PWD/layout \
                $$PWD/legend \
