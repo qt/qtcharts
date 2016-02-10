@@ -549,7 +549,7 @@ QString ChartPresenter::numberToString(int value)
         return QString::number(value);
 }
 
-void ChartPresenter::ensureGLWidget()
+void ChartPresenter::updateGLWidget()
 {
 #ifndef QT_NO_OPENGL
     // GLWidget pointer is wrapped in QPointer as its parent is not in our control, and therefore
@@ -566,6 +566,9 @@ void ChartPresenter::ensureGLWidget()
             m_glWidget->show();
         }
     }
+    // Make sure we update the widget in a timely manner
+    if (!m_glWidget.isNull())
+        m_glWidget->update();
 #endif
 }
 

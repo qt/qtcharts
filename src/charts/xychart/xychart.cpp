@@ -113,8 +113,8 @@ void XYChart::updateChart(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoin
 
 void XYChart::updateGlChart()
 {
-    presenter()->ensureGLWidget();
     dataSet()->glXYSeriesDataManager()->setPoints(m_series, domain());
+    presenter()->updateGLWidget();
     updateGeometry();
 }
 
