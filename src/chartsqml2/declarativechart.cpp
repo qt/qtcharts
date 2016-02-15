@@ -598,7 +598,9 @@ void DeclarativeChart::renderScene()
     QSize chartSize = m_chart->size().toSize();
     if (!m_sceneImage || chartSize != m_sceneImage->size()) {
         delete m_sceneImage;
-        m_sceneImage = new QImage(chartSize, QImage::Format_ARGB32);
+        qreal dpr = window() ? window()->devicePixelRatio() : 1.0;
+        m_sceneImage = new QImage(chartSize * dpr, QImage::Format_ARGB32);
+        m_sceneImage->setDevicePixelRatio(dpr);
         m_sceneImageNeedsClear = true;
     }
 

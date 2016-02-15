@@ -174,7 +174,7 @@ public:
     QString numberToString(double value, char f = 'g', int prec = 6);
     QString numberToString(int value);
 
-    void ensureGLWidget();
+    void updateGLWidget();
     void glSetUseWidget(bool enable) { m_glUseWidget = enable; }
 
 private:
