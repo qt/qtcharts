@@ -52,6 +52,7 @@ void QBarModelMapper::setModel(QAbstractItemModel *model)
     d->m_model = model;
     d->initializeBarFromModel();
     // connect signals from the model
+    connect(d->m_model, SIGNAL(modelReset()), d, SLOT(initializeBarFromModel()));
     connect(d->m_model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), d, SLOT(modelUpdated(QModelIndex,QModelIndex)));
     connect(d->m_model, SIGNAL(headerDataChanged(Qt::Orientation,int,int)), d, SLOT(modelHeaderDataUpdated(Qt::Orientation,int,int)));
     connect(d->m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), d, SLOT(modelRowsAdded(QModelIndex,int,int)));
