@@ -69,7 +69,7 @@ void DeclarativeBarSet::setValues(QVariantList values)
     while (count())
         remove(count() - 1);
 
-    if (values.at(0).canConvert(QVariant::Point)) {
+    if (values.count() > 0 && values.at(0).canConvert(QVariant::Point)) {
         // Create list of values for appending if the first item is Qt.point
         int maxValue = 0;
         for (int i = 0; i < values.count(); i++) {
