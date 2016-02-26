@@ -512,14 +512,16 @@ QSGNode *DeclarativeChart::updatePaintNode(QSGNode *oldNode, QQuickItem::UpdateP
 
     if (!node) {
         node =  new DeclarativeChartNode(window());
-        connect(window(), &QQuickWindow::beforeRendering,
-                node->glRenderNode(), &DeclarativeRenderNode::render);
+        if (node->glRenderNode()) {
+            connect(window(), &QQuickWindow::beforeRendering,
+                    node->glRenderNode(), &DeclarativeRenderNode::render);
+        }
     }
 
     const QRectF &bRect = boundingRect();
 
     // Update GL data
-    if (m_glXYDataManager->dataMap().size() || m_glXYDataManager->mapDirty()) {
+    if (node->glRenderNode() && (m_glXYDataManager->dataMap().size() || m_glXYDataManager->mapDirty())) {
         const QRectF &plotArea = m_chart->plotArea();
         const QSizeF &chartAreaSize = m_chart->size();
 
