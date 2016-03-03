@@ -37,11 +37,11 @@ class QT_CHARTS_EXPORT QBarCategoryAxis : public QAbstractAxis
     Q_PROPERTY(int count READ count NOTIFY countChanged)
 
 public:
-    explicit QBarCategoryAxis(QObject *parent = 0);
+    explicit QBarCategoryAxis(QObject *parent = Q_NULLPTR);
     ~QBarCategoryAxis();
 
 protected:
-    QBarCategoryAxis(QBarCategoryAxisPrivate &d, QObject *parent = 0);
+    QBarCategoryAxis(QBarCategoryAxisPrivate &d, QObject *parent = Q_NULLPTR);
 
 public:
     AxisType type() const;

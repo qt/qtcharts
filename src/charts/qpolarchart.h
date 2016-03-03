@@ -43,12 +43,12 @@ public:
     Q_DECLARE_FLAGS(PolarOrientations, PolarOrientation)
 
 public:
-    explicit QPolarChart(QGraphicsItem *parent = 0, Qt::WindowFlags wFlags = 0);
+    explicit QPolarChart(QGraphicsItem *parent = Q_NULLPTR, Qt::WindowFlags wFlags = Qt::WindowFlags());
     ~QPolarChart();
 
     void addAxis(QAbstractAxis *axis, PolarOrientation polarOrientation);
 
-    QList<QAbstractAxis*> axes(PolarOrientations polarOrientation = PolarOrientations(PolarOrientationRadial | PolarOrientationAngular), QAbstractSeries *series = 0) const;
+    QList<QAbstractAxis*> axes(PolarOrientations polarOrientation = PolarOrientations(PolarOrientationRadial | PolarOrientationAngular), QAbstractSeries *series = Q_NULLPTR) const;
 
     static PolarOrientation axisPolarOrientation(QAbstractAxis *axis);
 

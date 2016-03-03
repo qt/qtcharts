@@ -88,7 +88,7 @@ public:
     Q_DECLARE_FLAGS(AnimationOptions, AnimationOption)
 
 public:
-    explicit QChart(QGraphicsItem *parent = 0, Qt::WindowFlags wFlags = 0);
+    explicit QChart(QGraphicsItem *parent = Q_NULLPTR, Qt::WindowFlags wFlags = Qt::WindowFlags());
     ~QChart();
 
     void addSeries(QAbstractSeries *series);
@@ -97,15 +97,15 @@ public:
     QList<QAbstractSeries *> series() const;
 
     // *** deprecated ***
-    void setAxisX(QAbstractAxis *axis, QAbstractSeries *series = 0);
-    void setAxisY(QAbstractAxis *axis, QAbstractSeries *series = 0);
-    QAbstractAxis *axisX(QAbstractSeries *series = 0) const;
-    QAbstractAxis *axisY(QAbstractSeries *series = 0) const;
+    void setAxisX(QAbstractAxis *axis, QAbstractSeries *series = Q_NULLPTR);
+    void setAxisY(QAbstractAxis *axis, QAbstractSeries *series = Q_NULLPTR);
+    QAbstractAxis *axisX(QAbstractSeries *series = Q_NULLPTR) const;
+    QAbstractAxis *axisY(QAbstractSeries *series = Q_NULLPTR) const;
     // ******************
 
     void addAxis(QAbstractAxis *axis, Qt::Alignment alignment);
     void removeAxis(QAbstractAxis *axis);
-    QList<QAbstractAxis*> axes(Qt::Orientations orientation = Qt::Horizontal|Qt::Vertical, QAbstractSeries *series = 0) const;
+    QList<QAbstractAxis*> axes(Qt::Orientations orientation = Qt::Horizontal|Qt::Vertical, QAbstractSeries *series = Q_NULLPTR) const;
 
     void createDefaultAxes();
 
@@ -165,8 +165,8 @@ public:
     void setLocale(const QLocale &locale);
     QLocale locale() const;
 
-    QPointF mapToValue(const QPointF &position, QAbstractSeries *series = 0);
-    QPointF mapToPosition(const QPointF &value, QAbstractSeries *series = 0);
+    QPointF mapToValue(const QPointF &position, QAbstractSeries *series = Q_NULLPTR);
+    QPointF mapToPosition(const QPointF &value, QAbstractSeries *series = Q_NULLPTR);
 
     ChartType chartType() const;
 

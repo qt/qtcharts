@@ -51,7 +51,7 @@ private:
 public:
     ~QLegend();
 
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = Q_NULLPTR);
 
     void setBrush(const QBrush &brush);
     QBrush brush() const;
@@ -81,7 +81,7 @@ public:
     void setBackgroundVisible(bool visible = true);
     bool isBackgroundVisible() const;
 
-    QList <QLegendMarker*> markers(QAbstractSeries *series = 0) const;
+    QList <QLegendMarker*> markers(QAbstractSeries *series = Q_NULLPTR) const;
 
     bool reverseMarkers();
     void setReverseMarkers(bool reverseMarkers = true);

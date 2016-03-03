@@ -45,11 +45,11 @@ public:
         AxisLabelsPositionOnValue = 0x1
     };
 
-    explicit QCategoryAxis(QObject *parent = 0);
+    explicit QCategoryAxis(QObject *parent = Q_NULLPTR);
     ~QCategoryAxis();
 
 protected:
-    QCategoryAxis(QCategoryAxisPrivate &d, QObject *parent = 0);
+    QCategoryAxis(QCategoryAxisPrivate &d, QObject *parent = Q_NULLPTR);
 
 public:
     AxisType type() const;

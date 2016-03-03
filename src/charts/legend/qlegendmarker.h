@@ -90,7 +90,7 @@ Q_SIGNALS:
     void visibleChanged();
 
 protected:
-    explicit QLegendMarker(QLegendMarkerPrivate &d, QObject *parent = 0);
+    explicit QLegendMarker(QLegendMarkerPrivate &d, QObject *parent = Q_NULLPTR);
 
     QScopedPointer<QLegendMarkerPrivate> d_ptr;
     friend class QLegendPrivate;
