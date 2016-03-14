@@ -56,6 +56,7 @@
 #include <QtCharts/QPieLegendMarker>
 #include <QtCharts/QXYLegendMarker>
 #include <QtCharts/QBoxPlotModelMapper>
+#include <QtCharts/QHBoxPlotModelMapper>
 #include <QtCharts/QVBoxPlotModelMapper>
 #ifndef QT_QREAL_IS_FLOAT
     #include <QtCharts/QDateTimeAxis>
@@ -109,6 +110,7 @@ QML_DECLARE_TYPE(QVXYModelMapper)
 QML_DECLARE_TYPE(QXYLegendMarker)
 QML_DECLARE_TYPE(QXYModelMapper)
 QML_DECLARE_TYPE(QBoxPlotModelMapper)
+QML_DECLARE_TYPE(QHBoxPlotModelMapper)
 QML_DECLARE_TYPE(QVBoxPlotModelMapper)
 
 QML_DECLARE_TYPE(QAbstractSeries)
@@ -251,6 +253,7 @@ public:
         qmlRegisterType<DeclarativeScatterSeries, 4>(uri, 1, 4, "ScatterSeries");
 
         // QtCharts 2.0
+        qmlRegisterType<QHBoxPlotModelMapper>(uri, 2, 0, "HBoxPlotModelMapper");
         qmlRegisterType<QVBoxPlotModelMapper>(uri, 2, 0, "VBoxPlotModelMapper");
         qmlRegisterUncreatableType<QBoxPlotModelMapper>(uri, 2, 0, "BoxPlotModelMapper",
             QLatin1String("Trying to create uncreatable: BoxPlotModelMapper."));

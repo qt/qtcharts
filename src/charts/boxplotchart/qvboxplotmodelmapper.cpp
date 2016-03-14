@@ -99,7 +99,7 @@ QT_CHARTS_BEGIN_NAMESPACE
     Default value is: -1 (invalid mapping)
 */
 /*!
-    \qmlproperty int VBarModelMapper::firstBoxSetColumn
+    \qmlproperty int VBoxPlotModelMapper::firstBoxSetColumn
     Defines which column of the model is used as the data source for the first box-and-whiskers set. Default value
     is: -1 (invalid mapping).
 */
@@ -111,7 +111,7 @@ QT_CHARTS_BEGIN_NAMESPACE
     Default value is: -1 (invalid mapping)
 */
 /*!
-    \qmlproperty int VBarModelMapper::lastBoxSetColumn
+    \qmlproperty int VBoxPlotModelMapper::lastBoxSetColumn
     Defines which column of the model is used as the data source for the last box-and-whiskers set. Default
     value is: -1 (invalid mapping).
 */
@@ -135,7 +135,7 @@ QT_CHARTS_BEGIN_NAMESPACE
     Minimal and default value is: -1 (count limited by the number of rows in the model)
 */
 /*!
-    \qmlproperty int VBoxModelMapper::rowCount
+    \qmlproperty int VBoxPlotModelMapper::rowCount
     Defines the number of rows of the model that are mapped as the data for QBoxPlotSeries. The default value is
     -1 (count limited by the number of rows in the model)
 */
