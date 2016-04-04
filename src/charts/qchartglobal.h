@@ -24,11 +24,11 @@
 
 #include <QtCore/QtGlobal>
 
-#define QT_CHARTS_VERSION_STR   "2.1.0"
+#define QT_CHARTS_VERSION_STR   "2.1.1"
 /*
    QT_CHARTS_VERSION is (major << 16) + (minor << 8) + patch.
 */
-#define QT_CHARTS_VERSION       0x020100
+#define QT_CHARTS_VERSION       0x020101
 /*
    can be used like #if (QT_CHARTS_VERSION >= QT_CHARTS_VERSION_CHECK(1, 1, 0))
 */
