@@ -60,6 +60,7 @@ void QPieModelMapper::setModel(QAbstractItemModel *model)
     d->m_model = model;
     d->initializePieFromModel();
     //    connect signals from the model
+    connect(d->m_model, SIGNAL(modelReset()), d, SLOT(initializePieFromModel()));
     connect(d->m_model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), d, SLOT(modelUpdated(QModelIndex,QModelIndex)));
     connect(d->m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), d, SLOT(modelRowsAdded(QModelIndex,int,int)));
     connect(d->m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), d, SLOT(modelRowsRemoved(QModelIndex,int,int)));

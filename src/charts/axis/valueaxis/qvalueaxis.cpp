@@ -37,7 +37,7 @@
 #include <private/chartdataset_p.h>
 #include <private/chartpresenter_p.h>
 #include <private/charttheme_p.h>
-
+#include <private/charthelpers_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 /*!
@@ -389,6 +389,12 @@ void QValueAxisPrivate::setRange(qreal min, qreal max)
 
     if (min > max)
         return;
+
+    if (!isValidValue(min, max)) {
+        qWarning() << "Attempting to set invalid range for value axis: ["
+                   << min << " - " << max << "]";
+        return;
+    }
 
     bool changeMin = false;
     if (m_min == 0 || min == 0)

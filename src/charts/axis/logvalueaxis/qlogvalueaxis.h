@@ -49,11 +49,11 @@ class QT_CHARTS_EXPORT QLogValueAxis : public QAbstractAxis
     Q_PROPERTY(qreal base READ base WRITE setBase NOTIFY baseChanged)
 
 public:
-    explicit QLogValueAxis(QObject *parent = 0);
+    explicit QLogValueAxis(QObject *parent = Q_NULLPTR);
     ~QLogValueAxis();
 
 protected:
-    QLogValueAxis(QLogValueAxisPrivate &d, QObject *parent = 0);
+    QLogValueAxis(QLogValueAxisPrivate &d, QObject *parent = Q_NULLPTR);
 
 public:
     AxisType type() const;

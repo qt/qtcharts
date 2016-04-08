@@ -47,27 +47,27 @@ DeclarativeChartNode::DeclarativeChartNode(QQuickWindow *window) :
     m_textureSize(1, 1),
     m_glRenderNode(0)
 {
-    initializeOpenGLFunctions();
-
     // Our texture node must have a texture, so use a default one pixel texture
-    GLuint defaultTexture = 0;
-    glGenTextures(1, &defaultTexture);
-    glBindTexture(GL_TEXTURE_2D, defaultTexture);
-    uchar buf[4] = { 0, 0, 0, 0 };
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 1, 1, 0, GL_RGBA, GL_UNSIGNED_BYTE, &buf);
-
+    QImage dummyImage(QSize(1, 1), QImage::Format_ARGB32);
+    uchar *imageData = dummyImage.bits();
+    imageData[0] = 0;
+    imageData[1] = 0;
+    imageData[2] = 0;
+    imageData[3] = 0;
     QQuickWindow::CreateTextureOptions defaultTextureOptions = QQuickWindow::CreateTextureOptions(
             QQuickWindow::TextureHasAlphaChannel | QQuickWindow::TextureOwnsGLTexture);
-    m_texture = m_window->createTextureFromId(defaultTexture, QSize(1, 1), defaultTextureOptions);
+    m_texture = m_window->createTextureFromImage(dummyImage, defaultTextureOptions);
 
     setTexture(m_texture);
     setFiltering(QSGTexture::Linear);
 
-    // Create child node for rendering GL graphics
-    m_glRenderNode = new DeclarativeRenderNode(m_window);
-    m_glRenderNode->setFlag(OwnedByParent);
-    appendChildNode(m_glRenderNode);
-    m_glRenderNode->setRect(0, 0, 0, 0); // Hide child node by default
+    if (QOpenGLContext::currentContext()) {
+        // Create child node for rendering GL graphics
+        m_glRenderNode = new DeclarativeRenderNode(m_window);
+        m_glRenderNode->setFlag(OwnedByParent);
+        appendChildNode(m_glRenderNode);
+        m_glRenderNode->setRect(0, 0, 0, 0); // Hide child node by default
+    }
 }
 
 DeclarativeChartNode::~DeclarativeChartNode()

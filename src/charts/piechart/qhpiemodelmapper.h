@@ -45,7 +45,7 @@ class QT_CHARTS_EXPORT QHPieModelMapper : public QPieModelMapper
     Q_PROPERTY(int columnCount READ columnCount WRITE setColumnCount NOTIFY columnCountChanged)
 
 public:
-    explicit QHPieModelMapper(QObject *parent = 0);
+    explicit QHPieModelMapper(QObject *parent = Q_NULLPTR);
 
     QAbstractItemModel *model() const;
     void setModel(QAbstractItemModel *model);

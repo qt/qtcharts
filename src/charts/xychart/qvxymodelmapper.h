@@ -45,7 +45,7 @@ class QT_CHARTS_EXPORT QVXYModelMapper : public QXYModelMapper
     Q_PROPERTY(int rowCount READ rowCount WRITE setRowCount NOTIFY rowCountChanged)
 
 public:
-    explicit QVXYModelMapper(QObject *parent = 0);
+    explicit QVXYModelMapper(QObject *parent = Q_NULLPTR);
 
     QAbstractItemModel *model() const;
     void setModel(QAbstractItemModel *model);
