@@ -216,9 +216,9 @@ QList<RealList> MainWidget::generateTestData(int columnCount, int rowCount, QStr
         QList <qreal> newColumn;
         for (int i(0); i < rowCount; i++) {
             if (dataCharacteristics == "Sin") {
-                newColumn.append(abs(sin(3.14159265358979 / 50 * i) * 100));
+                newColumn.append(std::abs(sin(3.14159265358979 / 50 * i) * 100));
             } else if (dataCharacteristics == "Sin + random") {
-                newColumn.append(abs(sin(3.14159265358979 / 50 * i) * 100) + (rand() % 5));
+                newColumn.append(std::abs(sin(3.14159265358979 / 50 * i) * 100) + (rand() % 5));
             } else if (dataCharacteristics == "Random") {
                 newColumn.append(rand() % 10 + (qreal) rand() / (qreal) RAND_MAX);
             } else if (dataCharacteristics == "Linear") {

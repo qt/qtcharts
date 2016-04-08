@@ -92,7 +92,7 @@ public:
     Q_DECLARE_FLAGS(AxisTypes, AxisType)
 
 protected:
-    explicit QAbstractAxis(QAbstractAxisPrivate &d, QObject *parent = 0);
+    explicit QAbstractAxis(QAbstractAxisPrivate &d, QObject *parent = Q_NULLPTR);
 
 public:
     ~QAbstractAxis();

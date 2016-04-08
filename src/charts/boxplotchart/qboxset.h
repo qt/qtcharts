@@ -54,8 +54,8 @@ public:
     };
 
 public:
-    explicit QBoxSet(const QString label = QString(), QObject *parent = 0);
-    explicit QBoxSet(const qreal le, const qreal lq, const qreal m, const qreal uq, const qreal ue, const QString label = QString(), QObject *parent = 0);
+    explicit QBoxSet(const QString label = QString(), QObject *parent = Q_NULLPTR);
+    explicit QBoxSet(const qreal le, const qreal lq, const qreal m, const qreal uq, const qreal ue, const QString label = QString(), QObject *parent = Q_NULLPTR);
     virtual ~QBoxSet();
 
     void append(const qreal value);

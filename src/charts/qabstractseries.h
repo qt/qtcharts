@@ -67,7 +67,7 @@ public:
     };
 
 protected:
-    QAbstractSeries(QAbstractSeriesPrivate &d, QObject *parent = 0);
+    QAbstractSeries(QAbstractSeriesPrivate &d, QObject *parent = Q_NULLPTR);
 
 public:
     ~QAbstractSeries();

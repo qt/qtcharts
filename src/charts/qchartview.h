@@ -59,8 +59,8 @@ public:
 
     Q_DECLARE_FLAGS(RubberBands, RubberBand)
 
-    explicit QChartView(QWidget *parent = 0);
-    explicit QChartView(QChart *chart, QWidget *parent = 0);
+    explicit QChartView(QWidget *parent = Q_NULLPTR);
+    explicit QChartView(QChart *chart, QWidget *parent = Q_NULLPTR);
     ~QChartView();
 
     void setRubberBand(const RubberBands &rubberBands);

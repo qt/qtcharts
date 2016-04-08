@@ -45,7 +45,7 @@ class QT_CHARTS_EXPORT QHXYModelMapper : public QXYModelMapper
     Q_PROPERTY(int columnCount READ columnCount WRITE setColumnCount NOTIFY columnCountChanged)
 
 public:
-    explicit QHXYModelMapper(QObject *parent = 0);
+    explicit QHXYModelMapper(QObject *parent = Q_NULLPTR);
 
     QAbstractItemModel *model() const;
     void setModel(QAbstractItemModel *model);

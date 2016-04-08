@@ -45,7 +45,7 @@ class QT_CHARTS_EXPORT QHBarModelMapper : public QBarModelMapper
     Q_PROPERTY(int columnCount READ columnCount WRITE setColumnCount NOTIFY columnCountChanged)
 
 public:
-    explicit QHBarModelMapper(QObject *parent = 0);
+    explicit QHBarModelMapper(QObject *parent = Q_NULLPTR);
 
     QAbstractItemModel *model() const;
     void setModel(QAbstractItemModel *model);

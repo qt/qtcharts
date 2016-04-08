@@ -65,7 +65,7 @@ void AbstractChartLayout::setGeometry(const QRectF &rect)
 
         contentGeometry = calculateContentGeometry(contentGeometry);
 
-        if (title && title->isVisible() && !title->text().isEmpty())
+        if (title && title->isVisible())
             contentGeometry = calculateTitleGeometry(contentGeometry, title);
 
         if (legend->isAttachedToChart() && legend->isVisible())
@@ -167,11 +167,15 @@ QRectF AbstractChartLayout::calculateLegendMinimum(const QRectF &geometry, QLege
 QRectF AbstractChartLayout::calculateTitleGeometry(const QRectF &geometry, ChartTitle *title) const
 {
     title->setGeometry(geometry);
-    // Round to full pixel via QPoint to avoid one pixel clipping on the edge in some cases
-    QPointF center((geometry.center() - title->boundingRect().center()).toPoint());
+    if (title->text().isEmpty()) {
+        return geometry;
+    } else {
+        // Round to full pixel via QPoint to avoid one pixel clipping on the edge in some cases
+        QPointF center((geometry.center() - title->boundingRect().center()).toPoint());
 
-    title->setPos(center.x(), title->pos().y());
-    return geometry.adjusted(0, title->boundingRect().height()+1, 0, 0);
+        title->setPos(center.x(), title->pos().y());
+        return geometry.adjusted(0, title->boundingRect().height() + 1, 0, 0);
+    }
 }
 
 QRectF AbstractChartLayout::calculateTitleMinimum(const QRectF &minimum, ChartTitle *title) const
