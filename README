@@ -15,7 +15,11 @@ System Requirements
 
 Building
 ========
-
+Set up your environment:
+example:
+    export QTDIR=/opt/Qt5.4.1/5.4/gcc_64/
+    export PATH=$QTDIR/bin:$PATH
+    
 Configure the project with qmake:
     qmake
 
