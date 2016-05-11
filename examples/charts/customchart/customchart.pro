@@ -1,6 +1,7 @@
-!include( ../examples.pri ) {
- error( "Couldn't find the examples.pri file!" )
-}
+QT += charts
 
-TARGET = customchart
-SOURCES += main.cpp
+SOURCES += \
+    main.cpp
+
+target.path = $$[QT_INSTALL_EXAMPLES]/charts/customchart
+INSTALLS += target

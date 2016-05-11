@@ -1,16 +1,17 @@
-!include( ../examples.pri ) {
- error( "Couldn't find the examples.pri file!" )
-}
-
-TARGET = piechartcustomization
-SOURCES += main.cpp \
-    pentool.cpp \
-    brushtool.cpp \
-    customslice.cpp \
-    mainwidget.cpp
+QT += charts
 
 HEADERS += \
-    pentool.h \
     brushtool.h \
     customslice.h \
-    mainwidget.h
+    mainwidget.h \
+    pentool.h
+
+SOURCES += \
+    brushtool.cpp \
+    customslice.cpp \
+    main.cpp \
+    mainwidget.cpp \
+    pentool.cpp
+
+target.path = $$[QT_INSTALL_EXAMPLES]/charts/piechartcustomization
+INSTALLS += target

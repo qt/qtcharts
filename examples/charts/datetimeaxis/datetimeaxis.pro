@@ -1,8 +1,10 @@
-!include( ../examples.pri ) {
- error( "Couldn't find the examples.pri file!" )
-}
-TARGET = datetimeaxis
-SOURCES += main.cpp
+QT += charts
+
+SOURCES += \
+    main.cpp
 
 RESOURCES += \
     sundata.qrc
+
+target.path = $$[QT_INSTALL_EXAMPLES]/charts/datetimeaxis
+INSTALLS += target
