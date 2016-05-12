@@ -6,7 +6,7 @@ include($QT_INSTALL_DOCS/global/qt-html-templates-offline.qdocconf)
 
 project = QtCharts
 description = Qt Charts Reference Documentation
-version = 2.1.0
+version = $QT_VERSION
 
 sourcedirs += .. \
               ../../chartsqml2
@@ -32,14 +32,14 @@ Cpp.ignoretokens        = Q_INVOKABLE \
 
 qhp.projects                  = QtCharts
 qhp.QtCharts.file             = qtcharts.qhp
-qhp.QtCharts.namespace        = com.digia.qtcharts.210
+qhp.QtCharts.namespace        = com.digia.qtcharts.$QT_VERSION_TAG
 qhp.QtCharts.virtualFolder    = qtcharts
 qhp.QtCharts.indexTitle       = Qt Charts
 qhp.QtCharts.indexRoot        =
 
-qhp.QtCharts.filterAttributes                  = qtcharts 2.1.0 qtrefdoc
-qhp.QtCharts.customFilters.Qt.name             = QtCharts 2.1.0
-qhp.QtCharts.customFilters.Qt.filterAttributes = qtcharts 2.1.0
+qhp.QtCharts.filterAttributes                  = qtcharts $QT_VERSION qtrefdoc
+qhp.QtCharts.customFilters.Qt.name             = QtCharts $QT_VERSION
+qhp.QtCharts.customFilters.Qt.filterAttributes = qtcharts $QT_VERSION
 
 qhp.QtCharts.subprojects = gettingstarted classes types examples
 
