@@ -11,8 +11,6 @@ MODULE_INCNAME = QtCharts
 
 QMAKE_DOCS = $$PWD/doc/qtcharts.qdocconf
 
-load(qt_module)
-
 QMAKE_TARGET_PRODUCT = "Qt Charts (Qt $$QT_VERSION)"
 QMAKE_TARGET_DESCRIPTION = "Charts component for Qt."
 
@@ -97,3 +95,5 @@ win32:!winrt:!wince {
     # ChartThemeSystem uses Windows native API
     LIBS += -luser32
 }
+
+load(qt_module)
