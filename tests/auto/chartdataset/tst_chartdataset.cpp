@@ -18,7 +18,7 @@
 ** $QT_END_LICENSE$
 **
 ******************************************************************************/
-#ifndef BUILD_PRIVATE_UNIT_TESTS
+#ifndef QT_BUILD_INTERNAL
 #include <QtTest/QtTest>
 
 class tst_ChartDataSet: public QObject {
@@ -32,7 +32,7 @@ private Q_SLOTS:
 
 void tst_ChartDataSet::skip()
 {
-    QSKIP("This test requires the debug version of library");
+    QSKIP("This test requires a developer build of the library");
 }
 
 QTEST_MAIN(tst_ChartDataSet)
