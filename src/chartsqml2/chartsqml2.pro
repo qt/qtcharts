@@ -1,10 +1,9 @@
 
 TARGET = qtchartsqml2
+CXX_MODULE = charts
+
 QT += qml quick
 QT += charts charts-private
-TARGETPATH = QtCharts
-
-IMPORT_VERSION = $$MODULE_VERSION
 
 # Only build qml plugin static if Qt itself is also built static
 !contains(QT_CONFIG, static): CONFIG -= static staticlib
@@ -49,8 +48,6 @@ HEADERS += \
     declarativerendernode.h
 
 OTHER_FILES = qmldir
-
-CONFIG += no_cxx_module
 
 load(qml_plugin)
 
