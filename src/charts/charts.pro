@@ -3,9 +3,6 @@
 TARGET = QtCharts
 
 QT = core gui widgets
-DEFINES += QT_CHARTS_LIBRARY
-# Fix exports in static builds for applications linking charts module
-static: MODULE_DEFINES += QT_CHARTS_STATICLIB
 
 QMAKE_DOCS = $$PWD/doc/qtcharts.qdocconf
 
