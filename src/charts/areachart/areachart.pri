@@ -1,5 +1,4 @@
 INCLUDEPATH += $$PWD
-DEPENDPATH += $$PWD
 
 SOURCES += \
     $$PWD/areachartitem.cpp \
