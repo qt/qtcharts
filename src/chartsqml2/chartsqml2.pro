@@ -11,13 +11,6 @@ IMPORT_VERSION = $$MODULE_VERSION
 
 include($$PWD/designer/designer.pri)
 
-INCLUDEPATH += ../../include \
-               ../../include/QtCharts \
-               ../charts \
-               ../charts/animations \
-               ../charts/axis \
-               ../charts/domain
-
 SOURCES += \
     chartsqml2_plugin.cpp \
     declarativechart.cpp \

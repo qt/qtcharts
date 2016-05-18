@@ -59,7 +59,6 @@ PUBLIC_HEADERS += \
     $$PWD/chartsnamespace.h \
     $$PWD/qpolarchart.h
 
-include($$PWD/common.pri)
 include($$PWD/animations/animations.pri)
 include($$PWD/areachart/areachart.pri)
 include($$PWD/axis/axis.pri)

@@ -1,4 +1,4 @@
-#INCLUDEPATH += $$PWD
+INCLUDEPATH += $$PWD
 
 SOURCES += \
     $$PWD/xychart.cpp \
