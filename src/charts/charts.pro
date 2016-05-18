@@ -7,8 +7,6 @@ DEFINES += QT_CHARTS_LIBRARY
 # Fix exports in static builds for applications linking charts module
 static: MODULE_DEFINES += QT_CHARTS_STATICLIB
 
-MODULE_INCNAME = QtCharts
-
 QMAKE_DOCS = $$PWD/doc/qtcharts.qdocconf
 
 QMAKE_TARGET_PRODUCT = "Qt Charts (Qt $$QT_VERSION)"

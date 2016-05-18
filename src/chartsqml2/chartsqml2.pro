@@ -47,16 +47,9 @@ HEADERS += \
     declarativechartnode.h \
     declarativerendernode.h
 
-OTHER_FILES = qmldir
-
 load(qml_plugin)
 
 win32 {
-    CONFIG += skip_target_version_ext
-    VERSION = $$MODULE_VERSION
     QMAKE_TARGET_PRODUCT = "Qt Charts (Qt $$QT_VERSION)"
     QMAKE_TARGET_DESCRIPTION = "Charts QML plugin for Qt."
 }
-
-QML_FILES += \
-    $$PWD/plugins.qmltypes
