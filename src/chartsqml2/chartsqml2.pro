@@ -5,9 +5,6 @@ CXX_MODULE = charts
 QT += qml quick
 QT += charts charts-private
 
-# Only build qml plugin static if Qt itself is also built static
-!contains(QT_CONFIG, static): CONFIG -= static staticlib
-
 include($$PWD/designer/designer.pri)
 
 SOURCES += \
