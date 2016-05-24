@@ -12,7 +12,7 @@ exampledirs += ../../../examples/charts \
                snippets
 imagedirs += images
 
-examplesinstallpath = qtcharts/charts
+examplesinstallpath = charts
 
 sources.fileextensions  = "*.cpp *.qdoc"
 
