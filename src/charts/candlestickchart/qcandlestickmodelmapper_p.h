@@ -63,8 +63,8 @@ Q_SIGNALS:
     void highChanged();
     void lowChanged();
     void closeChanged();
-    void firstCandlestickSetSectionChanged();
-    void lastCandlestickSetSectionChanged();
+    void firstSetSectionChanged();
+    void lastSetSectionChanged();
 
 private Q_SLOTS:
     void initializeCandlestickFromModel();
@@ -100,9 +100,9 @@ private:
     int m_high;
     int m_low;
     int m_close;
-    int m_firstCandlestickSetSection;
-    int m_lastCandlestickSetSection;
-    QList<QCandlestickSet *> m_candlestickSets;
+    int m_firstSetSection;
+    int m_lastSetSection;
+    QList<QCandlestickSet *> m_sets;
     bool m_modelSignalsBlock;
     bool m_seriesSignalsBlock;
 

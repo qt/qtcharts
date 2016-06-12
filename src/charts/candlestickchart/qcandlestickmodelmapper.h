@@ -79,11 +79,11 @@ protected:
     void setClose(int close);
     int close() const;
 
-    void setFirstCandlestickSetSection(int firstCandlestickSetSection);
-    int firstCandlestickSetSection() const;
+    void setFirstSetSection(int firstSetSection);
+    int firstSetSection() const;
 
-    void setLastCandlestickSetSection(int lastCandlestickSetSection);
-    int lastCandlestickSetSection() const;
+    void setLastSetSection(int lastSetSection);
+    int lastSetSection() const;
 
 protected:
     QCandlestickModelMapperPrivate * const d_ptr;

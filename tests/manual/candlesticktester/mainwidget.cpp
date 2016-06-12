@@ -311,17 +311,17 @@ void MainWidget::updateAxes()
         series = nullptr;
 
     m_axisX = m_chart->axes(Qt::Horizontal).first();
-    if (series && !series->candlestickSets().isEmpty()) {
+    if (series && !series->sets().isEmpty()) {
         if (m_axisX->type() == QAbstractAxis::AxisTypeBarCategory) {
             QBarCategoryAxis *axisX = qobject_cast<QBarCategoryAxis *>(m_axisX);
             QStringList categories;
-            for (int i = 0; i < series->candlestickSets().count(); ++i)
+            for (int i = 0; i < series->sets().count(); ++i)
                 categories.append(QString::number(i));
             axisX->setCategories(categories);
         } else { // QAbstractAxis::AxisTypeDateTime || QAbstractAxis::AxisTypeValue
             qreal msInMonth = 31.0 * 24.0 * 60.0 * 60.0 * 1000.0;
-            qreal min = series->candlestickSets().first()->timestamp() - msInMonth;
-            qreal max = series->candlestickSets().last()->timestamp() + msInMonth;
+            qreal min = series->sets().first()->timestamp() - msInMonth;
+            qreal max = series->sets().last()->timestamp() + msInMonth;
             QDateTime minDateTime = QDateTime::fromMSecsSinceEpoch(min);
             QDateTime maxDateTime = QDateTime::fromMSecsSinceEpoch(max);
 
@@ -369,8 +369,8 @@ void MainWidget::addSeries()
         }
     } else {
         QCandlestickSeries *s = qobject_cast<QCandlestickSeries *>(m_chart->series().at(0));
-        for (int i = 0; i < s->candlestickSets().count(); ++i) {
-            QCandlestickSet *set = randomSet(s->candlestickSets().at(i)->timestamp());
+        for (int i = 0; i < s->sets().count(); ++i) {
+            QCandlestickSet *set = randomSet(s->sets().at(i)->timestamp());
             series->append(set);
         }
     }
@@ -424,7 +424,7 @@ void MainWidget::addSet()
 
         QDateTime dateTime;
         if (series->count()) {
-            dateTime.setMSecsSinceEpoch(series->candlestickSets().last()->timestamp());
+            dateTime.setMSecsSinceEpoch(series->sets().last()->timestamp());
             dateTime = dateTime.addMonths(1);
         } else {
             dateTime.setDate(QDate(QDateTime::currentDateTime().date().year(), 1, 1));
@@ -450,7 +450,7 @@ void MainWidget::insertSet()
 
         QDateTime dateTime;
         if (series->count()) {
-            dateTime.setMSecsSinceEpoch(series->candlestickSets().first()->timestamp());
+            dateTime.setMSecsSinceEpoch(series->sets().first()->timestamp());
             dateTime = dateTime.addMonths(-1);
         } else {
             dateTime.setDate(QDate(QDateTime::currentDateTime().date().year(), 1, 1));
@@ -473,10 +473,10 @@ void MainWidget::removeSet()
 
     foreach (QAbstractSeries *s, m_chart->series()) {
         QCandlestickSeries *series = qobject_cast<QCandlestickSeries *>(s);
-        if (series->candlestickSets().isEmpty())
+        if (series->sets().isEmpty())
             qDebug() << "Create a set first";
         else
-            series->remove(series->candlestickSets().last());
+            series->remove(series->sets().last());
     }
 
     updateAxes();
@@ -491,7 +491,7 @@ void MainWidget::removeAllSets()
 
     foreach (QAbstractSeries *s, m_chart->series()) {
         QCandlestickSeries *series = qobject_cast<QCandlestickSeries *>(s);
-        if (series->candlestickSets().isEmpty())
+        if (series->sets().isEmpty())
             qDebug() << "Create a set first";
         else
             series->clear();
@@ -665,11 +665,11 @@ void MainWidget::attachModelMapper()
     series->setName(QStringLiteral("SWMM")); // Series With Model Mapper
 
     CustomTableModel *model = qobject_cast<CustomTableModel *>(m_hModelMapper->model());
-    foreach (QCandlestickSet *set, series->candlestickSets())
+    foreach (QCandlestickSet *set, series->sets())
         model->addRow(set);
 
-    m_hModelMapper->setFirstCandlestickSetRow(0);
-    m_hModelMapper->setLastCandlestickSetRow(model->rowCount() - 1);
+    m_hModelMapper->setFirstSetRow(0);
+    m_hModelMapper->setLastSetRow(model->rowCount() - 1);
     m_hModelMapper->setSeries(series);
 }
 
@@ -683,8 +683,8 @@ void MainWidget::detachModelMapper()
     series->setName(QStringLiteral("S1"));
 
     m_hModelMapper->setSeries(nullptr);
-    m_hModelMapper->setFirstCandlestickSetRow(-1);
-    m_hModelMapper->setLastCandlestickSetRow(-1);
+    m_hModelMapper->setFirstSetRow(-1);
+    m_hModelMapper->setLastSetRow(-1);
 
     CustomTableModel *model = qobject_cast<CustomTableModel *>(m_hModelMapper->model());
     model->clearRows();

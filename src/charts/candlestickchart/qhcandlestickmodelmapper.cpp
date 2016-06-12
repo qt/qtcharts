@@ -71,8 +71,8 @@ QT_CHARTS_BEGIN_NAMESPACE
                 highColumn: 3
                 lowColumn: 4
                 closeColumn: 5
-                firstCandlestickSetRow: 1
-                lastCandlestickSetRow: 3
+                firstSetRow: 1
+                lastSetRow: 3
             }
         }
     \endqml
@@ -158,25 +158,25 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
-    \property QHCandlestickModelMapper::firstCandlestickSetRow
+    \property QHCandlestickModelMapper::firstSetRow
     \brief Defines the row of the model that is used as the data source for the first set. Default
     value is -1 (invalid mapping).
 */
 
 /*!
-    \qmlproperty int HCandlestickModelMapper::firstCandlestickSetRow
+    \qmlproperty int HCandlestickModelMapper::firstSetRow
     \brief Defines the row of the model that is used as the data source for the first set. Default
     value is -1 (invalid mapping).
 */
 
 /*!
-    \property QHCandlestickModelMapper::lastCandlestickSetRow
+    \property QHCandlestickModelMapper::lastSetRow
     \brief Defines the row of the model that is used as the data source for the last set. Default
     value is -1 (invalid mapping).
 */
 
 /*!
-    \qmlproperty int HCandlestickModelMapper::lastCandlestickSetRow
+    \qmlproperty int HCandlestickModelMapper::lastSetRow
     \brief Defines the row of the model that is used as the data source for the last set. Default
     value is -1 (invalid mapping).
 */
@@ -211,15 +211,15 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QHCandlestickModelMapper::firstCandlestickSetRowChanged()
+    \fn void QHCandlestickModelMapper::firstSetRowChanged()
     \brief Emitted when the row of the model that contains the data of the first set is changed.
-    \sa firstCandlestickSetRow
+    \sa firstSetRow
 */
 
 /*!
-    \fn void QHCandlestickModelMapper::lastCandlestickSetRowChanged()
+    \fn void QHCandlestickModelMapper::lastSetRowChanged()
     \brief Emitted when the row of the model that contains the data of the last set is changed.
-    \sa lastCandlestickSetRow
+    \sa lastSetRow
 */
 
 /*!
@@ -233,10 +233,8 @@ QHCandlestickModelMapper::QHCandlestickModelMapper(QObject *parent)
     connect(d_ptr, SIGNAL(highChanged()), this, SIGNAL(highColumnChanged()));
     connect(d_ptr, SIGNAL(lowChanged()), this, SIGNAL(lowColumnChanged()));
     connect(d_ptr, SIGNAL(closeChanged()), this, SIGNAL(closeColumnChanged()));
-    connect(d_ptr, SIGNAL(firstCandlestickSetSectionChanged()),
-            this, SIGNAL(firstCandlestickSetRowChanged()));
-    connect(d_ptr, SIGNAL(lastCandlestickSetSectionChanged()),
-            this, SIGNAL(lastCandlestickSetRowChanged()));
+    connect(d_ptr, SIGNAL(firstSetSectionChanged()), this, SIGNAL(firstSetRowChanged()));
+    connect(d_ptr, SIGNAL(lastSetSectionChanged()), this, SIGNAL(lastSetRowChanged()));
 }
 
 /*!
@@ -297,24 +295,24 @@ int QHCandlestickModelMapper::closeColumn() const
     return QCandlestickModelMapper::close();
 }
 
-void QHCandlestickModelMapper::setFirstCandlestickSetRow(int firstCandlestickSetRow)
+void QHCandlestickModelMapper::setFirstSetRow(int firstSetRow)
 {
-    QCandlestickModelMapper::setFirstCandlestickSetSection(firstCandlestickSetRow);
+    QCandlestickModelMapper::setFirstSetSection(firstSetRow);
 }
 
-int QHCandlestickModelMapper::firstCandlestickSetRow() const
+int QHCandlestickModelMapper::firstSetRow() const
 {
-    return QCandlestickModelMapper::firstCandlestickSetSection();
+    return QCandlestickModelMapper::firstSetSection();
 }
 
-void QHCandlestickModelMapper::setLastCandlestickSetRow(int lastCandlestickSetRow)
+void QHCandlestickModelMapper::setLastSetRow(int lastSetRow)
 {
-    QCandlestickModelMapper::setLastCandlestickSetSection(lastCandlestickSetRow);
+    QCandlestickModelMapper::setLastSetSection(lastSetRow);
 }
 
-int QHCandlestickModelMapper::lastCandlestickSetRow() const
+int QHCandlestickModelMapper::lastSetRow() const
 {
-    return QCandlestickModelMapper::lastCandlestickSetSection();
+    return QCandlestickModelMapper::lastSetSection();
 }
 
 #include "moc_qhcandlestickmodelmapper.cpp"

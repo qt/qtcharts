@@ -71,8 +71,8 @@ QT_CHARTS_BEGIN_NAMESPACE
                 highRow: 3
                 lowRow: 4
                 closeRow: 5
-                firstCandlestickSetColumn: 1
-                lastCandlestickSetColumn: 3
+                firstSetColumn: 1
+                lastSetColumn: 3
             }
         }
     \endqml
@@ -158,25 +158,25 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
-    \property QVCandlestickModelMapper::firstCandlestickSetColumn
+    \property QVCandlestickModelMapper::firstSetColumn
     \brief Defines the column of the model that is used as the data source for the first set.
     Default value is -1 (invalid mapping).
 */
 
 /*!
-    \qmlproperty int VCandlestickModelMapper::firstCandlestickSetColumn
+    \qmlproperty int VCandlestickModelMapper::firstSetColumn
     \brief Defines the column of the model that is used as the data source for the first set.
     Default value is -1 (invalid mapping).
 */
 
 /*!
-    \property QVCandlestickModelMapper::lastCandlestickSetColumn
+    \property QVCandlestickModelMapper::lastSetColumn
     \brief Defines the column of the model that is used as the data source for the last set. Default
     value is -1 (invalid mapping).
 */
 
 /*!
-    \qmlproperty int VCandlestickModelMapper::lastCandlestickSetColumn
+    \qmlproperty int VCandlestickModelMapper::lastSetColumn
     \brief Defines the column of the model that is used as the data source for the last set. Default
     value is -1 (invalid mapping).
 */
@@ -212,15 +212,15 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QVCandlestickModelMapper::firstCandlestickSetColumnChanged()
+    \fn void QVCandlestickModelMapper::firstSetColumnChanged()
     \brief Emitted when the column of the model that contains the data of the first set is changed.
-    \sa firstCandlestickSetColumn
+    \sa firstSetColumn
 */
 
 /*!
-    \fn void QVCandlestickModelMapper::lastCandlestickSetColumnChanged()
+    \fn void QVCandlestickModelMapper::lastSetColumnChanged()
     \brief Emitted when the column of the model that contains the data of the last set is changed.
-    \sa lastCandlestickSetColumn
+    \sa lastSetColumn
 */
 
 /*!
@@ -234,10 +234,8 @@ QVCandlestickModelMapper::QVCandlestickModelMapper(QObject *parent)
     connect(d_ptr, SIGNAL(highChanged()), this, SIGNAL(highRowChanged()));
     connect(d_ptr, SIGNAL(lowChanged()), this, SIGNAL(lowRowChanged()));
     connect(d_ptr, SIGNAL(closeChanged()), this, SIGNAL(closeRowChanged()));
-    connect(d_ptr, SIGNAL(firstCandlestickSetSectionChanged()),
-            this, SIGNAL(firstCandlestickSetColumnChanged()));
-    connect(d_ptr, SIGNAL(lastCandlestickSetSectionChanged()),
-            this, SIGNAL(lastCandlestickSetColumnChanged()));
+    connect(d_ptr, SIGNAL(firstSetSectionChanged()), this, SIGNAL(firstSetColumnChanged()));
+    connect(d_ptr, SIGNAL(lastSetSectionChanged()), this, SIGNAL(lastSetColumnChanged()));
 }
 
 /*!
@@ -298,24 +296,24 @@ int QVCandlestickModelMapper::closeRow() const
     return QCandlestickModelMapper::close();
 }
 
-void QVCandlestickModelMapper::setFirstCandlestickSetColumn(int firstCandlestickSetColumn)
+void QVCandlestickModelMapper::setFirstSetColumn(int firstSetColumn)
 {
-    QCandlestickModelMapper::setFirstCandlestickSetSection(firstCandlestickSetColumn);
+    QCandlestickModelMapper::setFirstSetSection(firstSetColumn);
 }
 
-int QVCandlestickModelMapper::firstCandlestickSetColumn() const
+int QVCandlestickModelMapper::firstSetColumn() const
 {
-    return QCandlestickModelMapper::firstCandlestickSetSection();
+    return QCandlestickModelMapper::firstSetSection();
 }
 
-void QVCandlestickModelMapper::setLastCandlestickSetColumn(int lastCandlestickSetColumn)
+void QVCandlestickModelMapper::setLastSetColumn(int lastSetColumn)
 {
-    QCandlestickModelMapper::setLastCandlestickSetSection(lastCandlestickSetColumn);
+    QCandlestickModelMapper::setLastSetSection(lastSetColumn);
 }
 
-int QVCandlestickModelMapper::lastCandlestickSetColumn() const
+int QVCandlestickModelMapper::lastSetColumn() const
 {
-    return QCandlestickModelMapper::lastCandlestickSetSection();
+    return QCandlestickModelMapper::lastSetSection();
 }
 
 #include "moc_qvcandlestickmodelmapper.cpp"

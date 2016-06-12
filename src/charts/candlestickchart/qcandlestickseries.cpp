@@ -602,7 +602,7 @@ void QCandlestickSeries::clear()
 {
     Q_D(QCandlestickSeries);
 
-    QList<QCandlestickSet *> sets = candlestickSets();
+    QList<QCandlestickSet *> sets = this->sets();
 
     bool success = d->remove(sets);
     if (success) {
@@ -616,11 +616,11 @@ void QCandlestickSeries::clear()
 /*!
     Returns the list of sets in the series. Ownership of the sets is unchanged.
  */
-QList<QCandlestickSet *> QCandlestickSeries::candlestickSets() const
+QList<QCandlestickSet *> QCandlestickSeries::sets() const
 {
     Q_D(const QCandlestickSeries);
 
-    return d->m_candlestickSets;
+    return d->m_sets;
 }
 
 /*!
@@ -628,7 +628,7 @@ QList<QCandlestickSet *> QCandlestickSeries::candlestickSets() const
 */
 int QCandlestickSeries::count() const
 {
-    return candlestickSets().count();
+    return sets().count();
 }
 
 /*!
@@ -918,20 +918,20 @@ void QCandlestickSeriesPrivate::initializeDomain()
     qreal minY(domain()->minY());
     qreal maxY(domain()->maxY());
 
-    if (m_candlestickSets.count()) {
-        QCandlestickSet *set = m_candlestickSets.first();
+    if (m_sets.count()) {
+        QCandlestickSet *set = m_sets.first();
         minX = set->timestamp();
         maxX = set->timestamp();
         minY = set->low();
         maxY = set->high();
-        for (int i = 1; i < m_candlestickSets.count(); ++i) {
-            set = m_candlestickSets.at(i);
+        for (int i = 1; i < m_sets.count(); ++i) {
+            set = m_sets.at(i);
             minX = qMin(minX, qreal(set->timestamp()));
             maxX = qMax(maxX, qreal(set->timestamp()));
             minY = qMin(minY, set->low());
             maxY = qMax(maxY, set->high());
         }
-        qreal extra = (maxX - minX) / m_candlestickSets.count() / 2;
+        qreal extra = (maxX - minX) / m_sets.count() / 2;
         minX = minX - extra;
         maxX = maxX + extra;
     }
@@ -1039,14 +1039,14 @@ QAbstractAxis* QCandlestickSeriesPrivate::createDefaultAxis(Qt::Orientation orie
 bool QCandlestickSeriesPrivate::append(const QList<QCandlestickSet *> &sets)
 {
     foreach (QCandlestickSet *set, sets) {
-        if ((set == 0) || m_candlestickSets.contains(set) || set->d_ptr->m_series)
+        if ((set == 0) || m_sets.contains(set) || set->d_ptr->m_series)
             return false; // Fail if any of the sets is null or is already appended.
         if (sets.count(set) != 1)
             return false; // Also fail if the same set occurs more than once in the given list.
     }
 
     foreach (QCandlestickSet *set, sets) {
-        m_candlestickSets.append(set);
+        m_sets.append(set);
         connect(set->d_func(), SIGNAL(updatedLayout()), this, SIGNAL(updatedLayout()));
         connect(set->d_func(), SIGNAL(updatedCandlestick()), this, SIGNAL(updatedCandlesticks()));
         set->d_ptr->m_series = this;
@@ -1061,7 +1061,7 @@ bool QCandlestickSeriesPrivate::remove(const QList<QCandlestickSet *> &sets)
         return false;
 
     foreach (QCandlestickSet *set, sets) {
-        if ((set == 0) || (!m_candlestickSets.contains(set)))
+        if ((set == 0) || (!m_sets.contains(set)))
             return false; // Fail if any of the sets is null or is not in series.
         if (sets.count(set) != 1)
             return false; // Also fail if the same set occurs more than once in the given list.
@@ -1069,7 +1069,7 @@ bool QCandlestickSeriesPrivate::remove(const QList<QCandlestickSet *> &sets)
 
     foreach (QCandlestickSet *set, sets) {
         set->d_ptr->m_series = nullptr;
-        m_candlestickSets.removeOne(set);
+        m_sets.removeOne(set);
         disconnect(set->d_func(), SIGNAL(updatedLayout()), this, SIGNAL(updatedLayout()));
         disconnect(set->d_func(), SIGNAL(updatedCandlestick()),this, SIGNAL(updatedCandlesticks()));
     }
@@ -1079,10 +1079,10 @@ bool QCandlestickSeriesPrivate::remove(const QList<QCandlestickSet *> &sets)
 
 bool QCandlestickSeriesPrivate::insert(int index, QCandlestickSet *set)
 {
-    if ((m_candlestickSets.contains(set)) || (set == 0) || set->d_ptr->m_series)
+    if ((m_sets.contains(set)) || (set == 0) || set->d_ptr->m_series)
         return false; // Fail if set is already in list or set is null.
 
-    m_candlestickSets.insert(index, set);
+    m_sets.insert(index, set);
     connect(set->d_func(), SIGNAL(updatedLayout()), this, SIGNAL(updatedLayout()));
     connect(set->d_func(), SIGNAL(updatedCandlestick()), this, SIGNAL(updatedCandlesticks()));
     set->d_ptr->m_series = this;
@@ -1123,8 +1123,8 @@ void QCandlestickSeriesPrivate::populateBarCategories(QBarCategoryAxis *axis)
 {
     if (axis->categories().isEmpty()) {
         QStringList categories;
-        for (int i = 0; i < m_candlestickSets.count(); ++i) {
-            const qint64 timestamp = qRound64(m_candlestickSets.at(i)->timestamp());
+        for (int i = 0; i < m_sets.count(); ++i) {
+            const qint64 timestamp = qRound64(m_sets.at(i)->timestamp());
             const QString timestampFormat = m_chart->locale().dateTimeFormat(QLocale::ShortFormat);
             categories << QDateTime::fromMSecsSinceEpoch(timestamp).toString(timestampFormat);
         }

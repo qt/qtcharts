@@ -89,7 +89,7 @@ private:
     void populateBarCategories(QBarCategoryAxis *axis);
 
 protected:
-    QList<QCandlestickSet *> m_candlestickSets;
+    QList<QCandlestickSet *> m_sets;
     qreal m_maximumColumnWidth;
     qreal m_minimumColumnWidth;
     qreal m_bodyWidth;

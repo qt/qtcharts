@@ -57,7 +57,7 @@ CandlestickChartItem::CandlestickChartItem(QCandlestickSeries *series, QGraphics
 
     setZValue(ChartPresenter::CandlestickSeriesZValue);
 
-    handleCandlestickSetsAdd(m_series->candlestickSets());
+    handleCandlestickSetsAdd(m_series->sets());
 }
 
 CandlestickChartItem::~CandlestickChartItem()
@@ -233,7 +233,7 @@ void CandlestickChartItem::handleDataStructureChanged()
     updateTimePeriod();
 
     for (int i = 0; i < m_series->count(); ++i) {
-        QCandlestickSet *set = m_series->candlestickSets().at(i);
+        QCandlestickSet *set = m_series->sets().at(i);
         Candlestick *item = m_candlesticks.value(set);
 
         updateCandlestickGeometry(item, i);
@@ -252,7 +252,7 @@ bool CandlestickChartItem::updateCandlestickGeometry(Candlestick *item, int inde
 {
     bool changed = false;
 
-    QCandlestickSet *set = m_series->candlestickSets().at(index);
+    QCandlestickSet *set = m_series->sets().at(index);
     CandlestickData &data = item->m_data;
 
     if ((data.m_open != set->open())

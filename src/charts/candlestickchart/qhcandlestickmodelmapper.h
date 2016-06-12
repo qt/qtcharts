@@ -42,8 +42,8 @@ class QT_CHARTS_EXPORT QHCandlestickModelMapper : public QCandlestickModelMapper
     Q_PROPERTY(int highColumn READ highColumn WRITE setHighColumn NOTIFY highColumnChanged)
     Q_PROPERTY(int lowColumn READ lowColumn WRITE setLowColumn NOTIFY lowColumnChanged)
     Q_PROPERTY(int closeColumn READ closeColumn WRITE setCloseColumn NOTIFY closeColumnChanged)
-    Q_PROPERTY(int firstCandlestickSetRow READ firstCandlestickSetRow WRITE setFirstCandlestickSetRow NOTIFY firstCandlestickSetRowChanged)
-    Q_PROPERTY(int lastCandlestickSetRow READ lastCandlestickSetRow WRITE setLastCandlestickSetRow NOTIFY lastCandlestickSetRowChanged)
+    Q_PROPERTY(int firstSetRow READ firstSetRow WRITE setFirstSetRow NOTIFY firstSetRowChanged)
+    Q_PROPERTY(int lastSetRow READ lastSetRow WRITE setLastSetRow NOTIFY lastSetRowChanged)
 
 public:
     explicit QHCandlestickModelMapper(QObject *parent = nullptr);
@@ -65,11 +65,11 @@ public:
     void setCloseColumn(int closeColumn);
     int closeColumn() const;
 
-    void setFirstCandlestickSetRow(int firstCandlestickSetRow);
-    int firstCandlestickSetRow() const;
+    void setFirstSetRow(int firstSetRow);
+    int firstSetRow() const;
 
-    void setLastCandlestickSetRow(int lastCandlestickSetRow);
-    int lastCandlestickSetRow() const;
+    void setLastSetRow(int lastSetRow);
+    int lastSetRow() const;
 
 Q_SIGNALS:
     void timestampColumnChanged();
@@ -77,8 +77,8 @@ Q_SIGNALS:
     void highColumnChanged();
     void lowColumnChanged();
     void closeColumnChanged();
-    void firstCandlestickSetRowChanged();
-    void lastCandlestickSetRowChanged();
+    void firstSetRowChanged();
+    void lastSetRowChanged();
 };
 
 QT_CHARTS_END_NAMESPACE

@@ -110,8 +110,8 @@ void tst_qcandlestickmodelmapper::createHorizontalMapper()
     m_hMapper->setHighColumn(3);
     m_hMapper->setLowColumn(5);
     m_hMapper->setCloseColumn(6);
-    m_hMapper->setFirstCandlestickSetRow(0);
-    m_hMapper->setLastCandlestickSetRow(4);
+    m_hMapper->setFirstSetRow(0);
+    m_hMapper->setLastSetRow(4);
     m_hMapper->setModel(m_model);
     m_hMapper->setSeries(m_series);
 }
@@ -125,8 +125,8 @@ void tst_qcandlestickmodelmapper::createVerticalMapper()
     m_vMapper->setHighRow(3);
     m_vMapper->setLowRow(5);
     m_vMapper->setCloseRow(6);
-    m_vMapper->setFirstCandlestickSetColumn(0);
-    m_vMapper->setLastCandlestickSetColumn(4);
+    m_vMapper->setFirstSetColumn(0);
+    m_vMapper->setLastSetColumn(4);
     m_vMapper->setModel(m_model);
     m_vMapper->setSeries(m_series);
 }
@@ -179,9 +179,9 @@ void tst_qcandlestickmodelmapper::cleanup()
 
 void tst_qcandlestickmodelmapper::verticalMapper_data()
 {
-    QTest::addColumn<int>("firstCandlestickSetColumn");
-    QTest::addColumn<int>("lastCandlestickSetColumn");
-    QTest::addColumn<int>("expectedCandlestickSetCount");
+    QTest::addColumn<int>("firstSetColumn");
+    QTest::addColumn<int>("lastSetColumn");
+    QTest::addColumn<int>("expectedSetCount");
 
     QTest::newRow("last column greater than first column") << 0 << 1 << 2;
     QTest::newRow("last column equal to first column") << 1 << 1 << 1;
@@ -193,21 +193,21 @@ void tst_qcandlestickmodelmapper::verticalMapper_data()
 
 void tst_qcandlestickmodelmapper::verticalMapper()
 {
-    QFETCH(int, firstCandlestickSetColumn);
-    QFETCH(int, lastCandlestickSetColumn);
-    QFETCH(int, expectedCandlestickSetCount);
+    QFETCH(int, firstSetColumn);
+    QFETCH(int, lastSetColumn);
+    QFETCH(int, expectedSetCount);
 
     QCandlestickSeries *series = new QCandlestickSeries();
     m_chart->addSeries(series);
 
     createVerticalMapper();
-    m_vMapper->setFirstCandlestickSetColumn(firstCandlestickSetColumn);
-    m_vMapper->setLastCandlestickSetColumn(lastCandlestickSetColumn);
+    m_vMapper->setFirstSetColumn(firstSetColumn);
+    m_vMapper->setLastSetColumn(lastSetColumn);
     m_vMapper->setSeries(series);
 
-    QCOMPARE(m_vMapper->firstCandlestickSetColumn(), qMax(firstCandlestickSetColumn, -1));
-    QCOMPARE(m_vMapper->lastCandlestickSetColumn(), qMax(lastCandlestickSetColumn, -1));
-    QCOMPARE(series->count(), expectedCandlestickSetCount);
+    QCOMPARE(m_vMapper->firstSetColumn(), qMax(firstSetColumn, -1));
+    QCOMPARE(m_vMapper->lastSetColumn(), qMax(lastSetColumn, -1));
+    QCOMPARE(series->count(), expectedSetCount);
 
     m_chart->removeSeries(series);
     delete series;
@@ -272,14 +272,14 @@ void tst_qcandlestickmodelmapper::verticalMapperCustomMapping()
         && (m_vMapper->highRow() >= 0 && m_vMapper->highRow() < m_modelRowCount)
         && (m_vMapper->lowRow() >= 0 && m_vMapper->lowRow() < m_modelRowCount)
         && (m_vMapper->closeRow() >= 0 && m_vMapper->closeRow() < m_modelRowCount))
-        count = m_vMapper->lastCandlestickSetColumn() - m_vMapper->firstCandlestickSetColumn() + 1;
+        count = m_vMapper->lastSetColumn() - m_vMapper->firstSetColumn() + 1;
     else
         count = 0;
     QCOMPARE(series->count(), count);
 
     // change values column mapping to invalid
-    m_vMapper->setFirstCandlestickSetColumn(-1);
-    m_vMapper->setLastCandlestickSetColumn(1);
+    m_vMapper->setFirstSetColumn(-1);
+    m_vMapper->setLastSetColumn(1);
     QCOMPARE(series->count(), 0);
 
     m_chart->removeSeries(series);
@@ -288,9 +288,9 @@ void tst_qcandlestickmodelmapper::verticalMapperCustomMapping()
 
 void tst_qcandlestickmodelmapper::horizontalMapper_data()
 {
-    QTest::addColumn<int>("firstCandlestickSetRow");
-    QTest::addColumn<int>("lastCandlestickSetRow");
-    QTest::addColumn<int>("expectedCandlestickSetCount");
+    QTest::addColumn<int>("firstSetRow");
+    QTest::addColumn<int>("lastSetRow");
+    QTest::addColumn<int>("expectedSetCount");
 
     QTest::newRow("last row greater than first row") << 0 << 1 << 2;
     QTest::newRow("last row equal to first row") << 1 << 1 << 1;
@@ -302,21 +302,21 @@ void tst_qcandlestickmodelmapper::horizontalMapper_data()
 
 void tst_qcandlestickmodelmapper::horizontalMapper()
 {
-    QFETCH(int, firstCandlestickSetRow);
-    QFETCH(int, lastCandlestickSetRow);
-    QFETCH(int, expectedCandlestickSetCount);
+    QFETCH(int, firstSetRow);
+    QFETCH(int, lastSetRow);
+    QFETCH(int, expectedSetCount);
 
     QCandlestickSeries *series = new QCandlestickSeries();
     m_chart->addSeries(series);
 
     createHorizontalMapper();
-    m_hMapper->setFirstCandlestickSetRow(firstCandlestickSetRow);
-    m_hMapper->setLastCandlestickSetRow(lastCandlestickSetRow);
+    m_hMapper->setFirstSetRow(firstSetRow);
+    m_hMapper->setLastSetRow(lastSetRow);
     m_hMapper->setSeries(series);
 
-    QCOMPARE(m_hMapper->firstCandlestickSetRow(), qMax(firstCandlestickSetRow, -1));
-    QCOMPARE(m_hMapper->lastCandlestickSetRow(), qMax(lastCandlestickSetRow, -1));
-    QCOMPARE(series->count(), expectedCandlestickSetCount);
+    QCOMPARE(m_hMapper->firstSetRow(), qMax(firstSetRow, -1));
+    QCOMPARE(m_hMapper->lastSetRow(), qMax(lastSetRow, -1));
+    QCOMPARE(series->count(), expectedSetCount);
 
     m_chart->removeSeries(series);
     delete series;
@@ -381,14 +381,14 @@ void tst_qcandlestickmodelmapper::horizontalMapperCustomMapping()
         && (m_hMapper->highColumn() >= 0 && m_hMapper->highColumn() < m_modelColumnCount)
         && (m_hMapper->lowColumn() >= 0 && m_hMapper->lowColumn() < m_modelColumnCount)
         && (m_hMapper->closeColumn() >= 0 && m_hMapper->closeColumn() < m_modelColumnCount))
-        count = m_hMapper->lastCandlestickSetRow() - m_hMapper->firstCandlestickSetRow() + 1;
+        count = m_hMapper->lastSetRow() - m_hMapper->firstSetRow() + 1;
     else
         count = 0;
     QCOMPARE(series->count(), count);
 
     // change values row mapping to invalid
-    m_hMapper->setFirstCandlestickSetRow(-1);
-    m_hMapper->setLastCandlestickSetRow(1);
+    m_hMapper->setFirstSetRow(-1);
+    m_hMapper->setLastSetRow(1);
     QCOMPARE(series->count(), 0);
 
     m_chart->removeSeries(series);
@@ -400,7 +400,7 @@ void tst_qcandlestickmodelmapper::seriesUpdated()
     createVerticalMapper();
     QVERIFY(m_vMapper->model() != nullptr);
 
-    QCandlestickSet *set = m_series->candlestickSets().value(0, 0);
+    QCandlestickSet *set = m_series->sets().value(0, 0);
     QVERIFY(set != nullptr);
 
     // update values
@@ -429,8 +429,8 @@ void tst_qcandlestickmodelmapper::seriesUpdated()
 
     // remove sets
     newCandlestickSets.clear();
-    newCandlestickSets << m_series->candlestickSets().at(m_series->count() - 1);
-    newCandlestickSets << m_series->candlestickSets().at(m_series->count() - 2);
+    newCandlestickSets << m_series->sets().at(m_series->count() - 1);
+    newCandlestickSets << m_series->sets().at(m_series->count() - 2);
     m_series->remove(newCandlestickSets);
     QCOMPARE(m_model->columnCount(), m_modelColumnCount);
 }
@@ -438,7 +438,7 @@ void tst_qcandlestickmodelmapper::seriesUpdated()
 void tst_qcandlestickmodelmapper::verticalModelInsertRows()
 {
     createVerticalMapper();
-    int count = m_vMapper->lastCandlestickSetColumn() - m_vMapper->firstCandlestickSetColumn() + 1;
+    int count = m_vMapper->lastSetColumn() - m_vMapper->firstSetColumn() + 1;
     QVERIFY(m_vMapper->model() != 0);
     QCOMPARE(m_series->count(), count);
 
@@ -449,7 +449,7 @@ void tst_qcandlestickmodelmapper::verticalModelInsertRows()
 void tst_qcandlestickmodelmapper::verticalModelRemoveRows()
 {
     createVerticalMapper();
-    int count = m_vMapper->lastCandlestickSetColumn() - m_vMapper->firstCandlestickSetColumn() + 1;
+    int count = m_vMapper->lastSetColumn() - m_vMapper->firstSetColumn() + 1;
     QVERIFY(m_vMapper->model() != 0);
     QCOMPARE(m_series->count(), count);
 
@@ -464,7 +464,7 @@ void tst_qcandlestickmodelmapper::verticalModelRemoveRows()
 void tst_qcandlestickmodelmapper::verticalModelInsertColumns()
 {
     createVerticalMapper();
-    int count = m_vMapper->lastCandlestickSetColumn() - m_vMapper->firstCandlestickSetColumn() + 1;
+    int count = m_vMapper->lastSetColumn() - m_vMapper->firstSetColumn() + 1;
     QVERIFY(m_vMapper->model() != 0);
     QCOMPARE(m_series->count(), count);
 
@@ -475,7 +475,7 @@ void tst_qcandlestickmodelmapper::verticalModelInsertColumns()
 void tst_qcandlestickmodelmapper::verticalModelRemoveColumns()
 {
     createVerticalMapper();
-    int count = m_vMapper->lastCandlestickSetColumn() - m_vMapper->firstCandlestickSetColumn() + 1;
+    int count = m_vMapper->lastSetColumn() - m_vMapper->firstSetColumn() + 1;
     QVERIFY(m_vMapper->model() != 0);
     QCOMPARE(m_series->count(), count);
 
@@ -491,7 +491,7 @@ void tst_qcandlestickmodelmapper::verticalModelRemoveColumns()
 void tst_qcandlestickmodelmapper::horizontalModelInsertRows()
 {
     createHorizontalMapper();
-    int count = m_hMapper->lastCandlestickSetRow() - m_hMapper->firstCandlestickSetRow() + 1;
+    int count = m_hMapper->lastSetRow() - m_hMapper->firstSetRow() + 1;
     QVERIFY(m_hMapper->model() != 0);
     QCOMPARE(m_series->count(), count);
 
@@ -502,7 +502,7 @@ void tst_qcandlestickmodelmapper::horizontalModelInsertRows()
 void tst_qcandlestickmodelmapper::horizontalModelRemoveRows()
 {
     createHorizontalMapper();
-    int count = m_hMapper->lastCandlestickSetRow() - m_hMapper->firstCandlestickSetRow() + 1;
+    int count = m_hMapper->lastSetRow() - m_hMapper->firstSetRow() + 1;
     QVERIFY(m_hMapper->model() != 0);
     QCOMPARE(m_series->count(), qMin(m_model->rowCount(), count));
 
@@ -518,7 +518,7 @@ void tst_qcandlestickmodelmapper::horizontalModelRemoveRows()
 void tst_qcandlestickmodelmapper::horizontalModelInsertColumns()
 {
     createHorizontalMapper();
-    int count = m_hMapper->lastCandlestickSetRow() - m_hMapper->firstCandlestickSetRow() + 1;
+    int count = m_hMapper->lastSetRow() - m_hMapper->firstSetRow() + 1;
     QVERIFY(m_hMapper->model() != 0);
     QCOMPARE(m_series->count(), count);
 
@@ -529,7 +529,7 @@ void tst_qcandlestickmodelmapper::horizontalModelInsertColumns()
 void tst_qcandlestickmodelmapper::horizontalModelRemoveColumns()
 {
     createHorizontalMapper();
-    int count = m_hMapper->lastCandlestickSetRow() - m_hMapper->firstCandlestickSetRow() + 1;
+    int count = m_hMapper->lastSetRow() - m_hMapper->firstSetRow() + 1;
     QVERIFY(m_hMapper->model() != 0);
     QCOMPARE(m_series->count(), count);
 
@@ -550,7 +550,7 @@ void tst_qcandlestickmodelmapper::modelUpdateCell()
     qreal newValue = 44.0;
     QVERIFY(m_model->setData(index, newValue));
     QCOMPARE(m_model->data(index).toReal(), newValue);
-    QCOMPARE(m_series->candlestickSets().at(index.row())->timestamp(), newValue);
+    QCOMPARE(m_series->sets().at(index.row())->timestamp(), newValue);
 }
 
 void tst_qcandlestickmodelmapper::verticalMapperSignals()
@@ -564,8 +564,8 @@ void tst_qcandlestickmodelmapper::verticalMapperSignals()
     QSignalSpy spy4(mapper, SIGNAL(highRowChanged()));
     QSignalSpy spy5(mapper, SIGNAL(lowRowChanged()));
     QSignalSpy spy6(mapper, SIGNAL(closeRowChanged()));
-    QSignalSpy spy7(mapper, SIGNAL(firstCandlestickSetColumnChanged()));
-    QSignalSpy spy8(mapper, SIGNAL(lastCandlestickSetColumnChanged()));
+    QSignalSpy spy7(mapper, SIGNAL(firstSetColumnChanged()));
+    QSignalSpy spy8(mapper, SIGNAL(lastSetColumnChanged()));
 
     mapper->setModel(m_model);
     mapper->setSeries(m_series);
@@ -574,8 +574,8 @@ void tst_qcandlestickmodelmapper::verticalMapperSignals()
     mapper->setHighRow(3);
     mapper->setLowRow(4);
     mapper->setCloseRow(5);
-    mapper->setFirstCandlestickSetColumn(0);
-    mapper->setLastCandlestickSetColumn(1);
+    mapper->setFirstSetColumn(0);
+    mapper->setLastSetColumn(1);
 
     QCOMPARE(spy0.count(), 1);
     QCOMPARE(spy1.count(), 1);
@@ -601,8 +601,8 @@ void tst_qcandlestickmodelmapper::horizontalMapperSignals()
     QSignalSpy spy4(mapper, SIGNAL(highColumnChanged()));
     QSignalSpy spy5(mapper, SIGNAL(lowColumnChanged()));
     QSignalSpy spy6(mapper, SIGNAL(closeColumnChanged()));
-    QSignalSpy spy7(mapper, SIGNAL(firstCandlestickSetRowChanged()));
-    QSignalSpy spy8(mapper, SIGNAL(lastCandlestickSetRowChanged()));
+    QSignalSpy spy7(mapper, SIGNAL(firstSetRowChanged()));
+    QSignalSpy spy8(mapper, SIGNAL(lastSetRowChanged()));
 
     mapper->setModel(m_model);
     mapper->setSeries(m_series);
@@ -611,8 +611,8 @@ void tst_qcandlestickmodelmapper::horizontalMapperSignals()
     mapper->setHighColumn(3);
     mapper->setLowColumn(4);
     mapper->setCloseColumn(5);
-    mapper->setFirstCandlestickSetRow(0);
-    mapper->setLastCandlestickSetRow(1);
+    mapper->setFirstSetRow(0);
+    mapper->setLastSetRow(1);
 
     QCOMPARE(spy0.count(), 1);
     QCOMPARE(spy1.count(), 1);

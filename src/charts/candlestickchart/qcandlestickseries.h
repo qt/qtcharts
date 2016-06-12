@@ -64,7 +64,7 @@ public:
     bool take(QCandlestickSet *set);
     void clear();
 
-    QList<QCandlestickSet *> candlestickSets() const;
+    QList<QCandlestickSet *> sets() const;
     int count() const;
 
     QAbstractSeries::SeriesType type() const;

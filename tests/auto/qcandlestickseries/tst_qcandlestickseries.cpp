@@ -57,7 +57,7 @@ private Q_SLOTS:
     void insert();
     void take();
     void clear();
-    void candlestickSets();
+    void sets();
     void count();
     void type();
     void maximumColumnWidth_data();
@@ -182,7 +182,7 @@ void tst_QCandlestickSeries::remove()
     QCOMPARE(m_series->count(), m_sets.count() - removeCount);
 
     for (int i = removeCount; i < m_sets.count(); ++i)
-        QCOMPARE(m_series->candlestickSets().at(i - removeCount), m_sets.at(i));
+        QCOMPARE(m_series->sets().at(i - removeCount), m_sets.at(i));
 
     // Try removing all sets again (should be ok, even if some sets have already been removed)
     for (int i = 0; i < m_sets.count(); ++i)
@@ -313,23 +313,23 @@ void tst_QCandlestickSeries::clear()
     QCOMPARE(m_series->count(), 0);
 }
 
-void tst_QCandlestickSeries::candlestickSets()
+void tst_QCandlestickSeries::sets()
 {
     m_series->append(m_sets);
-    QCOMPARE(m_series->candlestickSets(), m_sets);
+    QCOMPARE(m_series->sets(), m_sets);
 
     for (int i = 0; i < m_sets.count(); ++i)
-        QCOMPARE(m_series->candlestickSets().at(i), m_sets.at(i));
+        QCOMPARE(m_series->sets().at(i), m_sets.at(i));
 
     m_series->clear();
-    QCOMPARE(m_series->candlestickSets(), QList<QCandlestickSet *>());
+    QCOMPARE(m_series->sets(), QList<QCandlestickSet *>());
 }
 
 void tst_QCandlestickSeries::count()
 {
     m_series->append(m_sets);
     QCOMPARE(m_series->count(), m_sets.count());
-    QCOMPARE(m_series->count(), m_series->candlestickSets().count());
+    QCOMPARE(m_series->count(), m_series->sets().count());
 }
 
 void tst_QCandlestickSeries::type()
@@ -586,8 +586,8 @@ void tst_QCandlestickSeries::mouseClicked()
     QVERIFY(m_series->append(m_sets));
     QCOMPARE(m_series->count(), m_sets.count());
 
-    QCandlestickSet *set1 = m_series->candlestickSets().at(1);
-    QCandlestickSet *set2 = m_series->candlestickSets().at(2);
+    QCandlestickSet *set1 = m_series->sets().at(1);
+    QCandlestickSet *set2 = m_series->sets().at(2);
 
     QSignalSpy seriesSpy(m_series, SIGNAL(clicked(QCandlestickSet *)));
     QSignalSpy setSpy1(set1, SIGNAL(clicked()));
@@ -649,8 +649,8 @@ void tst_QCandlestickSeries::mouseHovered()
     QVERIFY(m_series->append(m_sets));
     QCOMPARE(m_series->count(), m_sets.count());
 
-    QCandlestickSet *set1 = m_series->candlestickSets().at(1);
-    QCandlestickSet *set2 = m_series->candlestickSets().at(2);
+    QCandlestickSet *set1 = m_series->sets().at(1);
+    QCandlestickSet *set2 = m_series->sets().at(2);
 
     QSignalSpy seriesSpy(m_series, SIGNAL(hovered(bool, QCandlestickSet *)));
     QSignalSpy setSpy1(set1, SIGNAL(hovered(bool)));
@@ -764,8 +764,8 @@ void tst_QCandlestickSeries::mousePressed()
     QVERIFY(m_series->append(m_sets));
     QCOMPARE(m_series->count(), m_sets.count());
 
-    QCandlestickSet *set1 = m_series->candlestickSets().at(1);
-    QCandlestickSet *set2 = m_series->candlestickSets().at(2);
+    QCandlestickSet *set1 = m_series->sets().at(1);
+    QCandlestickSet *set2 = m_series->sets().at(2);
 
     QSignalSpy seriesSpy(m_series, SIGNAL(pressed(QCandlestickSet *)));
     QSignalSpy setSpy1(set1, SIGNAL(pressed()));
@@ -827,8 +827,8 @@ void tst_QCandlestickSeries::mouseReleased()
     QVERIFY(m_series->append(m_sets));
     QCOMPARE(m_series->count(), m_sets.count());
 
-    QCandlestickSet *set1 = m_series->candlestickSets().at(1);
-    QCandlestickSet *set2 = m_series->candlestickSets().at(2);
+    QCandlestickSet *set1 = m_series->sets().at(1);
+    QCandlestickSet *set2 = m_series->sets().at(2);
 
     QSignalSpy seriesSpy(m_series, SIGNAL(released(QCandlestickSet *)));
     QSignalSpy setSpy1(set1, SIGNAL(released()));
@@ -890,8 +890,8 @@ void tst_QCandlestickSeries::mouseDoubleClicked()
     QVERIFY(m_series->append(m_sets));
     QCOMPARE(m_series->count(), m_sets.count());
 
-    QCandlestickSet *set1 = m_series->candlestickSets().at(1);
-    QCandlestickSet *set2 = m_series->candlestickSets().at(2);
+    QCandlestickSet *set1 = m_series->sets().at(1);
+    QCandlestickSet *set2 = m_series->sets().at(2);
 
     QSignalSpy seriesSpy(m_series, SIGNAL(doubleClicked(QCandlestickSet *)));
     QSignalSpy setSpy1(set1, SIGNAL(doubleClicked()));

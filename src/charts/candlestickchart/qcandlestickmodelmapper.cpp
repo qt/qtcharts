@@ -310,19 +310,19 @@ int QCandlestickModelMapper::close() const
 
 /*!
     Sets the section of the model that is used as the data source for the first candlestick set.
-    Parameter \a firstCandlestickSetSection specifies the section of the model. Default value is -1.
+    Parameter \a firstSetSection specifies the section of the model. Default value is -1.
 */
-void QCandlestickModelMapper::setFirstCandlestickSetSection(int firstCandlestickSetSection)
+void QCandlestickModelMapper::setFirstSetSection(int firstSetSection)
 {
     Q_D(QCandlestickModelMapper);
 
-    firstCandlestickSetSection = qMax(firstCandlestickSetSection, -1);
+    firstSetSection = qMax(firstSetSection, -1);
 
-    if (d->m_firstCandlestickSetSection == firstCandlestickSetSection)
+    if (d->m_firstSetSection == firstSetSection)
         return;
 
-    d->m_firstCandlestickSetSection = firstCandlestickSetSection;
-    emit d->firstCandlestickSetSectionChanged();
+    d->m_firstSetSection = firstSetSection;
+    emit d->firstSetSectionChanged();
     d->initializeCandlestickFromModel();
 }
 
@@ -330,28 +330,28 @@ void QCandlestickModelMapper::setFirstCandlestickSetSection(int firstCandlestick
     Returns the section of the model that is used as the data source for the first candlestick set.
     Default value is -1 (invalid mapping).
 */
-int QCandlestickModelMapper::firstCandlestickSetSection() const
+int QCandlestickModelMapper::firstSetSection() const
 {
     Q_D(const QCandlestickModelMapper);
 
-    return d->m_firstCandlestickSetSection;
+    return d->m_firstSetSection;
 }
 
 /*!
     Sets the section of the model that is used as the data source for the last candlestick set.
-    Parameter \a lastCandlestickSetSection specifies the section of the model. Default value is -1.
+    Parameter \a lastSetSection specifies the section of the model. Default value is -1.
 */
-void QCandlestickModelMapper::setLastCandlestickSetSection(int lastCandlestickSetSection)
+void QCandlestickModelMapper::setLastSetSection(int lastSetSection)
 {
     Q_D(QCandlestickModelMapper);
 
-    lastCandlestickSetSection = qMax(lastCandlestickSetSection, -1);
+    lastSetSection = qMax(lastSetSection, -1);
 
-    if (d->m_lastCandlestickSetSection == lastCandlestickSetSection)
+    if (d->m_lastSetSection == lastSetSection)
         return;
 
-    d->m_lastCandlestickSetSection = lastCandlestickSetSection;
-    emit d->lastCandlestickSetSectionChanged();
+    d->m_lastSetSection = lastSetSection;
+    emit d->lastSetSectionChanged();
     d->initializeCandlestickFromModel();
 }
 
@@ -359,11 +359,11 @@ void QCandlestickModelMapper::setLastCandlestickSetSection(int lastCandlestickSe
     Returns the section of the model that is used as the data source for the last candlestick set.
     Default value is -1 (invalid mapping).
 */
-int QCandlestickModelMapper::lastCandlestickSetSection() const
+int QCandlestickModelMapper::lastSetSection() const
 {
     Q_D(const QCandlestickModelMapper);
 
-    return d->m_lastCandlestickSetSection;
+    return d->m_lastSetSection;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -377,8 +377,8 @@ QCandlestickModelMapperPrivate::QCandlestickModelMapperPrivate(QCandlestickModel
       m_high(-1),
       m_low(-1),
       m_close(-1),
-      m_firstCandlestickSetSection(-1),
-      m_lastCandlestickSetSection(-1),
+      m_firstSetSection(-1),
+      m_lastSetSection(-1),
       m_modelSignalsBlock(false),
       m_seriesSignalsBlock(false),
       q_ptr(q)
@@ -393,11 +393,11 @@ void QCandlestickModelMapperPrivate::initializeCandlestickFromModel()
     blockSeriesSignals();
     // clear current content
     m_series->clear();
-    m_candlestickSets.clear();
+    m_sets.clear();
 
     // create the initial candlestick sets
-    QList<QCandlestickSet *> candlestickSets;
-    for (int i = m_firstCandlestickSetSection; i <= m_lastCandlestickSetSection; ++i) {
+    QList<QCandlestickSet *> sets;
+    for (int i = m_firstSetSection; i <= m_lastSetSection; ++i) {
         QModelIndex timestampIndex = candlestickModelIndex(i, m_timestamp);
         QModelIndex openIndex = candlestickModelIndex(i, m_open);
         QModelIndex highIndex = candlestickModelIndex(i, m_high);
@@ -421,13 +421,13 @@ void QCandlestickModelMapperPrivate::initializeCandlestickFromModel()
             connect(set, SIGNAL(lowChanged()), this, SLOT(candlestickSetChanged()));
             connect(set, SIGNAL(closeChanged()), this, SLOT(candlestickSetChanged()));
 
-            candlestickSets.append(set);
+            sets.append(set);
         } else {
             break;
         }
     }
-    m_series->append(candlestickSets);
-    m_candlestickSets.append(candlestickSets);
+    m_series->append(sets);
+    m_sets.append(sets);
     blockSeriesSignals(false);
 }
 
@@ -485,7 +485,7 @@ void QCandlestickModelMapperPrivate::modelRowsInserted(QModelIndex parent, int s
     blockSeriesSignals();
     if (q->orientation() == Qt::Vertical)
         insertData(start, end);
-    else if (start <= m_firstCandlestickSetSection || start <= m_lastCandlestickSetSection)
+    else if (start <= m_firstSetSection || start <= m_lastSetSection)
         initializeCandlestickFromModel();  // if the changes affect the map - reinitialize
     blockSeriesSignals(false);
 }
@@ -502,7 +502,7 @@ void QCandlestickModelMapperPrivate::modelRowsRemoved(QModelIndex parent, int st
     blockSeriesSignals();
     if (q->orientation() == Qt::Vertical)
         removeData(start, end);
-    else if (start <= m_firstCandlestickSetSection || start <= m_lastCandlestickSetSection)
+    else if (start <= m_firstSetSection || start <= m_lastSetSection)
         initializeCandlestickFromModel();  // if the changes affect the map - reinitialize
     blockSeriesSignals(false);
 }
@@ -519,7 +519,7 @@ void QCandlestickModelMapperPrivate::modelColumnsInserted(QModelIndex parent, in
     blockSeriesSignals();
     if (q->orientation() == Qt::Horizontal)
         insertData(start, end);
-    else if (start <= m_firstCandlestickSetSection || start <= m_lastCandlestickSetSection)
+    else if (start <= m_firstSetSection || start <= m_lastSetSection)
         initializeCandlestickFromModel();  // if the changes affect the map - reinitialize
     blockSeriesSignals(false);
 }
@@ -536,7 +536,7 @@ void QCandlestickModelMapperPrivate::modelColumnsRemoved(QModelIndex parent, int
     blockSeriesSignals();
     if (q->orientation() == Qt::Horizontal)
         removeData(start, end);
-    else if (start <= m_firstCandlestickSetSection || start <= m_lastCandlestickSetSection)
+    else if (start <= m_firstSetSection || start <= m_lastSetSection)
         initializeCandlestickFromModel();  // if the changes affect the map - reinitialize
     blockSeriesSignals(false);
 }
@@ -556,20 +556,20 @@ void QCandlestickModelMapperPrivate::candlestickSetsAdded(const QList<QCandlesti
     if (sets.isEmpty())
         return;
 
-    int firstIndex = m_series->candlestickSets().indexOf(sets.at(0));
+    int firstIndex = m_series->sets().indexOf(sets.at(0));
     if (firstIndex == -1)
         return;
 
-    m_lastCandlestickSetSection += sets.count();
+    m_lastSetSection += sets.count();
 
     blockModelSignals();
     if (q->orientation() == Qt::Vertical)
-        m_model->insertColumns(firstIndex + m_firstCandlestickSetSection, sets.count());
+        m_model->insertColumns(firstIndex + m_firstSetSection, sets.count());
     else
-        m_model->insertRows(firstIndex + m_firstCandlestickSetSection, sets.count());
+        m_model->insertRows(firstIndex + m_firstSetSection, sets.count());
 
     for (int i = 0; i < sets.count(); ++i) {
-        int section = i + firstIndex + m_firstCandlestickSetSection;
+        int section = i + firstIndex + m_firstSetSection;
         m_model->setData(candlestickModelIndex(section, m_timestamp), sets.at(i)->timestamp());
         m_model->setData(candlestickModelIndex(section, m_open), sets.at(i)->open());
         m_model->setData(candlestickModelIndex(section, m_high), sets.at(i)->high());
@@ -590,20 +590,20 @@ void QCandlestickModelMapperPrivate::candlestickSetsRemoved(const QList<QCandles
     if (sets.isEmpty())
         return;
 
-    int firstIndex = m_candlestickSets.indexOf(sets.at(0));
+    int firstIndex = m_sets.indexOf(sets.at(0));
     if (firstIndex == -1)
         return;
 
-    m_lastCandlestickSetSection -= sets.count();
+    m_lastSetSection -= sets.count();
 
     for (int i = firstIndex + sets.count() - 1; i >= firstIndex; --i)
-        m_candlestickSets.removeAt(i);
+        m_sets.removeAt(i);
 
     blockModelSignals();
     if (q->orientation() == Qt::Vertical)
-        m_model->removeColumns(firstIndex + m_firstCandlestickSetSection, sets.count());
+        m_model->removeColumns(firstIndex + m_firstSetSection, sets.count());
     else
-        m_model->removeRows(firstIndex + m_firstCandlestickSetSection, sets.count());
+        m_model->removeRows(firstIndex + m_firstSetSection, sets.count());
     blockModelSignals(false);
     initializeCandlestickFromModel();
 }
@@ -617,11 +617,11 @@ void QCandlestickModelMapperPrivate::candlestickSetChanged()
     if (!set)
         return;
 
-    int section = m_series->candlestickSets().indexOf(set);
+    int section = m_series->sets().indexOf(set);
     if (section < 0)
         return;
 
-    section += m_firstCandlestickSetSection;
+    section += m_firstSetSection;
 
     blockModelSignals();
     m_model->setData(candlestickModelIndex(section, m_timestamp), set->timestamp());
@@ -647,20 +647,20 @@ QCandlestickSet *QCandlestickModelMapperPrivate::candlestickSet(QModelIndex inde
     int section = (q->orientation() == Qt::Vertical) ? index.column() : index.row();
     int pos = (q->orientation() == Qt::Vertical) ? index.row() : index.column();
 
-    if (section < m_firstCandlestickSetSection || section > m_lastCandlestickSetSection)
+    if (section < m_firstSetSection || section > m_lastSetSection)
         return 0; // This part of model has not been mapped to any candlestick set.
 
     if (pos != m_timestamp && pos != m_open && pos != m_high && pos != m_low && pos != m_close)
         return 0; // This part of model has not been mapped to any candlestick set.
 
-    return m_series->candlestickSets().at(section - m_firstCandlestickSetSection);
+    return m_series->sets().at(section - m_firstSetSection);
 }
 
 QModelIndex QCandlestickModelMapperPrivate::candlestickModelIndex(int section, int pos)
 {
     Q_Q(QCandlestickModelMapper);
 
-    if (section < m_firstCandlestickSetSection || section > m_lastCandlestickSetSection)
+    if (section < m_firstSetSection || section > m_lastSetSection)
         return QModelIndex(); // invalid
 
     if (pos != m_timestamp && pos != m_open && pos != m_high && pos != m_low && pos != m_close)

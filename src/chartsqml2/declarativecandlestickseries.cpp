@@ -126,7 +126,7 @@ QString DeclarativeCandlestickSeries::brushFilename() const
 
 DeclarativeCandlestickSet *DeclarativeCandlestickSeries::at(int index)
 {
-    QList<QCandlestickSet *> sets = candlestickSets();
+    QList<QCandlestickSet *> sets = this->sets();
     if (index >= 0 && index < sets.count())
         return qobject_cast<DeclarativeCandlestickSet *>(sets[index]);
 
@@ -158,7 +158,7 @@ bool DeclarativeCandlestickSeries::append(qreal open, qreal high, qreal low, qre
 bool DeclarativeCandlestickSeries::remove(qreal timestamp)
 {
     for (int i = 0; i < count(); ++i) {
-        QCandlestickSet *set = candlestickSets().at(i);
+        QCandlestickSet *set = sets().at(i);
         if (set->timestamp() == timestamp)
             return QCandlestickSeries::remove(set);
     }
