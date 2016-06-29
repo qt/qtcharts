@@ -2,19 +2,10 @@
 
 TARGET = QtCharts
 
-message($$QT_CONFIG)
 QT = core gui widgets
-DEFINES += QT_CHARTS_LIBRARY
 contains(QT_COORD_TYPE, float): DEFINES += QT_QREAL_IS_FLOAT
 
-# Fix exports in static builds for applications linking charts module
-static: MODULE_DEFINES += QT_CHARTS_STATICLIB
-
-MODULE_INCNAME = QtCharts
-
 QMAKE_DOCS = $$PWD/doc/qtcharts.qdocconf
-
-load(qt_module)
 
 QMAKE_TARGET_PRODUCT = "Qt Charts (Qt $$QT_VERSION)"
 QMAKE_TARGET_DESCRIPTION = "Charts component for Qt."
@@ -62,7 +53,6 @@ PUBLIC_HEADERS += \
     $$PWD/chartsnamespace.h \
     $$PWD/qpolarchart.h
 
-include($$PWD/common.pri)
 include($$PWD/animations/animations.pri)
 include($$PWD/areachart/areachart.pri)
 include($$PWD/axis/axis.pri)
@@ -96,3 +86,5 @@ win32:!winrt:!wince {
     # ChartThemeSystem uses Windows native API
     LIBS += -luser32
 }
+
+load(qt_module)

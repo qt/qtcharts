@@ -8,14 +8,6 @@ INCLUDEPATH += $$PWD \
     $$PWD/horizontal/stacked \
     $$PWD/horizontal/percent
 
-DEPENDPATH += $$PWD \
-    $$PWD/vertical/bar \
-    $$PWD/vertical/stacked \
-    $$PWD/vertical/percent \
-    $$PWD/horizontal/bar \
-    $$PWD/horizontal/stacked \
-    $$PWD/horizontal/percent
-
 SOURCES += \
     $$PWD/bar.cpp \
     $$PWD/abstractbarchartitem.cpp \
