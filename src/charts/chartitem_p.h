@@ -47,7 +47,6 @@ public:
 public Q_SLOTS:
     virtual void handleDomainUpdated();
 
-    void reversePainter(QPainter *painter, const QRectF &clipRect);
     QAbstractSeriesPrivate* seriesPrivate() const {return m_series;}
 
 protected:

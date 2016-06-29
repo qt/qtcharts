@@ -63,6 +63,7 @@ void XYDomain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY)
 void XYDomain::zoomIn(const QRectF &rect)
 {
     storeZoomReset();
+    QRectF fixedRect = fixZoomRect(rect);
     qreal dx = spanX() / m_size.width();
     qreal dy = spanY() / m_size.height();
 
@@ -71,10 +72,10 @@ void XYDomain::zoomIn(const QRectF &rect)
     qreal minY = m_minY;
     qreal maxY = m_maxY;
 
-    maxX = minX + dx * rect.right();
-    minX = minX + dx * rect.left();
-    minY = maxY - dy * rect.bottom();
-    maxY = maxY - dy * rect.top();
+    maxX = minX + dx * fixedRect.right();
+    minX = minX + dx * fixedRect.left();
+    minY = maxY - dy * fixedRect.bottom();
+    maxY = maxY - dy * fixedRect.top();
 
     if ((maxX - minX) == spanX()) {
         minX = m_minX;
@@ -91,6 +92,7 @@ void XYDomain::zoomIn(const QRectF &rect)
 void XYDomain::zoomOut(const QRectF &rect)
 {
     storeZoomReset();
+    QRectF fixedRect = fixZoomRect(rect);
     qreal dx = spanX() / rect.width();
     qreal dy = spanY() / rect.height();
 
@@ -99,9 +101,9 @@ void XYDomain::zoomOut(const QRectF &rect)
     qreal minY = m_minY;
     qreal maxY = m_maxY;
 
-    minX = maxX - dx * rect.right();
+    minX = maxX - dx * fixedRect.right();
     maxX = minX + dx * m_size.width();
-    maxY = minY + dy * rect.bottom();
+    maxY = minY + dy * fixedRect.bottom();
     minY = maxY - dy * m_size.height();
 
     if ((maxX - minX) == spanX()) {
@@ -118,6 +120,11 @@ void XYDomain::zoomOut(const QRectF &rect)
 
 void XYDomain::move(qreal dx, qreal dy)
 {
+    if (m_reverseX)
+        dx = -dx;
+    if (m_reverseY)
+        dy = -dy;
+
     qreal x = spanX() / m_size.width();
     qreal y = spanY() / m_size.height();
 
@@ -142,7 +149,11 @@ QPointF XYDomain::calculateGeometryPoint(const QPointF &point, bool &ok) const
     const qreal deltaX = m_size.width() / (m_maxX - m_minX);
     const qreal deltaY = m_size.height() / (m_maxY - m_minY);
     qreal x = (point.x() - m_minX) * deltaX;
-    qreal y = (point.y() - m_minY) * -deltaY + m_size.height();
+    if (m_reverseX)
+        x = m_size.width() - x;
+    qreal y = (point.y() - m_minY) * deltaY;
+    if (!m_reverseY)
+        y = m_size.height() - y;
     ok = true;
     return QPointF(x, y);
 }
@@ -157,7 +168,11 @@ QVector<QPointF> XYDomain::calculateGeometryPoints(const QVector<QPointF> &vecto
 
     for (int i = 0; i < vector.count(); ++i) {
         qreal x = (vector[i].x() - m_minX) * deltaX;
-        qreal y = (vector[i].y() - m_minY) * -deltaY + m_size.height();
+        if (m_reverseX)
+            x = m_size.width() - x;
+        qreal y = (vector[i].y() - m_minY) * deltaY;
+        if (!m_reverseY)
+            y = m_size.height() - y;
         result[i].setX(x);
         result[i].setY(y);
     }
@@ -168,8 +183,12 @@ QPointF XYDomain::calculateDomainPoint(const QPointF &point) const
 {
     const qreal deltaX = m_size.width() / (m_maxX - m_minX);
     const qreal deltaY = m_size.height() / (m_maxY - m_minY);
-    qreal x = point.x() / deltaX + m_minX;
-    qreal y = (point.y() - m_size.height()) / (-deltaY) + m_minY;
+    qreal x = m_reverseX ? (m_size.width() - point.x()) : point.x();
+    x /= deltaX;
+    x += m_minX;
+    qreal y = m_reverseY ? point.y() : (m_size.height() - point.y());
+    y /= deltaY;
+    y += m_minY;
     return QPointF(x, y);
 }
 

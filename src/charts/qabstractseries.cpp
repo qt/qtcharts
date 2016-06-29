@@ -449,40 +449,6 @@ void QAbstractSeriesPrivate::initializeAnimations(QChart::AnimationOptions optio
     Q_UNUSED(curve);
 }
 
-bool QAbstractSeriesPrivate::reverseXAxis()
-{
-    bool reverseXAxis = false;
-    if (m_axes.size() != 0 && !(m_chart->chartType() == QChart::ChartTypePolar)) {
-        int i = 0;
-        while (i < m_axes.size()) {
-            if (m_axes.at(i)->orientation() == Qt::Horizontal && m_axes.at(i)->isReverse()) {
-                reverseXAxis = true;
-                break;
-            }
-            i++;
-        }
-    }
-
-    return reverseXAxis;
-}
-
-bool QAbstractSeriesPrivate::reverseYAxis()
-{
-    bool reverseYAxis = false;
-    if (m_axes.size() != 0 && !(m_chart->chartType() == QChart::ChartTypePolar)) {
-        int i = 0;
-        while (i < m_axes.size()) {
-            if (m_axes.at(i)->orientation() == Qt::Vertical && m_axes.at(i)->isReverse()) {
-                reverseYAxis = true;
-                break;
-            }
-            i++;
-        }
-    }
-
-    return reverseYAxis;
-}
-
 // This function can be used to explicitly block OpenGL use from some otherwise supported series,
 // such as the line series used as edge series of an area series.
 void QAbstractSeriesPrivate::setBlockOpenGL(bool enable)

@@ -167,6 +167,8 @@ void AreaChartItem::handleDomainUpdated()
         AbstractDomain* d = m_upper->domain();
         d->setSize(domain()->size());
         d->setRange(domain()->minX(),domain()->maxX(),domain()->minY(),domain()->maxY());
+        d->setReverseX(domain()->isReverseX());
+        d->setReverseY(domain()->isReverseY());
         m_upper->handleDomainUpdated();
     }
 
@@ -174,6 +176,8 @@ void AreaChartItem::handleDomainUpdated()
         AbstractDomain* d = m_lower->domain();
         d->setSize(domain()->size());
         d->setRange(domain()->minX(),domain()->maxX(),domain()->minY(),domain()->maxY());
+        d->setReverseX(domain()->isReverseX());
+        d->setReverseY(domain()->isReverseY());
         m_lower->handleDomainUpdated();
     }
 }
@@ -191,8 +195,6 @@ void AreaChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     else
         painter->setClipRect(clipRect);
 
-    reversePainter(painter, clipRect);
-
     painter->drawPath(m_path);
     if (m_pointsVisible) {
         painter->setPen(m_pointPen);
@@ -200,8 +202,6 @@ void AreaChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
         if (m_lower)
             painter->drawPoints(m_lower->geometryPoints());
     }
-
-    reversePainter(painter, clipRect);
 
     // Draw series point label
     if (m_pointLabelsVisible) {
@@ -231,17 +231,9 @@ void AreaChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
                 // Position text in relation to the point
                 int pointLabelWidth = fm.width(pointLabel);
                 QPointF position(m_upper->geometryPoints().at(i));
-                if (!seriesPrivate()->reverseXAxis())
-                    position.setX(position.x() - pointLabelWidth / 2);
-                else
-                    position.setX(domain()->size().width() - position.x() - pointLabelWidth / 2);
-                if (!seriesPrivate()->reverseYAxis()) {
-                    position.setY(position.y() - m_series->upperSeries()->pen().width() / 2
-                                  - labelOffset);
-                } else {
-                    position.setY(domain()->size().height() - position.y()
-                                  - m_series->upperSeries()->pen().width() / 2 - labelOffset);
-                }
+                position.setX(position.x() - pointLabelWidth / 2);
+                position.setY(position.y() - m_series->upperSeries()->pen().width() / 2
+                              - labelOffset);
                 painter->drawText(position, pointLabel);
             }
         }
@@ -257,17 +249,9 @@ void AreaChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
                 // Position text in relation to the point
                 int pointLabelWidth = fm.width(pointLabel);
                 QPointF position(m_lower->geometryPoints().at(i));
-                if (!seriesPrivate()->reverseXAxis())
-                    position.setX(position.x() - pointLabelWidth / 2);
-                else
-                    position.setX(domain()->size().width() - position.x() - pointLabelWidth / 2);
-                if (!seriesPrivate()->reverseYAxis()) {
-                    position.setY(position.y() - m_series->lowerSeries()->pen().width() / 2
-                                  - labelOffset);
-                } else {
-                    position.setY(domain()->size().height() - position.y()
-                                  - m_series->lowerSeries()->pen().width() / 2 - labelOffset);
-                }
+                position.setX(position.x() - pointLabelWidth / 2);
+                position.setY(position.y() - m_series->lowerSeries()->pen().width() / 2
+                              - labelOffset);
                 painter->drawText(position, pointLabel);
             }
         }

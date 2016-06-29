@@ -452,8 +452,6 @@ void SplineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
         painter->setClipRect(clipRect);
     }
 
-    reversePainter(painter, clipRect);
-
     painter->drawPath(m_path);
 
     if (m_pointsVisible) {
@@ -463,8 +461,6 @@ void SplineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
         else
             painter->drawPoints(geometryPoints());
     }
-
-    reversePainter(painter, clipRect);
 
     if (m_pointLabelsVisible) {
         if (m_pointLabelsClipping)

@@ -73,15 +73,16 @@ void XLogYDomain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY)
 void XLogYDomain::zoomIn(const QRectF &rect)
 {
     storeZoomReset();
+    QRectF fixedRect = fixZoomRect(rect);
     qreal dx = spanX() / m_size.width();
     qreal maxX = m_maxX;
     qreal minX = m_minX;
 
-    maxX = minX + dx * rect.right();
-    minX = minX + dx * rect.left();
+    maxX = minX + dx * fixedRect.right();
+    minX = minX + dx * fixedRect.left();
 
-    qreal logLeftY = m_logRightY - rect.bottom() * (m_logRightY - m_logLeftY) / m_size.height();
-    qreal logRightY = m_logRightY - rect.top() * (m_logRightY - m_logLeftY) / m_size.height();
+    qreal logLeftY = m_logRightY - fixedRect.bottom() * (m_logRightY - m_logLeftY) / m_size.height();
+    qreal logRightY = m_logRightY - fixedRect.top() * (m_logRightY - m_logLeftY) / m_size.height();
     qreal leftY = qPow(m_logBaseY, logLeftY);
     qreal rightY = qPow(m_logBaseY, logRightY);
     qreal minY = leftY < rightY ? leftY : rightY;
@@ -93,14 +94,15 @@ void XLogYDomain::zoomIn(const QRectF &rect)
 void XLogYDomain::zoomOut(const QRectF &rect)
 {
     storeZoomReset();
-    qreal dx = spanX() / rect.width();
+    QRectF fixedRect = fixZoomRect(rect);
+    qreal dx = spanX() / fixedRect.width();
     qreal maxX = m_maxX;
     qreal minX = m_minX;
 
-    minX = maxX - dx * rect.right();
+    minX = maxX - dx * fixedRect.right();
     maxX = minX + dx * m_size.width();
 
-    const qreal factorY = m_size.height() / rect.height();
+    const qreal factorY = m_size.height() / fixedRect.height();
     qreal newLogMinY = m_logLeftY + (m_logRightY - m_logLeftY) / 2 * (1 - factorY);
     qreal newLogMaxY = m_logLeftY + (m_logRightY - m_logLeftY) / 2 * (1 + factorY);
     qreal leftY = qPow(m_logBaseY, newLogMinY);
@@ -113,6 +115,11 @@ void XLogYDomain::zoomOut(const QRectF &rect)
 
 void XLogYDomain::move(qreal dx, qreal dy)
 {
+    if (m_reverseX)
+        dx = -dx;
+    if (m_reverseY)
+        dy = -dy;
+
     qreal x = spanX() / m_size.width();
     qreal maxX = m_maxX;
     qreal minX = m_minX;
@@ -137,9 +144,13 @@ QPointF XLogYDomain::calculateGeometryPoint(const QPointF &point, bool &ok) cons
     const qreal deltaY = m_size.height() / qAbs(m_logRightY - m_logLeftY);
 
     qreal x = (point.x() - m_minX) * deltaX;
+    if (m_reverseX)
+        x = m_size.width() - x;
     qreal y(0);
     if (point.y() > 0) {
-        y = (std::log10(point.y()) / std::log10(m_logBaseY)) * -deltaY - m_logLeftY * -deltaY + m_size.height();
+        y = ((std::log10(point.y()) / std::log10(m_logBaseY)) - m_logLeftY) * deltaY;
+        if (!m_reverseY)
+            y = m_size.height() - y;
         ok = true;
     } else {
         y = m_size.height();
@@ -160,7 +171,11 @@ QVector<QPointF> XLogYDomain::calculateGeometryPoints(const QVector<QPointF> &ve
     for (int i = 0; i < vector.count(); ++i) {
         if (vector[i].y() > 0) {
             qreal x = (vector[i].x() - m_minX) * deltaX;
-            qreal y = (std::log10(vector[i].y()) / std::log10(m_logBaseY)) * -deltaY - m_logLeftY * -deltaY + m_size.height();
+            if (m_reverseX)
+                x = m_size.width() - x;
+            qreal y = ((std::log10(vector[i].y()) / std::log10(m_logBaseY)) - m_logLeftY) * deltaY;
+            if (!m_reverseY)
+                y = m_size.height() - y;
             result[i].setX(x);
             result[i].setY(y);
         } else {
@@ -175,8 +190,11 @@ QPointF XLogYDomain::calculateDomainPoint(const QPointF &point) const
 {
     const qreal deltaX = m_size.width() / (m_maxX - m_minX);
     const qreal deltaY = m_size.height() / qAbs(m_logRightY - m_logLeftY);
-    qreal x = point.x() / deltaX + m_minX;
-    qreal y = qPow(m_logBaseY, m_logLeftY + (m_size.height() - point.y()) / deltaY);
+    qreal x = m_reverseX ? (m_size.width() - point.x()) : point.x();
+    x /= deltaX;
+    x += m_minX;
+    qreal y = m_reverseY ? point.y() : (m_size.height() - point.y());
+    y = qPow(m_logBaseY, m_logLeftY + y / deltaY);
     return QPointF(x, y);
 }
 
