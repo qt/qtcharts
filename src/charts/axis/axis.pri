@@ -6,12 +6,6 @@ INCLUDEPATH += $$PWD \
     $$PWD/categoryaxis \
     $$PWD/logvalueaxis
 
-DEPENDPATH += $$PWD \
-    $$PWD/valueaxis \
-    $$PWD/barcategoryaxis \
-    $$PWD/categoryaxis \
-    $$PWD/logvalueaxis
-
 SOURCES += \
     $$PWD/chartaxiselement.cpp \
     $$PWD/cartesianchartaxis.cpp \
@@ -83,9 +77,6 @@ PRIVATE_HEADERS += \
 
 !contains(QT_COORD_TYPE, float): {
 INCLUDEPATH += \
-    $$PWD/datetimeaxis
-
-DEPENDPATH += \
     $$PWD/datetimeaxis
 
 SOURCES += \

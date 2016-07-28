@@ -42,18 +42,17 @@
 */
 #define QT_CHARTS_VERSION_CHECK(major, minor, patch) ((major<<16)|(minor<<8)|(patch))
 
-#if defined(QT_CHARTS_LIBRARY)
-#  define QT_CHARTS_EXPORT Q_DECL_EXPORT
+#ifndef QT_STATIC
+#  if defined(QT_BUILD_CHARTS_LIB)
+#    define QT_CHARTS_EXPORT Q_DECL_EXPORT
+#  else
+#    define QT_CHARTS_EXPORT Q_DECL_IMPORT
+#  endif
 #else
-#  define QT_CHARTS_EXPORT Q_DECL_IMPORT
+#  define QT_CHARTS_EXPORT
 #endif
 
-#ifdef QT_CHARTS_STATICLIB
-#  undef QT_CHARTS_EXPORT
-#  undef Q_AUTOTEST_EXPORT
-#  define QT_CHARTS_EXPORT
-#  define Q_AUTOTEST_EXPORT
-#endif
+#define QT_CHARTS_AUTOTEST_EXPORT Q_AUTOTEST_EXPORT
 
 #define QT_CHARTS_NAMESPACE QtCharts
 

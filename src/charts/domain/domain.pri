@@ -1,7 +1,6 @@
 #Subdirectiores are defined here, because qt creator doesn't handle nested include(foo.pri) chains very well.
 
 INCLUDEPATH += $$PWD
-DEPENDPATH += $$PWD
 
 SOURCES += \
     $$PWD/abstractdomain.cpp \
