@@ -49,6 +49,7 @@ struct GLXYSeriesData {
     QAbstractSeries::SeriesType type;
     QVector2D min;
     QVector2D delta;
+    bool visible;
 };
 
 typedef QMap<const QXYSeries *, GLXYSeriesData *> GLXYDataMap;
@@ -80,6 +81,7 @@ public Q_SLOTS:
     void cleanup();
     void handleSeriesPenChange();
     void handleSeriesOpenGLChange();
+    void handleSeriesVisibilityChange();
     void handleScatterColorChange();
     void handleScatterMarkerSizeChange();
 

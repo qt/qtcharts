@@ -248,15 +248,21 @@ void ScatterChartItem::setBrush(const QBrush &brush)
 
 void ScatterChartItem::handleUpdated()
 {
-    int count = m_items.childItems().count();
+    if (m_series->useOpenGL()) {
+        if ((m_series->isVisible() != m_visible)) {
+            m_visible = m_series->isVisible();
+            refreshGlChart();
+        }
+        return;
+    }
 
+    int count = m_items.childItems().count();
     if (count == 0)
         return;
 
     bool recreate = m_visible != m_series->isVisible()
                     || m_size != m_series->markerSize()
                     || m_shape != m_series->markerShape();
-
     m_visible = m_series->isVisible();
     m_size = m_series->markerSize();
     m_shape = m_series->markerShape();

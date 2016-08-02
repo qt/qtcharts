@@ -118,6 +118,12 @@ void XYChart::updateGlChart()
     updateGeometry();
 }
 
+// Doesn't update gl geometry, but refreshes the chart
+void XYChart::refreshGlChart()
+{
+    presenter()->updateGLWidget();
+}
+
 //handlers
 
 void XYChart::handlePointAdded(int index)
