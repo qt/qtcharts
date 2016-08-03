@@ -516,6 +516,9 @@ QSGNode *DeclarativeChart::updatePaintNode(QSGNode *oldNode, QQuickItem::UpdateP
             connect(window(), &QQuickWindow::beforeRendering,
                     node->glRenderNode(), &DeclarativeRenderNode::render);
         }
+        // Ensure that chart is rendered whenever node is recreated
+        if (m_sceneImage)
+            m_sceneImageDirty = true;
     }
 
     const QRectF &bRect = boundingRect();
