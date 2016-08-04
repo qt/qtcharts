@@ -24,6 +24,7 @@
 #include <QtCharts/QXYSeries>
 #include <QtCore/QAbstractItemModel>
 #include <QtCore/QDateTime>
+#include <QtCore/QDebug>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -536,15 +537,27 @@ void QXYModelMapperPrivate::initializeXYFromModel()
     int pointPos = 0;
     QModelIndex xIndex = xModelIndex(pointPos);
     QModelIndex yIndex = yModelIndex(pointPos);
-    while (xIndex.isValid() && yIndex.isValid()) {
-        QPointF point;
-        point.setX(valueFromModel(xIndex));
-        point.setY(valueFromModel(yIndex));
-        m_series->append(point);
-        pointPos++;
-        xIndex = xModelIndex(pointPos);
-        yIndex = yModelIndex(pointPos);
+
+    if (xIndex.isValid() && yIndex.isValid()) {
+        while (xIndex.isValid() && yIndex.isValid()) {
+            QPointF point;
+            point.setX(valueFromModel(xIndex));
+            point.setY(valueFromModel(yIndex));
+            m_series->append(point);
+            pointPos++;
+            xIndex = xModelIndex(pointPos);
+            yIndex = yModelIndex(pointPos);
+            // Don't warn about invalid index after the first, those are valid and used to
+            // determine when we should end looping.
+        }
+    } else {
+        // Invalid index right off the bat means series will be left empty, so output a warning
+        if (!xIndex.isValid())
+            qWarning() << __FUNCTION__ << QStringLiteral("Invalid X coordinate index in model mapper.");
+        else if (!yIndex.isValid())
+            qWarning() << __FUNCTION__ << QStringLiteral("Invalid Y coordinate index in model mapper.");
     }
+
     blockSeriesSignals(false);
 }
 
