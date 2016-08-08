@@ -27,35 +27,29 @@
 **
 ****************************************************************************/
 
-#ifndef DECLARATIVECHARTNODE_P_H
-#define DECLARATIVECHARTNODE_P_H
+#ifndef DECLARATIVEABSTRACTRENDERNODE_H
+#define DECLARATIVEABSTRACTRENDERNODE_H
 
 #include <QtCharts/QChartGlobal>
 #include <QtQuick/QSGNode>
 #include <QtQuick/QQuickWindow>
-#include <QtQuick/QSGImageNode>
+#include <private/glxyseriesdata_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class DeclarativeAbstractRenderNode;
-class DeclarativeChartNode : public QSGRootNode
+class DeclarativeAbstractRenderNode : public QSGRootNode
 {
 public:
-    DeclarativeChartNode(QQuickWindow *window);
-    ~DeclarativeChartNode();
+    DeclarativeAbstractRenderNode() {}
 
-    void createTextureFromImage(const QImage &chartImage);
-    DeclarativeAbstractRenderNode *renderNode() const { return m_renderNode; }
+    virtual void setTextureSize(const QSize &textureSize) = 0;
+    virtual QSize textureSize() const = 0;
+    virtual void setRect(const QRectF &rect) = 0;
+    virtual void setSeriesData(bool mapDirty, const GLXYDataMap &dataMap) = 0;
 
-    void setRect(const QRectF &rect);
-
-private:
-    QRectF m_rect;
-    QQuickWindow *m_window;
-    DeclarativeAbstractRenderNode *m_renderNode;
-    QSGImageNode *m_imageNode;
 };
 
 QT_CHARTS_END_NAMESPACE
 
-#endif // DECLARATIVECHARTNODE_P_H
+
+#endif // DECLARATIVEABSTRACTRENDERNODE_H

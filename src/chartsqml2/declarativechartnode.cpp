@@ -28,62 +28,67 @@
 ****************************************************************************/
 
 #include "declarativechartnode.h"
-#include "declarativerendernode.h"
-#include <QtGui/QOpenGLContext>
-#include <QtGui/QOpenGLFunctions>
-#include <QtGui/QOpenGLFramebufferObjectFormat>
-#include <QtGui/QOpenGLFramebufferObject>
-#include <QOpenGLShaderProgram>
-#include <QtGui/QOpenGLBuffer>
+#include "declarativeabstractrendernode.h"
+
+#include <QtQuick/QQuickWindow>
+#include <QtQuick/QSGImageNode>
+#include <QtQuick/QSGRendererInterface>
+
+#ifndef QT_NO_OPENGL
+# include "declarativeopenglrendernode.h"
+#endif
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 // This node handles displaying of the chart itself
 DeclarativeChartNode::DeclarativeChartNode(QQuickWindow *window) :
-    QSGSimpleTextureNode(),
-    m_texture(0),
+    QSGRootNode(),
     m_window(window),
-    m_textureOptions(0),
-    m_textureSize(1, 1),
-    m_glRenderNode(0)
+    m_renderNode(nullptr),
+    m_imageNode(nullptr)
 {
-    // Our texture node must have a texture, so use a default one pixel texture
-    QImage dummyImage(QSize(1, 1), QImage::Format_ARGB32);
-    uchar *imageData = dummyImage.bits();
-    imageData[0] = 0;
-    imageData[1] = 0;
-    imageData[2] = 0;
-    imageData[3] = 0;
-    QQuickWindow::CreateTextureOptions defaultTextureOptions = QQuickWindow::CreateTextureOptions(
-            QQuickWindow::TextureHasAlphaChannel | QQuickWindow::TextureOwnsGLTexture);
-    m_texture = m_window->createTextureFromImage(dummyImage, defaultTextureOptions);
+    // Create a DeclarativeRenderNode for correct QtQuick Backend
+#ifndef QT_NO_OPENGL
+    if (m_window->rendererInterface()->graphicsApi() == QSGRendererInterface::OpenGL)
+        m_renderNode = new DeclarativeOpenGLRenderNode(m_window);
+#endif
 
-    setTexture(m_texture);
-    setFiltering(QSGTexture::Linear);
-
-    if (QOpenGLContext::currentContext()) {
-        // Create child node for rendering GL graphics
-        m_glRenderNode = new DeclarativeRenderNode(m_window);
-        m_glRenderNode->setFlag(OwnedByParent);
-        appendChildNode(m_glRenderNode);
-        m_glRenderNode->setRect(0, 0, 0, 0); // Hide child node by default
+    if (m_renderNode) {
+        m_renderNode->setFlag(OwnedByParent);
+        appendChildNode(m_renderNode);
+        m_renderNode->setRect(QRectF(0, 0, 0, 0)); // Hide child node by default
     }
 }
 
 DeclarativeChartNode::~DeclarativeChartNode()
 {
-    delete m_texture;
 }
 
 // Must be called on render thread and in context
 void DeclarativeChartNode::createTextureFromImage(const QImage &chartImage)
 {
-    if (chartImage.size() != m_textureSize)
-        m_textureSize = chartImage.size();
+    static auto const defaultTextureOptions = QQuickWindow::CreateTextureOptions(QQuickWindow::TextureHasAlphaChannel |
+                                                                                 QQuickWindow::TextureOwnsGLTexture);
 
-    delete m_texture;
-    m_texture = m_window->createTextureFromImage(chartImage, m_textureOptions);
-    setTexture(m_texture);
+    auto texture = m_window->createTextureFromImage(chartImage, defaultTextureOptions);
+    // Create Image node if needed
+    if (!m_imageNode) {
+        m_imageNode = m_window->createImageNode();
+        m_imageNode->setFlag(OwnedByParent);
+        m_imageNode->setOwnsTexture(true);
+        prependChildNode(m_imageNode);
+    }
+    m_imageNode->setTexture(texture);
+    if (!m_rect.isEmpty())
+        m_imageNode->setRect(m_rect);
+}
+
+void DeclarativeChartNode::setRect(const QRectF &rect)
+{
+    m_rect = rect;
+
+    if (m_imageNode)
+        m_imageNode->setRect(rect);
 }
 
 QT_CHARTS_END_NAMESPACE

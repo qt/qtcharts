@@ -38,7 +38,7 @@
 #include "declarativecandlestickseries.h"
 #include "declarativescatterseries.h"
 #include "declarativechartnode.h"
-#include "declarativerendernode.h"
+#include "declarativeabstractrendernode.h"
 #include <QtCharts/QBarCategoryAxis>
 #include <QtCharts/QValueAxis>
 #include <QtCharts/QLogValueAxis>
@@ -60,6 +60,7 @@
 #include <QtWidgets/QApplication>
 #include <QtCore/QTimer>
 #include <QtCore/QThread>
+#include <QtQuick/QQuickWindow>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -521,16 +522,12 @@ QSGNode *DeclarativeChart::updatePaintNode(QSGNode *oldNode, QQuickItem::UpdateP
 
     if (!node) {
         node =  new DeclarativeChartNode(window());
-        if (node->glRenderNode()) {
-            connect(window(), &QQuickWindow::beforeRendering,
-                    node->glRenderNode(), &DeclarativeRenderNode::render);
-        }
     }
 
     const QRectF &bRect = boundingRect();
 
-    // Update GL data
-    if (node->glRenderNode() && (m_glXYDataManager->dataMap().size() || m_glXYDataManager->mapDirty())) {
+    // Update renderNode data
+    if (node->renderNode() && (m_glXYDataManager->dataMap().size() || m_glXYDataManager->mapDirty())) {
         const QRectF &plotArea = m_chart->plotArea();
         const QSizeF &chartAreaSize = m_chart->size();
 
@@ -546,11 +543,11 @@ QSGNode *DeclarativeChart::updatePaintNode(QSGNode *oldNode, QQuickItem::UpdateP
                                 normalizedHeight * bRect.height());
 
         const QSize &adjustedPlotSize = adjustedPlotArea.size().toSize();
-        if (adjustedPlotSize != node->glRenderNode()->textureSize())
-            node->glRenderNode()->setTextureSize(adjustedPlotSize);
+        if (adjustedPlotSize != node->renderNode()->textureSize())
+            node->renderNode()->setTextureSize(adjustedPlotSize);
 
-        node->glRenderNode()->setRect(adjustedPlotArea);
-        node->glRenderNode()->setSeriesData(m_glXYDataManager->mapDirty(),
+        node->renderNode()->setRect(adjustedPlotArea);
+        node->renderNode()->setSeriesData(m_glXYDataManager->mapDirty(),
                                             m_glXYDataManager->dataMap());
 
         // Clear dirty flags from original xy data

@@ -27,7 +27,7 @@
 **
 ****************************************************************************/
 
-#include "declarativerendernode.h"
+#include "declarativeopenglrendernode.h"
 
 #include <QtGui/QOpenGLContext>
 #include <QtGui/QOpenGLFunctions>
@@ -45,10 +45,10 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 // This node draws the xy series data on a transparent background using OpenGL.
 // It is used as a child node of the chart node.
-DeclarativeRenderNode::DeclarativeRenderNode(QQuickWindow *window) :
+DeclarativeOpenGLRenderNode::DeclarativeOpenGLRenderNode(QQuickWindow *window) :
     QObject(),
-    QSGSimpleTextureNode(),
     m_texture(0),
+    m_imageNode(nullptr),
     m_window(window),
     m_textureOptions(QQuickWindow::TextureHasAlphaChannel),
     m_textureSize(1, 1),
@@ -64,23 +64,11 @@ DeclarativeRenderNode::DeclarativeRenderNode(QQuickWindow *window) :
 {
     initializeOpenGLFunctions();
 
-    // Our texture node must have a texture, so use a default one pixel texture
-    GLuint defaultTexture = 0;
-    glGenTextures(1, &defaultTexture);
-    glBindTexture(GL_TEXTURE_2D, defaultTexture);
-    uchar buf[4] = { 0, 0, 0, 0 };
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 1, 1, 0, GL_RGBA, GL_UNSIGNED_BYTE, &buf);
-
-    QQuickWindow::CreateTextureOptions defaultTextureOptions = QQuickWindow::CreateTextureOptions(
-            QQuickWindow::TextureHasAlphaChannel | QQuickWindow::TextureOwnsGLTexture);
-    m_texture = m_window->createTextureFromId(defaultTexture, QSize(1, 1), defaultTextureOptions);
-
-    setTexture(m_texture);
-    setFiltering(QSGTexture::Linear);
-    setTextureCoordinatesTransform(QSGSimpleTextureNode::MirrorVertically);
+    connect(m_window, &QQuickWindow::beforeRendering,
+            this, &DeclarativeOpenGLRenderNode::render);
 }
 
-DeclarativeRenderNode::~DeclarativeRenderNode()
+DeclarativeOpenGLRenderNode::~DeclarativeOpenGLRenderNode()
 {
     delete m_texture;
     delete m_fbo;
@@ -109,7 +97,7 @@ static const char *fragmentSource =
         "}\n";
 
 // Must be called on render thread and in context
-void DeclarativeRenderNode::initGL()
+void DeclarativeOpenGLRenderNode::initGL()
 {
     recreateFBO();
 
@@ -146,7 +134,7 @@ void DeclarativeRenderNode::initGL()
     m_program->release();
 }
 
-void DeclarativeRenderNode::recreateFBO()
+void DeclarativeOpenGLRenderNode::recreateFBO()
 {
     QOpenGLFramebufferObjectFormat fboFormat;
     fboFormat.setAttachment(QOpenGLFramebufferObject::NoAttachment);
@@ -157,13 +145,22 @@ void DeclarativeRenderNode::recreateFBO()
 
     delete m_texture;
     m_texture = m_window->createTextureFromId(m_fbo->texture(), m_textureSize, m_textureOptions);
-    setTexture(m_texture);
+    if (!m_imageNode) {
+        m_imageNode = m_window->createImageNode();
+        m_imageNode->setFiltering(QSGTexture::Linear);
+        m_imageNode->setTextureCoordinatesTransform(QSGImageNode::MirrorVertically);
+        m_imageNode->setFlag(OwnedByParent);
+        if (!m_rect.isEmpty())
+            m_imageNode->setRect(m_rect);
+        appendChildNode(m_imageNode);
+    }
+    m_imageNode->setTexture(m_texture);
 
     m_recreateFbo = false;
 }
 
 // Must be called on render thread and in context
-void DeclarativeRenderNode::setTextureSize(const QSize &size)
+void DeclarativeOpenGLRenderNode::setTextureSize(const QSize &size)
 {
     m_textureSize = size;
     m_recreateFbo = true;
@@ -171,7 +168,7 @@ void DeclarativeRenderNode::setTextureSize(const QSize &size)
 }
 
 // Must be called on render thread while gui thread is blocked, and in context
-void DeclarativeRenderNode::setSeriesData(bool mapDirty, const GLXYDataMap &dataMap)
+void DeclarativeOpenGLRenderNode::setSeriesData(bool mapDirty, const GLXYDataMap &dataMap)
 {
     if (mapDirty) {
         // Series have changed, recreate map, but utilize old data where feasible
@@ -213,7 +210,15 @@ void DeclarativeRenderNode::setSeriesData(bool mapDirty, const GLXYDataMap &data
     m_renderNeeded = true;
 }
 
-void DeclarativeRenderNode::renderGL()
+void DeclarativeOpenGLRenderNode::setRect(const QRectF &rect)
+{
+    m_rect = rect;
+
+    if (m_imageNode)
+        m_imageNode->setRect(rect);
+}
+
+void DeclarativeOpenGLRenderNode::renderGL()
 {
     glClearColor(0, 0, 0, 0);
 
@@ -281,7 +286,7 @@ void DeclarativeRenderNode::renderGL()
 }
 
 // Must be called on render thread as response to beforeRendering signal
-void DeclarativeRenderNode::render()
+void DeclarativeOpenGLRenderNode::render()
 {
     if (m_renderNeeded) {
         if (m_xyDataMap.size()) {
@@ -291,7 +296,7 @@ void DeclarativeRenderNode::render()
                 recreateFBO();
             renderGL();
         } else {
-            if (rect() != QRectF()) {
+            if (m_imageNode && m_imageNode->rect() != QRectF()) {
                 glClearColor(0, 0, 0, 0);
                 m_fbo->bind();
                 glClear(GL_COLOR_BUFFER_BIT);
@@ -304,7 +309,7 @@ void DeclarativeRenderNode::render()
     }
 }
 
-void DeclarativeRenderNode::cleanXYSeriesResources(const QXYSeries *series)
+void DeclarativeOpenGLRenderNode::cleanXYSeriesResources(const QXYSeries *series)
 {
     if (series) {
         delete m_seriesBufferMap.take(series);

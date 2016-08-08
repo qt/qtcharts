@@ -25,7 +25,6 @@ SOURCES += \
     declarativepolarchart.cpp \
     declarativeboxplotseries.cpp \
     declarativechartnode.cpp \
-    declarativerendernode.cpp \
     declarativecandlestickseries.cpp
 
 HEADERS += \
@@ -44,8 +43,14 @@ HEADERS += \
     declarativepolarchart.h \
     declarativeboxplotseries.h \
     declarativechartnode.h \
-    declarativerendernode.h \
-    declarativecandlestickseries.h
+    declarativecandlestickseries.h \
+    declarativeabstractrendernode.h
+
+contains(QT_CONFIG, opengl) {
+    SOURCES += declarativeopenglrendernode.cpp
+    HEADERS += declarativeopenglrendernode.h
+}
+
 
 load(qml_plugin)
 

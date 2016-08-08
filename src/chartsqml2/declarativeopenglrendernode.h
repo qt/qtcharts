@@ -27,13 +27,16 @@
 **
 ****************************************************************************/
 
-#ifndef DECLARATIVERENDERNODE_P_H
-#define DECLARATIVERENDERNODE_P_H
+#ifndef DECLARATIVEOPENGLRENDERNODE_P_H
+#define DECLARATIVEOPENGLRENDERNODE_P_H
+
+#include "declarativeabstractrendernode.h"
 
 #include <QtCharts/QChartGlobal>
 #include <private/glxyseriesdata_p.h>
-#include <QtQuick/QSGSimpleTextureNode>
+#include <QtQuick/QSGImageNode>
 #include <QtQuick/QQuickWindow>
+#include <QtGui/QOpenGLShaderProgram>
 #include <QtGui/QOpenGLVertexArrayObject>
 #include <QtGui/QOpenGLFunctions>
 #include <QtGui/QOpenGLFramebufferObject>
@@ -41,17 +44,19 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class DeclarativeRenderNode : public QObject, public QSGSimpleTextureNode, QOpenGLFunctions
+class DeclarativeOpenGLRenderNode : public QObject, public DeclarativeAbstractRenderNode, QOpenGLFunctions
 {
     Q_OBJECT
 public:
-    DeclarativeRenderNode(QQuickWindow *window);
-    ~DeclarativeRenderNode();
+    DeclarativeOpenGLRenderNode(QQuickWindow *window);
+    ~DeclarativeOpenGLRenderNode();
 
     void initGL();
-    QSize textureSize() const { return m_textureSize; }
-    void setTextureSize(const QSize &size);
-    void setSeriesData(bool mapDirty, const GLXYDataMap &dataMap);
+    QSize textureSize() const override { return m_textureSize; }
+    void setTextureSize(const QSize &size) override;
+
+    void setSeriesData(bool mapDirty, const GLXYDataMap &dataMap) override;
+    void setRect(const QRectF &rect) override;
 
 public Q_SLOTS:
     void render();
@@ -62,6 +67,7 @@ private:
     void cleanXYSeriesResources(const QXYSeries *series);
 
     QSGTexture *m_texture;
+    QSGImageNode *m_imageNode;
     QQuickWindow *m_window;
     QQuickWindow::CreateTextureOptions m_textureOptions;
     QSize m_textureSize;
@@ -78,8 +84,9 @@ private:
     QOpenGLVertexArrayObject m_vao;
     QHash<const QAbstractSeries *, QOpenGLBuffer *> m_seriesBufferMap;
     bool m_renderNeeded;
+    QRectF m_rect;
 };
 
 QT_CHARTS_END_NAMESPACE
 
-#endif // DECLARATIVERENDERNODE_P_H
+#endif // DECLARATIVEOPENGLRENDERNODE_P_H
