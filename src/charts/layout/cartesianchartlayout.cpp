@@ -225,11 +225,11 @@ QRectF CartesianChartLayout::calculateAxisMinimum(const QRectF &minimum, const Q
         switch (axis->axis()->alignment()) {
         case Qt::AlignLeft:
             left.setWidth(left.width() + size.width());
-            left.setHeight(qMax(left.height() * 2, size.height()));
+            left.setHeight(qMax(left.height(), size.height()));
             break;
         case Qt::AlignRight:
             right.setWidth(right.width() + size.width());
-            right.setHeight(qMax(right.height() * 2, size.height()));
+            right.setHeight(qMax(right.height(), size.height()));
             break;
         case Qt::AlignTop:
             top.setWidth(qMax(top.width(), size.width()));
