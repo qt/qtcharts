@@ -18,9 +18,10 @@
 ** $QT_END_LICENSE$
 **
 ******************************************************************************/
-#ifndef QT_BUILD_INTERNAL
 
 #include <QtTest/QtTest>
+
+#ifndef QT_BUILD_INTERNAL
 
 class tst_Domain: public QObject {
 
