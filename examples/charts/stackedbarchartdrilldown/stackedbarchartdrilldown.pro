@@ -1,6 +1,13 @@
-!include( ../examples.pri ) {
- error( "Couldn't find the examples.pri file!" )
-}
-TARGET = stackedbarchartdrilldown
-SOURCES += main.cpp drilldownseries.cpp drilldownchart.cpp
-HEADERS += drilldownseries.h drilldownchart.h
+QT += charts
+
+HEADERS += \
+    drilldownchart.h \
+    drilldownseries.h
+
+SOURCES += \
+    drilldownchart.cpp \
+    drilldownseries.cpp \
+    main.cpp
+
+target.path = $$[QT_INSTALL_EXAMPLES]/charts/stackedbarchartdrilldown
+INSTALLS += target

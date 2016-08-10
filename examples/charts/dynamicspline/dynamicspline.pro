@@ -1,7 +1,11 @@
-!include( ../examples.pri ) {
- error( "Couldn't find the examples.pri file!" )
-}
+QT += charts
 
-TARGET = dynamicspline
-HEADERS += chart.h
-SOURCES += main.cpp chart.cpp
+HEADERS += \
+    chart.h
+
+SOURCES += \
+    chart.cpp \
+    main.cpp
+
+target.path = $$[QT_INSTALL_EXAMPLES]/charts/dynamicspline
+INSTALLS += target

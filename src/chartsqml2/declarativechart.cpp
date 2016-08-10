@@ -524,13 +524,18 @@ QSGNode *DeclarativeChart::updatePaintNode(QSGNode *oldNode, QQuickItem::UpdateP
             connect(window(), &QQuickWindow::beforeRendering,
                     node->glRenderNode(), &DeclarativeRenderNode::render);
         }
+        // Ensure that chart is rendered whenever node is recreated
+        if (m_sceneImage)
+            m_sceneImageDirty = true;
     }
 
     const QRectF &bRect = boundingRect();
 
     // Update GL data
     if (node->glRenderNode() && (m_glXYDataManager->dataMap().size() || m_glXYDataManager->mapDirty())) {
-        const QRectF &plotArea = m_chart->plotArea();
+        // Convert plotArea to QRect and back to QRectF to get rid of sub-pixel widths/heights
+        // which can cause unwanted partial antialising of the graph.
+        const QRectF plotArea = QRectF(m_chart->plotArea().toRect());
         const QSizeF &chartAreaSize = m_chart->size();
 
         // We can't use chart's plot area directly, as graphicscene has some internal minimum size

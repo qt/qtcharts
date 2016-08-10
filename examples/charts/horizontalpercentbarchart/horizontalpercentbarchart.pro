@@ -1,6 +1,7 @@
-!include( ../examples.pri ) {
- error( "Couldn't find the examples.pri file!" )
-}
+QT += charts
 
-TARGET = horizontalpercentbarchart
-SOURCES += main.cpp 
+SOURCES += \
+    main.cpp
+
+target.path = $$[QT_INSTALL_EXAMPLES]/charts/horizontalpercentbarchart
+INSTALLS += target

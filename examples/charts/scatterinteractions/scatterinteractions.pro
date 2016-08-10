@@ -1,9 +1,11 @@
-!include( ../examples.pri ) {
-    error( "Couldn't find the examples.pri file!" )
-}
+QT += charts
 
-TARGET = scatterinteractions
-SOURCES += main.cpp \
-    chartview.cpp
-HEADERS  += \
+HEADERS += \
     chartview.h
+
+SOURCES += \
+    chartview.cpp \
+    main.cpp
+
+target.path = $$[QT_INSTALL_EXAMPLES]/charts/scatterinteractions
+INSTALLS += target

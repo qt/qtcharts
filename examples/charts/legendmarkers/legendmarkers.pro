@@ -1,10 +1,11 @@
-!include( ../examples.pri ) {
- error( "Couldn't find the examples.pri file!" )
-}
-
-TARGET = legendmarkers
-SOURCES += main.cpp \ 
-    mainwidget.cpp
+QT += charts
 
 HEADERS += \
     mainwidget.h
+
+SOURCES += \
+    main.cpp \
+    mainwidget.cpp
+
+target.path = $$[QT_INSTALL_EXAMPLES]/charts/legendmarkers
+INSTALLS += target

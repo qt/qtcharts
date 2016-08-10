@@ -1,15 +1,13 @@
-!include( ../examples.pri ) {
- error( "Couldn't find the examples.pri file!" )
-}
+QT += charts multimedia
 
-QT += multimedia
+HEADERS += \
+    widget.h \
+    xyseriesiodevice.h
 
-TARGET = audio
-TEMPLATE = app
-
-SOURCES += main.cpp\
-        widget.cpp \
+SOURCES += \
+    main.cpp\
+    widget.cpp \
     xyseriesiodevice.cpp
 
-HEADERS  += widget.h \
-    xyseriesiodevice.h
+target.path = $$[QT_INSTALL_EXAMPLES]/charts/audio
+INSTALLS += target
