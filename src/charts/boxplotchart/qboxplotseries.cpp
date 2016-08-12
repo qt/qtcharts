@@ -527,9 +527,10 @@ void QBoxPlotSeriesPrivate::handleSeriesRemove(QAbstractSeries *series)
 
     QBoxPlotSeries *removedSeries = static_cast<QBoxPlotSeries *>(series);
 
-    if (q == removedSeries && m_animation) {
-        m_animation->stopAll();
-        QObject::disconnect(m_chart->d_ptr->m_dataset, 0, removedSeries->d_func(), 0);
+    if (q == removedSeries) {
+        if (m_animation)
+            m_animation->stopAll();
+        QObject::disconnect(m_chart->d_ptr->m_dataset, 0, this, 0);
     }
 
     // Test if series removed is me, then don't do anything
