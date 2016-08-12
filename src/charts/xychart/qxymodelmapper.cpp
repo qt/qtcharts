@@ -551,11 +551,15 @@ void QXYModelMapperPrivate::initializeXYFromModel()
             // determine when we should end looping.
         }
     } else {
-        // Invalid index right off the bat means series will be left empty, so output a warning
-        if (!xIndex.isValid())
-            qWarning() << __FUNCTION__ << QStringLiteral("Invalid X coordinate index in model mapper.");
-        else if (!yIndex.isValid())
-            qWarning() << __FUNCTION__ << QStringLiteral("Invalid Y coordinate index in model mapper.");
+        // Invalid index right off the bat means series will be left empty, so output a warning,
+        // unless model is also empty
+        int count = m_orientation == Qt::Vertical ? m_model->rowCount() : m_model->columnCount();
+        if (count > 0) {
+            if (!xIndex.isValid())
+                qWarning() << __FUNCTION__ << QStringLiteral("Invalid X coordinate index in model mapper.");
+            else if (!yIndex.isValid())
+                qWarning() << __FUNCTION__ << QStringLiteral("Invalid Y coordinate index in model mapper.");
+        }
     }
 
     blockSeriesSignals(false);
