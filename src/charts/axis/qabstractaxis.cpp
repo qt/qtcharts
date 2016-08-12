@@ -515,7 +515,7 @@ QPen QAbstractAxis::linePen() const
 void QAbstractAxis::setLinePenColor(QColor color)
 {
     QPen p = linePen();
-    if (p.color() != color) {
+    if (p.color() != color || d_ptr->m_axisPen == QChartPrivate::defaultPen()) {
         p.setColor(color);
         setLinePen(p);
         emit colorChanged(color);
@@ -610,31 +610,31 @@ QPen QAbstractAxis::minorGridLinePen() const
 void QAbstractAxis::setGridLineColor(const QColor &color)
 {
     QPen pen = gridLinePen();
-    if (color != pen.color()) {
+    if (color != pen.color() || d_ptr->m_gridLinePen == QChartPrivate::defaultPen()) {
         pen.setColor(color);
-        d_ptr->m_gridLinePen = pen;
+        setGridLinePen(pen);
         emit gridLineColorChanged(color);
     }
 }
 
 QColor QAbstractAxis::gridLineColor()
 {
-    return d_ptr->m_gridLinePen.color();
+    return gridLinePen().color();
 }
 
 void QAbstractAxis::setMinorGridLineColor(const QColor &color)
 {
     QPen pen = minorGridLinePen();
-    if (color != pen.color()) {
+    if (color != pen.color() || d_ptr->m_minorGridLinePen == QChartPrivate::defaultPen()) {
         pen.setColor(color);
-        d_ptr->m_minorGridLinePen = pen;
+        setMinorGridLinePen(pen);
         emit minorGridLineColorChanged(color);
     }
 }
 
 QColor QAbstractAxis::minorGridLineColor()
 {
-    return d_ptr->m_minorGridLinePen.color();
+    return minorGridLinePen().color();
 }
 
 void QAbstractAxis::setLabelsVisible(bool visible)
@@ -709,7 +709,7 @@ int QAbstractAxis::labelsAngle() const
 void QAbstractAxis::setLabelsColor(QColor color)
 {
     QBrush b = labelsBrush();
-    if (b.color() != color) {
+    if (b.color() != color || d_ptr->m_labelsBrush == QChartPrivate::defaultBrush()) {
         b.setColor(color);
         setLabelsBrush(b);
         emit labelsColorChanged(color);
@@ -852,7 +852,7 @@ QBrush QAbstractAxis::shadesBrush() const
 void QAbstractAxis::setShadesColor(QColor color)
 {
     QBrush b = shadesBrush();
-    if (b.color() != color) {
+    if (b.color() != color || d_ptr->m_shadesBrush == QChartPrivate::defaultBrush()) {
         b.setColor(color);
         setShadesBrush(b);
         emit shadesColorChanged(color);
@@ -866,8 +866,8 @@ QColor QAbstractAxis::shadesColor() const
 
 void QAbstractAxis::setShadesBorderColor(QColor color)
 {
-    QPen p = d_ptr->m_shadesPen;
-    if (p.color() != color) {
+    QPen p = shadesPen();
+    if (p.color() != color || d_ptr->m_shadesPen == QChartPrivate::defaultPen()) {
         p.setColor(color);
         setShadesPen(p);
         emit shadesColorChanged(color);
