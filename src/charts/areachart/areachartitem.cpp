@@ -25,6 +25,7 @@
 #include <QtCharts/QLineSeries>
 #include <private/chartpresenter_p.h>
 #include <private/abstractdomain_p.h>
+#include <private/chartdataset_p.h>
 #include <QtGui/QPainter>
 #include <QtWidgets/QGraphicsSceneMouseEvent>
 #include <QtCore/QDebug>
@@ -163,22 +164,26 @@ void AreaChartItem::handleUpdated()
 
 void AreaChartItem::handleDomainUpdated()
 {
-    if (m_upper) {
-        AbstractDomain* d = m_upper->domain();
-        d->setSize(domain()->size());
-        d->setRange(domain()->minX(),domain()->maxX(),domain()->minY(),domain()->maxY());
-        d->setReverseX(domain()->isReverseX());
-        d->setReverseY(domain()->isReverseY());
-        m_upper->handleDomainUpdated();
-    }
+    fixEdgeSeriesDomain(m_upper);
+    fixEdgeSeriesDomain(m_lower);
+}
 
-    if (m_lower) {
-        AbstractDomain* d = m_lower->domain();
-        d->setSize(domain()->size());
-        d->setRange(domain()->minX(),domain()->maxX(),domain()->minY(),domain()->maxY());
-        d->setReverseX(domain()->isReverseX());
-        d->setReverseY(domain()->isReverseY());
-        m_lower->handleDomainUpdated();
+void AreaChartItem::fixEdgeSeriesDomain(LineChartItem *edgeSeries)
+{
+    if (edgeSeries) {
+        AbstractDomain* mainDomain = domain();
+        AbstractDomain* edgeDomain = edgeSeries->domain();
+
+        if (edgeDomain->type() != mainDomain->type()) {
+            // Change the domain of edge series to the same type as the area series
+            edgeDomain = dataSet()->createDomain(mainDomain->type());
+            edgeSeries->seriesPrivate()->setDomain(edgeDomain);
+        }
+        edgeDomain->setSize(mainDomain->size());
+        edgeDomain->setRange(mainDomain->minX(), mainDomain->maxX(), mainDomain->minY(), mainDomain->maxY());
+        edgeDomain->setReverseX(mainDomain->isReverseX());
+        edgeDomain->setReverseY(mainDomain->isReverseY());
+        edgeSeries->handleDomainUpdated();
     }
 }
 
