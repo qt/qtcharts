@@ -58,6 +58,7 @@ private:
     QGraphicsSimpleTextItem *m_coordY;
     QChart *m_chart;
     Callout *m_tooltip;
+    QList<Callout *> m_callouts;
 };
 
 #endif

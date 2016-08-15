@@ -90,6 +90,8 @@ void View::resizeEvent(QResizeEvent *event)
          m_chart->resize(event->size());
          m_coordX->setPos(m_chart->size().width()/2 - 50, m_chart->size().height() - 20);
          m_coordY->setPos(m_chart->size().width()/2 + 50, m_chart->size().height() - 20);
+         foreach (Callout *callout, m_callouts)
+             callout->updateGeometry();
     }
     QGraphicsView::resizeEvent(event);
 }
@@ -103,6 +105,7 @@ void View::mouseMoveEvent(QMouseEvent *event)
 
 void View::keepCallout()
 {
+    m_callouts.append(m_tooltip);
     m_tooltip = new Callout(m_chart);
 }
 
@@ -113,10 +116,9 @@ void View::tooltip(QPointF point, bool state)
 
     if (state) {
         m_tooltip->setText(QString("X: %1 \nY: %2 ").arg(point.x()).arg(point.y()));
-        QXYSeries *series = qobject_cast<QXYSeries *>(sender());
-        m_tooltip->setAnchor(m_chart->mapToPosition(point, series));
-        m_tooltip->setPos(m_chart->mapToPosition(point, series) + QPoint(10, -50));
+        m_tooltip->setAnchor(point);
         m_tooltip->setZValue(11);
+        m_tooltip->updateGeometry();
         m_tooltip->show();
     } else {
         m_tooltip->hide();

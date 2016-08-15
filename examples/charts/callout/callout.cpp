@@ -24,15 +24,17 @@
 #include <QtGui/QFontMetrics>
 #include <QtWidgets/QGraphicsSceneMouseEvent>
 #include <QtGui/QMouseEvent>
+#include <QtCharts/QChart>
 
-Callout::Callout(QGraphicsItem * parent):
-    QGraphicsItem(parent)
+Callout::Callout(QChart *chart):
+    QGraphicsItem(chart),
+    m_chart(chart)
 {
 }
 
 QRectF Callout::boundingRect() const
 {
-    QPointF anchor = mapFromParent(m_anchor);
+    QPointF anchor = mapFromParent(m_chart->mapToPosition(m_anchor));
     QRectF rect;
     rect.setLeft(qMin(m_rect.left(), anchor.x()));
     rect.setRight(qMax(m_rect.right(), anchor.x()));
@@ -48,7 +50,7 @@ void Callout::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     QPainterPath path;
     path.addRoundedRect(m_rect, 5, 5);
 
-    QPointF anchor = mapFromParent(m_anchor);
+    QPointF anchor = mapFromParent(m_chart->mapToPosition(m_anchor));
     if (!m_rect.contains(anchor)) {
         QPointF point1, point2;
 
@@ -80,7 +82,7 @@ void Callout::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
         point2.setY(y2);
 
         path.moveTo(point1);
-        path.lineTo(mapFromParent(m_anchor));
+        path.lineTo(anchor);
         path.lineTo(point2);
         path = path.simplified();
     }
@@ -117,4 +119,10 @@ void Callout::setText(const QString &text)
 void Callout::setAnchor(QPointF point)
 {
     m_anchor = point;
+}
+
+void Callout::updateGeometry()
+{
+    prepareGeometryChange();
+    setPos(m_chart->mapToPosition(m_anchor) + QPoint(10, -50));
 }
