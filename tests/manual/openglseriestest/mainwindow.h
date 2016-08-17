@@ -73,6 +73,7 @@ public slots:
     void countIndexChanged(int index);
     void colorIndexChanged(int index);
     void widthIndexChanged(int index);
+    void antiAliasCheckBoxClicked(bool checked);
 
 private:
     enum AxisMode {

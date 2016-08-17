@@ -104,6 +104,8 @@ MainWindow::MainWindow(QWidget *parent) :
             this, SLOT(colorIndexChanged(int)));
     connect(ui->widthComboBox, SIGNAL(currentIndexChanged(int)),
             this, SLOT(widthIndexChanged(int)));
+    connect(ui->antiAliasCheckBox, SIGNAL(clicked(bool)),
+            this, SLOT(antiAliasCheckBoxClicked(bool)));
 
     ui->chartView->setChart(m_chart);
     ui->chartView->setRenderHint(QPainter::Antialiasing);
@@ -417,6 +419,11 @@ void MainWindow::widthIndexChanged(int index)
             series->setPen(QPen(QBrush(color), width));
         }
     }
+}
+
+void MainWindow::antiAliasCheckBoxClicked(bool checked)
+{
+    ui->chartView->setRenderHint(QPainter::Antialiasing, checked);
 }
 
 void MainWindow::backgroundIndexChanged(int index)

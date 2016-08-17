@@ -47,20 +47,22 @@ QT_CHARTS_BEGIN_NAMESPACE
 // It is used as a child node of the chart node.
 DeclarativeOpenGLRenderNode::DeclarativeOpenGLRenderNode(QQuickWindow *window) :
     QObject(),
-    m_texture(0),
+    m_texture(nullptr),
     m_imageNode(nullptr),
     m_window(window),
     m_textureOptions(QQuickWindow::TextureHasAlphaChannel),
     m_textureSize(1, 1),
     m_recreateFbo(false),
-    m_fbo(0),
-    m_program(0),
+    m_fbo(nullptr),
+    m_resolvedFbo(nullptr),
+    m_program(nullptr),
     m_shaderAttribLoc(-1),
     m_colorUniformLoc(-1),
     m_minUniformLoc(-1),
     m_deltaUniformLoc(-1),
     m_pointSizeUniformLoc(-1),
-    m_renderNeeded(true)
+    m_renderNeeded(true),
+    m_antialiasing(false)
 {
     initializeOpenGLFunctions();
 
@@ -70,13 +72,12 @@ DeclarativeOpenGLRenderNode::DeclarativeOpenGLRenderNode(QQuickWindow *window) :
 
 DeclarativeOpenGLRenderNode::~DeclarativeOpenGLRenderNode()
 {
+    cleanXYSeriesResources(0);
+
     delete m_texture;
     delete m_fbo;
-
+    delete m_resolvedFbo;
     delete m_program;
-    m_program = 0;
-
-    cleanXYSeriesResources(0);
 }
 
 static const char *vertexSource =
@@ -138,13 +139,25 @@ void DeclarativeOpenGLRenderNode::recreateFBO()
 {
     QOpenGLFramebufferObjectFormat fboFormat;
     fboFormat.setAttachment(QOpenGLFramebufferObject::NoAttachment);
+
+    int samples = 0;
+    QOpenGLContext *context = QOpenGLContext::currentContext();
+
+    if (m_antialiasing && (!context->isOpenGLES() || context->format().majorVersion() >= 3))
+        samples = 4;
+    fboFormat.setSamples(samples);
+
     delete m_fbo;
-    m_fbo = new QOpenGLFramebufferObject(m_textureSize.width(),
-                                         m_textureSize.height(),
-                                         fboFormat);
+    delete m_resolvedFbo;
+    m_resolvedFbo = nullptr;
+
+    m_fbo = new QOpenGLFramebufferObject(m_textureSize, fboFormat);
+    if (samples > 0)
+        m_resolvedFbo = new QOpenGLFramebufferObject(m_textureSize);
 
     delete m_texture;
-    m_texture = m_window->createTextureFromId(m_fbo->texture(), m_textureSize, m_textureOptions);
+    uint textureId = m_resolvedFbo ? m_resolvedFbo->texture() : m_fbo->texture();
+    m_texture = m_window->createTextureFromId(textureId, m_textureSize, m_textureOptions);
     if (!m_imageNode) {
         m_imageNode = m_window->createImageNode();
         m_imageNode->setFiltering(QSGTexture::Linear);
@@ -218,6 +231,15 @@ void DeclarativeOpenGLRenderNode::setRect(const QRectF &rect)
         m_imageNode->setRect(rect);
 }
 
+void DeclarativeOpenGLRenderNode::setAntialiasing(bool enable)
+{
+    if (m_antialiasing != enable) {
+        m_antialiasing = enable;
+        m_recreateFbo = true;
+        m_renderNeeded = true;
+    }
+}
+
 void DeclarativeOpenGLRenderNode::renderGL()
 {
     glClearColor(0, 0, 0, 0);
@@ -280,6 +302,11 @@ void DeclarativeOpenGLRenderNode::renderGL()
         frameCount = 0;
     }
 #endif
+
+    if (m_resolvedFbo) {
+        QRect rect(QPoint(0, 0), m_fbo->size());
+        QOpenGLFramebufferObject::blitFramebuffer(m_resolvedFbo, rect, m_fbo, rect);
+    }
 
     markDirty(DirtyMaterial);
     m_window->resetOpenGLState();

@@ -56,8 +56,6 @@ Item {
         onAntialiasingEnabled: scopeView.antialiasing = enabled;
         onOpenGlChanged: {
             scopeView.openGL = enabled;
-            antialiasButton.enabled = !enabled;
-            antialiasButton.currentSelection = 0;
         }
     }
 

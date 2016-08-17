@@ -96,7 +96,7 @@ ColumnLayout {
         id: antialiasButton
         text: "Antialias: "
         items: ["OFF", "ON"]
-        enabled: false
+        enabled: true
         currentSelection: 0
         onSelectionChanged: antialiasingEnabled(currentSelection == 1);
     }

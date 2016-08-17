@@ -46,6 +46,7 @@ public:
     virtual QSize textureSize() const = 0;
     virtual void setRect(const QRectF &rect) = 0;
     virtual void setSeriesData(bool mapDirty, const GLXYDataMap &dataMap) = 0;
+    virtual void setAntialiasing(bool enable) = 0;
 
 };
 

@@ -545,6 +545,22 @@
         </property>
        </item>
       </widget>
+      <widget class="QCheckBox" name="antiAliasCheckBox">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>370</y>
+         <width>91</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Antialiasing</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
      </widget>
     </item>
    </layout>

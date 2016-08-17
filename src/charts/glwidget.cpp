@@ -42,7 +42,7 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-GLWidget::GLWidget(GLXYSeriesDataManager *xyDataManager, QWidget *parent)
+GLWidget::GLWidget(GLXYSeriesDataManager *xyDataManager, QGraphicsView *parent)
     : QOpenGLWidget(parent),
       m_program(0),
       m_shaderAttribLoc(-1),
@@ -50,7 +50,9 @@ GLWidget::GLWidget(GLXYSeriesDataManager *xyDataManager, QWidget *parent)
       m_minUniformLoc(-1),
       m_deltaUniformLoc(-1),
       m_pointSizeUniformLoc(-1),
-      m_xyDataManager(xyDataManager)
+      m_xyDataManager(xyDataManager),
+      m_antiAlias(parent->renderHints().testFlag(QPainter::Antialiasing)),
+      m_view(parent)
 {
     setAttribute(Qt::WA_TranslucentBackground);
     setAttribute(Qt::WA_AlwaysStackOnTop);
@@ -65,6 +67,7 @@ GLWidget::GLWidget(GLXYSeriesDataManager *xyDataManager, QWidget *parent)
     surfaceFormat.setAlphaBufferSize(8);
     surfaceFormat.setSwapBehavior(QSurfaceFormat::DoubleBuffer);
     surfaceFormat.setRenderableType(QSurfaceFormat::DefaultRenderableType);
+    surfaceFormat.setSamples(m_antiAlias ? 4 : 0);
     setFormat(surfaceFormat);
 
     connect(xyDataManager, &GLXYSeriesDataManager::seriesRemoved,
@@ -182,14 +185,15 @@ void GLWidget::paintGL()
         m_program->setUniformValue(m_minUniformLoc, data->min);
         m_program->setUniformValue(m_deltaUniformLoc, data->delta);
         m_program->setUniformValue(m_matrixUniformLoc, data->matrix);
-
+        bool dirty = data->dirty;
         if (!vbo) {
             vbo = new QOpenGLBuffer;
             m_seriesBufferMap.insert(i.key(), vbo);
             vbo->create();
+            dirty = true;
         }
         vbo->bind();
-        if (data->dirty) {
+        if (dirty) {
             vbo->allocate(data->array.constData(), data->array.count() * sizeof(GLfloat));
             data->dirty = false;
         }
@@ -229,6 +233,11 @@ void GLWidget::resizeGL(int w, int h)
 {
     Q_UNUSED(w)
     Q_UNUSED(h)
+}
+
+bool GLWidget::needsReset() const
+{
+    return m_view->renderHints().testFlag(QPainter::Antialiasing) != m_antiAlias;
 }
 
 QT_CHARTS_END_NAMESPACE

@@ -549,6 +549,7 @@ QSGNode *DeclarativeChart::updatePaintNode(QSGNode *oldNode, QQuickItem::UpdateP
         node->renderNode()->setRect(adjustedPlotArea);
         node->renderNode()->setSeriesData(m_glXYDataManager->mapDirty(),
                                             m_glXYDataManager->dataMap());
+        node->renderNode()->setAntialiasing(antialiasing());
 
         // Clear dirty flags from original xy data
         m_glXYDataManager->clearAllDirty();
@@ -720,6 +721,7 @@ void DeclarativeChart::mouseDoubleClickEvent(QMouseEvent *event)
 void DeclarativeChart::handleAntialiasingChanged(bool enable)
 {
     setAntialiasing(enable);
+    emit needRender();
 }
 
 void DeclarativeChart::setTheme(DeclarativeChart::Theme theme)

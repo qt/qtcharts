@@ -42,6 +42,7 @@
 #ifndef QT_NO_OPENGL
 
 #include <QtWidgets/QOpenGLWidget>
+#include <QtWidgets/QGraphicsView>
 #include <QtGui/QOpenGLFunctions>
 #include <QtGui/QOpenGLVertexArrayObject>
 #include <QtGui/QOpenGLBuffer>
@@ -60,8 +61,10 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions
     Q_OBJECT
 
 public:
-    GLWidget(GLXYSeriesDataManager *xyDataManager, QWidget *parent = 0);
+    GLWidget(GLXYSeriesDataManager *xyDataManager, QGraphicsView *parent = 0);
     ~GLWidget();
+
+    bool needsReset() const;
 
 public Q_SLOTS:
     void cleanup();
@@ -84,6 +87,8 @@ private:
 
     QHash<const QAbstractSeries *, QOpenGLBuffer *> m_seriesBufferMap;
     GLXYSeriesDataManager *m_xyDataManager;
+    bool m_antiAlias;
+    QGraphicsView *m_view;
 };
 
 QT_CHARTS_END_NAMESPACE

@@ -57,6 +57,7 @@ public:
 
     void setSeriesData(bool mapDirty, const GLXYDataMap &dataMap) override;
     void setRect(const QRectF &rect) override;
+    void setAntialiasing(bool enable) override;
 
 public Q_SLOTS:
     void render();
@@ -74,6 +75,7 @@ private:
     bool m_recreateFbo;
     GLXYDataMap m_xyDataMap;
     QOpenGLFramebufferObject *m_fbo;
+    QOpenGLFramebufferObject *m_resolvedFbo;
     QOpenGLShaderProgram *m_program;
     int m_shaderAttribLoc;
     int m_colorUniformLoc;
@@ -85,6 +87,7 @@ private:
     QHash<const QAbstractSeries *, QOpenGLBuffer *> m_seriesBufferMap;
     bool m_renderNeeded;
     QRectF m_rect;
+    bool m_antialiasing;
 };
 
 QT_CHARTS_END_NAMESPACE

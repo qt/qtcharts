@@ -562,6 +562,11 @@ void ChartPresenter::updateGLWidget()
 #ifndef QT_NO_OPENGL
     // GLWidget pointer is wrapped in QPointer as its parent is not in our control, and therefore
     // can potentially get deleted unexpectedly.
+    if (!m_glWidget.isNull() && m_glWidget->needsReset()) {
+        m_glWidget->hide();
+        delete m_glWidget.data();
+        m_glWidget.clear();
+    }
     if (m_glWidget.isNull() && m_glUseWidget && m_chart->scene()) {
         // Find the view of the scene. If the scene has multiple views, only the first view is
         // chosen.
