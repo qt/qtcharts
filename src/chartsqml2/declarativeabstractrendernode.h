@@ -37,6 +37,30 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
+class MouseEventResponse {
+public:
+    enum MouseEventType {
+        None,
+        Pressed,
+        Released,
+        Clicked,
+        DoubleClicked,
+        HoverEnter,
+        HoverLeave
+    };
+
+    MouseEventResponse()
+        : type(None),
+          series(nullptr) {}
+    MouseEventResponse(MouseEventType t, const QPoint &p, const QXYSeries *s)
+        : type(t),
+          point(p),
+          series(s) {}
+    MouseEventType type;
+    QPoint point;
+    const QXYSeries *series;
+};
+
 class DeclarativeAbstractRenderNode : public QSGRootNode
 {
 public:
@@ -47,7 +71,8 @@ public:
     virtual void setRect(const QRectF &rect) = 0;
     virtual void setSeriesData(bool mapDirty, const GLXYDataMap &dataMap) = 0;
     virtual void setAntialiasing(bool enable) = 0;
-
+    virtual void addMouseEvents(const QVector<QMouseEvent *> &events) = 0;
+    virtual void takeMouseEventResponses(QVector<MouseEventResponse> &responses) = 0;
 };
 
 QT_CHARTS_END_NAMESPACE

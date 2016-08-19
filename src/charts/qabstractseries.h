@@ -106,6 +106,7 @@ protected:
     friend class QLegendPrivate;
     friend class DeclarativeChart;
     friend class QAreaSeries;
+    friend class GLWidget;
 };
 
 QT_CHARTS_END_NAMESPACE

@@ -58,14 +58,20 @@ public:
     void setSeriesData(bool mapDirty, const GLXYDataMap &dataMap) override;
     void setRect(const QRectF &rect) override;
     void setAntialiasing(bool enable) override;
+    void addMouseEvents(const QVector<QMouseEvent *> &events) override;
+    void takeMouseEventResponses(QVector<MouseEventResponse> &responses) override;
 
 public Q_SLOTS:
     void render();
 
 private:
-    void renderGL();
+    void renderGL(bool selection);
+    void renderSelection();
+    void renderVisual();
     void recreateFBO();
     void cleanXYSeriesResources(const QXYSeries *series);
+    void handleMouseEvents();
+    const QXYSeries *findSeriesAtEvent(QMouseEvent *event);
 
     QSGTexture *m_texture;
     QSGImageNode *m_imageNode;
@@ -76,6 +82,7 @@ private:
     GLXYDataMap m_xyDataMap;
     QOpenGLFramebufferObject *m_fbo;
     QOpenGLFramebufferObject *m_resolvedFbo;
+    QOpenGLFramebufferObject *m_selectionFbo;
     QOpenGLShaderProgram *m_program;
     int m_shaderAttribLoc;
     int m_colorUniformLoc;
@@ -88,6 +95,14 @@ private:
     bool m_renderNeeded;
     QRectF m_rect;
     bool m_antialiasing;
+    QVector<QMouseEvent *> m_mouseEvents;
+    QVector<MouseEventResponse> m_mouseEventResponses;
+    bool m_selectionRenderNeeded;
+    QVector<const QXYSeries *> m_selectionVector;
+    QPoint m_mousePressPos;
+    bool m_mousePressed;
+    const QXYSeries *m_lastPressSeries;
+    const QXYSeries *m_lastHoverSeries;
 };
 
 QT_CHARTS_END_NAMESPACE

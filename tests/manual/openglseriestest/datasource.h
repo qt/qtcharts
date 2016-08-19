@@ -46,13 +46,14 @@ class DataSource : public QObject
 public:
     explicit DataSource(QObject *parent = 0);
 
-    void startUpdates(QList<QXYSeries *> &seriesList, QLabel *fpsLabel);
+    void startUpdates(QList<QXYSeries *> &seriesList, QLabel *fpsLabel, int interval);
 
 public slots:
     void generateData(int seriesIndex, int rowCount, int colCount);
     void update(QXYSeries *series, int seriesIndex);
     void handleSceneChanged();
     void updateAllSeries();
+    void setInterval(int interval);
 
 private:
     QVector<QVector<QVector<QPointF> > > m_data;

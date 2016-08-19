@@ -58,6 +58,8 @@ XYChart::XYChart(QXYSeries *series, QGraphicsItem *item):
     QObject::connect(this, SIGNAL(pressed(QPointF)), series, SIGNAL(pressed(QPointF)));
     QObject::connect(this, SIGNAL(released(QPointF)), series, SIGNAL(released(QPointF)));
     QObject::connect(this, SIGNAL(doubleClicked(QPointF)), series, SIGNAL(doubleClicked(QPointF)));
+    QObject::connect(series, &QAbstractSeries::useOpenGLChanged,
+                     this, &XYChart::handleDomainUpdated);
 }
 
 void XYChart::setGeometryPoints(const QVector<QPointF> &points)

@@ -62,7 +62,7 @@ ChartView {
         onStyleChanged:             console.log("lineSeries.onStyleChanged: " + style);
         onCapStyleChanged:          console.log("lineSeries.onCapStyleChanged: " + capStyle);
         onCountChanged:             console.log("lineSeries.onCountChanged: " + count);
-        onHovered:                  console.log("lineSeries.onHovered:" + point.x + "," + point.y + " " + state);
+        onHovered:                  console.log(name + ".onHovered:" + point.x + "," + point.y + " " + state);
         onPointLabelsVisibilityChanged:  console.log("lineSeries.onPointLabelsVisibilityChanged: "
                                                      + visible);
         onPointLabelsFormatChanged:      console.log("lineSeries.onPointLabelsFormatChanged: "

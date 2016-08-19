@@ -367,6 +367,9 @@ void DeclarativeChart::initChart(QChart::ChartType type)
     connect(this, &DeclarativeChart::needRender, this, &DeclarativeChart::renderScene,
             Qt::QueuedConnection);
     connect(this, SIGNAL(antialiasingChanged(bool)), this, SLOT(handleAntialiasingChanged(bool)));
+    connect(this, &DeclarativeChart::pendingRenderNodeMouseEventResponses,
+            this, &DeclarativeChart::handlePendingRenderNodeMouseEventResponses,
+            Qt::QueuedConnection);
 
     setAcceptedMouseButtons(Qt::AllButtons);
     setAcceptHoverEvents(true);
@@ -392,6 +395,68 @@ void DeclarativeChart::initChart(QChart::ChartType type)
 void DeclarativeChart::handleSeriesAdded(QAbstractSeries *series)
 {
     emit seriesAdded(series);
+}
+
+void DeclarativeChart::handlePendingRenderNodeMouseEventResponses()
+{
+    const int count = m_pendingRenderNodeMouseEventResponses.size();
+    if (count) {
+        QXYSeries *lastSeries = nullptr; // Small optimization; events are likely for same series
+        QList<QAbstractSeries *> seriesList = m_chart->series();
+        for (int i = 0; i < count; i++) {
+            const MouseEventResponse &response = m_pendingRenderNodeMouseEventResponses.at(i);
+            QXYSeries *series = nullptr;
+            if (lastSeries == response.series) {
+                series = lastSeries;
+            } else {
+                for (int j = 0; j < seriesList.size(); j++) {
+                    QAbstractSeries *chartSeries = seriesList.at(j);
+                    if (response.series == chartSeries) {
+                        series = qobject_cast<QXYSeries *>(chartSeries);
+                        break;
+                    }
+                }
+            }
+            if (series) {
+                lastSeries = series;
+                QSizeF normalizedPlotSize(
+                            m_chart->plotArea().size().width()
+                            / m_adjustedPlotArea.size().width(),
+                            m_chart->plotArea().size().height()
+                            / m_adjustedPlotArea.size().height());
+
+                QPoint adjustedPoint(
+                            response.point.x() * normalizedPlotSize.width(),
+                            response.point.y() * normalizedPlotSize.height());
+
+                QPointF domPoint = series->d_ptr->domain()->calculateDomainPoint(adjustedPoint);
+                switch (response.type) {
+                case MouseEventResponse::Pressed:
+                    emit series->pressed(domPoint);
+                    break;
+                case MouseEventResponse::Released:
+                    emit series->released(domPoint);
+                    break;
+                case MouseEventResponse::Clicked:
+                    emit series->clicked(domPoint);
+                    break;
+                case MouseEventResponse::DoubleClicked:
+                    emit series->doubleClicked(domPoint);
+                    break;
+                case MouseEventResponse::HoverEnter:
+                    emit series->hovered(domPoint, true);
+                    break;
+                case MouseEventResponse::HoverLeave:
+                    emit series->hovered(domPoint, false);
+                    break;
+                default:
+                    // No action
+                    break;
+                }
+            }
+        }
+        m_pendingRenderNodeMouseEventResponses.clear();
+    }
 }
 
 void DeclarativeChart::changeMargins(int top, int bottom, int left, int right)
@@ -525,35 +590,48 @@ QSGNode *DeclarativeChart::updatePaintNode(QSGNode *oldNode, QQuickItem::UpdateP
     }
 
     const QRectF &bRect = boundingRect();
-
     // Update renderNode data
-    if (node->renderNode() && (m_glXYDataManager->dataMap().size() || m_glXYDataManager->mapDirty())) {
-        const QRectF &plotArea = m_chart->plotArea();
-        const QSizeF &chartAreaSize = m_chart->size();
+    if (node->renderNode()) {
+        if (m_glXYDataManager->dataMap().size() || m_glXYDataManager->mapDirty()) {
+            const QRectF &plotArea = m_chart->plotArea();
+            const QSizeF &chartAreaSize = m_chart->size();
 
-        // We can't use chart's plot area directly, as graphicscene has some internal minimum size
-        const qreal normalizedX = plotArea.x() / chartAreaSize.width();
-        const qreal normalizedY = plotArea.y() / chartAreaSize.height();
-        const qreal normalizedWidth = plotArea.width() / chartAreaSize.width();
-        const qreal normalizedHeight = plotArea.height() / chartAreaSize.height();
+            // We can't use chart's plot area directly, as chart enforces a minimum size
+            // internally, so that axes and labels always fit the chart area.
+            const qreal normalizedX = plotArea.x() / chartAreaSize.width();
+            const qreal normalizedY = plotArea.y() / chartAreaSize.height();
+            const qreal normalizedWidth = plotArea.width() / chartAreaSize.width();
+            const qreal normalizedHeight = plotArea.height() / chartAreaSize.height();
 
-        QRectF adjustedPlotArea(normalizedX * bRect.width(),
-                                normalizedY * bRect.height(),
-                                normalizedWidth * bRect.width(),
-                                normalizedHeight * bRect.height());
+            m_adjustedPlotArea = QRectF(normalizedX * bRect.width(),
+                                        normalizedY * bRect.height(),
+                                        normalizedWidth * bRect.width(),
+                                        normalizedHeight * bRect.height());
 
-        const QSize &adjustedPlotSize = adjustedPlotArea.size().toSize();
-        if (adjustedPlotSize != node->renderNode()->textureSize())
-            node->renderNode()->setTextureSize(adjustedPlotSize);
+            const QSize &adjustedPlotSize = m_adjustedPlotArea.size().toSize();
+            if (adjustedPlotSize != node->renderNode()->textureSize())
+                node->renderNode()->setTextureSize(adjustedPlotSize);
 
-        node->renderNode()->setRect(adjustedPlotArea);
-        node->renderNode()->setSeriesData(m_glXYDataManager->mapDirty(),
-                                            m_glXYDataManager->dataMap());
-        node->renderNode()->setAntialiasing(antialiasing());
+            node->renderNode()->setRect(m_adjustedPlotArea);
+            node->renderNode()->setSeriesData(m_glXYDataManager->mapDirty(),
+                                              m_glXYDataManager->dataMap());
+            node->renderNode()->setAntialiasing(antialiasing());
 
-        // Clear dirty flags from original xy data
-        m_glXYDataManager->clearAllDirty();
+            // Clear dirty flags from original xy data
+            m_glXYDataManager->clearAllDirty();
+        }
+
+        node->renderNode()->takeMouseEventResponses(m_pendingRenderNodeMouseEventResponses);
+        if (m_pendingRenderNodeMouseEventResponses.size())
+            emit pendingRenderNodeMouseEventResponses();
+        if (m_pendingRenderNodeMouseEvents.size()) {
+            node->renderNode()->addMouseEvents(m_pendingRenderNodeMouseEvents);
+            // Queue another update to receive responses
+            update();
+        }
     }
+
+    m_pendingRenderNodeMouseEvents.clear();
 
     // Copy chart (if dirty) to chart node
     if (m_sceneImageDirty) {
@@ -644,6 +722,8 @@ void DeclarativeChart::mousePressEvent(QMouseEvent *event)
     mouseEvent.setAccepted(false);
 
     QApplication::sendEvent(m_scene, &mouseEvent);
+
+    queueRendererMouseEvent(event);
 }
 
 void DeclarativeChart::mouseReleaseEvent(QMouseEvent *event)
@@ -665,10 +745,14 @@ void DeclarativeChart::mouseReleaseEvent(QMouseEvent *event)
 
     m_mousePressButtons = event->buttons();
     m_mousePressButton = Qt::NoButton;
+
+    queueRendererMouseEvent(event);
 }
 
 void DeclarativeChart::hoverMoveEvent(QHoverEvent *event)
 {
+    QPointF previousLastScenePoint = m_lastMouseMoveScenePoint;
+
     // Convert hover move to mouse move, since we don't seem to get actual mouse move events.
     // QGraphicsScene generates hover events from mouse move events, so we don't need
     // to pass hover events there.
@@ -691,6 +775,18 @@ void DeclarativeChart::hoverMoveEvent(QHoverEvent *event)
     mouseEvent.setAccepted(false);
 
     QApplication::sendEvent(m_scene, &mouseEvent);
+
+    // Update triggers another hover event, so let's not handle successive hovers at same
+    // position to avoid infinite loop.
+    if (m_glXYDataManager->dataMap().size() && previousLastScenePoint != m_lastMouseMoveScenePoint) {
+        QMouseEvent *newEvent = new QMouseEvent(QEvent::MouseMove,
+                                                event->pos() - m_adjustedPlotArea.topLeft(),
+                                                m_mousePressButton,
+                                                m_mousePressButtons,
+                                                event->modifiers());
+        m_pendingRenderNodeMouseEvents.append(newEvent);
+        update();
+    }
 }
 
 void DeclarativeChart::mouseDoubleClickEvent(QMouseEvent *event)
@@ -716,6 +812,8 @@ void DeclarativeChart::mouseDoubleClickEvent(QMouseEvent *event)
     mouseEvent.setAccepted(false);
 
     QApplication::sendEvent(m_scene, &mouseEvent);
+
+    queueRendererMouseEvent(event);
 }
 
 void DeclarativeChart::handleAntialiasingChanged(bool enable)
@@ -1239,6 +1337,21 @@ void DeclarativeChart::findMinMaxForSeries(QAbstractSeries *series, Qt::Orientat
             min -= 0.5;
             max += 0.5;
         }
+    }
+}
+
+void DeclarativeChart::queueRendererMouseEvent(QMouseEvent *event)
+{
+    if (m_glXYDataManager->dataMap().size()) {
+        QMouseEvent *newEvent = new QMouseEvent(event->type(),
+                                                event->pos() - m_adjustedPlotArea.topLeft(),
+                                                event->button(),
+                                                event->buttons(),
+                                                event->modifiers());
+
+        m_pendingRenderNodeMouseEvents.append(newEvent);
+
+        update();
     }
 }
 

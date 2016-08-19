@@ -46,9 +46,11 @@
 #include <QtGui/QOpenGLFunctions>
 #include <QtGui/QOpenGLVertexArrayObject>
 #include <QtGui/QOpenGLBuffer>
+#include <QtGui/QOpenGLFramebufferObject>
 #include <QtCore/QHash>
 #include <QtCharts/QAbstractSeries>
 #include <QtCharts/QXYSeries>
+#include <QtCharts/QChart>
 
 QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
 
@@ -61,7 +63,7 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions
     Q_OBJECT
 
 public:
-    GLWidget(GLXYSeriesDataManager *xyDataManager, QGraphicsView *parent = 0);
+    GLWidget(GLXYSeriesDataManager *xyDataManager, QChart *chart, QGraphicsView *parent = 0);
     ~GLWidget();
 
     bool needsReset() const;
@@ -74,8 +76,17 @@ protected:
     void initializeGL() Q_DECL_OVERRIDE;
     void paintGL() Q_DECL_OVERRIDE;
     void resizeGL(int width, int height) Q_DECL_OVERRIDE;
+    void mouseDoubleClickEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
 
 private:
+    QXYSeries *findSeriesAtEvent(QMouseEvent *event);
+    void render(bool selection);
+    void recreateSelectionFbo();
+    QXYSeries *chartSeries(const QXYSeries *cSeries);
+
     QOpenGLShaderProgram *m_program;
     int m_shaderAttribLoc;
     int m_colorUniformLoc;
@@ -89,6 +100,16 @@ private:
     GLXYSeriesDataManager *m_xyDataManager;
     bool m_antiAlias;
     QGraphicsView *m_view;
+    QOpenGLFramebufferObject *m_selectionFbo;
+    QSize m_fboSize;
+    QVector<const QXYSeries *> m_selectionVector;
+    QChart *m_chart;
+    bool m_recreateSelectionFbo;
+    bool m_selectionRenderNeeded;
+    QPoint m_mousePressPos;
+    bool m_mousePressed;
+    QXYSeries *m_lastPressSeries;
+    QXYSeries *m_lastHoverSeries;
 };
 
 QT_CHARTS_END_NAMESPACE

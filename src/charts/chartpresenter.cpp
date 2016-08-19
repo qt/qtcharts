@@ -574,7 +574,7 @@ void ChartPresenter::updateGLWidget()
         if (views.size()) {
             QGraphicsView *firstView = views.at(0);
             m_glWidget = new GLWidget(m_chart->d_ptr->m_dataset->glXYSeriesDataManager(),
-                                      firstView);
+                                      m_chart, firstView);
             m_glWidget->setGeometry(m_rect.toRect());
             m_glWidget->show();
         }

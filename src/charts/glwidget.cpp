@@ -31,6 +31,7 @@
 
 #include "private/glwidget_p.h"
 #include "private/glxyseriesdata_p.h"
+#include "private/qabstractseries_p.h"
 #include <QtGui/QOpenGLShaderProgram>
 #include <QtGui/QOpenGLContext>
 #include <QtGui/QOpenGLBuffer>
@@ -42,9 +43,10 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-GLWidget::GLWidget(GLXYSeriesDataManager *xyDataManager, QGraphicsView *parent)
-    : QOpenGLWidget(parent),
-      m_program(0),
+GLWidget::GLWidget(GLXYSeriesDataManager *xyDataManager, QtCharts::QChart *chart,
+                   QGraphicsView *parent)
+    : QOpenGLWidget(parent->viewport()),
+      m_program(nullptr),
       m_shaderAttribLoc(-1),
       m_colorUniformLoc(-1),
       m_minUniformLoc(-1),
@@ -52,11 +54,17 @@ GLWidget::GLWidget(GLXYSeriesDataManager *xyDataManager, QGraphicsView *parent)
       m_pointSizeUniformLoc(-1),
       m_xyDataManager(xyDataManager),
       m_antiAlias(parent->renderHints().testFlag(QPainter::Antialiasing)),
-      m_view(parent)
+      m_view(parent),
+      m_selectionFbo(nullptr),
+      m_chart(chart),
+      m_recreateSelectionFbo(true),
+      m_selectionRenderNeeded(true),
+      m_mousePressed(false),
+      m_lastPressSeries(nullptr),
+      m_lastHoverSeries(nullptr)
 {
     setAttribute(Qt::WA_TranslucentBackground);
     setAttribute(Qt::WA_AlwaysStackOnTop);
-    setAttribute(Qt::WA_TransparentForMouseEvents);
 
     QSurfaceFormat surfaceFormat;
     surfaceFormat.setDepthBufferSize(0);
@@ -72,6 +80,8 @@ GLWidget::GLWidget(GLXYSeriesDataManager *xyDataManager, QGraphicsView *parent)
 
     connect(xyDataManager, &GLXYSeriesDataManager::seriesRemoved,
             this, &GLWidget::cleanXYSeriesResources);
+
+    setMouseTracking(true);
 }
 
 GLWidget::~GLWidget()
@@ -170,44 +180,7 @@ void GLWidget::initializeGL()
 
 void GLWidget::paintGL()
 {
-    glClear(GL_COLOR_BUFFER_BIT);
-
-    QOpenGLVertexArrayObject::Binder vaoBinder(&m_vao);
-    m_program->bind();
-
-    GLXYDataMapIterator i(m_xyDataManager->dataMap());
-    while (i.hasNext()) {
-        i.next();
-        QOpenGLBuffer *vbo = m_seriesBufferMap.value(i.key());
-        GLXYSeriesData *data = i.value();
-
-        m_program->setUniformValue(m_colorUniformLoc, data->color);
-        m_program->setUniformValue(m_minUniformLoc, data->min);
-        m_program->setUniformValue(m_deltaUniformLoc, data->delta);
-        m_program->setUniformValue(m_matrixUniformLoc, data->matrix);
-        bool dirty = data->dirty;
-        if (!vbo) {
-            vbo = new QOpenGLBuffer;
-            m_seriesBufferMap.insert(i.key(), vbo);
-            vbo->create();
-            dirty = true;
-        }
-        vbo->bind();
-        if (dirty) {
-            vbo->allocate(data->array.constData(), data->array.count() * sizeof(GLfloat));
-            data->dirty = false;
-        }
-
-        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
-        if (data->type == QAbstractSeries::SeriesTypeLine) {
-            glLineWidth(data->width);
-            glDrawArrays(GL_LINE_STRIP, 0, data->array.size() / 2);
-        } else { // Scatter
-            m_program->setUniformValue(m_pointSizeUniformLoc, data->width);
-            glDrawArrays(GL_POINTS, 0, data->array.size() / 2);
-        }
-        vbo->release();
-    }
+    render(false);
 
 #ifdef QDEBUG_TRACE_GL_FPS
     static QElapsedTimer stopWatch;
@@ -225,14 +198,208 @@ void GLWidget::paintGL()
         frameCount = 0;
     }
 #endif
-
-    m_program->release();
 }
 
 void GLWidget::resizeGL(int w, int h)
 {
-    Q_UNUSED(w)
-    Q_UNUSED(h)
+    m_fboSize.setWidth(w);
+    m_fboSize.setHeight(h);
+    m_recreateSelectionFbo = true;
+    m_selectionRenderNeeded = true;
+}
+
+void GLWidget::mouseDoubleClickEvent(QMouseEvent *event)
+{
+    QXYSeries *series = findSeriesAtEvent(event);
+    if (series)
+        emit series->doubleClicked(series->d_ptr->domain()->calculateDomainPoint(event->pos()));
+}
+
+void GLWidget::mouseMoveEvent(QMouseEvent *event)
+{
+    if (m_view->hasMouseTracking() && !event->buttons()) {
+        QXYSeries *series = findSeriesAtEvent(event);
+        if (series != m_lastHoverSeries) {
+            if (m_lastHoverSeries) {
+                if (chartSeries(m_lastHoverSeries)) {
+                    emit m_lastHoverSeries->hovered(
+                                m_lastHoverSeries->d_ptr->domain()->calculateDomainPoint(
+                                    event->pos()), false);
+                }
+            }
+            if (series) {
+                emit series->hovered(
+                            series->d_ptr->domain()->calculateDomainPoint(event->pos()), true);
+            }
+            m_lastHoverSeries = series;
+        }
+    } else {
+        event->ignore();
+    }
+}
+
+void GLWidget::mousePressEvent(QMouseEvent *event)
+{
+    QXYSeries *series = findSeriesAtEvent(event);
+    if (series) {
+        m_mousePressed = true;
+        m_mousePressPos = event->pos();
+        m_lastPressSeries = series;
+        emit series->pressed(series->d_ptr->domain()->calculateDomainPoint(event->pos()));
+    }
+}
+
+void GLWidget::mouseReleaseEvent(QMouseEvent *event)
+{
+    if (chartSeries(m_lastPressSeries)) {
+        emit m_lastPressSeries->released(
+                    m_lastPressSeries->d_ptr->domain()->calculateDomainPoint(m_mousePressPos));
+        if (m_mousePressed) {
+            emit m_lastPressSeries->clicked(
+                        m_lastPressSeries->d_ptr->domain()->calculateDomainPoint(m_mousePressPos));
+        }
+        if (m_lastHoverSeries == m_lastPressSeries
+                && m_lastHoverSeries != findSeriesAtEvent(event)) {
+            if (chartSeries(m_lastHoverSeries)) {
+                emit m_lastHoverSeries->hovered(
+                            m_lastHoverSeries->d_ptr->domain()->calculateDomainPoint(
+                                event->pos()), false);
+            }
+            m_lastHoverSeries = nullptr;
+        }
+        m_lastPressSeries = nullptr;
+        m_mousePressed = false;
+    } else {
+        event->ignore();
+    }
+}
+
+QXYSeries *GLWidget::findSeriesAtEvent(QMouseEvent *event)
+{
+    QXYSeries *series = nullptr;
+    int index = -1;
+
+    if (m_xyDataManager->dataMap().size()) {
+        makeCurrent();
+
+        if (m_recreateSelectionFbo)
+            recreateSelectionFbo();
+
+        m_selectionFbo->bind();
+
+        if (m_selectionRenderNeeded) {
+            m_selectionVector.resize(m_xyDataManager->dataMap().size());
+            render(true);
+            m_selectionRenderNeeded = false;
+        }
+
+        GLubyte pixel[4] = {0, 0, 0, 0};
+        glReadPixels(event->pos().x(), m_fboSize.height() - event->pos().y(),
+                     1, 1, GL_RGBA, GL_UNSIGNED_BYTE,
+                     (void *)pixel);
+        if (pixel[3] == 0xff)
+            index = pixel[0] + (pixel[1] << 8) + (pixel[2] << 16);
+
+        glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebufferObject());
+
+        doneCurrent();
+    }
+
+    if (index >= 0) {
+        const QXYSeries *cSeries = nullptr;
+        if (index < m_selectionVector.size())
+            cSeries = m_selectionVector.at(index);
+
+        series = chartSeries(cSeries);
+    }
+    if (series)
+        event->accept();
+    else
+        event->ignore();
+
+    return series;
+}
+
+void GLWidget::render(bool selection)
+{
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    QOpenGLVertexArrayObject::Binder vaoBinder(&m_vao);
+    m_program->bind();
+
+    GLXYDataMapIterator i(m_xyDataManager->dataMap());
+    int counter = 0;
+    while (i.hasNext()) {
+        i.next();
+        QOpenGLBuffer *vbo = m_seriesBufferMap.value(i.key());
+        GLXYSeriesData *data = i.value();
+
+        if (selection) {
+            m_selectionVector[counter] = i.key();
+            m_program->setUniformValue(m_colorUniformLoc, QVector3D((counter & 0xff) / 255.0f,
+                                                                    ((counter & 0xff00) >> 8) / 255.0f,
+                                                                    ((counter & 0xff0000) >> 16) / 255.0f));
+            counter++;
+        } else {
+            m_program->setUniformValue(m_colorUniformLoc, data->color);
+        }
+        m_program->setUniformValue(m_minUniformLoc, data->min);
+        m_program->setUniformValue(m_deltaUniformLoc, data->delta);
+        m_program->setUniformValue(m_matrixUniformLoc, data->matrix);
+        bool dirty = data->dirty;
+        if (!vbo) {
+            vbo = new QOpenGLBuffer;
+            m_seriesBufferMap.insert(i.key(), vbo);
+            vbo->create();
+            dirty = true;
+        }
+        vbo->bind();
+        if (dirty) {
+            vbo->allocate(data->array.constData(), data->array.count() * sizeof(GLfloat));
+            data->dirty = false;
+            m_selectionRenderNeeded = true;
+        }
+
+        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
+        if (data->type == QAbstractSeries::SeriesTypeLine) {
+            glLineWidth(data->width);
+            glDrawArrays(GL_LINE_STRIP, 0, data->array.size() / 2);
+        } else { // Scatter
+            m_program->setUniformValue(m_pointSizeUniformLoc, data->width);
+            glDrawArrays(GL_POINTS, 0, data->array.size() / 2);
+        }
+        vbo->release();
+    }
+    m_program->release();
+}
+
+void GLWidget::recreateSelectionFbo()
+{
+    QOpenGLFramebufferObjectFormat fboFormat;
+    fboFormat.setAttachment(QOpenGLFramebufferObject::NoAttachment);
+
+    delete m_selectionFbo;
+
+    const QSize deviceSize = m_fboSize * devicePixelRatioF();
+    m_selectionFbo = new QOpenGLFramebufferObject(deviceSize, fboFormat);
+    m_recreateSelectionFbo = false;
+    m_selectionRenderNeeded = true;
+}
+
+// This function makes sure the series we are dealing with has not been removed from the
+// chart since we stored the pointer.
+QXYSeries *GLWidget::chartSeries(const QXYSeries *cSeries)
+{
+    QXYSeries *series = nullptr;
+    if (cSeries) {
+        Q_FOREACH (QAbstractSeries *chartSeries, m_chart->series()) {
+            if (cSeries == chartSeries) {
+                series = qobject_cast<QXYSeries *>(chartSeries);
+                break;
+            }
+        }
+    }
+    return series;
 }
 
 bool GLWidget::needsReset() const

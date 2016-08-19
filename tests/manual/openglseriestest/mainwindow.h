@@ -74,6 +74,11 @@ public slots:
     void colorIndexChanged(int index);
     void widthIndexChanged(int index);
     void antiAliasCheckBoxClicked(bool checked);
+    void handleHovered(const QPointF &point, bool state);
+    void handleClicked(const QPointF &point);
+    void handlePressed(const QPointF &point);
+    void handleReleased(const QPointF &point);
+    void handleDoubleClicked(const QPointF &point);
 
 private:
     enum AxisMode {

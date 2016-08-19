@@ -174,7 +174,6 @@ QT_CHARTS_BEGIN_NAMESPACE
         The scatter dots may be circular or rectangular, depending on the underlying graphics
         hardware and drivers.
     \li Polar charts do not support accelerated series.
-    \li Mouse events are not supported for accelerated series.
     \li Enabling chart drop shadow or using transparent chart background color is not recommended
         when using accelerated series, as that can slow the frame rate down significantly.
     \endlist
@@ -190,10 +189,9 @@ QT_CHARTS_BEGIN_NAMESPACE
         chart when using accelerated series.
     \li Accelerated series are not supported for use cases where the graphics scene has more than
         one graphics view attached to it.
-    \li Accelerated series are not supported for use cases where the chart doesn't fill the entire
-        graphics view or has non-default geometry. For example, scrolling the view with scroll
-        bars or adding transformations to the graphics view cause the accelerated series to
-        be drawn in incorrect position related to the chart.
+    \li Accelerated series are not supported for use cases where the chart has non-default geometry.
+        For example, adding transforms to the graphics view causes the accelerated series to
+        be drawn in an incorrect position related to the chart.
     \endlist
 
     The default value is \c{false}.
@@ -229,7 +227,7 @@ QT_CHARTS_BEGIN_NAMESPACE
         The scatter dots may be circular or rectangular, depending on the underlying graphics
         hardware and drivers.
     \li Polar charts do not support accelerated series.
-    \li Mouse events are not supported for accelerated series.
+    \li Mouse events for series are reported asynchronously.
     \li Enabling chart drop shadow or using transparent chart background color is not recommended
         when using accelerated series, as that can slow the frame rate down significantly.
     \endlist

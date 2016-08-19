@@ -143,4 +143,8 @@ Flow {
         text: "clear"
         onClicked: series.clear();
     }
+    Button {
+        text: "toggle useOpenGL"
+        onClicked: series.useOpenGL = !series.useOpenGL
+    }
 }

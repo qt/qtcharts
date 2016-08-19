@@ -106,6 +106,8 @@ MainWindow::MainWindow(QWidget *parent) :
             this, SLOT(widthIndexChanged(int)));
     connect(ui->antiAliasCheckBox, SIGNAL(clicked(bool)),
             this, SLOT(antiAliasCheckBoxClicked(bool)));
+    connect(ui->intervalSpinbox, SIGNAL(valueChanged(int)),
+            &m_dataSource, SLOT(setInterval(int)));
 
     ui->chartView->setChart(m_chart);
     ui->chartView->setRenderHint(QPainter::Antialiasing);
@@ -113,7 +115,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(m_chart->scene(), &QGraphicsScene::changed,
                      &m_dataSource, &DataSource::handleSceneChanged);
 
-    m_dataSource.startUpdates(m_seriesList, ui->fpsLabel);
+    m_dataSource.startUpdates(m_seriesList, ui->fpsLabel, ui->intervalSpinbox->value());
 }
 
 MainWindow::~MainWindow()
@@ -426,6 +428,42 @@ void MainWindow::antiAliasCheckBoxClicked(bool checked)
     ui->chartView->setRenderHint(QPainter::Antialiasing, checked);
 }
 
+void MainWindow::handleHovered(const QPointF &point, bool state)
+{
+    QAbstractSeries *series = qobject_cast<QAbstractSeries *>(sender());
+    if (series) {
+        qDebug() << __FUNCTION__ << series->name() << point << state;
+        const QString labelTemplate = QStringLiteral("%3: %1 x %2 - %4");
+        ui->coordinatesLabel->setText(
+                    labelTemplate.arg(point.x()).arg(point.y()).arg(series->name())
+                    .arg(state ? QStringLiteral("enter") : QStringLiteral("leave")));
+    }
+}
+
+void MainWindow::handleClicked(const QPointF &point)
+{
+    QAbstractSeries *series = qobject_cast<QAbstractSeries *>(sender());
+    qDebug() << __FUNCTION__ << series->name() << point;
+}
+
+void MainWindow::handlePressed(const QPointF &point)
+{
+    QAbstractSeries *series = qobject_cast<QAbstractSeries *>(sender());
+    qDebug() << __FUNCTION__ << series->name() << point;
+}
+
+void MainWindow::handleReleased(const QPointF &point)
+{
+    QAbstractSeries *series = qobject_cast<QAbstractSeries *>(sender());
+    qDebug() << __FUNCTION__ << series->name() << point;
+}
+
+void MainWindow::handleDoubleClicked(const QPointF &point)
+{
+    QAbstractSeries *series = qobject_cast<QAbstractSeries *>(sender());
+    qDebug() << __FUNCTION__ << series->name() << point;
+}
+
 void MainWindow::backgroundIndexChanged(int index)
 {
     delete m_backgroundBrush;
@@ -521,6 +559,12 @@ void MainWindow::addSeries(bool gl)
             series = scatterSeries;
         }
         series->setUseOpenGL(gl);
+        const QString glNameTemplate = QStringLiteral("GL_%1");
+        const QString rasterNameTemplate = QStringLiteral("Raster_%1");
+        if (gl)
+            series->setName(glNameTemplate.arg(m_seriesList.size()));
+        else
+            series->setName(rasterNameTemplate.arg(m_seriesList.size()));
         m_dataSource.generateData(m_seriesList.size(), 2, m_pointCount);
         m_seriesList.append(series);
         m_chart->addSeries(series);
@@ -529,5 +573,11 @@ void MainWindow::addSeries(bool gl)
         if (m_yAxis)
             series->attachAxis(m_yAxis);
         applyRanges();
+
+        QObject::connect(series, &QXYSeries::hovered, this, &MainWindow::handleHovered);
+        QObject::connect(series, &QXYSeries::clicked, this, &MainWindow::handleClicked);
+        QObject::connect(series, &QXYSeries::pressed, this, &MainWindow::handlePressed);
+        QObject::connect(series, &QXYSeries::released, this, &MainWindow::handleReleased);
+        QObject::connect(series, &QXYSeries::doubleClicked, this, &MainWindow::handleDoubleClicked);
     }
 }

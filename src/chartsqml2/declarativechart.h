@@ -31,6 +31,7 @@
 #define DECLARATIVECHART_H
 
 #include <private/glxyseriesdata_p.h>
+#include "declarativeabstractrendernode.h"
 
 #include <QtCore/QtGlobal>
 #include <QtQuick/QQuickItem>
@@ -38,6 +39,7 @@
 
 #include <QtCharts/QChart>
 #include <QtCore/QLocale>
+#include <QQmlComponent>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -212,6 +214,7 @@ Q_SIGNALS:
     Q_REVISION(5) void animationDurationChanged(int msecs);
     Q_REVISION(5) void animationEasingCurveChanged(QEasingCurve curve);
     void needRender();
+    void pendingRenderNodeMouseEventResponses();
 
 private Q_SLOTS:
     void changeMargins(int top, int bottom, int left, int right);
@@ -220,6 +223,7 @@ private Q_SLOTS:
     void handleAxisXTopSet(QAbstractAxis *axis);
     void handleAxisYRightSet(QAbstractAxis *axis);
     void handleSeriesAdded(QAbstractSeries *series);
+    void handlePendingRenderNodeMouseEventResponses();
 
 protected:
     explicit DeclarativeChart(QChart::ChartType type, QQuickItem *parent);
@@ -230,6 +234,8 @@ private:
                                 Qt::Orientations orientation, Qt::Alignment alignment);
     void findMinMaxForSeries(QAbstractSeries *series,Qt::Orientations orientation,
                              qreal &min, qreal &max);
+    void queueRendererMouseEvent(QMouseEvent *event);
+
     // Extending QChart with DeclarativeChart is not possible because QObject does not support
     // multi inheritance, so we now have a QChart as a member instead
     QChart *m_chart;
@@ -248,6 +254,9 @@ private:
     DeclarativeMargins *m_margins;
     GLXYSeriesDataManager *m_glXYDataManager;
     bool m_sceneImageNeedsClear;
+    QVector<QMouseEvent *> m_pendingRenderNodeMouseEvents;
+    QVector<MouseEventResponse> m_pendingRenderNodeMouseEventResponses;
+    QRectF m_adjustedPlotArea;
 };
 
 QT_CHARTS_END_NAMESPACE

@@ -77,12 +77,17 @@ void DataSource::updateAllSeries()
     }
 }
 
-void DataSource::startUpdates(QList<QXYSeries *> &seriesList, QLabel *fpsLabel)
+void DataSource::setInterval(int interval)
+{
+    m_dataUpdater.setInterval(interval);
+}
+
+void DataSource::startUpdates(QList<QXYSeries *> &seriesList, QLabel *fpsLabel, int interval)
 {
     m_seriesList = &seriesList;
     m_fpsLabel = fpsLabel;
 
-    m_dataUpdater.setInterval(0);
+    m_dataUpdater.setInterval(interval);
     m_dataUpdater.setSingleShot(true);
     QObject::connect(&m_dataUpdater, &QTimer::timeout,
                      this, &DataSource::updateAllSeries);
