@@ -45,7 +45,9 @@ AbstractDomain::AbstractDomain(QObject *parent)
       m_zoomResetMinX(0),
       m_zoomResetMaxX(0),
       m_zoomResetMinY(0),
-      m_zoomResetMaxY(0)
+      m_zoomResetMaxY(0),
+      m_reverseX(false),
+      m_reverseY(false)
 
 {
 }
@@ -114,15 +116,6 @@ bool AbstractDomain::isEmpty() const
     return qFuzzyCompare(spanX(), 0) || qFuzzyCompare(spanY(), 0) || m_size.isEmpty();
 }
 
-QPointF AbstractDomain::calculateDomainPoint(const QPointF &point) const
-{
-    const qreal deltaX = m_size.width() / (m_maxX - m_minX);
-    const qreal deltaY = m_size.height() / (m_maxY - m_minY);
-    qreal x = point.x() / deltaX + m_minX;
-    qreal y = (point.y() - m_size.height()) / (-deltaY) + m_minY;
-    return QPointF(x, y);
-}
-
 // handlers
 
 void AbstractDomain::handleVerticalAxisRangeChanged(qreal min, qreal max)
@@ -133,6 +126,18 @@ void AbstractDomain::handleVerticalAxisRangeChanged(qreal min, qreal max)
 void AbstractDomain::handleHorizontalAxisRangeChanged(qreal min, qreal max)
 {
     setRangeX(min, max);
+}
+
+void AbstractDomain::handleReverseXChanged(bool reverse)
+{
+    m_reverseX = reverse;
+    emit updated();
+}
+
+void AbstractDomain::handleReverseYChanged(bool reverse)
+{
+    m_reverseY = reverse;
+    emit updated();
 }
 
 void AbstractDomain::blockRangeSignals(bool block)
@@ -207,11 +212,17 @@ bool AbstractDomain::attachAxis(QAbstractAxis *axis)
     if (axis->orientation() == Qt::Vertical) {
         QObject::connect(axis->d_ptr.data(), SIGNAL(rangeChanged(qreal,qreal)), this, SLOT(handleVerticalAxisRangeChanged(qreal,qreal)));
         QObject::connect(this, SIGNAL(rangeVerticalChanged(qreal,qreal)), axis->d_ptr.data(), SLOT(handleRangeChanged(qreal,qreal)));
+        QObject::connect(axis, &QAbstractAxis::reverseChanged,
+                         this, &AbstractDomain::handleReverseYChanged);
+        m_reverseY = axis->isReverse();
     }
 
     if (axis->orientation() == Qt::Horizontal) {
         QObject::connect(axis->d_ptr.data(), SIGNAL(rangeChanged(qreal,qreal)), this, SLOT(handleHorizontalAxisRangeChanged(qreal,qreal)));
         QObject::connect(this, SIGNAL(rangeHorizontalChanged(qreal,qreal)), axis->d_ptr.data(), SLOT(handleRangeChanged(qreal,qreal)));
+        QObject::connect(axis, &QAbstractAxis::reverseChanged,
+                         this, &AbstractDomain::handleReverseXChanged);
+        m_reverseX = axis->isReverse();
     }
 
     return true;
@@ -222,12 +233,16 @@ bool AbstractDomain::detachAxis(QAbstractAxis *axis)
     if (axis->orientation() == Qt::Vertical) {
 		QObject::disconnect(axis->d_ptr.data(), SIGNAL(rangeChanged(qreal,qreal)), this, SLOT(handleVerticalAxisRangeChanged(qreal,qreal)));
 		QObject::disconnect(this, SIGNAL(rangeVerticalChanged(qreal,qreal)), axis->d_ptr.data(), SLOT(handleRangeChanged(qreal,qreal)));
-	}
+        QObject::disconnect(axis, &QAbstractAxis::reverseChanged,
+                            this, &AbstractDomain::handleReverseYChanged);
+    }
 
     if (axis->orientation() == Qt::Horizontal) {
 		QObject::disconnect(axis->d_ptr.data(), SIGNAL(rangeChanged(qreal,qreal)), this, SLOT(handleHorizontalAxisRangeChanged(qreal,qreal)));
 		QObject::disconnect(this, SIGNAL(rangeHorizontalChanged(qreal,qreal)), axis->d_ptr.data(), SLOT(handleRangeChanged(qreal,qreal)));
-	}
+        QObject::disconnect(axis, &QAbstractAxis::reverseChanged,
+                            this, &AbstractDomain::handleReverseXChanged);
+    }
 
 	return true;
 }
@@ -267,6 +282,22 @@ void AbstractDomain::adjustLogDomainRanges(qreal &min, qreal &max)
        if (max <= min)
            max = min + 1.0;
     }
+}
+
+// This function fixes the zoom rect based on axis reversals
+QRectF AbstractDomain::fixZoomRect(const QRectF &rect)
+{
+    QRectF fixRect = rect;
+    if (m_reverseX || m_reverseY) {
+        QPointF center = rect.center();
+        if (m_reverseX)
+            center.setX(m_size.width() - center.x());
+        if (m_reverseY)
+            center.setY(m_size.height() - center.y());
+        fixRect.moveCenter(QPointF(center.x(), center.y()));
+    }
+
+    return fixRect;
 }
 
 

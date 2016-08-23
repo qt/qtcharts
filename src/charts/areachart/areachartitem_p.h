@@ -87,6 +87,8 @@ public Q_SLOTS:
     void handleDomainUpdated();
 
 private:
+    void fixEdgeSeriesDomain(LineChartItem *edgeSeries);
+
     QAreaSeries *m_series;
     LineChartItem *m_upper;
     LineChartItem *m_lower;

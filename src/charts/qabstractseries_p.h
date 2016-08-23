@@ -89,8 +89,6 @@ public:
     ChartPresenter *presenter() const;
 
     QChart* chart() { return m_chart; }
-    bool reverseXAxis();
-    bool reverseYAxis();
 
     void setBlockOpenGL(bool enable);
 

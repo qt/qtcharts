@@ -194,16 +194,9 @@ void ScatterChartItem::updateGeometry()
             // fake anyway. After remove animation stops, geometry is updated to correct one.
             m_markerMap[item] = m_series->at(qMin(seriesLastIndex, i));
             QPointF position;
-            if (seriesPrivate()->reverseXAxis())
-                position.setX(domain()->size().width() - point.x() - rect.width() / 2);
-            else
-                position.setX(point.x() - rect.width() / 2);
-            if (seriesPrivate()->reverseYAxis())
-                position.setY(domain()->size().height() - point.y() - rect.height() / 2);
-            else
-                position.setY(point.y() - rect.height() / 2);
+            position.setX(point.x() - rect.width() / 2);
+            position.setY(point.y() - rect.height() / 2);
             item->setPos(position);
-
 
             if (!m_visible || offGridStatus.at(i))
                 item->setVisible(false);

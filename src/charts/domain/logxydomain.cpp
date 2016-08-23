@@ -81,8 +81,9 @@ void LogXYDomain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY)
 void LogXYDomain::zoomIn(const QRectF &rect)
 {
     storeZoomReset();
-    qreal logLeftX = rect.left() * (m_logRightX - m_logLeftX) / m_size.width() + m_logLeftX;
-    qreal logRightX = rect.right() * (m_logRightX - m_logLeftX) / m_size.width() + m_logLeftX;
+    QRectF fixedRect = fixZoomRect(rect);
+    qreal logLeftX = fixedRect.left() * (m_logRightX - m_logLeftX) / m_size.width() + m_logLeftX;
+    qreal logRightX = fixedRect.right() * (m_logRightX - m_logLeftX) / m_size.width() + m_logLeftX;
     qreal leftX = qPow(m_logBaseX, logLeftX);
     qreal rightX = qPow(m_logBaseX, logRightX);
     qreal minX = leftX < rightX ? leftX : rightX;
@@ -92,8 +93,8 @@ void LogXYDomain::zoomIn(const QRectF &rect)
     qreal minY = m_minY;
     qreal maxY = m_maxY;
 
-    minY = maxY - dy * rect.bottom();
-    maxY = maxY - dy * rect.top();
+    minY = maxY - dy * fixedRect.bottom();
+    maxY = maxY - dy * fixedRect.top();
 
     setRange(minX, maxX, minY, maxY);
 }
@@ -101,7 +102,8 @@ void LogXYDomain::zoomIn(const QRectF &rect)
 void LogXYDomain::zoomOut(const QRectF &rect)
 {
     storeZoomReset();
-    const qreal factorX = m_size.width() / rect.width();
+    QRectF fixedRect = fixZoomRect(rect);
+    const qreal factorX = m_size.width() / fixedRect.width();
 
     qreal logLeftX = m_logLeftX + (m_logRightX - m_logLeftX) / 2 * (1 - factorX);
     qreal logRIghtX = m_logLeftX + (m_logRightX - m_logLeftX) / 2 * (1 + factorX);
@@ -110,11 +112,11 @@ void LogXYDomain::zoomOut(const QRectF &rect)
     qreal minX = leftX < rightX ? leftX : rightX;
     qreal maxX = leftX > rightX ? leftX : rightX;
 
-    qreal dy = spanY() / rect.height();
+    qreal dy = spanY() / fixedRect.height();
     qreal minY = m_minY;
     qreal maxY = m_maxY;
 
-    maxY = minY + dy * rect.bottom();
+    maxY = minY + dy * fixedRect.bottom();
     minY = maxY - dy * m_size.height();
 
     setRange(minX, maxX, minY, maxY);
@@ -122,6 +124,11 @@ void LogXYDomain::zoomOut(const QRectF &rect)
 
 void LogXYDomain::move(qreal dx, qreal dy)
 {
+    if (m_reverseX)
+        dx = -dx;
+    if (m_reverseY)
+        dy = -dy;
+
     qreal stepX = dx * (m_logRightX - m_logLeftX) / m_size.width();
     qreal leftX = qPow(m_logBaseX, m_logLeftX + stepX);
     qreal rightX = qPow(m_logBaseX, m_logRightX + stepX);
@@ -145,9 +152,13 @@ QPointF LogXYDomain::calculateGeometryPoint(const QPointF &point, bool &ok) cons
     const qreal deltaY = m_size.height() / (m_maxY - m_minY);
 
     qreal x(0);
-    qreal y = (point.y() - m_minY) * -deltaY + m_size.height();
+    qreal y = (point.y() - m_minY) * deltaY;
+    if (!m_reverseY)
+        y = m_size.height() - y;
     if (point.x() > 0) {
-        x = (std::log10(point.x()) / std::log10(m_logBaseX)) * deltaX - m_logLeftX * deltaX;
+        x = ((std::log10(point.x()) / std::log10(m_logBaseX)) - m_logLeftX) * deltaX;
+        if (m_reverseX)
+            x = m_size.width() - x;
         ok = true;
     } else {
         x = 0;
@@ -167,8 +178,12 @@ QVector<QPointF> LogXYDomain::calculateGeometryPoints(const QVector<QPointF> &ve
 
     for (int i = 0; i < vector.count(); ++i) {
         if (vector[i].x() > 0) {
-            qreal x = (std::log10(vector[i].x()) / std::log10(m_logBaseX)) * deltaX - m_logLeftX * deltaX;
-            qreal y = (vector[i].y() - m_minY) * -deltaY + m_size.height();
+            qreal x = ((std::log10(vector[i].x()) / std::log10(m_logBaseX)) - m_logLeftX) * deltaX;
+            if (m_reverseX)
+                x = m_size.width() - x;
+            qreal y = (vector[i].y() - m_minY) * deltaY;
+            if (!m_reverseY)
+                y = m_size.height() - y;
             result[i].setX(x);
             result[i].setY(y);
         } else {
@@ -184,8 +199,11 @@ QPointF LogXYDomain::calculateDomainPoint(const QPointF &point) const
 {
     const qreal deltaX = m_size.width() / (m_logRightX - m_logLeftX);
     const qreal deltaY = m_size.height() / (m_maxY - m_minY);
-    qreal x = qPow(m_logBaseX, m_logLeftX + point.x() / deltaX);
-    qreal y = (point.y() - m_size.height()) / (-deltaY) + m_minY;
+    qreal x = m_reverseX ? (m_size.width() - point.x()) : point.x();
+    x = qPow(m_logBaseX, m_logLeftX + x / deltaX);
+    qreal y = m_reverseY ? point.y() : (m_size.height() - point.y());
+    y /= deltaY;
+    y += m_minY;
     return QPointF(x, y);
 }
 
