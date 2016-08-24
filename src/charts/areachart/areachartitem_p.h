@@ -60,6 +60,9 @@ public:
     void setPresenter(ChartPresenter *presenter);
     QAreaSeries *series() const { return m_series; }
 
+    void setUpperSeries(QLineSeries *series);
+    void setLowerSeries(QLineSeries *series);
+
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
