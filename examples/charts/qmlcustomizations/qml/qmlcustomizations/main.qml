@@ -61,7 +61,7 @@ Item {
 
     //![2]
     Component.onCompleted: {
-        __intervalCoefficient = Math.random() + 0.1;
+        __intervalCoefficient = Math.random() + 0.25;
 
         for (var i = 0; i < 20; i++)
             wheelOfFortune.append("", 1);
@@ -77,6 +77,8 @@ Item {
     //![2]
 
     Timer {
+        id: timer
+        property color switchColor
         triggeredOnStart: true
         running: true
         repeat: true
@@ -101,9 +103,9 @@ Item {
                 //![5]
                 // Switch the colors of the slice and the border
                 wheelOfFortune.at(index).borderWidth = 2;
-                var borderColor = wheelOfFortune.at(index).borderColor;
+                switchColor = wheelOfFortune.at(index).borderColor;
                 wheelOfFortune.at(index).borderColor = wheelOfFortune.at(index).color;
-                wheelOfFortune.at(index).color = borderColor;
+                wheelOfFortune.at(index).color = switchColor;
                 //![5]
             }
         }
