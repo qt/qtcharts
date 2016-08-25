@@ -76,9 +76,11 @@ void DeclarativeChartNode::createTextureFromImage(const QImage &chartImage)
         m_imageNode = m_window->createImageNode();
         m_imageNode->setFlag(OwnedByParent);
         m_imageNode->setOwnsTexture(true);
+        m_imageNode->setTexture(texture);
         prependChildNode(m_imageNode);
+    } else {
+        m_imageNode->setTexture(texture);
     }
-    m_imageNode->setTexture(texture);
     if (!m_rect.isEmpty())
         m_imageNode->setRect(m_rect);
 }
