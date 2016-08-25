@@ -36,9 +36,18 @@ ChartView {
     animationOptions: ChartView.NoAnimation
     theme: ChartView.ChartThemeDark
     property bool openGL: true
+    property bool openGLSupported: true
     onOpenGLChanged: {
-        series("signal 1").useOpenGL = openGL;
-        series("signal 2").useOpenGL = openGL;
+        if (openGLSupported) {
+            series("signal 1").useOpenGL = openGL;
+            series("signal 2").useOpenGL = openGL;
+        }
+    }
+    Component.onCompleted: {
+        if (!series("signal 1").useOpenGL) {
+            openGLSupported = false
+            openGL = false
+        }
     }
 
     ValueAxis {

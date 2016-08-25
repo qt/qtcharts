@@ -67,6 +67,13 @@ Item {
         anchors.right: parent.right
         anchors.left: controlPanel.right
         height: main.height
+
+        onOpenGLSupportedChanged: {
+            if (!openGLSupported) {
+                controlPanel.openGLButton.enabled = false
+                controlPanel.openGLButton.currentSelection = 0
+            }
+        }
     }
 //![2]
 
