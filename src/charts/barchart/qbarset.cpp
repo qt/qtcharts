@@ -312,6 +312,7 @@ QBarSet::~QBarSet()
 void QBarSet::setLabel(const QString label)
 {
     d_ptr->m_label = label;
+    d_ptr->setLabelsDirty(true);
     emit labelChanged();
 }
 
@@ -390,7 +391,6 @@ void QBarSet::replace(const int index, const qreal value)
     }
 }
 
-
 /*!
     Returns value of set indexed by \a index.
     If the index is out of bounds 0.0 is returned.
@@ -437,6 +437,7 @@ void QBarSet::setPen(const QPen &pen)
 {
     if (d_ptr->m_pen != pen) {
         d_ptr->m_pen = pen;
+        d_ptr->setVisualsDirty(true);
         emit d_ptr->updatedBars();
         emit penChanged();
     }
@@ -460,6 +461,7 @@ void QBarSet::setBrush(const QBrush &brush)
 {
     if (d_ptr->m_brush != brush) {
         d_ptr->m_brush = brush;
+        d_ptr->setVisualsDirty(true);
         emit d_ptr->updatedBars();
         emit brushChanged();
     }
@@ -483,6 +485,7 @@ void QBarSet::setLabelBrush(const QBrush &brush)
 {
     if (d_ptr->m_labelBrush != brush) {
         d_ptr->m_labelBrush = brush;
+        d_ptr->setLabelsDirty(true);
         emit d_ptr->updatedBars();
         emit labelBrushChanged();
     }
@@ -506,10 +509,10 @@ void QBarSet::setLabelFont(const QFont &font)
 {
     if (d_ptr->m_labelFont != font) {
         d_ptr->m_labelFont = font;
+        d_ptr->setLabelsDirty(true);
         emit d_ptr->updatedBars();
         emit labelFontChanged();
     }
-
 }
 
 /*!
@@ -600,7 +603,8 @@ QBarSetPrivate::QBarSetPrivate(const QString label, QBarSet *parent) : QObject(p
     m_label(label),
     m_pen(QChartPrivate::defaultPen()),
     m_brush(QChartPrivate::defaultBrush()),
-    m_labelBrush(QChartPrivate::defaultBrush())
+    m_labelBrush(QChartPrivate::defaultBrush()),
+    m_visualsDirty(true)
 {
 }
 
@@ -612,41 +616,43 @@ void QBarSetPrivate::append(QPointF value)
 {
     if (isValidValue(value)) {
         m_values.append(value);
-        emit restructuredBars();
+        emit valueAdded(m_values.size() - 1, 1);
     }
 }
 
 void QBarSetPrivate::append(QList<QPointF> values)
 {
+    int originalIndex = m_values.count();
     for (int i = 0; i < values.count(); i++) {
         if (isValidValue(values.at(i)))
             m_values.append(values.at(i));
     }
-    emit restructuredBars();
+    emit valueAdded(originalIndex, values.size());
 }
 
 void QBarSetPrivate::append(QList<qreal> values)
 {
-    int index = m_values.count();
+    int originalIndex = m_values.count();
+    int index = originalIndex;
     for (int i = 0; i < values.count(); i++) {
         if (isValidValue(values.at(i))) {
             m_values.append(QPointF(index, values.at(i)));
             index++;
         }
     }
-    emit restructuredBars();
+    emit valueAdded(originalIndex, values.size());
 }
 
 void QBarSetPrivate::insert(const int index, const qreal value)
 {
     m_values.insert(index, QPointF(index, value));
-    emit restructuredBars();
+    emit valueAdded(index, 1);
 }
 
 void QBarSetPrivate::insert(const int index, const QPointF value)
 {
     m_values.insert(index, value);
-    emit restructuredBars();
+    emit valueAdded(index, 1);
 }
 
 int QBarSetPrivate::remove(const int index, const int count)
@@ -663,20 +669,14 @@ int QBarSetPrivate::remove(const int index, const int count)
         m_values.removeAt(index);
         c++;
     }
-    emit restructuredBars();
+    emit valueRemoved(index, removeCount);
     return removeCount;
 }
 
 void QBarSetPrivate::replace(const int index, const qreal value)
 {
     m_values.replace(index, QPointF(index, value));
-    emit updatedLayout();
-}
-
-void QBarSetPrivate::replace(const int index, const QPointF value)
-{
-    m_values.replace(index, value);
-    emit updatedLayout();
+    emit valueChanged(index);
 }
 
 qreal QBarSetPrivate::pos(const int index)

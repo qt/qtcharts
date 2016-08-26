@@ -3,7 +3,8 @@ SUBDIRS += \
     presenterchart \
     polarcharttest \
     boxplottester \
-    candlesticktester
+    candlesticktester \
+    barcharttester
 
 contains(QT_CONFIG, opengl) {
     SUBDIRS +=  chartwidgettest \

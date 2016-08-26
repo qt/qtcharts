@@ -64,15 +64,20 @@ public:
     int remove(const int index, const int count);
 
     void replace(const int index, const qreal value);
-    void replace(const int index, const QPointF value);
 
     qreal pos(const int index);
     qreal value(const int index);
 
+    void setVisualsDirty(bool dirty) { m_visualsDirty = dirty; }
+    bool visualsDirty() const { return m_visualsDirty; }
+    void setLabelsDirty(bool dirty) { m_labelsDirty = dirty; }
+    bool labelsDirty() const { return m_labelsDirty; }
+
 Q_SIGNALS:
-    void restructuredBars();
     void updatedBars();
-    void updatedLayout();
+    void valueChanged(int index);
+    void valueAdded(int index, int count);
+    void valueRemoved(int index, int count);
 
 public:
     QBarSet * const q_ptr;
@@ -82,6 +87,8 @@ public:
     QBrush m_brush;
     QBrush m_labelBrush;
     QFont m_labelFont;
+    bool m_visualsDirty;
+    bool m_labelsDirty;
 
     friend class QBarSet;
 };

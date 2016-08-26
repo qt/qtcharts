@@ -39,48 +39,62 @@ HorizontalBarChartItem::HorizontalBarChartItem(QAbstractBarSeries *series, QGrap
 {
 }
 
-void HorizontalBarChartItem::initializeLayout()
+void HorizontalBarChartItem::initializeLayout(int set, int category, int layoutIndex,
+                                              bool resetAnimation)
 {
-    qreal categoryCount = m_series->d_func()->categoryCount();
-    qreal setCount = m_series->count();
-    qreal barWidth = m_series->d_func()->barWidth();
+    QRectF rect;
 
-    m_layout.clear();
-    for(int category = 0; category < categoryCount; category++) {
-        for (int set = 0; set < setCount; set++) {
-            QRectF rect;
-            QPointF topLeft;
-            QPointF bottomRight;
-            if (domain()->type() == AbstractDomain::LogXYDomain || domain()->type() == AbstractDomain::LogXLogYDomain) {
-                topLeft = domain()->calculateGeometryPoint(QPointF(domain()->minX(), category - barWidth / 2 + set/setCount * barWidth), m_validData);
-                bottomRight = domain()->calculateGeometryPoint(QPointF(domain()->minX(), category - barWidth / 2 + (set + 1)/setCount * barWidth), m_validData);
-            } else {
-                topLeft = domain()->calculateGeometryPoint(QPointF(0, category - barWidth / 2 + set/setCount * barWidth), m_validData);
-                bottomRight = domain()->calculateGeometryPoint(QPointF(0, category - barWidth / 2 + (set + 1)/setCount * barWidth), m_validData);
-            }
+    int previousSetIndex = layoutIndex - m_categoryCount;
+    if (previousSetIndex >= 0) {
+        rect = m_layout.at(previousSetIndex);
+        qreal oldTop = rect.top();
+        if (resetAnimation)
+            rect.setTop(oldTop - rect.height());
+        rect.setBottom(oldTop);
+        rect.setRight(rect.left());
+    } else {
+        QPointF topLeft;
+        QPointF bottomRight;
+        qreal barWidth = m_series->d_func()->barWidth();
+        qreal setCount = m_series->count();
+        if (domain()->type() == AbstractDomain::LogXYDomain
+                || domain()->type() == AbstractDomain::LogXLogYDomain) {
+            topLeft = domain()->calculateGeometryPoint(
+                        QPointF(domain()->minX(),
+                                category - barWidth / 2 + set/setCount * barWidth), m_validData);
+            bottomRight = domain()->calculateGeometryPoint(
+                        QPointF(domain()->minX(),
+                                category - barWidth / 2 + (set + 1)/setCount * barWidth),
+                        m_validData);
+        } else {
+            topLeft = domain()->calculateGeometryPoint(
+                        QPointF(0, category - barWidth / 2 + set/setCount * barWidth), m_validData);
+            bottomRight = domain()->calculateGeometryPoint(
+                        QPointF(0, category - barWidth / 2 + (set + 1)/setCount * barWidth),
+                        m_validData);
+        }
 
-            if (!m_validData)
-                 return;
-
+        if (m_validData) {
             rect.setTopLeft(topLeft);
             rect.setBottomRight(bottomRight);
-            m_layout.append(rect.normalized());
         }
     }
+    m_layout[layoutIndex] = rect.normalized();
 }
 
 QVector<QRectF> HorizontalBarChartItem::calculateLayout()
 {
     QVector<QRectF> layout;
+    layout.reserve(m_layout.size());
 
     // Use temporary qreals for accuracy
-    qreal categoryCount = m_series->d_func()->categoryCount();
     qreal setCount = m_series->count();
     qreal barWidth = m_series->d_func()->barWidth();
 
-    for(int category = 0; category < categoryCount; category++) {
-        for (int set = 0; set < setCount; set++) {
-            qreal value = m_series->barSets().at(set)->at(category);
+    for (int set = 0; set < setCount; set++) {
+        const QBarSet *barSet = m_series->barSets().at(set);
+        for (int category = m_firstCategory; category <= m_lastCategory; category++) {
+            qreal value = barSet->at(category);
             QRectF rect;
             QPointF topLeft;
             if (domain()->type() == AbstractDomain::LogXYDomain || domain()->type() == AbstractDomain::LogXLogYDomain)

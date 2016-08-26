@@ -39,50 +39,89 @@ HorizontalPercentBarChartItem::HorizontalPercentBarChartItem(QAbstractBarSeries 
 {
 }
 
-void HorizontalPercentBarChartItem::initializeLayout()
+QString HorizontalPercentBarChartItem::generateLabelText(int set, int category, qreal value)
 {
-    qreal categoryCount = m_series->d_func()->categoryCount();
-    qreal setCount = m_series->count();
-    qreal barWidth = m_series->d_func()->barWidth();
+    Q_UNUSED(value)
 
-    m_layout.clear();
-    for(int category = 0; category < categoryCount; category++) {
-        for (int set = 0; set < setCount; set++) {
-            QRectF rect;
-            QPointF topLeft;
-            QPointF bottomRight;
-            if (domain()->type() == AbstractDomain::LogXYDomain || domain()->type() == AbstractDomain::LogXLogYDomain) {
-                topLeft = domain()->calculateGeometryPoint(QPointF(domain()->minX(), category - barWidth / 2), m_validData);
-                bottomRight = domain()->calculateGeometryPoint(QPointF(domain()->minX(), category + barWidth / 2), m_validData);
-            } else {
-                topLeft = domain()->calculateGeometryPoint(QPointF(0, category - barWidth / 2), m_validData);
-                bottomRight = domain()->calculateGeometryPoint(QPointF(0, category + barWidth / 2), m_validData);
-            }
+    static const QString valueTag(QLatin1String("@value"));
+    qreal p = m_series->d_func()->percentageAt(set, category) * 100.0;
+    QString vString(presenter()->numberToString(p, 'f', 0));
+    QString valueLabel;
+    if (m_series->labelsFormat().isEmpty()) {
+        vString.append(QStringLiteral("%"));
+        valueLabel = vString;
+    } else {
+        valueLabel = m_series->labelsFormat();
+        valueLabel.replace(valueTag, vString);
+    }
 
-            if (!m_validData)
-                 return;
+    return valueLabel;
+}
 
+void HorizontalPercentBarChartItem::initializeLayout(int set, int category, int layoutIndex,
+                                                     bool resetAnimation)
+{
+    Q_UNUSED(set)
+    Q_UNUSED(resetAnimation)
+
+    QRectF rect;
+
+    int previousSetIndex = layoutIndex - m_categoryCount;
+    if (previousSetIndex >= 0) {
+        rect = m_layout.at(previousSetIndex);
+        rect.setLeft(rect.right());
+    } else {
+        QPointF topLeft;
+        QPointF bottomRight;
+        qreal barWidth = m_series->d_func()->barWidth();
+        if (domain()->type() == AbstractDomain::LogXYDomain
+                || domain()->type() == AbstractDomain::LogXLogYDomain) {
+            topLeft = domain()->calculateGeometryPoint(
+                        QPointF(domain()->minX(), category - barWidth / 2), m_validData);
+            bottomRight = domain()->calculateGeometryPoint(
+                        QPointF(domain()->minX(), category + barWidth / 2), m_validData);
+        } else {
+            topLeft = domain()->calculateGeometryPoint(
+                        QPointF(0, category - barWidth / 2), m_validData);
+            bottomRight = domain()->calculateGeometryPoint(
+                        QPointF(0, category + barWidth / 2), m_validData);
+        }
+        if (m_validData) {
             rect.setTopLeft(topLeft);
             rect.setBottomRight(bottomRight);
-            m_layout.append(rect.normalized());
         }
     }
+    m_layout[layoutIndex] = rect.normalized();
+}
+
+void HorizontalPercentBarChartItem::markLabelsDirty(QBarSet *barset, int visualIndex, int count)
+{
+    Q_UNUSED(barset)
+    // Percent series need to dirty all labels of the stack
+    QList<QBarSet *> sets = m_barMap.keys();
+    for (int set = 0; set < sets.size(); set++)
+        AbstractBarChartItem::markLabelsDirty(sets.at(set), visualIndex, count);
 }
 
 QVector<QRectF> HorizontalPercentBarChartItem::calculateLayout()
 {
     QVector<QRectF> layout;
+    layout.reserve(m_layout.size());
 
     // Use temporary qreals for accuracy
-    qreal categoryCount = m_series->d_func()->categoryCount();
     qreal setCount = m_series->count();
     qreal barWidth = m_series->d_func()->barWidth();
 
-    for(int category = 0; category < categoryCount; category++) {
-        qreal sum = 0;
-        qreal categorySum = m_series->d_func()->categorySum(category);
-        for (int set = 0; set < setCount; set++) {
-            qreal value = m_series->barSets().at(set)->at(category);
+    QVector<qreal> categorySums(m_categoryCount);
+    QVector<qreal> tempSums(m_categoryCount, 0.0);
+    for (int category = 0; category < m_categoryCount; category++)
+        categorySums[category] = m_series->d_func()->categorySum(category + m_firstCategory);
+    for (int set = 0; set < setCount; set++) {
+        const QBarSet *barSet = m_series->barSets().at(set);
+        for (int category = m_firstCategory; category <= m_lastCategory; category++) {
+            qreal &sum = tempSums[category - m_firstCategory];
+            const qreal &categorySum = categorySums.at(category - m_firstCategory);
+            qreal value = barSet->at(category);
             QRectF rect;
             qreal topX = 0;
             if (sum > 0)
@@ -105,47 +144,6 @@ QVector<QRectF> HorizontalPercentBarChartItem::calculateLayout()
         }
     }
     return layout;
-}
-
-void HorizontalPercentBarChartItem::handleUpdatedBars()
-{
-    // Handle changes in pen, brush, labels etc.
-    int categoryCount = m_series->d_func()->categoryCount();
-    int setCount = m_series->count();
-    int itemIndex(0);
-    static const QString valueTag(QLatin1String("@value"));
-
-    for (int category = 0; category < categoryCount; category++) {
-        for (int set = 0; set < setCount; set++) {
-            QBarSetPrivate *barSet = m_series->d_func()->barsetAt(set)->d_ptr.data();
-            Bar *bar = m_bars.at(itemIndex);
-            bar->setPen(barSet->m_pen);
-            bar->setBrush(barSet->m_brush);
-            bar->update();
-
-            QGraphicsTextItem *label = m_labels.at(itemIndex);
-            qreal p = m_series->d_func()->percentageAt(set, category) * 100.0;
-            QString vString(presenter()->numberToString(p, 'f', 0));
-            QString valueLabel;
-            if (p == 0) {
-                label->setVisible(false);
-            } else {
-                label->setVisible(m_series->isLabelsVisible());
-                if (m_series->labelsFormat().isEmpty()) {
-                    vString.append(QStringLiteral("%"));
-                    valueLabel = vString;
-                } else {
-                    valueLabel = m_series->labelsFormat();
-                    valueLabel.replace(valueTag, vString);
-                }
-            }
-            label->setHtml(valueLabel);
-            label->setFont(barSet->m_labelFont);
-            label->setDefaultTextColor(barSet->m_labelBrush.color());
-            label->update();
-            itemIndex++;
-        }
-    }
 }
 
 #include "moc_horizontalpercentbarchartitem_p.cpp"

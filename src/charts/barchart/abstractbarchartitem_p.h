@@ -51,6 +51,7 @@ class Bar;
 class QAxisCategories;
 class QChart;
 class BarAnimation;
+class QBarSetPrivate;
 
 class AbstractBarChartItem : public ChartItem
 {
@@ -64,11 +65,11 @@ public:
     QRectF boundingRect() const;
 
     virtual QVector<QRectF> calculateLayout() = 0;
-    virtual void initializeLayout() = 0;
+    void initializeFullLayout();
+    virtual void initializeLayout(int set, int category, int layoutIndex, bool resetAnimation) = 0;
     virtual void applyLayout(const QVector<QRectF> &layout);
     virtual void setAnimation(BarAnimation *animation);
     void setLayout(const QVector<QRectF> &layout);
-    void updateLayout(const QVector<QRectF> &layout);
     QRectF geometry() const { return m_rect;}
 
 public Q_SLOTS:
@@ -78,17 +79,20 @@ public Q_SLOTS:
     void handleDataStructureChanged();     // structure of of series has changed, recreate graphic items
     void handleVisibleChanged();
     void handleOpacityChanged();
-    virtual void handleUpdatedBars();
+    void handleUpdatedBars();
     void handleLabelsPositionChanged();
     virtual void positionLabels();
+    void handleBarValueChange(int index, QBarSet *barset);
+    void handleBarValueAdd(int index, int count, QBarSet *barset);
+    void handleBarValueRemove(int index, int count, QBarSet *barset);
 
 protected:
     void positionLabelsVertical();
-
-    qreal m_domainMinX;
-    qreal m_domainMaxX;
-    qreal m_domainMinY;
-    qreal m_domainMaxY;
+    void createLabelItems();
+    void handleSetStructureChange();
+    virtual QString generateLabelText(int set, int category, qreal value);
+    void updateBarItems();
+    virtual void markLabelsDirty(QBarSet *barset, int visualIndex, int count);
 
     QRectF m_rect;
     QVector<QRectF> m_layout;
@@ -96,9 +100,14 @@ protected:
     BarAnimation *m_animation;
 
     QAbstractBarSeries *m_series; // Not owned.
-    QList<Bar *> m_bars;
-    QList<QGraphicsTextItem *> m_labels;
+    QMap<QBarSet *, QList<Bar *> > m_barMap;
+    int m_firstCategory;
+    int m_lastCategory;
+    int m_categoryCount;
     QSizeF m_oldSize;
+    bool m_labelItemsMissing;
+    Qt::Orientation m_orientation;
+    bool m_resetAnimation;
 };
 
 QT_CHARTS_END_NAMESPACE

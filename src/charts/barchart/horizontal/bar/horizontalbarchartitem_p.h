@@ -52,7 +52,7 @@ public:
 
 private:
     virtual QVector<QRectF> calculateLayout();
-    void initializeLayout();
+    void initializeLayout(int set, int category, int layoutIndex, bool resetAnimation);
 };
 
 QT_CHARTS_END_NAMESPACE

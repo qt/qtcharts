@@ -97,6 +97,10 @@ public:
     bool blockBarUpdate();
 
     qreal labelsAngle() const;
+    void setVisualsDirty(bool dirty) { m_visualsDirty = dirty; }
+    bool visualsDirty() const { return m_visualsDirty; }
+    void setLabelsDirty(bool dirty) { m_labelsDirty = dirty; }
+    bool labelsDirty() const { return m_labelsDirty; }
 
 Q_SIGNALS:
     void clicked(int index, QBarSet *barset);
@@ -108,6 +112,14 @@ Q_SIGNALS:
     void restructuredBars();
     void labelsVisibleChanged(bool visible);
     void visibleChanged();
+    void setValueChanged(int index, QBarSet *barset);
+    void setValueAdded(int index, int count, QBarSet *barset);
+    void setValueRemoved(int index, int count, QBarSet *barset);
+
+private Q_SLOTS:
+    void handleSetValueChange(int index);
+    void handleSetValueAdd(int index, int count);
+    void handleSetValueRemove(int index, int count);
 
 private:
     void populateCategories(QBarCategoryAxis *axis);
@@ -121,6 +133,8 @@ protected:
     QString m_labelsFormat;
     QAbstractBarSeries::LabelsPosition m_labelsPosition;
     qreal m_labelsAngle;
+    bool m_visualsDirty;
+    bool m_labelsDirty;
 
 private:
     Q_DECLARE_PUBLIC(QAbstractBarSeries)

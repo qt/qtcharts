@@ -39,50 +39,62 @@ HorizontalStackedBarChartItem::HorizontalStackedBarChartItem(QAbstractBarSeries 
 {
 }
 
-void HorizontalStackedBarChartItem::initializeLayout()
+void HorizontalStackedBarChartItem::initializeLayout(int set, int category, int layoutIndex,
+                                                     bool resetAnimation)
 {
-    qreal categoryCount = m_series->d_func()->categoryCount();
-    qreal setCount = m_series->count();
-    qreal barWidth = m_series->d_func()->barWidth();
+    Q_UNUSED(set)
+    Q_UNUSED(resetAnimation)
 
-    m_layout.clear();
-    for(int category = 0; category < categoryCount; category++) {
-        for (int set = 0; set < setCount; set++) {
-            QRectF rect;
-            QPointF topLeft;
-            QPointF bottomRight;
-            if (domain()->type() == AbstractDomain::LogXYDomain || domain()->type() == AbstractDomain::LogXLogYDomain) {
-                topLeft = domain()->calculateGeometryPoint(QPointF(domain()->minX(), category - barWidth / 2), m_validData);
-                bottomRight = domain()->calculateGeometryPoint(QPointF(domain()->minX(), category + barWidth / 2), m_validData);
-            } else {
-                topLeft = domain()->calculateGeometryPoint(QPointF(0, category - barWidth / 2), m_validData);
-                bottomRight = domain()->calculateGeometryPoint(QPointF(0, category + barWidth / 2), m_validData);
-            }
+    QRectF rect;
 
-            if (!m_validData)
-                 return;
+    int previousSetIndex = layoutIndex - m_categoryCount;
+    if (previousSetIndex >= 0) {
+        rect = m_layout.at(previousSetIndex);
+        rect.setLeft(rect.right());
+    } else {
+        QPointF topLeft;
+        QPointF bottomRight;
+        qreal barWidth = m_series->d_func()->barWidth();
 
+        if (domain()->type() == AbstractDomain::LogXYDomain
+                || domain()->type() == AbstractDomain::LogXLogYDomain) {
+            topLeft = domain()->calculateGeometryPoint(
+                        QPointF(domain()->minX(), category - barWidth / 2), m_validData);
+            bottomRight = domain()->calculateGeometryPoint(
+                        QPointF(domain()->minX(), category + barWidth / 2), m_validData);
+        } else {
+            topLeft = domain()->calculateGeometryPoint(
+                        QPointF(0, category - barWidth / 2), m_validData);
+            bottomRight = domain()->calculateGeometryPoint(
+                        QPointF(0, category + barWidth / 2), m_validData);
+        }
+
+        if (m_validData) {
             rect.setTopLeft(topLeft);
             rect.setBottomRight(bottomRight);
-            m_layout.append(rect.normalized());
         }
     }
+    m_layout[layoutIndex] = rect.normalized();
 }
 
 QVector<QRectF> HorizontalStackedBarChartItem::calculateLayout()
 {
     QVector<QRectF> layout;
+    layout.reserve(m_layout.size());
 
     // Use temporary qreals for accuracy
-    qreal categoryCount = m_series->d_func()->categoryCount();
     qreal setCount = m_series->count();
     qreal barWidth = m_series->d_func()->barWidth();
 
-    for(int category = 0; category < categoryCount; category++) {
-        qreal positiveSum = 0;
-        qreal negativeSum = 0;
-        for (int set = 0; set < setCount; set++) {
-            qreal value = m_series->barSets().at(set)->at(category);
+    QVector<qreal> positiveSums(m_categoryCount, 0.0);
+    QVector<qreal> negativeSums(m_categoryCount, 0.0);
+
+    for (int set = 0; set < setCount; set++) {
+        const QBarSet *barSet = m_series->barSets().at(set);
+        for (int category = m_firstCategory; category <= m_lastCategory; category++) {
+            qreal &positiveSum = positiveSums[category - m_firstCategory];
+            qreal &negativeSum = negativeSums[category - m_firstCategory];
+            qreal value = barSet->at(category);
             QRectF rect;
             QPointF topLeft;
             QPointF bottomRight;

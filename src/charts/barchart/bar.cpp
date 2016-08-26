@@ -35,11 +35,15 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-Bar::Bar(QBarSet *barset, int index, QGraphicsItem *parent) : QGraphicsRectItem(parent),
-    m_index(index),
+Bar::Bar(QBarSet *barset, QGraphicsItem *parent) : QGraphicsRectItem(parent),
+    m_index(-255),
+    m_layoutIndex(-255),
     m_barset(barset),
+    m_labelItem(nullptr),
     m_hovering(false),
-    m_mousePressed(false)
+    m_mousePressed(false),
+    m_visualsDirty(true),
+    m_labelDirty(true)
 {
     setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
     setAcceptHoverEvents(true);
@@ -51,6 +55,7 @@ Bar::~Bar()
     // End hover event, if bar is deleted during it
     if (m_hovering)
         emit hovered(false, m_index, m_barset);
+    delete m_labelItem;
 }
 
 void Bar::mousePressEvent(QGraphicsSceneMouseEvent *event)

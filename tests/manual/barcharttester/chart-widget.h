@@ -27,40 +27,46 @@
 **
 ****************************************************************************/
 
-//  W A R N I N G
-//  -------------
-//
-// This file is not part of the Qt Chart API.  It exists purely as an
-// implementation detail.  This header file may change from version to
-// version without notice, or even be removed.
-//
-// We mean it.
+#ifndef CHARTWIDGET_H
+#define CHARTWIDGET_H
+
+#include <QtWidgets/QHBoxLayout>
+#include <QtCharts/QChart>
+#include <QtCharts/QChartView>
+#include <QtCharts/QValueAxis>
+#include <QtCharts/QBarSeries>
+#include <QtCharts/QBarSet>
+#include <QtCore/QTimer>
+#include <QtCore/QElapsedTimer>
+
+QT_CHARTS_USE_NAMESPACE
 
 
-#ifndef STACKEDBARCHARTITEM_H
-#define STACKEDBARCHARTITEM_H
-
-#include <private/abstractbarchartitem_p.h>
-#include <QtCharts/QStackedBarSeries>
-#include <QtWidgets/QGraphicsItem>
-
-QT_CHARTS_BEGIN_NAMESPACE
-
-class StackedBarChartItem : public AbstractBarChartItem
+class ChartWidget : public QWidget
 {
     Q_OBJECT
-public:
-    StackedBarChartItem(QAbstractBarSeries *series, QGraphicsItem* item =0);
 
-private Q_SLOTS:
-    void handleLabelsPositionChanged();
-    void positionLabels();
+public:
+    explicit ChartWidget(QWidget *parent = 0);
+    ~ChartWidget();
+
+public slots:
+    void handleTimeout();
 
 private:
-    virtual QVector<QRectF> calculateLayout();
-    void initializeLayout(int set, int category, int layoutIndex, bool resetAnimation);
+    void createChart();
+
+private:
+    QChart *m_chart;
+    QChartView *m_chartView;
+    QValueAxis *m_barAxis;
+    QAbstractAxis *m_valueAxis;
+    QAbstractBarSeries *m_series;
+    QVector<QBarSet *> m_sets;
+    QTimer m_timer;
+    QElapsedTimer m_elapsedTimer;
+    QHBoxLayout *m_horizontalLayout;
+    int m_setCount;
 };
 
-QT_CHARTS_END_NAMESPACE
-
-#endif // STACKEDBARCHARTITEM_H
+#endif // CHARTWIDGET_H

@@ -49,11 +49,12 @@ class HorizontalPercentBarChartItem : public AbstractBarChartItem
     Q_OBJECT
 public:
     HorizontalPercentBarChartItem(QAbstractBarSeries *series, QGraphicsItem* item = 0);
-    void handleUpdatedBars();
+    virtual QString generateLabelText(int set, int category, qreal value);
 
 private:
     virtual QVector<QRectF> calculateLayout();
-    void initializeLayout();
+    void initializeLayout(int set, int category, int layoutIndex, bool resetAnimation);
+    void markLabelsDirty(QBarSet *barset, int visualIndex, int count);
 };
 
 QT_CHARTS_END_NAMESPACE

@@ -27,40 +27,16 @@
 **
 ****************************************************************************/
 
-//  W A R N I N G
-//  -------------
-//
-// This file is not part of the Qt Chart API.  It exists purely as an
-// implementation detail.  This header file may change from version to
-// version without notice, or even be removed.
-//
-// We mean it.
+#include "chart-widget.h"
+#include <QApplication>
 
-
-#ifndef STACKEDBARCHARTITEM_H
-#define STACKEDBARCHARTITEM_H
-
-#include <private/abstractbarchartitem_p.h>
-#include <QtCharts/QStackedBarSeries>
-#include <QtWidgets/QGraphicsItem>
-
-QT_CHARTS_BEGIN_NAMESPACE
-
-class StackedBarChartItem : public AbstractBarChartItem
+int main(int argc, char *argv[])
 {
-    Q_OBJECT
-public:
-    StackedBarChartItem(QAbstractBarSeries *series, QGraphicsItem* item =0);
+    QApplication a(argc, argv);
 
-private Q_SLOTS:
-    void handleLabelsPositionChanged();
-    void positionLabels();
+    ChartWidget w;
+    w.resize(1200, 800);
+    w.show();
 
-private:
-    virtual QVector<QRectF> calculateLayout();
-    void initializeLayout(int set, int category, int layoutIndex, bool resetAnimation);
-};
-
-QT_CHARTS_END_NAMESPACE
-
-#endif // STACKEDBARCHARTITEM_H
+    return a.exec();
+}

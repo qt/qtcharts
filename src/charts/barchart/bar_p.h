@@ -41,6 +41,7 @@
 
 #include <QtCharts/QChartGlobal>
 #include <QtWidgets/QGraphicsRectItem>
+#include <QtWidgets/QGraphicsTextItem>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -51,7 +52,7 @@ class Bar : public QObject, public QGraphicsRectItem
 {
     Q_OBJECT
 public:
-    Bar(QBarSet *barset, int index, QGraphicsItem *parent = 0);
+    Bar(QBarSet *barset, QGraphicsItem *parent = 0);
     ~Bar();
 
 public:
@@ -62,6 +63,18 @@ public:
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
+    void setVisualsDirty(bool dirty) { m_visualsDirty = dirty; }
+    bool visualsDirty() const { return m_visualsDirty; }
+    void setLabelDirty(bool dirty) { m_labelDirty = dirty; }
+    bool labelDirty() const { return m_labelDirty; }
+
+    void setLabelItem(QGraphicsTextItem *labelItem) { m_labelItem = labelItem; }
+    QGraphicsTextItem *labelItem() const { return m_labelItem; }
+
+    void setIndex(int index) { m_index = index; }
+    int index() const { return m_index; }
+    void setLayoutIndex(int index) { m_layoutIndex = index; }
+    int layoutIndex() const { return m_layoutIndex; }
 
 Q_SIGNALS:
     void clicked(int index, QBarSet *barset);
@@ -72,10 +85,13 @@ Q_SIGNALS:
 
 private:
     int m_index;
+    int m_layoutIndex;
     QBarSet *m_barset;
+    QGraphicsTextItem *m_labelItem;
     bool m_hovering;
-
     bool m_mousePressed;
+    bool m_visualsDirty;
+    bool m_labelDirty;
 };
 
 QT_CHARTS_END_NAMESPACE
