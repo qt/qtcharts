@@ -23,6 +23,7 @@ SUBDIRS += \
            domain \
            chartdataset \
            qlegend \
+           qareaseries \
            cmake
 
 !contains(QT_COORD_TYPE, float): {
