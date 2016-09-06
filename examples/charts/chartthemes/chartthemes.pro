@@ -1,7 +1,11 @@
-!include( ../examples.pri ) {
- error( "Couldn't find the examples.pri file!" )
-}
+QT += charts
 
-TARGET = chartthemes
-SOURCES = main.cpp themewidget.cpp
-HEADERS = themewidget.h
+HEADERS += \
+    themewidget.h
+
+SOURCES += \
+    main.cpp \
+    themewidget.cpp
+
+target.path = $$[QT_INSTALL_EXAMPLES]/charts/chartthemes
+INSTALLS += target

@@ -1,16 +1,13 @@
-!include( ../examples.pri ) {
-    error( "Couldn't find the examples.pri file!" )
-}
+QT += charts
 
-QT       += core gui
+HEADERS += \
+    customtablemodel.h \
+    tablewidget.h
 
-TARGET = barmodelmapper
-TEMPLATE = app
+SOURCES += \
+    customtablemodel.cpp \
+    main.cpp \
+    tablewidget.cpp
 
-
-SOURCES += main.cpp\
-        tablewidget.cpp \
-    customtablemodel.cpp
-
-HEADERS  += tablewidget.h \
-    customtablemodel.h
+target.path = $$[QT_INSTALL_EXAMPLES]/charts/barmodelmapper
+INSTALLS += target

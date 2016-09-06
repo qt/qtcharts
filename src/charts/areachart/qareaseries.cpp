@@ -406,13 +406,18 @@ QAbstractSeries::SeriesType QAreaSeries::type() const
 
 /*!
     Sets the \a series that is to be used as the area chart upper series.
+    If the upper series is null, the area chart is not drawn, even if it has a lower series.
 */
 void QAreaSeries::setUpperSeries(QLineSeries *series)
 {
     Q_D(QAreaSeries);
+
     if (d->m_upperSeries != series) {
-        series->d_ptr->setBlockOpenGL(true);
+        if (series)
+            series->d_ptr->setBlockOpenGL(true);
         d->m_upperSeries = series;
+        if (!d->m_item.isNull())
+            static_cast<AreaChartItem *>(d->m_item.data())->setUpperSeries(series);
     }
 }
 
@@ -428,8 +433,13 @@ QLineSeries *QAreaSeries::upperSeries() const
 void QAreaSeries::setLowerSeries(QLineSeries *series)
 {
     Q_D(QAreaSeries);
-    series->d_ptr->setBlockOpenGL(true);
-    d->m_lowerSeries = series;
+    if (d->m_lowerSeries != series) {
+        if (series)
+            series->d_ptr->setBlockOpenGL(true);
+        d->m_lowerSeries = series;
+        if (!d->m_item.isNull())
+            static_cast<AreaChartItem *>(d->m_item.data())->setLowerSeries(series);
+    }
 }
 
 QLineSeries *QAreaSeries::lowerSeries() const

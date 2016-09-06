@@ -194,16 +194,9 @@ void ScatterChartItem::updateGeometry()
             // fake anyway. After remove animation stops, geometry is updated to correct one.
             m_markerMap[item] = m_series->at(qMin(seriesLastIndex, i));
             QPointF position;
-            if (seriesPrivate()->reverseXAxis())
-                position.setX(domain()->size().width() - point.x() - rect.width() / 2);
-            else
-                position.setX(point.x() - rect.width() / 2);
-            if (seriesPrivate()->reverseYAxis())
-                position.setY(domain()->size().height() - point.y() - rect.height() / 2);
-            else
-                position.setY(point.y() - rect.height() / 2);
+            position.setX(point.x() - rect.width() / 2);
+            position.setY(point.y() - rect.height() / 2);
             item->setPos(position);
-
 
             if (!m_visible || offGridStatus.at(i))
                 item->setVisible(false);
@@ -256,15 +249,21 @@ void ScatterChartItem::setBrush(const QBrush &brush)
 
 void ScatterChartItem::handleUpdated()
 {
-    int count = m_items.childItems().count();
+    if (m_series->useOpenGL()) {
+        if ((m_series->isVisible() != m_visible)) {
+            m_visible = m_series->isVisible();
+            refreshGlChart();
+        }
+        return;
+    }
 
+    int count = m_items.childItems().count();
     if (count == 0)
         return;
 
     bool recreate = m_visible != m_series->isVisible()
                     || m_size != m_series->markerSize()
                     || m_shape != m_series->markerShape();
-
     m_visible = m_series->isVisible();
     m_size = m_series->markerSize();
     m_shape = m_series->markerShape();

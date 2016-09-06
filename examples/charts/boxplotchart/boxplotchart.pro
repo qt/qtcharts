@@ -1,13 +1,14 @@
-!include( ../examples.pri ) {
- error( "Couldn't find the examples.pri file!" )
-}
+QT += charts
 
-TARGET = boxplotchart
-SOURCES += main.cpp \
-    boxdatareader.cpp
+HEADERS += \
+    boxdatareader.h
+
+SOURCES += \
+    boxdatareader.cpp \
+    main.cpp \
 
 RESOURCES += \
     boxplotdata.qrc
 
-HEADERS += \
-    boxdatareader.h
+target.path = $$[QT_INSTALL_EXAMPLES]/charts/boxplotchart
+INSTALLS += target

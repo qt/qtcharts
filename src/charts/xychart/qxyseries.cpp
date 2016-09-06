@@ -972,14 +972,8 @@ void QXYSeriesPrivate::drawSeriesPointLabels(QPainter *painter, const QVector<QP
         // Position text in relation to the point
         int pointLabelWidth = fm.width(pointLabel);
         QPointF position(points.at(i));
-        if (!reverseXAxis())
-            position.setX(position.x() - pointLabelWidth / 2);
-        else
-            position.setX(domain()->size().width() - position.x() - pointLabelWidth / 2);
-        if (!reverseYAxis())
-            position.setY(position.y() - labelOffset);
-        else
-            position.setY(domain()->size().height() - position.y() - labelOffset);
+        position.setX(position.x() - pointLabelWidth / 2);
+        position.setY(position.y() - labelOffset);
 
         painter->drawText(position, pointLabel);
     }

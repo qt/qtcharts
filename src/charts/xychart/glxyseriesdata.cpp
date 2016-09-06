@@ -50,6 +50,7 @@ void GLXYSeriesDataManager::setPoints(QXYSeries *series, const AbstractDomain *d
     if (!data) {
         data = new GLXYSeriesData;
         data->type = series->type();
+        data->visible = series->isVisible();
         QColor sc;
         if (data->type == QAbstractSeries::SeriesTypeScatter) {
             QScatterSeries *scatter = static_cast<QScatterSeries *>(series);
@@ -68,6 +69,8 @@ void GLXYSeriesDataManager::setPoints(QXYSeries *series, const AbstractDomain *d
         data->color = QVector3D(float(sc.redF()), float(sc.greenF()), float(sc.blueF()));
         connect(series, &QXYSeries::useOpenGLChanged, this,
                 &GLXYSeriesDataManager::handleSeriesOpenGLChange);
+        connect(series, &QXYSeries::visibleChanged, this,
+                &GLXYSeriesDataManager::handleSeriesVisibilityChange);
         m_seriesDataMap.insert(series, data);
         m_mapDirty = true;
     }
@@ -172,6 +175,18 @@ void GLXYSeriesDataManager::handleSeriesOpenGLChange()
     QXYSeries *series = qobject_cast<QXYSeries *>(sender());
     if (!series->useOpenGL())
         removeSeries(series);
+}
+
+void GLXYSeriesDataManager::handleSeriesVisibilityChange()
+{
+    QXYSeries *series = qobject_cast<QXYSeries *>(sender());
+    if (series) {
+        GLXYSeriesData *data = m_seriesDataMap.value(series);
+        if (data) {
+            data->visible = series->isVisible();
+            data->dirty = true;
+        }
+    }
 }
 
 void GLXYSeriesDataManager::handleScatterColorChange()

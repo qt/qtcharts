@@ -33,6 +33,7 @@
 #include <QtCharts/QLineSeries>
 #include <private/chartpresenter_p.h>
 #include <private/abstractdomain_p.h>
+#include <private/chartdataset_p.h>
 #include <QtGui/QPainter>
 #include <QtWidgets/QGraphicsSceneMouseEvent>
 #include <QtCore/QDebug>
@@ -94,10 +95,39 @@ void AreaChartItem::setPresenter(ChartPresenter *presenter)
 {
     if (m_upper)
         m_upper->setPresenter(presenter);
-    if (m_lower) {
+    if (m_lower)
         m_lower->setPresenter(presenter);
+    ChartItem::setPresenter(presenter);
+}
+
+void AreaChartItem::setUpperSeries(QLineSeries *series)
+{
+    delete m_upper;
+    if (series)
+        m_upper = new AreaBoundItem(this, series);
+    else
+        m_upper = 0;
+    if (m_upper) {
+        m_upper->setPresenter(presenter());
+        fixEdgeSeriesDomain(m_upper);
+    } else {
+        updatePath();
     }
-	ChartItem::setPresenter(presenter);
+}
+
+void AreaChartItem::setLowerSeries(QLineSeries *series)
+{
+    delete m_lower;
+    if (series)
+        m_lower = new AreaBoundItem(this, series);
+    else
+        m_lower = 0;
+    if (m_lower) {
+        m_lower->setPresenter(presenter());
+        fixEdgeSeriesDomain(m_lower);
+    } else {
+        updatePath();
+    }
 }
 
 QRectF AreaChartItem::boundingRect() const
@@ -115,31 +145,34 @@ void AreaChartItem::updatePath()
     QPainterPath path;
     QRectF rect(QPointF(0,0),domain()->size());
 
-    path = m_upper->path();
+    if (m_upper) {
+        path = m_upper->path();
 
-    if (m_lower) {
-        // Note: Polarcharts always draw area correctly only when both series have equal width or are
-        // fully displayed. If one series is partally off-chart, the connecting line between
-        // the series does not attach to the end of the partially hidden series but to the point
-        // where it intersects the axis line. The problem is especially noticeable when one of the series
-        // is entirely off-chart, in which case the connecting line connects two ends of the
-        // visible series.
-        // This happens because we get the paths from linechart, which omits off-chart segments.
-        // To properly fix, linechart would need to provide true full path, in right, left, and the rest
-        // portions to enable proper clipping. However, combining those to single visually unified area
-        // would be a nightmare, since they would have to be painted separately.
-        path.connectPath(m_lower->path().toReversed());
-    } else {
-        QPointF first = path.pointAtPercent(0);
-        QPointF last =  path.pointAtPercent(1);
-        if (presenter()->chartType() == QChart::ChartTypeCartesian) {
-            path.lineTo(last.x(), rect.bottom());
-            path.lineTo(first.x(), rect.bottom());
-        } else { // polar
-            path.lineTo(rect.center());
+        if (m_lower) {
+            // Note: Polarcharts draw area correctly only when both series have equal width or are
+            // fully displayed. If one series is partally off-chart, the connecting line between
+            // the series does not attach to the end of the partially hidden series but to the point
+            // where it intersects the axis line. The problem is especially noticeable when one of
+            // the series is entirely off-chart, in which case the connecting line connects two
+            // ends of the visible series.
+            // This happens because we get the paths from linechart, which omits off-chart segments.
+            // To properly fix, linechart would need to provide true full path, in right, left,
+            // and the rest portions to enable proper clipping. However, combining those to single
+            // visually unified area would be a nightmare, since they would have to be painted
+            // separately.
+            path.connectPath(m_lower->path().toReversed());
+        } else {
+            QPointF first = path.pointAtPercent(0);
+            QPointF last =  path.pointAtPercent(1);
+            if (presenter()->chartType() == QChart::ChartTypeCartesian) {
+                path.lineTo(last.x(), rect.bottom());
+                path.lineTo(first.x(), rect.bottom());
+            } else { // polar
+                path.lineTo(rect.center());
+            }
         }
+        path.closeSubpath();
     }
-    path.closeSubpath();
 
     // Only zoom in if the bounding rect of the path fits inside int limits. QWidget::update() uses
     // a region that has to be compatible with QRect.
@@ -171,18 +204,26 @@ void AreaChartItem::handleUpdated()
 
 void AreaChartItem::handleDomainUpdated()
 {
-    if (m_upper) {
-        AbstractDomain* d = m_upper->domain();
-        d->setSize(domain()->size());
-        d->setRange(domain()->minX(),domain()->maxX(),domain()->minY(),domain()->maxY());
-        m_upper->handleDomainUpdated();
-    }
+    fixEdgeSeriesDomain(m_upper);
+    fixEdgeSeriesDomain(m_lower);
+}
 
-    if (m_lower) {
-        AbstractDomain* d = m_lower->domain();
-        d->setSize(domain()->size());
-        d->setRange(domain()->minX(),domain()->maxX(),domain()->minY(),domain()->maxY());
-        m_lower->handleDomainUpdated();
+void AreaChartItem::fixEdgeSeriesDomain(LineChartItem *edgeSeries)
+{
+    if (edgeSeries) {
+        AbstractDomain* mainDomain = domain();
+        AbstractDomain* edgeDomain = edgeSeries->domain();
+
+        if (edgeDomain->type() != mainDomain->type()) {
+            // Change the domain of edge series to the same type as the area series
+            edgeDomain = dataSet()->createDomain(mainDomain->type());
+            edgeSeries->seriesPrivate()->setDomain(edgeDomain);
+        }
+        edgeDomain->setSize(mainDomain->size());
+        edgeDomain->setRange(mainDomain->minX(), mainDomain->maxX(), mainDomain->minY(), mainDomain->maxY());
+        edgeDomain->setReverseX(mainDomain->isReverseX());
+        edgeDomain->setReverseY(mainDomain->isReverseY());
+        edgeSeries->handleDomainUpdated();
     }
 }
 
@@ -190,6 +231,7 @@ void AreaChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 {
     Q_UNUSED(widget)
     Q_UNUSED(option)
+
     painter->save();
     painter->setPen(m_linePen);
     painter->setBrush(m_brush);
@@ -199,17 +241,14 @@ void AreaChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     else
         painter->setClipRect(clipRect);
 
-    reversePainter(painter, clipRect);
-
     painter->drawPath(m_path);
     if (m_pointsVisible) {
         painter->setPen(m_pointPen);
-        painter->drawPoints(m_upper->geometryPoints());
+        if (m_upper)
+            painter->drawPoints(m_upper->geometryPoints());
         if (m_lower)
             painter->drawPoints(m_lower->geometryPoints());
     }
-
-    reversePainter(painter, clipRect);
 
     // Draw series point label
     if (m_pointLabelsVisible) {
@@ -239,17 +278,9 @@ void AreaChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
                 // Position text in relation to the point
                 int pointLabelWidth = fm.width(pointLabel);
                 QPointF position(m_upper->geometryPoints().at(i));
-                if (!seriesPrivate()->reverseXAxis())
-                    position.setX(position.x() - pointLabelWidth / 2);
-                else
-                    position.setX(domain()->size().width() - position.x() - pointLabelWidth / 2);
-                if (!seriesPrivate()->reverseYAxis()) {
-                    position.setY(position.y() - m_series->upperSeries()->pen().width() / 2
-                                  - labelOffset);
-                } else {
-                    position.setY(domain()->size().height() - position.y()
-                                  - m_series->upperSeries()->pen().width() / 2 - labelOffset);
-                }
+                position.setX(position.x() - pointLabelWidth / 2);
+                position.setY(position.y() - m_series->upperSeries()->pen().width() / 2
+                              - labelOffset);
                 painter->drawText(position, pointLabel);
             }
         }
@@ -265,17 +296,9 @@ void AreaChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
                 // Position text in relation to the point
                 int pointLabelWidth = fm.width(pointLabel);
                 QPointF position(m_lower->geometryPoints().at(i));
-                if (!seriesPrivate()->reverseXAxis())
-                    position.setX(position.x() - pointLabelWidth / 2);
-                else
-                    position.setX(domain()->size().width() - position.x() - pointLabelWidth / 2);
-                if (!seriesPrivate()->reverseYAxis()) {
-                    position.setY(position.y() - m_series->lowerSeries()->pen().width() / 2
-                                  - labelOffset);
-                } else {
-                    position.setY(domain()->size().height() - position.y()
-                                  - m_series->lowerSeries()->pen().width() / 2 - labelOffset);
-                }
+                position.setX(position.x() - pointLabelWidth / 2);
+                position.setY(position.y() - m_series->lowerSeries()->pen().width() / 2
+                              - labelOffset);
                 painter->drawText(position, pointLabel);
             }
         }
@@ -286,7 +309,7 @@ void AreaChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 
 void AreaChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    emit pressed(m_upper->domain()->calculateDomainPoint(event->pos()));
+    emit pressed(domain()->calculateDomainPoint(event->pos()));
     m_lastMousePos = event->pos();
     m_mousePressed = true;
     ChartItem::mousePressEvent(event);
@@ -308,16 +331,16 @@ void AreaChartItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 
 void AreaChartItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    emit released(m_upper->domain()->calculateDomainPoint(m_lastMousePos));
+    emit released(domain()->calculateDomainPoint(m_lastMousePos));
     if (m_mousePressed)
-        emit clicked(m_upper->domain()->calculateDomainPoint(m_lastMousePos));
+        emit clicked(domain()->calculateDomainPoint(m_lastMousePos));
     m_mousePressed = false;
     ChartItem::mouseReleaseEvent(event);
 }
 
 void AreaChartItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
-    emit doubleClicked(m_upper->domain()->calculateDomainPoint(m_lastMousePos));
+    emit doubleClicked(domain()->calculateDomainPoint(m_lastMousePos));
     ChartItem::mouseDoubleClickEvent(event);
 }
 

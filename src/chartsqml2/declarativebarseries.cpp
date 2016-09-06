@@ -87,12 +87,12 @@ void DeclarativeBarSet::setValues(QVariantList values)
             }
         }
 
-        QVector<int> indexValueList;
+        QVector<qreal> indexValueList;
         indexValueList.resize(maxValue + 1);
 
         for (int i = 0; i < values.count(); i++) {
             if (values.at(i).canConvert(QVariant::Point)) {
-                indexValueList.replace(values.at(i).toPoint().x(), values.at(i).toPoint().y());
+                indexValueList.replace(values.at(i).toPoint().x(), values.at(i).toPointF().y());
             }
         }
 

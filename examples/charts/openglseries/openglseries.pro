@@ -1,9 +1,11 @@
-!include( ../examples.pri ) {
-    error( "Couldn't find the examples.pri file!" )
-}
+QT += charts
 
-TARGET = openglseries
-SOURCES += main.cpp \
-    datasource.cpp
-HEADERS += datasource.h
+HEADERS += \
+    datasource.h
 
+SOURCES += \
+    datasource.cpp \
+    main.cpp
+
+target.path = $$[QT_INSTALL_EXAMPLES]/charts/openglseries
+INSTALLS += target

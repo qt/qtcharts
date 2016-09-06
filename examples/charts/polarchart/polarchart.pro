@@ -1,6 +1,11 @@
-!include( ../examples.pri ) {
- error( "Couldn't find the examples.pri file!" )
-}
-TARGET = polarchart
-SOURCES += main.cpp chartview.cpp
-HEADERS += chartview.h
+QT += charts
+
+HEADERS += \
+    chartview.h
+
+SOURCES += \
+    chartview.cpp \
+    main.cpp
+
+target.path = $$[QT_INSTALL_EXAMPLES]/charts/polarchart
+INSTALLS += target

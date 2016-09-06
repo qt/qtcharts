@@ -1,12 +1,13 @@
-!include( ../examples.pri ) {
- error( "Couldn't find the examples.pri file!" )
-}
+QT += charts
 
-TARGET = donutbreakdown
-SOURCES += main.cpp\
-    donutbreakdownchart.cpp \
-    mainslice.cpp
-
-HEADERS  += \
+HEADERS += \
     donutbreakdownchart.h \
     mainslice.h
+
+SOURCES += \
+    donutbreakdownchart.cpp \
+    main.cpp \
+    mainslice.cpp
+
+target.path = $$[QT_INSTALL_EXAMPLES]/charts/donutbreakdown
+INSTALLS += target

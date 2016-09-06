@@ -120,7 +120,7 @@ QT_CHARTS_BEGIN_NAMESPACE
     Minimal and default value is: -1 (count limited by the number of rows in the model)
 */
 /*!
-    \qmlproperty int VXYModelMapper::columnCount
+    \qmlproperty int VXYModelMapper::rowCount
     Defines the number of rows of the model that are mapped as the data for series. The default value is
     -1 (count limited by the number of rows in the model).
 */

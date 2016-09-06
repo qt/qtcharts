@@ -88,6 +88,7 @@ Q_SIGNALS:
 protected:
     virtual void updateChart(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints, int index = -1);
     virtual void updateGlChart();
+    virtual void refreshGlChart();
 
 private:
     inline bool isEmpty();
