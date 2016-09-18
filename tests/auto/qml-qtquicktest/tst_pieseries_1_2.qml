@@ -75,7 +75,7 @@ Rectangle {
             sumChangedSpy.clear();
             var count = 50;
             for (var i = 0; i < count; i++)
-                pieSeries.append("slice" + i, Math.random());
+                pieSeries.append("slice" + i, Math.random() + 0.01); // Add 0.01 to avoid zero
             compare(addedSpy.count, count);
             compare(countChangedSpy.count, count);
             compare(sumChangedSpy.count, count);
@@ -88,7 +88,7 @@ Rectangle {
             sumChangedSpy.clear();
             var count = 50;
             for (var i = 0; i < count; i++)
-                pieSeries.append("slice" + i, Math.random());
+                pieSeries.append("slice" + i, Math.random() + 0.01); // Add 0.01 to avoid zero
             for (var j = 0; j < count; j++)
                 pieSeries.remove(pieSeries.at(0));
             compare(removedSpy.count, count);
@@ -100,7 +100,7 @@ Rectangle {
         function test_find() {
             var count = 50;
             for (var i = 0; i < count; i++)
-                pieSeries.append("slice" + i, Math.random());
+                pieSeries.append("slice" + i, Math.random() + 0.01); // Add 0.01 to avoid zero
             for (var j = 0; j < count; j++)
                 compare(pieSeries.find("slice" + j).label, "slice" + j);
             pieSeries.clear();

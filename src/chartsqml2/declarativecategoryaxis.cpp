@@ -48,7 +48,8 @@ DeclarativeCategoryRange::DeclarativeCategoryRange(QObject *parent) :
 }
 
 DeclarativeCategoryAxis::DeclarativeCategoryAxis(QObject *parent) :
-    QCategoryAxis(parent)
+    QCategoryAxis(parent),
+    m_labelsPosition(AxisLabelsPositionCenter)
 {
 }
 
