@@ -28,6 +28,7 @@
 ****************************************************************************/
 
 import QtQuick 2.0
+import QtCharts 2.2
 
 Row {
     anchors.fill: parent
@@ -77,6 +78,17 @@ Row {
         Button {
             text: "legend use reverse order"
             onClicked: chartLegend.reverseMarkers = !chartLegend.reverseMarkers;
+        }
+        Button {
+            text: "legend marker shape"
+            onClicked: {
+                if (chartLegend.markerShape === Legend.MarkerShapeRectangle)
+                    chartLegend.markerShape = Legend.MarkerShapeCircle
+                else if (chartLegend.markerShape === Legend.MarkerShapeCircle)
+                    chartLegend.markerShape = Legend.MarkerShapeFromSeries
+                else
+                    chartLegend.markerShape = Legend.MarkerShapeRectangle
+            }
         }
     }
 

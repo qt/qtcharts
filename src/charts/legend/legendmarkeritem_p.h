@@ -40,6 +40,7 @@
 #define LEGENDMARKERITEM_P_H
 
 #include <QtCharts/QChartGlobal>
+#include <QtCharts/QLegend>
 #include <QGraphicsObject>
 #include <QtGui/QFont>
 #include <QtGui/QBrush>
@@ -56,6 +57,12 @@ class LegendMarkerItem : public QGraphicsObject, public QGraphicsLayoutItem
     Q_OBJECT
     Q_INTERFACES(QGraphicsLayoutItem)
 public:
+    enum ItemType {
+        TypeRect,
+        TypeLine,
+        TypeCircle
+    };
+
     explicit LegendMarkerItem(QLegendMarkerPrivate *marker, QGraphicsObject *parent = nullptr);
     ~LegendMarkerItem();
 
@@ -64,6 +71,9 @@ public:
 
     void setBrush(const QBrush &brush);
     QBrush brush() const;
+
+    void setSeriesPen(const QPen &pen);
+    void setSeriesBrush(const QBrush &brush);
 
     void setFont(const QFont &font);
     QFont font() const;
@@ -87,25 +97,43 @@ public:
     QString displayedLabel() const;
     void setToolTip(const QString &tooltip);
 
+    QLegend::MarkerShape markerShape() const;
+    void setMarkerShape(QLegend::MarkerShape shape);
+
+    void updateMarkerShapeAndSize();
+    QLegend::MarkerShape effectiveMarkerShape() const;
+    qreal effectiveMarkerWidth() const;
+
+    ItemType itemType() const { return m_itemType; }
+
 Q_SIGNALS:
     void markerRectChanged();
 
 protected:
+    void setItemBrushAndPen();
+    void setItemRect();
+    bool useMaxWidth() const;
+
     QLegendMarkerPrivate *m_marker; // Knows
+    QRectF m_defaultMarkerRect;
     QRectF m_markerRect;
     QRectF m_boundingRect;
     QGraphicsTextItem *m_textItem;
-    QGraphicsRectItem *m_rectItem;
+    QGraphicsItem *m_markerItem;
     qreal m_margin;
     qreal m_space;
     QString m_label;
+    QLegend::MarkerShape m_markerShape;
 
     QBrush m_labelBrush;
     QPen m_pen;
     QBrush m_brush;
+    QPen m_seriesPen;
+    QBrush m_seriesBrush;
+    QFont m_font;
     bool m_hovering;
 
-    QPointF m_pressPos;
+    ItemType m_itemType;
 
     friend class QLegendMarker;
     friend class QLegendMarkerPrivate;

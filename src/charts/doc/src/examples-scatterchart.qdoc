@@ -56,8 +56,7 @@
 
     \snippet scatterchart/chartview.cpp 4
 
-    The image used as a brush for the scatter series may contain several colors. Therefore we need
-    to set the desired color explicitly by setting the brush for the legend marker items.
+    We can also use the scatter points as legend markers.
 
     \snippet scatterchart/chartview.cpp 5
 

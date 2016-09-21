@@ -69,10 +69,10 @@ ChartView::ChartView(QWidget *parent) :
 
     //![3]
     QPainterPath starPath;
-    starPath.moveTo(30, 15);
+    starPath.moveTo(28, 15);
     for (int i = 1; i < 5; ++i) {
-        starPath.lineTo(15 + 15 * qCos(0.8 * i * Pi),
-                        15 + 15 * qSin(0.8 * i * Pi));
+        starPath.lineTo(14 + 14 * qCos(0.8 * i * Pi),
+                        15 + 14 * qSin(0.8 * i * Pi));
     }
     starPath.closeSubpath();
 
@@ -86,6 +86,7 @@ ChartView::ChartView(QWidget *parent) :
     painter.drawPath(starPath);
 
     series2->setBrush(star);
+    series2->setPen(QColor(Qt::transparent));
     //![3]
 
     //![4]
@@ -100,8 +101,6 @@ ChartView::ChartView(QWidget *parent) :
     //![4]
 
     //![5]
-    QList<QLegendMarker *> markers = chart()->legend()->markers(series2);
-    for (int i = 0; i < markers.count(); i++)
-        markers.at(i)->setBrush(painter.pen().color());
+    chart()->legend()->setMarkerShape(QLegend::MarkerShapeFromSeries);
     //![5]
 }

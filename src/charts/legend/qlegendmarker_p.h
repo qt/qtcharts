@@ -67,9 +67,11 @@ public:
     virtual QObject* relatedObject() = 0;
 
     void invalidateLegend();
+    void invalidateAllItems();
 
 public Q_SLOTS:
     virtual void updated() = 0;
+    void handleShapeChange();
 
 protected:
     LegendMarkerItem *m_item;

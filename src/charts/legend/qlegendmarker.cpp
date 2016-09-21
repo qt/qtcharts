@@ -148,6 +148,12 @@ QT_CHARTS_BEGIN_NAMESPACE
     Visibility of the legend marker. Affects label and the colored square.
 */
 
+/*!
+    \property QLegendMarker::shape
+
+    The shape of the legend marker. Defaults to QLegend::MarkerShapeDefault, which indicates
+    the shape is determined by QLegend::markerShape property.
+*/
 
 /*!
     \internal
@@ -276,6 +282,20 @@ void QLegendMarker::setVisible(bool visible)
     d_ptr->m_item->setVisible(visible);
 }
 
+QLegend::MarkerShape QLegendMarker::shape() const
+{
+    return d_ptr->m_item->markerShape();
+}
+
+void QLegendMarker::setShape(QLegend::MarkerShape shape)
+{
+    if (shape != d_ptr->m_item->markerShape()) {
+        d_ptr->m_item->setMarkerShape(shape);
+        d_ptr->handleShapeChange();
+        emit shapeChanged();
+    }
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 QLegendMarkerPrivate::QLegendMarkerPrivate(QLegendMarker *q, QLegend *legend) :
     m_legend(legend),
@@ -285,6 +305,9 @@ QLegendMarkerPrivate::QLegendMarkerPrivate(QLegendMarker *q, QLegend *legend) :
     q_ptr(q)
 {
     m_item = new LegendMarkerItem(this);
+
+    connect(legend, &QLegend::markerShapeChanged, this,
+            &QLegendMarkerPrivate::handleShapeChange);
 }
 
 QLegendMarkerPrivate::~QLegendMarkerPrivate()
@@ -294,6 +317,21 @@ QLegendMarkerPrivate::~QLegendMarkerPrivate()
 
 void QLegendMarkerPrivate::invalidateLegend()
 {
+    m_item->updateGeometry();
+    m_legend->d_ptr->m_layout->invalidate();
+}
+
+void QLegendMarkerPrivate::invalidateAllItems()
+{
+    QList<QLegendMarker *> markers = m_legend->markers();
+    for (int i = 0; i < markers.size(); i++)
+        markers.at(i)->d_ptr->m_item->updateGeometry();
+    m_legend->d_ptr->m_layout->invalidate();
+}
+
+void QLegendMarkerPrivate::handleShapeChange()
+{
+    m_item->updateMarkerShapeAndSize();
     m_legend->d_ptr->m_layout->invalidate();
 }
 

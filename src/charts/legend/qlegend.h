@@ -53,11 +53,20 @@ class QT_CHARTS_EXPORT QLegend : public QGraphicsWidget
     Q_PROPERTY(QColor labelColor READ labelColor WRITE setLabelColor NOTIFY labelColorChanged)
     Q_PROPERTY(bool reverseMarkers READ reverseMarkers WRITE setReverseMarkers NOTIFY reverseMarkersChanged)
     Q_PROPERTY(bool showToolTips READ showToolTips WRITE setShowToolTips NOTIFY showToolTipsChanged)
+    Q_PROPERTY(MarkerShape markerShape READ markerShape WRITE setMarkerShape NOTIFY markerShapeChanged)
 
 private:
     explicit QLegend(QChart *chart);
 
 public:
+    enum MarkerShape {
+        MarkerShapeDefault,
+        MarkerShapeRectangle,
+        MarkerShapeCircle,
+        MarkerShapeFromSeries
+    };
+    Q_ENUMS(MarkerShape)
+
     ~QLegend();
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = Q_NULLPTR);
@@ -97,6 +106,10 @@ public:
 
     bool showToolTips() const;
     void setShowToolTips(bool show);
+
+    MarkerShape markerShape() const;
+    void setMarkerShape(MarkerShape shape);
+
 protected:
     void hideEvent(QHideEvent *event);
     void showEvent(QShowEvent *event);
@@ -109,6 +122,7 @@ Q_SIGNALS:
     void labelColorChanged(QColor color);
     void reverseMarkersChanged(bool reverseMarkers);
     void showToolTipsChanged(bool showToolTips);
+    void markerShapeChanged(MarkerShape shape);
 
 private:
     QScopedPointer<QLegendPrivate> d_ptr;

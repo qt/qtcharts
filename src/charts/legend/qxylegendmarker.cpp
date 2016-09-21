@@ -31,6 +31,7 @@
 #include <private/qxylegendmarker_p.h>
 #include <private/qxyseries_p.h>
 #include <QtCharts/QXYSeries>
+#include <QtCharts/QScatterSeries>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -122,6 +123,18 @@ void QXYLegendMarkerPrivate::updated()
             m_item->setBrush(m_series->brush());
             brushChanged = true;
         }
+        if (m_item->effectiveMarkerShape() == QLegend::MarkerShapeFromSeries) {
+            QScatterSeries *scatter = static_cast<QScatterSeries *>(m_series);
+            if (scatter) {
+                const bool shapeChangeNeeded =
+                        (scatter->markerShape() == QScatterSeries::MarkerShapeCircle
+                        && m_item->itemType() != LegendMarkerItem::TypeCircle)
+                        || (scatter->markerShape() == QScatterSeries::MarkerShapeRectangle
+                            && m_item->itemType() != LegendMarkerItem::TypeRect);
+                if (shapeChangeNeeded || scatter->markerSize() != m_item->markerRect().width())
+                    m_item->updateMarkerShapeAndSize();
+            }
+        }
     } else {
         QBrush emptyBrush;
         if (!m_customBrush
@@ -131,6 +144,9 @@ void QXYLegendMarkerPrivate::updated()
             brushChanged = true;
         }
     }
+    m_item->setSeriesBrush(m_series->brush());
+    m_item->setSeriesPen(m_series->pen());
+
     invalidateLegend();
 
     if (labelChanged)

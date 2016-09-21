@@ -31,6 +31,7 @@
 #define QLEGENDMARKER_H
 
 #include <QtCharts/QChartGlobal>
+#include <QtCharts/QLegend>
 #include <QtCore/QObject>
 #include <QtGui/QPen>
 #include <QtGui/QBrush>
@@ -62,6 +63,7 @@ public:
     Q_PROPERTY(QPen pen READ pen WRITE setPen NOTIFY penChanged)
     Q_PROPERTY(QBrush brush READ brush WRITE setBrush NOTIFY brushChanged)
     Q_PROPERTY(bool visible READ isVisible WRITE setVisible NOTIFY visibleChanged)
+    Q_PROPERTY(QLegend::MarkerShape shape READ shape WRITE setShape NOTIFY shapeChanged)
     Q_ENUMS(LegendMarkerType)
 
 public:
@@ -86,6 +88,9 @@ public:
     bool isVisible() const;
     void setVisible(bool visible);
 
+    QLegend::MarkerShape shape() const;
+    void setShape(QLegend::MarkerShape shape);
+
     virtual QAbstractSeries* series() = 0;
 
 Q_SIGNALS:
@@ -97,6 +102,7 @@ Q_SIGNALS:
     void penChanged();
     void brushChanged();
     void visibleChanged();
+    void shapeChanged();
 
 protected:
     explicit QLegendMarker(QLegendMarkerPrivate &d, QObject *parent = Q_NULLPTR);

@@ -171,6 +171,47 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
+    \enum QLegend::MarkerShape
+
+    This enum describes the shape used when rendering legend marker items.
+
+    \value MarkerShapeDefault Default shape determined by QLegend is used for the marker.
+           This value is supported only for individual QLegendMarker items.
+    \value MarkerShapeRectangle Rectangular markers are used.
+           Marker size is determined by font size.
+    \value MarkerShapeCircle Circular markers are used.
+           Marker size is determined by font size.
+    \value MarkerShapeFromSeries The marker shape is determined by the series.
+           In case of a scatter series, the legend marker looks like a scatter dot and is the same
+           size as the dot. In case of a line or spline series, the legend marker looks like a small
+           segment of the line. For other series types, rectangular markers are shown.
+
+    \sa markerShape
+*/
+
+/*!
+    \qmlproperty enumeration Legend::markerShape
+    \since 5.9
+
+    The default shape of the legend markers.
+    The default value is \c{MarkerShapeRectangle}.
+
+    \value Legend.MarkerShapeRectangle Legend markers are rectangular
+    \value Legend.MarkerShapeCircle Legend markers are circular
+    \value Legend.MarkerShapeFromSeries Legend marker shape is determined by the series
+
+    \sa QLegend::MarkerShape
+*/
+
+/*!
+    \property QLegend::markerShape
+    \since 5.9
+
+    The default shape of the legend markers.
+    The default value is \c{MarkerShapeRectangle}.
+*/
+
+/*!
     \qmlproperty bool Legend::showToolTips
     Whether tooltips are shown when the text is truncated. This is false by default.
     This currently has no effect as there is no support for tooltips in QML.
@@ -497,6 +538,23 @@ void QLegend::setShowToolTips(bool show)
     }
 }
 
+QLegend::MarkerShape QLegend::markerShape() const
+{
+    return d_ptr->m_markerShape;
+}
+
+void QLegend::setMarkerShape(QLegend::MarkerShape shape)
+{
+    QLegend::MarkerShape newShape = shape;
+    if (newShape == MarkerShapeDefault)
+        newShape = MarkerShapeRectangle;
+    if (d_ptr->m_markerShape != newShape) {
+        d_ptr->m_markerShape = newShape;
+        layout()->invalidate();
+        emit markerShapeChanged(newShape);
+    }
+}
+
 /*!
  \internal \a event see QGraphicsWidget for details
  */
@@ -533,7 +591,8 @@ QLegendPrivate::QLegendPrivate(ChartPresenter *presenter, QChart *chart, QLegend
       m_attachedToChart(true),
       m_backgroundVisible(false),
       m_reverseMarkers(false),
-      m_showToolTips(false)
+      m_showToolTips(false),
+      m_markerShape(QLegend::MarkerShapeRectangle)
 {
     m_items->setHandlesChildEvents(false);
 }
@@ -573,6 +632,17 @@ QList<QLegendMarker*> QLegendPrivate::markers(QAbstractSeries *series)
         }
     }
     return markers;
+}
+
+qreal QLegendPrivate::maxMarkerWidth() const
+{
+    qreal maxWidth = 0.0;
+    for (int i = 0; i < m_markers.size(); i++) {
+        LegendMarkerItem *item = m_markers.at(i)->d_ptr->item();
+        if (item)
+            maxWidth = qMax(item->markerRect().width(), maxWidth);
+    }
+    return maxWidth;
 }
 
 void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series)

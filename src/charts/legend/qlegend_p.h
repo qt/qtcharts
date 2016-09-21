@@ -63,6 +63,7 @@ public:
     QGraphicsItemGroup* items() { return m_items; }
 
     QList<QLegendMarker*> markers(QAbstractSeries *series = 0);
+    qreal maxMarkerWidth() const;
 
 public Q_SLOTS:
     void handleSeriesAdded(QAbstractSeries *series);
@@ -94,6 +95,7 @@ private:
     bool m_backgroundVisible;
     bool m_reverseMarkers;
     bool m_showToolTips;
+    QLegend::MarkerShape m_markerShape;
 
     QList<QLegendMarker *> m_markers;
     QList<QAbstractSeries *> m_series;
