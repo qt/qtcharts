@@ -240,8 +240,15 @@ void ChartAxisElement::handleVisibleChanged(bool visible)
         m_labels->setVisible(axis()->labelsVisible());
         m_title->setVisible(axis()->isTitleVisible());
     }
-
-    if (presenter()) presenter()->layout()->invalidate();
+    if (presenter()) {
+        if (visible) {
+            QSizeF before = effectiveSizeHint(Qt::PreferredSize);
+            QSizeF after = sizeHint(Qt::PreferredSize);
+            if (before != after)
+                QGraphicsLayoutItem::updateGeometry();
+        }
+        presenter()->layout()->invalidate();
+    }
 }
 
 void ChartAxisElement::handleRangeChanged(qreal min, qreal max)

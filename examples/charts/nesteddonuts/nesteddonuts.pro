@@ -1,8 +1,11 @@
-!include( ../examples.pri ) {
- error( "Couldn't find the examples.pri file!" )
-}
+QT += charts
 
-TARGET = nesteddonuts
-SOURCES += main.cpp\
-        widget.cpp
-HEADERS  += widget.h
+HEADERS += \
+    widget.h
+
+SOURCES += \
+    main.cpp \
+    widget.cpp
+
+target.path = $$[QT_INSTALL_EXAMPLES]/charts/nesteddonuts
+INSTALLS += target

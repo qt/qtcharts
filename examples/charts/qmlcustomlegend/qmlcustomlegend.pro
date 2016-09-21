@@ -1,7 +1,13 @@
-!include( ../examples.pri ) {
- error( "Couldn't find the examples.pri file!" )
-}
+QT += charts qml quick
 
-RESOURCES += resources.qrc
-SOURCES += main.cpp
-OTHER_FILES += qml/qmlcustomlegend/*
+SOURCES += \
+    main.cpp
+
+RESOURCES += \
+    resources.qrc
+
+DISTFILES += \
+    qml/qmlcustomlegend/*
+
+target.path = $$[QT_INSTALL_EXAMPLES]/charts/qmlcustomlegend
+INSTALLS += target

@@ -81,6 +81,8 @@ public:
 
     GLXYSeriesDataManager *glXYSeriesDataManager() { return m_glXYSeriesDataManager; }
 
+    AbstractDomain* createDomain(AbstractDomain::DomainType type);
+
 Q_SIGNALS:
     void axisAdded(QAbstractAxis* axis);
     void axisRemoved(QAbstractAxis* axis);
@@ -92,7 +94,6 @@ private:
     void createAxes(QAbstractAxis::AxisTypes type, Qt::Orientation orientation);
     QAbstractAxis *createAxis(QAbstractAxis::AxisType type, Qt::Orientation orientation);
     AbstractDomain::DomainType selectDomain(QList<QAbstractAxis* > axes);
-    AbstractDomain* createDomain(AbstractDomain::DomainType type);
     void deleteAllAxes();
     void deleteAllSeries();
     void findMinMaxForSeries(QList<QAbstractSeries *> series,Qt::Orientations orientation, qreal &min, qreal &max);

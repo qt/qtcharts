@@ -1,15 +1,13 @@
-!include( ../examples.pri ) {
- error( "Couldn't find the examples.pri file!" )
-}
+QT += charts
 
-TARGET = callout
-TEMPLATE = app
+HEADERS += \
+    callout.h \
+    view.h
 
 SOURCES += \
-        main.cpp\
-        callout.cpp \
-        view.cpp
+    callout.cpp \
+    main.cpp\
+    view.cpp
 
-HEADERS  += \
-        callout.h \
-        view.h
+target.path = $$[QT_INSTALL_EXAMPLES]/charts/callout
+INSTALLS += target

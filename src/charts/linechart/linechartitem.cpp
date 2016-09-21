@@ -347,6 +347,7 @@ void LineChartItem::handleUpdated()
     bool doGeometryUpdate =
         (m_pointsVisible != m_series->pointsVisible())
         || (m_series->pointsVisible() && (m_linePen != m_series->pen()));
+    bool visibleChanged = m_series->isVisible() != isVisible();
     setVisible(m_series->isVisible());
     setOpacity(m_series->opacity());
     m_pointsVisible = m_series->pointsVisible();
@@ -358,6 +359,8 @@ void LineChartItem::handleUpdated()
     m_pointLabelsClipping = m_series->pointLabelsClipping();
     if (doGeometryUpdate)
         updateGeometry();
+    else if (m_series->useOpenGL() && visibleChanged)
+        refreshGlChart();
     update();
 }
 
@@ -392,8 +395,6 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
         painter->setClipRect(clipRect);
     }
 
-    reversePainter(painter, clipRect);
-
     if (m_pointsVisible) {
         painter->setBrush(m_linePen.color());
         painter->drawPath(m_linePath);
@@ -408,8 +409,6 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
                 painter->drawLine(m_linePoints.at(i - 1), m_linePoints.at(i));
         }
     }
-
-    reversePainter(painter, clipRect);
 
     if (m_pointLabelsVisible) {
         if (m_pointLabelsClipping)

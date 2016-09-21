@@ -280,12 +280,19 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \qmlproperty QVariantList BarSet::values
-    The values of the bar set. You can set either a list of reals or a list of points as values. If you set a list of
-    reals as values, the values are automatically completed to points by using the index of a value as it's
-    x-coordinate. For example the following sets have equal values:
+    The values of the bar set. You can set either a list of reals or a list of points as values.
+
+    If you set a list of reals as values, the values directly define the bar set values.
+
+    If you set a list of points as values, the x-coordinate of the point specifies its zero-based
+    index in the bar set. The size of the bar set is the highest x-coordinate value + 1.
+    If a point is missing for any x-coordinate between zero and the highest value,
+    it gets value zero.
+
+    For example the following sets have equal values:
     \code
-        myBarSet1.values = [0, 5, 1, 5];
-        myBarSet2.values = [Qt.point(0, 0), Qt.point(1, 5), Qt.point(2, 1), Qt.point(3, 5)];
+        myBarSet1.values = [5, 0, 1, 5];
+        myBarSet2.values = [Qt.point(0, 5), Qt.point(2, 1), Qt.point(3, 5)];
     \endcode
 */
 

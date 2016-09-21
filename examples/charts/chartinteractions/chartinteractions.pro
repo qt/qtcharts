@@ -1,11 +1,13 @@
-!include( ../examples.pri ) {
- error( "Couldn't find the examples.pri file!" )
-}
+QT += charts
 
-QT += core gui
+HEADERS += \
+    chart.h \
+    chartview.h
 
-TARGET = chartinteractions
-TEMPLATE = app
+SOURCES += \
+    chart.cpp \
+    chartview.cpp \
+    main.cpp
 
-HEADERS += chart.h chartview.h
-SOURCES += main.cpp chart.cpp chartview.cpp
+target.path = $$[QT_INSTALL_EXAMPLES]/charts/chartinteractions
+INSTALLS += target

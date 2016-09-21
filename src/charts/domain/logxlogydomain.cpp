@@ -89,15 +89,16 @@ void LogXLogYDomain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY)
 void LogXLogYDomain::zoomIn(const QRectF &rect)
 {
     storeZoomReset();
-    qreal logLeftX = rect.left() * (m_logRightX - m_logLeftX) / m_size.width() + m_logLeftX;
-    qreal logRightX = rect.right() * (m_logRightX - m_logLeftX) / m_size.width() + m_logLeftX;
+    QRectF fixedRect = fixZoomRect(rect);
+    qreal logLeftX = fixedRect.left() * (m_logRightX - m_logLeftX) / m_size.width() + m_logLeftX;
+    qreal logRightX = fixedRect.right() * (m_logRightX - m_logLeftX) / m_size.width() + m_logLeftX;
     qreal leftX = qPow(m_logBaseX, logLeftX);
     qreal rightX = qPow(m_logBaseX, logRightX);
     qreal minX = leftX < rightX ? leftX : rightX;
     qreal maxX = leftX > rightX ? leftX : rightX;
 
-    qreal logLeftY = m_logRightY - rect.bottom() * (m_logRightY - m_logLeftY) / m_size.height();
-    qreal logRightY = m_logRightY - rect.top() * (m_logRightY - m_logLeftY) / m_size.height();
+    qreal logLeftY = m_logRightY - fixedRect.bottom() * (m_logRightY - m_logLeftY) / m_size.height();
+    qreal logRightY = m_logRightY - fixedRect.top() * (m_logRightY - m_logLeftY) / m_size.height();
     qreal leftY = qPow(m_logBaseY, logLeftY);
     qreal rightY = qPow(m_logBaseY, logRightY);
     qreal minY = leftY < rightY ? leftY : rightY;
@@ -109,8 +110,9 @@ void LogXLogYDomain::zoomIn(const QRectF &rect)
 void LogXLogYDomain::zoomOut(const QRectF &rect)
 {
     storeZoomReset();
-    const qreal factorX = m_size.width() / rect.width();
-    const qreal factorY = m_size.height() / rect.height();
+    QRectF fixedRect = fixZoomRect(rect);
+    const qreal factorX = m_size.width() / fixedRect.width();
+    const qreal factorY = m_size.height() / fixedRect.height();
 
     qreal logLeftX = m_logLeftX + (m_logRightX - m_logLeftX) / 2 * (1 - factorX);
     qreal logRIghtX = m_logLeftX + (m_logRightX - m_logLeftX) / 2 * (1 + factorX);
@@ -131,6 +133,11 @@ void LogXLogYDomain::zoomOut(const QRectF &rect)
 
 void LogXLogYDomain::move(qreal dx, qreal dy)
 {
+    if (m_reverseX)
+        dx = -dx;
+    if (m_reverseY)
+        dy = -dy;
+
     qreal stepX = dx * qAbs(m_logRightX - m_logLeftX) / m_size.width();
     qreal leftX = qPow(m_logBaseX, m_logLeftX + stepX);
     qreal rightX = qPow(m_logBaseX, m_logRightX + stepX);
@@ -153,23 +160,25 @@ QPointF LogXLogYDomain::calculateGeometryPoint(const QPointF &point, bool &ok) c
     qreal x(0);
     qreal y(0);
     if (point.x() > 0 && point.y() > 0) {
-        x = (std::log10(point.x()) / std::log10(m_logBaseX)) * deltaX - m_logLeftX * deltaX;
-        y = (std::log10(point.y()) / std::log10(m_logBaseY)) * -deltaY - m_logLeftY * -deltaY + m_size.height();
+        x = ((std::log10(point.x()) / std::log10(m_logBaseX)) - m_logLeftX) * deltaX;
+        y = ((std::log10(point.y()) / std::log10(m_logBaseY)) - m_logLeftY) * deltaY;
         ok = true;
     } else {
         qWarning() << "Logarithms of zero and negative values are undefined.";
         ok = false;
         if (point.x() > 0)
-            x = (std::log10(point.x()) / std::log10(m_logBaseX)) * deltaX - m_logLeftX * deltaX;
+            x = ((std::log10(point.x()) / std::log10(m_logBaseX)) - m_logLeftX) * deltaX;
         else
             x = 0;
-        if (point.y() > 0) {
-            y = (std::log10(point.y()) / std::log10(m_logBaseY)) * -deltaY - m_logLeftY * -deltaY
-                    + m_size.height();
-        } else {
-            y = m_size.height();
-        }
+        if (point.y() > 0)
+            y = ((std::log10(point.y()) / std::log10(m_logBaseY)) - m_logLeftY) * deltaY;
+        else
+            y = 0;
     }
+    if (m_reverseX)
+        x = m_size.width() - x;
+    if (!m_reverseY)
+        y = m_size.height() - y;
     return QPointF(x, y);
 }
 
@@ -183,8 +192,12 @@ QVector<QPointF> LogXLogYDomain::calculateGeometryPoints(const QVector<QPointF> 
 
     for (int i = 0; i < vector.count(); ++i) {
         if (vector[i].x() > 0 && vector[i].y() > 0) {
-            qreal x = (std::log10(vector[i].x()) / std::log10(m_logBaseX)) * deltaX - m_logLeftX * deltaX;
-            qreal y = (std::log10(vector[i].y()) / std::log10(m_logBaseY)) * -deltaY - m_logLeftY * -deltaY + m_size.height();
+            qreal x = ((std::log10(vector[i].x()) / std::log10(m_logBaseX)) - m_logLeftX) * deltaX;
+            if (m_reverseX)
+                x = m_size.width() - x;
+            qreal y = ((std::log10(vector[i].y()) / std::log10(m_logBaseY)) - m_logLeftY) * deltaY;
+            if (!m_reverseY)
+                y = m_size.height() - y;
             result[i].setX(x);
             result[i].setY(y);
         } else {
@@ -199,8 +212,10 @@ QPointF LogXLogYDomain::calculateDomainPoint(const QPointF &point) const
 {
     const qreal deltaX = m_size.width() / qAbs(m_logRightX - m_logLeftX);
     const qreal deltaY = m_size.height() / qAbs(m_logRightY - m_logLeftY);
-    qreal x = qPow(m_logBaseX, m_logLeftX + point.x() / deltaX);
-    qreal y = qPow(m_logBaseY, m_logLeftY + (m_size.height() - point.y()) / deltaY);
+    qreal x = m_reverseX ? (m_size.width() - point.x()) : point.x();
+    x = qPow(m_logBaseX, m_logLeftX + x / deltaX);
+    qreal y = m_reverseY ? point.y() : (m_size.height() - point.y());
+    y = qPow(m_logBaseY, m_logLeftY + y / deltaY);
     return QPointF(x, y);
 }
 

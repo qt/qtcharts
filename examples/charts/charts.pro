@@ -1,52 +1,55 @@
 TEMPLATE = subdirs
-SUBDIRS += areachart \
+SUBDIRS += \
+           areachart \
+           barchart \
+           barmodelmapper \
+           boxplotchart \
+           callout \
+           candlestickchart \
+           chartinteractions \
+           chartthemes \
            customchart \
+           donutbreakdown \
+           donutchart \
+           dynamicspline \
+           horizontalbarchart \
+           horizontalpercentbarchart \
+           horizontalstackedbarchart \
+           legend \
+           legendmarkers \
+           lineandbar \
            linechart \
+           logvalueaxis \
+           modeldata \
+           multiaxis \
+           nesteddonuts \
            percentbarchart \
            piechart \
+           piechartcustomization \
            piechartdrilldown \
+           polarchart \
            scatterchart \
            scatterinteractions \
            splinechart \
            stackedbarchart \
            stackedbarchartdrilldown \
-           zoomlinechart \
-           modeldata \
-           barchart \
-           boxplotchart \
-           candlestickchart \
-           legend \
-           barmodelmapper \
-           lineandbar \
-           horizontalbarchart \
-           horizontalstackedbarchart \
-           horizontalpercentbarchart \
-           donutbreakdown \
            temperaturerecords \
-           donutchart \
-           multiaxis \
-           legendmarkers \
-           logvalueaxis \
-           polarchart \
-           piechartcustomization \
-           dynamicspline \
-           nesteddonuts \
-           chartinteractions \
-           callout \
-           chartthemes
+           zoomlinechart
 
 qtHaveModule(quick) {
-    SUBDIRS += qmlboxplot \
-           qmlcandlestick \
-           qmlpiechart \
-           qmlweather \
-           qmlf1legends \
-           qmlcustomizations \
+    SUBDIRS += \
            qmlaxes \
-           qmlcustomlegend \
-           qmlpolarchart \
+           qmlboxplot \
+           qmlcandlestick \
            qmlchart \
-           qmloscilloscope
+           qmlcustomizations \
+           qmlcustomlegend \
+           qmlf1legends \
+           qmloscilloscope \
+           qmlpiechart \
+           qmlpolarchart \
+           qmlweather
+
 }
 
 qtHaveModule(multimedia) {

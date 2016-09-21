@@ -111,6 +111,12 @@ public:
     static void looseNiceNumbers(qreal &min, qreal &max, int &ticksCount);
     static qreal niceNumber(qreal x, bool ceiling);
 
+    void setReverseX(bool reverse) { m_reverseX = reverse; }
+    void setReverseY(bool reverse) { m_reverseY = reverse; }
+
+    bool isReverseX() const { return m_reverseX; }
+    bool isReverseY() const { return m_reverseY; }
+
 Q_SIGNALS:
     void updated();
     void rangeHorizontalChanged(qreal min, qreal max);
@@ -119,9 +125,12 @@ Q_SIGNALS:
 public Q_SLOTS:
     void handleVerticalAxisRangeChanged(qreal min,qreal max);
     void handleHorizontalAxisRangeChanged(qreal min,qreal max);
+    void handleReverseXChanged(bool reverse);
+    void handleReverseYChanged(bool reverse);
 
 protected:
     void adjustLogDomainRanges(qreal &min, qreal &max);
+    QRectF fixZoomRect(const QRectF &rect);
 
     qreal m_minX;
     qreal m_maxX;
@@ -134,6 +143,8 @@ protected:
     qreal m_zoomResetMaxX;
     qreal m_zoomResetMinY;
     qreal m_zoomResetMaxY;
+    bool m_reverseX;
+    bool m_reverseY;
 };
 
 QT_CHARTS_END_NAMESPACE

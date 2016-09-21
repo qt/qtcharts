@@ -68,6 +68,9 @@ public:
     void setPresenter(ChartPresenter *presenter);
     QAreaSeries *series() const { return m_series; }
 
+    void setUpperSeries(QLineSeries *series);
+    void setLowerSeries(QLineSeries *series);
+
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
@@ -87,6 +90,8 @@ public Q_SLOTS:
     void handleDomainUpdated();
 
 private:
+    void fixEdgeSeriesDomain(LineChartItem *edgeSeries);
+
     QAreaSeries *m_series;
     LineChartItem *m_upper;
     LineChartItem *m_lower;

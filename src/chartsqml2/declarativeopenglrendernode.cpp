@@ -290,39 +290,41 @@ void DeclarativeOpenGLRenderNode::renderGL(bool selection)
         QOpenGLBuffer *vbo = m_seriesBufferMap.value(i.key());
         GLXYSeriesData *data = i.value();
 
-        if (selection) {
-            m_selectionVector[counter] = i.key();
-            m_program->setUniformValue(m_colorUniformLoc, QVector3D((counter & 0xff) / 255.0f,
-                                                                    ((counter & 0xff00) >> 8) / 255.0f,
-                                                                    ((counter & 0xff0000) >> 16) / 255.0f));
-            counter++;
-        } else {
-            m_program->setUniformValue(m_colorUniformLoc, data->color);
-        }
-        m_program->setUniformValue(m_minUniformLoc, data->min);
-        m_program->setUniformValue(m_deltaUniformLoc, data->delta);
-        m_program->setUniformValue(m_matrixUniformLoc, data->matrix);
+        if (data->visible) {
+            if (selection) {
+                m_selectionVector[counter] = i.key();
+                m_program->setUniformValue(m_colorUniformLoc, QVector3D((counter & 0xff) / 255.0f,
+                                                                        ((counter & 0xff00) >> 8) / 255.0f,
+                                                                        ((counter & 0xff0000) >> 16) / 255.0f));
+                counter++;
+            } else {
+                m_program->setUniformValue(m_colorUniformLoc, data->color);
+            }
+            m_program->setUniformValue(m_minUniformLoc, data->min);
+            m_program->setUniformValue(m_deltaUniformLoc, data->delta);
+            m_program->setUniformValue(m_matrixUniformLoc, data->matrix);
 
-        if (!vbo) {
-            vbo = new QOpenGLBuffer;
-            m_seriesBufferMap.insert(i.key(), vbo);
-            vbo->create();
-        }
-        vbo->bind();
-        if (data->dirty) {
-            vbo->allocate(data->array.constData(), data->array.count() * sizeof(GLfloat));
-            data->dirty = false;
-        }
+            if (!vbo) {
+                vbo = new QOpenGLBuffer;
+                m_seriesBufferMap.insert(i.key(), vbo);
+                vbo->create();
+            }
+            vbo->bind();
+            if (data->dirty) {
+                vbo->allocate(data->array.constData(), data->array.count() * sizeof(GLfloat));
+                data->dirty = false;
+            }
 
-        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
-        if (data->type == QAbstractSeries::SeriesTypeLine) {
-            glLineWidth(data->width);
-            glDrawArrays(GL_LINE_STRIP, 0, data->array.size() / 2);
-        } else { // Scatter
-            m_program->setUniformValue(m_pointSizeUniformLoc, data->width);
-            glDrawArrays(GL_POINTS, 0, data->array.size() / 2);
+            glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
+            if (data->type == QAbstractSeries::SeriesTypeLine) {
+                glLineWidth(data->width);
+                glDrawArrays(GL_LINE_STRIP, 0, data->array.size() / 2);
+            } else { // Scatter
+                m_program->setUniformValue(m_pointSizeUniformLoc, data->width);
+                glDrawArrays(GL_POINTS, 0, data->array.size() / 2);
+            }
+            vbo->release();
         }
-        vbo->release();
     }
 }
 

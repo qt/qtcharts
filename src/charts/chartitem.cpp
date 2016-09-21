@@ -52,19 +52,6 @@ void ChartItem::handleDomainUpdated()
     qWarning() <<  __FUNCTION__<< "Slot not implemented";
 }
 
-void ChartItem::reversePainter(QPainter *painter, const QRectF &clipRect)
-{
-    if (m_series->reverseXAxis()) {
-        painter->translate(clipRect.width(), 0);
-        painter->scale(-1, 1);
-    }
-
-    if (m_series->reverseYAxis()) {
-        painter->translate(0, clipRect.height());
-        painter->scale(1, -1);
-    }
-}
-
 #include "moc_chartitem_p.cpp"
 
 QT_CHARTS_END_NAMESPACE

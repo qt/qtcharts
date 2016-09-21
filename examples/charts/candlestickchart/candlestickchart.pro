@@ -1,6 +1,4 @@
-!include( ../examples.pri ) {
-    error( "Couldn't find the examples.pri file!" )
-}
+QT += charts
 
 TARGET = candlestickchart
 
@@ -12,3 +10,6 @@ HEADERS += \
 
 RESOURCES += \
     candlestickdata.qrc
+
+target.path = $$[QT_INSTALL_EXAMPLES]/charts/candlestickchart
+INSTALLS += target

@@ -58,6 +58,7 @@ struct GLXYSeriesData {
     QAbstractSeries::SeriesType type;
     QVector2D min;
     QVector2D delta;
+    bool visible;
     QMatrix4x4 matrix;
 public:
     GLXYSeriesData &operator=(const GLXYSeriesData &data) {
@@ -68,6 +69,7 @@ public:
         type = data.type;
         min = data.min;
         delta = data.delta;
+        visible = data.visible;
         matrix = data.matrix;
         return *this;
     }
@@ -103,6 +105,7 @@ public Q_SLOTS:
     void cleanup();
     void handleSeriesPenChange();
     void handleSeriesOpenGLChange();
+    void handleSeriesVisibilityChange();
     void handleScatterColorChange();
     void handleScatterMarkerSizeChange();
 
