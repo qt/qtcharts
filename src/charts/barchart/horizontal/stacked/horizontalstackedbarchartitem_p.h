@@ -53,6 +53,8 @@ public:
 private:
     virtual QVector<QRectF> calculateLayout();
     void initializeLayout(int set, int category, int layoutIndex, bool resetAnimation);
+    QPointF topLeftPoint(int category, qreal barWidth, qreal value);
+    QPointF bottomRightPoint(int category, qreal barWidth, qreal value);
 };
 
 QT_CHARTS_END_NAMESPACE

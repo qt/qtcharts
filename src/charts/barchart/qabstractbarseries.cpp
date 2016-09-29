@@ -999,7 +999,6 @@ void QAbstractBarSeriesPrivate::initializeAxes()
     Q_Q(QAbstractBarSeries);
 
     foreach(QAbstractAxis* axis, m_axes) {
-
         if (axis->type() == QAbstractAxis::AxisTypeBarCategory) {
             switch (q->type()) {
             case QAbstractSeries::SeriesTypeHorizontalBar:
@@ -1022,6 +1021,11 @@ void QAbstractBarSeriesPrivate::initializeAxes()
             }
         }
     }
+
+    // Make sure series animations are reset when axes change
+    AbstractBarChartItem *item = qobject_cast<AbstractBarChartItem *>(m_item.data());
+    if (item)
+        item->resetAnimation();
 }
 
 QAbstractAxis::AxisType QAbstractBarSeriesPrivate::defaultAxisType(Qt::Orientation orientation) const
@@ -1096,19 +1100,53 @@ void QAbstractBarSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bo
 
     const QList<QGradient> gradients = theme->seriesGradients();
 
+    // Since each bar series uses different number of colors, we need to account for other
+    // bar series in the chart that are also themed when choosing colors.
+    // First series count is used to determine the color stepping to keep old applications
+    // with single bar series with a lot of sets colored as they always have been.
+    int actualIndex = 0;
+    int firstSeriesSetCount = m_barSets.count();
+    if (!m_item.isNull()) {
+        auto seriesMap = m_item->themeManager()->seriesMap();
+        int lowestSeries = index;
+        for (auto it = seriesMap.cbegin(), end = seriesMap.cend(); it != end; ++it) {
+            if (it.value() != index) {
+                auto barSeries = qobject_cast<QAbstractBarSeries *>(it.key());
+                if (barSeries) {
+                    actualIndex += barSeries->count();
+                    if (it.value() < lowestSeries) {
+                        firstSeriesSetCount = qMax(barSeries->count(), gradients.count());
+                        lowestSeries = it.value();
+                    }
+                }
+            }
+        }
+    }
+
     qreal takeAtPos = 0.5;
     qreal step = 0.2;
-    if (m_barSets.count() > 1) {
-        step = 1.0 / (qreal) m_barSets.count();
-        if (m_barSets.count() % gradients.count())
-        step *= gradients.count();
+    if (firstSeriesSetCount > 1) {
+        step = 1.0 / qreal(firstSeriesSetCount);
+        if (firstSeriesSetCount % gradients.count())
+            step *= gradients.count();
         else
-        step *= (gradients.count() - 1);
+            step *= (gradients.count() - 1);
+        if (index > 0) {
+            // Take necessary amount of initial steps
+            int initialStepper = actualIndex;
+            while (initialStepper > gradients.count()) {
+                initialStepper -= gradients.count();
+                takeAtPos += step;
+                if (takeAtPos == 1.0)
+                    takeAtPos += step;
+                takeAtPos -= int(takeAtPos);
+            }
+        }
     }
 
     for (int i(0); i < m_barSets.count(); i++) {
-        int colorIndex = (index + i) % gradients.count();
-        if (i > 0 && i %gradients.count() == 0) {
+        int colorIndex = (actualIndex + i) % gradients.count();
+        if ((actualIndex + i) > 0 && (actualIndex + i) % gradients.count() == 0) {
             // There is no dedicated base color for each sets, generate more colors
             takeAtPos += step;
             if (takeAtPos == 1.0)
@@ -1122,12 +1160,12 @@ void QAbstractBarSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bo
         // 0.3 as a boundary seems to work well.
         if (forced || QChartPrivate::defaultBrush() == m_barSets.at(i)->d_ptr->m_labelBrush) {
             if (takeAtPos < 0.3)
-                m_barSets.at(i)->setLabelBrush(ChartThemeManager::colorAt(gradients.at(index % gradients.size()), 1));
+                m_barSets.at(i)->setLabelBrush(ChartThemeManager::colorAt(gradients.at(actualIndex % gradients.size()), 1));
             else
-                m_barSets.at(i)->setLabelBrush(ChartThemeManager::colorAt(gradients.at(index % gradients.size()), 0));
+                m_barSets.at(i)->setLabelBrush(ChartThemeManager::colorAt(gradients.at(actualIndex % gradients.size()), 0));
         }
         if (forced || QChartPrivate::defaultPen() == m_barSets.at(i)->d_ptr->m_pen) {
-            QColor c = ChartThemeManager::colorAt(gradients.at(index % gradients.size()), 0.0);
+            QColor c = ChartThemeManager::colorAt(gradients.at(actualIndex % gradients.size()), 0.0);
             m_barSets.at(i)->setPen(c);
         }
     }

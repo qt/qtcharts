@@ -55,18 +55,21 @@ public slots:
 
 private:
     void createChart();
+    void addSeriesToChart(QAbstractBarSeries *series);
 
 private:
     QChart *m_chart;
     QChartView *m_chartView;
-    QValueAxis *m_barAxis;
+    QAbstractAxis *m_barAxis;
     QAbstractAxis *m_valueAxis;
-    QAbstractBarSeries *m_series;
-    QVector<QBarSet *> m_sets;
+    QVector<QAbstractBarSeries *> m_series;
+    QMap<const QAbstractBarSeries *, QVector<QBarSet *> > m_sets;
     QTimer m_timer;
     QElapsedTimer m_elapsedTimer;
     QHBoxLayout *m_horizontalLayout;
     int m_setCount;
+    int m_seriesCount;
+    qreal m_extraScroll;
 };
 
 #endif // CHARTWIDGET_H

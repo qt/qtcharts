@@ -63,33 +63,30 @@ QString PercentBarChartItem::generateLabelText(int set, int category, qreal valu
     return valueLabel;
 }
 
-void PercentBarChartItem::initializeLayout(int set, int category, int layoutIndex,
-                                           bool resetAnimation)
+void PercentBarChartItem::initializeLayout(int set, int category,
+                                           int layoutIndex, bool resetAnimation)
 {
     Q_UNUSED(set)
     Q_UNUSED(resetAnimation)
 
     QRectF rect;
 
-    int previousSetIndex = layoutIndex - m_categoryCount;
-    if (previousSetIndex >= 0) {
-        rect = m_layout.at(previousSetIndex);
+    if (set > 0) {
+        QBarSet *barSet = m_series->barSets().at(set - 1);
+        Bar *bar = m_indexForBarMap.value(barSet).value(category);
+        rect = m_layout.at(bar->layoutIndex());
         rect.setBottom(rect.top());
     } else {
         QPointF topLeft;
         QPointF bottomRight;
-        qreal barWidth = m_series->d_func()->barWidth();
+        const qreal barWidth = m_series->d_func()->barWidth() * m_seriesWidth;
         if (domain()->type() == AbstractDomain::XLogYDomain
                 || domain()->type() == AbstractDomain::LogXLogYDomain) {
-            topLeft = domain()->calculateGeometryPoint(
-                        QPointF(category - barWidth / 2, domain()->minY()), m_validData);
-            bottomRight = domain()->calculateGeometryPoint(
-                        QPointF(category + barWidth / 2, domain()->minY()), m_validData);
+            topLeft = topLeftPoint(category, barWidth, domain()->minY());
+            bottomRight = bottomRightPoint(category, barWidth, domain()->minY());
         } else {
-            topLeft = domain()->calculateGeometryPoint(
-                        QPointF(category - barWidth / 2, 0), m_validData);
-            bottomRight = domain()->calculateGeometryPoint(
-                        QPointF(category + barWidth / 2, 0), m_validData);
+            topLeft = topLeftPoint(category, barWidth, 0.0);
+            bottomRight = bottomRightPoint(category, barWidth, 0.0);
         }
         if (m_validData) {
             rect.setTopLeft(topLeft);
@@ -100,52 +97,73 @@ void PercentBarChartItem::initializeLayout(int set, int category, int layoutInde
     m_layout[layoutIndex] = rect.normalized();
 }
 
-void PercentBarChartItem::markLabelsDirty(QBarSet *barset, int visualIndex, int count)
+void PercentBarChartItem::markLabelsDirty(QBarSet *barset, int index, int count)
 {
     Q_UNUSED(barset)
     // Percent series need to dirty all labels of the stack
     QList<QBarSet *> sets = m_barMap.keys();
     for (int set = 0; set < sets.size(); set++)
-        AbstractBarChartItem::markLabelsDirty(sets.at(set), visualIndex, count);
+        AbstractBarChartItem::markLabelsDirty(sets.at(set), index, count);
+}
+
+QPointF PercentBarChartItem::topLeftPoint(int category, qreal barWidth, qreal value)
+{
+    return domain()->calculateGeometryPoint(
+                QPointF(m_seriesPosAdjustment + category - (barWidth / 2.0), value), m_validData);
+}
+
+QPointF PercentBarChartItem::bottomRightPoint(int category, qreal barWidth, qreal value)
+{
+    return domain()->calculateGeometryPoint(
+                QPointF(m_seriesPosAdjustment + category + (barWidth / 2.0), value), m_validData);
 }
 
 QVector<QRectF> PercentBarChartItem::calculateLayout()
 {
     QVector<QRectF> layout;
-    layout.reserve(m_layout.size());
+    layout.resize(m_layout.size());
 
-    // Use temporary qreals for accuracy
-    qreal setCount = m_series->count();
-    qreal barWidth = m_series->d_func()->barWidth();
+    const int setCount = m_series->count();
+    const qreal barWidth = m_series->d_func()->barWidth() * m_seriesWidth;
 
     QVector<qreal> categorySums(m_categoryCount);
     QVector<qreal> tempSums(m_categoryCount, 0.0);
+
     for (int category = 0; category < m_categoryCount; category++)
         categorySums[category] = m_series->d_func()->categorySum(category + m_firstCategory);
+
     for (int set = 0; set < setCount; set++) {
-        const QBarSet *barSet = m_series->barSets().at(set);
-        for (int category = m_firstCategory; category <= m_lastCategory; category++) {
+        QBarSet *barSet = m_series->barSets().at(set);
+        const QList<Bar *> bars = m_barMap.value(barSet);
+        for (int i = 0; i < m_categoryCount; i++) {
+            Bar *bar = bars.at(i);
+            const int category = bar->index();
             qreal &sum = tempSums[category - m_firstCategory];
             const qreal &categorySum = categorySums.at(category - m_firstCategory);
             qreal value = barSet->at(category);
             QRectF rect;
-            qreal topY = 0;
+            qreal topY = 0.0;
             qreal newSum = value + sum;
-            if (newSum > 0)
-                topY = 100 * newSum / categorySum;
-            qreal bottomY = 0;
-            if (sum > 0)
-                bottomY = 100 * sum / categorySum;
-            QPointF topLeft = domain()->calculateGeometryPoint(QPointF(category - barWidth/2, topY), m_validData);
+            qreal bottomY = 0.0;
+            if (categorySum != 0.0) {
+                if (newSum > 0.0)
+                    topY = 100.0 * newSum / categorySum;
+                if (sum > 0.0)
+                    bottomY = 100.0 * sum / categorySum;
+            }
+            QPointF topLeft = topLeftPoint(category, barWidth, topY);
             QPointF bottomRight;
-            if (domain()->type() == AbstractDomain::XLogYDomain || domain()->type() == AbstractDomain::LogXLogYDomain)
-                bottomRight = domain()->calculateGeometryPoint(QPointF(category + barWidth/2, set ? bottomY : domain()->minY()), m_validData);
-            else
-                bottomRight = domain()->calculateGeometryPoint(QPointF(category + barWidth/2, set ? bottomY : 0), m_validData);
+            if (domain()->type() == AbstractDomain::XLogYDomain
+                    || domain()->type() == AbstractDomain::LogXLogYDomain) {
+                bottomRight = bottomRightPoint(category, barWidth,
+                                               set ? bottomY : domain()->minY());
+            } else {
+                bottomRight = bottomRightPoint(category, barWidth, bottomY);
+            }
 
             rect.setTopLeft(topLeft);
             rect.setBottomRight(bottomRight);
-            layout.append(rect.normalized());
+            layout[bar->layoutIndex()] = rect.normalized();
             sum = newSum;
         }
     }

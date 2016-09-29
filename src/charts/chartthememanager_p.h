@@ -65,6 +65,7 @@ public:
     void decorateChart(QChart *chart, ChartTheme* theme) const;
     void decorateLegend(QLegend *legend, ChartTheme* theme) const;
     void updateSeries(QAbstractSeries *series);
+    QMap<QAbstractSeries *, int> seriesMap() const { return m_seriesMap; }
 
 public:
     static QList<QGradient> generateSeriesGradients(const QList<QColor>& colors);

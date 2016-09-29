@@ -58,7 +58,10 @@ private Q_SLOTS:
 
 private:
     virtual QVector<QRectF> calculateLayout();
-    void initializeLayout(int set, int category, int layoutIndex, bool resetAnimation);
+    void initializeLayout(int set, int category,
+                          int layoutIndex, bool resetAnimation);
+    QPointF topLeftPoint(int set, int setCount, int category, qreal barWidth, qreal value);
+    QPointF bottomRightPoint(int set, int setCount, int category, qreal barWidth, qreal value);
 };
 
 QT_CHARTS_END_NAMESPACE

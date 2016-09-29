@@ -192,6 +192,7 @@ protected:
     friend class QAbstractSeries;
     friend class QBoxPlotSeriesPrivate;
     friend class QCandlestickSeriesPrivate;
+    friend class AbstractBarChartItem;
 
 private:
     Q_DISABLE_COPY(QChart)

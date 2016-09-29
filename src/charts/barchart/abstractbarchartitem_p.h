@@ -52,6 +52,7 @@ class QAxisCategories;
 class QChart;
 class BarAnimation;
 class QBarSetPrivate;
+class QAbstractAxis;
 
 class AbstractBarChartItem : public ChartItem
 {
@@ -71,6 +72,7 @@ public:
     virtual void setAnimation(BarAnimation *animation);
     void setLayout(const QVector<QRectF> &layout);
     QRectF geometry() const { return m_rect;}
+    void resetAnimation();
 
 public Q_SLOTS:
     void handleDomainUpdated();
@@ -85,6 +87,8 @@ public Q_SLOTS:
     void handleBarValueChange(int index, QBarSet *barset);
     void handleBarValueAdd(int index, int count, QBarSet *barset);
     void handleBarValueRemove(int index, int count, QBarSet *barset);
+    void handleSeriesAdded(QAbstractSeries *series);
+    void handleSeriesRemoved(QAbstractSeries *series);
 
 protected:
     void positionLabelsVertical();
@@ -92,7 +96,8 @@ protected:
     void handleSetStructureChange();
     virtual QString generateLabelText(int set, int category, qreal value);
     void updateBarItems();
-    virtual void markLabelsDirty(QBarSet *barset, int visualIndex, int count);
+    virtual void markLabelsDirty(QBarSet *barset, int index, int count);
+    void calculateSeriesPositionAdjustmentAndWidth();
 
     QRectF m_rect;
     QVector<QRectF> m_layout;
@@ -101,6 +106,7 @@ protected:
 
     QAbstractBarSeries *m_series; // Not owned.
     QMap<QBarSet *, QList<Bar *> > m_barMap;
+    QMap<QBarSet *, QHash<int, Bar *> > m_indexForBarMap;
     int m_firstCategory;
     int m_lastCategory;
     int m_categoryCount;
@@ -108,6 +114,8 @@ protected:
     bool m_labelItemsMissing;
     Qt::Orientation m_orientation;
     bool m_resetAnimation;
+    qreal m_seriesPosAdjustment;
+    qreal m_seriesWidth;
 };
 
 QT_CHARTS_END_NAMESPACE

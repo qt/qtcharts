@@ -31,7 +31,7 @@
 
 #include <QtCharts/QLineSeries>
 #include <QtCharts/QLegend>
-#include <QtCharts/QCategoryAxis>
+#include <QtCharts/QBarCategoryAxis>
 #include <QtCharts/QValueAxis>
 #include <QtCharts/QLogValueAxis>
 #include <QtCharts/QBarSet>
@@ -44,26 +44,39 @@
 #include <QElapsedTimer>
 #include <QDebug>
 
-const int initialCount = 20;
-const int visibleCount = 40;
+//#define VALUE_LOGGING 1
+
+const int initialCount = 100000;
+const int visibleCount = 20;
 const int storeCount = 100000000;
-const int interval = 600;
+const int interval = 500;
+
+const int initialSeriesCount = 2;
+const int maxSeriesCount = 2;
+const bool removeSeries = false;
+const int extraSeriesFrequency = 7;
+
 const int initialSetCount = 3;
 const int maxSetCount = 3;
-const bool removeSets = true;
-const int extraSetFrequency = 30;
-const bool initialLabels = false;
+const bool removeSets = false;
+const int extraSetFrequency = 3;
+
+const bool initialLabels = true;
 const int labelsTrigger = -1;
 const int visibleTrigger = -1;
 const int appendFrequency = 1;
 const int animationTrigger = -1;
 const bool sameNumberOfBars = false;
+
 const bool animation = true;
-const int animationDuration = 500;
+const int animationDuration = 300;
 
 const bool horizontal = false;
 const bool percent = false;
-const bool stacked = false;
+const bool stacked = true;
+
+const bool negativeValues = false;
+const bool mixedValues = false;
 
 // Negative indexes are counted from end of the set.
 const bool doReplace = false;
@@ -77,20 +90,24 @@ const int replaceIndex = -3;
 const int insertIndex = -5;
 
 const bool logarithmic = false;
+const bool barCategories = false;
+
+const qreal barWidth = 0.9;
+
 // Note: reverse axes are not fully supported for bars (animation and label positioning break a bit)
 const bool reverseBar = false;
 const bool reverseValue = false;
 
 static int counter = 1;
-static const QString nameTemplate = QStringLiteral("Set %1");
+static const QString nameTemplate = QStringLiteral("Set %1/%2");
 
 ChartWidget::ChartWidget(QWidget *parent) :
     QWidget(parent),
     m_chart(new QChart()),
     m_chartView(new QChartView(this)),
-    m_barAxis(new QValueAxis()),
-    m_series(nullptr),
-    m_setCount(initialSetCount)
+    m_setCount(initialSetCount),
+    m_seriesCount(initialSeriesCount),
+    m_extraScroll(0.0)
 {
     m_elapsedTimer.start();
 
@@ -102,23 +119,37 @@ ChartWidget::ChartWidget(QWidget *parent) :
         m_valueAxis = new QValueAxis;
     }
 
+    if (barCategories)
+        m_barAxis = new QBarCategoryAxis;
+    else
+        m_barAxis = new QValueAxis;
+
     m_barAxis->setReverse(reverseBar);
     m_valueAxis->setReverse(reverseValue);
 
-    if (horizontal) {
-        if (percent)
-            m_series = new QHorizontalPercentBarSeries;
-        else if (stacked)
-            m_series = new QHorizontalStackedBarSeries;
-        else
-            m_series = new QHorizontalBarSeries;
-    } else {
-        if (percent)
-            m_series = new QPercentBarSeries;
-        else if (stacked)
-            m_series = new QStackedBarSeries;
-        else
-            m_series = new QBarSeries;
+    for (int i = 0; i < maxSeriesCount; i++) {
+        if (horizontal) {
+            if (percent)
+                m_series.append(new QHorizontalPercentBarSeries);
+            else if (stacked)
+                m_series.append(new QHorizontalStackedBarSeries);
+            else
+                m_series.append(new QHorizontalBarSeries);
+        } else {
+            if (percent)
+                m_series.append(new QPercentBarSeries);
+            else if (stacked)
+                m_series.append(new QStackedBarSeries);
+            else
+                m_series.append(new QBarSeries);
+        }
+        QAbstractBarSeries *series =
+                qobject_cast<QAbstractBarSeries *>(m_series.at(m_series.size() - 1));
+        QString seriesNameTemplate = QStringLiteral("bar %1");
+        series->setName(seriesNameTemplate.arg(i));
+        series->setLabelsPosition(QAbstractBarSeries::LabelsInsideEnd);
+        series->setLabelsVisible(initialLabels);
+        series->setBarWidth(barWidth);
     }
 
     qsrand((uint) QTime::currentTime().msec());
@@ -155,50 +186,89 @@ void ChartWidget::handleTimeout()
     bool doScroll = false;
 
     if (counter % appendFrequency == 0) {
-        for (int i = 0; i < maxSetCount; i++) {
-            QBarSet *set = m_sets.at(i);
-            qreal value = (counter % 100) / qreal(i+1);
-            set->append(value);
-            if (set->count() > storeCount)
-                set->remove(5, set->count() - storeCount);
-            if (set->count() > visibleCount)
-                doScroll = true;
+        for (int i = 0; i < maxSeriesCount; i++) {
+            for (int j = 0; j < maxSetCount; j++) {
+                QBarSet *set = m_sets.value(m_series.at(i)).at(j);
+                qreal value = 5 * i + (counter % 100) / qreal(j+1);
+                if (negativeValues)
+                    set->append(-value);
+                else if (mixedValues)
+                    set->append(counter % 2 ? value : -value);
+                else
+                    set->append(value);
+#ifdef VALUE_LOGGING
+                qDebug() << "Appended value:" << set->at(set->count() - 1)
+                         << "to series:" << i
+                         << "to set:" << j
+                         << "at index:" << set->count() - 1;
+#endif
+                if (set->count() > storeCount)
+                    set->remove(0, set->count() - storeCount);
+                if (set->count() > visibleCount)
+                    doScroll = true;
+            }
         }
         qDebug() << "Append time:" << m_elapsedTimer.restart();
     }
 
     if (doScroll) {
         doScroll = false;
-        if (horizontal)
-            m_chart->scroll(0, m_chart->plotArea().height() / visibleCount);
-        else
-            m_chart->scroll(m_chart->plotArea().width() / visibleCount, 0);
+        qreal scrollAmount = horizontal ? m_chart->plotArea().height() / visibleCount
+                                        : m_chart->plotArea().width() / visibleCount;
+        // Charts can't scroll without any series, so store the required scroll in those cases
+        if (m_seriesCount == 0) {
+            m_extraScroll += scrollAmount;
+        } else {
+            if (horizontal)
+                m_chart->scroll(0, scrollAmount + m_extraScroll);
+            else
+                m_chart->scroll(scrollAmount + m_extraScroll, 0);
+            m_extraScroll = 0.0;
+        }
         qDebug() << "Scroll time:" << m_elapsedTimer.restart();
     }
 
     if (doRemove || doReplace || doInsert) {
-        for (int i = 0; i < m_setCount; i++) {
-            QBarSet *set = m_sets.at(i);
-            qreal value = ((counter + 20) % 100) / qreal(i+1);
-            if (doReplace && (!singleReplace || i == 0)) {
-                int index = replaceIndex < 0 ? set->count() + replaceIndex : replaceIndex;
-                set->replace(index, value);
-            }
-            if (doRemove && (!singleRemove || i == 0)) {
-                int index = removeIndex < 0 ? set->count() + removeIndex : removeIndex;
-                set->remove(index, 1);
-            }
-            if (doInsert && (!singleInsert || i == 0)) {
-                int index = insertIndex < 0 ? set->count() + insertIndex : insertIndex;
-                set->insert(index, value);
+        for (int i = 0; i < maxSeriesCount; i++) {
+            for (int j = 0; j < m_setCount; j++) {
+                QBarSet *set = m_sets.value(m_series.at(i)).at(j);
+                qreal value = ((counter + 20) % 100) / qreal(j + 1);
+                if (doReplace && (!singleReplace || j == 0)) {
+                    int index = replaceIndex < 0 ? set->count() + replaceIndex : replaceIndex;
+                    set->replace(index, value);
+                }
+                if (doRemove && (!singleRemove || j == 0)) {
+                    int index = removeIndex < 0 ? set->count() + removeIndex : removeIndex;
+                    set->remove(index, 1);
+                }
+                if (doInsert && (!singleInsert || j == 0)) {
+                    int index = insertIndex < 0 ? set->count() + insertIndex : insertIndex;
+                    set->insert(index, value);
+                }
             }
         }
         qDebug() << "R/R    time:" << m_elapsedTimer.restart();
     }
 
-//    if (counter % 5 == 0) {
-//        m_sets.at(0)->setPen(QPen(QColor(counter % 255, counter % 255, counter % 255), 2));
-//    }
+    if (counter % extraSeriesFrequency == 0) {
+        if (m_seriesCount <= maxSeriesCount) {
+            qDebug() << "Adjusting series count, current count:" << m_seriesCount;
+            static int seriesCountAdder = 1;
+            if (m_seriesCount == maxSeriesCount) {
+                if (removeSeries)
+                    seriesCountAdder = -1;
+                else
+                    seriesCountAdder = 0;
+            } else if (m_seriesCount == 0) {
+                seriesCountAdder = 1;
+            }
+            if (seriesCountAdder < 0)
+                m_chart->removeSeries(m_series.at(m_seriesCount - 1));
+            else if (m_seriesCount < maxSeriesCount)
+                addSeriesToChart(m_series.at(m_seriesCount));
+            m_seriesCount += seriesCountAdder;
+        }
+    }
 
     if (counter % extraSetFrequency == 0) {
         if (m_setCount <= maxSetCount) {
@@ -212,34 +282,43 @@ void ChartWidget::handleTimeout()
             } else if (m_setCount == 0) {
                 setCountAdder = 1;
             }
-            if (setCountAdder < 0) {
-                int barCount = m_sets.at(m_setCount - 1)->count();
-                m_series->remove(m_sets.at(m_setCount - 1));
-                // Since remove deletes the set, recreate it in our list
-                QBarSet *set = new QBarSet(nameTemplate.arg(m_setCount - 1));
-                m_sets[m_setCount - 1] = set;
-                set->setLabelBrush(QColor("black"));
-                set->setPen(QPen(QColor("black"), 0.3));
-                QList<qreal> valueList;
-                valueList.reserve(barCount);
-                for (int j = 0; j < barCount; ++j)
-                    valueList.append(counter % 100);
-                set->append(valueList);
+            for (int i = 0; i < maxSeriesCount; i++) {
+                if (setCountAdder < 0) {
+                    int barCount = m_sets.value(m_series.at(i)).at(m_setCount - 1)->count();
+                    m_series.at(i)->remove(m_sets.value(m_series.at(i)).at(m_setCount - 1));
+                    // Since remove deletes the set, recreate it in our list
+                    QBarSet *set = new QBarSet(nameTemplate.arg(i).arg(m_setCount - 1));
+                    m_sets[m_series.at(i)][m_setCount - 1] = set;
+                    set->setLabelBrush(QColor("black"));
+                    set->setPen(QPen(QColor("black"), 0.3));
+                    QList<qreal> valueList;
+                    valueList.reserve(barCount);
+                    for (int j = 0; j < barCount; ++j) {
+                        qreal value = counter % 100;
+                        if (negativeValues)
+                            valueList.append(-value);
+                        else if (mixedValues)
+                            valueList.append(counter % 2 ? value : -value);
+                        else
+                            valueList.append(value);
+                   }
+                    set->append(valueList);
 
-            } else if (m_setCount < maxSetCount) {
-                m_series->append(m_sets.at(m_setCount));
+                } else if (m_setCount < maxSetCount) {
+                    m_series.at(i)->append(m_sets.value(m_series.at(i)).at(m_setCount));
+                }
             }
             m_setCount += setCountAdder;
         }
     }
 
     if (labelsTrigger > 0 && counter % labelsTrigger == 0) {
-        m_series->setLabelsVisible(!m_series->isLabelsVisible());
+        m_series.at(0)->setLabelsVisible(!m_series.at(0)->isLabelsVisible());
         qDebug() << "Label visibility changed";
     }
 
     if (visibleTrigger > 0 && counter % visibleTrigger == 0) {
-        m_series->setVisible(!m_series->isVisible());
+        m_series.at(0)->setVisible(!m_series.at(0)->isVisible());
         qDebug() << "Series visibility changed";
     }
 
@@ -251,9 +330,9 @@ void ChartWidget::handleTimeout()
         qDebug() << "Series animation changed";
     }
 
-    qDebug() << "Restof time:" << m_elapsedTimer.restart();
+    qDebug() << "Rest of time:" << m_elapsedTimer.restart();
 
-    qDebug() << "Item Count:" << m_chart->scene()->items().size();
+    qDebug() << "GraphicsItem Count:" << m_chart->scene()->items().size();
     counter++;
 }
 
@@ -263,57 +342,85 @@ void ChartWidget::createChart()
 
     QList<qreal> valueList;
     valueList.reserve(initialCount);
-    for (int j = 0; j < initialCount; ++j)
-        valueList.append(counter++ % 100);
-
-    for (int i = 0; i < maxSetCount; i++) {
-        QBarSet *set = new QBarSet(nameTemplate.arg(i));
-        m_sets.append(set);
-        set->setLabelBrush(QColor("black"));
-        set->setPen(QPen(QColor("black"), 0.3));
-        if (sameNumberOfBars) {
-            set->append(valueList);
-        } else {
-            QList<qreal> tempList = valueList;
-            for (int j = 0; j < i; j++) {
-                tempList.removeLast();
-                tempList.removeLast();
-                tempList.removeLast();
-            }
-            set->append(tempList);
-        }
+    for (int j = 0; j < initialCount; ++j) {
+        qreal value = counter++ % 100;
+        if (negativeValues)
+            valueList.append(-value);
+        else if (mixedValues)
+            valueList.append(counter % 2 ? value : -value);
+        else
+            valueList.append(value);
     }
 
-    m_series->setName("bar");
-    for (int i = 0; i < initialSetCount; i++)
-        m_series->append(m_sets.at(i));
+    for (int i = 0; i < maxSeriesCount; i++) {
+        for (int j = 0; j < maxSetCount; j++) {
+            QBarSet *set = new QBarSet(nameTemplate.arg(i).arg(j));
+            m_sets[m_series.at(i)].append(set);
+            set->setLabelBrush(QColor("black"));
+            set->setPen(QPen(QColor("black"), 0.3));
+            if (sameNumberOfBars) {
+                set->append(valueList);
+            } else {
+                QList<qreal> tempList = valueList;
+                for (int k = 0; k < j; k++)
+                    tempList.removeLast();
+                set->append(tempList);
+            }
+            if (j < m_setCount)
+                m_series.at(i)->append(set);
+        }
+    }
+    for (int i = 0; i < initialSeriesCount; i++)
+        addSeriesToChart(m_series.at(i));
 
-    m_series->append(m_sets.at(0));
-    m_series->setLabelsPosition(QAbstractBarSeries::LabelsInsideEnd);
-    m_series->setLabelsVisible(initialLabels);
-    m_series->setBarWidth(0.9);
-
-    m_chart->addSeries(m_series);
     m_chart->setTitle("Chart");
     if (animation) {
         m_chart->setAnimationOptions(QChart::SeriesAnimations);
         m_chart->setAnimationDuration(animationDuration);
     }
 
-    if (horizontal) {
-        m_chart->setAxisX(m_valueAxis, m_series);
-        m_chart->setAxisY(m_barAxis, m_series);
+    if (barCategories) {
+        QBarCategoryAxis *barCatAxis = qobject_cast<QBarCategoryAxis *>(m_barAxis);
+        QStringList categories;
+        const int count = qMax(initialCount, visibleCount);
+        for (int i = 0; i < count; i++)
+            categories.append(QString::number(i));
+        barCatAxis->setCategories(categories);
     } else {
-        m_chart->setAxisX(m_barAxis, m_series);
-        m_chart->setAxisY(m_valueAxis, m_series);
+        qobject_cast<QValueAxis *>(m_barAxis)->setTickCount(11);
     }
-    m_barAxis->setTickCount(11);
+
     if (initialCount > visibleCount)
         m_barAxis->setRange(initialCount - visibleCount, initialCount);
     else
         m_barAxis->setRange(0, visibleCount);
 
-    m_valueAxis->setRange(logarithmic ? 1 : 0, stacked ? 200 : 100);
+    qreal rangeValue = stacked ? 200.0 : 100.0;
+    m_valueAxis->setRange(logarithmic ? 1.0 : (negativeValues || mixedValues) ? -rangeValue : 0.0,
+                          (!negativeValues || mixedValues) ? rangeValue : 0.0);
 
     m_chartView->setChart(m_chart);
+}
+
+void ChartWidget::addSeriesToChart(QAbstractBarSeries *series)
+{
+    qDebug() << "Adding series:" << series->name();
+
+    // HACK: Temporarily take the sets out of the series until axes are set.
+    // This is done because added series defaults to a domain that displays all bars, which can
+    // get extremely slow as the bar count increases.
+    QList<QBarSet *> sets = series->barSets();
+    for (auto set : sets)
+        series->take(set);
+
+    m_chart->addSeries(series);
+    if (horizontal) {
+        m_chart->setAxisX(m_valueAxis,series);
+        m_chart->setAxisY(m_barAxis, series);
+    } else {
+        m_chart->setAxisX(m_barAxis, series);
+        m_chart->setAxisY(m_valueAxis, series);
+    }
+
+    series->append(sets);
 }

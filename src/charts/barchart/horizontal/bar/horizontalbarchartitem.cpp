@@ -39,14 +39,15 @@ HorizontalBarChartItem::HorizontalBarChartItem(QAbstractBarSeries *series, QGrap
 {
 }
 
-void HorizontalBarChartItem::initializeLayout(int set, int category, int layoutIndex,
-                                              bool resetAnimation)
+void HorizontalBarChartItem::initializeLayout(int set, int category,
+                                              int layoutIndex, bool resetAnimation)
 {
     QRectF rect;
 
-    int previousSetIndex = layoutIndex - m_categoryCount;
-    if (previousSetIndex >= 0) {
-        rect = m_layout.at(previousSetIndex);
+    if (set > 0) {
+        QBarSet *barSet = m_series->barSets().at(set - 1);
+        Bar *bar = m_indexForBarMap.value(barSet).value(category);
+        rect = m_layout.at(bar->layoutIndex());
         qreal oldTop = rect.top();
         if (resetAnimation)
             rect.setTop(oldTop - rect.height());
@@ -55,23 +56,15 @@ void HorizontalBarChartItem::initializeLayout(int set, int category, int layoutI
     } else {
         QPointF topLeft;
         QPointF bottomRight;
-        qreal barWidth = m_series->d_func()->barWidth();
-        qreal setCount = m_series->count();
+        const qreal barWidth = m_series->d_func()->barWidth() * m_seriesWidth;
+        const int setCount = m_series->count();
         if (domain()->type() == AbstractDomain::LogXYDomain
                 || domain()->type() == AbstractDomain::LogXLogYDomain) {
-            topLeft = domain()->calculateGeometryPoint(
-                        QPointF(domain()->minX(),
-                                category - barWidth / 2 + set/setCount * barWidth), m_validData);
-            bottomRight = domain()->calculateGeometryPoint(
-                        QPointF(domain()->minX(),
-                                category - barWidth / 2 + (set + 1)/setCount * barWidth),
-                        m_validData);
+            topLeft = topLeftPoint(set, setCount, category, barWidth, domain()->minX());
+            bottomRight = bottomRightPoint(set, setCount, category, barWidth, domain()->minX());
         } else {
-            topLeft = domain()->calculateGeometryPoint(
-                        QPointF(0, category - barWidth / 2 + set/setCount * barWidth), m_validData);
-            bottomRight = domain()->calculateGeometryPoint(
-                        QPointF(0, category - barWidth / 2 + (set + 1)/setCount * barWidth),
-                        m_validData);
+            topLeft = topLeftPoint(set, setCount, category, barWidth, 0.0);
+            bottomRight = bottomRightPoint(set, setCount, category, barWidth, 0.0);
         }
 
         if (m_validData) {
@@ -82,31 +75,52 @@ void HorizontalBarChartItem::initializeLayout(int set, int category, int layoutI
     m_layout[layoutIndex] = rect.normalized();
 }
 
+QPointF HorizontalBarChartItem::topLeftPoint(int set, int setCount, int category,
+                                             qreal barWidth, qreal value)
+{
+    return domain()->calculateGeometryPoint(
+                QPointF(value, m_seriesPosAdjustment + category - (barWidth / 2.0)
+                        + (qreal(set)/setCount) * barWidth),
+                m_validData);
+}
+
+QPointF HorizontalBarChartItem::bottomRightPoint(int set, int setCount, int category,
+                                                 qreal barWidth, qreal value)
+{
+    return domain()->calculateGeometryPoint(
+                QPointF(value, m_seriesPosAdjustment + category - (barWidth / 2.0)
+                        + (qreal(set + 1)/setCount) * barWidth),
+                m_validData);
+}
+
 QVector<QRectF> HorizontalBarChartItem::calculateLayout()
 {
     QVector<QRectF> layout;
-    layout.reserve(m_layout.size());
+    layout.resize(m_layout.size());
 
-    // Use temporary qreals for accuracy
-    qreal setCount = m_series->count();
-    qreal barWidth = m_series->d_func()->barWidth();
+    const int setCount = m_series->count();
+    const qreal barWidth = m_series->d_func()->barWidth() * m_seriesWidth;
 
     for (int set = 0; set < setCount; set++) {
-        const QBarSet *barSet = m_series->barSets().at(set);
-        for (int category = m_firstCategory; category <= m_lastCategory; category++) {
+        QBarSet *barSet = m_series->barSets().at(set);
+        const QList<Bar *> bars = m_barMap.value(barSet);
+        for (int i = 0; i < m_categoryCount; i++) {
+            Bar *bar = bars.at(i);
+            const int category = bar->index();
             qreal value = barSet->at(category);
             QRectF rect;
             QPointF topLeft;
-            if (domain()->type() == AbstractDomain::LogXYDomain || domain()->type() == AbstractDomain::LogXLogYDomain)
-                topLeft = domain()->calculateGeometryPoint(QPointF(domain()->minX(), category - barWidth / 2 + set/setCount * barWidth), m_validData);
-            else
-                topLeft = domain()->calculateGeometryPoint(QPointF(0, category - barWidth / 2 + set/setCount * barWidth), m_validData);
+            if (domain()->type() == AbstractDomain::LogXYDomain
+                    || domain()->type() == AbstractDomain::LogXLogYDomain) {
+                topLeft = topLeftPoint(set, setCount, category, barWidth, domain()->minX());
+            } else {
+                topLeft = topLeftPoint(set, setCount, category, barWidth, 0.0);
+            }
 
-            QPointF bottomRight = domain()->calculateGeometryPoint(QPointF(value, category - barWidth / 2 + (set + 1)/setCount * barWidth), m_validData);
-
+            QPointF bottomRight = bottomRightPoint(set, setCount, category, barWidth, value);
             rect.setTopLeft(topLeft);
             rect.setBottomRight(bottomRight);
-            layout.append(rect.normalized());
+            layout[bar->layoutIndex()] = rect.normalized();
         }
     }
     return layout;

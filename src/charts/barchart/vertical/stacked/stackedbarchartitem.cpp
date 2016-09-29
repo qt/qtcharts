@@ -44,33 +44,53 @@ StackedBarChartItem::StackedBarChartItem(QAbstractBarSeries *series, QGraphicsIt
     connect(series, SIGNAL(labelsFormatChanged(QString)), this, SLOT(positionLabels()));
 }
 
-void StackedBarChartItem::initializeLayout(int set, int category, int layoutIndex,
-                                           bool resetAnimation)
+void StackedBarChartItem::initializeLayout(int set, int category,
+                                           int layoutIndex, bool resetAnimation)
 {
     Q_UNUSED(set)
     Q_UNUSED(resetAnimation)
 
     QRectF rect;
 
-    int previousSetIndex = layoutIndex - m_categoryCount;
-    if (previousSetIndex >= 0) {
-        rect = m_layout.at(previousSetIndex);
-        rect.setBottom(rect.top());
+    if (set > 0) {
+        const QBarSet *barSet = m_series->barSets().at(set);
+        const qreal value = barSet->at(category);
+        int checkIndex = set;
+        bool found = false;
+        // Negative values stack to negative side and positive values to positive side, so we need
+        // to find the previous set that stacks to the same side
+        while (checkIndex > 0 && !found) {
+            checkIndex--;
+            QBarSet *checkSet = m_series->barSets().at(checkIndex);
+            const qreal checkValue = checkSet->at(category);
+            if (value < 0.0 == checkValue < 0.0) {
+                Bar *checkBar = m_indexForBarMap.value(checkSet).value(category);
+                rect = m_layout.at(checkBar->layoutIndex());
+                found = true;
+                break;
+            }
+        }
+        // If we didn't find a previous set to the same direction, just stack next to the first set
+        if (!found) {
+            QBarSet *firsSet = m_series->barSets().at(0);
+            Bar *firstBar = m_indexForBarMap.value(firsSet).value(category);
+            rect = m_layout.at(firstBar->layoutIndex());
+        }
+        if (value < 0)
+            rect.setTop(rect.bottom());
+        else
+            rect.setBottom(rect.top());
     } else {
         QPointF topLeft;
         QPointF bottomRight;
-        qreal barWidth = m_series->d_func()->barWidth();
+        const qreal barWidth = m_series->d_func()->barWidth() * m_seriesWidth;
         if (domain()->type() == AbstractDomain::XLogYDomain
                 || domain()->type() == AbstractDomain::LogXLogYDomain) {
-            topLeft = domain()->calculateGeometryPoint(
-                        QPointF(category - barWidth / 2, domain()->minY()), m_validData);
-            bottomRight = domain()->calculateGeometryPoint(
-                        QPointF(category + barWidth / 2, domain()->minY()), m_validData);
+            topLeft = topLeftPoint(category, barWidth, domain()->minY());
+            bottomRight = bottomRightPoint(category, barWidth, domain()->minY());
         } else {
-            topLeft = domain()->calculateGeometryPoint(
-                        QPointF(category - barWidth / 2, 0), m_validData);
-            bottomRight = domain()->calculateGeometryPoint(
-                        QPointF(category + barWidth / 2, 0), m_validData);
+            topLeft = topLeftPoint(category, barWidth, 0.0);
+            bottomRight = bottomRightPoint(category, barWidth, 0.0);
         }
 
         if (m_validData) {
@@ -81,46 +101,79 @@ void StackedBarChartItem::initializeLayout(int set, int category, int layoutInde
     m_layout[layoutIndex] = rect.normalized();
 }
 
+QPointF StackedBarChartItem::topLeftPoint(int category, qreal barWidth, qreal value)
+{
+    return domain()->calculateGeometryPoint(
+                QPointF(m_seriesPosAdjustment + category - (barWidth / 2), value), m_validData);
+}
+
+QPointF StackedBarChartItem::bottomRightPoint(int category, qreal barWidth, qreal value)
+{
+    return domain()->calculateGeometryPoint(
+                QPointF(m_seriesPosAdjustment + category + (barWidth / 2), value), m_validData);
+}
+
 QVector<QRectF> StackedBarChartItem::calculateLayout()
 {
     QVector<QRectF> layout;
-    layout.reserve(m_layout.size());
+    layout.resize(m_layout.size());
 
-    // Use temporary qreals for accuracy
-    qreal setCount = m_series->count();
-    qreal barWidth = m_series->d_func()->barWidth();
+    const int setCount = m_series->count();
+    const qreal barWidth = m_series->d_func()->barWidth() * m_seriesWidth;
 
     QVector<qreal> positiveSums(m_categoryCount, 0.0);
     QVector<qreal> negativeSums(m_categoryCount, 0.0);
 
     for (int set = 0; set < setCount; set++) {
-        const QBarSet *barSet = m_series->barSets().at(set);
-        for (int category = m_firstCategory; category <= m_lastCategory; category++) {
+        QBarSet *barSet = m_series->barSets().at(set);
+        const QList<Bar *> bars = m_barMap.value(barSet);
+        for (int i = 0; i < m_categoryCount; i++) {
+            Bar *bar = bars.at(i);
+            const int category = bar->index();
             qreal &positiveSum = positiveSums[category - m_firstCategory];
             qreal &negativeSum = negativeSums[category - m_firstCategory];
             qreal value = barSet->at(category);
             QRectF rect;
             QPointF topLeft;
             QPointF bottomRight;
-            if (value < 0) {
-                bottomRight = domain()->calculateGeometryPoint(QPointF(category - barWidth / 2, value + negativeSum), m_validData);
-                if (domain()->type() == AbstractDomain::XLogYDomain || domain()->type() == AbstractDomain::LogXLogYDomain)
-                    topLeft = domain()->calculateGeometryPoint(QPointF(category + barWidth / 2, set ? negativeSum : domain()->minY()), m_validData);
-                else
-                    topLeft = domain()->calculateGeometryPoint(QPointF(category + barWidth / 2, set ? negativeSum : 0), m_validData);
+            if (value < 0.0) {
+                topLeft = topLeftPoint(category, barWidth, value + negativeSum);
+                if (domain()->type() == AbstractDomain::XLogYDomain
+                        || domain()->type() == AbstractDomain::LogXLogYDomain) {
+                    bottomRight = bottomRightPoint(category, barWidth,
+                                                   set ? negativeSum : domain()->minY());
+                } else {
+                    bottomRight = bottomRightPoint(category, barWidth, set ? negativeSum : 0.0);
+                }
                 negativeSum += value;
             } else {
-                topLeft = domain()->calculateGeometryPoint(QPointF(category - barWidth / 2, value + positiveSum), m_validData);
-                if (domain()->type() == AbstractDomain::XLogYDomain || domain()->type() == AbstractDomain::LogXLogYDomain)
-                    bottomRight = domain()->calculateGeometryPoint(QPointF(category + barWidth / 2, set ? positiveSum : domain()->minY()), m_validData);
-                else
-                    bottomRight = domain()->calculateGeometryPoint(QPointF(category + barWidth / 2, set ? positiveSum : 0), m_validData);
+                topLeft = topLeftPoint(category, barWidth, value + positiveSum);
+                if (domain()->type() == AbstractDomain::XLogYDomain
+                        || domain()->type() == AbstractDomain::LogXLogYDomain) {
+                    bottomRight = bottomRightPoint(category, barWidth,
+                                                   set ? positiveSum : domain()->minY());
+                } else {
+                    bottomRight = bottomRightPoint(category, barWidth, set ? positiveSum : 0.0);
+                }
                 positiveSum += value;
             }
 
             rect.setTopLeft(topLeft);
             rect.setBottomRight(bottomRight);
-            layout.append(rect.normalized());
+            rect = rect.normalized();
+            layout[bar->layoutIndex()] = rect;
+
+            // If animating, we need to reinitialize ~zero size bars with non-zero values
+            // so the bar growth animation starts at correct spot. We shouldn't reset if rect
+            // is already at correct position vertically, so we check for that.
+            if (m_animation && value != 0.0) {
+                const QRectF &checkRect = m_layout.at(bar->layoutIndex());
+                if (checkRect.isEmpty() &&
+                        (value < 0.0 && !qFuzzyCompare(checkRect.top(), rect.top())
+                         || value > 0.0 && !qFuzzyCompare(checkRect.bottom(), rect.bottom()))) {
+                    initializeLayout(set, category, bar->layoutIndex(), true);
+                }
+            }
         }
     }
     return layout;

@@ -33,7 +33,7 @@
 #include <private/qbarset_p.h>
 #include <QtCharts/QAbstractBarSeries>
 #include <private/qabstractbarseries_p.h>
-#include <QtCharts/QChart>
+#include <private/qchart_p.h>
 #include <private/chartpresenter_p.h>
 #include <private/charttheme_p.h>
 #include <private/baranimation_p.h>
@@ -75,7 +75,12 @@ AbstractBarChartItem::AbstractBarChartItem(QAbstractBarSeries *series, QGraphics
     connect(series, SIGNAL(labelsPositionChanged(QAbstractBarSeries::LabelsPosition)),
             this, SLOT(handleLabelsPositionChanged()));
     connect(series, SIGNAL(labelsAngleChanged(qreal)), this, SLOT(positionLabels()));
+    connect(series->chart()->d_ptr->m_dataset, &ChartDataSet::seriesAdded,
+            this, &AbstractBarChartItem::handleSeriesAdded);
+    connect(series->chart()->d_ptr->m_dataset, &ChartDataSet::seriesRemoved,
+            this, &AbstractBarChartItem::handleSeriesRemoved);
     setZValue(ChartPresenter::BarSeriesZValue);
+    calculateSeriesPositionAdjustmentAndWidth();
     handleDataStructureChanged();
 }
 
@@ -99,12 +104,15 @@ void AbstractBarChartItem::initializeFullLayout()
 {
     qreal setCount = m_series->count();
 
-    int index = 0;
     for (int set = 0; set < setCount; set++) {
         QBarSet *barSet = m_series->barSets().at(set);
         const QList<Bar *> bars = m_barMap.value(barSet);
-        for (int category = 0; category < m_categoryCount; category++)
-            initializeLayout(set, bars.at(category)->index(), index++, true);
+        for (int i = 0; i < bars.size(); i++) {
+            Bar *bar = bars.at(i);
+            initializeLayout(set, bar->index(), bar->layoutIndex(), true);
+            // Make bar initially hidden to avoid artifacts, layout setting will show it
+            bar->setVisible(false);
+        }
     }
 }
 
@@ -113,9 +121,16 @@ void AbstractBarChartItem::applyLayout(const QVector<QRectF> &layout)
     QSizeF size = geometry().size();
     if (geometry().size().isValid()) {
         if (m_animation) {
-            if (m_resetAnimation || m_oldSize != size) {
+            // If geometry changes along the value axis, do full animation reset, as
+            // it can cause "ungrounded" bars otherwise.
+            // Changes to axis labels on bar axis can occur naturally with scrolling,
+            // which can cause geometry changes that shouldn't trigger animation reset.
+            const bool sizeChanged = m_orientation == Qt::Horizontal
+                    ? m_oldSize.width() != size.width()
+                    : m_oldSize.height() != size.height();
+            m_oldSize = size;
+            if (m_resetAnimation || sizeChanged) {
                 initializeFullLayout();
-                m_oldSize = size;
                 m_resetAnimation = false;
             }
             m_animation->setup(m_layout, layout);
@@ -135,23 +150,33 @@ void AbstractBarChartItem::setAnimation(BarAnimation *animation)
 
 void AbstractBarChartItem::setLayout(const QVector<QRectF> &layout)
 {
-    if (layout.size() != m_layout.size())
+    int setCount = m_series->count();
+    if (layout.size() != m_layout.size() || m_barMap.size() != setCount)
         return;
 
     m_layout = layout;
 
-    int index = 0;
-    int setCount = m_series->count();
+    const bool visible = m_series->isVisible();
     for (int set = 0; set < setCount; set++) {
         QBarSet *barSet = m_series->d_func()->barsetAt(set);
         const QList<Bar *> bars = m_barMap.value(barSet);
-        for (int category = 0; category < m_categoryCount; category++)
-            bars.at(category)->setRect(layout.at(index++));
+        for (int i = 0; i < bars.size(); i++) {
+            Bar *bar = bars.at(i);
+            const QRectF &rect = layout.at(bar->layoutIndex());
+            bar->setRect(rect);
+            // Hide empty bars to avoid artifacts at animation start when adding a new series
+            // as it doesn't have correct axes yet
+            bar->setVisible(visible && !rect.isEmpty());
+        }
     }
 
     positionLabels();
 }
-//handlers
+
+void AbstractBarChartItem::resetAnimation()
+{
+    m_resetAnimation = true;
+}
 
 void AbstractBarChartItem::handleDomainUpdated()
 {
@@ -182,7 +207,7 @@ void AbstractBarChartItem::handleLabelsVisibleChanged(bool visible)
     while (i.hasNext()) {
         i.next();
         const QList<Bar *> &bars = i.value();
-        for (int j = 0; j < m_categoryCount; j++) {
+        for (int j = 0; j < bars.size(); j++) {
             QGraphicsTextItem *label = bars.at(j)->labelItem();
             if (label)
                 label->setVisible(newVisible);
@@ -210,7 +235,7 @@ void AbstractBarChartItem::handleVisibleChanged()
     while (i.hasNext()) {
         i.next();
         const QList<Bar *> &bars = i.value();
-        for (int j = 0; j < m_categoryCount; j++) {
+        for (int j = 0; j < bars.size(); j++) {
             Bar *bar = bars.at(j);
             bar->setVisible(visible && i.key()->at(bar->index()) != 0.0);
         }
@@ -247,28 +272,27 @@ void AbstractBarChartItem::handleUpdatedBars()
             barSetP->setVisualsDirty(false);
             if (updateLabels)
                 barSetP->setLabelsDirty(false);
-            const QList<Bar *> bars = m_barMap.value(barSet);
             const int actualBarCount = barSet->count();
-            const int categoryCount = bars.size();
-            for (int category = 0; category < categoryCount; category++) {
-                Bar *bar = bars.at(category);
+            const QList<Bar *> bars = m_barMap.value(barSet);
+            for (int i = 0; i < bars.size(); i++) {
+                Bar *bar = bars.at(i);
                 if (seriesVisualsDirty || setVisualsDirty || bar->visualsDirty()) {
                     bar->setPen(barSetP->m_pen);
                     bar->setBrush(barSetP->m_brush);
                     bar->setVisualsDirty(false);
                     bar->update();
                 }
-                if (updateLabels && actualBarCount > category) {
+                if (updateLabels && actualBarCount > bar->index()) {
                     if (seriesLabelsDirty || setLabelsDirty || bar->labelDirty()) {
                         bar->setLabelDirty(false);
-                        QGraphicsTextItem *label = bars.at(category)->labelItem();
+                        QGraphicsTextItem *label = bar->labelItem();
                         QString valueLabel;
-                        qreal value = barSetP->value(category + m_firstCategory);
+                        qreal value = barSetP->value(bar->index());
                         if (value == 0.0) {
                             label->setVisible(false);
                         } else {
                             label->setVisible(m_series->isLabelsVisible());
-                            valueLabel = generateLabelText(set, category + m_firstCategory, value);
+                            valueLabel = generateLabelText(set, bar->index(), value);
                         }
                         label->setHtml(valueLabel);
                         label->setFont(barSetP->m_labelFont);
@@ -300,19 +324,19 @@ void AbstractBarChartItem::positionLabels()
     if (angle != 0.0)
         transform.rotate(angle);
 
-    int index = 0;
     int setCount = m_series->count();
     for (int set = 0; set < setCount; set++) {
         QBarSet *barSet = m_series->d_func()->barsetAt(set);
         const QList<Bar *> bars = m_barMap.value(barSet);
-        for (int category = 0; category < m_categoryCount; category++) {
-            QGraphicsTextItem *label = bars.at(category)->labelItem();
+        for (int i = 0; i < bars.size(); i++) {
+            Bar *bar = bars.at(i);
+            QGraphicsTextItem *label = bar->labelItem();
 
             QRectF labelRect = label->boundingRect();
             QPointF center = labelRect.center();
 
             qreal xPos = 0;
-            qreal yPos = m_layout.at(index).center().y() - center.y();
+            qreal yPos = m_layout.at(bar->layoutIndex()).center().y() - center.y();
 
             int xDiff = 0;
             if (angle != 0.0) {
@@ -323,20 +347,20 @@ void AbstractBarChartItem::positionLabels()
                 xDiff = (labelRect.width() - oldWidth) / 2;
             }
 
-            int offset = bars.at(category)->pen().width() / 2 + 2;
+            int offset = bar->pen().width() / 2 + 2;
 
             switch (m_series->labelsPosition()) {
             case QAbstractBarSeries::LabelsCenter:
-                xPos = m_layout.at(index).center().x() - center.x();
+                xPos = m_layout.at(bar->layoutIndex()).center().x() - center.x();
                 break;
             case QAbstractBarSeries::LabelsInsideEnd:
-                xPos = m_layout.at(index).right() - labelRect.width() - offset + xDiff;
+                xPos = m_layout.at(bar->layoutIndex()).right() - labelRect.width() - offset + xDiff;
                 break;
             case QAbstractBarSeries::LabelsInsideBase:
-                xPos = m_layout.at(index).left() + offset + xDiff;
+                xPos = m_layout.at(bar->layoutIndex()).left() + offset + xDiff;
                 break;
             case QAbstractBarSeries::LabelsOutsideEnd:
-                xPos = m_layout.at(index).right() + offset + xDiff;
+                xPos = m_layout.at(bar->layoutIndex()).right() + offset + xDiff;
                 break;
             default:
                 // Invalid position, never comes here
@@ -345,15 +369,13 @@ void AbstractBarChartItem::positionLabels()
 
             label->setPos(xPos, yPos);
             label->setZValue(zValue() + 1);
-
-            index++;
         }
     }
 }
 
 void AbstractBarChartItem::handleBarValueChange(int index, QtCharts::QBarSet *barset)
 {
-    markLabelsDirty(barset, index - m_firstCategory, 1);
+    markLabelsDirty(barset, index, 1);
     handleLayoutChanged();
 }
 
@@ -362,8 +384,7 @@ void AbstractBarChartItem::handleBarValueAdd(int index, int count, QBarSet *bars
     Q_UNUSED(count)
 
     // Value insertions into middle of barset need to dirty the rest of the labels of the set
-    int visualIndex = qMax(0, index - m_firstCategory);
-    markLabelsDirty(barset, visualIndex, -1);
+    markLabelsDirty(barset, index, -1);
     handleLayoutChanged();
 }
 
@@ -372,9 +393,36 @@ void AbstractBarChartItem::handleBarValueRemove(int index, int count, QBarSet *b
     Q_UNUSED(count)
 
     // Value removals from the middle of barset need to dirty the rest of the labels of the set.
-    int visualIndex = qMax(0, index - m_firstCategory);
-    markLabelsDirty(barset, visualIndex, -1);
+    markLabelsDirty(barset, index, -1);
     handleLayoutChanged();
+}
+
+void AbstractBarChartItem::handleSeriesAdded(QAbstractSeries *series)
+{
+    Q_UNUSED(series)
+
+    // If the parent series was added, do nothing, as series pos and width calculations will
+    // happen anyway.
+    QAbstractBarSeries *addedSeries = static_cast<QAbstractBarSeries *>(series);
+    if (addedSeries != m_series) {
+        calculateSeriesPositionAdjustmentAndWidth();
+        handleLayoutChanged();
+    }
+}
+
+void AbstractBarChartItem::handleSeriesRemoved(QAbstractSeries *series)
+{
+    // If the parent series was removed, disconnect everything connected by this item,
+    // as the item will be scheduled for deletion but it is done asynchronously with deleteLater.
+    QAbstractBarSeries *removedSeries = static_cast<QAbstractBarSeries *>(series);
+    if (removedSeries == m_series) {
+        disconnect(m_series->d_func(), 0, this, 0);
+        disconnect(m_series, 0, this, 0);
+        disconnect(m_series->chart()->d_ptr->m_dataset, 0, this, 0);
+    } else {
+        calculateSeriesPositionAdjustmentAndWidth();
+        handleLayoutChanged();
+    }
 }
 
 void AbstractBarChartItem::positionLabelsVertical()
@@ -388,18 +436,18 @@ void AbstractBarChartItem::positionLabelsVertical()
     if (angle != 0.0)
         transform.rotate(angle);
 
-    int index = 0;
     int setCount = m_series->count();
     for (int set = 0; set < setCount; set++) {
         QBarSet *barSet = m_series->d_func()->barsetAt(set);
         const QList<Bar *> bars = m_barMap.value(barSet);
-        for (int category = 0; category < m_categoryCount; category++) {
-            QGraphicsTextItem *label = bars.at(category)->labelItem();
+        for (int i = 0; i < bars.size(); i++) {
+            Bar *bar = bars.at(i);
+            QGraphicsTextItem *label = bar->labelItem();
 
             QRectF labelRect = label->boundingRect();
             QPointF center = labelRect.center();
 
-            qreal xPos = m_layout.at(index).center().x() - center.x();
+            qreal xPos = m_layout.at(bar->layoutIndex()).center().x() - center.x();
             qreal yPos = 0;
 
             int yDiff = 0;
@@ -411,20 +459,20 @@ void AbstractBarChartItem::positionLabelsVertical()
                 yDiff = (labelRect.height() - oldHeight) / 2;
             }
 
-            int offset = bars.at(category)->pen().width() / 2 + 2;
+            int offset = bar->pen().width() / 2 + 2;
 
             switch (m_series->labelsPosition()) {
             case QAbstractBarSeries::LabelsCenter:
-                yPos = m_layout.at(index).center().y() - center.y();
+                yPos = m_layout.at(bar->layoutIndex()).center().y() - center.y();
                 break;
             case QAbstractBarSeries::LabelsInsideEnd:
-                yPos = m_layout.at(index).top() + offset + yDiff;
+                yPos = m_layout.at(bar->layoutIndex()).top() + offset + yDiff;
                 break;
             case QAbstractBarSeries::LabelsInsideBase:
-                yPos = m_layout.at(index).bottom() - labelRect.height() - offset + yDiff;
+                yPos = m_layout.at(bar->layoutIndex()).bottom() - labelRect.height() - offset + yDiff;
                 break;
             case QAbstractBarSeries::LabelsOutsideEnd:
-                yPos = m_layout.at(index).top() - labelRect.height() - offset + yDiff;
+                yPos = m_layout.at(bar->layoutIndex()).top() - labelRect.height() - offset + yDiff;
                 break;
             default:
                 // Invalid position, never comes here
@@ -433,8 +481,6 @@ void AbstractBarChartItem::positionLabelsVertical()
 
             label->setPos(xPos, yPos);
             label->setZValue(zValue() + 1);
-
-            index++;
         }
     }
 }
@@ -483,8 +529,7 @@ void AbstractBarChartItem::handleSetStructureChange()
             m_barMap.insert(set, bars);
         } else {
             // Dirty the old set labels to ensure labels are updated correctly on all series types
-            QBarSetPrivate *barSetP = set->d_ptr.data();
-            barSetP->setLabelsDirty(true);
+            markLabelsDirty(set, 0, -1);
         }
     }
 
@@ -520,7 +565,6 @@ void AbstractBarChartItem::updateBarItems()
     }
 
     int lastBarIndex = m_series->d_func()->categoryCount() - 1;
-    int oldFirstCategory = m_firstCategory;
 
     if (lastBarIndex < 0) {
         // Indicate invalid categories by negatives
@@ -534,8 +578,6 @@ void AbstractBarChartItem::updateBarItems()
         m_categoryCount = m_lastCategory - m_firstCategory + 1;
     }
 
-    bool dirtyAllLabels = oldFirstCategory != m_firstCategory;
-
     QList<QBarSet *> newSets = m_series->barSets();
     QList<QBarSet *> oldSets = m_barMap.keys();
 
@@ -547,17 +589,10 @@ void AbstractBarChartItem::updateBarItems()
     if (layoutSize != m_layout.size())
         m_layout.resize(layoutSize);
 
-    bool visible = m_series->isVisible();
-
     // Create new graphic items for bars or remove excess ones
     int layoutIndex = 0;
     for (int s = 0; s < newSets.size(); s++) {
         QBarSet *set = newSets.at(s);
-        if (dirtyAllLabels) {
-            QBarSetPrivate *barSetP = set->d_ptr.data();
-            barSetP->setLabelsDirty(true);
-        }
-
         QList<Bar *> bars = m_barMap.value(set);
         int addCount = m_categoryCount - bars.size();
         if (addCount > 0) {
@@ -576,7 +611,6 @@ void AbstractBarChartItem::updateBarItems()
                 connect(bar, &Bar::released, set, &QBarSet::released);
                 connect(bar, &Bar::doubleClicked, set, &QBarSet::doubleClicked);
 
-                bar->setVisible(m_series->isVisible());
                 m_labelItemsMissing = true;
             }
         }
@@ -613,33 +647,67 @@ void AbstractBarChartItem::updateBarItems()
             Bar *bar = indexMap.value(c);
             if (!bar) {
                 bar = unassignedBars.at(unassignedIndex++);
-                if (bar) {
-                    bar->setIndex(c);
-                    if (m_animation) {
-                        int layoutIndex = bar->layoutIndex();
-                        initializeLayout(s, c, layoutIndex, m_resetAnimation);
-                        bar->setRect(m_layout.at(layoutIndex));
-                    }
-                }
+                bar->setIndex(c);
+                indexMap.insert(bar->index(), bar);
             }
-            if (bar)
-                bar->setVisible(visible && set->at(c) != 0.0);
+        }
+
+        m_indexForBarMap.insert(set, indexMap);
+
+        if (m_animation) {
+            for (int i = 0; i < unassignedIndex; i++) {
+                Bar *bar = unassignedBars.at(i);
+                initializeLayout(s, bar->index(), bar->layoutIndex(), m_resetAnimation);
+                bar->setRect(m_layout.at(bar->layoutIndex()));
+                // Make bar initially hidden to avoid artifacts, layout setting will show it
+                bar->setVisible(false);
+            }
         }
 
         m_barMap.insert(set, newBars);
     }
 }
 
-void AbstractBarChartItem::markLabelsDirty(QBarSet *barset, int visualIndex, int count)
+void AbstractBarChartItem::markLabelsDirty(QBarSet *barset, int index, int count)
 {
     Q_ASSERT(barset);
 
-    QList<Bar *> bars = m_barMap.value(barset);
-    int firstIndex = qMax(0, visualIndex);
-    int lastIndex = count < 0 ? bars.size() - 1 : visualIndex + count - 1;
-    lastIndex = qMin(bars.size() - 1, lastIndex);
-    for (int i = firstIndex; i <= lastIndex; i++)
-        bars.at(i)->setLabelDirty(true);
+    if (index <= 0 && count < 0) {
+        barset->d_ptr.data()->setLabelsDirty(true);
+    } else {
+        const QList<Bar *> bars = m_barMap.value(barset);
+        const int maxIndex = count > 0 ? index + count : barset->count();
+        for (int i = 0; i < bars.size(); i++) {
+            Bar *bar = bars.at(i);
+            if (bar->index() >= index && bar->index() < maxIndex)
+                bar->setLabelDirty(true);
+        }
+    }
+}
+
+void AbstractBarChartItem::calculateSeriesPositionAdjustmentAndWidth()
+{
+    m_seriesPosAdjustment = 0.0;
+    m_seriesWidth = 1.0;
+
+    if (!m_series->chart())
+        return;
+
+    // Find out total number of bar series in chart and the index of this series among them
+    const QList<QAbstractSeries *> seriesList = m_series->chart()->series();
+    int index = -1;
+    int count = 0;
+    for (QAbstractSeries *series : seriesList) {
+        if (qobject_cast<QAbstractBarSeries *>(series)){
+            if (series == m_series)
+                index = count;
+            count++;
+        }
+    }
+    if (index > -1 && count > 1) {
+        m_seriesWidth = 1.0 / count;
+        m_seriesPosAdjustment = (m_seriesWidth * index) + (m_seriesWidth / 2.0) - 0.5;
+    }
 }
 
 #include "moc_abstractbarchartitem_p.cpp"

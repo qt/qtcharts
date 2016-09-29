@@ -54,7 +54,9 @@ public:
 private:
     virtual QVector<QRectF> calculateLayout();
     void initializeLayout(int set, int category, int layoutIndex, bool resetAnimation);
-    void markLabelsDirty(QBarSet *barset, int visualIndex, int count);
+    void markLabelsDirty(QBarSet *barset, int index, int count);
+    QPointF topLeftPoint(int category, qreal barWidth, qreal value);
+    QPointF bottomRightPoint(int category, qreal barWidth, qreal value);
 };
 
 QT_CHARTS_END_NAMESPACE
