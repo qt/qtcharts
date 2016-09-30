@@ -39,6 +39,11 @@ AbstractDomain* ChartItem::domain() const
     return m_series->domain();
 }
 
+void ChartItem::cleanup()
+{
+    disconnect();
+}
+
 void ChartItem::handleDomainUpdated()
 {
     qWarning() <<  __FUNCTION__<< "Slot not implemented";

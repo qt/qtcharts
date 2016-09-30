@@ -60,15 +60,7 @@ PieChartItem::PieChartItem(QPieSeries *series, QGraphicsItem* item)
 
 PieChartItem::~PieChartItem()
 {
-    // slices deleted automatically through QGraphicsItem
-    if (m_series) {
-        m_series->disconnect(this);
-        QPieSeriesPrivate::fromSeries(m_series)->disconnect(this);
-    }
-    foreach (QPieSlice *slice, m_sliceItems.keys()) {
-        slice->disconnect(this);
-        QPieSlicePrivate::fromSlice(slice)->disconnect(this);
-    }
+    cleanup();
 }
 
 void PieChartItem::setAnimation(PieAnimation *animation)
@@ -79,6 +71,23 @@ void PieChartItem::setAnimation(PieAnimation *animation)
 ChartAnimation *PieChartItem::animation() const
 {
     return m_animation;
+}
+
+void PieChartItem::cleanup()
+{
+    ChartItem::cleanup();
+
+    // slice items deleted automatically through QGraphicsItem
+    if (m_series) {
+        m_series->disconnect(this);
+        QPieSeriesPrivate::fromSeries(m_series)->disconnect(this);
+        m_series = 0;
+    }
+    foreach (QPieSlice *slice, m_sliceItems.keys()) {
+        slice->disconnect(this);
+        QPieSlicePrivate::fromSlice(slice)->disconnect(this);
+    }
+    m_sliceItems.clear();
 }
 
 void PieChartItem::handleDomainUpdated()

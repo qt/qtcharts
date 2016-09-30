@@ -44,6 +44,8 @@ class ChartItem : public ChartElement
 public:
     ChartItem(QAbstractSeriesPrivate *series,QGraphicsItem* item);
     AbstractDomain*  domain() const;
+    virtual void cleanup();
+
 public Q_SLOTS:
     virtual void handleDomainUpdated();
 
