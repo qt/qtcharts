@@ -82,7 +82,6 @@ protected:
 
     ChartPresenter *m_presenter;
     QMargins m_margins;
-    QRectF m_minChartRect;
     QRectF m_minAxisRect;
 };
 

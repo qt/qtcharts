@@ -120,6 +120,7 @@ void tst_QSplineSeries::pressedSignal()
     splineSeries->append(QPointF(6, 12));
 
     QChartView view;
+    view.resize(200, 200);
     view.chart()->legend()->setVisible(false);
     view.chart()->addSeries(splineSeries);
     view.show();
@@ -151,6 +152,7 @@ void tst_QSplineSeries::releasedSignal()
     splineSeries->append(QPointF(6, 12));
 
     QChartView view;
+    view.resize(200, 200);
     view.chart()->legend()->setVisible(false);
     view.chart()->addSeries(splineSeries);
     view.show();
@@ -182,6 +184,7 @@ void tst_QSplineSeries::doubleClickedSignal()
     splineSeries->append(QPointF(6, 12));
 
     QChartView view;
+    view.resize(200, 200);
     view.chart()->legend()->setVisible(false);
     view.chart()->addSeries(splineSeries);
     view.show();

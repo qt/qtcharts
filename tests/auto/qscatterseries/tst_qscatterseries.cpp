@@ -151,6 +151,7 @@ void tst_QScatterSeries::pressedSignal()
     scatterSeries->append(QPointF(6, 12));
 
     QChartView view;
+    view.resize(200, 200);
     view.chart()->legend()->setVisible(false);
     view.chart()->addSeries(scatterSeries);
     view.show();
@@ -182,6 +183,7 @@ void tst_QScatterSeries::releasedSignal()
     scatterSeries->append(QPointF(6, 12));
 
     QChartView view;
+    view.resize(200, 200);
     view.chart()->legend()->setVisible(false);
     view.chart()->addSeries(scatterSeries);
     view.show();
@@ -213,6 +215,7 @@ void tst_QScatterSeries::doubleClickedSignal()
     scatterSeries->append(QPointF(6, 12));
 
     QChartView view;
+    view.resize(200, 200);
     view.chart()->legend()->setVisible(false);
     view.chart()->addSeries(scatterSeries);
     view.show();

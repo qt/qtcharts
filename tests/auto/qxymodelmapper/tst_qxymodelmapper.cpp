@@ -159,6 +159,7 @@ void tst_qxymodelmapper::initTestCase()
 {
     m_chart = newQChartOrQPolarChart();
     m_chartView = new QChartView(m_chart);
+    m_chartView->resize(200, 200);
     m_chartView->show();
 }
 

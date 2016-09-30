@@ -253,6 +253,7 @@ void tst_qpieslice::clickedSignal()
 
     // add series to the chart
     QChartView view;
+    view.resize(200, 200);
     view.chart()->legend()->setVisible(false);
     view.chart()->addSeries(series);
     view.show();
@@ -289,6 +290,7 @@ void tst_qpieslice::hoverSignal()
 
     // add series to the chart
     QChartView view;
+    view.resize(200, 200);
     view.chart()->legend()->setVisible(false);
     view.chart()->addSeries(series);
     view.show();
@@ -368,6 +370,7 @@ void tst_qpieslice::pressedSignal()
 
     // add series to the chart
     QChartView view;
+    view.resize(200, 200);
     view.chart()->legend()->setVisible(false);
     view.chart()->addSeries(series);
     view.show();
@@ -408,6 +411,7 @@ void tst_qpieslice::releasedSignal()
 
     // add series to the chart
     QChartView view;
+    view.resize(200, 200);
     view.chart()->legend()->setVisible(false);
     view.chart()->addSeries(series);
     view.show();
@@ -442,6 +446,7 @@ void tst_qpieslice::doubleClickedSignal()
 
     // add series to the chart
     QChartView view;
+    view.resize(200, 200);
     view.chart()->legend()->setVisible(false);
     view.chart()->addSeries(series);
     view.show();

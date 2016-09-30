@@ -43,6 +43,7 @@ void tst_QXYSeries::cleanupTestCase()
 void tst_QXYSeries::init()
 {
     m_view = new QChartView(newQChartOrQPolarChart());
+    m_view->resize(200, 200);
     m_chart = m_view->chart();
 }
 

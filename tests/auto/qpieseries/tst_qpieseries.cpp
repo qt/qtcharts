@@ -93,6 +93,7 @@ void tst_qpieseries::cleanupTestCase()
 void tst_qpieseries::init()
 {
     m_view = new QChartView();
+    m_view->resize(200, 200);
     m_series = new QPieSeries(m_view);
     m_view->show();
     QTest::qWaitForWindowShown(m_view);

@@ -627,6 +627,7 @@ void tst_QPercentBarSeries::zeroValuesInSeries()
     series->append(set2);
 
     QChartView view(new QChart());
+    view.resize(400, 300);
     view.chart()->addSeries(series);
     view.chart()->createDefaultAxes();
     view.show();

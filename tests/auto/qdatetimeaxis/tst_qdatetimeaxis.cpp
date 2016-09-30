@@ -91,6 +91,7 @@ void tst_QDateTimeAxis::init()
     //    tst_QAbstractAxis::init(m_datetimeaxis, m_series);
 
     m_view = new QChartView;
+    m_view->resize(200, 200);
     m_chart = m_view->chart();
     m_chart->addSeries(m_series);
     m_chart->setAxisY(m_dateTimeAxisY, m_series);

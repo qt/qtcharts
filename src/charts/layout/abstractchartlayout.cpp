@@ -41,8 +41,7 @@ static const qreal golden_ratio = 0.4;
 
 AbstractChartLayout::AbstractChartLayout(ChartPresenter *presenter)
     : m_presenter(presenter),
-      m_margins(20, 20, 20, 20),
-      m_minChartRect(0, 0, 200, 200)
+      m_margins(20, 20, 20, 20)
 {
 }
 
@@ -160,8 +159,12 @@ QRectF AbstractChartLayout::calculateLegendGeometry(const QRectF &geometry, QLeg
 
 QRectF AbstractChartLayout::calculateLegendMinimum(const QRectF &geometry, QLegend *legend) const
 {
-    QSizeF minSize = legend->effectiveSizeHint(Qt::MinimumSize, QSizeF(-1, -1));
-    return geometry.adjusted(0, 0, minSize.width(), minSize.height());
+    if (!legend->isAttachedToChart() || !legend->isVisible()) {
+        return geometry;
+    } else {
+        QSizeF minSize = legend->effectiveSizeHint(Qt::MinimumSize, QSizeF(-1, -1));
+        return geometry.adjusted(0, 0, minSize.width(), minSize.height());
+    }
 }
 
 QRectF AbstractChartLayout::calculateTitleGeometry(const QRectF &geometry, ChartTitle *title) const
@@ -180,8 +183,12 @@ QRectF AbstractChartLayout::calculateTitleGeometry(const QRectF &geometry, Chart
 
 QRectF AbstractChartLayout::calculateTitleMinimum(const QRectF &minimum, ChartTitle *title) const
 {
-    QSizeF min = title->sizeHint(Qt::MinimumSize);
-    return  minimum.adjusted(0, 0, min.width(), min.height());
+    if (!title->isVisible() || title->text().isEmpty()) {
+        return minimum;
+    } else {
+        QSizeF min = title->sizeHint(Qt::MinimumSize);
+        return  minimum.adjusted(0, 0, min.width(), min.height());
+    }
 }
 
 QSizeF AbstractChartLayout::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
@@ -197,7 +204,7 @@ QSizeF AbstractChartLayout::sizeHint(Qt::SizeHint which, const QSizeF &constrain
         minimumRect = calculateTitleMinimum(minimumRect, title);
         minimumRect = calculateLegendMinimum(minimumRect, legend);
         minimumRect = calculateAxisMinimum(minimumRect, axes);
-        return  minimumRect.united(m_minChartRect).size().toSize();
+        return  minimumRect.size().toSize();
     }
     return QSize(-1, -1);
 }

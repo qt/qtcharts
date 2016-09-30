@@ -78,6 +78,7 @@ void tst_QChartView::cleanupTestCase()
 void tst_QChartView::init()
 {
     m_view = new QChartView(newQChartOrQPolarChart());
+    m_view->resize(200, 200);
     m_view->chart()->legend()->setVisible(false);
 }
 
