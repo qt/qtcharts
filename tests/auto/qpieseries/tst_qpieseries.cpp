@@ -555,6 +555,7 @@ void tst_qpieseries::hoverSignal()
     // Just for different signals.
 
     SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
+    SKIP_IF_FLAKY_MOUSE_MOVE();
 
     // add some slices
     m_series->append("slice 1", 1);
@@ -567,13 +568,6 @@ void tst_qpieseries::hoverSignal()
     m_view->chart()->addSeries(m_series);
     m_view->show();
     QTest::qWaitForWindowShown(m_view);
-
-    // try to ensure focus
-    QApplication::setActiveWindow(m_view);
-    m_view->setFocus();
-    QApplication::processEvents();
-    QVERIFY(m_view->isActiveWindow());
-    QVERIFY(m_view->hasFocus());
 
     // move inside the slices
     m_series->setPieSize(1.0);

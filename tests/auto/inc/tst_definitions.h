@@ -55,14 +55,16 @@ QT_END_NAMESPACE
     #define SKIP_IF_CANNOT_TEST_MOUSE_EVENTS() { \
         do { \
             QPushButton b; \
-            b.resize(100, 100); \
+            b.resize(120, 100); \
             b.show(); \
             QTest::qWaitForWindowShown(&b); \
             QSignalSpy spy(&b, SIGNAL(clicked())); \
             QTest::mouseClick(&b, Qt::LeftButton, 0, b.rect().center()); \
+            QApplication::processEvents(); \
             if (spy.count() == 0) \
                 QSKIP("Cannot test mouse events in this environment"); \
         } while (0); \
+        QApplication::processEvents(); \
     }
 
     #define SKIP_ON_POLAR() { \
@@ -74,6 +76,12 @@ QT_END_NAMESPACE
         if (!isPolarTest()) \
             QSKIP("Test not supported by cartesian chart"); \
         }
+
+// Synthetic mouse moves do not trigger hover events reliably in many virtual machines,
+// so we skip tests involving mouse moves.
+    #define SKIP_IF_FLAKY_MOUSE_MOVE() { \
+        QSKIP("Skipping test with synthetic mouse moves."); \
+    }
 
 static inline bool isPolarTest()
 {

@@ -317,6 +317,7 @@ void tst_QStackedBarSeries::mousehovered_data()
 void tst_QStackedBarSeries::mousehovered()
 {
     SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
+    SKIP_IF_FLAKY_MOUSE_MOVE();
 
     QStackedBarSeries* series = new QStackedBarSeries();
 

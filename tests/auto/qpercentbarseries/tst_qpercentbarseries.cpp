@@ -315,6 +315,7 @@ void tst_QPercentBarSeries::mousehovered_data()
 void tst_QPercentBarSeries::mousehovered()
 {
     SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
+    SKIP_IF_FLAKY_MOUSE_MOVE();
 
     QPercentBarSeries* series = new QPercentBarSeries();
 

@@ -125,6 +125,9 @@ void tst_QAreaSeries::dynamicEdgeSeriesChange()
     m_chart->addSeries(series);
     series->attachAxis(m_axisX);
     series->attachAxis(m_axisY);
+    // Hide axes so they don't confuse color checks
+    m_axisX->setVisible(false);
+    m_axisY->setVisible(false);
     m_view->show();
     QTest::qWaitForWindowShown(m_view);
 
