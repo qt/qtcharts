@@ -470,7 +470,7 @@ QCandlestickSetPrivate::~QCandlestickSetPrivate()
 
 bool QCandlestickSetPrivate::setTimestamp(qreal timestamp)
 {
-    timestamp = qMax(timestamp, 0.0);
+    timestamp = qMax(timestamp, qreal(0.0));
     timestamp = qRound64(timestamp);
 
     if (m_timestamp == timestamp)
