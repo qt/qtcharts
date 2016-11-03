@@ -323,160 +323,6 @@ Module {
         Method { name: "close"; type: "bool" }
     }
     Component {
-        name: "QQuickItem"
-        defaultProperty: "data"
-        prototype: "QObject"
-        Enum {
-            name: "TransformOrigin"
-            values: {
-                "TopLeft": 0,
-                "Top": 1,
-                "TopRight": 2,
-                "Left": 3,
-                "Center": 4,
-                "Right": 5,
-                "BottomLeft": 6,
-                "Bottom": 7,
-                "BottomRight": 8
-            }
-        }
-        Property { name: "parent"; type: "QQuickItem"; isPointer: true }
-        Property { name: "data"; type: "QObject"; isList: true; isReadonly: true }
-        Property { name: "resources"; type: "QObject"; isList: true; isReadonly: true }
-        Property { name: "children"; type: "QQuickItem"; isList: true; isReadonly: true }
-        Property { name: "x"; type: "double" }
-        Property { name: "y"; type: "double" }
-        Property { name: "z"; type: "double" }
-        Property { name: "width"; type: "double" }
-        Property { name: "height"; type: "double" }
-        Property { name: "opacity"; type: "double" }
-        Property { name: "enabled"; type: "bool" }
-        Property { name: "visible"; type: "bool" }
-        Property { name: "visibleChildren"; type: "QQuickItem"; isList: true; isReadonly: true }
-        Property { name: "states"; type: "QQuickState"; isList: true; isReadonly: true }
-        Property { name: "transitions"; type: "QQuickTransition"; isList: true; isReadonly: true }
-        Property { name: "state"; type: "string" }
-        Property { name: "childrenRect"; type: "QRectF"; isReadonly: true }
-        Property { name: "anchors"; type: "QQuickAnchors"; isReadonly: true; isPointer: true }
-        Property { name: "left"; type: "QQuickAnchorLine"; isReadonly: true }
-        Property { name: "right"; type: "QQuickAnchorLine"; isReadonly: true }
-        Property { name: "horizontalCenter"; type: "QQuickAnchorLine"; isReadonly: true }
-        Property { name: "top"; type: "QQuickAnchorLine"; isReadonly: true }
-        Property { name: "bottom"; type: "QQuickAnchorLine"; isReadonly: true }
-        Property { name: "verticalCenter"; type: "QQuickAnchorLine"; isReadonly: true }
-        Property { name: "baseline"; type: "QQuickAnchorLine"; isReadonly: true }
-        Property { name: "baselineOffset"; type: "double" }
-        Property { name: "clip"; type: "bool" }
-        Property { name: "focus"; type: "bool" }
-        Property { name: "activeFocus"; type: "bool"; isReadonly: true }
-        Property { name: "activeFocusOnTab"; revision: 1; type: "bool" }
-        Property { name: "rotation"; type: "double" }
-        Property { name: "scale"; type: "double" }
-        Property { name: "transformOrigin"; type: "TransformOrigin" }
-        Property { name: "transformOriginPoint"; type: "QPointF"; isReadonly: true }
-        Property { name: "transform"; type: "QQuickTransform"; isList: true; isReadonly: true }
-        Property { name: "smooth"; type: "bool" }
-        Property { name: "antialiasing"; type: "bool" }
-        Property { name: "implicitWidth"; type: "double" }
-        Property { name: "implicitHeight"; type: "double" }
-        Property { name: "layer"; type: "QQuickItemLayer"; isReadonly: true; isPointer: true }
-        Signal {
-            name: "childrenRectChanged"
-            Parameter { type: "QRectF" }
-        }
-        Signal {
-            name: "baselineOffsetChanged"
-            Parameter { type: "double" }
-        }
-        Signal {
-            name: "stateChanged"
-            Parameter { type: "string" }
-        }
-        Signal {
-            name: "focusChanged"
-            Parameter { type: "bool" }
-        }
-        Signal {
-            name: "activeFocusChanged"
-            Parameter { type: "bool" }
-        }
-        Signal {
-            name: "activeFocusOnTabChanged"
-            revision: 1
-            Parameter { type: "bool" }
-        }
-        Signal {
-            name: "parentChanged"
-            Parameter { type: "QQuickItem"; isPointer: true }
-        }
-        Signal {
-            name: "transformOriginChanged"
-            Parameter { type: "TransformOrigin" }
-        }
-        Signal {
-            name: "smoothChanged"
-            Parameter { type: "bool" }
-        }
-        Signal {
-            name: "antialiasingChanged"
-            Parameter { type: "bool" }
-        }
-        Signal {
-            name: "clipChanged"
-            Parameter { type: "bool" }
-        }
-        Signal {
-            name: "windowChanged"
-            revision: 1
-            Parameter { name: "window"; type: "QQuickWindow"; isPointer: true }
-        }
-        Method { name: "update" }
-        Method {
-            name: "grabToImage"
-            revision: 2
-            type: "bool"
-            Parameter { name: "callback"; type: "QJSValue" }
-            Parameter { name: "targetSize"; type: "QSize" }
-        }
-        Method {
-            name: "grabToImage"
-            revision: 2
-            type: "bool"
-            Parameter { name: "callback"; type: "QJSValue" }
-        }
-        Method {
-            name: "contains"
-            type: "bool"
-            Parameter { name: "point"; type: "QPointF" }
-        }
-        Method {
-            name: "mapFromItem"
-            Parameter { type: "QQmlV4Function"; isPointer: true }
-        }
-        Method {
-            name: "mapToItem"
-            Parameter { type: "QQmlV4Function"; isPointer: true }
-        }
-        Method { name: "forceActiveFocus" }
-        Method {
-            name: "forceActiveFocus"
-            Parameter { name: "reason"; type: "Qt::FocusReason" }
-        }
-        Method {
-            name: "nextItemInFocusChain"
-            revision: 1
-            type: "QQuickItem*"
-            Parameter { name: "forward"; type: "bool" }
-        }
-        Method { name: "nextItemInFocusChain"; revision: 1; type: "QQuickItem*" }
-        Method {
-            name: "childAt"
-            type: "QQuickItem*"
-            Parameter { name: "x"; type: "double" }
-            Parameter { name: "y"; type: "double" }
-        }
-    }
-    Component {
         name: "QtCharts::DeclarativeAreaSeries"
         prototype: "QtCharts::QAreaSeries"
         exports: [
@@ -852,6 +698,133 @@ Module {
         }
     }
     Component {
+        name: "QtCharts::DeclarativeCandlestickSeries"
+        defaultProperty: "seriesChildren"
+        prototype: "QtCharts::QCandlestickSeries"
+        exports: ["QtCharts/CandlestickSeries 2.2"]
+        exportMetaObjectRevisions: [0]
+        Property { name: "axisX"; type: "QAbstractAxis"; isPointer: true }
+        Property { name: "axisY"; type: "QAbstractAxis"; isPointer: true }
+        Property { name: "axisXTop"; type: "QAbstractAxis"; isPointer: true }
+        Property { name: "axisYRight"; type: "QAbstractAxis"; isPointer: true }
+        Property { name: "seriesChildren"; type: "QObject"; isList: true; isReadonly: true }
+        Property { name: "brushFilename"; type: "string" }
+        Signal {
+            name: "axisXChanged"
+            Parameter { name: "axis"; type: "QAbstractAxis"; isPointer: true }
+        }
+        Signal {
+            name: "axisYChanged"
+            Parameter { name: "axis"; type: "QAbstractAxis"; isPointer: true }
+        }
+        Signal {
+            name: "axisXTopChanged"
+            Parameter { name: "axis"; type: "QAbstractAxis"; isPointer: true }
+        }
+        Signal {
+            name: "axisYRightChanged"
+            Parameter { name: "axis"; type: "QAbstractAxis"; isPointer: true }
+        }
+        Signal {
+            name: "clicked"
+            Parameter { name: "set"; type: "DeclarativeCandlestickSet"; isPointer: true }
+        }
+        Signal {
+            name: "hovered"
+            Parameter { name: "status"; type: "bool" }
+            Parameter { name: "set"; type: "DeclarativeCandlestickSet"; isPointer: true }
+        }
+        Signal {
+            name: "pressed"
+            Parameter { name: "set"; type: "DeclarativeCandlestickSet"; isPointer: true }
+        }
+        Signal {
+            name: "released"
+            Parameter { name: "set"; type: "DeclarativeCandlestickSet"; isPointer: true }
+        }
+        Signal {
+            name: "doubleClicked"
+            Parameter { name: "set"; type: "DeclarativeCandlestickSet"; isPointer: true }
+        }
+        Signal {
+            name: "brushFilenameChanged"
+            Parameter { name: "brushFilename"; type: "string" }
+        }
+        Method {
+            name: "appendSeriesChildren"
+            Parameter { name: "list"; type: "QObject"; isList: true; isPointer: true }
+            Parameter { name: "element"; type: "QObject"; isPointer: true }
+        }
+        Method {
+            name: "onClicked"
+            Parameter { name: "set"; type: "QCandlestickSet"; isPointer: true }
+        }
+        Method {
+            name: "onHovered"
+            Parameter { name: "status"; type: "bool" }
+            Parameter { name: "set"; type: "QCandlestickSet"; isPointer: true }
+        }
+        Method {
+            name: "onPressed"
+            Parameter { name: "set"; type: "QCandlestickSet"; isPointer: true }
+        }
+        Method {
+            name: "onReleased"
+            Parameter { name: "set"; type: "QCandlestickSet"; isPointer: true }
+        }
+        Method {
+            name: "onDoubleClicked"
+            Parameter { name: "set"; type: "QCandlestickSet"; isPointer: true }
+        }
+        Method {
+            name: "at"
+            type: "DeclarativeCandlestickSet*"
+            Parameter { name: "index"; type: "int" }
+        }
+        Method {
+            name: "append"
+            type: "bool"
+            Parameter { name: "set"; type: "DeclarativeCandlestickSet"; isPointer: true }
+        }
+        Method {
+            name: "remove"
+            type: "bool"
+            Parameter { name: "set"; type: "DeclarativeCandlestickSet"; isPointer: true }
+        }
+        Method {
+            name: "append"
+            type: "bool"
+            Parameter { name: "open"; type: "double" }
+            Parameter { name: "high"; type: "double" }
+            Parameter { name: "low"; type: "double" }
+            Parameter { name: "close"; type: "double" }
+            Parameter { name: "timestamp"; type: "double" }
+        }
+        Method {
+            name: "remove"
+            type: "bool"
+            Parameter { name: "timestamp"; type: "double" }
+        }
+        Method {
+            name: "insert"
+            type: "bool"
+            Parameter { name: "index"; type: "int" }
+            Parameter { name: "set"; type: "DeclarativeCandlestickSet"; isPointer: true }
+        }
+        Method { name: "clear" }
+    }
+    Component {
+        name: "QtCharts::DeclarativeCandlestickSet"
+        prototype: "QtCharts::QCandlestickSet"
+        exports: ["QtCharts/CandlestickSet 2.2"]
+        exportMetaObjectRevisions: [0]
+        Property { name: "brushFilename"; type: "string" }
+        Signal {
+            name: "brushFilenameChanged"
+            Parameter { name: "brushFilename"; type: "string" }
+        }
+    }
+    Component {
         name: "QtCharts::DeclarativeCategoryAxis"
         defaultProperty: "axisChildren"
         prototype: "QtCharts::QCategoryAxis"
@@ -947,12 +920,13 @@ Module {
                 "SeriesTypeStackedBar": 3,
                 "SeriesTypePercentBar": 4,
                 "SeriesTypeBoxPlot": 5,
-                "SeriesTypePie": 6,
-                "SeriesTypeScatter": 7,
-                "SeriesTypeSpline": 8,
-                "SeriesTypeHorizontalBar": 9,
-                "SeriesTypeHorizontalStackedBar": 10,
-                "SeriesTypeHorizontalPercentBar": 11
+                "SeriesTypeCandlestick": 6,
+                "SeriesTypePie": 7,
+                "SeriesTypeScatter": 8,
+                "SeriesTypeSpline": 9,
+                "SeriesTypeHorizontalBar": 10,
+                "SeriesTypeHorizontalStackedBar": 11,
+                "SeriesTypeHorizontalPercentBar": 12
             }
         }
         Property { name: "theme"; type: "Theme" }
@@ -1020,6 +994,7 @@ Module {
             Parameter { name: "curve"; type: "QEasingCurve" }
         }
         Signal { name: "needRender" }
+        Signal { name: "pendingRenderNodeMouseEventResponses" }
         Method {
             name: "series"
             type: "QAbstractSeries*"
@@ -1985,11 +1960,6 @@ Module {
         Property { name: "y"; type: "double" }
     }
     Component {
-        name: "QtCharts::LegendScroller"
-        defaultProperty: "children"
-        prototype: "QtCharts::QLegend"
-    }
-    Component {
         name: "QtCharts::QAbstractAxis"
         prototype: "QObject"
         exports: [
@@ -2221,7 +2191,8 @@ Module {
                 "SeriesTypeHorizontalBar": 8,
                 "SeriesTypeHorizontalStackedBar": 9,
                 "SeriesTypeHorizontalPercentBar": 10,
-                "SeriesTypeBoxPlot": 11
+                "SeriesTypeBoxPlot": 11,
+                "SeriesTypeCandlestick": 12
             }
         }
         Property { name: "name"; type: "string" }
@@ -2461,6 +2432,82 @@ Module {
         Signal { name: "cleared" }
     }
     Component {
+        name: "QtCharts::QCandlestickModelMapper"
+        prototype: "QObject"
+        exports: ["QtCharts/CandlestickModelMapper 2.2"]
+        isCreatable: false
+        exportMetaObjectRevisions: [0]
+        Property { name: "model"; type: "QAbstractItemModel"; isPointer: true }
+        Property { name: "series"; type: "QCandlestickSeries"; isPointer: true }
+        Signal { name: "modelReplaced" }
+        Signal { name: "seriesReplaced" }
+    }
+    Component {
+        name: "QtCharts::QCandlestickSeries"
+        prototype: "QtCharts::QAbstractSeries"
+        Property { name: "count"; type: "int"; isReadonly: true }
+        Property { name: "maximumColumnWidth"; type: "double" }
+        Property { name: "minimumColumnWidth"; type: "double" }
+        Property { name: "bodyWidth"; type: "double" }
+        Property { name: "bodyOutlineVisible"; type: "bool" }
+        Property { name: "capsWidth"; type: "double" }
+        Property { name: "capsVisible"; type: "bool" }
+        Property { name: "increasingColor"; type: "QColor" }
+        Property { name: "decreasingColor"; type: "QColor" }
+        Property { name: "brush"; type: "QBrush" }
+        Property { name: "pen"; type: "QPen" }
+        Signal {
+            name: "clicked"
+            Parameter { name: "set"; type: "QCandlestickSet"; isPointer: true }
+        }
+        Signal {
+            name: "hovered"
+            Parameter { name: "status"; type: "bool" }
+            Parameter { name: "set"; type: "QCandlestickSet"; isPointer: true }
+        }
+        Signal {
+            name: "pressed"
+            Parameter { name: "set"; type: "QCandlestickSet"; isPointer: true }
+        }
+        Signal {
+            name: "released"
+            Parameter { name: "set"; type: "QCandlestickSet"; isPointer: true }
+        }
+        Signal {
+            name: "doubleClicked"
+            Parameter { name: "set"; type: "QCandlestickSet"; isPointer: true }
+        }
+        Signal {
+            name: "candlestickSetsAdded"
+            Parameter { name: "sets"; type: "QList<QCandlestickSet*>" }
+        }
+        Signal {
+            name: "candlestickSetsRemoved"
+            Parameter { name: "sets"; type: "QList<QCandlestickSet*>" }
+        }
+        Signal { name: "bodyOutlineVisibilityChanged" }
+        Signal { name: "capsVisibilityChanged" }
+    }
+    Component {
+        name: "QtCharts::QCandlestickSet"
+        prototype: "QObject"
+        Property { name: "timestamp"; type: "double" }
+        Property { name: "open"; type: "double" }
+        Property { name: "high"; type: "double" }
+        Property { name: "low"; type: "double" }
+        Property { name: "close"; type: "double" }
+        Property { name: "brush"; type: "QBrush" }
+        Property { name: "pen"; type: "QPen" }
+        Signal { name: "clicked" }
+        Signal {
+            name: "hovered"
+            Parameter { name: "status"; type: "bool" }
+        }
+        Signal { name: "pressed" }
+        Signal { name: "released" }
+        Signal { name: "doubleClicked" }
+    }
+    Component {
         name: "QtCharts::QCategoryAxis"
         prototype: "QtCharts::QValueAxis"
         Enum {
@@ -2529,6 +2576,33 @@ Module {
         Signal { name: "modelReplaced" }
     }
     Component {
+        name: "QtCharts::QHBoxPlotModelMapper"
+        prototype: "QtCharts::QBoxPlotModelMapper"
+        exports: ["QtCharts/HBoxPlotModelMapper 2.0"]
+        exportMetaObjectRevisions: [0]
+        Property { name: "series"; type: "QBoxPlotSeries"; isPointer: true }
+        Property { name: "model"; type: "QAbstractItemModel"; isPointer: true }
+        Property { name: "firstBoxSetRow"; type: "int" }
+        Property { name: "lastBoxSetRow"; type: "int" }
+        Property { name: "firstColumn"; type: "int" }
+        Property { name: "columnCount"; type: "int" }
+        Signal { name: "seriesReplaced" }
+        Signal { name: "modelReplaced" }
+    }
+    Component {
+        name: "QtCharts::QHCandlestickModelMapper"
+        prototype: "QtCharts::QCandlestickModelMapper"
+        exports: ["QtCharts/HCandlestickModelMapper 2.2"]
+        exportMetaObjectRevisions: [0]
+        Property { name: "timestampColumn"; type: "int" }
+        Property { name: "openColumn"; type: "int" }
+        Property { name: "highColumn"; type: "int" }
+        Property { name: "lowColumn"; type: "int" }
+        Property { name: "closeColumn"; type: "int" }
+        Property { name: "firstSetRow"; type: "int" }
+        Property { name: "lastSetRow"; type: "int" }
+    }
+    Component {
         name: "QtCharts::QHPieModelMapper"
         prototype: "QtCharts::QPieModelMapper"
         exports: [
@@ -2585,6 +2659,7 @@ Module {
         Property { name: "font"; type: "QFont" }
         Property { name: "labelColor"; type: "QColor" }
         Property { name: "reverseMarkers"; type: "bool" }
+        Property { name: "showToolTips"; type: "bool" }
         Signal {
             name: "backgroundVisibleChanged"
             Parameter { name: "visible"; type: "bool" }
@@ -2608,6 +2683,10 @@ Module {
         Signal {
             name: "reverseMarkersChanged"
             Parameter { name: "reverseMarkers"; type: "bool" }
+        }
+        Signal {
+            name: "showToolTipsChanged"
+            Parameter { name: "showToolTips"; type: "bool" }
         }
     }
     Component { name: "QtCharts::QLineSeries"; prototype: "QtCharts::QXYSeries" }
@@ -2802,6 +2881,19 @@ Module {
         Property { name: "rowCount"; type: "int" }
         Signal { name: "seriesReplaced" }
         Signal { name: "modelReplaced" }
+    }
+    Component {
+        name: "QtCharts::QVCandlestickModelMapper"
+        prototype: "QtCharts::QCandlestickModelMapper"
+        exports: ["QtCharts/VCandlestickModelMapper 2.2"]
+        exportMetaObjectRevisions: [0]
+        Property { name: "timestampRow"; type: "int" }
+        Property { name: "openRow"; type: "int" }
+        Property { name: "highRow"; type: "int" }
+        Property { name: "lowRow"; type: "int" }
+        Property { name: "closeRow"; type: "int" }
+        Property { name: "firstSetColumn"; type: "int" }
+        Property { name: "lastSetColumn"; type: "int" }
     }
     Component {
         name: "QtCharts::QVPieModelMapper"
