@@ -455,8 +455,11 @@ void QAreaSeries::setPen(const QPen &pen)
 {
     Q_D(QAreaSeries);
     if (d->m_pen != pen) {
+        bool emitColorChanged = pen.color() != d->m_pen.color();
         d->m_pen = pen;
         emit d->updated();
+        if (emitColorChanged)
+            emit borderColorChanged(pen.color());
     }
 }
 
@@ -510,11 +513,8 @@ QColor QAreaSeries::color() const
 void QAreaSeries::setBorderColor(const QColor &color)
 {
     QPen p = pen();
-    if (p.color() != color) {
-        p.setColor(color);
-        setPen(p);
-        emit borderColorChanged(color);
-    }
+    p.setColor(color);
+    setPen(p);
 }
 
 QColor QAreaSeries::borderColor() const
