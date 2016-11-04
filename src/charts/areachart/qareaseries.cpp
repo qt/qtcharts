@@ -643,10 +643,10 @@ void QAreaSeriesPrivate::initializeDomain()
 {
     Q_Q(QAreaSeries);
 
-    qreal minX(domain()->minX());
-    qreal minY(domain()->minY());
-    qreal maxX(domain()->maxX());
-    qreal maxY(domain()->maxY());
+    qreal minX(0.0);
+    qreal minY(0.0);
+    qreal maxX(1.0);
+    qreal maxY(1.0);
 
     QLineSeries *upperSeries = q->upperSeries();
     QLineSeries *lowerSeries = q->lowerSeries();
@@ -654,25 +654,41 @@ void QAreaSeriesPrivate::initializeDomain()
     if (upperSeries) {
         const QVector<QPointF> &points = upperSeries->pointsVector();
 
-        for (int i = 0; i < points.count(); i++) {
-            qreal x = points[i].x();
-            qreal y = points[i].y();
-            minX = qMin(minX, x);
-            minY = qMin(minY, y);
-            maxX = qMax(maxX, x);
-            maxY = qMax(maxY, y);
+        if (!points.isEmpty()) {
+            minX = points[0].x();
+            minY = points[0].y();
+            maxX = minX;
+            maxY = minY;
+
+            for (int i = 0; i < points.count(); i++) {
+                qreal x = points[i].x();
+                qreal y = points[i].y();
+                minX = qMin(minX, x);
+                minY = qMin(minY, y);
+                maxX = qMax(maxX, x);
+                maxY = qMax(maxY, y);
+            }
         }
     }
     if (lowerSeries) {
         const QVector<QPointF> &points = lowerSeries->pointsVector();
 
-        for (int i = 0; i < points.count(); i++) {
-            qreal x = points[i].x();
-            qreal y = points[i].y();
-            minX = qMin(minX, x);
-            minY = qMin(minY, y);
-            maxX = qMax(maxX, x);
-            maxY = qMax(maxY, y);
+        if (!points.isEmpty()) {
+            if (!upperSeries) {
+                minX = points[0].x();
+                minY = points[0].y();
+                maxX = minX;
+                maxY = minY;
+            }
+
+            for (int i = 0; i < points.count(); i++) {
+                qreal x = points[i].x();
+                qreal y = points[i].y();
+                minX = qMin(minX, x);
+                minY = qMin(minY, y);
+                maxX = qMax(maxX, x);
+                maxY = qMax(maxY, y);
+            }
         }
     }
 
