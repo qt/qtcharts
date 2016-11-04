@@ -41,6 +41,11 @@
     the stacked areas is created. See ChartViewStacked.qml and AnimatedAreaSeries.qml.
 
     \image examples_qmlcustomlegend1.png
+
+    \include examples-run.qdocinc
+
+    \section1 Customizing Legends
+
     \snippet qmlcustomlegend/qml/qmlcustomlegend/ChartViewStacked.qml 1
 
     Hovering with mouse on top of the legend will highlight the hovered series.

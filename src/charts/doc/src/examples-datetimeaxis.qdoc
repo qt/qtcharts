@@ -36,6 +36,10 @@
 
     \image examples_datetimeaxis.png
 
+    \include examples-run.qdocinc
+
+    \section1 Creating Line Charts
+
     To create line chart, QLineSeries instance is needed. Let's create one.
 
     \snippet datetimeaxis/main.cpp 1

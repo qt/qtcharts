@@ -46,6 +46,10 @@
     bin\qmlweather.exe 1234567890abcdef123456
     \endcode
 
+    \include examples-run.qdocinc
+
+    \section1 Using Charts in Qt Quick Applications
+
     The example application uses a ChartView and a some series to visualize weather data:
     \snippet qmlweather/qml/qmlweather/main.qml 1
     \snippet qmlweather/qml/qmlweather/main.qml 2

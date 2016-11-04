@@ -38,6 +38,10 @@
 
     \image examples_barchart.png
 
+    \include examples-run.qdocinc
+
+    \section1 Creating Bar Charts
+
     The barsets are used in the same way in all barcharts.
     To illustrate the difference between various barcharts, we use the same data in the examples.
     Data that the barchart visualizes, is defined by the QBarSet instances. Here we create the sets and append data

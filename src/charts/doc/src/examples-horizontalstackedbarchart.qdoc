@@ -41,6 +41,10 @@
 
     \image examples_horizontalstackedbarchart.png
 
+    \include examples-run.qdocinc
+
+    \section1 Creating Horizontal Stacked Bar Charts
+
     The bar sets are used in same way in all bar charts.
     To illustrate the difference between various barcharts, we use the same data in all examples.
     The data that barchart visualizes, is defined by the QBarSet instances. Here we create the sets and append data

@@ -37,6 +37,10 @@
 
      \image examples_barmodelmapper.png
 
+     \include examples-run.qdocinc
+
+     \section1 Using Data Models with Bar Charts
+
      Let's start by creating an instance of CustomTableModel class.
      The CustomTableModel class is derived from QAbstractTableModel, and it was created for the purpose of this example.
      The constructor of this class populates the model's internal data store with the data required for our chart example.

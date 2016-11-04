@@ -34,6 +34,10 @@
 
     \brief This basic demonstration shows how to use the different chart types by using qml.
 
+    \include examples-run.qdocinc
+
+    \section1 Creating Charts Using QML
+
     Creating each chart type begins with the creation of a ChartView.
 
     To create a pie, we use the PieSeries API together with a few PieSlices:

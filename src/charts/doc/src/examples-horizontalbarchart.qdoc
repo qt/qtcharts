@@ -39,6 +39,10 @@
 
     \image examples_horizontalbarchart.png
 
+    \include examples-run.qdocinc
+
+    \section1 Creating Horizontal Bar Charts
+
     The bar sets are used in the same way in all bar charts.
     To illustrate the difference between various bar charts, we use the same data in all examples.
     Data that bar chart visualizes, is defined by QBarSet instances. Here we create the sets and append data

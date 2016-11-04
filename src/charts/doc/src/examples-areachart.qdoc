@@ -36,6 +36,10 @@
 
     \image examples_areachart.png
 
+    \include examples-run.qdocinc
+
+    \section1 Creating Area Charts
+
     To create area charts, we need two QLineSeries instances. They are going to define the upper and lower boundary of the area.
 
     \snippet areachart/main.cpp 1

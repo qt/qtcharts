@@ -36,6 +36,10 @@
 
     \image examples_linechart.png
 
+    \include examples-run.qdocinc
+
+    \section1 Creating Line Charts
+
     To create a line chart, a QLineSeries instance is needed. Let's create one.
 
     \snippet linechart/main.cpp 1

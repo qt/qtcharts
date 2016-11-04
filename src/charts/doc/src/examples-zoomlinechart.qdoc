@@ -39,6 +39,10 @@
     \image examples_zoomlinechart1.png
     \image examples_zoomlinechart2.png
 
+    \include examples-run.qdocinc
+
+    \section1 Customizing Zooming Effects
+
     Let's first create a line series with some example data.
     \snippet zoomlinechart/main.cpp 1
 

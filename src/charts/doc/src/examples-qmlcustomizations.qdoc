@@ -39,6 +39,10 @@
 
     This example shows a wheel of fortune by customizing a pie series.
 
+    \include examples-run.qdocinc
+
+    \section1 Customizing Chart Views
+
     First we create the ChartView and a couple of series.
     \snippet qmlcustomizations/qml/qmlcustomizations/main.qml 1
 

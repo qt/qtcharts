@@ -35,6 +35,10 @@
      \brief This example shows how to create a nested donuts chart using the QPieSeries API.
      \image examples_nesteddonuts.png
 
+    \include examples-run.qdocinc
+
+    \section1 Creating Nested Donut Charts
+
      Let's start by creating a QChartView instance and enabling the Antialiasing on it. A QChart object is then obtained from the QChartView instance.
      The legend is disabled and the title of the chart is set. Last line enables the animations of the chart.
 

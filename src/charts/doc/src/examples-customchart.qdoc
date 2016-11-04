@@ -35,6 +35,10 @@
     \brief This example shows how to customize the appearance of the different elements on a chart.
     \image examples_customchart.png
 
+    \include examples-run.qdocinc
+
+    \section1 Customizing Charts
+
     We begin by creating a simple line series and a chart object.
     \snippet customchart/main.cpp 1
 

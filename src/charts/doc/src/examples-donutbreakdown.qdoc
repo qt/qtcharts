@@ -35,6 +35,10 @@
      \brief This example shows how to use create a donut breakdown chart using QPieSeries API.
      \image examples_donutbreakdown.png
 
+     \include examples-run.qdocinc
+
+     \section1 Creating Donut Breakdown Charts
+
      Let's start by defining some data for the chart.
 
      \snippet donutbreakdown/main.cpp 1

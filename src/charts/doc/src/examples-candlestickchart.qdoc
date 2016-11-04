@@ -36,6 +36,10 @@
 
     \image examples_candlestickchart.png
 
+    \include examples-run.qdocinc
+
+    \section1 Creating Candlestick Charts
+
     To display a candlestick chart, we start by creating QCandlestickSeries to handle daily data. We
     are also specifying custom increasing and decreasing body colors.
 

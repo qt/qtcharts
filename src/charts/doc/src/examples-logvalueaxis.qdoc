@@ -36,6 +36,10 @@
 
     \image examples_logvalueaxis.png
 
+    \include examples-run.qdocinc
+
+    \section1 Using Logarithmic Value Axes
+
     Create a QLineSeries instance and add some data to it.
 
     \snippet logvalueaxis/main.cpp 1

@@ -34,6 +34,10 @@
 
     \brief This is a demonstration on how to use a polar chart in your QML application.
 
+    \include examples-run.qdocinc
+
+    \section1 Using Polar Charts in Qt Quick Applications
+
     We begin with a chart that has a spline series and a scatter series with random
     data. Both series use the same axes.
 
