@@ -27,17 +27,16 @@
 **
 ****************************************************************************/
 
-#include <QtCharts/QLogValueAxis>
-#include <private/qlogvalueaxis_p.h>
+#include <QtCore/qmath.h>
+#include <private/abstractdomain_p.h>
 #include <private/chartlogvalueaxisx_p.h>
 #include <private/chartlogvalueaxisy_p.h>
 #include <private/polarchartlogvalueaxisangular_p.h>
 #include <private/polarchartlogvalueaxisradial_p.h>
-#include <private/abstractdomain_p.h>
-#include <float.h>
-#include <cmath>
+#include <private/qlogvalueaxis_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
+
 /*!
     \class QLogValueAxis
     \inmodule Qt Charts
@@ -117,6 +116,31 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
+  \property QLogValueAxis::tickCount
+  \brief The number of tick marks on the axis. This indicates how many grid lines are drawn on the
+  chart. This value is read-only.
+*/
+/*!
+  \qmlproperty int LogValueAxis::tickCount
+  The number of tick marks on the axis. This indicates how many grid lines are drawn on the
+  chart. This value is read-only.
+*/
+
+/*!
+  \property QLogValueAxis::minorTickCount
+  \brief The number of minor tick marks on the axis. This indicates how many grid lines are drawn
+  between major ticks on the chart. Labels are not drawn for minor ticks. The default value is 0.
+  Set the value to -1 and the number of grid lines between major ticks will be calculated
+  automatically.
+*/
+/*!
+  \qmlproperty int LogValueAxis::minorTickCount
+  The number of minor tick marks on the axis. This indicates how many grid lines are drawn between
+  major ticks on the chart. Labels are not drawn for minor ticks. The default value is 0. Set the
+  value to -1 and the number of grid lines between major ticks will be calculated automatically.
+*/
+
+/*!
   \property QLogValueAxis::labelFormat
   \brief The label format of the axis.
 
@@ -165,6 +189,28 @@ QT_CHARTS_BEGIN_NAMESPACE
   \fn void QLogValueAxis::rangeChanged(qreal min, qreal max)
   This signal is emitted when the minimum or maximum value of the axis, specified by \a min
   and \a max, changes.
+*/
+
+/*!
+  \fn void QLogValueAxis::tickCountChanged(int tickCount)
+  This signal is emitted when the number of tick marks on the axis, specified by \a tickCount,
+  changes.
+*/
+/*!
+  \qmlsignal LogValueAxis::tickCountChanged(int tickCount)
+  This signal is emitted when the number of tick marks on the axis, specified by \a tickCount,
+  changes.
+*/
+
+/*!
+  \fn void QLogValueAxis::minorTickCountChanged(int minorTickCount)
+  This signal is emitted when the number of minor tick marks on the axis, specified by
+  \a minorTickCount, changes.
+*/
+/*!
+  \qmlsignal LogValueAxis::minorTickCountChanged(int minorTickCount)
+  This signal is emitted when the number of minor tick marks on the axis, specified by
+  \a minorTickCount, changes.
 */
 
 /*!
@@ -243,12 +289,13 @@ qreal QLogValueAxis::max() const
 void QLogValueAxis::setRange(qreal min, qreal max)
 {
     Q_D(QLogValueAxis);
-    bool changed = false;
 
     if (min > max)
         return;
 
     if (min > 0) {
+        bool changed = false;
+
         if (!qFuzzyCompare(d->m_min, min)) {
             d->m_min = min;
             changed = true;
@@ -262,6 +309,7 @@ void QLogValueAxis::setRange(qreal min, qreal max)
         }
 
         if (changed) {
+            d->updateTickCount();
             emit rangeChanged(min, max);
             emit d->rangeChanged(min,max);
         }
@@ -290,6 +338,7 @@ void QLogValueAxis::setBase(qreal base)
     if (base > 0) {
         Q_D(QLogValueAxis);
         d->m_base = base;
+        d->updateTickCount();
         emit baseChanged(base);
     }
 }
@@ -300,6 +349,32 @@ qreal QLogValueAxis::base() const
     return d->m_base;
 }
 
+int QLogValueAxis::tickCount() const
+{
+    Q_D(const QLogValueAxis);
+    return d->m_tickCount;
+}
+
+void QLogValueAxis::setMinorTickCount(int minorTickCount)
+{
+    Q_D(QLogValueAxis);
+
+    if (minorTickCount < 0)
+        minorTickCount = -1;
+
+    if (d->m_minorTickCount == minorTickCount)
+        return;
+
+    d->m_minorTickCount = minorTickCount;
+    emit minorTickCountChanged(minorTickCount);
+}
+
+int QLogValueAxis::minorTickCount() const
+{
+    Q_D(const QLogValueAxis);
+    return d->m_minorTickCount;
+}
+
 /*!
   Returns the type of the axis.
 */
@@ -308,20 +383,21 @@ QAbstractAxis::AxisType QLogValueAxis::type() const
     return AxisTypeLogValue;
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QLogValueAxisPrivate::QLogValueAxisPrivate(QLogValueAxis *q)
     : QAbstractAxisPrivate(q),
       m_min(1),
       m_max(1),
       m_base(10),
+      m_tickCount(0),
+      m_minorTickCount(0),
       m_format(QString::null)
 {
 }
 
 QLogValueAxisPrivate::~QLogValueAxisPrivate()
 {
-
 }
 
 void QLogValueAxisPrivate::setMin(const QVariant &min)
@@ -357,12 +433,13 @@ void QLogValueAxisPrivate::setRange(const QVariant &min, const QVariant &max)
 void QLogValueAxisPrivate::setRange(qreal min, qreal max)
 {
     Q_Q(QLogValueAxis);
-    bool changed = false;
 
     if (min > max)
         return;
 
     if (min > 0) {
+        bool changed = false;
+
         if (!qFuzzyCompare(m_min, min)) {
             m_min = min;
             changed = true;
@@ -376,10 +453,31 @@ void QLogValueAxisPrivate::setRange(qreal min, qreal max)
         }
 
         if (changed) {
+            updateTickCount();
             emit rangeChanged(min,max);
             emit q->rangeChanged(min, max);
         }
     }
+}
+
+void QLogValueAxisPrivate::updateTickCount()
+{
+    Q_Q(QLogValueAxis);
+
+    const qreal logMax = qLn(m_max) / qLn(m_base);
+    const qreal logMin = qLn(m_min) / qLn(m_base);
+    int tickCount = qAbs(qCeil(logMax) - qCeil(logMin));
+
+    // If the high edge sits exactly on the tick value, add a tick
+    qreal highValue = logMin < logMax ? logMax : logMin;
+    if (qFuzzyCompare(highValue, qreal(qCeil(highValue))))
+        ++tickCount;
+
+    if (m_tickCount == tickCount)
+        return;
+
+    m_tickCount = tickCount;
+    emit q->tickCountChanged(m_tickCount);
 }
 
 void QLogValueAxisPrivate::initializeGraphics(QGraphicsItem *parent)

@@ -36,8 +36,8 @@
 //
 // We mean it.
 
-#ifndef VERTICALAXIS_P_H_
-#define VERTICALAXIS_P_H_
+#ifndef VERTICALAXIS_P_H
+#define VERTICALAXIS_P_H
 
 #include <private/cartesianchartaxis_p.h>
 
@@ -46,14 +46,18 @@ QT_CHARTS_BEGIN_NAMESPACE
 class VerticalAxis : public CartesianChartAxis
 {
 public:
-    VerticalAxis(QAbstractAxis *axis, QGraphicsItem *item = 0, bool intervalAxis = false);
+    VerticalAxis(QAbstractAxis *axis, QGraphicsItem *item = nullptr, bool intervalAxis = false);
     ~VerticalAxis();
-    QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const;
-protected:
-    void updateGeometry();
 
+    QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const Q_DECL_OVERRIDE;
+
+protected:
+    void updateGeometry() Q_DECL_OVERRIDE;
+
+private:
+    void updateMinorTickGeometry();
 };
 
 QT_CHARTS_END_NAMESPACE
 
-#endif /* VERTICALAXIS_P_H_ */
+#endif // VERTICALAXIS_P_H

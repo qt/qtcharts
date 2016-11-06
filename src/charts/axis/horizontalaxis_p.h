@@ -36,8 +36,8 @@
 //
 // We mean it.
 
-#ifndef HORIZONTALAXIS_P_H_
-#define HORIZONTALAXIS_P_H_
+#ifndef HORIZONTALAXIS_P_H
+#define HORIZONTALAXIS_P_H
 
 #include <private/cartesianchartaxis_p.h>
 
@@ -46,14 +46,18 @@ QT_CHARTS_BEGIN_NAMESPACE
 class HorizontalAxis : public CartesianChartAxis
 {
 public:
-    HorizontalAxis(QAbstractAxis *axis, QGraphicsItem *item = 0, bool intervalAxis = false);
+    HorizontalAxis(QAbstractAxis *axis, QGraphicsItem *item = nullptr, bool intervalAxis = false);
     ~HorizontalAxis();
-    QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const;
-protected:
-    void updateGeometry();
 
+    QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const Q_DECL_OVERRIDE;
+
+protected:
+    void updateGeometry() Q_DECL_OVERRIDE;
+
+private:
+    void updateMinorTickGeometry();
 };
 
 QT_CHARTS_END_NAMESPACE
 
-#endif
+#endif // HORIZONTALAXIS_P_H

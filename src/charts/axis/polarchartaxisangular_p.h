@@ -39,14 +39,15 @@
 #ifndef POLARCHARTAXISANGULAR_P_H
 #define POLARCHARTAXISANGULAR_P_H
 
+#include <QtCharts/qvalueaxis.h>
 #include <private/polarchartaxis_p.h>
-#include <QtCharts/QValueAxis>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 class PolarChartAxisAngular : public PolarChartAxis
 {
     Q_OBJECT
+
 public:
     PolarChartAxisAngular(QAbstractAxis *axis, QGraphicsItem *item, bool intervalAxis = false);
     ~PolarChartAxisAngular();
@@ -70,6 +71,7 @@ public Q_SLOTS:
 
 private:
     QRectF moveLabelToPosition(qreal angularCoordinate, QPointF labelPoint, QRectF labelRect) const;
+    void updateMinorTickGeometry();
 };
 
 QT_CHARTS_END_NAMESPACE

@@ -27,22 +27,23 @@
 **
 ****************************************************************************/
 
-#include <QtWidgets/QApplication>
-#include <QtWidgets/QMainWindow>
 #include <QtCharts/QChartView>
 #include <QtCharts/QLineSeries>
-#include <QtCharts/QValueAxis>
 #include <QtCharts/QLogValueAxis>
+#include <QtCharts/QValueAxis>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QMainWindow>
 
 QT_CHARTS_USE_NAMESPACE
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    QApplication app(argc, argv);
 
     //![1]
     QLineSeries *series = new QLineSeries();
-    *series << QPointF(1, 1) << QPointF(2, 73) << QPointF(3, 268) << QPointF(4, 17) << QPointF(5, 4325) << QPointF(6, 723);
+    *series << QPointF(1.0, 1.0) << QPointF(2.0, 73.0) << QPointF(3.0, 268.0) << QPointF(4.0, 17.0)
+            << QPointF(5.0, 4325.0) << QPointF(6.0, 723.0);
     //![1]
 
     //![2]
@@ -53,17 +54,18 @@ int main(int argc, char *argv[])
     //![2]
 
     //![3]
-    QValueAxis *axisX = new QValueAxis;
+    QValueAxis *axisX = new QValueAxis();
     axisX->setTitleText("Data point");
-    axisX->setTickCount(6);
     axisX->setLabelFormat("%i");
+    axisX->setTickCount(series->count());
     chart->addAxis(axisX, Qt::AlignBottom);
     series->attachAxis(axisX);
 
-    QLogValueAxis *axisY = new QLogValueAxis;
-    axisY->setLabelFormat("%g");
+    QLogValueAxis *axisY = new QLogValueAxis();
     axisY->setTitleText("Values");
-    axisY->setBase(8);
+    axisY->setLabelFormat("%g");
+    axisY->setBase(8.0);
+    axisY->setMinorTickCount(-1);
     chart->addAxis(axisY, Qt::AlignLeft);
     series->attachAxis(axisY);
     //![3]
@@ -76,10 +78,9 @@ int main(int argc, char *argv[])
     //![5]
     QMainWindow window;
     window.setCentralWidget(chartView);
-    window.resize(400, 300);
+    window.resize(800, 600);
     window.show();
-
     //![5]
 
-    return a.exec();
+    return app.exec();
 }

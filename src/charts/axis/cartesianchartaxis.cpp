@@ -27,17 +27,18 @@
 **
 ****************************************************************************/
 
-#include <private/cartesianchartaxis_p.h>
-#include <QtCharts/QAbstractAxis>
-#include <private/qabstractaxis_p.h>
-#include <private/chartpresenter_p.h>
+#include <QtCharts/qabstractaxis.h>
+#include <QtCharts/qlogvalueaxis.h>
+#include <QtCharts/qvalueaxis.h>
+#include <QtCore/qmath.h>
+#include <QtGui/qtextdocument.h>
+#include <QtWidgets/qgraphicslayout.h>
 #include <private/abstractchartlayout_p.h>
 #include <private/abstractdomain_p.h>
+#include <private/cartesianchartaxis_p.h>
+#include <private/chartpresenter_p.h>
 #include <private/linearrowitem_p.h>
-#include <QtCharts/QValueAxis>
-#include <QtCharts/QLogValueAxis>
-#include <QtWidgets/QGraphicsLayout>
-#include <QtGui/QTextDocument>
+#include <private/qabstractaxis_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -102,29 +103,46 @@ void CartesianChartAxis::createItems(int count)
 
 void CartesianChartAxis::updateMinorTickItems()
 {
-    QValueAxis *valueAxis = qobject_cast<QValueAxis *>(this->axis());
-    if (valueAxis) {
-        int currentCount = minorArrowItems().size();
-        int expectedCount = valueAxis->minorTickCount() * (valueAxis->tickCount() - 1);
-        int diff = expectedCount - currentCount;
-        if (diff > 0) {
-            for (int i = 0; i < diff; i++) {
-                QGraphicsLineItem *minorArrow = new QGraphicsLineItem(this);
-                QGraphicsLineItem *minorGrid = new QGraphicsLineItem(this);
-                minorArrow->setPen(valueAxis->linePen());
-                minorGrid->setPen(valueAxis->minorGridLinePen());
-                minorArrowGroup()->addToGroup(minorArrow);
-                minorGridGroup()->addToGroup(minorGrid);
-            }
-        } else {
-            QList<QGraphicsItem *> minorGridLines = minorGridItems();
-            QList<QGraphicsItem *> minorArrows = minorArrowItems();
-            for (int i = 0; i > diff; i--) {
-                if (!minorGridLines.isEmpty())
-                    delete(minorGridLines.takeLast());
-                if (!minorArrows.isEmpty())
-                    delete(minorArrows.takeLast());
-            }
+    int currentCount = minorArrowItems().size();
+    int expectedCount = 0;
+    if (axis()->type() == QAbstractAxis::AxisTypeValue) {
+        QValueAxis *valueAxis = qobject_cast<QValueAxis *>(axis());
+        expectedCount = valueAxis->minorTickCount() * (valueAxis->tickCount() - 1);
+        expectedCount = qMax(expectedCount, 0);
+    } else if (axis()->type() == QAbstractAxis::AxisTypeLogValue) {
+        QLogValueAxis *logValueAxis = qobject_cast<QLogValueAxis *>(axis());
+
+        int minorTickCount = logValueAxis->minorTickCount();
+        if (minorTickCount < 0)
+            minorTickCount = qMax(int(qFloor(logValueAxis->base()) - 2.0), 0);
+
+        expectedCount = minorTickCount * (logValueAxis->tickCount() + 1);
+        expectedCount = qMax(expectedCount, logValueAxis->minorTickCount());
+    } else {
+        // minor ticks are not supported
+        return;
+    }
+
+    int diff = expectedCount - currentCount;
+    if (diff > 0) {
+        for (int i = 0; i < diff; ++i) {
+            QGraphicsLineItem *minorGridLineItem = new QGraphicsLineItem(this);
+            minorGridLineItem->setPen(axis()->minorGridLinePen());
+            minorGridGroup()->addToGroup(minorGridLineItem);
+
+            QGraphicsLineItem *minorArrowLineItem = new QGraphicsLineItem(this);
+            minorArrowLineItem->setPen(axis()->linePen());
+            minorArrowGroup()->addToGroup(minorArrowLineItem);
+        }
+    } else {
+        QList<QGraphicsItem *> minorGridItemsList = minorGridItems();
+        QList<QGraphicsItem *> minorArrowItemsList = minorArrowItems();
+        for (int i = 0; i > diff; --i) {
+            if (!minorGridItemsList.isEmpty())
+                delete minorGridItemsList.takeLast();
+
+            if (!minorArrowItemsList.isEmpty())
+                delete minorArrowItemsList.takeLast();
         }
     }
 }

@@ -27,19 +27,17 @@
 **
 ****************************************************************************/
 
-#include <private/polarchartaxisangular_p.h>
+#include <QtCharts/qcategoryaxis.h>
+#include <QtCharts/qlogvalueaxis.h>
+#include <QtCore/qmath.h>
+#include <QtGui/qtextdocument.h>
 #include <private/chartpresenter_p.h>
-#include <private/abstractchartlayout_p.h>
-#include <QtCharts/QAbstractAxis>
-#include <QtCharts/QCategoryAxis>
-#include <private/qabstractaxis_p.h>
-#include <QtCore/QDebug>
-#include <QtCore/QtMath>
-#include <QtGui/QTextDocument>
+#include <private/polarchartaxisangular_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-PolarChartAxisAngular::PolarChartAxisAngular(QAbstractAxis *axis, QGraphicsItem *item, bool intervalAxis)
+PolarChartAxisAngular::PolarChartAxisAngular(QAbstractAxis *axis, QGraphicsItem *item,
+                                             bool intervalAxis)
     : PolarChartAxis(axis, item, intervalAxis)
 {
 }
@@ -242,37 +240,9 @@ void PolarChartAxisAngular::updateGeometry()
             shadeItem->setVisible(true);
             firstShade = false;
         }
-
-        // Minor ticks
-        QValueAxis *valueAxis = qobject_cast<QValueAxis *>(axis());
-        if ((i + 1) != layout.size() && valueAxis) {
-            int minorTickCount = valueAxis->minorTickCount();
-            if (minorTickCount != 0) {
-                qreal minorAngularCoordinate = (layout[i + 1] - layout[i])
-                        / qreal(minorTickCount + 1);
-                for (int j = 0; j < minorTickCount; j++) {
-                    QGraphicsLineItem *minorGridItem =
-                            static_cast<QGraphicsLineItem *>(minorGridItemList.at(i * minorTickCount + j));
-                    QGraphicsLineItem *minorTickItem =
-                            static_cast<QGraphicsLineItem *>(minorArrowItemList.at(i * minorTickCount + j));
-                    qreal minorAngle = 90.0 - angularCoordinate
-                            - minorAngularCoordinate * qreal(j + 1);
-                    QLineF minorGridLine = QLineF::fromPolar(radius, minorAngle);
-                    minorGridLine.translate(center);
-                    minorGridItem->setLine(minorGridLine);
-                    minorGridItem->setVisible(true);
-
-                    QLineF minorTickLine(QLineF::fromPolar(radius - tickWidth() + 1,
-                                                           minorAngle).p2(),
-                                         QLineF::fromPolar(radius + tickWidth() - 1,
-                                                           minorAngle).p2());
-                    minorTickLine.translate(center);
-                    minorTickItem->setLine(minorTickLine);
-                    minorTickItem->setVisible(true);
-                }
-            }
-        }
     }
+
+    updateMinorTickGeometry();
 
     // Title, centered above the chart
     QString titleText = axis()->titleText();
@@ -514,31 +484,161 @@ QRectF PolarChartAxisAngular::moveLabelToPosition(qreal angularCoordinate, QPoin
     return labelRect;
 }
 
+void PolarChartAxisAngular::updateMinorTickGeometry()
+{
+    if (!axis())
+        return;
+
+    QVector<qreal> layout = ChartAxisElement::layout();
+    int minorTickCount = 0;
+    qreal tickAngle = 0.0;
+    QVector<qreal> minorTickAngles;
+    switch (axis()->type()) {
+    case QAbstractAxis::AxisTypeValue: {
+        const QValueAxis *valueAxis = qobject_cast<QValueAxis *>(axis());
+
+        minorTickCount = valueAxis->minorTickCount();
+
+        if (valueAxis->tickCount() >= 2)
+            tickAngle = layout.at(1) - layout.at(0);
+
+        for (int i = 0; i < minorTickCount; ++i) {
+            const qreal ratio = (1.0 / qreal(minorTickCount + 1)) * qreal(i + 1);
+            minorTickAngles.append(tickAngle * ratio);
+        }
+        break;
+    }
+    case QAbstractAxis::AxisTypeLogValue: {
+        const QLogValueAxis *logValueAxis = qobject_cast<QLogValueAxis *>(axis());
+        const qreal base = logValueAxis->base();
+        const qreal logBase = qLn(base);
+
+        minorTickCount = logValueAxis->minorTickCount();
+        if (minorTickCount < 0)
+            minorTickCount = qMax(int(qFloor(base) - 2.0), 0);
+
+        // Two "virtual" ticks are required to make sure that all minor ticks
+        // are displayed properly (even for the partially visible segments of
+        // the chart).
+        if (layout.size() >= 2) {
+            // Calculate tickAngle as a difference between visible ticks
+            // whenever it is possible. Virtual ticks will not be correctly
+            // positioned when the layout is animating.
+            tickAngle = layout.at(1) - layout.at(0);
+            layout.prepend(layout.at(0) - tickAngle);
+            layout.append(layout.at(layout.size() - 1) + tickAngle);
+        } else {
+            const qreal logMax = qLn(logValueAxis->max());
+            const qreal logMin = qLn(logValueAxis->min());
+            const qreal logExtraMaxTick = qLn(qPow(base, qFloor(logMax / logBase) + 1.0));
+            const qreal logExtraMinTick = qLn(qPow(base, qCeil(logMin / logBase) - 1.0));
+            const qreal edge = qMin(logMin, logMax);
+            const qreal delta = 360.0 / qAbs(logMax - logMin);
+            const qreal extraMaxTick = edge + (logExtraMaxTick - edge) * delta;
+            const qreal extraMinTick = edge + (logExtraMinTick - edge) * delta;
+
+            // Calculate tickAngle using one (if layout.size() == 1) or two
+            // (if layout.size() == 0) "virtual" ticks. In both cases animation
+            // will not work as expected. This should be fixed later.
+            layout.prepend(extraMinTick);
+            layout.append(extraMaxTick);
+            tickAngle = layout.at(1) - layout.at(0);
+        }
+
+        const qreal minorTickStepValue = qFabs(base - 1.0) / qreal(minorTickCount + 1);
+        for (int i = 0; i < minorTickCount; ++i) {
+            const qreal x = minorTickStepValue * qreal(i + 1) + 1.0;
+            const qreal minorTickAngle = tickAngle * (qLn(x) / logBase);
+            minorTickAngles.append(minorTickAngle);
+        }
+        break;
+    }
+    default:
+        // minor ticks are not supported
+        break;
+    }
+
+    if (minorTickCount < 1 || tickAngle == 0.0 || minorTickAngles.count() != minorTickCount)
+        return;
+
+    const QPointF axisCenter = axisGeometry().center();
+    const qreal axisRadius = axisGeometry().height() / 2.0;
+
+    for (int i = 0; i < layout.size() - 1; ++i) {
+        for (int j = 0; j < minorTickCount; ++j) {
+            const int minorItemIndex = i * minorTickCount + j;
+            QGraphicsLineItem *minorGridLineItem =
+                    static_cast<QGraphicsLineItem *>(minorGridItems().at(minorItemIndex));
+            QGraphicsLineItem *minorArrowLineItem =
+                    static_cast<QGraphicsLineItem *>(minorArrowItems().at(minorItemIndex));
+            if (!minorGridLineItem || !minorArrowLineItem)
+                continue;
+
+            const qreal minorTickAngle = 90.0 - layout.at(i) - minorTickAngles.value(j, 0.0);
+
+            const QPointF minorArrowLinePt1 = QLineF::fromPolar(axisRadius - tickWidth() + 1,
+                                                                minorTickAngle).p2();
+            const QPointF minorArrowLinePt2 = QLineF::fromPolar(axisRadius + tickWidth() - 1,
+                                                                minorTickAngle).p2();
+
+            QLineF minorGridLine = QLineF::fromPolar(axisRadius, minorTickAngle);
+            minorGridLine.translate(axisCenter);
+            minorGridLineItem->setLine(minorGridLine);
+
+            QLineF minorArrowLine(minorArrowLinePt1, minorArrowLinePt2);
+            minorArrowLine.translate(axisCenter);
+            minorArrowLineItem->setLine(minorArrowLine);
+
+            // check if the minor grid line and the minor axis arrow should be shown
+            const bool minorGridLineVisible = (minorTickAngle >= -270.0 && minorTickAngle <= 90.0);
+            minorGridLineItem->setVisible(minorGridLineVisible);
+            minorArrowLineItem->setVisible(minorGridLineVisible);
+        }
+    }
+}
+
 void PolarChartAxisAngular::updateMinorTickItems()
 {
-    QValueAxis *valueAxis = qobject_cast<QValueAxis *>(this->axis());
-    if (valueAxis) {
-        int currentCount = minorArrowItems().size();
-        int expectedCount = valueAxis->minorTickCount() * (valueAxis->tickCount() - 1);
-        int diff = expectedCount - currentCount;
-        if (diff > 0) {
-            for (int i = 0; i < diff; i++) {
-                QGraphicsLineItem *minorArrow = new QGraphicsLineItem(presenter()->rootItem());
-                QGraphicsLineItem *minorGrid = new QGraphicsLineItem(presenter()->rootItem());
-                minorArrow->setPen(valueAxis->linePen());
-                minorGrid->setPen(valueAxis->minorGridLinePen());
-                minorArrowGroup()->addToGroup(minorArrow);
-                minorGridGroup()->addToGroup(minorGrid);
-            }
-        } else {
-            QList<QGraphicsItem *> minorGridLines = minorGridItems();
-            QList<QGraphicsItem *> minorArrows = minorArrowItems();
-            for (int i = 0; i > diff; i--) {
-                if (!minorGridLines.isEmpty())
-                    delete(minorGridLines.takeLast());
-                if (!minorArrows.isEmpty())
-                    delete(minorArrows.takeLast());
-            }
+    int currentCount = minorArrowItems().size();
+    int expectedCount = 0;
+    if (axis()->type() == QAbstractAxis::AxisTypeValue) {
+        QValueAxis *valueAxis = qobject_cast<QValueAxis *>(axis());
+        expectedCount = valueAxis->minorTickCount() * (valueAxis->tickCount() - 1);
+        expectedCount = qMax(expectedCount, 0);
+    } else if (axis()->type() == QAbstractAxis::AxisTypeLogValue) {
+        QLogValueAxis *logValueAxis = qobject_cast<QLogValueAxis *>(axis());
+
+        int minorTickCount = logValueAxis->minorTickCount();
+        if (minorTickCount < 0)
+            minorTickCount = qMax(int(qFloor(logValueAxis->base()) - 2.0), 0);
+
+        expectedCount = minorTickCount * (logValueAxis->tickCount() + 1);
+        expectedCount = qMax(expectedCount, logValueAxis->minorTickCount());
+    } else {
+        // minor ticks are not supported
+        return;
+    }
+
+    int diff = expectedCount - currentCount;
+    if (diff > 0) {
+        for (int i = 0; i < diff; ++i) {
+            QGraphicsLineItem *minorGridLineItem = new QGraphicsLineItem(this);
+            minorGridLineItem->setPen(axis()->minorGridLinePen());
+            minorGridGroup()->addToGroup(minorGridLineItem);
+
+            QGraphicsLineItem *minorArrowLineItem = new QGraphicsLineItem(this);
+            minorArrowLineItem->setPen(axis()->linePen());
+            minorArrowGroup()->addToGroup(minorArrowLineItem);
+        }
+    } else {
+        QList<QGraphicsItem *> minorGridItemsList = minorGridItems();
+        QList<QGraphicsItem *> minorArrowItemsList = minorArrowItems();
+        for (int i = 0; i > diff; --i) {
+            if (!minorGridItemsList.isEmpty())
+                delete minorGridItemsList.takeLast();
+
+            if (!minorArrowItemsList.isEmpty())
+                delete minorArrowItemsList.takeLast();
         }
     }
 }

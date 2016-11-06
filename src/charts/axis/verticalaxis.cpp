@@ -27,11 +27,11 @@
 **
 ****************************************************************************/
 
-#include <private/verticalaxis_p.h>
-#include <QtCharts/QAbstractAxis>
+#include <QtCharts/qcategoryaxis.h>
+#include <QtCharts/qlogvalueaxis.h>
+#include <QtCore/qmath.h>
 #include <private/chartpresenter_p.h>
-#include <QtCharts/QCategoryAxis>
-#include <QtCore/QDebug>
+#include <private/verticalaxis_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -42,6 +42,34 @@ VerticalAxis::VerticalAxis(QAbstractAxis *axis, QGraphicsItem *item, bool interv
 
 VerticalAxis::~VerticalAxis()
 {
+}
+
+QSizeF VerticalAxis::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
+{
+    Q_UNUSED(constraint);
+    QSizeF sh(0, 0);
+
+    if (axis()->titleText().isEmpty() || !titleItem()->isVisible())
+        return sh;
+
+    switch (which) {
+    case Qt::MinimumSize: {
+        QRectF titleRect = ChartPresenter::textBoundingRect(axis()->titleFont(),
+                                                            QStringLiteral("..."));
+        sh = QSizeF(titleRect.height() + (titlePadding() * 2.0), titleRect.width());
+        break;
+    }
+    case Qt::MaximumSize:
+    case Qt::PreferredSize: {
+        QRectF titleRect = ChartPresenter::textBoundingRect(axis()->titleFont(), axis()->titleText());
+        sh = QSizeF(titleRect.height() + (titlePadding() * 2.0), titleRect.width());
+        break;
+    }
+    default:
+        break;
+    }
+
+    return sh;
 }
 
 void VerticalAxis::updateGeometry()
@@ -91,10 +119,13 @@ void VerticalAxis::updateGeometry()
         titleBoundingRect = title->boundingRect();
 
         QPointF center = gridRect.center() - titleBoundingRect.center();
-        if (axis()->alignment() == Qt::AlignLeft)
-            title->setPos(axisRect.left() - titleBoundingRect.width() / 2.0 + titleBoundingRect.height() / 2.0 + titlePadding(), center.y());
-        else if (axis()->alignment() == Qt::AlignRight)
-            title->setPos(axisRect.right() - titleBoundingRect.width() / 2.0 - titleBoundingRect.height() / 2.0 - titlePadding(), center.y());
+        if (axis()->alignment() == Qt::AlignLeft) {
+            title->setPos(axisRect.left() - titleBoundingRect.width() / 2.0
+                          + titleBoundingRect.height() / 2.0 + titlePadding(), center.y());
+        } else if (axis()->alignment() == Qt::AlignRight) {
+            title->setPos(axisRect.right() - titleBoundingRect.width() / 2.0
+                          - titleBoundingRect.height() / 2.0 - titlePadding(), center.y());
+        }
 
         title->setTransformOriginPoint(titleBoundingRect.center());
         title->setRotation(270);
@@ -102,13 +133,8 @@ void VerticalAxis::updateGeometry()
         availableSpace -= titleBoundingRect.height();
     }
 
-    if (layout.isEmpty() && axis()->type() == QAbstractAxis::AxisTypeLogValue)
-        return;
-
     QList<QGraphicsItem *> lines = gridItems();
     QList<QGraphicsItem *> shades = shadeItems();
-    QList<QGraphicsItem *> minorLines = minorGridItems();
-    QList<QGraphicsItem *> minorArrows = minorArrowItems();
 
     for (int i = 0; i < layout.size(); ++i) {
         //items
@@ -301,61 +327,15 @@ void VerticalAxis::updateGeometry()
         }
 
         // check if the grid line and the axis tick should be shown
-        qreal y = gridItem->line().p1().y();
-        if ((y < gridRect.top() || y > gridRect.bottom()))
-        {
-            gridItem->setVisible(false);
-            tickItem->setVisible(false);
-        }else{
-            gridItem->setVisible(true);
-            tickItem->setVisible(true);
-        }
-
-        // add minor ticks
-        QValueAxis *valueAxis = qobject_cast<QValueAxis *>(axis());
-        if ((i + 1) != layout.size() && valueAxis) {
-            int minorTickCount = valueAxis->minorTickCount();
-            if (minorTickCount != 0) {
-                qreal minorTickDistance = (layout[i] - layout[i + 1]) / qreal(minorTickCount + 1);
-                if (axis()->isReverse())
-                    minorTickDistance = -minorTickDistance;
-                for (int j = 0; j < minorTickCount; j++) {
-                    QGraphicsLineItem *minorGridItem =
-                        static_cast<QGraphicsLineItem *>(minorLines.at(i * minorTickCount + j));
-                    QGraphicsLineItem *minorArrowItem =
-                        static_cast<QGraphicsLineItem *>(minorArrows.at(i * minorTickCount + j));
-                    minorGridItem->setLine(gridRect.left(),
-                                           gridItem->line().p1().y()
-                                           - minorTickDistance * qreal(j + 1),
-                                           gridRect.right(),
-                                           gridItem->line().p1().y()
-                                           - minorTickDistance * qreal(j + 1));
-                    if (axis()->alignment() == Qt::AlignLeft) {
-                        minorArrowItem->setLine(gridRect.left() - labelPadding() / 2,
-                                                minorGridItem->line().p1().y(),
-                                                gridRect.left(),
-                                                minorGridItem->line().p1().y());
-                    } else if (axis()->alignment() == Qt::AlignRight){
-                        minorArrowItem->setLine(gridRect.right(),
-                                                minorGridItem->line().p1().y(),
-                                                gridRect.right() + labelPadding() / 2,
-                                                minorGridItem->line().p1().y());
-                    }
-
-                    // check if the minor grid line and the axis tick should be shown
-                    qreal minorYPos = minorGridItem->line().p1().y();
-                    if (minorYPos < gridRect.top() || minorYPos > gridRect.bottom()) {
-                        minorGridItem->setVisible(false);
-                        minorArrowItem->setVisible(false);
-                    } else {
-                        minorGridItem->setVisible(true);
-                        minorArrowItem->setVisible(true);
-                    }
-                }
-            }
-        }
+        const bool gridLineVisible = (gridItem->line().p1().y() >= gridRect.top()
+                                      && gridItem->line().p1().y() <= gridRect.bottom());
+        gridItem->setVisible(gridLineVisible);
+        tickItem->setVisible(gridLineVisible);
     }
-    //begin/end grid line in case labels between
+
+    updateMinorTickGeometry();
+
+    // begin/end grid line in case labels between
     if (intervalAxis()) {
         QGraphicsLineItem *gridLine;
         gridLine = static_cast<QGraphicsLineItem *>(lines.at(layout.size()));
@@ -367,32 +347,132 @@ void VerticalAxis::updateGeometry()
     }
 }
 
-QSizeF VerticalAxis::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
+void VerticalAxis::updateMinorTickGeometry()
 {
-    Q_UNUSED(constraint);
-    QSizeF sh(0, 0);
+    if (!axis())
+        return;
 
-    if (axis()->titleText().isEmpty() || !titleItem()->isVisible())
-        return sh;
+    QVector<qreal> layout = ChartAxisElement::layout();
+    int minorTickCount = 0;
+    qreal tickSpacing = 0.0;
+    QVector<qreal> minorTickSpacings;
+    switch (axis()->type()) {
+    case QAbstractAxis::AxisTypeValue: {
+        const QValueAxis *valueAxis = qobject_cast<QValueAxis *>(axis());
 
-    switch (which) {
-    case Qt::MinimumSize: {
-        QRectF titleRect = ChartPresenter::textBoundingRect(axis()->titleFont(),
-                                                            QStringLiteral("..."));
-        sh = QSizeF(titleRect.height() + (titlePadding() * 2.0), titleRect.width());
+        minorTickCount = valueAxis->minorTickCount();
+
+        if (valueAxis->tickCount() >= 2)
+            tickSpacing = layout.at(0) - layout.at(1);
+
+        for (int i = 0; i < minorTickCount; ++i) {
+            const qreal ratio = (1.0 / qreal(minorTickCount + 1)) * qreal(i + 1);
+            minorTickSpacings.append(tickSpacing * ratio);
+        }
         break;
     }
-    case Qt::MaximumSize:
-    case Qt::PreferredSize: {
-        QRectF titleRect = ChartPresenter::textBoundingRect(axis()->titleFont(), axis()->titleText());
-        sh = QSizeF(titleRect.height() + (titlePadding() * 2.0), titleRect.width());
+    case QAbstractAxis::AxisTypeLogValue: {
+        const QLogValueAxis *logValueAxis = qobject_cast<QLogValueAxis *>(axis());
+        const qreal base = logValueAxis->base();
+        const qreal logBase = qLn(base);
+
+        minorTickCount = logValueAxis->minorTickCount();
+        if (minorTickCount < 0)
+            minorTickCount = qMax(int(qFloor(base) - 2.0), 0);
+
+        // Two "virtual" ticks are required to make sure that all minor ticks
+        // are displayed properly (even for the partially visible segments of
+        // the chart).
+        if (layout.size() >= 2) {
+            // Calculate tickSpacing as a difference between visible ticks
+            // whenever it is possible. Virtual ticks will not be correctly
+            // positioned when the layout is animating.
+            tickSpacing = layout.at(0) - layout.at(1);
+            layout.prepend(layout.at(0) + tickSpacing);
+            layout.append(layout.at(layout.size() - 1) - tickSpacing);
+        } else {
+            const qreal logMax = qLn(logValueAxis->max());
+            const qreal logMin = qLn(logValueAxis->min());
+            const qreal logExtraMaxTick = qLn(qPow(base, qFloor(logMax / logBase) + 1.0));
+            const qreal logExtraMinTick = qLn(qPow(base, qCeil(logMin / logBase) - 1.0));
+            const qreal edge = gridGeometry().bottom();
+            const qreal delta = gridGeometry().height() / qAbs(logMax - logMin);
+            const qreal extraMaxTick = edge - (logExtraMaxTick - qMin(logMin, logMax)) * delta;
+            const qreal extraMinTick = edge - (logExtraMinTick - qMin(logMin, logMax)) * delta;
+
+            // Calculate tickSpacing using one (if layout.size() == 1) or two
+            // (if layout.size() == 0) "virtual" ticks. In both cases animation
+            // will not work as expected. This should be fixed later.
+            layout.prepend(extraMinTick);
+            layout.append(extraMaxTick);
+            tickSpacing = layout.at(0) - layout.at(1);
+        }
+
+        const qreal minorTickStepValue = qFabs(base - 1.0) / qreal(minorTickCount + 1);
+        for (int i = 0; i < minorTickCount; ++i) {
+            const qreal x = minorTickStepValue * qreal(i + 1) + 1.0;
+            const qreal minorTickSpacing = tickSpacing * (qLn(x) / logBase);
+            minorTickSpacings.append(minorTickSpacing);
+        }
         break;
     }
     default:
+        // minor ticks are not supported
         break;
     }
 
-    return sh;
+    if (minorTickCount < 1 || tickSpacing == 0.0 || minorTickSpacings.count() != minorTickCount)
+        return;
+
+    for (int i = 0; i < layout.size() - 1; ++i) {
+        for (int j = 0; j < minorTickCount; ++j) {
+            const int minorItemIndex = i * minorTickCount + j;
+            QGraphicsLineItem *minorGridLineItem =
+                    static_cast<QGraphicsLineItem *>(minorGridItems().value(minorItemIndex));
+            QGraphicsLineItem *minorArrowLineItem =
+                    static_cast<QGraphicsLineItem *>(minorArrowItems().value(minorItemIndex));
+            if (!minorGridLineItem || !minorArrowLineItem)
+                continue;
+
+            const qreal minorTickSpacing = minorTickSpacings.value(j, 0.0);
+
+            qreal minorGridLineItemY = 0.0;
+            if (axis()->isReverse()) {
+                minorGridLineItemY = qFloor(gridGeometry().top() + gridGeometry().bottom()
+                                            - layout.at(i) + minorTickSpacing);
+            } else {
+                minorGridLineItemY = qCeil(layout.at(i) - minorTickSpacing);
+            }
+
+            qreal minorArrowLineItemX1;
+            qreal minorArrowLineItemX2;
+            switch (axis()->alignment()) {
+            case Qt::AlignLeft:
+                minorArrowLineItemX1 = gridGeometry().left() - labelPadding() / 2.0;
+                minorArrowLineItemX2 = gridGeometry().left();
+                break;
+            case Qt::AlignRight:
+                minorArrowLineItemX1 = gridGeometry().right();
+                minorArrowLineItemX2 = gridGeometry().right() + labelPadding() / 2.0;
+                break;
+            default:
+                minorArrowLineItemX1 = 0.0;
+                minorArrowLineItemX2 = 0.0;
+                break;
+            }
+
+            minorGridLineItem->setLine(gridGeometry().left(), minorGridLineItemY,
+                                       gridGeometry().right(), minorGridLineItemY);
+            minorArrowLineItem->setLine(minorArrowLineItemX1, minorGridLineItemY,
+                                        minorArrowLineItemX2, minorGridLineItemY);
+
+            // check if the minor grid line and the minor axis arrow should be shown
+            bool minorGridLineVisible = (minorGridLineItemY >= gridGeometry().top()
+                                         && minorGridLineItemY <= gridGeometry().bottom());
+            minorGridLineItem->setVisible(minorGridLineVisible);
+            minorArrowLineItem->setVisible(minorGridLineVisible);
+        }
+    }
 }
 
 QT_CHARTS_END_NAMESPACE

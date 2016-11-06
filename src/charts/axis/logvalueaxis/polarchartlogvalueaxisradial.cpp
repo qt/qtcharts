@@ -27,13 +27,11 @@
 **
 ****************************************************************************/
 
-#include <private/polarchartlogvalueaxisradial_p.h>
+#include <QtCharts/qlogvalueaxis.h>
+#include <QtCore/qmath.h>
 #include <private/abstractchartlayout_p.h>
 #include <private/chartpresenter_p.h>
-#include <QtCharts/QLogValueAxis>
-#include <QtCore/QtMath>
-#include <QtCore/QDebug>
-#include <cmath>
+#include <private/polarchartlogvalueaxisradial_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -41,7 +39,8 @@ PolarChartLogValueAxisRadial::PolarChartLogValueAxisRadial(QLogValueAxis *axis, 
     : PolarChartAxisRadial(axis, item)
 {
     QObject::connect(axis, SIGNAL(baseChanged(qreal)), this, SLOT(handleBaseChanged(qreal)));
-    QObject::connect(axis, SIGNAL(labelFormatChanged(QString)), this, SLOT(handleLabelFormatChanged(QString)));
+    QObject::connect(axis, SIGNAL(labelFormatChanged(QString)),
+                     this, SLOT(handleLabelFormatChanged(QString)));
 }
 
 PolarChartLogValueAxisRadial::~PolarChartLogValueAxisRadial()
@@ -50,26 +49,19 @@ PolarChartLogValueAxisRadial::~PolarChartLogValueAxisRadial()
 
 QVector<qreal> PolarChartLogValueAxisRadial::calculateLayout() const
 {
-    QLogValueAxis *logValueAxis = static_cast<QLogValueAxis *>(axis());
+    QLogValueAxis *logValueAxis = qobject_cast<QLogValueAxis *>(axis());
+
+    QVector<qreal> points;
+    points.resize(logValueAxis->tickCount());
+
     const qreal logMax = std::log10(logValueAxis->max()) / std::log10(logValueAxis->base());
     const qreal logMin = std::log10(logValueAxis->min()) / std::log10(logValueAxis->base());
     const qreal innerEdge = logMin < logMax ? logMin : logMax;
-    const qreal outerEdge = logMin > logMax ? logMin : logMax;
     const qreal delta = (axisGeometry().width() / 2.0) / qAbs(logMax - logMin);
     const qreal initialSpan = (qCeil(innerEdge) - innerEdge) * delta;
-    int tickCount = qAbs(qCeil(logMax) - qCeil(logMin));
 
-    // Extra tick if outer edge is exactly at the tick
-    if (outerEdge == qCeil(outerEdge))
-        tickCount++;
-
-    QVector<qreal> points;
-    points.resize(tickCount);
-
-    for (int i = 0; i < tickCount; ++i) {
-        qreal radialCoordinate = initialSpan + (delta * qreal(i));
-        points[i] = radialCoordinate;
-    }
+    for (int i = 0; i < logValueAxis->tickCount(); ++i)
+        points[i] = initialSpan + (delta * qreal(i));
 
     return points;
 }

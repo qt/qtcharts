@@ -27,21 +27,21 @@
 **
 ****************************************************************************/
 
-#include <private/polarchartlogvalueaxisangular_p.h>
+#include <QtCharts/qlogvalueaxis.h>
+#include <QtCore/qmath.h>
 #include <private/abstractchartlayout_p.h>
 #include <private/chartpresenter_p.h>
-#include <QtCharts/QLogValueAxis>
-#include <QtCore/QtMath>
-#include <QtCore/QDebug>
-#include <cmath>
+#include <private/polarchartlogvalueaxisangular_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-PolarChartLogValueAxisAngular::PolarChartLogValueAxisAngular(QLogValueAxis *axis, QGraphicsItem *item)
+PolarChartLogValueAxisAngular::PolarChartLogValueAxisAngular(QLogValueAxis *axis,
+                                                             QGraphicsItem *item)
     : PolarChartAxisAngular(axis, item)
 {
     QObject::connect(axis, SIGNAL(baseChanged(qreal)), this, SLOT(handleBaseChanged(qreal)));
-    QObject::connect(axis, SIGNAL(labelFormatChanged(QString)), this, SLOT(handleLabelFormatChanged(QString)));
+    QObject::connect(axis, SIGNAL(labelFormatChanged(QString)),
+                     this, SLOT(handleLabelFormatChanged(QString)));
 }
 
 PolarChartLogValueAxisAngular::~PolarChartLogValueAxisAngular()
@@ -50,21 +50,19 @@ PolarChartLogValueAxisAngular::~PolarChartLogValueAxisAngular()
 
 QVector<qreal> PolarChartLogValueAxisAngular::calculateLayout() const
 {
-    QLogValueAxis *logValueAxis = static_cast<QLogValueAxis *>(axis());
-    const qreal logMax = std::log10(logValueAxis->max()) / std::log10(logValueAxis->base());
-    const qreal logMin = std::log10(logValueAxis->min()) / std::log10(logValueAxis->base());
-    const qreal startEdge = logMin < logMax ? logMin : logMax;
-    const qreal delta = 360.0 / qAbs(logMax - logMin);
-    const qreal initialSpan = (qCeil(startEdge) - startEdge) * delta;
-    int tickCount = qAbs(qCeil(logMax) - qCeil(logMin));
+    QLogValueAxis *logValueAxis = qobject_cast<QLogValueAxis *>(axis());
 
     QVector<qreal> points;
-    points.resize(tickCount);
+    points.resize(logValueAxis->tickCount());
 
-    for (int i = 0; i < tickCount; ++i) {
-        qreal angularCoordinate = initialSpan + (delta * qreal(i));
-        points[i] = angularCoordinate;
-    }
+    const qreal logMax = std::log10(logValueAxis->max()) / std::log10(logValueAxis->base());
+    const qreal logMin = std::log10(logValueAxis->min()) / std::log10(logValueAxis->base());
+    const qreal startEdge = qMin(logMin, logMax);
+    const qreal delta = 360.0 / qAbs(logMax - logMin);
+    const qreal initialSpan = (qCeil(startEdge) - startEdge) * delta;
+
+    for (int i = 0; i < logValueAxis->tickCount(); ++i)
+        points[i] = initialSpan + (delta * qreal(i));
 
     return points;
 }

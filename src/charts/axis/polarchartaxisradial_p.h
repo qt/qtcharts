@@ -39,14 +39,15 @@
 #ifndef POLARCHARTAXISRADIAL_P_H
 #define POLARCHARTAXISRADIAL_P_H
 
+#include <QtCharts/qvalueaxis.h>
 #include <private/polarchartaxis_p.h>
-#include <QtCharts/QValueAxis>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 class PolarChartAxisRadial : public PolarChartAxis
 {
     Q_OBJECT
+
 public:
     PolarChartAxisRadial(QAbstractAxis *axis, QGraphicsItem *item, bool intervalAxis = false);
     ~PolarChartAxisRadial();
@@ -67,6 +68,9 @@ public Q_SLOTS:
     virtual void handleMinorGridPenChanged(const QPen &pen);
     virtual void handleGridLineColorChanged(const QColor &color);
     virtual void handleMinorGridLineColorChanged(const QColor &color);
+
+private:
+    void updateMinorTickGeometry();
 };
 
 QT_CHARTS_END_NAMESPACE

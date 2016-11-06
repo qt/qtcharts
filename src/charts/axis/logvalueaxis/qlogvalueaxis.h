@@ -47,6 +47,8 @@ class QT_CHARTS_EXPORT QLogValueAxis : public QAbstractAxis
     Q_PROPERTY(qreal max READ max WRITE setMax NOTIFY maxChanged)
     Q_PROPERTY(QString labelFormat READ labelFormat WRITE setLabelFormat NOTIFY labelFormatChanged)
     Q_PROPERTY(qreal base READ base WRITE setBase NOTIFY baseChanged)
+    Q_PROPERTY(int tickCount READ tickCount NOTIFY tickCountChanged)
+    Q_PROPERTY(int minorTickCount READ minorTickCount WRITE setMinorTickCount NOTIFY minorTickCountChanged)
 
 public:
     explicit QLogValueAxis(QObject *parent = Q_NULLPTR);
@@ -71,12 +73,19 @@ public:
     void setBase(qreal base);
     qreal base() const;
 
+    int tickCount() const;
+
+    void setMinorTickCount(int minorTickCount);
+    int minorTickCount() const;
+
 Q_SIGNALS:
     void minChanged(qreal min);
     void maxChanged(qreal max);
     void rangeChanged(qreal min, qreal max);
     void labelFormatChanged(const QString &format);
     void baseChanged(qreal base);
+    void tickCountChanged(int tickCount);
+    void minorTickCountChanged(int minorTickCount);
 
 private:
     Q_DECLARE_PRIVATE(QLogValueAxis)

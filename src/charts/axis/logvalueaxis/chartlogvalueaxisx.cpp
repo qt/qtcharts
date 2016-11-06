@@ -27,14 +27,12 @@
 **
 ****************************************************************************/
 
+#include <QtCharts/qlogvalueaxis.h>
+#include <QtCore/qmath.h>
+#include <QtWidgets/qgraphicslayout.h>
+#include <private/abstractchartlayout_p.h>
 #include <private/chartlogvalueaxisx_p.h>
 #include <private/chartpresenter_p.h>
-#include <QtCharts/QLogValueAxis>
-#include <private/abstractchartlayout_p.h>
-#include <QtWidgets/QGraphicsLayout>
-#include <QtCore/QtMath>
-#include <QtCore/QDebug>
-#include <cmath>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -53,22 +51,16 @@ ChartLogValueAxisX::~ChartLogValueAxisX()
 QVector<qreal> ChartLogValueAxisX::calculateLayout() const
 {
     QVector<qreal> points;
+    points.resize(m_axis->tickCount());
 
-    qreal logMax = std::log10(m_axis->max()) / std::log10(m_axis->base());
-    qreal logMin = std::log10(m_axis->min()) / std::log10(m_axis->base());
-    qreal leftEdge = logMin < logMax ? logMin : logMax;
-    qreal ceilEdge = qCeil(leftEdge);
-    int tickCount = qAbs(qCeil(logMax) - qCeil(logMin));
+    const qreal logMax = std::log10(m_axis->max()) / std::log10(m_axis->base());
+    const qreal logMin = std::log10(m_axis->min()) / std::log10(m_axis->base());
+    const qreal leftEdge = qMin(logMin, logMax);
+    const qreal ceilEdge = qCeil(leftEdge);
 
-    // If the high edge sits exactly on the tick value, add a tick
-    qreal highValue = logMin < logMax ? logMax : logMin;
-    if (qFuzzyCompare(highValue, qreal(qCeil(highValue))))
-        tickCount++;
-
-    points.resize(tickCount);
     const QRectF &gridRect = gridGeometry();
     const qreal deltaX = gridRect.width() / qAbs(logMax - logMin);
-    for (int i = 0; i < tickCount; ++i)
+    for (int i = 0; i < m_axis->tickCount(); ++i)
         points[i] = (ceilEdge + qreal(i)) * deltaX - leftEdge * deltaX + gridRect.left();
 
     return points;

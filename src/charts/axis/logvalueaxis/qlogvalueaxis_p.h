@@ -39,7 +39,7 @@
 #ifndef QLOGVALUEAXIS_P_H
 #define QLOGVALUEAXIS_P_H
 
-#include <QtCharts/QLogValueAxis>
+#include <QtCharts/qlogvalueaxis.h>
 #include <private/qabstractaxis_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
@@ -59,16 +59,19 @@ class QLogValueAxisPrivate : public QAbstractAxisPrivate
     qreal max() { return m_max; }
     void setRange(qreal min,qreal max);
 
+    void updateTickCount();
+
     protected:
     void setMin(const QVariant &min);
     void setMax(const QVariant &max);
     void setRange(const QVariant &min, const QVariant &max);
-    int tickCount() const;
 
     protected:
     qreal m_min;
     qreal m_max;
     qreal m_base;
+    int m_tickCount;
+    int m_minorTickCount;
     QString m_format;
     Q_DECLARE_PUBLIC(QLogValueAxis)
 };
