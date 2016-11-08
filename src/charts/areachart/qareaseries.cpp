@@ -43,16 +43,18 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \class QAreaSeries
     \inmodule Qt Charts
-    \brief The QAreaSeries class is used for making area charts.
+    \brief The QAreaSeries class presents data in area charts.
 
-    An area series is used to show quantitative data. It is based on line series, in the way that
+    An area series is used to show quantitative data. It is based on a line series, in the way that
     the area between the boundary lines is emphasized with color. Since the area series is based on
-    line series, QAreaSeries constructor needs a QLineSeries instance, which defines "upper"
-    boundary of the area. The area chart is drawn using the bottom of the plot area as the "lower"
-    boundary by default. Instead of the bottom of the plot area, the "lower" boundary can be
-    specified by another line. In that case QAreaSeries should be initialized with two QLineSeries
-    instances. Please note that the terms "upper" and "lower" boundary can be misleading in cases
-    where the "lower" boundary has bigger values than the "upper" one. The main point is that the
+    the line series, the QAreaSeries constructor needs a QLineSeries instance, which defines the
+    \e upper boundary of the area. The area chart is drawn using the bottom of the plot area as the
+    \e lower boundary by default. Instead of the bottom of the plot area, the lower boundary can be
+    specified by another line. In that case, QAreaSeries should be initialized with two QLineSeries
+    instances.
+
+    \note The terms \e upper and \e lower boundary can be misleading in cases where the value of the
+    lower boundary is greater than that of the upper boundary. The main point is that the
     area between these two boundary lines will be filled.
 
     See the \l {AreaChart Example} {area chart example} to learn how to create a simple area chart.
@@ -66,7 +68,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
     \inherits AbstractSeries
 
-    \brief The AreaSeries type is used for making area charts.
+    \brief Presents data in area charts.
 
     The following QML shows how to create a simple area chart:
     \snippet qmlchart/qml/qmlchart/View4.qml 1
@@ -75,7 +77,7 @@ QT_CHARTS_BEGIN_NAMESPACE
     \endfloat
     \clearfloat
 
-    \note Adding the same line series to chart and area series is not supported. The series used as
+    \note Adding the same line series to a chart and area series is not supported. The series used as
     boundary lines should be defined only for the area series.
 */
 
@@ -90,18 +92,21 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \property QAreaSeries::lowerSeries
-    The lower one of the two line series used to define are series boundaries. Note if
-    QAreaSeries was constructed without a\ lowerSeries this is null.
+    \brief The lower one of the two line series used to define area series boundaries.
+
+    \note If QAreaSeries was constructed without a\ lowerSeries, this is null.
 */
 /*!
     \qmlproperty LineSeries AreaSeries::lowerSeries
-    The lower one of the two line series used to define are series boundaries. Note if
-    AreaSeries was constructed without a\ lowerSeries this is null.
+    The lower one of the two line series used to define area series boundaries.
+
+    \note If AreaSeries was constructed without a\ lowerSeries, this is null.
 */
 
 /*!
     \property QAreaSeries::color
-    Fill (brush) color of the series. This is a convenience property for modifying the color of brush.
+    \brief The fill (brush) color of the series. This is a convenience property for modifying the
+    color of the brush.
     \sa QAreaSeries::brush()
 */
 /*!
@@ -111,7 +116,8 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \property QAreaSeries::borderColor
-    Line (pen) color of the series. This is a convenience property for modifying the color of pen.
+    \brief The line (pen) color of the series. This is a convenience property for modifying the
+    color of the pen.
     \sa QAreaSeries::pen()
 */
 /*!
@@ -121,18 +127,18 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \qmlproperty real AreaSeries::borderWidth
-    The width of the border line. By default the width is 2.0.
+    The width of the border line. By default, the width is 2.0.
 */
 
 /*!
    \fn QPen QAreaSeries::pen() const
-   \brief  Returns the pen used to draw line for this series.
+   \brief Returns the pen used to draw the line for this series.
     \sa setPen()
 */
 
 /*!
    \fn QPen QAreaSeries::brush() const
-   \brief  Returns the brush used to draw line for this series.
+   \brief Returns the brush used to draw the line for this series.
     \sa setBrush()
 */
 
@@ -143,103 +149,99 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \fn void QAreaSeries::colorChanged(QColor color)
-    \brief Signal is emitted when the fill (brush) color has changed to \a color.
+    \brief This signal is emitted when the fill (brush) color changes to \a color.
 */
 /*!
     \qmlsignal AreaSeries::onColorChanged(color color)
-    Signal is emitted when the fill (brush) color has changed to \a color.
+    This signal is emitted when the fill (brush) color changes to \a color.
 */
 
 /*!
     \fn void QAreaSeries::borderColorChanged(QColor color)
-    \brief Signal is emitted when the line (pen) color has changed to \a color.
+    \brief This signal is emitted when the line (pen) color changes to \a color.
 */
 /*!
     \qmlsignal AreaSeries::onBorderColorChanged(color color)
-    Signal is emitted when the line (pen) color has changed to \a color.
+    This signal is emitted when the line (pen) color changes to \a color.
 */
 
 /*!
     \fn void QAreaSeries::clicked(const QPointF& point)
-    \brief Signal is emitted when user clicks the \a point on area chart. The \a point is the point
-    where the press was triggered.
+    \brief This signal is emitted when the user triggers a press on \a point by clicking it in an
+    area chart.
     \sa pressed, released, doubleClicked
 */
 /*!
     \qmlsignal AreaSeries::onClicked(QPointF point)
-    Signal is emitted when user clicks the \a point on area chart. The \a point is the point where
-    the press was triggered.
+    This signal is emitted when the user triggers a press on \a point by clicking it in an
+    area chart.
     \sa onPressed, onReleased, onDoubleClicked
 */
 
 /*!
     \fn void QAreaSeries::hovered(const QPointF &point, bool state)
-    This signal is emitted when user has hovered over or away from the series. \a point shows the origin (coordinate)
-    of the hover event. \a state is true when user has hovered over the series and false when hover has moved away from
-    the series.
+    This signal is emitted when the user hovers the mouse cursor over a series or moves it away from
+    the series. \a point shows the origin (coordinate) of the hover event. \a state is \c true when
+    the cursor hovers over the series and turns \e false when it moves away from the series.
 */
 /*!
     \qmlsignal AreaSeries::onHovered(point point, bool state)
-    This signal is emitted when user has hovered over or away from the series. \a point shows the origin (coordinate)
-    of the hover event. \a state is true when user has hovered over the series and false when hover has moved away from
-    the series.
+    This signal is emitted when the user hovers the mouse cursor over a series or moves it away from
+    the series. \a point shows the origin (coordinate) of the hover event. \a state is \c true when
+    the cursor hovers over the series and turns \e false when it moves away from the series.
 */
 
 /*!
     \fn void QAreaSeries::pressed(const QPointF& point)
-    \brief Signal is emitted when user presses the \a point on area chart.
+    \brief This signal is emitted when the user presses the point specified by \a point
+    in an area chart.
     \sa clicked, released, doubleClicked
 */
 /*!
     \qmlsignal AreaSeries::onPressed(QPointF point)
-    Signal is emitted when user presses the \a point on area chart.
+    This signal is emitted when the user presses the point specified by \a point in an area chart.
     \sa onClicked, onReleased, onDoubleClicked
 */
 
 /*!
     \fn void QAreaSeries::released(const QPointF& point)
-    \brief Signal is emitted when user releases a press that was triggered on a \a point on area
-    chart.
+    \brief This signal is emitted when the user releases a press that was triggered on
+    \a point in an area chart.
     \sa pressed, clicked, doubleClicked
 */
 /*!
     \qmlsignal AreaSeries::onReleased(QPointF point)
-    Signal is emitted when user releases a press that was triggered on a \a point on area chart.
+    This signal is emitted when the user releases a press that was triggered on
+    \a point in an area chart.
     \sa onPressed, onClicked, onDoubleClicked
 */
 
 /*!
     \fn void QAreaSeries::doubleClicked(const QPointF& point)
-    \brief Signal is emitted when user doubleclicks the \a point on area chart. The \a point is the
-    point where the first press was triggered.
+    \brief This signal is emitted when the user triggers the first press in an area chart
+    by doubleclicking \a point.
     \sa pressed, released, clicked
 */
 /*!
     \qmlsignal AreaSeries::onDoubleClicked(QPointF point)
-    Signal is emitted when user doubleclicks the \a point on area chart. The \a point is the point
-    where the first press was triggered.
+    This signal is emitted when the user triggers the first press in an area chart
+    by doubleclicking \a point.
     \sa onPressed, onReleased, onClicked
 */
 
 /*!
     \fn void QAreaSeries::selected()
-    The signal is emitted if the user selects/deselects the XY series. The logic for maintaining selections should be
-    implemented by the user of QAreaSeries API.
-*/
-/*!
-    \qmlsignal AreaSeries::onSelected()
-    The signal is emitted if the user selects/deselects the XY series. The logic for maintaining selections should be
-    implemented by the user of AreaSeries API.
+    \internal
 */
 
 /*!
     \fn void QAreaSeriesPrivate::updated()
-    \brief \internal
+    \internal
 */
 
 /*!
     \property QAreaSeries::pointLabelsFormat
-    The \a format used for showing labels with series points.
+    \brief The format used for showing labels with series points.
 
     QAreaSeries supports the following format tags:
     \table
@@ -255,51 +257,51 @@ QT_CHARTS_BEGIN_NAMESPACE
     series->setPointLabelsFormat("(@xPoint, @yPoint)");
     \endcode
 
-    By default, the labels format is set to '@xPoint, @yPoint'. The labels are shown on the plot
-    area, labels on the edge of the plot area are cut. If the points are close to each other the
-    labels may overlap.
+    By default, the label format is set to \c{@xPoint, @yPoint}. The labels are shown on the plot
+    area, whereas labels on the edge of the plot area are cut. If the points are close to each
+    other, the labels may overlap.
 
     \sa QAreaSeries::pointLabelsVisible, QAreaSeries::pointLabelsFont, QAreaSeries::pointLabelsColor
 */
 /*!
     \qmlproperty string AreaSeries::pointLabelsFormat
-    The \a format used for showing labels with series points.
+    The format used for showing labels with series points.
 
     \sa QAreaSeries::pointLabelsFormat, pointLabelsVisible, pointLabelsFont, pointLabelsColor
 */
 /*!
     \fn void QAreaSeries::pointLabelsFormatChanged(const QString &format)
-    Signal is emitted when the \a format of data point labels is changed.
+    This signal is emitted when the \a format of data point labels is changed.
 */
 /*!
     \qmlsignal AreaSeries::onPointLabelsFormatChanged(string format)
-    Signal is emitted when the \a format of data point labels is changed.
+    This signal is emitted when the \a format of data point labels is changed.
 */
 
 /*!
     \property QAreaSeries::pointLabelsVisible
-    Defines the visibility for data point labels. False by default.
+    \brief The visibility of data point labels. False by default.
 
     \sa QAreaSeries::pointLabelsFormat, QAreaSeries::pointLabelsClipping
 */
 /*!
     \qmlproperty bool AreaSeries::pointLabelsVisible
-    Defines the visibility for data point labels.
+    Defines the visibility of data point labels.
 
     \sa pointLabelsFormat, pointLabelsClipping
 */
 /*!
     \fn void QAreaSeries::pointLabelsVisibilityChanged(bool visible)
-    The visibility of the data point labels is changed to \a visible.
+    This signal is emitted when the visibility of the data point labels changes to \a visible.
 */
 /*!
     \qmlsignal AreaSeries::onPointLabelsVisibilityChanged(bool visible)
-    The visibility of the data point labels is changed to \a visible.
+    This signal is emitted when the visibility of the data point labels changes to \a visible.
 */
 
 /*!
     \property QAreaSeries::pointLabelsFont
-    Defines the font used for data point labels.
+    \brief The font used for data point labels.
 
     \sa QAreaSeries::pointLabelsFormat
 */
@@ -311,39 +313,39 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 /*!
     \fn void QAreaSeries::pointLabelsFontChanged(const QFont &font);
-    The font used for data point labels is changed to \a font.
+    This signal is emitted when the font used for data point labels changes to \a font.
 */
 /*!
     \qmlsignal AreaSeries::onPointLabelsFontChanged(Font font)
-    The font used for data point labels is changed to \a font.
+    This signal is emitted when the font used for data point labels changes to \a font.
 */
 
 /*!
     \property QAreaSeries::pointLabelsColor
-    Defines the color used for data point labels. By default, the color is the color of the brush
-    defined in theme for labels.
+    \brief The color used for data point labels. By default, the color is the color of the brush
+    defined for labels in the theme.
 
     \sa QAreaSeries::pointLabelsFormat
 */
 /*!
     \qmlproperty font AreaSeries::pointLabelsColor
     Defines the color used for data point labels. By default, the color is the color of the brush
-    defined in theme for labels.
+    defined for labels in the theme.
 
     \sa pointLabelsFormat
 */
 /*!
     \fn void QAreaSeries::pointLabelsColorChanged(const QColor &color);
-    The color used for data point labels is changed to \a color.
+    This signal is emitted when the color used for data point labels changes to \a color.
 */
 /*!
     \qmlsignal AreaSeries::onPointLabelsColorChanged(Color color)
-    The color used for data point labels is changed to \a color.
+    This signal is emitted when the color used for data point labels changes to \a color.
 */
 
 /*!
     \property QAreaSeries::pointLabelsClipping
-    Defines the clipping for data point labels. True by default. The labels on the edge of the plot
+    \brief The clipping for data point labels. True by default. The labels on the edge of the plot
     area are cut when clipping is enabled.
 
     \sa pointLabelsVisible
@@ -357,17 +359,20 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 /*!
     \fn void QAreaSeries::pointLabelsClippingChanged(bool clipping)
-    The clipping of the data point labels is changed to \a clipping.
+    This signal is emitted when the clipping of the data point labels changes to \a clipping.
 */
 /*!
     \qmlsignal AreaSeries::onPointLabelsClippingChanged(bool clipping)
-    The clipping of the data point labels is changed to \a clipping.
+    This signal is emitted when the clipping of the data point labels changes to \a clipping.
 */
 
 /*!
-    Constructs area series object which is a child of \a upperSeries. Area will be spanned between \a
-    upperSeries line and \a lowerSeries line.  If no \a lowerSeries is passed to constructor, area is specified by axis x (y=0) instead.
-    When series object is added to QChartView or QChart instance ownerships is transferred.
+    Constructs an area series object that will be spanned between an \a upperSeries line and a
+    \a lowerSeries line.  If no \a lowerSeries is passed to the constructor, the x-axis is used
+    as the lower bound instead.
+
+    The QAreaSeries does not own the upper or lower series, but the ownership stays with the caller.
+    When the series object is added to QChartView or QChart, the instance ownership is transferred.
 */
 QAreaSeries::QAreaSeries(QLineSeries *upperSeries, QLineSeries *lowerSeries)
     : QAbstractSeries(*new QAreaSeriesPrivate(upperSeries, lowerSeries, this), upperSeries)
@@ -379,7 +384,7 @@ QAreaSeries::QAreaSeries(QLineSeries *upperSeries, QLineSeries *lowerSeries)
 }
 
 /*!
-    Constructs area series object without upper or lower series with \a parent object.
+    Constructs an area series object without an upper or a lower series with the \a parent object.
 */
 QAreaSeries::QAreaSeries(QObject *parent)
     : QAbstractSeries(*new QAreaSeriesPrivate(0, 0, this), parent)
@@ -449,7 +454,7 @@ QLineSeries *QAreaSeries::lowerSeries() const
 }
 
 /*!
-    Sets \a pen used for drawing area outline.
+    Sets the \a pen used for drawing the area outline.
 */
 void QAreaSeries::setPen(const QPen &pen)
 {
@@ -473,7 +478,7 @@ QPen QAreaSeries::pen() const
 }
 
 /*!
-    Sets \a brush used for filling the area.
+    Sets the \a brush used for filling the area.
 */
 void QAreaSeries::setBrush(const QBrush &brush)
 {
@@ -523,7 +528,7 @@ QColor QAreaSeries::borderColor() const
 }
 
 /*!
-    Sets if data points are \a visible and should be drawn on line.
+    Determines whether data points are \a visible and should be drawn on the line.
 */
 void QAreaSeries::setPointsVisible(bool visible)
 {
@@ -535,7 +540,7 @@ void QAreaSeries::setPointsVisible(bool visible)
 }
 
 /*!
-    Returns if the points are drawn for this series.
+    Returns whether the points are drawn for this series.
     \sa setPointsVisible()
 */
 bool QAreaSeries::pointsVisible() const
