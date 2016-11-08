@@ -42,19 +42,19 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \class QDateTimeAxis
     \inmodule Qt Charts
-    \brief The QDateTimeAxis class is used for manipulating chart's axis.
+    \brief The QDateTimeAxis class adds dates and times to a chart's axis.
 
+    QDateTimeAxis can be set up to show an axis line with tick marks, grid lines, and shades.
     The labels can be configured by setting an appropriate DateTime format.
     QDateTimeAxis works correctly with dates from 4714 BCE to 287396 CE.
-    There are also other limitiation related to QDateTime. Please refer to QDateTime documentation.
-    QDateTimeAxis can be setup to show axis line with tick marks, grid lines and shades.
+    For other limitiations related to QDateTime, see QDateTime documentation.
 
-    Note: QDateTimeAxis is disabled on platforms that define qreal as float.
+    \note QDateTimeAxis is disabled on platforms that define qreal as float.
 
     \image api_datatime_axis.png
 
     QDateTimeAxis can be used with any QXYSeries.
-    To add a data point to the series QDateTime::toMSecsSinceEpoch() is used.
+    To add a data point to the series, QDateTime::toMSecsSinceEpoch() is used:
     \code
     QLineSeries *series = new QLineSeries;
 
@@ -70,7 +70,8 @@ QT_CHARTS_BEGIN_NAMESPACE
     series->append(xValue.toMSecsSinceEpoch(), yValue);
     \endcode
 
-    Adding the series to the chart and setting up the QDateTimeAxis.
+    The following code snippet illustrates adding the series to the chart and setting up
+    QDateTimeAxis:
     \code
     QChartView *chartView = new QChartView;
     chartView->chart()->addSeries(series);
@@ -87,102 +88,117 @@ QT_CHARTS_BEGIN_NAMESPACE
     \instantiates QDateTimeAxis
     \inqmlmodule QtCharts
 
-    \brief The DateTimeAxis element is used for manipulating chart's axes.
+    \brief Adds dates and times to a chart's axis.
     \inherits AbstractAxis
 
-    The labels can be configured by setting an appropriate DateTime format.
-    Note that any date before 4714 BCE or after about 1.4 million CE may not be accurately stored.
-    DateTimeAxis can be setup to show axis line with tick marks, grid lines and shades.
+    The DateTimeAxis type can be set up to show an axis line with tick marks, grid lines,
+    and shades. The axis labels display dates and times and can be configured by setting
+    an appropriate DateTime format.
+
+    \note Any date before 4714 BCE or after about 1.4 million CE may not be accurately stored.
 */
 
 /*!
   \property QDateTimeAxis::min
-  Defines the minimum value on the axis.
-  When setting this property the max is adjusted if necessary, to ensure that the range remains valid.
+  \brief The minimum value on the axis.
+
+  When setting this property, the maximum value is adjusted if necessary, to ensure that the
+  range remains valid.
 */
 /*!
   \qmlproperty datetime DateTimeAxis::min
-  Defines the minimum value on the axis.
-  When setting this property the max is adjusted if necessary, to ensure that the range remains valid.
+  The minimum value on the axis.
+
+  When setting this property, the maximum value is adjusted if necessary, to ensure that the
+  range remains valid.
 */
 
 /*!
   \property QDateTimeAxis::max
-  Defines the maximum value on the axis.
-  When setting this property the min is adjusted if necessary, to ensure that the range remains valid.
+  \brief The maximum value on the axis.
+
+  When setting this property, the minimum value is adjusted if necessary, to ensure that the
+  range remains valid.
 */
 /*!
   \qmlproperty datetime DateTimeAxis::max
-  Defines the maximum value on the axis.
-  When setting this property the min is adjusted if necessary, to ensure that the range remains valid.
+  The maximum value on the axis.
+
+  When setting this property, the minimum value is adjusted if necessary, to ensure that the
+  range remains valid.
 */
 
 /*!
   \fn void QDateTimeAxis::minChanged(QDateTime min)
-  Axis emits signal when \a min of axis has changed.
+  This signal is emitted when the minimum value of the axis, specified by \a min, changes.
 */
 /*!
   \qmlsignal DateTimeAxis::onMinChanged(datetime min)
-  Axis emits signal when \a min of axis has changed.
+  This signal is emitted when the minimum value of the axis, specified by \a min, changes.
 */
 
 /*!
   \fn void QDateTimeAxis::maxChanged(QDateTime max)
-  Axis emits signal when \a max of axis has changed.
+  This signal is emitted when the maximum value of the axis, specified by \a max, changes.
 */
 /*!
   \qmlsignal DateTimeAxis::onMaxChanged(datetime max)
-  Axis emits signal when \a max of axis has changed.
+  This signal is emitted when the maximum value of the axis, specified by \a max, changes.
 */
 
 /*!
   \fn void QDateTimeAxis::rangeChanged(QDateTime min, QDateTime max)
-  Axis emits signal when \a min or \a max of axis has changed.
+  This signal is emitted when the minimum or maximum value of the axis, specified by \a min
+  and \a max, changes.
 */
 
 /*!
   \property QDateTimeAxis::tickCount
-  The number of tick marks for the axis.
+  \brief The number of tick marks on the axis.
 */
 
 /*!
   \qmlproperty int DateTimeAxis::tickCount
-  The number of tick marks for the axis.
+  The number of tick marks on the axis.
 */
 
 /*!
   \property QDateTimeAxis::format
-  The format string that is used when creating label for the axis out of a QDateTime object.
-  Check QDateTime documentation for information on how the string should be defined.
+  \brief The format string that is used when creating the label for the axis out of a
+  QDateTime object.
+
+  See QDateTime documentation for information on how the string should be defined.
 
   \sa QChart::locale
 */
 /*!
   \qmlproperty string DateTimeAxis::format
-  The format string that is used when creating label for the axis out of a QDateTime object.
-  Check QDateTime documentation for information on how the string should be defined.
+  The format string that is used when creating the label for the axis out of a QDateTime object.
+  See QDateTime documentation for information on how the string should be defined.
 */
 
 /*!
   \fn void QDateTimeAxis::tickCountChanged(int tickCount)
-  Axis emits signal when \a tickCount number on axis have changed.
+  This signal is emitted when the number of tick marks on the axis, specified by \a tickCount,
+  changes.
 */
 /*!
   \qmlsignal DateTimeAxis::tickCountChanged(int tickCount)
-  Axis emits signal when \a tickCount number on axis have changed.
+  This signal is emitted when the number of tick marks on the axis, specified by \a tickCount,
+  changes.
 */
 
 /*!
   \fn void QDateTimeAxis::formatChanged(QString format)
-  Axis emits signal when \a format of the axis has changed.
+  This signal is emitted when the \a format of the axis changes.
 */
 /*!
   \qmlsignal DateTimeAxis::onFormatChanged(string format)
-  Axis emits signal when \a format of the axis has changed.
+  This signal is emitted when the \a format of the axis changes.
 */
 
 /*!
-    Constructs an axis object which is a child of \a parent.
+    Constructs an axis object that is a child of \a parent.
 */
 QDateTimeAxis::QDateTimeAxis(QObject *parent) :
     QAbstractAxis(*new QDateTimeAxisPrivate(this), parent)
@@ -235,8 +251,8 @@ QDateTime QDateTimeAxis::max() const
 }
 
 /*!
-  Sets range from \a min to \a max on the axis.
-  If min is greater than max then this function returns without making any changes.
+  Sets the range on the axis from \a min to \a max.
+  If \a min is greater than \a max, this function returns without making any changes.
 */
 void QDateTimeAxis::setRange(QDateTime min, QDateTime max)
 {
@@ -263,7 +279,7 @@ QString QDateTimeAxis::format() const
 }
 
 /*!
-  Sets \a count for ticks on the axis.
+  Sets the number of tick marks on the axis to \a count.
 */
 void QDateTimeAxis::setTickCount(int count)
 {
@@ -276,7 +292,7 @@ void QDateTimeAxis::setTickCount(int count)
 
 /*!
   \fn int QDateTimeAxis::tickCount() const
-  Return number of ticks on the axis.
+  Returns the number of tick marks on the axis.
 */
 int QDateTimeAxis::tickCount() const
 {
