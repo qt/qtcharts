@@ -98,14 +98,14 @@ public:
         SeriesTypeBar,
         SeriesTypeStackedBar,
         SeriesTypePercentBar,
-        SeriesTypeBoxPlot,
-        SeriesTypeCandlestick,
         SeriesTypePie,
         SeriesTypeScatter,
         SeriesTypeSpline,
         SeriesTypeHorizontalBar,
         SeriesTypeHorizontalStackedBar,
-        SeriesTypeHorizontalPercentBar
+        SeriesTypeHorizontalPercentBar,
+        SeriesTypeBoxPlot,
+        SeriesTypeCandlestick
     };
 
 public:
