@@ -41,9 +41,12 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \class QLogValueAxis
     \inmodule Qt Charts
-    \brief The QLogValueAxis class is used for manipulating chart's axis.
+    \brief The QLogValueAxis class adds a logarithmic scale to a chart's axis.
 
-    \note If a QLogValueAxis is attached to a series with one or more points with
+    A logarithmic scale is a nonlinear scale that is based on orders of magnitude,
+    so that each tick mark on the axis is the previous tick mark multiplied by a value.
+
+    \note If QLogValueAxis is attached to a series with one or more points with
     negative or zero values on the associated dimension, the series will not be
     plotted at all. This is particularly relevant when XYModelMappers are used,
     since empty cells in models typically contain zero values.
@@ -54,10 +57,13 @@ QT_CHARTS_BEGIN_NAMESPACE
     \instantiates QLogValueAxis
     \inqmlmodule QtCharts
 
-    \brief The LogValueAxis element is used for manipulating chart's axes.
+    \brief Adds a logarithmic scale to a chart's axis.
     \inherits AbstractAxis
 
-    \note If a LogValueAxis is attached to a series with one or more points with
+    A logarithmic scale is a nonlinear scale that is based on orders of magnitude,
+    so that each tick mark on the axis is the previous tick mark multiplied by a value.
+
+    \note If a LogValueAxis type is attached to a series with one or more points with
     negative or zero values on the associated dimension, the series will not be
     plotted at all. This is particularly relevant when XYModelMappers are used,
     since empty cells in models typically contain zero values.
@@ -65,98 +71,122 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
   \property QLogValueAxis::min
-  Defines the minimum value on the axis.
-  When setting this property the max is adjusted if necessary, to ensure that the range remains valid.
-  Value has to be greater than 0.
+  \brief The minimum value on the axis.
+
+  When setting this property, the maximum value is adjusted if necessary, to ensure that
+  the range remains valid.
+  The value has to be greater than 0.
 */
 /*!
   \qmlproperty real LogValueAxis::min
-  Defines the minimum value on the axis.
-  When setting this property the max is adjusted if necessary, to ensure that the range remains valid.
-  Value has to be greater than 0.
+  The minimum value on the axis.
+
+  When setting this property, the maximum value is adjusted if necessary, to ensure that
+  the range remains valid.
+  The value has to be greater than 0.
 */
 
 /*!
   \property QLogValueAxis::max
-  Defines the maximum value on the axis.
-  When setting this property the min is adjusted if necessary, to ensure that the range remains valid.
-  Value has to be greater than 0.
+  \brief The maximum value on the axis.
+
+  When setting this property, the minimum value is adjusted if necessary, to ensure that
+  the range remains valid.
+  The value has to be greater than 0.
 */
 /*!
   \qmlproperty real LogValueAxis::max
-  Defines the maximum value on the axis.
-  When setting this property the min is adjusted if necessary, to ensure that the range remains valid.
-  Value has to be greater than 0.
+  The maximum value on the axis.
+
+  When setting this property, the minimum value is adjusted if necessary, to ensure that
+  the range remains valid.
+  The value has to be greater than 0.
 */
 
 /*!
   \property QLogValueAxis::base
-  Defines the base of the logarithm.
-  Value has to be greater than 0 and not equal 1
+  \brief The base of the logarithm.
+
+  The value has to be greater than 0 and cannot equal 1.
 */
 /*!
   \qmlproperty real LogValueAxis::base
-  Defines the maximum value on the axis.
-  Defines the base of the logarithm.
-  Value has to be greater than 0 and not equal 1
+  The base of the logarithm.
+
+  The value has to be greater than 0 and cannot equal 1.
 */
 
 /*!
   \property QLogValueAxis::labelFormat
-  Defines the label format of the axis.
-  Supported specifiers are: d, i, o, x, X, f, F, e, E, g, G, c
-  See QString::sprintf() for additional details.
+  \brief The label format of the axis.
+
+  The format string supports the following conversion specifiers, length modifiers, and flags
+  provided by \c printf() in the standard C++ library: d, i, o, x, X, f, F, e, E, g, G, c.
+
+  If QChart::localizeNumbers is \c true, the supported specifiers are limited to:
+  d, e, E, f, g, G, and i. Also, only the precision modifier is supported. The rest of the
+  formatting comes from the default QLocale of the application.
+
+  \sa QString::asprintf()
 */
 /*!
   \qmlproperty real LogValueAxis::labelFormat
-  Defines the label format of the axis.
-  Supported specifiers are: d, i, o, x, X, f, F, e, E, g, G, c
-  See QString::sprintf() for additional details.
+  The label format of the axis.
+
+  The format string supports the following conversion specifiers, length modifiers, and flags
+  provided by \c printf() in the standard C++ library: d, i, o, x, X, f, F, e, E, g, G, c.
+
+  If \l{ChartView::localizeNumbers}{ChartView.localizeNumbers} is \c true, the supported
+  specifiers are limited to: d, e, E, f, g, G, and i. Also, only the precision modifier is
+  supported. The rest of the formatting comes from the default QLocale of the application.
+
+  \sa QString::asprintf()
 */
 
 /*!
   \fn void QLogValueAxis::minChanged(qreal min)
-  Axis emits signal when \a min of axis has changed.
+  This signal is emitted when the minimum value of the axis, specified by \a min, changes.
 */
 /*!
   \qmlsignal LogValueAxis::onMinChanged(qreal min)
-  Axis emits signal when \a min of axis has changed.
+  This signal is emitted when the minimum value of the axis, specified by \a min, changes.
 */
 
 /*!
   \fn void QLogValueAxis::maxChanged(qreal max)
-  Axis emits signal when \a max of axis has changed.
+  This signal is emitted when the maximum value of the axis, specified by \a max, changes.
 */
 /*!
   \qmlsignal LogValueAxis::onMaxChanged(qreal max)
-  Axis emits signal when \a max of axis has changed.
+  This signal is emitted when the maximum value of the axis, specified by \a max, changes.
 */
 
 /*!
   \fn void QLogValueAxis::rangeChanged(qreal min, qreal max)
-  Axis emits signal when \a min or \a max of axis has changed.
+  This signal is emitted when the minimum or maximum value of the axis, specified by \a min
+  and \a max, changes.
 */
 
 /*!
   \fn void QLogValueAxis::labelFormatChanged(const QString &format)
-  Axis emits signal when \a format of axis labels has changed.
+  This signal is emitted when the \a format of axis labels changes.
 */
 /*!
   \qmlsignal LogValueAxis::labelFormatChanged(const QString &format)
-   Axis emits signal when \a format of axis labels has changed.
+   This signal is emitted when the \a format of axis labels changes.
 */
 
 /*!
   \fn void QLogValueAxis::baseChanged(qreal base)
-  Axis emits signal when \a base of logarithm of the axis has changed.
+  This signal is emitted when the \a base of the logarithm of the axis changes.
 */
 /*!
   \qmlsignal LogValueAxis::baseChanged(qreal base)
-  Axis emits signal when \a base of logarithm of the axis has changed.
+  This signal is emitted when the \a base of the logarithm of the axis changes.
 */
 
 /*!
-    Constructs an axis object which is a child of \a parent.
+    Constructs an axis object that is a child of \a parent.
 */
 QLogValueAxis::QLogValueAxis(QObject *parent) :
     QAbstractAxis(*new QLogValueAxisPrivate(this), parent)
@@ -173,7 +203,7 @@ QLogValueAxis::QLogValueAxis(QLogValueAxisPrivate &d, QObject *parent) : QAbstra
 }
 
 /*!
-    Destroys the object
+    Destroys the object.
 */
 QLogValueAxis::~QLogValueAxis()
 {
@@ -207,8 +237,8 @@ qreal QLogValueAxis::max() const
 }
 
 /*!
-  Sets range from \a min to \a max on the axis.
-  If min is greater than max then this function returns without making any changes.
+  Sets the range from \a min to \a max on the axis.
+  If \a min is greater than \a max, this function returns without making any changes.
 */
 void QLogValueAxis::setRange(qreal min, qreal max)
 {
@@ -271,7 +301,7 @@ qreal QLogValueAxis::base() const
 }
 
 /*!
-  Returns the type of the axis
+  Returns the type of the axis.
 */
 QAbstractAxis::AxisType QLogValueAxis::type() const
 {
