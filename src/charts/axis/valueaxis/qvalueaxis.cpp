@@ -43,12 +43,12 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \class QValueAxis
     \inmodule Qt Charts
-    \brief The QValueAxis class is used for manipulating chart's axis.
+    \brief The QValueAxis class adds values to a chart's axes.
 
-    ValueAxis can be setup to show axis line with tick marks, grid lines and shades.
-    Values of axis are drawn to position of ticks.
+    A value axis can be set up to show an axis line with tick marks, grid lines, and shades.
+    The values on the axis are drawn at the positions of tick marks.
 
-    Example code on how to use QValueAxis.
+    The following example code illustrates how to use the QValueAxis class:
     \code
     QChartView *chartView = new QChartView;
     QLineSeries *series = new QLineSeries;
@@ -68,12 +68,12 @@ QT_CHARTS_BEGIN_NAMESPACE
     \inqmlmodule QtCharts
 
     \inherits AbstractAxis
-    \brief The ValueAxis element is used for manipulating chart's axes
+    \brief Adds values to a chart's axes.
 
-    ValueAxis can be setup to show axis line with tick marks, grid lines and shades.
-    Values of axis are drawn to position of ticks
+    The ValueAxis type can be set up to show an axis line with tick marks, grid lines, and shades.
+    The values on the axis are drawn at the positions of tick marks.
 
-    Example about using ValueAxis:
+    The following example code illustrates how to use the ValueAxis type:
     \code
         ChartView {
             ValueAxis {
@@ -88,121 +88,139 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
   \property QValueAxis::min
-  Defines the minimum value on the axis.
-  When setting this property the max is adjusted if necessary, to ensure that the range remains valid.
+  \brief The minimum value on the axis.
+
+  When setting this property, the maximum value is adjusted if necessary, to ensure that
+  the range remains valid.
 */
 /*!
   \qmlproperty real ValueAxis::min
-  Defines the minimum value on the axis.
-  When setting this property the max is adjusted if necessary, to ensure that the range remains valid.
+  The minimum value on the axis.
+
+  When setting this property, the maximum value is adjusted if necessary, to ensure that
+  the range remains valid.
 */
 
 /*!
   \property QValueAxis::max
-  Defines the maximum value on the axis.
-  When setting this property the min is adjusted if necessary, to ensure that the range remains valid.
+  \brief The maximum value on the axis.
+
+  When setting this property, the minimum value is adjusted if necessary, to ensure that
+  the range remains valid.
 */
 /*!
   \qmlproperty real ValueAxis::max
-  Defines the maximum value on the axis.
-  When setting this property the min is adjusted if necessary, to ensure that the range remains valid.
+  The maximum value on the axis.
+
+  When setting this property, the minimum value is adjusted if necessary, to ensure that
+  the range remains valid.
 */
 
 /*!
   \property QValueAxis::tickCount
-  Defines the number of ticks on the axis. This indicates how many grid lines are drawn on the
-  chart. The default value is 5, and it can not be below 2.
+  \brief The number of tick marks on the axis. This indicates how many grid lines are drawn on the
+  chart. The default value is 5, and the number cannot be less than 2.
 */
 /*!
   \qmlproperty int ValueAxis::tickCount
-   Defines the number of ticks on the axis. This indicates how many grid lines are drawn on the
-  chart. The default value is 5, and it can not be below 2.
+  The number of tick marks on the axis. This indicates how many grid lines are drawn on the
+  chart. The default value is 5, and the number cannot be less than 2.
 */
 
 /*!
   \property QValueAxis::minorTickCount
-  Defines the number of minor ticks on the axis. This indicates how many grid lines are drawn
+  \brief The number of minor tick marks on the axis. This indicates how many grid lines are drawn
   between major ticks on the chart. Labels are not drawn for minor ticks. The default value is 0.
 */
 /*!
   \qmlproperty int ValueAxis::minorTickCount
-  Defines the number of minor ticks on the axis. This indicates how many grid lines are drawn
+  The number of minor tick marks on the axis. This indicates how many grid lines are drawn
   between major ticks on the chart. Labels are not drawn for minor ticks. The default value is 0.
 */
 
 /*!
   \property QValueAxis::labelFormat
-  Defines the label format of the axis.
-  Supported specifiers are: d, i, o, x, X, f, F, e, E, g, G, and c.
-  See QString::sprintf() for additional details.
+  \brief The label format of the axis.
 
-  If the QChart::localizeNumbers is \c{true}, the supported specifiers are limited to: d, e, E, f,
-  g, G, and i. Also, only the precision modifier is supported. The rest of the formatting comes from
-  the default QLocale of the application.
+  The format string supports the following conversion specifiers, length modifiers, and flags
+  provided by \c printf() in the standard C++ library: d, i, o, x, X, f, F, e, E, g, G, c.
+
+  If QChart::localizeNumbers is \c true, the supported specifiers are limited to:
+  d, e, E, f, g, G, and i. Also, only the precision modifier is supported. The rest of the
+  formatting comes from the default QLocale of the application.
+
+  \sa QString::asprintf()
 */
 /*!
   \qmlproperty real ValueAxis::labelFormat
-  Defines the label format of the axis.
-  Supported specifiers are: d, i, o, x, X, f, F, e, E, g, G, and c.
-  See QString::sprintf() for additional details.
 
-  If the ChartView::localizeNumbers is \c{true}, the supported specifiers are limited to: d, e, E, f,
-  g, G, and i. Also, only the precision modifier is supported. The rest of the formatting comes from
-  the default QLocale of the application.
+  The format string supports the following conversion specifiers, length modifiers, and flags
+  provided by \c printf() in the standard C++ library: d, i, o, x, X, f, F, e, E, g, G, c.
+
+  If \l{ChartView::localizeNumbers}{ChartView.localizeNumbers} is \c true, the supported
+  specifiers are limited to: d, e, E, f, g, G, and i. Also, only the precision modifier is
+  supported. The rest of the formatting comes from the default QLocale of the application.
+
+  \sa QString::asprintf()
 */
 
 /*!
   \fn void QValueAxis::minChanged(qreal min)
-  Axis emits signal when \a min of axis has changed.
+  This signal is emitted when the minimum value of the axis, specified by \a min, changes.
 */
 /*!
   \qmlsignal ValueAxis::onMinChanged(real min)
-  Axis emits signal when \a min of axis has changed.
+  This signal is emitted when the minimum value of the axis, specified by \a min, changes.
 */
 
 /*!
   \fn void QValueAxis::maxChanged(qreal max)
-  Axis emits signal when \a max of axis has changed.
+  This signal is emitted when the maximum value of the axis, specified by \a max, changes.
 */
 /*!
   \qmlsignal ValueAxis::onMaxChanged(real max)
-  Axis emits signal when \a max of axis has changed.
+  This signal is emitted when the maximum value of the axis, specified by \a max, changes.
 */
 
 /*!
   \fn void QValueAxis::tickCountChanged(int tickCount)
-  Axis emits signal when \a tickCount of axis has changed.
+  This signal is emitted when the number of tick marks on the axis, specified by \a tickCount,
+  changes.
 */
 /*!
   \qmlsignal ValueAxis::tickCountChanged(int tickCount)
-  Axis emits signal when \a tickCount of axis has changed.
+  This signal is emitted when the number of tick marks on the axis, specified by \a tickCount,
+  changes.
 */
 
 /*!
   \fn void QValueAxis::minorTickCountChanged(int minorTickCount)
-  Axis emits signal when \a minorTickCount of axis has changed.
+  This signal is emitted when the number of minor tick marks on the axis, specified by
+  \a minorTickCount, changes.
 */
 /*!
   \qmlsignal ValueAxis::minorTickCountChanged(int minorTickCount)
-  Axis emits signal when \a minorTickCount of axis has changed.
+  This signal is emitted when the number of minor tick marks on the axis, specified by
+  \a minorTickCount, changes.
 */
 
 /*!
   \fn void QValueAxis::rangeChanged(qreal min, qreal max)
-  Axis emits signal when \a min or \a max of axis has changed.
+  This signal is emitted when the minimum or maximum value of the axis, specified by \a min
+  and \a max, changes.
 */
 
 /*!
   \fn void QValueAxis::labelFormatChanged(const QString &format)
-  Axis emits signal when \a format of axis labels has changed.
+  This signal is emitted when the \a format of axis labels changes.
 */
 /*!
   \qmlsignal ValueAxis::labelFormatChanged(const QString &format)
-  Axis emits signal when \a format of axis labels has changed.
+  This signal is emitted when the \a format of axis labels changes.
 */
 
 /*!
-    Constructs an axis object which is a child of \a parent.
+    Constructs an axis object that is a child of \a parent.
 */
 QValueAxis::QValueAxis(QObject *parent) :
     QAbstractAxis(*new QValueAxisPrivate(this), parent)
@@ -220,7 +238,7 @@ QValueAxis::QValueAxis(QValueAxisPrivate &d, QObject *parent)
 }
 
 /*!
-    Destroys the object
+    Destroys the object.
 */
 QValueAxis::~QValueAxis()
 {
@@ -254,8 +272,8 @@ qreal QValueAxis::max() const
 }
 
 /*!
-  Sets range from \a min to \a max on the axis.
-  If min is greater than max then this function returns without making any changes.
+  Sets the range from \a min to \a max on the axis.
+  If \a min is greater than \a max, this function returns without making any changes.
 */
 void QValueAxis::setRange(qreal min, qreal max)
 {
@@ -307,7 +325,7 @@ QString QValueAxis::labelFormat() const
 }
 
 /*!
-  Returns the type of the axis
+  Returns the type of the axis.
 */
 QAbstractAxis::AxisType QValueAxis::type() const
 {
@@ -315,9 +333,10 @@ QAbstractAxis::AxisType QValueAxis::type() const
 }
 
 /*!
-    This method modifies range and number of ticks on the axis to look "nice". Algorithm considers numbers that
-    can be expressed as form of 1*10^n, 2* 10^n or 5*10^n as a nice numbers. These numbers are used for spacing the ticks.
-    This method will modify the current range and number of ticks.
+    Modifies the current range and number of tick marks on the axis to look \e nice. The algorithm
+    considers numbers that can be expressed as a form of 1*10^n, 2* 10^n, or 5*10^n to be
+    nice numbers. These numbers are used for setting spacing for the tick marks.
+
     \sa setRange(), setTickCount()
 */
 void QValueAxis::applyNiceNumbers()
