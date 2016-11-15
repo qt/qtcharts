@@ -39,11 +39,13 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \class QPercentBarSeries
     \inmodule Qt Charts
-    \brief Series for creating percent bar chart.
+    \brief The QPercentBarSeries class presents a series of categorized data as
+    a percentage of each category.
 
-    QPercentBarSeries represents a series of data shown as bars. The purpose of this class is to
-    draw bars as stacks, where each bar is shown as percentage of all bars in that category.
-    QPercentBarSeries groups the data from sets to categories, which are defined by a QStringList.
+    This class draws data as a series of uniformly sized vertically stacked bars, with one
+    bar per category. Each bar set added to the series contributes a single segment to each
+    stacked bar. The segment size corresponds to the percentage of the segment value compared
+    with the total value of all segments in the stack.
     Bars with zero value are not drawn.
 
     See the \l {PercentbarChart Example} {percent bar chart example} to learn how to create a
@@ -59,9 +61,15 @@ QT_CHARTS_BEGIN_NAMESPACE
 
     \inherits AbstractBarSeries
 
-    \brief Series for creating persent bar chart.
+    \brief Presents a series of categorized data as a percentage of each category.
 
-    The following QML shows how to create a simple percent bar chart:
+    The data is drawn as a series of uniformly sized vertically stacked bars, with one
+    bar per category. Each bar set added to the series contributes a single segment to each
+    stacked bar. The segment size corresponds to the percentage of the segment value compared
+    with the total value of all segments in the stack.
+    Bars with zero value are not drawn.
+
+    The following QML code snippet shows how to create a simple percent bar chart:
     \snippet qmlchart/qml/qmlchart/View8.qml 1
     \beginfloatleft
     \image examples_qmlchart8.png
@@ -70,8 +78,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
-    Constructs empty QPercentBarSeries.
-    QPercentBarSeries is QObject which is a child of a \a parent.
+    Constructs an empty vertical percent bar series that is a QObject and a child of \a parent.
 */
 QPercentBarSeries::QPercentBarSeries(QObject *parent)
     : QAbstractBarSeries(*new QPercentBarSeriesPrivate(this), parent)
@@ -79,7 +86,7 @@ QPercentBarSeries::QPercentBarSeries(QObject *parent)
 }
 
 /*!
-    Destructor. Removes series from chart.
+    Removes the bar series from the chart.
 */
 QPercentBarSeries::~QPercentBarSeries()
 {
@@ -89,7 +96,7 @@ QPercentBarSeries::~QPercentBarSeries()
 }
 
 /*!
-    Returns QAbstractSeries::SeriesTypePercentBar.
+    Returns the vertical percent bar series.
 */
 QAbstractSeries::SeriesType QPercentBarSeries::type() const
 {

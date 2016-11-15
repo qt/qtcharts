@@ -39,11 +39,10 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \class QStackedBarSeries
     \inmodule Qt Charts
-    \brief Series for creating stacked bar chart.
+    \brief The QStackedBarSeries class presents a series of data as vertically stacked bars,
+    with one bar per category.
 
-    QStackedBarSeries represents a series of data shown as bars. The purpose of this class is to draw bars
-    as stacks, where bars in same category are stacked on top of each other.
-    QStackedBarSeries groups the data from sets to categories, which are defined by QStringList.
+    Each bar set added to the series contributes a single segment to each stacked bar.
 
     See the \l {StackedbarChart Example} {stacked bar chart example} to learn how to create a stacked bar chart.
     \image examples_stackedbarchart.png
@@ -58,7 +57,9 @@ QT_CHARTS_BEGIN_NAMESPACE
 
     \inherits AbstractBarSeries
 
-    \brief Series for creating stacked bar chart.
+    \brief Presents a series of data as vertically stacked bars, with one bar per category.
+
+    Each bar set added to the series contributes a single segment to each stacked bar.
 
     The following QML shows how to create a simple stacked bar chart:
     \snippet qmlchart/qml/qmlchart/View7.qml 1
@@ -69,8 +70,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
-    Constructs empty QStackedBarSeries.
-    QStackedBarSeries is QObject which is a child of a \a parent.
+    Constructs an empty bar series that is a QObject and a child of \a parent.
 */
 QStackedBarSeries::QStackedBarSeries(QObject *parent)
     : QAbstractBarSeries(*new QStackedBarSeriesPrivate(this), parent)
@@ -78,7 +78,7 @@ QStackedBarSeries::QStackedBarSeries(QObject *parent)
 }
 
 /*!
-    Destructor. Removes series from chart.
+    Removes the bar series from the chart.
 */
 QStackedBarSeries::~QStackedBarSeries()
 {
@@ -87,7 +87,7 @@ QStackedBarSeries::~QStackedBarSeries()
         d->m_chart->removeSeries(this);
 }
 /*!
-    Returns QAbstractSeries::SeriesTypeStackedBar.
+    Returns the stacked bar series.
 */
 QAbstractSeries::SeriesType QStackedBarSeries::type() const
 {

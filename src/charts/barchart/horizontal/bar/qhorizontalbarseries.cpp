@@ -41,11 +41,11 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \class QHorizontalBarSeries
     \inmodule Qt Charts
-    \brief Series for creating horizontal bar chart.
+    \brief The QHorizontalBarSeries class presents a series of data as horizontal bars grouped by
+    category.
 
-    QHorizontalBarSeries represents a series of data shown as bars. The purpose of this class is to draw bars
-    as groups, where bars in same category are grouped next to each other. QHorizontalBarSeries groups the data
-    from sets to categories, which are defined by a QStringList.
+    This class draws data as a series of horizontal bars grouped by category, with one bar per
+    category from each bar set added to the series.
 
     See the \l {HorizontalBarChart Example} {horizontal bar chart example} to learn how to create a horizontal bar chart.
     \image examples_horizontalbarchart.png
@@ -59,9 +59,12 @@ QT_CHARTS_BEGIN_NAMESPACE
 
     \inherits AbstractBarSeries
 
-    \brief Series type for creating horizontal bar chart.
+    \brief Presents a series of data as horizontal bars grouped by category.
 
-    The following QML shows how to create a simple horizontal bar chart:
+    The data is drawn as a series of horizontal bars grouped by category, with one bar per
+    category from each bar set added to the series.
+
+    The following QML code snippet shows how to create a simple horizontal bar chart:
     \snippet qmlchart/qml/qmlchart/View9.qml 1
     \beginfloatleft
     \image examples_qmlchart9.png
@@ -70,8 +73,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
-    Constructs empty QHorizontalBarSeries.
-    QHorizontalBarSeries is QObject which is a child of a \a parent.
+    Constructs an empty horizontal bar series that is a QObject and a child of \a parent.
 */
 QHorizontalBarSeries::QHorizontalBarSeries(QObject *parent)
     : QAbstractBarSeries(*new QHorizontalBarSeriesPrivate(this), parent)
@@ -79,8 +81,7 @@ QHorizontalBarSeries::QHorizontalBarSeries(QObject *parent)
 }
 
 /*!
-    Destructor.
-    Removes series from chart.
+    Removes the horizontal bar series from the chart.
 */
 QHorizontalBarSeries::~QHorizontalBarSeries()
 {
@@ -90,7 +91,7 @@ QHorizontalBarSeries::~QHorizontalBarSeries()
 }
 
 /*!
-    Returns QChartSeries::SeriesTypeHorizontalBar.
+    Returns the horizontal bar series.
 */
 QAbstractSeries::SeriesType QHorizontalBarSeries::type() const
 {

@@ -40,11 +40,10 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \class QBarSeries
     \inmodule Qt Charts
-    \brief Series for creating bar chart.
+    \brief The QBarSeries class presents a series of data as vertical bars grouped by category.
 
-    QBarSeries represents a series of data shown as bars. The purpose of this class is to draw bars
-    as groups, where bars in same category are grouped next to each other. QBarSeries groups the data
-    from sets to categories, which are defined by a QStringList.
+    This class draws data as a series of vertical bars grouped by category, with one bar per
+    category from each bar set added to the series.
 
     See the \l {BarChart Example} {bar chart example} to learn how to create a grouped bar chart.
     \image examples_barchart.png
@@ -58,9 +57,12 @@ QT_CHARTS_BEGIN_NAMESPACE
 
     \inherits AbstractBarSeries
 
-    \brief Series for creating bar chart.
+    \brief Presents a series of data as vertical bars grouped by category.
 
-    The following QML shows how to create a simple grouped bar chart:
+    The data is drawn as a series of vertical bars grouped by category, with one bar per
+    category from each bar set added to the series.
+
+    The following QML code snippet shows how to create a simple grouped bar chart:
     \snippet qmlchart/qml/qmlchart/View6.qml 1
     \beginfloatleft
     \image examples_qmlchart6.png
@@ -69,8 +71,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
-    Constructs empty QBarSeries.
-    QBarSeries is QObject which is a child of a \a parent.
+    Constructs an empty bar series that is a QObject and a child of \a parent.
 */
 QBarSeries::QBarSeries(QObject *parent)
     : QAbstractBarSeries(*new QBarSeriesPrivate(this), parent)
@@ -79,7 +80,7 @@ QBarSeries::QBarSeries(QObject *parent)
 }
 
 /*!
-    Returns QAbstractSeries::SeriesTypeBar.
+    Returns the bar series.
 */
 QAbstractSeries::SeriesType QBarSeries::type() const
 {
@@ -87,7 +88,7 @@ QAbstractSeries::SeriesType QBarSeries::type() const
 }
 
 /*!
-    Destructor. Removes series from chart.
+    Removes the bar series from the chart.
 */
 QBarSeries::~QBarSeries()
 {
