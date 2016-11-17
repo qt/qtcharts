@@ -79,6 +79,12 @@ public Q_SLOTS:
     void setAnimation(PieAnimation *animation);
     ChartAnimation *animation() const;
 
+    void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
+
 private:
     PieSliceData updateSliceGeometry(QPieSlice *slice);
 
