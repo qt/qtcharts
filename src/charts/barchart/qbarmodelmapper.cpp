@@ -36,6 +36,16 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
+/*!
+    \class QBarModelMapper
+    \inmodule Qt Charts
+    \brief The QBarModelMapper class is the base class for model mapper classes.
+    \internal
+
+    Model mappers enable using a data model derived from the QAbstractItemModel class
+    as a data source for a chart.
+*/
+
 QBarModelMapper::QBarModelMapper(QObject *parent) :
     QObject(parent),
     d_ptr(new QBarModelMapperPrivate(this))
