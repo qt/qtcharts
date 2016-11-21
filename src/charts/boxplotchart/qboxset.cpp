@@ -36,93 +36,103 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \class QBoxSet
     \inmodule Qt Charts
-    \brief Building block for box-and-whiskers chart.
+    \brief The QBoxSet class represents one item in a box-and-whiskers chart.
 
-    QBoxSet represents one box-and-whiskers item. It takes five values to create a graphical representation
-    of range and three medians. There are two ways to give the values. The first one is with constructor
-    or stream operator (<<). The values have to be given in the following order: lower extreme,
-    lower quartile, median, upper quartile and upper extreme. The Second method is to create an empty QBoxSet instance and
-    give the values using setValue method.
+    A box-and-whiskers item is a graphical representation of a range and three median values
+    that is constructed from five different values. There are two ways to specify the values.
+    The first one is by using a constructor or stream operator (<<). The values have to be
+    specified in the following order: lower extreme, lower quartile, median, upper quartile,
+    and upper extreme.
+
+    The second way is to create an empty QBoxSet instance and specify the values using the
+    setValue() method.
+
+    See the \l{Box and Whiskers Example}{box-and-whiskers chart example} to learn how to
+    create a box-and-whiskers chart.
 
     \sa QBoxPlotSeries
 */
 /*!
     \enum QBoxSet::ValuePositions
 
-    \value LowerExtreme
-    \value LowerQuartile
-    \value Median
-    \value UpperQuartile
-    \value UpperExtreme
+    This enum type defines the values of a box-and-whiskers item:
+
+    \value LowerExtreme The smallest value of the box-and-whiskers item.
+    \value LowerQuartile The median value of the lower half of the box-and-whiskers item.
+    \value Median The median value of the box-and-whiskers item.
+    \value UpperQuartile The median value of the upper half of the box-and-whiskers item.
+    \value UpperExtreme The largest value of the box-and-whiskers item.
 */
 /*!
     \property QBoxSet::pen
-    \brief Defines the pen used by the box-and-whiskers set.
+    \brief The pen used to draw the lines of the box-and-whiskers item.
 */
 /*!
     \property QBoxSet::brush
-    \brief Defines the brush used by the box-and-whiskers set.
+    \brief The brush used fill the box of the box-and-whiskers item.
 */
 
 /*!
     \qmlproperty QString BoxSet::brushFilename
-    The name of the file used as a brush for the box-and-whiskers set.
+    The name of the file used as a brush for the box-and-whiskers item.
 */
 
 /*!
     \fn void QBoxSet::clicked()
-    The signal is emitted if the user clicks with a mouse on top of box-and-whisker item.
+    This signal is emitted when the user clicks a box-and-whiskers item in the chart.
 */
 
 /*!
     \fn void QBoxSet::pressed()
-    The signal is emitted if the user presses with a mouse on top of box-and-whisker item.
+    This signal is emitted when the user clicks a box-and-whiskers item in the chart
+    and holds down the mouse button.
 */
 
 /*!
     \fn void QBoxSet::released()
-    The signal is emitted if the user releases with a mouse on top of box-and-whisker item.
+    This signal is emitted when the user releases the mouse press on a box-and-whiskers item.
 */
 
 /*!
     \fn void QBoxSet::doubleClicked()
-    The signal is emitted if the user doubleclicks with a mouse on top of box-and-whisker item.
+    This signal is emitted when the user double-clicks a box-and-whiskers item.
 */
 
 /*!
     \fn void QBoxSet::hovered(bool status)
 
-    The signal is emitted if mouse is hovered on top of box-and-whisker item.
-    Parameter \a status is true, if mouse entered on top of item, false if mouse left from top of item.
+    This signal is emitted when a mouse is hovered over a box-and-whiskers item in a chart.
+    When the mouse moves over the item, \a status turns \c true, and when the mouse moves
+    away again, it turns \c false.
 */
 /*!
     \fn void QBoxSet::penChanged()
-    This signal is emitted when the pen of the box-and-whisker item has changed.
+    This signal is emitted when the pen of the box-and-whiskers item changes.
     \sa pen
 */
 /*!
     \fn void QBoxSet::brushChanged()
-    This signal is emitted when the brush of the box-and-whisker item has changed.
+    This signal is emitted when the brush of the box-and-whiskers item changes.
     \sa brush
 */
 /*!
     \fn void QBoxSet::valuesChanged()
-    This signal is emitted when multiple values have been changed on the box-and-whisker item.
+    This signal is emitted when multiple values of the box-and-whiskers item change.
     \sa append()
 */
 /*!
     \fn void QBoxSet::valueChanged(int index)
-    This signal is emitted values the value in the box-and-whisker item has been modified.
-    Parameter \a index indicates the position of the modified value.
+    This signal is emitted when the value of the box-and-whiskers item specified by
+    \a index is modified.
     \sa at()
 */
 /*!
     \fn void QBoxSet::cleared()
-    This signal is emitted when all the values on the set are cleared to 0.
+    This signal is emitted when all the values of the box-and-whiskers item are set to 0.
 */
 
 /*!
-    Constructs QBoxSet with optional \a label and parent of \a parent
+    Constructs a box-and-whiskers item with the optional label \a label and parent \a parent.
 */
 QBoxSet::QBoxSet(const QString label, QObject *parent)
     : QObject(parent),
@@ -131,8 +141,9 @@ QBoxSet::QBoxSet(const QString label, QObject *parent)
 }
 
 /*!
-    Constructs QBoxSet with given ordered values. \a le for lower extreme, \a lq for lower quartile, \a m for median,
-    \a uq for upper quartile and \a ue for upper quartile. \a label and \a parent are optional.
+    Constructs a box-and-whiskers item with the following ordered values: \a le specifies the
+    lower extreme, \a lq the lower quartile, \a m the median, \a uq the upper quartile, and
+    \a ue the upper quartile. Optionally, the \a label and \a parent can be specified.
  */
 QBoxSet::QBoxSet(const qreal le, const qreal lq, const qreal m, const qreal uq, const qreal ue, const QString label, QObject *parent)
     : QObject(parent),
@@ -146,14 +157,14 @@ QBoxSet::QBoxSet(const qreal le, const qreal lq, const qreal m, const qreal uq, 
 }
 
 /*!
-    Destroys the boxset
+    Destroys the a box-and-whiskers item.
 */
 QBoxSet::~QBoxSet()
 {
 }
 
 /*!
-    Appends new value \a value to the end of set.
+    Appends the new value specified by \a value to the end of the box-and-whiskers item.
 */
 void QBoxSet::append(const qreal value)
 {
@@ -162,8 +173,7 @@ void QBoxSet::append(const qreal value)
 }
 
 /*!
-    Appends a list of reals to set. Works like append with single real value. The \a values in list
-    are appended to end of boxset.
+    Appends a list of real values specified by \a values to the end of the box-and-whiskers item.
     \sa append()
 */
 void QBoxSet::append(const QList<qreal> &values)
@@ -173,7 +183,7 @@ void QBoxSet::append(const QList<qreal> &values)
 }
 
 /*!
-    Sets new \a label for the category of the set.
+    Sets the label specified by \a label for the category of the box-and-whiskers item.
 */
 void QBoxSet::setLabel(const QString label)
 {
@@ -181,7 +191,7 @@ void QBoxSet::setLabel(const QString label)
 }
 
 /*!
-    Returns the label of the the category of the set.
+    Returns the label of the category of the box-and-whiskers item.
 */
 QString QBoxSet::label() const
 {
@@ -189,7 +199,8 @@ QString QBoxSet::label() const
 }
 
 /*!
-    Convenience operator. Same as append, with real \a value.
+    A convenience operator for appending the real value specified by \a value to the end
+    of the box-and-whiskers item.
     \sa append()
 */
 QBoxSet &QBoxSet::operator << (const qreal &value)
@@ -199,7 +210,8 @@ QBoxSet &QBoxSet::operator << (const qreal &value)
 }
 
 /*!
-    Sets a new \a value on the \a index position. For \a index ValuePositions can be used.
+    Sets the value specified by \a value in the position specified by \a index.
+    The index can be specified by using the ValuePositions enumeration values.
 */
 void QBoxSet::setValue(const int index, const qreal value)
 {
@@ -208,7 +220,7 @@ void QBoxSet::setValue(const int index, const qreal value)
 }
 
 /*!
-    Sets all values on the set to 0.
+    Sets all the values of the box-and-whiskers item to 0.
  */
 void QBoxSet::clear()
 {
@@ -217,8 +229,9 @@ void QBoxSet::clear()
 }
 
 /*!
-    Returns value of set indexed by \a index. For \a index ValuePositions can be used.
-    If the index is out of bounds 0.0 is returned.
+    Returns the value of the box-and-whiskers item specified by \a index.
+    The index can be specified by using ValuePositions enumeration values.
+    If the index is out of bounds, 0.0 is returned.
 */
 qreal QBoxSet::at(const int index) const
 {
@@ -228,8 +241,9 @@ qreal QBoxSet::at(const int index) const
 }
 
 /*!
-    Returns value of set indexed by \a index. For \a index ValuePositions can be used.
-    If the index is out of bounds 0.0 is returned.
+    Returns the value of the box-and-whiskers item specified by \a index.
+    The index can be specified by using ValuePositions enumeration values.
+    If the index is out of bounds, 0.0 is returned.
 */
 qreal QBoxSet::operator [](const int index) const
 {
@@ -237,7 +251,7 @@ qreal QBoxSet::operator [](const int index) const
 }
 
 /*!
-    Returns count of values appended to the set.
+    Returns the number of values appended to the box-and-whiskers item.
 */
 int QBoxSet::count() const
 {
@@ -245,7 +259,7 @@ int QBoxSet::count() const
 }
 
 /*!
-    Sets pen for set. Boxes of this set are drawn using \a pen
+    Sets the pen used to draw the box-and-whiskers item to \a pen.
 */
 void QBoxSet::setPen(const QPen &pen)
 {
@@ -257,7 +271,7 @@ void QBoxSet::setPen(const QPen &pen)
 }
 
 /*!
-    Returns pen of the set.
+    Returns the pen used to draw the box-and-whiskers item.
 */
 QPen QBoxSet::pen() const
 {
@@ -265,7 +279,7 @@ QPen QBoxSet::pen() const
 }
 
 /*!
-    Sets brush for the set. Boxes of this set are drawn using \a brush
+    Sets the brush used to fill the box-and-whiskers item to \a brush.
 */
 void QBoxSet::setBrush(const QBrush &brush)
 {
@@ -277,7 +291,7 @@ void QBoxSet::setBrush(const QBrush &brush)
 }
 
 /*!
-    Returns brush of the set.
+    Returns the brush used to fill the box-and-whiskers item.
 */
 QBrush QBoxSet::brush() const
 {
