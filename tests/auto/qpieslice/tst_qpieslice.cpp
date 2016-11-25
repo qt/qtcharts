@@ -279,6 +279,7 @@ void tst_qpieslice::hoverSignal()
     // Just for different signals.
 
     SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
+    SKIP_IF_FLAKY_MOUSE_MOVE();
 
     // add some slices
     QPieSeries *series = new QPieSeries();

@@ -79,6 +79,8 @@ public Q_SLOTS:
     void setAnimation(PieAnimation *animation);
     ChartAnimation *animation() const;
 
+    // From ChartItem
+    void cleanup();
 private:
     PieSliceData updateSliceGeometry(QPieSlice *slice);
 

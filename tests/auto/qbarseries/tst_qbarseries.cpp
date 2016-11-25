@@ -627,6 +627,7 @@ void tst_QBarSeries::mousehovered_data()
 void tst_QBarSeries::mousehovered()
 {
     SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
+    SKIP_IF_FLAKY_MOUSE_MOVE();
 
     QBarSeries* series = new QBarSeries();
 

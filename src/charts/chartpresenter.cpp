@@ -146,7 +146,7 @@ void ChartPresenter::handleSeriesRemoved(QAbstractSeries *series)
 {
     ChartItem *chart  = series->d_ptr->m_item.take();
     chart->hide();
-    chart->disconnect();
+    chart->cleanup();
     series->disconnect(chart);
     chart->deleteLater();
     if (chart->animation())

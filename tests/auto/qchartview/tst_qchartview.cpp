@@ -143,6 +143,9 @@ void tst_QChartView::rubberBand_data()
 
 void tst_QChartView::rubberBand()
 {
+    SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
+    SKIP_IF_FLAKY_MOUSE_MOVE();
+
     QFETCH(QChartView::RubberBands, rubberBand);
     QFETCH(int, Xcount);
     QFETCH(int, Ycount);

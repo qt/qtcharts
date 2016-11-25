@@ -78,6 +78,9 @@ void tst_QAreaSeries::init()
     m_axisY = new QValueAxis;
     m_axisX->setRange(0, 4);
     m_axisY->setRange(0, 10);
+    // Hide axes so they don't confuse color checks
+    m_axisX->setVisible(false);
+    m_axisY->setVisible(false);
     m_chart->addAxis(m_axisX, Qt::AlignBottom);
     m_chart->addAxis(m_axisY, Qt::AlignRight);
 }
