@@ -373,6 +373,14 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
         return;
 
     QRectF clipRect = QRectF(QPointF(0, 0), domain()->size());
+    // Adjust clip rect half a pixel in required dimensions to make it include lines along the
+    // plot area edges, but never increase clip so much that any portion of the line is draw beyond
+    // the plot area.
+    const qreal x1 = pos().x() - int(pos().x());
+    const qreal y1 = pos().y() - int(pos().y());
+    const qreal x2 = (clipRect.width() + 0.5) - int(clipRect.width() + 0.5);
+    const qreal y2 = (clipRect.height() + 0.5) - int(clipRect.height() + 0.5);
+    clipRect.adjust(-x1, -y1, qMax(x1, x2), qMax(y1, y2));
 
     painter->save();
     painter->setPen(m_linePen);

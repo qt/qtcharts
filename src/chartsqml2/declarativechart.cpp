@@ -1113,7 +1113,7 @@ QAbstractAxis *DeclarativeChart::axesAtFunc(QQmlListProperty<QAbstractAxis> *lis
 {
     if (qobject_cast<DeclarativeChart *>(list->object)) {
         DeclarativeChart *chart = qobject_cast<DeclarativeChart *>(list->object);
-        QList<QAbstractAxis *> axes = chart->m_chart->axes(Qt::Horizontal | Qt::Vertical, chart->m_chart->series()[0]);
+        QList<QAbstractAxis *> axes = chart->m_chart->axes(Qt::Horizontal | Qt::Vertical);
         return axes.at(index);
     }
     return 0;
