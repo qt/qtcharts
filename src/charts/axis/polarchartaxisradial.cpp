@@ -49,7 +49,7 @@ PolarChartAxisRadial::~PolarChartAxisRadial()
 void PolarChartAxisRadial::updateGeometry()
 {
     const QVector<qreal> &layout = this->layout();
-    if (layout.isEmpty())
+    if (layout.isEmpty() && axis()->type() != QAbstractAxis::AxisTypeLogValue)
         return;
 
     createAxisLabels(layout);

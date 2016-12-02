@@ -88,7 +88,7 @@ void PolarChartAxis::updateLayout(QVector<qreal> &layout)
 
     if (diff > 0)
         deleteItems(diff);
-    else if (diff < 0)
+    else if (diff <= 0)
         createItems(-diff);
 
     updateMinorTickItems();

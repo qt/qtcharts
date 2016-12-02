@@ -61,6 +61,8 @@ private slots:
     void range_raw();
     void range_data();
     void range();
+    void range_before_show_data();
+    void range_before_show();
     void range_animation_data();
     void range_animation();
     void noautoscale_data();
@@ -253,6 +255,7 @@ void tst_QLogValueAxis::range_raw_data()
     QTest::newRow("0.1 - 1.0") << (qreal)0.1 << (qreal)1.0 << (qreal)0.1 << (qreal)1.0 << true << false;
     QTest::newRow("25.0 - 75.0") << (qreal)25.0 << (qreal)75.0 << (qreal)25.0 << (qreal)75.0 << true << true;
     QTest::newRow("10.0 - 5.0") << (qreal)10.0 << (qreal)5.0 << (qreal)1.0 << (qreal)1.0 << false << false;
+    QTest::newRow("2.0 - 7.0") << (qreal)2.0 << (qreal)7.0 << (qreal)2.0 << (qreal)7.0 << true << true;
 }
 
 void tst_QLogValueAxis::range_raw()
@@ -290,6 +293,20 @@ void tst_QLogValueAxis::range()
     m_view->show();
     QTest::qWaitForWindowShown(m_view);
     range_raw();
+}
+
+void tst_QLogValueAxis::range_before_show_data()
+{
+    range_raw_data();
+}
+
+void tst_QLogValueAxis::range_before_show()
+{
+    range_raw();
+
+    m_chart->setAxisX(m_logvaluesaxis, m_series);
+    m_view->show();
+    QTest::qWaitForWindowShown(m_view);
 }
 
 void tst_QLogValueAxis::range_animation_data()
