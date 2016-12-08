@@ -272,6 +272,11 @@ bool ChartDataSet::attachAxis(QAbstractSeries *series,QAbstractAxis *axis)
         }
         series->d_ptr->setDomain(domain);
         series->d_ptr->initializeDomain();
+
+        // Reinitialize domain based on old axes, as the series domain initialization above
+        // has trashed the old ranges, if there were any.
+        for (QAbstractAxis *oldAxis : series->d_ptr->m_axes)
+            oldAxis->d_ptr->initializeDomain(domain);
     }
 
     series->d_ptr->m_axes<<axis;
@@ -642,6 +647,11 @@ AbstractDomain* ChartDataSet::createDomain(AbstractDomain::DomainType type)
     default:
         return 0;
     }
+}
+
+AbstractDomain *ChartDataSet::domainForSeries(QAbstractSeries *series) const
+{
+    return series->d_ptr->domain();
 }
 
 void ChartDataSet::reverseChanged()

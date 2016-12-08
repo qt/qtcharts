@@ -28,21 +28,22 @@
 ****************************************************************************/
 
 #include <QtTest/QtTest>
-#include <QtCharts/QAbstractAxis>
-#include <QtCharts/QValueAxis>
-#include <QtCharts/QBarCategoryAxis>
-#include <QtCharts/QCategoryAxis>
+#include <QtCharts/qabstractaxis.h>
+#include <QtCharts/qvalueaxis.h>
+#include <QtCharts/qlogvalueaxis.h>
+#include <QtCharts/qbarcategoryaxis.h>
+#include <QtCharts/qcategoryaxis.h>
 #ifndef QT_QREAL_IS_FLOAT
-#include <QtCharts/QDateTimeAxis>
+#include <QtCharts/qdatetimeaxis.h>
 #endif
-#include <QtCharts/QLineSeries>
-#include <QtCharts/QAreaSeries>
-#include <QtCharts/QScatterSeries>
-#include <QtCharts/QSplineSeries>
-#include <QtCharts/QPieSeries>
-#include <QtCharts/QBarSeries>
-#include <QtCharts/QPercentBarSeries>
-#include <QtCharts/QStackedBarSeries>
+#include <QtCharts/qlineseries.h>
+#include <QtCharts/qareaseries.h>
+#include <QtCharts/qscatterseries.h>
+#include <QtCharts/qsplineseries.h>
+#include <QtCharts/qpieseries.h>
+#include <QtCharts/qbarseries.h>
+#include <QtCharts/qpercentbarseries.h>
+#include <QtCharts/qstackedbarseries.h>
 #include <private/chartdataset_p.h>
 #include <private/abstractdomain_p.h>
 #include <tst_definitions.h>
@@ -85,8 +86,11 @@ private Q_SLOTS:
     void attachAxis();
     void detachAxis_data();
     void detachAxis();
+    void domainChangePreservesRanges();
 
 private:
+    void compareDomain(QAbstractSeries *series, qreal minX, qreal maxX,
+                       qreal minY, qreal maxY) const;
     ChartDataSet* m_dataset;
 };
 
@@ -206,6 +210,7 @@ void tst_ChartDataSet::addAxis_data()
 {
     QTest::addColumn<QAbstractAxis*>("axis");
     QAbstractAxis* value = new QValueAxis(this);
+    QAbstractAxis* logvalue = new QLogValueAxis(this);
     QAbstractAxis* category = new QCategoryAxis(this);
     QAbstractAxis* barcategory = new QBarCategoryAxis(this);
 #ifndef QT_QREAL_IS_FLOAT
@@ -213,6 +218,7 @@ void tst_ChartDataSet::addAxis_data()
 #endif
 
     QTest::newRow("value") << value;
+    QTest::newRow("logvalue") << logvalue;
     QTest::newRow("category") << category;
     QTest::newRow("barcategory") << barcategory;
 #ifndef QT_QREAL_IS_FLOAT
@@ -379,6 +385,68 @@ void tst_ChartDataSet::detachAxis()
     QSignalSpy spy3(m_dataset, SIGNAL(seriesRemoved(QAbstractSeries*)));
 
     QCOMPARE(m_dataset->detachAxis(detachSeries,detachAxis),success);
+}
+
+void tst_ChartDataSet::domainChangePreservesRanges()
+{
+    // This test checks that domain ranges stay correct after an axis attachment causes domain
+    // to be recreated.
+    QVERIFY(m_dataset->series().isEmpty());
+    QVERIFY(m_dataset->axes().isEmpty());
+
+    QLineSeries* line = new QLineSeries(this);
+    QValueAxis* value1 = new QValueAxis(this);
+    QValueAxis* value2 = new QValueAxis(this);
+    QLogValueAxis* logValue1 = new QLogValueAxis(this);
+    QLogValueAxis* logValue2 = new QLogValueAxis(this);
+    (*line) << QPointF(1.0, 2.0) << QPointF(10.0, 20.0);
+
+    value1->setRange(2.0, 6.0);
+    value2->setRange(3.0, 7.0);
+    logValue1->setRange(4.0, 8.0);
+    logValue2->setRange(5.0, 9.0);
+
+    m_dataset->addSeries(line);
+    compareDomain(line, 1.0, 10.0, 2.0, 20.0);
+    m_dataset->addAxis(value1, Qt::AlignBottom);
+    m_dataset->addAxis(value2, Qt::AlignLeft);
+    m_dataset->addAxis(logValue1, Qt::AlignBottom);
+    m_dataset->addAxis(logValue2, Qt::AlignLeft);
+    compareDomain(line, 1.0, 10.0, 2.0, 20.0);
+
+    // Start with two value axes
+    m_dataset->attachAxis(line, value1);
+    compareDomain(line, 2.0, 6.0, 2.0, 20.0);
+    m_dataset->attachAxis(line, value2);
+    compareDomain(line, 2.0, 6.0, 3.0, 7.0);
+
+    // Detach y value and attach y logvalue
+    m_dataset->detachAxis(line, value2);
+    compareDomain(line, 2.0, 6.0, 3.0, 7.0); // Detach doesn't change domain ranges
+    m_dataset->attachAxis(line, logValue2);
+    compareDomain(line, 2.0, 6.0, 5.0, 9.0);
+
+    // Detach x value and attach x logvalue
+    m_dataset->detachAxis(line, value1);
+    compareDomain(line, 2.0, 6.0, 5.0, 9.0); // Detach doesn't change domain ranges
+    m_dataset->attachAxis(line, logValue1);
+    compareDomain(line, 4.0, 8.0, 5.0, 9.0);
+
+    // Detach y logvalue and attach y value
+    m_dataset->detachAxis(line, logValue2);
+    compareDomain(line, 4.0, 8.0, 5.0, 9.0); // Detach doesn't change domain ranges
+    m_dataset->attachAxis(line, value2);
+    compareDomain(line, 4.0, 8.0, 3.0, 7.0);
+}
+
+void tst_ChartDataSet::compareDomain(QAbstractSeries *series, qreal minX, qreal maxX,
+                                     qreal minY, qreal maxY) const
+{
+    AbstractDomain *domain = m_dataset->domainForSeries(series);
+    QCOMPARE(domain->minX(), minX);
+    QCOMPARE(domain->maxX(), maxX);
+    QCOMPARE(domain->minY(), minY);
+    QCOMPARE(domain->maxY(), maxY);
 }
 
 QTEST_MAIN(tst_ChartDataSet)

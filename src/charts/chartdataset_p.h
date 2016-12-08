@@ -82,6 +82,7 @@ public:
     GLXYSeriesDataManager *glXYSeriesDataManager() { return m_glXYSeriesDataManager; }
 
     AbstractDomain* createDomain(AbstractDomain::DomainType type);
+    AbstractDomain* domainForSeries(QAbstractSeries *series) const;
 
 Q_SIGNALS:
     void axisAdded(QAbstractAxis* axis);
