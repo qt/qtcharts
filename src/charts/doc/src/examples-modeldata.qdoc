@@ -37,6 +37,10 @@
 
      \image examples_modeldata.png
 
+    \include examples-run.qdocinc
+
+    \section1 Using Model Data
+
      Let's start by creating an instance of the CustomTableModel class.
      The CustomTableModel class is derived from QAbstractTableModel and it was created for the purpose of this example.
      The constructor of this class populates the internal data store of the model with the data that is suitable for our chart example.

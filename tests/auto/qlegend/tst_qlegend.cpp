@@ -506,8 +506,9 @@ void tst_QLegend::xyMarkerPropertiesScatter()
 void tst_QLegend::markerSignals()
 {
     SKIP_ON_POLAR();
-
     SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
+    SKIP_IF_FLAKY_MOUSE_MOVE();
+
     QChart *chart = newQChartOrQPolarChart();
     QLegend *legend = chart->legend();
 

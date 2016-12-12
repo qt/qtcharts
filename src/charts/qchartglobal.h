@@ -66,6 +66,11 @@
 #  define QT_CHARTS_USE_NAMESPACE
 #endif
 
+// Make sure we have used the namespace at least once to avoid compile errors when including
+// the QtCharts umbrella header.
+QT_CHARTS_BEGIN_NAMESPACE
+QT_CHARTS_END_NAMESPACE
+
 /*
     On Windows min and max conflict with standard macros
 */

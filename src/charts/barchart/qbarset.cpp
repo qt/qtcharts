@@ -37,75 +37,79 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \class QBarSet
     \inmodule Qt Charts
-    \brief Building block for different bar charts.
+    \brief The QBarSet class represents one set of bars in a bar chart.
 
-    QBarSet represents one set of bars. Set of bars contains one data value for each category.
-    First value of set is assumed to belong to first category, second to second category and so on.
-    If set has fewer values than there are categories, then the missing values are assumed to be
-    at the end of set. For missing values in middle of a set, numerical value of zero is used.
+    A bar set contains one data value for each category. The first value of a set is assumed to
+    belong to the first category, the second one to the second category, and so on. If the set has
+    fewer values than there are categories, the missing values are assumed to be located at the end
+    of the set. For missing values in the middle of a set, the numerical value of zero is used.
     Labels for zero value sets are not shown.
 
     \sa QAbstractBarSeries, QBarSeries, QStackedBarSeries, QPercentBarSeries
+    \sa QHorizontalBarSeries, QHorizontalStackedBarSeries, QHorizontalPercentBarSeries
 */
 /*!
     \qmltype BarSet
     \instantiates QBarSet
     \inqmlmodule QtCharts
 
-    \brief Building block for different bar charts.
+    \brief Represents one set of bars in a bar chart.
 
-    BarSet represents one set of bars. Set of bars contains one data value for each category.
-    First value of set is assumed to belong to first category, second to second category and so on.
-    If set has fewer values than there are categories, then the missing values are assumed to be
-    at the end of set. For missing values in middle of a set, numerical value of zero is used.
+    A bar set contains one data value for each category. The first value of a set is assumed to
+    belong to the first category, the second one to the second category, and so on. If the set has
+    fewer values than there are categories, the missing values are assumed to be located at the end
+    of the set. For missing values in the middle of a set, the numerical value of zero is used.
     Labels for zero value sets are not shown.
+
     \sa AbstractBarSeries, BarSeries, StackedBarSeries, PercentBarSeries
+    \sa HorizontalBarSeries, HorizontalStackedBarSeries, HorizontalPercentBarSeries
+
 */
 
 /*!
     \property QBarSet::label
-    Defines the label of the bar set.
+    \brief The label of the bar set.
 */
 /*!
     \qmlproperty string BarSet::label
-    Defines the label of the bar set.
+    The label of the bar set.
 */
 
 /*!
     \property QBarSet::pen
-    \brief Defines the pen used by the bar set.
+    \brief The pen used to draw the lines of bars in the bar set.
 */
 
 /*!
     \property QBarSet::brush
-    \brief Defines the brush used by the bar set.
+    \brief The brush used to fill the bars in the bar set.
 */
 
 /*!
-    \qmlproperty QString BarSet::brushFilename
+    \qmlproperty string BarSet::brushFilename
     The name of the file used as a brush for the set.
 */
 
 /*!
     \property QBarSet::labelBrush
-    \brief Defines the brush used by the bar set's label.
+    \brief The brush used to draw the bar set's label.
 */
 
 /*!
     \property QBarSet::labelFont
-    \brief Defines the font used by the bar set's label.
+    \brief The font used to draw the bar set's label.
 */
 
 /*!
-    \qmlproperty Font BarSet::labelFont
-    Defines the font used by the bar set's label.
+    \qmlproperty font BarSet::labelFont
+    The font used to draw the bar set's label.
 
-    See the Qt documentation for more details of Font.
+    For more information, see \l [QML]{font}.
 */
 
 /*!
     \property QBarSet::color
-    The fill (brush) color of the bar set.
+    \brief The fill (brush) color of the bar set.
 */
 /*!
     \qmlproperty color BarSet::color
@@ -114,7 +118,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \property QBarSet::borderColor
-    The line (pen) color of the bar set.
+    \brief The line (pen) color of the bar set.
 */
 /*!
     \qmlproperty color BarSet::borderColor
@@ -123,12 +127,12 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \qmlproperty real BarSet::borderWidth
-    The width of the border line. By default the width is 2.0.
+    The width of the border line. By default, the width is 2.0.
 */
 
 /*!
     \property QBarSet::labelColor
-    The text (label) color of the bar set.
+    \brief The text (label) color of the bar set.
 */
 /*!
     \qmlproperty color BarSet::labelColor
@@ -138,158 +142,155 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \fn void QBarSet::clicked(int index)
 
-    The signal is emitted if the user clicks with a mouse on top of bar set.
-    Clicked bar inside set is indexed by \a index
+    This signal is emitted when the user clicks the bar specified by \a index in a bar set.
 */
 
 /*!
     \fn void QBarSet::pressed(int index)
 
-    The signal is emitted if the user presses with a mouse on top of bar set.
-    Pressed bar inside set is indexed by \a index
+    This signal is emitted when the user clicks the bar specified by \a index in a bar set
+    and holds down the mouse button.
 */
 
 /*!
     \fn void QBarSet::released(int index)
 
-    The signal is emitted if the user releases with a mouse on top of bar set.
-    Released bar inside set is indexed by \a index
+    This signal is emitted when the user releases the mouse press on the bar specified by
+    \a index in a bar set.
 */
 
 /*!
     \fn void QBarSet::doubleClicked(int index)
 
-    The signal is emitted if the user doubleclicks with a mouse on top of bar set.
-    Doubleclicked bar inside set is indexed by \a index
+    This signal is emitted when the user double-clicks the bar specified by \a index in a bar set.
 */
 
 /*!
     \fn void QBarSet::hovered(bool status, int index)
 
-    The signal is emitted if mouse is hovered on top of bar set.
-    Parameter \a status is true, if mouse entered on top of bar set, false if mouse left from top of bar set.
-    Hovered bar inside the set is indexed by \a index.
+    This signal is emitted when a mouse is hovered over the bar specified by \a index in a bar set.
+    When the mouse moves over the bar, \a status turns \c true, and when the mouse moves away again,
+    it turns \c false.
 */
 
 
 /*!
     \fn void QBarSet::labelChanged()
-    This signal is emitted when the label of the bar set has changed.
+    This signal is emitted when the label of the bar set changes.
     \sa label
 */
 /*!
     \qmlsignal BarSet::onLabelChanged()
-    This signal is emitted when the label of the bar set has changed.
+    This signal is emitted when the label of the bar set changes.
 */
 
 /*!
     \fn void QBarSet::penChanged()
-    This signal is emitted when the pen of the bar set has changed.
+    This signal is emitted when the pen used to draw the bar set changes.
     \sa pen
 */
 
 /*!
     \fn void QBarSet::brushChanged()
-    This signal is emitted when the brush of the bar set has changed.
+    This signal is emitted when the brush used to draw the bar set changes.
     \sa brush
 */
 
 /*!
     \fn void QBarSet::labelBrushChanged()
-    This signal is emitted when the brush of the bar set's label has changed.
+    This signal is emitted when the brush used to draw the bar set's label changes.
     \sa labelBrush
 */
 
 /*!
     \fn void QBarSet::labelFontChanged()
-    This signal is emitted when the font of the bar set's label has changed.
+    This signal is emitted when the font of the bar set's label changes.
     \sa labelBrush
 */
 
 /*!
     \fn void QBarSet::colorChanged(QColor)
-    This signal is emitted when the fill (brush) color of the set has changed to \a color.
+    This signal is emitted when the fill (brush) color of the bar set changes to \a color.
 */
 /*!
     \qmlsignal BarSet::onColorChanged(color color)
-    This signal is emitted when the fill (brush) color of the set has changed to \a color.
+    This signal is emitted when the fill (brush) color of the bar set changes to \a color.
 */
 
 /*!
     \fn void QBarSet::borderColorChanged(QColor)
-    This signal is emitted when the line (pen) color of the set has changed to \a color.
+    This signal is emitted when the line (pen) color of the bar set changes to \a color.
 */
 /*!
     \qmlsignal BarSet::onBorderColorChanged(color color)
-    This signal is emitted when the line (pen) color of the set has changed to \a color.
+    This signal is emitted when the line (pen) color of the bar set changes to \a color.
 */
 
 /*!
     \fn void QBarSet::labelColorChanged(QColor)
-    This signal is emitted when the text (label) color of the set has changed to \a color.
+    This signal is emitted when the text (label) color of the bar set changes to \a color.
 */
 /*!
     \qmlsignal BarSet::onLabelColorChanged(color color)
-    This signal is emitted when the text (label) color of the set has changed to \a color.
+    This signal is emitted when the text (label) color of the bar set changes to \a color.
 */
 
 /*!
     \fn void QBarSet::valuesAdded(int index, int count)
-    This signal is emitted when new values have been added to the set.
-    Parameter \a index indicates the position of the first inserted value.
-    Parameter \a count is the number of inserted values.
+    This signal is emitted when new values are added to the bar set.
+    \a index indicates the position of the first inserted value, and \a count is the number
+    of inserted values.
     \sa append(), insert()
 */
 /*!
     \qmlsignal BarSet::onValuesAdded(int index, int count)
-    This signal is emitted when new values have been added to the set.
-    Parameter \a index indicates the position of the first inserted value.
-    Parameter \a count is the number of inserted values.
+    This signal is emitted when new values are added to the bar set.
+    \a index indicates the position of the first inserted value, and \a count is the number
+    of inserted values.
 */
 
 /*!
     \fn void QBarSet::valuesRemoved(int index, int count)
-    This signal is emitted values have been removed from the set.
-    Parameter \a index indicates the position of the first removed value.
-    Parameter \a count is the number of removed values.
+    This signal is emitted when values are removed from the bar set.
+    \a index indicates the position of the first removed value, and \a count is the number
+    of removed values.
     \sa remove()
 */
 /*!
     \qmlsignal BarSet::onValuesRemoved(int index, int count)
-    This signal is emitted values have been removed from the set.
-    Parameter \a index indicates the position of the first removed value.
-    Parameter \a count is the number of removed values.
+    This signal is emitted when values are removed from the bar set.
+    \a index indicates the position of the first removed value, and \a count is the number
+    of removed values.
 */
 
 /*!
     \fn void QBarSet::valueChanged(int index)
-    This signal is emitted values the value in the set has been modified.
-    Parameter \a index indicates the position of the modified value.
+    This signal is emitted when the value at the position specified by \a index is modified.
     \sa at()
 */
 /*!
     \qmlsignal BarSet::onValueChanged(int index)
-    This signal is emitted values the value in the set has been modified.
-    Parameter \a index indicates the position of the modified value.
+    This signal is emitted when the value at the position specified by \a index is modified.
 */
 
 /*!
     \qmlproperty int BarSet::count
-    The count of values on the bar set
+    The number of values in the bar set.
 */
 
 /*!
     \qmlproperty QVariantList BarSet::values
-    The values of the bar set. You can set either a list of reals or a list of points as values.
+    The values of the bar set. You can set a list of either \l [QML]{real} or \l [QML]{point}
+    types as values.
 
-    If you set a list of reals as values, the values directly define the bar set values.
+    If you set a list of real types as values, they directly define the bar set values.
 
-    If you set a list of points as values, the x-coordinate of the point specifies its zero-based
-    index in the bar set. The size of the bar set is the highest x-coordinate value + 1.
+    If you set a list of point types as values, the x-coordinate of the point specifies its
+    zero-based index in the bar set. The size of the bar set is the highest x-coordinate value + 1.
     If a point is missing for any x-coordinate between zero and the highest value,
-    it gets value zero.
+    it gets the value zero.
 
-    For example the following sets have equal values:
+    For example, the following bar sets have equal values:
     \code
         myBarSet1.values = [5, 0, 1, 5];
         myBarSet2.values = [Qt.point(0, 5), Qt.point(2, 1), Qt.point(3, 5)];
@@ -297,7 +298,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
-    Constructs QBarSet with a label of \a label and with parent of \a parent.
+    Constructs a bar set with the label \a label and the parent \a parent.
 */
 QBarSet::QBarSet(const QString label, QObject *parent)
     : QObject(parent),
@@ -306,7 +307,7 @@ QBarSet::QBarSet(const QString label, QObject *parent)
 }
 
 /*!
-    Destroys the bar set.
+    Removes the bar set.
 */
 QBarSet::~QBarSet()
 {
@@ -314,7 +315,7 @@ QBarSet::~QBarSet()
 }
 
 /*!
-    Sets new \a label for set.
+    Sets \a label as the new label for the bar set.
 */
 void QBarSet::setLabel(const QString label)
 {
@@ -324,7 +325,7 @@ void QBarSet::setLabel(const QString label)
 }
 
 /*!
-    Returns label of the set.
+    Returns the label of the bar set.
 */
 QString QBarSet::label() const
 {
@@ -332,7 +333,7 @@ QString QBarSet::label() const
 }
 
 /*!
-    Appends new value \a value to the end of set.
+    Appends the new value specified by \a value to the end of the bar set.
 */
 void QBarSet::append(const qreal value)
 {
@@ -343,8 +344,8 @@ void QBarSet::append(const qreal value)
 }
 
 /*!
-    Appends a list of reals to set. Works like append with single real value. The \a values in list
-    are appended to end of bar set.
+    Appends the list of real values specified by \a values to the end of the bar set.
+
     \sa append()
 */
 void QBarSet::append(const QList<qreal> &values)
@@ -355,7 +356,9 @@ void QBarSet::append(const QList<qreal> &values)
 }
 
 /*!
-    Convenience operator. Same as append, with real \a value.
+    A convenience operator for appending the real value specified by \a value to the end of the
+    bar set.
+
     \sa append()
 */
 QBarSet &QBarSet::operator << (const qreal &value)
@@ -365,8 +368,9 @@ QBarSet &QBarSet::operator << (const qreal &value)
 }
 
 /*!
-    Inserts new \a value on the \a index position.
-    The value that is currently at this postion is moved to position index + 1
+    Inserts \a value in the position specified by \a index.
+    The values following the inserted value are moved up one position.
+
     \sa remove()
 */
 void QBarSet::insert(const int index, const qreal value)
@@ -376,7 +380,8 @@ void QBarSet::insert(const int index, const qreal value)
 }
 
 /*!
-    Removes \a count number of values from the set starting at \a index.
+    Removes the number of values specified by \a count from the bar set starting with
+    the value specified by \a index.
     \sa insert()
 */
 void QBarSet::remove(const int index, const int count)
@@ -388,7 +393,7 @@ void QBarSet::remove(const int index, const int count)
 }
 
 /*!
-    Sets a new value \a value to set, indexed by \a index.
+    Adds the value specified by \a value to the bar set at the position specified by \a index.
 */
 void QBarSet::replace(const int index, const qreal value)
 {
@@ -399,8 +404,8 @@ void QBarSet::replace(const int index, const qreal value)
 }
 
 /*!
-    Returns value of set indexed by \a index.
-    If the index is out of bounds 0.0 is returned.
+    Returns the value specified by \a index from the bar set.
+    If the index is out of bounds, 0.0 is returned.
 */
 qreal QBarSet::at(const int index) const
 {
@@ -410,8 +415,8 @@ qreal QBarSet::at(const int index) const
 }
 
 /*!
-    Returns value of set indexed by \a index.
-    If the index is out of bounds 0.0 is returned.
+    Returns the value of the bar set specified by \a index.
+    If the index is out of bounds, 0.0 is returned.
 */
 qreal QBarSet::operator [](const int index) const
 {
@@ -419,7 +424,7 @@ qreal QBarSet::operator [](const int index) const
 }
 
 /*!
-    Returns count of values in set.
+    Returns the number of values in a bar set.
 */
 int QBarSet::count() const
 {
@@ -427,7 +432,7 @@ int QBarSet::count() const
 }
 
 /*!
-    Returns sum of all values in the bar set.
+    Returns the sum of all values in the bar set.
 */
 qreal QBarSet::sum() const
 {
@@ -438,7 +443,7 @@ qreal QBarSet::sum() const
 }
 
 /*!
-    Sets pen for set. Bars of this set are drawn using \a pen
+    Sets the pen used to draw the lines in the bar set to \a pen.
 */
 void QBarSet::setPen(const QPen &pen)
 {
@@ -451,7 +456,7 @@ void QBarSet::setPen(const QPen &pen)
 }
 
 /*!
-    Returns pen of the set.
+    Returns the pen used to draw the lines in the bar set.
 */
 QPen QBarSet::pen() const
 {
@@ -462,7 +467,7 @@ QPen QBarSet::pen() const
 }
 
 /*!
-    Sets brush for the set. Bars of this set are drawn using \a brush.
+    Sets the brush used to fill the bars in the bar set to \a brush.
 */
 void QBarSet::setBrush(const QBrush &brush)
 {
@@ -475,7 +480,7 @@ void QBarSet::setBrush(const QBrush &brush)
 }
 
 /*!
-    Returns brush of the set.
+    Returns the brush used to fill the bars in the bar set.
 */
 QBrush QBarSet::brush() const
 {
@@ -486,7 +491,7 @@ QBrush QBarSet::brush() const
 }
 
 /*!
-    Sets \a brush of the values that are drawn on top of this bar set.
+    Sets the brush used to draw values on top of this bar set to \a brush.
 */
 void QBarSet::setLabelBrush(const QBrush &brush)
 {
@@ -499,7 +504,7 @@ void QBarSet::setLabelBrush(const QBrush &brush)
 }
 
 /*!
-    Returns brush of the values that are drawn on top of this bar set.
+    Returns the brush used to draw values on top of this bar set.
 */
 QBrush QBarSet::labelBrush() const
 {
@@ -510,7 +515,7 @@ QBrush QBarSet::labelBrush() const
 }
 
 /*!
-    Sets the \a font for values that are drawn on top of this bar set.
+    Sets the font used to draw values on top of this bar set to \a font.
 */
 void QBarSet::setLabelFont(const QFont &font)
 {
@@ -523,7 +528,7 @@ void QBarSet::setLabelFont(const QFont &font)
 }
 
 /*!
-    Returns the pen for values that are drawn on top of this bar set.
+    Returns the pen used to draw values on top of this bar set.
 */
 QFont QBarSet::labelFont() const
 {
@@ -531,7 +536,7 @@ QFont QBarSet::labelFont() const
 }
 
 /*!
-    Returns the color of the brush of bar set.
+    Returns the fill color for the bar set.
 */
 QColor QBarSet::color()
 {
@@ -539,7 +544,7 @@ QColor QBarSet::color()
 }
 
 /*!
-    Sets the \a color of brush for this bar set.
+    Sets the fill color for the bar set to \a color.
 */
 void QBarSet::setColor(QColor color)
 {
@@ -559,7 +564,7 @@ void QBarSet::setColor(QColor color)
 }
 
 /*!
-    Returns the color of pen of this bar set.
+    Returns the line color for the bar set.
 */
 QColor QBarSet::borderColor()
 {
@@ -567,7 +572,7 @@ QColor QBarSet::borderColor()
 }
 
 /*!
-    Sets the \a color of pen for this bar set.
+    Sets the line color for the bar set to \a color.
 */
 void QBarSet::setBorderColor(QColor color)
 {
@@ -580,7 +585,7 @@ void QBarSet::setBorderColor(QColor color)
 }
 
 /*!
-    Returns the color of labels of this bar set.
+    Returns the text color for the bar set.
 */
 QColor QBarSet::labelColor()
 {
@@ -588,7 +593,7 @@ QColor QBarSet::labelColor()
 }
 
 /*!
-    Sets the \a color of labels for this bar set.
+    Sets the text color for the bar set to \a color.
 */
 void QBarSet::setLabelColor(QColor color)
 {

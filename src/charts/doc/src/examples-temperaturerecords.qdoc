@@ -38,6 +38,10 @@
 
     \image examples_temperaturerecords.png
 
+    \include examples-run.qdocinc
+
+    \section1 Crating Negative Bars
+
     First we create two barsets and append the data to them. One set represents the minimum temperatures and another the maximum temperatures.
 
     \snippet temperaturerecords/main.cpp 1

@@ -34,4 +34,6 @@
 
     \brief This example shows how the look and feel of a pie chart can be customized.
     \image piechart_customization.png
+
+    \include examples-run.qdocinc
 */

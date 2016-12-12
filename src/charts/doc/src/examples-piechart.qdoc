@@ -35,4 +35,6 @@
      \brief The example shows how to create a simple pie chart and do some customizations to
      a pie slice.
      \image examples_piechart.png
+
+    \include examples-run.qdocinc
 */

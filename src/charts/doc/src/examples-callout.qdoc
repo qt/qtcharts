@@ -41,4 +41,6 @@
      QPointF QChart::mapToPosition(const QPointF &value, QAbstractSeries *series)
 
      QPointF QChart::mapToValue(const QPointF &position, QAbstractSeries *series)
+
+     \include examples-run.qdocinc
 */

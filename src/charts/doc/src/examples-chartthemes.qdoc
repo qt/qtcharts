@@ -41,4 +41,6 @@
     \image examples_chartthemes_light.png
     \image examples_chartthemes_brown_sand.png
     \image examples_chartthemes_blue_cerulean.png
+
+    \include examples-run.qdocinc
 */

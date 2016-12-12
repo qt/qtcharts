@@ -39,6 +39,10 @@
 
     \image examples_boxplotchart.png
 
+    \include examples-run.qdocinc
+
+    \section1 Creating Box-and-Whiskers Charts
+
     To show the share deviation of two companies we start by creating two QBoxPlotSeries to handle monthly data.
 
     \snippet boxplotchart/main.cpp 1

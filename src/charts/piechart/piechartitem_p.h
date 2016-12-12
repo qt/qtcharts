@@ -65,6 +65,13 @@ public:
     QRectF boundingRect() const { return m_rect; }
     void paint(QPainter *, const QStyleOptionGraphicsItem *, QWidget *) {}
 
+protected:
+    void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
+
 public Q_SLOTS:
     // from Chart
     virtual void handleDomainUpdated();
@@ -79,6 +86,8 @@ public Q_SLOTS:
     void setAnimation(PieAnimation *animation);
     ChartAnimation *animation() const;
 
+    // From ChartItem
+    void cleanup();
 private:
     PieSliceData updateSliceGeometry(QPieSlice *slice);
 

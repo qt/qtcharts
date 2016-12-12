@@ -43,59 +43,81 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \class QAbstractSeries
     \inmodule Qt Charts
-    \brief Base class for all Qt Chart series.
+    \brief The QAbstractSeries class is a base class for all Qt Chart series.
 
-    Usually you use the series type specific inherited classes instead of the base class.
-    \sa QXYSeries, QLineSeries, QSplineSeries, QScatterSeries, QAreaSeries, QAbstractBarSeries, QStackedBarSeries,
-    QPercentBarSeries, QPieSeries
+    Usually, the series type specific inherited classes are used instead of the base class.
+
+    \sa QXYSeries, QLineSeries, QSplineSeries, QScatterSeries, QAreaSeries, QAbstractBarSeries
+    \sa QBarSeries, QStackedBarSeries, QPercentBarSeries, QHorizontalBarSeries
+    \sa QHorizontalStackedBarSeries, QHorizontalPercentBarSeries, QPieSeries
 */
 /*!
     \qmltype AbstractSeries
     \instantiates QAbstractSeries
     \inqmlmodule QtCharts
 
-    \brief Base class for all Qt Chart series.
+    \brief Base type for all Qt Chart series types.
 
-    AbstractSeries is the base class for all series.
-    The class cannot be instantiated by the user.
+    This type cannot be instantiated directly. Instead, one of the following derived types
+    should be used to create a series: LineSeries, AreaSeries, BarSeries, StackedBarSeries,
+    PercentBarSeries, HorizontalBarSeries, HorizontalStackedBarSeries, HorizontalPercentBarSeries,
+    PieSeries, ScatterSeries, SplineSeries, BoxPlotSeries, or CandlestickSeries.
 */
 
 /*!
     \enum QAbstractSeries::SeriesType
 
-    The type of the series object.
+    This enum describes the type of the series.
 
-    \value SeriesTypeLine
-    \value SeriesTypeArea
-    \value SeriesTypeBar
-    \value SeriesTypeStackedBar
-    \value SeriesTypePercentBar
-    \value SeriesTypePie
-    \value SeriesTypeScatter
-    \value SeriesTypeSpline
-    \value SeriesTypeHorizontalBar
-    \value SeriesTypeHorizontalStackedBar
-    \value SeriesTypeHorizontalPercentBar
-    \value SeriesTypeBoxPlot
-    \value SeriesTypeCandlestick
+    \value SeriesTypeLine A line chart.
+    \value SeriesTypeArea An area chart.
+    \value SeriesTypeBar A vertical bar chart.
+    \value SeriesTypeStackedBar A vertical stacked bar chart.
+    \value SeriesTypePercentBar A vertical percent bar chart.
+    \value SeriesTypePie A pie chart.
+    \value SeriesTypeScatter A scatter chart.
+    \value SeriesTypeSpline A spline chart.
+    \value SeriesTypeHorizontalBar A horizontal bar chart.
+    \value SeriesTypeHorizontalStackedBar A horizontal stacked bar chart.
+    \value SeriesTypeHorizontalPercentBar A horizontal percent bar chart.
+    \value SeriesTypeBoxPlot A box plot chart.
+    \value SeriesTypeCandlestick A candlestick chart.
 */
 
 /*!
     \property QAbstractSeries::type
-    The type of the series.
+    \brief The type of the series.
 */
 /*!
-    \qmlproperty ChartView.SeriesType AbstractSeries::type
+    \qmlproperty enumeration AbstractSeries::type
+
     The type of the series.
+
+    \value AbstractSeries.SeriesTypeLine A line chart.
+    \value AbstractSeries.SeriesTypeArea An area chart.
+    \value AbstractSeries.SeriesTypeBar A vertical bar chart.
+    \value AbstractSeries.SeriesTypeStackedBar A vertical stacked bar chart.
+    \value AbstractSeries.SeriesTypePercentBar A vertical percent bar chart.
+    \value AbstractSeries.SeriesTypePie A pie chart.
+    \value AbstractSeries.SeriesTypeScatter A scatter chart.
+    \value AbstractSeries.SeriesTypeSpline A spline chart.
+    \value AbstractSeries.SeriesTypeHorizontalBar A horizontal bar chart.
+    \value AbstractSeries.SeriesTypeHorizontalStackedBar A horizontal stacked bar chart.
+    \value AbstractSeries.SeriesTypeHorizontalPercentBar A horizontal percent bar chart.
+    \value AbstractSeries.SeriesTypeBoxPlot A box plot chart.
+    \value AbstractSeries.SeriesTypeCandlestick A candlestick chart.
 */
 
 /*!
     \property QAbstractSeries::name
-    \brief name of the series property. The name is shown in legend for series and supports html formatting.
+    \brief The name of the series.
+
+    The name is displayed in the legend for the series and it supports HTML formatting.
 */
 /*!
     \qmlproperty string AbstractSeries::name
-    Name of the series. The name is shown in legend for series and supports html formatting.
+    The name of the series. It is displayed in the legend for the series and it
+    supports HTML formatting.
 */
 
 /*!
@@ -109,56 +131,58 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \property QAbstractSeries::visible
-    \brief whether the series is visible or not; true by default.
+    \brief whether the series is visible or not.
+
+    By default, \c true.
 */
 /*!
     \qmlproperty bool AbstractSeries::visible
-    Visibility of the series. True by default.
+    Visibility of the series. By default, \c true.
 */
 
 /*!
     \fn void QAbstractSeries::visibleChanged()
-    Emitted when the series visibility changes.
+    This signal is emitted when the series visibility changes.
 */
 /*!
     \qmlsignal AbstractSeries::onVisibleChanged()
-    Emitted when the series visibility changes.
+    This signal is emitted when the series visibility changes.
 */
 
 /*!
     \property QAbstractSeries::opacity
     \brief The opacity of the series.
 
-    By default the opacity is 1.0. The valid values range from 0.0 (transparent) to 1.0 (opaque).
+    By default, the opacity is 1.0. The valid values range from 0.0 (transparent) to 1.0 (opaque).
 */
 /*!
     \qmlproperty real AbstractSeries::opacity
-    The opacity of the series. By default the opacity is 1.0.
+    The opacity of the series. By default, the opacity is 1.0.
     The valid values range from 0.0 (transparent) to 1.0 (opaque).
 */
 
 /*!
     \fn void QAbstractSeries::opacityChanged()
-    Emitted when the opacity of the series changes.
+    This signal is emitted when the opacity of the series changes.
 */
 /*!
     \qmlsignal AbstractSeries::onOpacityChanged()
-    Emitted when the opacity of the series changes.
+    This signal is emitted when the opacity of the series changes.
 */
 
 /*!
     \property QAbstractSeries::useOpenGL
-    \brief Specifies whether or not the series drawing is accelerated with OpenGL.
+    \brief Specifies whether or not drawing the series is accelerated by using OpenGL.
 
-    Drawing series with OpenGL is supported only for QLineSeries and QScatterSeries.
-    Line series used as edge series for a QAreaSeries cannot use OpenGL acceleration.
+    Acceleration using OpenGL is supported only for QLineSeries and QScatterSeries.
+    A line series used as an edge series for QAreaSeries cannot use OpenGL acceleration.
     When a chart contains any series that are drawn with OpenGL, a transparent QOpenGLWidget
     is created on top of the chart plot area. The accelerated series are not drawn on the underlying
     QGraphicsView, but are instead drawn on the created QOpenGLWidget.
 
     Performance gained from using OpenGL to accelerate series drawing depends on the underlying
     hardware, but in most cases it is significant. For example, on a standard desktop computer,
-    enabling OpenGL acceleration for a series typically allows rendering at least hundred times
+    enabling OpenGL acceleration for a series typically allows rendering at least a hundred times
     more points without reduction on the frame rate.
     Chart size also has less effect on the frame rate.
 
@@ -200,8 +224,8 @@ QT_CHARTS_BEGIN_NAMESPACE
     \qmlproperty bool AbstractSeries::useOpenGL
     Specifies whether or not the series is drawn with OpenGL.
 
-    Drawing series with OpenGL is supported only for LineSeries and ScatterSeries.
-    Line series used as edge series for a AreaSeries cannot use OpenGL acceleration.
+    Acceleration using OpenGL is supported only for LineSeries and ScatterSeries.
+    A line series used as an edge series for a AreaSeries cannot use OpenGL acceleration.
     When a chart contains any series that are drawn with OpenGL, an additional transparent child
     node is created for the ChartView node. The accelerated series are not drawn on the
     ChartView node, but are instead drawn on the child node.
@@ -237,11 +261,13 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \fn void QAbstractSeries::useOpenGLChanged()
-    Emitted when the useOpenGL property value changes.
+    This signal is emitted when accelerating the drawing of the series by using OpenGL
+    is enabled or disabled.
 */
 /*!
     \qmlsignal AbstractSeries::onUseOpenGLChanged()
-    Emitted when the useOpenGL property value changes.
+    This signal is emitted when accelerating the drawing of the series by using OpenGL
+    is enabled or disabled.
 */
 
 /*!
@@ -325,9 +351,9 @@ bool QAbstractSeries::useOpenGL() const
 }
 
 /*!
-    \brief Returns the chart where series belongs to.
+    Returns the chart that the series belongs to.
 
-    Set automatically when the series is added to the chart
+    Set automatically when the series is added to the chart,
     and unset when the series is removed from the chart.
 */
 QChart *QAbstractSeries::chart() const
@@ -336,7 +362,7 @@ QChart *QAbstractSeries::chart() const
 }
 
 /*!
-    \brief Sets the visibility of the series to true.
+    Sets the visibility of the series to \c true.
 
     \sa setVisible(), isVisible()
 */
@@ -346,7 +372,7 @@ void QAbstractSeries::show()
 }
 
 /*!
-    \brief Sets the visibility of the series to false.
+    Sets the visibility of the series to \c false.
 
     \sa setVisible(), isVisible()
 */
@@ -356,10 +382,13 @@ void QAbstractSeries::hide()
 }
 
 /*!
- Attach \a axis to the series.
- \return true if the axis was attached successfully, false otherwise.
- \note If multiple axes of same orientation are attached to same series,
-       they will have same min/max ranges.
+    Attaches the axis specified by \a axis to the series.
+
+    Returns \c true if the axis was attached successfully, \c false otherwise.
+
+    \note If multiple axes of the same orientation are attached to the same series,
+    they will have the same minimum and maximum values.
+
  \sa QChart::addAxis(), QChart::createDefaultAxes()
  */
 bool QAbstractSeries::attachAxis(QAbstractAxis* axis)
@@ -373,8 +402,10 @@ bool QAbstractSeries::attachAxis(QAbstractAxis* axis)
 }
 
 /*!
- Detach \a axis from the series.
- \return true if the axis was detached successfully, false otherwise.
+    Detaches the axis specified by \a axis from the series.
+
+    Returns \c true if the axis was detached successfully, \c false otherwise.
+
  \sa QChart::removeAxis()
  */
 bool QAbstractSeries::detachAxis(QAbstractAxis* axis)
@@ -389,8 +420,8 @@ bool QAbstractSeries::detachAxis(QAbstractAxis* axis)
 }
 
 /*!
- Returns the list of axes attached to the series. Usually there is an x-axis and a y-axis attached to a series, except
- in case of a QPieSeries, which does not have any axes attached.
+    Returns the list of axes attached to the series. Usually, an x-axis and a y-axis
+    are attached to a series, except for QPieSeries, which does not have any axes attached.
  \sa attachAxis(), detachAxis()
  */
 QList<QAbstractAxis*> QAbstractSeries::attachedAxes()

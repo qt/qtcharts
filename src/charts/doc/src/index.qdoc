@@ -57,14 +57,14 @@
 
     \snippet doc_src_qtcharts.pro 0
 
-    \section1 References
+    \section1 Examples
     \list
-        \li \l{Qt Charts C++ Classes}
-        \li \l{Qt Charts QML Types}
+        \li \l{Qt Charts Examples}
     \endlist
 
-    Qt Charts comes with the following examples:
-
-    \annotatedlist qtcharts_examples
-
+    \section1 API Reference
+    \list
+        \li \l{Qt Charts C++ Classes}{C++ Classes}
+        \li \l{Qt Charts QML Types}{QML Types}
+    \endlist
 */

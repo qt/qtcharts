@@ -36,6 +36,10 @@
 
     \brief This application demonstrates how to use XmlListModel as a datasource for a Chart.
 
+    \include examples-run.qdocinc
+
+    \section1 Using List Models as Data Sources
+
     Let's define an empty ChartView first:
     \snippet qmlf1legends/qml/qmlf1legends/main.qml 1
 

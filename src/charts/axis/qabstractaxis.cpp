@@ -38,32 +38,32 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \class QAbstractAxis
     \inmodule Qt Charts
-    \brief The QAbstractAxis class is used for manipulating chart's axis.
+    \brief The QAbstractAxis class is a base class used for specialized axis classes.
 
     Each series can be bound to one or more horizontal and vertical axes, but mixing axis types
     that would result in different domains is not supported, such as specifying
     QValueAxis and QLogValueAxis on the same orientation.
 
-    Properties and visibility of various axis elements such as axis line, title, labels, grid lines,
-    and shades can be individually controlled.
+    The properties and visibility of various axis elements, such as axis line, title, labels,
+    grid lines, and shades, can be individually controlled.
 */
 /*!
     \qmltype AbstractAxis
     \instantiates QAbstractAxis
     \inqmlmodule QtCharts
 
-    \brief The AbstractAxis is a base element used for specialized axis elements.
+    \brief A base type used for specialized axis types.
 
     Each series can be bound to only one horizontal and vertical axis.
 
-    Properties and visibility of various axis elements such as axis line, title, labels, grid lines,
-    and shades can be individually controlled.
+    The properties and visibility of various axis elements, such as axis line, title, labels,
+    grid lines, and shades, can be individually controlled.
 */
 
 /*!
     \enum QAbstractAxis::AxisType
 
-    The type of the axis object.
+    This enum type specifies the type of the axis object.
 
     \value AxisTypeNoAxis
     \value AxisTypeValue
@@ -74,41 +74,43 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
- *\fn void QAbstractAxis::type() const
-  Returns the type of the axis
+  \fn void QAbstractAxis::type() const
+  Returns the type of the axis.
 */
 
 /*!
   \property QAbstractAxis::lineVisible
-  The visibility of the axis line
+  \brief The visibility of the axis line.
 */
 /*!
   \qmlproperty bool AbstractAxis::lineVisible
-  The visibility of the axis line
+  The visibility of the axis line.
 */
 
 /*!
   \property QAbstractAxis::linePen
-  The pen of the line.
+  \brief The pen used to draw the line.
 */
 
 /*!
   \property QAbstractAxis::labelsVisible
-  Defines if axis labels are visible.
+  \brief Whether axis labels are visible.
 */
 /*!
   \qmlproperty bool AbstractAxis::labelsVisible
-  Defines if axis labels are visible.
+  The visibility of axis labels.
 */
 
 /*!
   \property QAbstractAxis::labelsBrush
-  The brush of the labels. Only the color of the brush is relevant.
+  \brief The brush used to draw the labels.
+
+  Only the color of the brush is relevant.
 */
 
 /*!
   \property QAbstractAxis::visible
-  The visibility of the axis.
+  \brief The visibility of the axis.
 */
 /*!
   \qmlproperty bool AbstractAxis::visible
@@ -117,7 +119,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
   \property QAbstractAxis::gridVisible
-  The visibility of the grid lines.
+  \brief The visibility of the grid lines.
 */
 /*!
   \qmlproperty bool AbstractAxis::gridVisible
@@ -126,57 +128,63 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
   \property QAbstractAxis::minorGridVisible
-  The visibility of the minor grid lines. Applies only to QValueAxis.
+  \brief The visibility of the minor grid lines.
+
+  Applies only to QValueAxis.
 */
 /*!
   \qmlproperty bool AbstractAxis::minorGridVisible
-  The visibility of the minor grid lines. Applies only to QValueAxis.
+  The visibility of the minor grid lines. Applies only to ValueAxis.
 */
 
 /*!
   \property QAbstractAxis::color
-  The color of the axis and ticks.
+  \brief The color of the axis and tick marks.
 */
 /*!
   \qmlproperty color AbstractAxis::color
-  The color of the axis and ticks.
+  The color of the axis and tick marks.
 */
 
 /*!
   \property QAbstractAxis::gridLinePen
-  The pen of the grid line.
+  \brief The pen used to draw the grid line.
 */
 
 /*!
   \property QAbstractAxis::minorGridLinePen
-  The pen of the minor grid line. Applies only to QValueAxis.
+  \brief The pen used to draw the minor grid line.
+
+  Applies only to QValueAxis.
 */
 
 /*!
   \property QAbstractAxis::gridLineColor
-  The color of the grid line.
+  \brief The color of the grid line.
 */
 
 /*!
   \property QAbstractAxis::minorGridLineColor
-  The color of the minor grid line. Applies only to QValueAxis.
+  \brief The color of the minor grid line.
+
+  Applies only to QValueAxis.
 */
 
 /*!
   \property QAbstractAxis::labelsFont
-  The font of the axis labels.
+  \brief The font of the axis labels.
 */
 
 /*!
   \qmlproperty Font AbstractAxis::labelsFont
   The font of the axis labels.
 
-  See the Qt documentation for more details of Font.
+  For more information, see \l [QML]{font}.
 */
 
 /*!
   \property QAbstractAxis::labelsColor
-  The color of the axis labels.
+  \brief The color of the axis labels.
 */
 /*!
   \qmlproperty color AbstractAxis::labelsColor
@@ -185,7 +193,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
   \property QAbstractAxis::labelsAngle
-  The angle of the axis labels in degrees.
+  \brief The angle of the axis labels in degrees.
 */
 /*!
   \qmlproperty int AbstractAxis::labelsAngle
@@ -194,7 +202,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
   \property QAbstractAxis::shadesVisible
-  The visibility of the axis shades.
+  \brief The visibility of the axis shades.
 */
 /*!
   \qmlproperty bool AbstractAxis::shadesVisible
@@ -203,7 +211,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
   \property QAbstractAxis::shadesColor
-  The fill (brush) color of the axis shades.
+  \brief The fill (brush) color of the axis shades.
 */
 /*!
   \qmlproperty color AbstractAxis::shadesColor
@@ -212,7 +220,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
   \property QAbstractAxis::shadesBorderColor
-  The border (pen) color of the axis shades.
+  \brief The border (pen) color of the axis shades.
 */
 /*!
   \qmlproperty color AbstractAxis::shadesBorderColor
@@ -221,40 +229,46 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
   \property QAbstractAxis::shadesPen
-  The pen of the axis shades (area between grid lines).
+  \brief The pen used to draw the axis shades (the area between the grid lines).
 */
 
 /*!
   \property QAbstractAxis::shadesBrush
-  The brush of the axis shades (area between grid lines).
+  \brief The brush used to draw the axis shades (the area between the grid lines).
 */
 
 /*!
   \property QAbstractAxis::titleVisible
-  The visibility of the axis title. By default the value is true.
+  \brief The visibility of the axis title.
+
+    By default, the value is \c true.
 */
 /*!
   \qmlproperty bool AbstractAxis::titleVisible
-  The visibility of the axis title. By default the value is true.
+  The visibility of the axis title. By default, the value is \c true.
 */
 
 /*!
   \property QAbstractAxis::titleText
-  The title of the axis. Empty by default. Axis titles support html formatting.
+  \brief The title of the axis.
+
+  Empty by default. Axis titles support HTML formatting.
 */
 /*!
   \qmlproperty String AbstractAxis::titleText
-  The title of the axis. Empty by default. Axis titles support html formatting.
+  The title of the axis. Empty by default. Axis titles support HTML formatting.
 */
 
 /*!
   \property QAbstractAxis::titleBrush
-  The brush of the title text. Only the color of the brush is relevant.
+  \brief The brush used to draw the title text.
+
+  Only the color of the brush is relevant.
 */
 
 /*!
   \property QAbstractAxis::titleFont
-  The font of the title of the axis.
+  \brief The font of the title of the axis.
 */
 /*!
   \qmlproperty Font AbstractAxis::titleFont
@@ -263,223 +277,235 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
   \property QAbstractAxis::orientation
-  The orientation of the axis. Fixed to either Qt::Horizontal or Qt::Vertical when you add the axis to a chart.
+  \brief The orientation of the axis.
+
+  Fixed to either Qt::Horizontal or Qt::Vertical when the axis is added to a chart.
 */
 /*!
   \qmlproperty Qt.Orientation AbstractAxis::orientation
-  The orientation of the axis. Fixed to either Qt.Horizontal or Qt.Vertical when the axis is set to a series.
+  The orientation of the axis. Fixed to either \l {Qt::Horizontal}{Qt.Horizontal}
+  or \l{Qt::Vertical}{Qt.Vertical} when the axis is set to a series.
 */
 
 /*!
   \property QAbstractAxis::alignment
-  The alignment of the axis. Can be Qt::AlignLeft, Qt::AlignRight, Qt::AlignBottom, or Qt::AlignTop.
+  \brief The alignment of the axis.
+
+  Can be Qt::AlignLeft, Qt::AlignRight, Qt::AlignBottom, or Qt::AlignTop.
 */
 /*!
   \qmlproperty alignment AbstractAxis::alignment
-  The alignment of the axis. Can be Qt.AlignLeft, Qt.AlignRight, Qt.AlignBottom, or Qt.AlignTop.
+  The alignment of the axis. Can be \l{Qt::AlignLeft}{Qt.AlignLeft},
+  \l{Qt::AlignRight}{Qt.AlignRight}, \l{Qt::AlignBottom}{Qt.AlignBottom}, or
+  \l{Qt::AlignTop}{Qt.AlignTop}.
 */
 
 /*!
   \property QAbstractAxis::reverse
-  The reverse property defines if reverse axis is used. By default the value is false.
+  \brief Whether a reverse axis is used.
 
-  Reverse axis is supported with line, spline, scatter and area series with cartesian chart.
-  All axes of the same orientation attached to same series must be reversed if one is reversed or
-  the behavior is undefined.
+  By default, the value is \c false.
+
+  The reverse axis is supported with a line, spline, and scatter series, as well as an area series
+  with a cartesian chart. All axes of the same orientation attached to the same series must be
+  reversed if one is reversed or the behavior is undefined.
 */
 /*!
   \qmlproperty alignment AbstractAxis::reverse
-  The reverse property defines if reverse axis is used. By default the value is false.
+  Defines whether a reverse axis is used. By default, the value is \c false.
 
-  Reverse axis is supported with line, spline, scatter and area series with cartesian chart.
-  All axes of the same orientation attached to same series must be reversed if one is reversed or
-  the behavior is undefined.
+  The reverse axis is supported with a line, spline, and scatter series, as well as an area series
+  with a cartesian chart. All axes of the same orientation attached to the same series must be
+  reversed if one is reversed or the behavior is undefined.
 */
 
 /*!
   \fn void QAbstractAxis::visibleChanged(bool visible)
-  Visibility of the axis has changed to \a visible.
+  This signal is emitted when the visibility of the axis changes to \a visible.
 */
 /*!
   \qmlsignal AbstractAxis::onVisibleChanged(bool visible)
-  Visibility of the axis has changed to \a visible.
+  This signal is emitted when the visibility of the axis changes to \a visible.
 */
 
 /*!
   \fn void QAbstractAxis::linePenChanged(const QPen& pen)
-  The pen of the line of the axis has changed to \a pen.
+  This signal is emitted when the pen used to draw the line of the axis changes to \a pen.
 */
 
 /*!
   \fn void QAbstractAxis::lineVisibleChanged(bool visible)
-  Visibility of the axis line has changed to \a visible.
+  This signal is emitted when the visibility of the axis line changes to \a visible.
 */
 /*!
   \qmlsignal AbstractAxis::onLineVisibleChanged(bool visible)
-  Visibility of the axis line has changed to \a visible.
+  This signal is emitted when the visibility of the axis line changes to \a visible.
 */
 
 /*!
   \fn void QAbstractAxis::labelsVisibleChanged(bool visible)
-  Visibility of the labels of the axis has changed to \a visible.
+  This signal is emitted when the visibility of the labels of the axis changes to \a visible.
 */
 /*!
   \qmlsignal AbstractAxis::onLabelsVisibleChanged(bool visible)
-  Visibility of the labels of the axis has changed to \a visible.
+  This signal is emitted when the visibility of the labels of the axis changes to \a visible.
 */
 
 /*!
   \fn void QAbstractAxis::labelsFontChanged(const QFont& font)
-  The font of the axis labels has changed to \a font.
+  This signal is emitted when the font of the axis labels changes to \a font.
 */
 /*!
   \qmlsignal AbstractAxis::onLabelsFontChanged(Font font)
-  The font of the axis labels has changed to \a font.
+  This signal is emitted when the font of the axis labels changes to \a font.
 */
 
 /*!
   \fn void QAbstractAxis::labelsBrushChanged(const QBrush& brush)
-  The brush of the axis labels has changed to \a brush.
+  This signal is emitted when the brush used to draw the axis labels changes to \a brush.
 */
 
 /*!
   \fn void QAbstractAxis::labelsAngleChanged(int angle)
-  The angle of the axis labels has changed to \a angle.
+  This signal is emitted when the angle of the axis labels changes to \a angle.
 */
 /*!
   \qmlsignal AbstractAxis::onLabelsAngleChanged(int angle)
-  The angle of the axis labels has changed to \a angle.
+  This signal is emitted when the angle of the axis labels changes to \a angle.
 */
 
 /*!
   \fn void QAbstractAxis::gridVisibleChanged(bool visible)
-  Visibility of the grid lines of the axis has changed to \a visible.
+  This signal is emitted when the visibility of the grid lines of the axis changes to \a visible.
 */
 /*!
   \qmlsignal AbstractAxis::onGridVisibleChanged(bool visible)
-  Visibility of the grid lines of the axis has changed to \a visible.
+  This signal is emitted when the visibility of the grid lines of the axis changes to \a visible.
 */
 
 /*!
   \fn void QAbstractAxis::minorGridVisibleChanged(bool visible)
-  Visibility of the minor grid lines of the axis has changed to \a visible.
+  This signal is emitted when the visibility of the minor grid lines of the axis
+  changes to \a visible.
 */
 /*!
   \qmlsignal AbstractAxis::onMinorGridVisibleChanged(bool visible)
-  Visibility of the minor grid lines of the axis has changed to \a visible.
+  This signal is emitted when the visibility of the minor grid lines of the axis
+  changes to \a visible.
 */
 
 /*!
   \fn void QAbstractAxis::gridLinePenChanged(const QPen& pen)
-  The pen of the grid line has changed to \a pen.
+  This signal is emitted when the pen used to draw the grid line changes to \a pen.
 */
 
 /*!
   \fn void QAbstractAxis::minorGridLinePenChanged(const QPen& pen)
-  The pen of the minor grid line has changed to \a pen.
+  This signal is emitted when the pen used to draw the minor grid line changes to \a pen.
 */
 
 /*!
   \fn void QAbstractAxis::gridLineColorChanged(const QColor &color)
-  The color of the pen of the grid line has changed to \a color.
+  This signal is emitted when the color of the pen used to draw the grid line changes to \a color.
 */
 
 /*!
   \fn void QAbstractAxis::minorGridLineColorChanged(const QColor &color)
-  The color of the pen of the minor grid line has changed to \a color.
+  This signal is emitted when the color of the pen used to draw the minor grid line changes
+  to \a color.
 */
 
 /*!
   \fn void QAbstractAxis::colorChanged(QColor color)
-  Emitted if the \a color of the axis is changed.
+  This signal is emitted when the color of the axis changes to \a color.
 */
 /*!
   \qmlsignal AbstractAxis::onColorChanged(QColor color)
-  Emitted if the \a color of the axis is changed.
+  This signal is emitted when the color of the axis changes to \a color.
 */
 
 /*!
   \fn void QAbstractAxis::labelsColorChanged(QColor color)
-  Emitted if the \a color of the axis labels is changed.
+  This signal is emitted when the color of the axis labels changes to \a color.
 */
 /*!
   \qmlsignal AbstractAxis::onLabelsColorChanged(QColor color)
-  Emitted if the \a color of the axis labels is changed.
+  This signal is emitted when the color of the axis labels changes to \a color.
 */
 
 /*!
   \fn void QAbstractAxis::titleVisibleChanged(bool visible)
-  Visibility of the title text of the axis has changed to \a visible.
+  This signal is emitted when the visibility of the title text of the axis changes to \a visible.
 */
 /*!
   \qmlsignal AbstractAxis::onTitleVisibleChanged(bool visible)
-  Visibility of the title text of the axis has changed to \a visible.
+  This signal is emitted when the visibility of the title text of the axis changes to \a visible.
 */
 
 /*!
   \fn void QAbstractAxis::titleTextChanged(const QString& text)
-  The text of the axis title has changed to \a text.
+  This signal is emitted when the text of the axis title changes to \a text.
 */
 /*!
   \qmlsignal AbstractAxis::onTitleTextChanged(String text)
-  The text of the axis title has changed to \a text.
+  This signal is emitted when the text of the axis title changes to \a text.
 */
 
 /*!
   \fn void QAbstractAxis::titleBrushChanged(const QBrush& brush)
-  The brush of the axis title has changed to \a brush.
+  This signal is emitted when the brush used to draw the axis title changes to \a brush.
 */
 
 /*!
   \fn void QAbstractAxis::titleFontChanged(const QFont& font)
-  The font of the axis title has changed to \a font.
+  This signal is emitted when the font of the axis title changes to \a font.
 */
 /*!
   \qmlsignal AbstractAxis::onTitleFontChanged(Font font)
-  The font of the axis title has changed to \a font.
+  This signal is emitted when the font of the axis title changes to \a font.
 */
 
 /*!
   \fn void QAbstractAxis::shadesVisibleChanged(bool)
-  Emitted if the visibility of the axis shades is changed to \a visible.
+  This signal is emitted when the visibility of the axis shades changes to \a visible.
 */
 /*!
   \qmlsignal AbstractAxis::onShadesVisibleChanged(bool visible)
-  Emitted if the visibility of the axis shades is changed to \a visible.
+  This signal is emitted when the visibility of the axis shades changes to \a visible.
 */
 
 /*!
   \fn void QAbstractAxis::shadesColorChanged(QColor color)
-  Emitted if the \a color of the axis shades is changed.
+  This signal is emitted when the color of the axis shades changes to \a color.
 */
 /*!
   \qmlsignal AbstractAxis::onShadesColorChanged(QColor color)
-  Emitted if the \a color of the axis shades is changed.
+  This signal is emitted when the color of the axis shades changes to \a color.
 */
 
 /*!
-  \fn void QAbstractAxis::shadesBorderColorChanged(QColor)
-  Emitted if the border \a color of the axis shades is changed.
+  \fn void QAbstractAxis::shadesBorderColorChanged(QColor color)
+  This signal is emitted when the border color of the axis shades changes to \a color.
 */
 /*!
   \qmlsignal AbstractAxis::onBorderColorChanged(QColor color)
-  Emitted if the border \a color of the axis shades is changed.
+  This signal is emitted when the border color of the axis shades changes to \a color.
 */
 
 /*!
   \fn void QAbstractAxis::shadesBrushChanged(const QBrush& brush)
-  The brush of the axis shades has changed to \a brush.
+  This signal is emitted when the brush used to draw the axis shades changes to \a brush.
 */
 
 /*!
   \fn void QAbstractAxis::shadesPenChanged(const QPen& pen)
-  The pen of the axis shades has changed to \a pen.
+  This signal is emitted when the pen used to draw the axis shades changes to \a pen.
 */
 
 /*!
  \internal
-  Constructs new axis object which is a child of \a parent. Ownership is taken by
-  QChart when axis added.
+  Constructs a new axis object that is a child of \a parent. The ownership is taken by
+  QChart when the axis is added.
 */
 
 QAbstractAxis::QAbstractAxis(QAbstractAxisPrivate &d, QObject *parent)
@@ -489,7 +515,7 @@ QAbstractAxis::QAbstractAxis(QAbstractAxisPrivate &d, QObject *parent)
 }
 
 /*!
-  Destructor of the axis object. When axis is added to chart, chart object takes ownership.
+  Destructs the axis object. When the axis is added to a chart, the chart object takes ownership.
 */
 
 QAbstractAxis::~QAbstractAxis()
@@ -499,7 +525,7 @@ QAbstractAxis::~QAbstractAxis()
 }
 
 /*!
-  Sets \a pen used to draw axis line and ticks.
+  Sets the pen used to draw the axis line and tick marks to \a pen.
  */
 void QAbstractAxis::setLinePen(const QPen &pen)
 {
@@ -510,7 +536,7 @@ void QAbstractAxis::setLinePen(const QPen &pen)
 }
 
 /*!
-  Returns pen used to draw axis and ticks.
+  Returns the pen used to draw the axis line and tick marks.
 */
 QPen QAbstractAxis::linePen() const
 {
@@ -536,7 +562,7 @@ QColor QAbstractAxis::linePenColor() const
 }
 
 /*!
-  Sets if axis and ticks are \a visible.
+  Determines whether the axis line and tick marks are \a visible.
  */
 void QAbstractAxis::setLineVisible(bool visible)
 {
@@ -578,7 +604,7 @@ bool QAbstractAxis::isMinorGridLineVisible() const
 }
 
 /*!
-  Sets \a pen used to draw grid line.
+  Sets the pen used to draw the grid lines to \a pen.
 */
 void QAbstractAxis::setGridLinePen(const QPen &pen)
 {
@@ -589,7 +615,7 @@ void QAbstractAxis::setGridLinePen(const QPen &pen)
 }
 
 /*!
-  Returns pen used to draw grid.
+  Returns the pen used to draw the grid.
 */
 QPen QAbstractAxis::gridLinePen() const
 {
@@ -659,7 +685,7 @@ bool QAbstractAxis::labelsVisible() const
 }
 
 /*!
-  Sets \a brush used to draw labels.
+  Sets the brush used to draw labels to \a brush.
  */
 void QAbstractAxis::setLabelsBrush(const QBrush &brush)
 {
@@ -670,7 +696,7 @@ void QAbstractAxis::setLabelsBrush(const QBrush &brush)
 }
 
 /*!
-  Returns brush used to draw labels.
+  Returns the brush used to draw labels.
 */
 QBrush  QAbstractAxis::labelsBrush() const
 {
@@ -681,7 +707,7 @@ QBrush  QAbstractAxis::labelsBrush() const
 }
 
 /*!
-  Sets \a font used to draw labels.
+  Sets the font used to draw labels to \a font.
 */
 void QAbstractAxis::setLabelsFont(const QFont &font)
 {
@@ -692,7 +718,7 @@ void QAbstractAxis::setLabelsFont(const QFont &font)
 }
 
 /*!
-  Returns font used to draw labels.
+  Returns the font used to draw labels.
 */
 QFont QAbstractAxis::labelsFont() const
 {
@@ -743,7 +769,7 @@ bool QAbstractAxis::isTitleVisible() const
 }
 
 /*!
-  Sets \a brush used to draw title.
+  Sets the brush used to draw titles to \a brush.
  */
 void QAbstractAxis::setTitleBrush(const QBrush &brush)
 {
@@ -754,7 +780,7 @@ void QAbstractAxis::setTitleBrush(const QBrush &brush)
 }
 
 /*!
-  Returns brush used to draw title.
+  Returns the brush used to draw titles.
 */
 QBrush QAbstractAxis::titleBrush() const
 {
@@ -765,7 +791,7 @@ QBrush QAbstractAxis::titleBrush() const
 }
 
 /*!
-  Sets \a font used to draw title.
+  Sets the font used to draw titles to \a font.
 */
 void QAbstractAxis::setTitleFont(const QFont &font)
 {
@@ -776,7 +802,7 @@ void QAbstractAxis::setTitleFont(const QFont &font)
 }
 
 /*!
-  Returns font used to draw title.
+  Returns the font used to draw titles.
 */
 QFont QAbstractAxis::titleFont() const
 {
@@ -814,7 +840,7 @@ bool QAbstractAxis::shadesVisible() const
 }
 
 /*!
-  Sets \a pen used to draw shades.
+  Sets the pen used to draw shades to \a pen.
 */
 void QAbstractAxis::setShadesPen(const QPen &pen)
 {
@@ -825,7 +851,7 @@ void QAbstractAxis::setShadesPen(const QPen &pen)
 }
 
 /*!
-  Returns pen used to draw shades.
+  Returns the pen used to draw shades.
 */
 QPen QAbstractAxis::shadesPen() const
 {
@@ -836,7 +862,7 @@ QPen QAbstractAxis::shadesPen() const
 }
 
 /*!
-  Sets \a brush used to draw shades.
+  Sets the brush used to draw shades to \a brush.
 */
 void QAbstractAxis::setShadesBrush(const QBrush &brush)
 {
@@ -847,7 +873,7 @@ void QAbstractAxis::setShadesBrush(const QBrush &brush)
 }
 
 /*!
-   Returns brush used to draw shades.
+   Returns the brush used to draw shades.
 */
 QBrush QAbstractAxis::shadesBrush() const
 {
@@ -894,7 +920,7 @@ bool QAbstractAxis::isVisible() const
 }
 
 /*!
-  Sets axis, shades, labels and grid lines visibility to \a visible.
+  Sets the visibility of the axis, shades, labels, and grid lines to \a visible.
 */
 void QAbstractAxis::setVisible(bool visible)
 {
@@ -906,7 +932,7 @@ void QAbstractAxis::setVisible(bool visible)
 
 
 /*!
-  Sets axis, shades, labels and grid lines to be visible.
+  Makes the axis, shades, labels, and grid lines visible.
 */
 void QAbstractAxis::show()
 {
@@ -914,7 +940,7 @@ void QAbstractAxis::show()
 }
 
 /*!
-  Sets axis, shades, labels and grid lines to not be visible.
+  Makes the axis, shades, labels, and grid lines invisible.
 */
 void QAbstractAxis::hide()
 {
@@ -923,8 +949,8 @@ void QAbstractAxis::hide()
 
 /*!
   Sets the minimum value shown on the axis.
-  Depending on the actual axis type the \a min parameter is converted to appropriate type.
-  If the conversion is impossible then the function call does nothing
+  Depending on the actual axis type, the \a min parameter is converted to the appropriate type
+  of value. If the conversion is impossible, the function call does nothing.
 */
 void QAbstractAxis::setMin(const QVariant &min)
 {
@@ -933,8 +959,8 @@ void QAbstractAxis::setMin(const QVariant &min)
 
 /*!
   Sets the maximum value shown on the axis.
-  Depending on the actual axis type the \a max parameter is converted to appropriate type.
-  If the conversion is impossible then the function call does nothing
+  Depending on the actual axis type, the \a max parameter is converted to the appropriate type
+  of value. If the conversion is impossible, the function call does nothing.
 */
 void QAbstractAxis::setMax(const QVariant &max)
 {
@@ -943,8 +969,8 @@ void QAbstractAxis::setMax(const QVariant &max)
 
 /*!
   Sets the range shown on the axis.
-  Depending on the actual axis type the \a min and \a max parameters are converted to appropriate types.
-  If the conversion is impossible then the function call does nothing.
+  Depending on the actual axis type, the \a min and \a max parameters are converted to
+  appropriate types of values. If the conversion is impossible, the function call does nothing.
 */
 void QAbstractAxis::setRange(const QVariant &min, const QVariant &max)
 {
@@ -953,7 +979,7 @@ void QAbstractAxis::setRange(const QVariant &min, const QVariant &max)
 
 
 /*!
-  Returns the orientation in which the axis is being used (Vertical or Horizontal)
+  Returns the orientation of the axis (vertical or horizontal).
 */
 Qt::Orientation QAbstractAxis::orientation() const
 {

@@ -39,6 +39,10 @@
 
     \image examples_legendmarkers.png
 
+    \include examples-run.qdocinc
+
+    \section1 Using Legend Markers
+
     Our application has buttons for adding or removing a series in a chart and a button to connect or disconnect the legend markers clicked signal to our handler.
     In the image above we have connected the markers and clicked on one of them.
 

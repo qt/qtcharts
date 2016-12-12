@@ -45,6 +45,10 @@
     Clicking on a month shows that month's harvest:
     \image examples_stackedbarchartdrilldown2.png
 
+    \include examples-run.qdocinc
+
+    \section1 Implementing Drilldown
+
     First we define a drilldown series class, which adds categories to the stacked bar series and mapping for categories to other drilldown series.
     The purpose of the drilldown series is to contain knowledge of the drilldown structure. The mapDrilldownSeries function maps the category to a given series. We can request the mapping for a category with the drilldownSeries(int category) function.
 

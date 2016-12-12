@@ -36,6 +36,10 @@
 
     \image examples_scatterchart.png
 
+    \include examples-run.qdocinc
+
+    \section1 Creating Scatter Charts
+
     To create scatter charts, a QScatterSeries instance is needed. Here we create a scatter series
     instance, and set the type and width of outline for the scatter points.
 

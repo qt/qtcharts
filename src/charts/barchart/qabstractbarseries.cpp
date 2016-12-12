@@ -46,17 +46,23 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \class QAbstractBarSeries
     \inmodule Qt Charts
-    \brief Series for creating a bar chart.
+    \brief The QAbstractBarSeries class is an abstract parent class for all bar series classes.
 
-    QAbstractBarSeries represents a series of data shown as bars. The purpose of this class is to draw bars to
-    the position defined by data. Single bar is defined by QPointF, where x value is the x-coordinate of the bar
-    and y-value is the height of the bar. The category names are ignored with this series and x-axis
-    shows the x-values.
+    In bar charts, bars are defined as bar sets that contain one data value for each category.
+    The position of a bar is specified by the category and its height by the data value. Bar
+    series that contain multiple bar sets group together bars that belong to the same category.
+    The way the bars are displayed is determined by the subclass of this class chosen to create
+    the bar chart.
 
-    See the \l {BarChart Example} {bar chart example} to learn how to create a simple bar chart.
+    If a QValueAxis is used instead of QBarCategoryAxis for the main bar axis, the bars are
+    grouped around the index value of the category.
+
+    See the \l {BarChart Example} {bar chart example} to learn how to use the QBarSeries class
+    to create a simple bar chart.
     \image examples_barchart.png
 
-    \sa QBarSet, QStackedBarSeries, QPercentBarSeries
+    \sa QBarSet, QBarSeries, QStackedBarSeries, QPercentBarSeries
+    \sa QHorizontalBarSeries, QHorizontalStackedBarSeries, QHorizontalPercentBarSeries
 */
 /*!
     \qmltype AbstractBarSeries
@@ -65,9 +71,20 @@ QT_CHARTS_BEGIN_NAMESPACE
 
     \inherits AbstractSeries
 
-    \brief Series type for creating a bar chart.
+    \brief An abstract parent type for all bar series types.
 
-    The following QML shows how to create a simple bar chart:
+    In bar charts, bars are defined as bar sets that contain one data value for each category.
+    The position of a bar is specified by the category and its height by the data value. Bar
+    series that contain multiple bar sets group together bars that belong to the same category.
+    The way the bars are displayed is determined by the type chosen to create the bar chart:
+    BarSeries, StackedBarSeries, PercentBarSeries, HorizontalBarSeries, HorizontalStackedBarSeries,
+    or HorizontalPercentBarSeries.
+
+    If a ValueAxis type is used instead of a BarCategoryAxis type for the main bar axis, the
+    bars are grouped around the index value of the category.
+
+    The following QML code snippet shows how to use the BarSeries and BarCategoryAxis type
+    to create a simple bar chart:
     \snippet qmlchart/qml/qmlchart/View6.qml 1
 
     \beginfloatleft
@@ -78,69 +95,79 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \qmlproperty AbstractAxis AbstractBarSeries::axisX
-    The x axis used for the series. If you leave both axisX and axisXTop undefined, a BarCategoriesAxis is created for
-    the series.
+    The x-axis used for the series. If you leave both axisX and axisXTop undefined, a
+    BarCategoryAxis is created for the series.
     \sa axisXTop
 */
 
 /*!
     \qmlproperty AbstractAxis AbstractBarSeries::axisY
-    The y axis used for the series. If you leave both axisY and axisYRight undefined, a ValueAxis is created for
-    the series.
+    The y-axis used for the series. If you leave both axisY and axisYRight undefined, a
+    ValueAxis is created for the series.
     \sa axisYRight
 */
 
 /*!
     \qmlproperty AbstractAxis AbstractBarSeries::axisXTop
-    The x axis used for the series, drawn on top of the chart view. Note that you can only provide either axisX or
-    axisXTop, but not both.
+    The x-axis used for the series, drawn on top of the chart view.
+
+    \note You can only provide either axisX or axisXTop, but not both.
     \sa axisX
 */
 
 /*!
     \qmlproperty AbstractAxis AbstractBarSeries::axisYRight
-    The y axis used for the series, drawn to the right on the chart view. Note that you can only provide either axisY
-    or axisYRight, but not both.
+    The y-axis used for the series, drawn to the right of the chart view.
+
+    \note You can only provide either axisY or axisYRight, but not both.
     \sa axisY
 */
 
 /*!
     \property QAbstractBarSeries::barWidth
-    The width of the bars of the series. The unit of \a width is the unit of x-axis. The minimum width for bars
-    is zero and negative values are treated as zero. Setting the width to zero means that width of the bar on screen
-    is one pixel no matter what the scale of x-axis is. Bars wider than zero are scaled with x-axis.
-    Note that with QBarSeries this value means the width of one group of bars instead of just one bar.
+    \brief The width of the bars of the series.
+
+    The unit of width is the unit of the x-axis. The minimum width for bars is zero, and negative
+    values are treated as zero. Setting the width to zero means that the width of the bar on the
+    screen is one pixel regardless of the scale of the x-axis. Bars wider than zero are scaled
+    using the x-axis scale.
+
+    \note When used with QBarSeries, this value specifies the width of a group of bars instead of
+    that of a single bar.
     \sa QBarSeries
 */
 /*!
     \qmlproperty real AbstractBarSeries::barWidth
-    The width of the bars of the series. The unit of width is the unit of x-axis. The minimum width for bars
-    is zero and negative values are treated as zero. Setting the width to zero means that width of the bar on screen
-    is one pixel no matter what the scale of x-axis is. Bars wider than zero are scaled with x-axis.
-    Note that with QBarSeries this value means the width of one group of bars instead of just one bar.
+    The unit of width is the unit of the x-axis. The minimum width for bars is zero, and negative
+    values are treated as zero. Setting the width to zero means that the width of the bar on the
+    screen is one pixel regardless of the scale of the x-axis. Bars wider than zero are scaled
+    using the x-axis scale.
+
+    \note When used with the BarSeries type, this value specifies the width of a group of bars
+    instead of that of a single bar.
 */
 
 /*!
     \property QAbstractBarSeries::count
-    Holds the number of sets in series.
+    \brief The number of bar sets in a bar series.
 */
 /*!
     \qmlproperty int AbstractBarSeries::count
-    Holds the number of sets in series.
+    The number of bar sets in a bar series.
 */
 
 /*!
     \property QAbstractBarSeries::labelsVisible
-    Defines the visibility of the labels in series
+    \brief The visibility of the labels in a bar series.
 */
 /*!
     \qmlproperty bool AbstractBarSeries::labelsVisible
-    Defines the visibility of the labels in series
+    The visibility of the labels in a bar series.
 */
 
 /*!
     \property QAbstractBarSeries::labelsFormat
-    The \a format used for showing labels in series.
+    \brief The format used for showing labels in a bar series.
 
     QAbstractBarSeries supports the following format tag:
     \table
@@ -149,67 +176,73 @@ QT_CHARTS_BEGIN_NAMESPACE
     \endtable
 
     For example, the following usage of the format tags would produce labels that show the value
-    followed by unit ('u'):
+    followed by the unit (u):
     \code
     series->setLabelsFormat("@value u");
     \endcode
 
-    By default, the labels shows the value of the bar. For percent bar series '%' is added after
-    the value. The labels are shown on the plot area, labels on the edge of the plot area are cut.
-    If the bars are close to each other the labels may overlap.
+    By default, the labels show the value of the bar. For the percent bar series, \e % is added
+    after the value. The labels are shown on the plot area, whereas labels on the edge of the plot
+    area are cut. If the bars are close to each other, the labels may overlap.
 
-    \sa QAbstractBarSeries::labelsVisible, QAbstractBarSeries::labelsPosition
+    \sa labelsVisible, labelsPosition
 */
 /*!
     \qmlproperty string AbstractBarSeries::labelsFormat
-    The format used for showing labels in series.
+    The format used for showing labels in a bar series.
 
-    \sa QAbstractBarSeries::labelsFormat, labelsVisible, labelsPosition
+    \sa QAbstractBarSeries::labelsFormat, labelsVisible, LabelsPosition
 */
 /*!
     \fn void QAbstractBarSeries::labelsFormatChanged(const QString &format)
-    Signal is emitted when the \a format of data value labels is changed.
+    This signal is emitted when the \a format of data value labels changes.
 */
 /*!
     \qmlsignal XYSeries::onLabelsFormatChanged(string format)
-    Signal is emitted when the \a format of data value labels is changed.
+    This signal is emitted when the \a format of data value labels changes.
 */
 
 /*!
  \enum QAbstractBarSeries::LabelsPosition
 
- This enum describes the position of the data value labels.
+ This enum value describes the position of the data value labels:
 
- \value LabelsCenter Label is in the center of the bar.
- \value LabelsInsideEnd Label is inside the bar at the high end of it.
- \value LabelsInsideBase Label is inside the bar at the low end of it.
- \value LabelsOutsideEnd Label is outside the bar at the high end of it.
+ \value LabelsCenter Label is located in the center of the bar.
+ \value LabelsInsideEnd Label is located inside the bar at the top.
+ \value LabelsInsideBase Label is located inside the bar at the bottom.
+ \value LabelsOutsideEnd Label is located outside the bar at the top.
  */
 
 /*!
     \property QAbstractBarSeries::labelsPosition
-    Defines the \a position of value labels.
+    \brief The position of value labels.
 
-    \sa QAbstractBarSeries::labelsVisible, QAbstractBarSeries::labelsFormat
+    \sa labelsVisible, labelsFormat
 */
 /*!
-    \qmlproperty string AbstractBarSeries::labelsPosition
-    Defines the \a position of value labels.
+    \qmlproperty enumeration AbstractBarSeries::LabelsPosition
+
+    The position of the data value labels:
+
+    \value LabelsCenter Label is located in the center of the bar.
+    \value LabelsInsideEnd Label is located inside the bar at the top.
+    \value LabelsInsideBase Label is located inside the bar at the bottom.
+    \value LabelsOutsideEnd Label is located outside the bar at the top.
 
     \sa labelsVisible, labelsFormat
 */
 /*!
     \fn void QAbstractBarSeries::labelsPositionChanged(QAbstractBarSeries::LabelsPosition position)
-    Signal is emitted when the \a position of value labels is changed.
+    This signal is emitted when the \a position of value labels changes.
 */
 /*!
     \qmlsignal AbstractBarSeries::onLabelsPositionChanged(LabelsPosition position)
-    Signal is emitted when the \a position of value labels is changed.
+    This signal is emitted when the \a position of value labels changes.
 */
 
 /*!
     \property QAbstractBarSeries::labelsAngle
-    The angle of the value labels in degrees.
+    \brief The angle of the value labels in degrees.
 */
 /*!
     \qmlproperty qreal QAbstractBarSeries::labelsAngle
@@ -217,117 +250,119 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 /*!
     \fn void QAbstractBarSeries::labelsAngleChanged(qreal angle)
-    Signal is emitted when the \a angle of the value labels is changed.
+    This signal is emitted when the \a angle of the value labels changes.
 */
 /*!
     \qmlsignal AbstractBarSeries::onLabelsAngleChanged(qreal angle)
-    Signal is emitted when the \a angle of the value labels is changed.
+    This signal is emitted when the \a angle of the value labels changes.
 */
 
 /*!
     \fn void QAbstractBarSeries::clicked(int index, QBarSet *barset)
-    The signal is emitted if the user clicks with a mouse on top of QBarSet \a barset.
-    Clicked bar inside set is indexed by \a index
+    This signal is emitted when the user clicks the bar specified by \a index
+    in the bar set specified by \a barset.
 */
 /*!
     \qmlsignal AbstractBarSeries::onClicked(int index, BarSet barset)
-    The signal is emitted if the user clicks with a mouse on top of BarSet.
-    Clicked bar inside set is indexed by \a index
+    This signal is emitted when the user clicks the bar specified by \a index
+    in the bar set specified by \a barset.
 */
 
 /*!
     \fn void QAbstractBarSeries::pressed(int index, QBarSet *barset)
-    The signal is emitted if the user presses with a mouse on top of QBarSet \a barset.
-    Pressed bar inside set is indexed by \a index
+    This signal is emitted when the user clicks the bar specified by \a index
+    in the bar set specified by \a barset and holds down the mouse button.
 */
 /*!
     \qmlsignal AbstractBarSeries::onPressed(int index, BarSet barset)
-    The signal is emitted if the user presses with a mouse on top of BarSet.
-    Pressed bar inside set is indexed by \a index
+    This signal is emitted when the user clicks the bar specified by \a index
+    in the bar set specified by \a barset and holds down the mouse button.
 */
 
 /*!
     \fn void QAbstractBarSeries::released(int index, QBarSet *barset)
-    The signal is emitted if the user releases with a mouse on top of QBarSet \a barset.
-    Released bar inside set is indexed by \a index
+    This signal is emitted when the user releases the mouse press on the bar
+    specified by \a index in the bar set specified by \a barset.
 */
 /*!
     \qmlsignal AbstractBarSeries::onReleased(int index, BarSet barset)
-    The signal is emitted if the user releases with a mouse on top of BarSet.
-    Released bar inside set is indexed by \a index
+    This signal is emitted when the user releases the mouse press on the bar
+    specified by \a index in the bar set specified by \a barset.
 */
 
 /*!
     \fn void QAbstractBarSeries::doubleClicked(int index, QBarSet *barset)
-    The signal is emitted if the user doubleclicks with a mouse on top of QBarSet \a barset.
-    DoubleClicked bar inside set is indexed by \a index
+    This signal is emitted when the user double-clicks the bar specified by \a index
+    in the bar set specified by \a barset.
 */
 /*!
     \qmlsignal AbstractBarSeries::onDoubleClicked(int index, BarSet barset)
-    The signal is emitted if the user doubleclicks with a mouse on top of BarSet.
-    Doubleclicked bar inside set is indexed by \a index
+    This signal is emitted when the user double-clicks the bar specified by \a index
+    in the bar set specified by \a barset.
 */
 
 /*!
     \fn void QAbstractBarSeries::hovered(bool status, int index, QBarSet* barset)
 
-    The signal is emitted if mouse is hovered on top of series.
-    Parameter \a barset is the pointer of barset, where hover happened.
-    Parameter \a status is true, if mouse entered on top of series, false if mouse left from top of series.
-    Hovered bar inside the set is indexed by \a index.
+    This signal is emitted when a mouse is hovered over the bar specified by \a index in the
+    bar set specified by \a barset. When the mouse moves over the bar, \a status turns \c true,
+    and when the mouse moves away again, it turns \c false.
 */
 /*!
     \qmlsignal AbstractBarSeries::onHovered(bool status, int index, BarSet barset)
 
-    The signal is emitted if mouse is hovered on top of series.
-    Parameter \a barset is the pointer of barset, where hover happened.
-    Parameter \a status is true, if mouse entered on top of series, false if mouse left from top of series.
-    Hovered bar inside the set is indexed by \a index.
+    This signal is emitted when a mouse is hovered over the bar specified by \a index in the
+    bar set specified by \a barset. When the mouse moves over the bar, \a status turns \c true,
+    and when the mouse moves away again, it turns \c false.
 */
 
 /*!
     \fn void QAbstractBarSeries::countChanged()
-    This signal is emitted when barset count has been changed, for example by append or remove.
+    This signal is emitted when the number of bar sets is changed, for example by append() or
+    remove().
 */
 /*!
     \qmlsignal AbstractBarSeries::onCountChanged()
-    This signal is emitted when barset count has been changed, for example by append or remove.
+    This signal is emitted when the number of bar sets is changed, for example by append() or
+    remove().
 */
 
 /*!
     \fn void QAbstractBarSeries::labelsVisibleChanged()
-    This signal is emitted when labels visibility have changed.
+    This signal is emitted when the labels' visibility changes.
     \sa isLabelsVisible(), setLabelsVisible()
 */
 
 /*!
     \fn void QAbstractBarSeries::barsetsAdded(QList<QBarSet*> sets)
-    This signal is emitted when \a sets have been added to the series.
+    This signal is emitted when the bar sets specified by \a sets are added to the series.
     \sa append(), insert()
 */
 /*!
-    \qmlsignal AbstractBarSeries::onBarsetsAdded(BarSet barset)
-    Emitted when \a barset has been added to the series.
+    \qmlsignal AbstractBarSeries::onBarsetsAdded()
+    This signal is emitted when bar sets are added to the series.
 */
 
 /*!
     \fn void QAbstractBarSeries::barsetsRemoved(QList<QBarSet*> sets)
-    This signal is emitted when \a sets have been removed from the series.
+    This signal is emitted when the bar sets specified by \a sets are removed from the series.
     \sa remove()
 */
 /*!
-    \qmlsignal AbstractBarSeries::onBarsetsRemoved(BarSet barset)
-    Emitted when \a barset has been removed from the series.
+    \qmlsignal AbstractBarSeries::onBarsetsRemoved()
+    This signal is emitted when bar sets are removed from the series.
 */
 
 /*!
     \qmlmethod BarSet AbstractBarSeries::at(int index)
-    Returns bar set at \a index. Returns null if the index is not valid.
+    Returns the bar set at \a index. Returns null if the index is not valid.
 */
 
 /*!
     \qmlmethod BarSet AbstractBarSeries::append(string label, VariantList values)
-    Adds a new bar set with \a label and \a values to \a index. Values is a list of reals.
+    Adds a new bar set with \a label and \a values to the index. \a values is
+    a list of real values.
+
     For example:
     \code
         myBarSeries.append("set 1", [0, 0.2, 0.2, 0.5, 0.4, 1.5, 0.9]);
@@ -336,24 +371,29 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \qmlmethod BarSet AbstractBarSeries::insert(int index, string label, VariantList values)
-    Inserts a new bar set with \a label and \a values to \a index. Values can be a list of reals or a list of XYPoints.
-    If index is zero or smaller, the new barset is prepended. If the index is count or bigger, the new barset is
-    appended.
-    \sa AbstractBarSeries::append()
+    Adds a new bar set with \a label and \a values to \a index. \a values can be a list
+    of real values or a list of XYPoint types.
+
+    If the index value is equal to or less than zero, the new bar set is prepended to the bar
+    series. If the index value is equal to or greater than the number of bar sets in the bar
+    series, the new bar set is appended to the bar series.
+
+    \sa append()
 */
 
 /*!
     \qmlmethod bool AbstractBarSeries::remove(BarSet barset)
-    Removes the barset from the series. Returns true if successful, false otherwise.
+    Removes the bar set specified by \a barset from the series. Returns \c true if successful,
+    \c false otherwise.
 */
 
 /*!
     \qmlmethod AbstractBarSeries::clear()
-    Removes all barsets from the series.
+    Removes all bar sets from the series.
 */
 
 /*!
-    Destructs abstractbarseries and owned barsets.
+    Removes the abstract bar series and the bar sets owned by it.
 */
 QAbstractBarSeries::~QAbstractBarSeries()
 {
@@ -371,10 +411,7 @@ QAbstractBarSeries::QAbstractBarSeries(QAbstractBarSeriesPrivate &o, QObject *pa
 }
 
 /*!
-    Sets the width of the bars of the series. The unit of \a width is the unit of x-axis. The minimum width for bars
-    is zero and negative values are treated as zero. Setting the width to zero means that width of the bar on screen
-    is one pixel no matter what the scale of x-axis is. Bars wider than zero are scaled with x-axis.
-    Note that with \link QBarSeries \endlink this value means the width of one group of bars instead of just one bar.
+    Sets the width of the bars of the series to \a width.
 */
 void QAbstractBarSeries::setBarWidth(qreal width)
 {
@@ -393,8 +430,9 @@ qreal QAbstractBarSeries::barWidth() const
 }
 
 /*!
-    Adds a set of bars to series. Takes ownership of \a set. If the set is null or is already in series, it won't be appended.
-    Returns true, if appending succeeded.
+    Adds a set of bars specified by \a set to the bar series and takes ownership of it. If the set
+    is null or it already belongs to the series, it will not be appended.
+    Returns \c true if appending succeeded.
 */
 bool QAbstractBarSeries::append(QBarSet *set)
 {
@@ -411,9 +449,8 @@ bool QAbstractBarSeries::append(QBarSet *set)
 }
 
 /*!
-    Removes barset from series. Releases ownership of \a set. Deletes the set, if remove
-    was successful.
-    Returns true, if set was removed.
+    Removes the bar set specified by \a set from the series and permanently deletes it if
+    the removal succeeds. Returns \c true if the set was removed.
 */
 bool QAbstractBarSeries::remove(QBarSet *set)
 {
@@ -432,12 +469,11 @@ bool QAbstractBarSeries::remove(QBarSet *set)
 }
 
 /*!
-    Takes a single \a set from the series. Does not delete the barset object.
-
-    NOTE: The series remains as the barset's parent object. You must set the
+    Takes a single \a set from the series. Does not delete the bar set object.
+    \note The series remains the barset's parent object. You must set the
     parent object to take full ownership.
 
-    Returns true if take was successful.
+    Returns \c true if the take operation succeeds.
 */
 bool QAbstractBarSeries::take(QBarSet *set)
 {
@@ -453,10 +489,11 @@ bool QAbstractBarSeries::take(QBarSet *set)
 }
 
 /*!
-    Adds a list of barsets to series. Takes ownership of \a sets.
-    Returns true, if all sets were appended successfully. If any of the sets is null or is already appended to series,
-    nothing is appended and function returns false. If any of the sets is in list more than once, nothing is appended
-    and function returns false.
+    Adds a list of bar sets specified by \a sets to a bar series and takes ownership of the sets.
+    Returns \c true if all sets were appended successfully. If any of the sets is null or was
+    previously appended to the series, nothing is appended and this function returns \c false.
+    If any of the sets appears in the list more than once, nothing is appended and this function
+    returns \c false.
 */
 bool QAbstractBarSeries::append(QList<QBarSet *> sets)
 {
@@ -472,9 +509,9 @@ bool QAbstractBarSeries::append(QList<QBarSet *> sets)
 }
 
 /*!
-    Insert a set of bars to series at \a index postion. Takes ownership of \a set. If the set is null or is already in series, it won't be appended.
-    Returns true, if inserting succeeded.
-
+    Inserts a bar set specified by \a set to a series at the position specified by \a index
+    and takes ownership of the set. If the set is null or already belongs to the series, it will
+    not be appended. Returns \c true if inserting succeeds.
 */
 bool QAbstractBarSeries::insert(int index, QBarSet *set)
 {
@@ -490,7 +527,7 @@ bool QAbstractBarSeries::insert(int index, QBarSet *set)
 }
 
 /*!
-    Removes all barsets from the series. Deletes removed sets.
+    Removes all bar sets from the series and permanently deletes them.
 */
 void QAbstractBarSeries::clear()
 {
@@ -506,7 +543,7 @@ void QAbstractBarSeries::clear()
 }
 
 /*!
-    Returns number of sets in series.
+    Returns the number of bar sets in a bar series.
 */
 int QAbstractBarSeries::count() const
 {
@@ -515,7 +552,7 @@ int QAbstractBarSeries::count() const
 }
 
 /*!
-    Returns a list of sets in series. Keeps ownership of sets.
+    Returns a list of bar sets in a bar series. Keeps the ownership of the bar sets.
  */
 QList<QBarSet *> QAbstractBarSeries::barSets() const
 {
@@ -524,7 +561,7 @@ QList<QBarSet *> QAbstractBarSeries::barSets() const
 }
 
 /*!
-    Sets the visibility of labels in series to \a visible
+    Sets the visibility of labels in a bar series to \a visible.
 */
 void QAbstractBarSeries::setLabelsVisible(bool visible)
 {
@@ -536,7 +573,7 @@ void QAbstractBarSeries::setLabelsVisible(bool visible)
 }
 
 /*!
-    Returns the visibility of labels
+    Returns the visibility of labels.
 */
 bool QAbstractBarSeries::isLabelsVisible() const
 {

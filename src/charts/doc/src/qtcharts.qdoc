@@ -74,15 +74,13 @@
 */
 
 /*!
-    \group charts_examples
+    \group qtcharts_examples
     \ingroup all-examples
     \title Qt Charts Examples
 
     \brief Examples for the Qt Charts.
 
-    For some code examples, see one of the Qt Charts examples:
+    The Qt Charts examples demonstrate how to use charts in widget-based and
+    Qt Quick applications:
 
-    \section1 Examples
-
-    \annotatedlist qtcharts_examples
 */

@@ -645,6 +645,7 @@ void tst_QCandlestickSeries::mouseClicked()
 void tst_QCandlestickSeries::mouseHovered()
 {
     SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
+    SKIP_IF_FLAKY_MOUSE_MOVE();
 
     QVERIFY(m_series->append(m_sets));
     QCOMPARE(m_series->count(), m_sets.count());

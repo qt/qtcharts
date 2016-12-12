@@ -44,6 +44,10 @@
 
     \image examples_percentbarchart.png
 
+    \include examples-run.qdocinc
+
+    \section1 Creating Percent Bar Charts
+
     The barsets are used in same way in all barcharts.
     To illustrate the difference between various barcharts, we use the same data in all examples.
     The data visualized by the bar chart is defined by QBarSet instances. Here we create the sets and append data

@@ -37,11 +37,10 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \class QHorizontalStackedBarSeries
     \inmodule Qt Charts
-    \brief Series for creating horizontal stacked bar chart.
+    \brief The QHorizontalStackedBarSeries class presents a series of data as horizontally
+    stacked bars, with one bar per category.
 
-    QHorizontalStackedBarSeries represents a series of data shown as bars. The purpose of this class is to draw bars
-    as groups, where bars in same category are grouped next to each other. QHorizontalStackedBarSeries groups the data
-    from sets to categories, which are defined by a QStringList.
+    Each bar set added to the series contributes a single segment to each stacked bar.
 
     See the \l {HorizontalStackedBarChart Example} {horizontal stacked bar chart example} to learn how to create a horizontal stacked bar chart.
     \image examples_horizontalstackedbarchart.png
@@ -55,9 +54,11 @@ QT_CHARTS_BEGIN_NAMESPACE
 
     \inherits AbstractBarSeries
 
-    \brief Series type for creating horizontal stacked bar chart.
+    \brief Presents a series of data as stacked horizontal bars, with one bar per category.
 
-    The following QML shows how to create a simple horizontal stacked bar chart:
+    Each bar set added to the series contributes a single segment to each stacked bar.
+
+    The following QML code snippet shows how to create a simple horizontal stacked bar chart:
     \snippet qmlchart/qml/qmlchart/View10.qml 1
     \beginfloatleft
     \image examples_qmlchart10.png
@@ -66,8 +67,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
-    Constructs empty QHorizontalStackedBarSeries.
-    QHorizontalStackedBarSeries is QObject which is a child of a \a parent.
+    Constructs an empty horizontal stacked bar series that is a QObject and a child of \a parent.
 */
 QHorizontalStackedBarSeries::QHorizontalStackedBarSeries(QObject *parent)
     : QAbstractBarSeries(*new QHorizontalStackedBarSeriesPrivate(this), parent)
@@ -75,8 +75,7 @@ QHorizontalStackedBarSeries::QHorizontalStackedBarSeries(QObject *parent)
 }
 
 /*!
-    Destructor.
-    Removes series from chart.
+    Removes the bar series from the chart.
 */
 QHorizontalStackedBarSeries::~QHorizontalStackedBarSeries()
 {
@@ -86,7 +85,7 @@ QHorizontalStackedBarSeries::~QHorizontalStackedBarSeries()
 }
 
 /*!
-    Returns QAbstractSeries::SeriesTypeHorizontalStackedBar.
+    Returns the horizontal stacked bar series.
 */
 QAbstractSeries::SeriesType QHorizontalStackedBarSeries::type() const
 {

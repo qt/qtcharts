@@ -46,16 +46,14 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \class QBoxPlotSeries
     \inmodule Qt Charts
-    \brief Series for creating box-and-whiskers chart.
+    \brief The QBoxPlotSeries class presents data in box-and-whiskers charts.
 
-    QBoxPlotSeries represents a series of data shown as box-and-whisker bars. The purpose of this
-    class is to act as a container for single box-and-whisker items. Each item is drawn to own slot.
-    If chart includes multiple instances of QBoxPlotSeries then box-and-whiskers items with the same
-    index are drawn to same slot.
+    A box plot series acts as a container for box-and-whiskers items. Items from multiple series
+    are grouped into categories according to their index value.
 
-    \note The slot, each item in QBoxPlotSeries is drawn, represents a category in QBarCategoryAxis.
-    The category labels have to be unique. If same category label is defined for several
-    box-and-whisker items only the first one is drawn.
+    The QBarCategoryAxis class is used to add the categories to the chart's axis. Category labels
+    have to be unique. If the same category label is defined for several box-and-whiskers items,
+    only the first one is drawn.
 
     See the \l {Box and Whiskers Example} {box-and-whiskers chart example} to learn how to create a
     box-and-whiskers chart.
@@ -65,91 +63,94 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 /*!
     \fn QBoxPlotSeries::boxsetsAdded(QList<QBoxSet *> sets)
-    \brief Signal is emitted when a new \a sets of box-and-whiskers data is added to the series.
+    This signal is emitted when the list of box-and-whiskers items specified by \a sets
+    is added to the series.
 */
 /*!
     \fn QBoxPlotSeries::boxsetsRemoved(QList<QBoxSet *> sets)
-    \brief Signal is emitted when \a sets of box-and-whiskers data is removed from the series.
+    This signal is emitted when the list of box-and-whiskers items specified by \a sets
+    is removed from the series.
 */
 /*!
     \fn QBoxPlotSeries::clicked(QBoxSet *boxset)
-    \brief Signal is emitted when the user clicks the \a boxset on the chart.
+    This signal is emitted when the user clicks the box-and-whiskers item specified by
+    \a boxset in the chart.
 */
 /*!
     \fn QBoxPlotSeries::pressed(QBoxSet *boxset)
-    \brief Signal is emitted when the user presses the \a boxset on the chart.
+    This signal is emitted when the user clicks the box-and-whiskers item specified by
+    \a boxset in the chart and holds down the mouse button.
 */
 /*!
     \fn QBoxPlotSeries::released(QBoxSet *boxset)
-    \brief Signal is emitted when the user releases the \a boxset on the chart.
+    This signal is emitted when the user releases the mouse press on the box-and-whiskers
+    item specified by \a boxset in the chart.
 */
 /*!
     \fn QBoxPlotSeries::doubleClicked(QBoxSet *boxset)
-    \brief Signal is emitted when the user doubleclicks the \a boxset on the chart.
+    This signal is emitted when the user double-clicks the box-and-whiskers item specified by
+    \a boxset in the chart.
 */
 /*!
     \fn QBoxPlotSeries::hovered(bool status, QBoxSet *boxset)
-    \brief Signal is emitted when there is change in hover \a status over \a boxset.
+    This signal is emitted when a mouse is hovered over the box-and-whiskers item specified by
+    \a boxset in the chart. When the mouse moves over the item, \a status turns \c true, and
+    when the mouse moves away again, it turns \c false.
 */
 /*!
     \fn QBoxPlotSeries::countChanged()
-    \brief Signal is emitted when there is change in count of box-and-whiskers items in the series.
+    This signal is emitted when the number of box-and-whiskers items in the series changes.
 */
 /*!
     \property QBoxPlotSeries::boxOutlineVisible
-    \brief This property configures the visibility of the middle box outline.
+    \brief The visibility of the box outline.
 */
 /*!
     \property QBoxPlotSeries::boxWidth
-    \brief This property configures the width of the box-and-whiskers item. The value signifies the relative
-    width of the box-and-whiskers item inside its own slot. The value can between 0.0 and 1.0. Negative values
-    are clamped to 0.0 and values over 1.0 are clamped to 1.0.
+    \brief The width of the box-and-whiskers item. The value indicates the relative
+    width of the item within its category. The value can be between 0.0 and 1.0. Negative values
+    are replaced with 0.0 and values greater than 1.0 are replaced with 1.0.
 */
 /*!
     \property QBoxPlotSeries::pen
-    \brief This property configures the pen of the box-and-whiskers items.
+    \brief The pen used to draw the lines of the box-and-whiskers items.
 */
 /*!
     \property QBoxPlotSeries::brush
-    \brief This property configures the brush of the box-and-whiskers items.
+    \brief The brush used to fill the boxes of the box-and-whiskers items.
 */
 /*!
     \property QBoxPlotSeries::count
-    \brief The count of sets in series.
-*/
-
-/*!
-    \qmlproperty QString BoxPlotSeries::brushFilename
-    The name of the file used as a brush for the series.
+    \brief The number of box-and-whiskers items in a box plot series.
 */
 
 /*!
     \fn void QBoxPlotSeries::boxOutlineVisibilityChanged()
-    Signal is emitted when the middle box outline visibility is changed.
+    This signal is emitted when the box outline visibility changes.
 */
+
 /*!
     \fn void QBoxPlotSeries::boxWidthChanged()
-    Signal is emitted when the width of the box-and-whiskers item is changed.
+    This signal is emitted when the width of the box-and-whiskers item changes.
 */
 /*!
     \fn void QBoxPlotSeries::penChanged()
-    This signal is emitted when the pen of the box-and-whiskers has changed.
-    \sa brush
+    This signal is emitted when the pen used to draw the lines of the box-and-whiskers
+    items changes.
 */
 /*!
     \fn void QBoxPlotSeries::brushChanged()
-    This signal is emitted when the brush of the box-and-whiskers has changed.
-    \sa brush
+    This signal is emitted when the brush used to fill the boxes of the box-and-whiskers
+    items changes.
 */
 /*!
     \fn virtual SeriesType QBoxPlotSeries::type() const
-    \brief Returns type of series.
+    Returns the type of the series.
     \sa QAbstractSeries, SeriesType
 */
 
 /*!
-    Constructs empty QBoxPlotSeries.
-    QBoxPlotSeries is QObject which is a child of a \a parent.
+    Constructs an empty box plot series that is a QObject and a child of \a parent.
 */
 QBoxPlotSeries::QBoxPlotSeries(QObject *parent)
     : QAbstractSeries(*new QBoxPlotSeriesPrivate(this), parent)
@@ -157,7 +158,7 @@ QBoxPlotSeries::QBoxPlotSeries(QObject *parent)
 }
 
 /*!
-    Destructor. Removes series from chart.
+    Removes the series from the chart.
 */
 QBoxPlotSeries::~QBoxPlotSeries()
 {
@@ -167,8 +168,9 @@ QBoxPlotSeries::~QBoxPlotSeries()
 }
 
 /*!
-    Adds a single box and whiskers set to series. Takes ownership of the \a set. If the set is null or is already in series, it won't be appended.
-    Returns true, if appending succeeded.
+    Adds a single box-and-whiskers item specified by \a set to the series and takes ownership of
+    it. If the item is null or it already belongs to the series, it will not be appended.
+    Returns \c true if appending succeeded.
 */
 bool QBoxPlotSeries::append(QBoxSet *set)
 {
@@ -186,7 +188,8 @@ bool QBoxPlotSeries::append(QBoxSet *set)
 }
 
 /*!
-    Removes boxset from the series. Deletes the \a set and returns true if successful.
+    Removes the box-and-whiskers item specified by \a set from the series and permanently
+    deletes it if the removal succeeds. Returns \c true if the item was removed.
 */
 bool QBoxPlotSeries::remove(QBoxSet *set)
 {
@@ -205,12 +208,14 @@ bool QBoxPlotSeries::remove(QBoxSet *set)
 }
 
 /*!
-    Takes a single \a set from the series. Does not delete the boxset object.
+    Takes the box-and-whiskers item specified by \a set from the series. Does not delete the
+    item.
 
-    NOTE: The series remains as the boxset's parent object. You must set the
-    parent object to take full ownership.
+    \note The series remains the item's parent object. You must set the parent object to take
+    full ownership.
 
-    Returns true if take was successful.
+    Returns \c true if the take operation succeeds.
+
 */
 bool QBoxPlotSeries::take(QBoxSet *set)
 {
@@ -227,10 +232,9 @@ bool QBoxPlotSeries::take(QBoxSet *set)
 }
 
 /*!
-    Adds a list of boxsets to series. Takes ownership of the \a sets.
-    Returns true, if all sets were appended successfully. If any of the sets is null or is already appended to series,
-    nothing is appended and function returns false. If any of the sets is in list more than once, nothing is appended
-    and function returns false.
+    Adds a list of box-and-whiskers items specified by \a sets to the series and takes ownership of
+    them. If the list is null or the items already belong to the series, it will not be appended.
+    Returns \c true if appending succeeded.
 */
 bool QBoxPlotSeries::append(QList<QBoxSet *> sets)
 {
@@ -244,9 +248,9 @@ bool QBoxPlotSeries::append(QList<QBoxSet *> sets)
 }
 
 /*!
-    Insert a box-and-whiskers set to the series at \a index postion. Takes ownership of the \a set. If the set is null or
-    is already in series, it won't be appended. Returns true, if inserting succeeded.
-
+    Inserts a box-and-whiskers item specified by \a set to a series at the position specified by
+    \a index and takes ownership of the item. If the item is null or already belongs to the series,
+    it will not be appended. Returns \c true if inserting succeeds.
 */
 bool QBoxPlotSeries::insert(int index, QBoxSet *set)
 {
@@ -262,7 +266,7 @@ bool QBoxPlotSeries::insert(int index, QBoxSet *set)
 }
 
 /*!
-    Removes all boxsets from the series. Deletes removed sets.
+    Removes all box-and-whiskers items from the series and permanently deletes them.
 */
 void QBoxPlotSeries::clear()
 {
@@ -278,7 +282,7 @@ void QBoxPlotSeries::clear()
 }
 
 /*!
-    Returns number of sets in series.
+    Returns the number of box-and-whiskers items in a box plot series.
 */
 int QBoxPlotSeries::count() const
 {
@@ -287,7 +291,7 @@ int QBoxPlotSeries::count() const
 }
 
 /*!
-    Returns a list of sets in series. Keeps ownership of sets.
+    Returns a list of box-and-whiskers items in a box plot series. Keeps the ownership of the items.
  */
 QList<QBoxSet *> QBoxPlotSeries::boxSets() const
 {

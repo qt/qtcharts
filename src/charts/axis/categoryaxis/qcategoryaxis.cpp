@@ -41,10 +41,11 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \class QCategoryAxis
     \inmodule Qt Charts
-    \brief The QCategoryAxis class allows putting a named ranges on the axis.
+    \brief The QCategoryAxis class places named ranges on the axis.
 
-    This class can be used when the underlying data needs to be given extra meaning.
-    Unlike with the QBarCategoryAxis the QCategoryAxis allows the categories ranges widths to be specified freely.
+    This class can be used to explain the underlying data by adding labeled categories.
+    Unlike QBarCategoryAxis, QCategoryAxis allows the widths of the category ranges to
+    be specified freely.
 
     Example code on how to use QCategoryAxis:
     \image api_category_axis.png
@@ -70,7 +71,10 @@ QT_CHARTS_BEGIN_NAMESPACE
     \inqmlmodule QtCharts
 
     \inherits AbstractAxis
-    \brief CategoryAxis allows putting a named ranges on the axis.
+    \brief CategoryAxis places named ranges on the axis.
+
+    This type can be used to explain the underlying data by adding labeled categories.
+    The widths of the category ranges can be specified freely.
 
     For example:
     \image examples_qmlaxes3.png
@@ -79,25 +83,25 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
   \property QCategoryAxis::startValue
-  Defines the low end of the first category on the axis.
+  \brief The low end of the first category on the axis.
 */
 /*!
   \qmlproperty int CategoryAxis::startValue
-  Defines the low end of the first category on the axis.
+  The low end of the first category on the axis.
 */
 
 /*!
   \property QCategoryAxis::count
-  The count of categories.
+  \brief The number of categories.
 */
 /*!
   \qmlproperty int CategoryAxis::count
-  The count of categories.
+  The number of categories.
 */
 
 /*!
   \property QCategoryAxis::categoriesLabels
-  The category labels as a string list.
+  \brief The category labels as a string list.
 */
 /*!
   \qmlproperty StringList CategoryAxis::categoriesLabels
@@ -106,7 +110,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
   \fn void QCategoryAxis::categoriesChanged()
-  Axis emits signal when the categories of the axis have changed.
+  This signal is emitted when the categories of the axis change.
 */
 
 /*!
@@ -119,18 +123,24 @@ QT_CHARTS_BEGIN_NAMESPACE
  */
 /*!
   \property QCategoryAxis::labelsPosition
-  Defines the position of the category labels. The labels in the beginning and in the end of the
-  axes may overlap other axes labels when positioned on value.
+  \brief The position of the category labels. The labels in the beginning and in the end of the
+  axes may overlap other axes' labels when positioned on value.
 */
 /*!
-  \qmlproperty AxisLabelsPosition CategoryAxis::labelsPosition
-  Defines the position of the category labels. The labels in the beginning and in the end of the
-  axes may overlap other axes labels when positioned on value.
+  \qmlproperty enumeration CategoryAxis::labelsPosition
+
+  The position of the category labels. The labels in the beginning and in the end of the
+  axes may overlap other axes' labels when positioned on value.
+
+ \value CategoryAxis.AxisLabelsPositionCenter
+        Labels are centered to category.
+ \value CategoryAxis.AxisLabelsPositionOnValue
+        Labels are positioned to the high end limit of the category.
 */
 
 
 /*!
-    Constructs an axis object which is a child of \a parent.
+    Constructs an axis object that is a child of \a parent.
 */
 QCategoryAxis::QCategoryAxis(QObject *parent):
     QValueAxis(*new QCategoryAxisPrivate(this), parent)
@@ -138,7 +148,7 @@ QCategoryAxis::QCategoryAxis(QObject *parent):
 }
 
 /*!
-    Destroys the object
+    Destroys the object.
 */
 QCategoryAxis::~QCategoryAxis()
 {
@@ -157,15 +167,15 @@ QCategoryAxis::QCategoryAxis(QCategoryAxisPrivate &d, QObject *parent): QValueAx
 
 /*!
     \qmlmethod CategoryAxis::append(string label, real endValue)
-    Appends new category to the axis with an \a label. Category label has to be unique.
-    Parameter \a endValue specifies the high end limit of the category.
+    Appends a new category to the axis with the label \a label. A category label has to be unique.
+    \a endValue specifies the high end limit of the category.
     It has to be greater than the high end limit of the previous category.
     Otherwise the method returns without adding a new category.
 */
 /*!
-    Appends new category to the axis with an \a categoryLabel.
-    Category label has to be unique.
-    Parameter \a categoryEndValue specifies the high end limit of the category.
+    Appends a new category to the axis with the label \a categoryLabel.
+    A category label has to be unique.
+    \a categoryEndValue specifies the high end limit of the category.
     It has to be greater than the high end limit of the previous category.
     Otherwise the method returns without adding a new category.
 */
@@ -190,7 +200,8 @@ void QCategoryAxis::append(const QString &categoryLabel, qreal categoryEndValue)
 
 /*!
     Sets \a min to be the low end limit of the first category on the axis.
-    If there is already some categories added to the axis then passed value must be lower than the high end value of the already defined first category range.
+    If categories have already been added to the axis, the passed value must be less
+    than the high end value of the already defined first category range.
     Otherwise nothing is done.
 */
 void QCategoryAxis::setStartValue(qreal min)
@@ -209,7 +220,7 @@ void QCategoryAxis::setStartValue(qreal min)
 }
 
 /*!
-    Returns the low end limit of the category specified by an \a categoryLabel
+    Returns the low end limit of the category specified by \a categoryLabel.
 */
 qreal QCategoryAxis::startValue(const QString &categoryLabel) const
 {
@@ -220,7 +231,7 @@ qreal QCategoryAxis::startValue(const QString &categoryLabel) const
 }
 
 /*!
-    Returns the high end limit of the interval specified by an \a categoryLabel
+    Returns the high end limit of the category specified by \a categoryLabel.
 */
 qreal QCategoryAxis::endValue(const QString &categoryLabel) const
 {
@@ -230,10 +241,10 @@ qreal QCategoryAxis::endValue(const QString &categoryLabel) const
 
 /*!
     \qmlmethod CategoryAxis::remove(string label)
-    Removes a category specified by the \a label from the axis
+    Removes a category specified by the label \a label from the axis.
 */
 /*!
-    Removes an interval specified by the \a categoryLabel from the axis
+    Removes a category specified by the label \a categoryLabel from the axis.
 */
 void QCategoryAxis::remove(const QString &categoryLabel)
 {
@@ -264,13 +275,13 @@ void QCategoryAxis::remove(const QString &categoryLabel)
 }
 
 /*!
-  \qmlmethod CategoryAxis::replace(string oldLabel, string newLabel)
-  Replaces \a oldLabel of an existing category with a \a newLabel.
-  If the old label does not exist the method returns without making any changes.
+    \qmlmethod CategoryAxis::replace(string oldLabel, string newLabel)
+    Replaces an existing category label specified by \a oldLabel with \a newLabel.
+    If the old label does not exist, the method returns without making any changes.
 */
 /*!
-  Replaces \a oldLabel of an existing category with a \a newLabel
-  If the old label does not exist the method returns without making any changes.
+    Replaces an existing category label specified by \a oldLabel with \a newLabel.
+    If the old label does not exist, the method returns without making any changes.
  */
 void QCategoryAxis::replaceLabel(const QString &oldLabel, const QString &newLabel)
 {
@@ -288,7 +299,7 @@ void QCategoryAxis::replaceLabel(const QString &oldLabel, const QString &newLabe
 }
 
 /*!
-  Returns the list of the intervals labels
+    Returns the list of the categories' labels.
  */
 QStringList QCategoryAxis::categoriesLabels()
 {
@@ -297,7 +308,7 @@ QStringList QCategoryAxis::categoriesLabels()
 }
 
 /*!
-  Returns number of intervals.
+    Returns the number of categories.
  */
 int QCategoryAxis::count() const
 {
@@ -306,7 +317,7 @@ int QCategoryAxis::count() const
 }
 
 /*!
-  Returns the type of the axis
+    Returns the type of the axis.
 */
 QAbstractAxis::AxisType QCategoryAxis::type() const
 {

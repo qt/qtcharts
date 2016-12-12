@@ -36,4 +36,6 @@
     chart.
 
      \image examples_scatterinteractions.png
+
+     \include examples-run.qdocinc
 */

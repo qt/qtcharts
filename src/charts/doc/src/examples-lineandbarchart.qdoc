@@ -39,6 +39,10 @@
 
     \image examples_lineandbar.png
 
+    \include examples-run.qdocinc
+
+    \section1 Combining Charts
+
     Here we create data for our bar series.
 
     \snippet lineandbar/main.cpp 1

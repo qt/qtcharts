@@ -38,12 +38,14 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \class QHorizontalPercentBarSeries
     \inmodule Qt Charts
-    \brief Series for creating horizontal percent bar chart.
+    \brief The QHorizontalPercentBarSeries class presents a series of categorized data as
+    a percentage of each category.
 
-    QHorizontalPercentBarSeries represents a series of data shown as bars. The purpose of this
-    class is to draw bars as groups, where bars in same category are grouped next to each other.
-    QHorizontalPercentBarSeries groups the data from sets to categories, which are defined by a
-    QStringList. Bars with zero value are not drawn.
+    This class draws data as a series of uniformly sized horizontally stacked bars, with one
+    bar per category. Each bar set added to the series contributes a single segment to each
+    stacked bar. The segment size corresponds to the percentage of the segment value compared
+    with the total value of all segments in the stack.
+    Bars with zero value are not drawn.
 
     See the \l {HorizontalPercentBarChart Example} {horizontal percent bar chart example} to learn
     how to create a horizontal percent bar chart.
@@ -59,9 +61,15 @@ QT_CHARTS_BEGIN_NAMESPACE
 
     \inherits AbstractBarSeries
 
-    \brief Series type for creating horizontal precent bar chart.
+    \brief Presents a series of categorized data as a percentage of each category.
 
-    The following QML shows how to create a simple horizontal percent bar chart:
+    The data is drawn as a series of uniformly sized horizontally stacked bars, with one
+    bar per category. Each bar set added to the series contributes a single segment to each
+    stacked bar. The segment size corresponds to the percentage of the segment value compared
+    with the total value of all segments in the stack.
+    Bars with zero value are not drawn.
+
+    The following QML code snippet shows how to create a simple horizontal percent bar chart:
     \snippet qmlchart/qml/qmlchart/View11.qml 1
     \beginfloatleft
     \image examples_qmlchart11.png
@@ -70,8 +78,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
-    Constructs empty QHorizontalPercentBarSeries.
-    QHorizontalPercentBarSeries is QObject which is a child of a \a parent.
+    Constructs an empty horizontal percent bar series that is a QObject and a child of \a parent.
 */
 QHorizontalPercentBarSeries::QHorizontalPercentBarSeries(QObject *parent) :
     QAbstractBarSeries(*new QHorizontalPercentBarSeriesPrivate(this), parent)
@@ -79,7 +86,7 @@ QHorizontalPercentBarSeries::QHorizontalPercentBarSeries(QObject *parent) :
 }
 
 /*!
-    Returns QAbstractSeries::SeriesTypeHorizontalPercentBar.
+    Returns the horizontal percent bar series.
 */
 QAbstractSeries::SeriesType QHorizontalPercentBarSeries::type() const
 {
@@ -87,8 +94,8 @@ QAbstractSeries::SeriesType QHorizontalPercentBarSeries::type() const
 }
 
 /*!
-    Destructor.
-    Removes series from chart.
+    Removes the bar series from the chart.
+
 */
 QHorizontalPercentBarSeries::~QHorizontalPercentBarSeries()
 {

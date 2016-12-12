@@ -82,6 +82,7 @@ void GLXYSeriesDataManager::setPoints(QXYSeries *series, const AbstractDomain *d
     foreach (QAbstractAxis* axis, series->attachedAxes()) {
         if (axis->type() == QAbstractAxis::AxisTypeLogValue) {
             logAxis = true;
+            break;
         }
         if (axis->isReverse()) {
             if (axis->orientation() == Qt::Horizontal)
@@ -96,11 +97,6 @@ void GLXYSeriesDataManager::setPoints(QXYSeries *series, const AbstractDomain *d
     int index = 0;
     array.resize(count * 2);
     QMatrix4x4 matrix;
-    if (reverseX)
-        matrix.scale(-1.0, 1.0);
-    if (reverseY)
-        matrix.scale(1.0, -1.0);
-    data->matrix = matrix;
     if (logAxis) {
         // Use domain to resolve geometry points. Not as fast as shaders, but simpler that way
         QVector<QPointF> geometryPoints = domain->calculateGeometryPoints(series->pointsVector());
@@ -122,6 +118,10 @@ void GLXYSeriesDataManager::setPoints(QXYSeries *series, const AbstractDomain *d
         data->delta = QVector2D(domain->size().width() / 2.0f, domain->size().height() / 2.0f);
     } else {
         // Regular value axes, so we can do the math easily on shaders.
+        if (reverseX)
+            matrix.scale(-1.0, 1.0);
+        if (reverseY)
+            matrix.scale(1.0, -1.0);
         QVector<QPointF> seriesPoints = series->pointsVector();
         for (int i = 0; i < count; i++) {
             const QPointF &point = seriesPoints.at(i);
@@ -132,6 +132,7 @@ void GLXYSeriesDataManager::setPoints(QXYSeries *series, const AbstractDomain *d
         data->delta = QVector2D((domain->maxX() - domain->minX()) / 2.0f,
                                 (domain->maxY() - domain->minY()) / 2.0f);
     }
+    data->matrix = matrix;
     data->dirty = true;
 }
 

@@ -34,4 +34,6 @@
 
      \brief This example shows the drawing of dynamic data (microphone input).
      \image examples_audio.png
+
+    \include examples-run.qdocinc
 */

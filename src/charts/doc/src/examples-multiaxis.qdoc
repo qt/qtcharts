@@ -37,6 +37,10 @@
 
     \image examples_multiaxis.png
 
+    \include examples-run.qdocinc
+
+    \section1 Using Multiple Axes
+
     Create the QChart instance, hide the legend of the chart, and set its title.
 
     \snippet multiaxis/main.cpp 1

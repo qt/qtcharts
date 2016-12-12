@@ -36,6 +36,10 @@
 
     \image examples_openglseries.png
 
+    \include examples-run.qdocinc
+
+    \section1 Enabling OpenGL Acceleration
+
     To create an OpenGL accelerated series, all you have to do compared to a regular
     series is to set QAbstractSeries::useOpenGL property to \c{true}:
 

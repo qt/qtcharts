@@ -34,13 +34,21 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \class QHBarModelMapper
     \inmodule Qt Charts
-    \brief Horizontal model mapper for bar series.
+    \brief The QHBarModelMapper class is a horizontal model mapper for bar series.
 
-    Model mappers allow you to use QAbstractItemModel derived models as a data source for a chart series.
-    Horizontal model mapper is used to create a connection between QAbstractBarSeries and QAbstractItemModel derived model object.
-    Model mapper maintains equal size of all the BarSets.
-    Adding/removing value from the BarSet causes the the same change in the rest of the BarSets added to the same series.
-    \note Used model has to support adding/removing rows/columns and modifying the data of the cells.
+    Model mappers enable using a data model derived from the QAbstractItemModel class
+    as a data source for a chart. A horizontal model mapper is used to create a connection
+    between a data model and QAbstractBarSeries, so that each row in the data model
+    defines a bar set and each column maps to a category in a bar series.
+
+    Both model and bar series properties can be used to manipulate the data. The model mapper
+    keeps the bar series and the data model in sync.
+
+    The model mapper ensures that all the bar sets in the bar series have equal sizes.
+    Therefore, adding or removing a value from a bar set causes the same change to be
+    made in all the bar sets in the bar series.
+
+    \sa QVBarModelMapper
 */
 /*!
     \qmltype HBarModelMapper
@@ -49,13 +57,22 @@ QT_CHARTS_BEGIN_NAMESPACE
 
     \brief Horizontal model mapper for bar series.
 
-    HBarModelMapper allows you to use your own QAbstractItemModel derived model with data in rows as
-    a data source for any bar series. It is possible to use both QAbstractItemModel and bar series
-    data API to manipulate data. HBarModelMapper keeps the series and the model in sync.
+    The HBarModelMapper type enables using a data model derived from the QAbstractItemModel
+    class as a data source for a chart. A horizontal model mapper is used to create a connection
+    between a data model and AbstractBarSeries, so that each row in the data model
+    defines a bar set and each column maps to a category in a bar series. You need to implement
+    the data model and expose it to QML.
 
-    The following QML example would create a bar series with three bar sets (assuming the model has
-    at least four rows). Each bar set would contain data starting from column 1. The name of a set
-    would be defined by the vertical header (of the row).
+    Both model and bar series properties can be used to manipulate the data. The model mapper
+    keeps the bar series and the data model in sync.
+
+    The model mapper ensures that all the bar sets in the bar series have equal sizes.
+    Therefore, adding or removing a value from a bar set causes the same change to be
+    made in all the bar sets in the bar series.
+
+    The following QML code snippet creates a bar series with three bar sets (assuming the model
+    has at least four rows). Each bar set contains data starting from column 1. The name
+    of a bar set is defined by the row header.
     \code
         BarSeries {
             HBarModelMapper {
@@ -66,19 +83,22 @@ QT_CHARTS_BEGIN_NAMESPACE
             }
         }
     \endcode
+
+    \sa VBarModelMapper
 */
 
 /*!
     \property QHBarModelMapper::series
-    \brief Defines the QPieSeries object that is used by the mapper.
+    \brief The bar series that is used by the mapper.
 
     All the data in the series is discarded when it is set to the mapper.
-    When new series is specified the old series is disconnected (it preserves its data)
+    When a new series is specified, the old series is disconnected (but it preserves its data).
 */
 /*!
     \qmlproperty AbstractBarSeries HBarModelMapper::series
-    Defines the AbstractBarSeries based object that is used by the mapper. All the data in the series is discarded when it is
-    set to the mapper. When new series is specified the old series is disconnected (it preserves its data).
+    The bar series that is used by the mapper. All the data in the series is discarded when it is
+    set to the mapper. When the new series is specified, the old series is disconnected (but it
+    preserves its data).
 */
 
 /*!
@@ -87,95 +107,96 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 /*!
     \qmlproperty SomeModel HBarModelMapper::model
-    The QAbstractItemModel based model that is used by the mapper. You need to implement the model
-    and expose it to QML. Note: the model has to support adding/removing rows/columns and modifying
-    the data of the cells.
+    The data model that is used by the mapper. You need to implement the model and expose it to QML.
+
+    \note The model has to support adding and removing rows or columns and modifying
+    the data in the cells.
 */
 
 /*!
     \property QHBarModelMapper::firstBarSetRow
-    \brief Defines which column of the model is used as the data source for the first bar set.
+    \brief The row of the model that is used as the data source for the first bar set.
 
-    Default value is: -1 (invalid mapping)
+    The default value is -1 (invalid mapping).
 */
 /*!
     \qmlproperty int HBarModelMapper::firstBarSetRow
-    Defines which column of the model is used as the data source for the first bar set. The default value is -1
+    Defines which row of the model is used as the data source for the first bar set. The default value is -1
     (invalid mapping).
 */
 
 /*!
     \property QHBarModelMapper::lastBarSetRow
-    \brief Defines which column of the model is used as the data source for the last bar set.
+    \brief The row of the model that is used as the data source for the last bar set.
 
-    Default value is: -1 (invalid mapping)
+    The default value is -1 (invalid mapping).
 */
 /*!
     \qmlproperty int HBarModelMapper::lastBarSetRow
-    Defines which column of the model is used as the data source for the last bar set. The default value is -1
-    (invalid mapping).
+    The row of the model that is used as the data source for the last bar set. The default
+    value is -1 (invalid mapping).
 */
 
 /*!
     \property QHBarModelMapper::firstColumn
-    \brief Defines which column of the model contains the first values of the QBarSets in the series.
+    \brief The column of the model that contains the first values of the bar sets in the bar series.
 
-    Minimal and default value is: 0
+    The minimum and default value is 0.
 */
 /*!
     \qmlproperty int HBarModelMapper::firstColumn
-    Defines which column of the model contains the first values of the QBarSets in the series.
+    The column of the model that contains the first values of the bar sets in the bar series.
     The default value is 0.
 */
 
 /*!
     \property QHBarModelMapper::columnCount
-    \brief Defines the number of columns of the model that are mapped as the data for QAbstractBarSeries.
+    \brief The number of columns of the model that are mapped as the data for the bar series.
 
-    Minimal and default value is: -1 (count limited by the number of columns in the model)
+    The minimum and default value is -1 (number limited to the number of columns in the model).
 */
 /*!
     \qmlproperty int HBarModelMapper::columnCount
-    Defines the number of columns of the model that are mapped as the data for QAbstractBarSeries. The default value is
-    -1 (count limited by the number of columns in the model)
+    The number of columns of the model that are mapped as the data for the bar series. The default
+    value is -1 (number limited to the number of columns in the model).
 */
 
 /*!
     \fn void QHBarModelMapper::seriesReplaced()
 
-    Emitted when the series to which mapper is connected to has changed.
+    This signal is emitted when the series that the mapper is connected to changes.
 */
 
 /*!
     \fn void QHBarModelMapper::modelReplaced()
 
-    Emitted when the model to which mapper is connected to has changed.
+    This signal is emitted when the model that the mapper is connected to changes.
 */
 
 /*!
     \fn void QHBarModelMapper::firstBarSetRowChanged()
 
-    Emitted when the firstBarSetRow has changed.
+    This signal is emitted when the first bar set row changes.
 */
 
 /*!
     \fn void QHBarModelMapper::lastBarSetRowChanged()
 
-    Emitted when the lastBarSetRow has changed.
+    This signal is emitted when the last bar set row changes.
 */
 
 /*!
     \fn void QHBarModelMapper::firstColumnChanged()
-    Emitted when the firstColumn has changed.
+    This signal is emitted when the first column changes.
 */
 
 /*!
     \fn void QHBarModelMapper::columnCountChanged()
-    Emitted when the columnCount has changed.
+    This signal is emitted when the number of columns changes.
 */
 
 /*!
-    Constructs a mapper object which is a child of \a parent.
+    Constructs a mapper object that is a child of \a parent.
 */
 QHBarModelMapper::QHBarModelMapper(QObject *parent) :
     QBarModelMapper(parent)

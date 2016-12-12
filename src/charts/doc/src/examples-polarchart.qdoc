@@ -39,6 +39,10 @@
 
     \image examples_polarchart.png
 
+    \include examples-run.qdocinc
+
+    \section1 Creating Polar Charts
+
     Creating a polar chart is done with a QPolarChart instance instead of a QChart instance.
 
     \snippet polarchart/main.cpp 1
