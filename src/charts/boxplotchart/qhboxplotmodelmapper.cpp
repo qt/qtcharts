@@ -35,12 +35,24 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \class QHBoxPlotModelMapper
     \inmodule Qt Charts
-    \brief Horizontal model mapper for box plot series.
+    \brief The QHBoxPlotModelMapper class is a horizontal model mapper for box
+    plot series.
 
-    Model mappers allow you to use QAbstractItemModel derived models as a data source for a chart series.
-    Horizontal model mapper is used to create a connection between QBoxPlotSeries and QAbstractItemModel derived model object.
-    Model mapper maintains equal size of all the QBoxSets.
-    \note used model has to support adding/removing rows/columns and modifying the data of the cells.
+    Model mappers enable using a data model derived from the QAbstractItemModel
+    class as a data source for a chart. A horizontal model mapper is used to
+    create a connection between a data model and QBoxPlotSeries object, so that
+    each row in the data model defines a box-and-whiskers item and each column
+    maps to the range and three median values of the box-and-whiskers item.
+
+    Both model and series properties can be used to manipulate the
+    data. The model mapper keeps the series and the data model in sync.
+
+    The model mapper ensures that all the box-and-whiskers items in the box plot
+    series have equal sizes. Therefore, adding or removing a value from a
+    box-and-whiskers item causes the same change to be made in all the
+    box-and-whiskers items in the box plot series.
+
+    \sa QVBoxPlotModelMapper
 */
 /*!
     \qmltype HBoxPlotModelMapper
@@ -49,14 +61,25 @@ QT_CHARTS_BEGIN_NAMESPACE
 
     \brief Horizontal model mapper for box plot series.
 
-    HBoxPlotModelMapper allows you to use your own QAbstractItemModel derived model with data in
-    rows as a data source for any box-and-whiskers series. It is possible to use both
-    QAbstractItemModel and box-and-whiskers series data API to manipulate data. HBoxPlotModelMapper
-    keeps the series and the model in sync.
+    The HBoxPlotModelMapper type enables using a data model derived from the
+    QAbstractItemModel class as a data source for a chart. A horizontal model
+    mapper is used to create a connection between a data model and a
+    BoxPlotSeries type, so that each row in the data model defines a
+    box-and-whiskers item and each column maps to the range and three median
+    values of the box-and-whiskers item.
 
-    The following QML example would create a box-and-whiskers series with three box sets (assuming
-    the model has at least four rows). Each box set would contain data starting from column 1. The
-    name of a set would be defined by the vertical header (of the row).
+    Both model and series properties can be used to manipulate the data. The
+    model mapper keeps the series and the data model in sync.
+
+    The model mapper ensures that all the box-and-whiskers items in the box plot
+    series have equal sizes. Therefore, adding or removing a value from a
+    box-and-whiskers item causes the same change to be made in all the
+    box-and-whiskers items in the box plot series.
+
+    The following QML code snippet creates a box plot series with three
+    box-and-whiskers items (assuming the model has at least four rows). Each
+    box-and-whiskers item contains data starting from column 1. The name of an
+    item is defined by the row header.
     \code
         BoxPlotSeries {
             HBoxPlotModelMapper {
@@ -67,114 +90,129 @@ QT_CHARTS_BEGIN_NAMESPACE
             }
         }
     \endcode
+
+    \sa VBoxPlotModelMapper
 */
 
 /*!
     \property QHBoxPlotModelMapper::series
-    \brief Defines the QBoxPlotSeries object that is used by the mapper.
+    \brief The box plot series that is used by the mapper.
 
     All the data in the series is discarded when it is set to the mapper.
-    When new series is specified the old series is disconnected (it preserves its data)
+    When a new series is specified, the old series is disconnected (but it
+    preserves its data).
 */
 /*!
     \qmlproperty AbstractBarSeries HBoxPlotModelMapper::series
-    Defines the AbstractBarSeries based object that is used by the mapper. All the data in the series is discarded when it is
-    set to the mapper. When new series is specified the old series is disconnected (it preserves its data).
+    The box plot series that is used by the mapper. All the data in the series
+    is discarded when it is set to the mapper. When the new series is specified,
+    the old series is disconnected (but it preserves its data).
 */
 
 /*!
     \property QHBoxPlotModelMapper::model
-    \brief Defines the model that is used by the mapper.
+    \brief The model that is used by the mapper.
 */
 /*!
     \qmlproperty SomeModel HBoxPlotModelMapper::model
-    The QAbstractItemModel based model that is used by the mapper. You need to implement the model
-    and expose it to QML. \note the model has to support adding/removing rows/columns and modifying
-    the data of the cells.
+    The data model that is used by the mapper. You need to implement the model
+    and expose it to QML.
+
+    \note The model has to support adding and removing rows or columns and
+    modifying the data in the cells.
 */
 
 /*!
     \property QHBoxPlotModelMapper::firstBoxSetRow
-    \brief Defines which row of the model is used as the data source for the first box-and-whiskers set.
+    \brief The row of the model that is used as the data source for the first
+    box-and-whiskers item.
 
-    Default value is: -1 (invalid mapping)
+    The default value is -1 (invalid mapping).
 */
 /*!
     \qmlproperty int HBoxPlotModelMapper::firstBoxSetRow
-    Defines which row of the model is used as the data source for the first box-and-whiskers set. Default value
-    is: -1 (invalid mapping).
+    The row of the model is used as the data source for the first
+    box-and-whiskers item. The default value is -1 (invalid mapping).
 */
 
 /*!
     \property QHBoxPlotModelMapper::lastBoxSetRow
-    \brief Defines which row of the model is used as the data source for the last box-and-whiskers set.
+    \brief The row of the model that is used as the data source for the last
+    box-and-whiskers item.
 
-    Default value is: -1 (invalid mapping)
+    The default value is -1 (invalid mapping).
 */
 /*!
     \qmlproperty int HBoxPlotModelMapper::lastBoxSetRow
-    Defines which row of the model is used as the data source for the last box-and-whiskers set. Default
-    value is: -1 (invalid mapping).
+    The row of the model is used as the data source for the last
+    box-and-whiskers item. The default value is -1 (invalid mapping).
 */
 
 /*!
     \property QHBoxPlotModelMapper::firstColumn
-    \brief Defines which column of the model contains the first values of the QBoxSets in the series.
+    \brief The column of the model that contains the first values of the
+    box-and-whiskers items in the box plot series.
 
-    Minimal and default value is: 0
+    The minimum and default value is 0.
 */
 /*!
     \qmlproperty int HBoxPlotModelMapper::firstColumn
-    Defines which column of the model contains the first values of the QBoxSets in the series.
+    The column of the model that contains the first values of the
+    box-and-whiskers items in the box plot series.
     The default value is 0.
 */
 
 /*!
     \property QHBoxPlotModelMapper::columnCount
-    \brief Defines the number of column of the model that are mapped as the data for QBoxPlotSeries
+    \brief The number of columns of the model that are mapped as the data for
+    the box plot series.
 
-    Minimal and default value is: -1 (count limited by the number of columns in the model)
+    The minimum and default value is  -1 (number limited to the number of
+    columns in the model).
 */
 /*!
     \qmlproperty int HBoxPlotModelMapper::columnCount
-    Defines the number of columns of the model that are mapped as the data for QBoxPlotSeries. The default value is
-    -1 (count limited by the number of columns in the model)
+    The number of columns of the model that are mapped as the data for
+    the box plot series. The minimum and default value is  -1 (number limited to
+    the number of columns in the model).
 */
 
 /*!
     \fn void QHBoxPlotModelMapper::seriesReplaced()
 
-    Emitted when the series to which mapper is connected to has changed.
+    This signal is emitted when the series that the mapper is connected to
+    changes.
 */
 
 /*!
     \fn void QHBoxPlotModelMapper::modelReplaced()
 
-    Emitted when the model to which mapper is connected to has changed.
+    This signal is emitted when the model that the mapper is connected to
+    changes.
 */
 
 /*!
     \fn void QHBoxPlotModelMapper::firstBoxSetRowChanged()
-    Emitted when the firstBoxSetRow has changed.
+    This signal is emitted when the first box-and-whiskers item row changes.
 */
 
 /*!
     \fn void QHBoxPlotModelMapper::lastBoxSetRowChanged()
-    Emitted when the lastBoxSetRow has changed.
+    This signal is emitted when the last box-and-whiskers item row changes.
 */
 
 /*!
     \fn void QHBoxPlotModelMapper::firstColumnChanged()
-    Emitted when the firstColumn has changed.
+    This signal is emitted when the first column changes.
 */
 
 /*!
     \fn void QHBoxPlotModelMapper::columnCountChanged()
-    Emitted when the columnCount has changed.
+    This signal is emitted when the number of columns changes.
 */
 
 /*!
-    Constructs a mapper object which is a child of \a parent.
+    Constructs a mapper object that is a child of \a parent.
 */
 QHBoxPlotModelMapper::QHBoxPlotModelMapper(QObject *parent) :
     QBoxPlotModelMapper(parent)
