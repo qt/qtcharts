@@ -83,7 +83,8 @@ void PolarChartAxis::updateLayout(QVector<qreal> &layout)
         // axes lingering in wrong position compared to series plot before animation can kick in.
         // Note that the position mismatch still exists even with this update, but it will be
         // far less ugly.
-        updateGeometry();
+        if (ChartAxisElement::layout().size() != 0)
+            updateGeometry();
     }
 
     if (diff > 0)
