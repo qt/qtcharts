@@ -49,7 +49,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \qmltype VCandlestickModelMapper
-    \since 2.2
+    \since QtCharts 2.2
     \instantiates QVCandlestickModelMapper
     \inqmlmodule QtCharts
     \brief Vertical model mapper for a candlestick series.
