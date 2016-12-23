@@ -168,17 +168,9 @@ QT_CHARTS_BEGIN_NAMESPACE
   \fn void QValueAxis::minChanged(qreal min)
   This signal is emitted when the minimum value of the axis, specified by \a min, changes.
 */
-/*!
-  \qmlsignal ValueAxis::onMinChanged(real min)
-  This signal is emitted when the minimum value of the axis, specified by \a min, changes.
-*/
 
 /*!
   \fn void QValueAxis::maxChanged(qreal max)
-  This signal is emitted when the maximum value of the axis, specified by \a max, changes.
-*/
-/*!
-  \qmlsignal ValueAxis::onMaxChanged(real max)
   This signal is emitted when the maximum value of the axis, specified by \a max, changes.
 */
 
@@ -187,19 +179,9 @@ QT_CHARTS_BEGIN_NAMESPACE
   This signal is emitted when the number of tick marks on the axis, specified by \a tickCount,
   changes.
 */
-/*!
-  \qmlsignal ValueAxis::tickCountChanged(int tickCount)
-  This signal is emitted when the number of tick marks on the axis, specified by \a tickCount,
-  changes.
-*/
 
 /*!
   \fn void QValueAxis::minorTickCountChanged(int minorTickCount)
-  This signal is emitted when the number of minor tick marks on the axis, specified by
-  \a minorTickCount, changes.
-*/
-/*!
-  \qmlsignal ValueAxis::minorTickCountChanged(int minorTickCount)
   This signal is emitted when the number of minor tick marks on the axis, specified by
   \a minorTickCount, changes.
 */
@@ -219,10 +201,6 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
   \fn void QValueAxis::labelFormatChanged(const QString &format)
-  This signal is emitted when the \a format of axis labels changes.
-*/
-/*!
-  \qmlsignal ValueAxis::labelFormatChanged(const QString &format)
   This signal is emitted when the \a format of axis labels changes.
 */
 
