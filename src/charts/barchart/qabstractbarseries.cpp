@@ -197,10 +197,6 @@ QT_CHARTS_BEGIN_NAMESPACE
     \fn void QAbstractBarSeries::labelsFormatChanged(const QString &format)
     This signal is emitted when the \a format of data value labels changes.
 */
-/*!
-    \qmlsignal XYSeries::onLabelsFormatChanged(string format)
-    This signal is emitted when the \a format of data value labels changes.
-*/
 
 /*!
  \enum QAbstractBarSeries::LabelsPosition
@@ -220,23 +216,23 @@ QT_CHARTS_BEGIN_NAMESPACE
     \sa labelsVisible, labelsFormat
 */
 /*!
-    \qmlproperty enumeration AbstractBarSeries::LabelsPosition
+    \qmlproperty enumeration AbstractBarSeries::labelsPosition
 
     The position of the data value labels:
 
-    \value LabelsCenter Label is located in the center of the bar.
-    \value LabelsInsideEnd Label is located inside the bar at the top.
-    \value LabelsInsideBase Label is located inside the bar at the bottom.
-    \value LabelsOutsideEnd Label is located outside the bar at the top.
+    \value  AbstractBarSeries.LabelsCenter
+            Label is located in the center of the bar.
+    \value  AbstractBarSeries.LabelsInsideEnd
+            Label is located inside the bar at the top.
+    \value  AbstractBarSeries.LabelsInsideBase
+            Label is located inside the bar at the bottom.
+    \value  AbstractBarSeries.LabelsOutsideEnd
+            Label is located outside the bar at the top.
 
     \sa labelsVisible, labelsFormat
 */
 /*!
     \fn void QAbstractBarSeries::labelsPositionChanged(QAbstractBarSeries::LabelsPosition position)
-    This signal is emitted when the \a position of value labels changes.
-*/
-/*!
-    \qmlsignal AbstractBarSeries::onLabelsPositionChanged(LabelsPosition position)
     This signal is emitted when the \a position of value labels changes.
 */
 
@@ -245,15 +241,11 @@ QT_CHARTS_BEGIN_NAMESPACE
     \brief The angle of the value labels in degrees.
 */
 /*!
-    \qmlproperty qreal QAbstractBarSeries::labelsAngle
+    \qmlproperty real AbstractBarSeries::labelsAngle
     The angle of the value labels in degrees.
 */
 /*!
     \fn void QAbstractBarSeries::labelsAngleChanged(qreal angle)
-    This signal is emitted when the \a angle of the value labels changes.
-*/
-/*!
-    \qmlsignal AbstractBarSeries::onLabelsAngleChanged(qreal angle)
     This signal is emitted when the \a angle of the value labels changes.
 */
 
@@ -263,9 +255,11 @@ QT_CHARTS_BEGIN_NAMESPACE
     in the bar set specified by \a barset.
 */
 /*!
-    \qmlsignal AbstractBarSeries::onClicked(int index, BarSet barset)
+    \qmlsignal AbstractBarSeries::clicked(int index, BarSet barset)
     This signal is emitted when the user clicks the bar specified by \a index
     in the bar set specified by \a barset.
+
+    The corresponding signal handler is \c onClicked.
 */
 
 /*!
@@ -274,9 +268,11 @@ QT_CHARTS_BEGIN_NAMESPACE
     in the bar set specified by \a barset and holds down the mouse button.
 */
 /*!
-    \qmlsignal AbstractBarSeries::onPressed(int index, BarSet barset)
+    \qmlsignal AbstractBarSeries::pressed(int index, BarSet barset)
     This signal is emitted when the user clicks the bar specified by \a index
     in the bar set specified by \a barset and holds down the mouse button.
+
+    The corresponding signal handler is \c onPressed.
 */
 
 /*!
@@ -285,9 +281,11 @@ QT_CHARTS_BEGIN_NAMESPACE
     specified by \a index in the bar set specified by \a barset.
 */
 /*!
-    \qmlsignal AbstractBarSeries::onReleased(int index, BarSet barset)
+    \qmlsignal AbstractBarSeries::released(int index, BarSet barset)
     This signal is emitted when the user releases the mouse press on the bar
     specified by \a index in the bar set specified by \a barset.
+
+    The corresponding signal handler is \c onReleased.
 */
 
 /*!
@@ -296,9 +294,11 @@ QT_CHARTS_BEGIN_NAMESPACE
     in the bar set specified by \a barset.
 */
 /*!
-    \qmlsignal AbstractBarSeries::onDoubleClicked(int index, BarSet barset)
+    \qmlsignal AbstractBarSeries::doubleClicked(int index, BarSet barset)
     This signal is emitted when the user double-clicks the bar specified by \a index
     in the bar set specified by \a barset.
+
+    The corresponding signal handler is \c onDoubleClicked.
 */
 
 /*!
@@ -309,20 +309,17 @@ QT_CHARTS_BEGIN_NAMESPACE
     and when the mouse moves away again, it turns \c false.
 */
 /*!
-    \qmlsignal AbstractBarSeries::onHovered(bool status, int index, BarSet barset)
+    \qmlsignal AbstractBarSeries::hovered(bool status, int index, BarSet barset)
 
     This signal is emitted when a mouse is hovered over the bar specified by \a index in the
     bar set specified by \a barset. When the mouse moves over the bar, \a status turns \c true,
     and when the mouse moves away again, it turns \c false.
+
+    The corresponding signal handler is \c onHovered.
 */
 
 /*!
     \fn void QAbstractBarSeries::countChanged()
-    This signal is emitted when the number of bar sets is changed, for example by append() or
-    remove().
-*/
-/*!
-    \qmlsignal AbstractBarSeries::onCountChanged()
     This signal is emitted when the number of bar sets is changed, for example by append() or
     remove().
 */
@@ -339,8 +336,10 @@ QT_CHARTS_BEGIN_NAMESPACE
     \sa append(), insert()
 */
 /*!
-    \qmlsignal AbstractBarSeries::onBarsetsAdded()
+    \qmlsignal AbstractBarSeries::barsetsAdded()
     This signal is emitted when bar sets are added to the series.
+
+    The corresponding signal handler is \c onBarsetsAdded.
 */
 
 /*!
@@ -349,8 +348,10 @@ QT_CHARTS_BEGIN_NAMESPACE
     \sa remove()
 */
 /*!
-    \qmlsignal AbstractBarSeries::onBarsetsRemoved()
+    \qmlsignal AbstractBarSeries::barsetsRemoved()
     This signal is emitted when bar sets are removed from the series.
+
+    The corresponding signal handler is \c onBarsetsRemoved.
 */
 
 /*!
