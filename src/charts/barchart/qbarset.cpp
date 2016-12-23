@@ -227,10 +227,12 @@ QT_CHARTS_BEGIN_NAMESPACE
     \sa append(), insert()
 */
 /*!
-    \qmlsignal BarSet::onValuesAdded(int index, int count)
+    \qmlsignal BarSet::valuesAdded(int index, int count)
     This signal is emitted when new values are added to the bar set.
     \a index indicates the position of the first inserted value, and \a count is the number
     of inserted values.
+
+    The corresponding signal handler is \c onValuesAdded.
 */
 
 /*!
@@ -241,10 +243,12 @@ QT_CHARTS_BEGIN_NAMESPACE
     \sa remove()
 */
 /*!
-    \qmlsignal BarSet::onValuesRemoved(int index, int count)
+    \qmlsignal BarSet::valuesRemoved(int index, int count)
     This signal is emitted when values are removed from the bar set.
     \a index indicates the position of the first removed value, and \a count is the number
     of removed values.
+
+    The corresponding signal handler is \c onValuesRemoved.
 */
 
 /*!
@@ -253,8 +257,10 @@ QT_CHARTS_BEGIN_NAMESPACE
     \sa at()
 */
 /*!
-    \qmlsignal BarSet::onValueChanged(int index)
+    \qmlsignal BarSet::valueChanged(int index)
     This signal is emitted when the value at the position specified by \a index is modified.
+
+    The corresponding signal handler is \c onValueChanged.
 */
 
 /*!
