@@ -148,6 +148,13 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
+  \qmlsignal BarCategoryAxis::rangeChanged(string min, string max)
+  This signal is emitted when \a min or \a max value of the axis changes.
+
+  The corresponding signal handler is \c onRangeChanged.
+*/
+
+/*!
   \qmlmethod void BarCategoryAxis::clear()
   Removes all categories. Sets the maximum and minimum values of the axis range to QString::null.
 */
