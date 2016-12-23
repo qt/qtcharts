@@ -211,6 +211,13 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
+    \qmlsignal ValueAxis::rangeChanged(string min, string max)
+    This signal is emitted when \a min or \a max value of the axis changes.
+
+    The corresponding signal handler is \c onRangeChanged.
+*/
+
+/*!
   \fn void QValueAxis::labelFormatChanged(const QString &format)
   This signal is emitted when the \a format of axis labels changes.
 */
@@ -331,6 +338,14 @@ QAbstractAxis::AxisType QValueAxis::type() const
 {
     return AxisTypeValue;
 }
+
+/*!
+    \qmlmethod ValueAxis::applyNiceNumbers()
+    Modifies the current range and number of tick marks on the axis to look
+    \e nice. The algorithm considers numbers that can be expressed as a form of
+    1*10^n, 2* 10^n, or 5*10^n to be nice numbers. These numbers are used for
+    setting spacing for the tick marks.
+*/
 
 /*!
     Modifies the current range and number of tick marks on the axis to look \e nice. The algorithm
