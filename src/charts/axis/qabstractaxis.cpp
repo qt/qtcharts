@@ -176,7 +176,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
-  \qmlproperty Font AbstractAxis::labelsFont
+  \qmlproperty font AbstractAxis::labelsFont
   The font of the axis labels.
 
   For more information, see \l [QML]{font}.
@@ -255,7 +255,7 @@ QT_CHARTS_BEGIN_NAMESPACE
   Empty by default. Axis titles support HTML formatting.
 */
 /*!
-  \qmlproperty String AbstractAxis::titleText
+  \qmlproperty string AbstractAxis::titleText
   The title of the axis. Empty by default. Axis titles support HTML formatting.
 */
 
@@ -271,7 +271,7 @@ QT_CHARTS_BEGIN_NAMESPACE
   \brief The font of the title of the axis.
 */
 /*!
-  \qmlproperty Font AbstractAxis::titleFont
+  \qmlproperty font AbstractAxis::titleFont
   The font of the title of the axis.
 */
 
