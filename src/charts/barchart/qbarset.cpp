@@ -179,10 +179,6 @@ QT_CHARTS_BEGIN_NAMESPACE
     This signal is emitted when the label of the bar set changes.
     \sa label
 */
-/*!
-    \qmlsignal BarSet::onLabelChanged()
-    This signal is emitted when the label of the bar set changes.
-*/
 
 /*!
     \fn void QBarSet::penChanged()
@@ -212,26 +208,14 @@ QT_CHARTS_BEGIN_NAMESPACE
     \fn void QBarSet::colorChanged(QColor)
     This signal is emitted when the fill (brush) color of the bar set changes to \a color.
 */
-/*!
-    \qmlsignal BarSet::onColorChanged(color color)
-    This signal is emitted when the fill (brush) color of the bar set changes to \a color.
-*/
 
 /*!
     \fn void QBarSet::borderColorChanged(QColor)
     This signal is emitted when the line (pen) color of the bar set changes to \a color.
 */
-/*!
-    \qmlsignal BarSet::onBorderColorChanged(color color)
-    This signal is emitted when the line (pen) color of the bar set changes to \a color.
-*/
 
 /*!
     \fn void QBarSet::labelColorChanged(QColor)
-    This signal is emitted when the text (label) color of the bar set changes to \a color.
-*/
-/*!
-    \qmlsignal BarSet::onLabelColorChanged(color color)
     This signal is emitted when the text (label) color of the bar set changes to \a color.
 */
 
