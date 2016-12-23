@@ -332,6 +332,11 @@ QString QBarSet::label() const
 }
 
 /*!
+    \qmlmethod BarSet::append(real value)
+    Appends the new value specified by \a value to the end of the bar set.
+*/
+
+/*!
     Appends the new value specified by \a value to the end of the bar set.
 */
 void QBarSet::append(const qreal value)
@@ -379,6 +384,14 @@ void QBarSet::insert(const int index, const qreal value)
 }
 
 /*!
+    \qmlmethod BarSet::remove(int index, int count)
+    Removes the number of values specified by \a count from the bar set starting
+    with the value specified by \a index.
+
+    If you leave out \a count, only the value specified by \a index is removed.
+*/
+
+/*!
     Removes the number of values specified by \a count from the bar set starting with
     the value specified by \a index.
     \sa insert()
@@ -392,6 +405,12 @@ void QBarSet::remove(const int index, const int count)
 }
 
 /*!
+    \qmlmethod BarSet::replace(int index, real value)
+    Adds the value specified by \a value to the bar set at the position
+    specified by \a index.
+*/
+
+/*!
     Adds the value specified by \a value to the bar set at the position specified by \a index.
 */
 void QBarSet::replace(const int index, const qreal value)
@@ -402,6 +421,11 @@ void QBarSet::replace(const int index, const qreal value)
     }
 }
 
+/*!
+    \qmlmethod BarSet::at(int index)
+    Returns the value specified by \a index from the bar set.
+    If the index is out of bounds, 0.0 is returned.
+*/
 
 /*!
     Returns the value specified by \a index from the bar set.
