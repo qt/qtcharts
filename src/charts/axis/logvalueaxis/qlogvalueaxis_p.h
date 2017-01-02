@@ -72,7 +72,7 @@ class QLogValueAxisPrivate : public QAbstractAxisPrivate
     qreal m_base;
     int m_tickCount;
     int m_minorTickCount;
-    QString m_format;
+    QString m_labelFormat;
     Q_DECLARE_PUBLIC(QLogValueAxis)
 };
 

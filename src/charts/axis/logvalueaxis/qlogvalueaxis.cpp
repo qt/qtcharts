@@ -319,28 +319,32 @@ void QLogValueAxis::setRange(qreal min, qreal max)
 void QLogValueAxis::setLabelFormat(const QString &format)
 {
     Q_D(QLogValueAxis);
-    d->m_format = format;
-    emit labelFormatChanged(format);
+
+    if (d->m_labelFormat == format)
+        return;
+
+    d->m_labelFormat = format;
+    emit labelFormatChanged(d->m_labelFormat);
 }
 
 QString QLogValueAxis::labelFormat() const
 {
     Q_D(const QLogValueAxis);
-    return d->m_format;
+    return d->m_labelFormat;
 }
 
 void QLogValueAxis::setBase(qreal base)
 {
-    // check if base is correct
-    if (qFuzzyCompare(base, 1))
-        return;
+    Q_D(QLogValueAxis);
 
-    if (base > 0) {
-        Q_D(QLogValueAxis);
-        d->m_base = base;
-        d->updateTickCount();
-        emit baseChanged(base);
+    if (base < 0.0 || qFuzzyIsNull(base) || qFuzzyCompare(base, 1.0) // check if base is correct
+        || qFuzzyCompare(d->m_base, base)) {
+        return;
     }
+
+    d->m_base = base;
+    d->updateTickCount();
+    emit baseChanged(d->m_base);
 }
 
 qreal QLogValueAxis::base() const
@@ -392,7 +396,7 @@ QLogValueAxisPrivate::QLogValueAxisPrivate(QLogValueAxis *q)
       m_base(10),
       m_tickCount(0),
       m_minorTickCount(0),
-      m_format(QString::null)
+      m_labelFormat(QString::null)
 {
 }
 
