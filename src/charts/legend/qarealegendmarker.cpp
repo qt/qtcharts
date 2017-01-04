@@ -37,16 +37,17 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \class QAreaLegendMarker
     \inmodule Qt Charts
-    \brief QLegendMarker subclass for area series.
+    \brief The QAreaLegendMarker class is a legend marker for an area series.
 
-    QAreaLegendMarker is related to QAreaSeries. One QAreaSeries results in one marker.
+    An area legend marker is related to a QAreaSeries object, so that one area series
+    results in one marker.
 
     \sa QLegend, QAreaSeries
 */
 
 /*!
   \fn virtual LegendMarkerType QAreaLegendMarker::type()
-  Returns QLegendMarker::LegendMarkerTypeArea
+  \reimp
 */
 
 /*!
@@ -59,7 +60,7 @@ QAreaLegendMarker::QAreaLegendMarker(QAreaSeries *series, QLegend *legend, QObje
 }
 
 /*!
-  Destructor
+    Removes the legend marker for an area series.
 */
 QAreaLegendMarker::~QAreaLegendMarker()
 {
@@ -74,7 +75,7 @@ QAreaLegendMarker::QAreaLegendMarker(QAreaLegendMarkerPrivate &d, QObject *paren
 }
 
 /*!
-  Returns related series of marker
+  \reimp
 */
 QAreaSeries* QAreaLegendMarker::series()
 {

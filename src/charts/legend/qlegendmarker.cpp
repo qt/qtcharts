@@ -42,12 +42,13 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \class QLegendMarker
     \inmodule Qt Charts
-    \brief LegendMarker object.
+    \brief The QLegendMarker class is an abstract object that can be used to access
+    markers within a legend.
 
-    QLegendMarker is abstract object that can be used to access markers inside QLegend. Legend marker consists of two
-    items: The colored box, which reflects the color of series and label, which is the name of series (or label of slice/barset
-    in case of pie or bar series)
-    The QLegendMarker is always related to one series.
+    A legend marker consists of an icon and a label. The icon color corresponds to the color
+    used to draw a series and the label displays the name of the series (or the label of the
+    slice for a pie series or bar set for a bar series). A legend marker is always related to
+    one series, slice, or bar set.
 
     \image examples_percentbarchart_legend.png
 
@@ -55,37 +56,47 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 /*!
     \enum QLegendMarker::LegendMarkerType
+    \since 5.8
 
-    The type of the legendmarker object.
+    The type of the legend marker object.
 
     \value LegendMarkerTypeArea
+           A legend marker for an area series.
     \value LegendMarkerTypeBar
+           A legend marker for a bar set.
     \value LegendMarkerTypePie
+           A legend marker for a pie slice.
     \value LegendMarkerTypeXY
+           A legend marker for a line, spline, or scatter series.
     \value LegendMarkerTypeBoxPlot
+           A legend marker for a box plot series.
     \value LegendMarkerTypeCandlestick
+           A legend marker for a candlestick series.
 */
 
 /*!
     \fn virtual LegendMarkerType QLegendMarker::type() = 0;
-    Returns the type of legendmarker. Type depends of the related series. LegendMarkerTypeXY is used for all QXYSeries derived
-    classes.
+    Returns the type of the legend marker for the related series, pie slice, or bar set.
+
+    \sa LegendMarkerType
 */
 
 /*!
     \fn virtual QAbstractSeries* QLegendMarker::series() = 0;
-    Returns pointer to series, which is related to this marker. Marker is always related to some series.
+    Returns a pointer to the series that is related to this legend marker. A legend marker
+    is always related to a series.
 */
 
 /*!
   \fn void QLegendMarker::clicked();
-  This signal is emitted, when marker is clicked with mouse.
+  This signal is emitted when the legend marker is clicked.
 */
 
 /*!
   \fn void QLegendMarker::hovered(bool status);
-  This signal is emitted, when mouse is hovered over marker. \a status is true, when mouse enters the marker
-  and false when it leaves the marker.
+  This signal is emitted when a mouse is hovered over the legend marker.
+  When the mouse moves over the marker, \a status turns \c true, and when
+  the mouse moves away again, it turns \c false.
 */
 
 /*!
@@ -120,32 +131,34 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \property QLegendMarker::label
-    Label of the marker. This is the text that is shown in legend.
+    \brief The text shown in the legend for a legend marker.
 */
 
 /*!
     \property QLegendMarker::labelBrush
-    Brush of the label
+    \brief The brush of the label.
 */
 
 /*!
     \property QLegendMarker::font
-    Font of the label
+    \brief The font of the label.
 */
 
 /*!
     \property QLegendMarker::pen
-    Pen of the marker. This is the outline of the colored square.
+    \brief The pen used to draw the outline of the icon.
 */
 
 /*!
     \property QLegendMarker::brush
-    Brush of the marker. This is the inside of the colored square.
+    \brief The brush used to fill the icon.
 */
 
 /*!
     \property QLegendMarker::visible
-    Visibility of the legend marker. Affects label and the colored square.
+    \brief The visibility of the legend marker.
+
+    The visibility affects both the legend marker label and the icon.
 */
 
 
@@ -160,7 +173,7 @@ QLegendMarker::QLegendMarker(QLegendMarkerPrivate &d, QObject *parent) :
 }
 
 /*!
-  Destructor of marker
+    Removes the legend marker.
 */
 QLegendMarker::~QLegendMarker()
 {
@@ -175,7 +188,9 @@ QString QLegendMarker::label() const
 }
 
 /*!
-  Sets the \a label of marker. Note that changing name of series will also change label of its marker.
+    Sets the label of the marker to \a label.
+
+    \note Changing the name of a series also changes the label of its marker.
 */
 void QLegendMarker::setLabel(const QString &label)
 {
@@ -187,7 +202,7 @@ void QLegendMarker::setLabel(const QString &label)
     }
 }
 /*!
-  Returns the brush which is used to draw label.
+    Returns the brush that is used to draw the label.
 */
 QBrush QLegendMarker::labelBrush() const
 {
@@ -195,7 +210,7 @@ QBrush QLegendMarker::labelBrush() const
 }
 
 /*!
-  Sets the \a brush of label
+    Sets the the brush used to draw to label to \a brush.
 */
 void QLegendMarker::setLabelBrush(const QBrush &brush)
 {
@@ -203,7 +218,7 @@ void QLegendMarker::setLabelBrush(const QBrush &brush)
 }
 
 /*!
-  Retuns the font of label
+    Retuns the font of the label.
 */
 QFont QLegendMarker::font() const
 {
@@ -211,7 +226,7 @@ QFont QLegendMarker::font() const
 }
 
 /*!
-  Sets the \a font of label
+    Sets the font of the label to \a font.
 */
 void QLegendMarker::setFont(const QFont &font)
 {
@@ -219,7 +234,7 @@ void QLegendMarker::setFont(const QFont &font)
 }
 
 /*!
-  Returns the pen of marker item
+    Returns the pen used to draw the outline of the icon.
 */
 QPen QLegendMarker::pen() const
 {
@@ -227,7 +242,7 @@ QPen QLegendMarker::pen() const
 }
 
 /*!
-  Sets the \a pen of marker item
+    Sets the \a pen used to draw the outline of the icon to \a pen.
 */
 void QLegendMarker::setPen(const QPen &pen)
 {
@@ -240,7 +255,7 @@ void QLegendMarker::setPen(const QPen &pen)
 }
 
 /*!
-  Returns the brush of marker item
+    Returns the brush used to fill the icon.
 */
 QBrush QLegendMarker::brush() const
 {
@@ -248,7 +263,9 @@ QBrush QLegendMarker::brush() const
 }
 
 /*!
-  Sets the \a brush of marker item. Note that changing color of the series also changes this.
+    Sets the brush used to fill the icon to \a brush.
+
+    \note Changing the color of the series also changes the color of the icon.
 */
 void QLegendMarker::setBrush(const QBrush &brush)
 {
@@ -261,7 +278,7 @@ void QLegendMarker::setBrush(const QBrush &brush)
 }
 
 /*!
-  Returns visibility of the marker
+    Returns the visibility of the marker.
 */
 bool QLegendMarker::isVisible() const
 {
@@ -269,7 +286,7 @@ bool QLegendMarker::isVisible() const
 }
 
 /*!
-  Sets markers visibility to \a visible
+    Sets the marker's visibility to \a visible.
 */
 void QLegendMarker::setVisible(bool visible)
 {

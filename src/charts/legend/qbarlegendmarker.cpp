@@ -37,16 +37,17 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \class QBarLegendMarker
     \inmodule Qt Charts
-    \brief QLegendMarker subclass for bar series.
+    \brief The QBarLegendMarker class is a legend marker for a bar series.
 
-    QBarLegendMarker is related to QAbstractBarSeries derived classes. With bar series, each marker is related to one QBarSet.
+    A bar legend marker is related to QAbstractBarSeries derived classes. With a bar series,
+    each marker is related to one QBarSet.
 
     \sa QLegend, QAbstractBarSeries, QBarSet
 */
 
 /*!
   \fn virtual LegendMarkerType QBarLegendMarker::type()
-  Returns QLegendMarker::LegendMarkerTypeBar
+  \reimp
 */
 
 /*!
@@ -60,7 +61,7 @@ QBarLegendMarker::QBarLegendMarker(QAbstractBarSeries *series, QBarSet *barset, 
 }
 
 /*!
-  Desturctor
+    Removes the legend marker for a bar set.
 */
 QBarLegendMarker::~QBarLegendMarker()
 {
@@ -75,7 +76,7 @@ QBarLegendMarker::QBarLegendMarker(QBarLegendMarkerPrivate &d, QObject *parent) 
 }
 
 /*!
-  Returns the related series of marker
+    \reimp
 */
 QAbstractBarSeries *QBarLegendMarker::series()
 {
@@ -84,7 +85,7 @@ QAbstractBarSeries *QBarLegendMarker::series()
 }
 
 /*!
-  Returns the related barset of marker
+  Returns the bar set related to the marker.
 */
 QBarSet* QBarLegendMarker::barset()
 {
