@@ -38,14 +38,14 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \class QLineSeries
     \inmodule Qt Charts
-    \brief The QLineSeries class is used for making line charts.
+    \brief The QLineSeries class presents data in line charts.
 
     A line chart is used to show information as a series of data points
     connected by straight lines.
 
     \image examples_linechart.png
 
-    Creating basic line chart is simple:
+    Creating a basic line chart is simple:
     \code
     QLineSeries* series = new QLineSeries();
     series->append(0, 6);
@@ -61,9 +61,12 @@ QT_CHARTS_BEGIN_NAMESPACE
 
     \inherits XYSeries
 
-    \brief The LineSeries type is used for making line charts.
+    \brief Presents data in line charts.
 
-    The following QML shows how to create a simple line chart:
+    A line chart is used to show information as a series of data points
+    connected by straight lines.
+
+    The following QML example shows how to create a simple line chart:
     \snippet qmlchart/qml/qmlchart/View2.qml 1
     \beginfloatleft
     \image examples_qmlchart2.png
@@ -72,32 +75,34 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn virtual SeriesType QLineSeries::type() const
-    \brief Returns type of series.
-    \sa QAbstractSeries, SeriesType
-*/
-
-/*!
     \qmlproperty real LineSeries::width
-    The width of the line. By default the width is 2.0.
+    The width of the line. By default, the width is 2.0.
 */
 
 /*!
     \qmlproperty Qt::PenStyle LineSeries::style
-    Controls the style of the line. Set to one of Qt.NoPen, Qt.SolidLine, Qt.DashLine, Qt.DotLine,
-    Qt.DashDotLine or Qt.DashDotDotLine. Using Qt.CustomDashLine is not supported in the QML API.
-    By default the style is Qt.SolidLine.
+    Controls the style of the line. Set to one of \l{Qt::NoPen}{Qt.NoPen},
+    \l{Qt::SolidLine}{Qt.SolidLine}, \l{Qt::DashLine}{Qt.DashLine}, \l{Qt::DotLine}{Qt.DotLine},
+    \l{Qt::DashDotLine}{Qt.DashDotLine}, or \l{Qt::DashDotDotLine}{Qt.DashDotDotLine}.
+    Using \l{Qt::CustomDashLine}{Qt.CustomDashLine} is not supported in the QML API.
+    By default, the style is Qt.SolidLine.
+
+    \sa Qt::PenStyle
 */
 
 /*!
     \qmlproperty Qt::PenCapStyle LineSeries::capStyle
-    Controls the cap style of the line. Set to one of Qt.FlatCap, Qt.SquareCap or Qt.RoundCap. By
+    Controls the cap style of the line. Set to one of \l{Qt::FlatCap}{Qt.FlatCap},
+    \l{Qt::SquareCap}{Qt.SquareCap} or \l{Qt::RoundCap}{Qt.RoundCap}. By
     default the cap style is Qt.SquareCap.
+
+    \sa Qt::PenCapStyle
 */
 
 /*!
-    Constructs empty series object which is a child of \a parent.
-    When series object is added to QChartView or QChart instance ownerships is transferred.
+    Constructs an empty series object that is a child of \a parent.
+    When the series object is added to a QChartView or QChart instance, the ownership
+    is transferred.
 */
 QLineSeries::QLineSeries(QObject *parent)
     : QXYSeries(*new QLineSeriesPrivate(this), parent)
@@ -114,8 +119,8 @@ QLineSeries::QLineSeries(QLineSeriesPrivate &d, QObject *parent)
 
 }
 /*!
-    Destroys the object. Series added to QChartView or QChart instances are owned by those,
-    and are deleted when mentioned object are destroyed.
+    Destroys the object. Series added to QChartView or QChart instances are owned by the
+    instances and deleted when the instances are destroyed.
 */
 QLineSeries::~QLineSeries()
 {
@@ -124,6 +129,9 @@ QLineSeries::~QLineSeries()
         d->m_chart->removeSeries(this);
 }
 
+/*!
+    \reimp
+*/
 QAbstractSeries::SeriesType QLineSeries::type() const
 {
     return QAbstractSeries::SeriesTypeLine;
