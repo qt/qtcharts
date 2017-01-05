@@ -191,7 +191,7 @@ QT_CHARTS_BEGIN_NAMESPACE
     \qmlproperty string AbstractBarSeries::labelsFormat
     The format used for showing labels in a bar series.
 
-    \sa QAbstractBarSeries::labelsFormat, labelsVisible, LabelsPosition
+    \sa QAbstractBarSeries::labelsFormat, labelsVisible, labelsPosition
 */
 /*!
     \fn void QAbstractBarSeries::labelsFormatChanged(const QString &format)
