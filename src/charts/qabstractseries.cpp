@@ -124,10 +124,6 @@ QT_CHARTS_BEGIN_NAMESPACE
     \fn void QAbstractSeries::nameChanged()
     This signal is emitted when the series name changes.
 */
-/*!
-    \qmlsignal AbstractSeries::onNameChanged()
-    This signal is emitted when the series name changes.
-*/
 
 /*!
     \property QAbstractSeries::visible
@@ -142,10 +138,6 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \fn void QAbstractSeries::visibleChanged()
-    This signal is emitted when the series visibility changes.
-*/
-/*!
-    \qmlsignal AbstractSeries::onVisibleChanged()
     This signal is emitted when the series visibility changes.
 */
 
@@ -163,10 +155,6 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \fn void QAbstractSeries::opacityChanged()
-    This signal is emitted when the opacity of the series changes.
-*/
-/*!
-    \qmlsignal AbstractSeries::onOpacityChanged()
     This signal is emitted when the opacity of the series changes.
 */
 
@@ -261,11 +249,6 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \fn void QAbstractSeries::useOpenGLChanged()
-    This signal is emitted when accelerating the drawing of the series by using OpenGL
-    is enabled or disabled.
-*/
-/*!
-    \qmlsignal AbstractSeries::onUseOpenGLChanged()
     This signal is emitted when accelerating the drawing of the series by using OpenGL
     is enabled or disabled.
 */
