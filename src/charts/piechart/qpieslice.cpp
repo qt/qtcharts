@@ -35,17 +35,24 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \class QPieSlice
     \inmodule Qt Charts
-    \brief Defines a slice in pie series.
+    \brief The QPieSlice class represents a single slice in a pie series.
 
-    This object defines the properties of a single slice in a QPieSeries.
+    A pie slice has a value and a label. When the slice is added to a pie series, the
+    QPieSeries object calculates the percentage of the slice compared with the sum of
+    all slices in the series to determine the actual size of the slice in the chart.
 
-    In addition to the obvious value and label properties the user can also control
-    the visual appearance of a slice. By modifying the visual appearance also means that
-    the user is overriding the default appearance set by the theme.
+    By default, the label is hidden. If it is visible, it can be either located outside
+    the slice and connected to it with an arm or centered inside the slice either
+    horizontally or in parallel with the tangential or normal of the slice's arc.
 
-    Note that if the user has customized slices and theme is changed all customizations will be lost.
+    By default, the visual appearance of the slice is set by a theme, but the theme can be
+    overridden by specifying slice properties. However, if the theme is changed after the
+    slices are customized, all customization will be lost.
 
-    To enable user interaction with the pie some basic signals are provided about clicking and hovering.
+    To enable user interaction with the pie chart, some basic signals are emitted when
+    users click pie slices or hover the mouse over them.
+
+    \sa QPieSeries
 */
 
 /*!
@@ -53,18 +60,29 @@ QT_CHARTS_BEGIN_NAMESPACE
     \instantiates QPieSlice
     \inqmlmodule QtCharts
 
-    \brief Defines a slice in pie series.
+    \brief Represents a single slice in a pie series.
 
-    PieSlice defines the properties of a single slice in a PieSeries. The element should be used
-    as a child for a PieSeries. For example:
+    A pie slice has a value and a label. When the slice is added to a pie series, the
+    PieSeries type calculates the percentage of the slice compared with the sum of
+    all slices in the series to determine the actual size of the slice in the chart.
+
+    By default, the label is hidden. If it is visible, it can be either located outside
+    the slice and connected to it with an arm or centered inside the slice either
+    horizontally or in parallel with the tangential or normal of the slice's arc.
+
+    By default, the visual appearance of the slice is set by a theme, but the theme can be
+    overridden by specifying slice properties. However, if the theme is changed after the
+    slices are customized, all customization will be lost.
+
+    The PieSlice type should be used as a child of a PieSeries type. For example:
     \snippet qmlpiechart/qml/qmlpiechart/main.qml 2
 
-    An alternative (dynamic) method for adding slices to a PieSeries is using PieSeries.append
-    method.
+    Alternatively, slices can be added to a pie series by using the \l{PieSeries::append()}
+    {PieSeries.append()} method.
     \snippet qmlpiechart/qml/qmlpiechart/main.qml 4
 
-    In that case you may want to use PieSeries.at or PieSeries.find to access the properties of
-    an individual PieSlice instance.
+    In that case, \l{PieSeries::at()}{PieSeries.at()} or \l {PieSeries::find}
+    {PieSeries.find} can be used to access the properties of an individual PieSlice instance.
     \snippet qmlpiechart/qml/qmlpiechart/main.qml 5
     \sa PieSeries
 */
@@ -74,42 +92,46 @@ QT_CHARTS_BEGIN_NAMESPACE
 
  This enum describes the position of the slice label.
 
- \value LabelOutside Label is outside the slice with an arm.
- \value LabelInsideHorizontal Label is centered inside the slice and laid out horizontally.
- \value LabelInsideTangential Label is centered inside the slice and rotated to be parallel to the tangential of the slice's arc.
- \value LabelInsideNormal Label is centered inside the slice rotated to be parallel to the normal of the slice's arc.
+    \value  LabelOutside
+            The label is located outside the slice connected to it with an arm.
+            This is the default value.
+    \value  LabelInsideHorizontal
+            The label is centered within the slice and laid out horizontally.
+    \value  LabelInsideTangential
+            The label is centered within the slice and rotated to be parallel with
+            the tangential of the slice's arc.
+    \value  LabelInsideNormal
+            The label is centered within the slice and rotated to be parallel with
+            the normal of the slice's arc.
  */
 
 /*!
     \property QPieSlice::label
-    Label of the slice.
+    \brief The label of the slice.
     \sa labelVisible, labelBrush, labelFont, labelArmLengthFactor
 */
 /*!
     \qmlproperty string PieSlice::label
-    Label (text) of the slice.
+    The label of the slice.
 */
 
 /*!
     \fn void QPieSlice::labelChanged()
-    This signal emitted when the slice label has been changed.
-    \sa label
-*/
-/*!
-    \qmlsignal PieSlice::onLabelChanged()
-    This signal emitted when the slice label has been changed.
+    This signal is emitted when the slice label changes.
     \sa label
 */
 
 /*!
     \property QPieSlice::value
-    Value of the slice.
-    Note that if users sets a negative value it is converted to a positive value.
+    \brief The value of the slice.
+    \note A negative value is converted to a positive value.
     \sa percentage(), QPieSeries::sum()
 */
 /*!
     \qmlproperty real PieSlice::value
-    Value of the slice. Note that if users sets a negative value it is converted to a positive value.
+    The value of the slice.
+
+    \note A negative value is converted to a positive value.
 */
 
 /*!
@@ -117,373 +139,361 @@ QT_CHARTS_BEGIN_NAMESPACE
     This signal is emitted when the slice value changes.
     \sa value
 */
-/*!
-    \qmlsignal PieSlice::onValueChanged()
-    This signal is emitted when the slice value changes.
-    \sa value
-*/
 
 /*!
     \property QPieSlice::labelVisible
-    Defines the visibility of slice label. By default the label is not visible.
+    \brief The visibility of the slice label. By default, the label is not visible.
     \sa label, labelBrush, labelFont, labelArmLengthFactor
 */
 /*!
     \qmlproperty bool PieSlice::labelVisible
-    Defines the visibility of slice label. By default the label is not visible.
+    The visibility of the slice label. By default, the label is not visible.
 */
 
 /*!
     \fn void QPieSlice::labelVisibleChanged()
-    This signal emitted when visibility of the slice label has changed.
-    \sa labelVisible
-*/
-/*!
-    \qmlsignal PieSlice::onLabelVisibleChanged()
-    This signal emitted when visibility of the slice label has changed.
+    This signal is emitted when the visibility of the slice label changes.
     \sa labelVisible
 */
 
 /*!
     \property QPieSlice::exploded
-    If set to true the slice is "exploded" away from the pie.
+    \brief Whether the slice is separated from the pie.
     \sa explodeDistanceFactor
 */
 /*!
     \qmlproperty bool PieSlice::exploded
-    If set to true the slice is "exploded" away from the pie.
+    Whether the slice is separated from the pie.
     \sa explodeDistanceFactor
 */
 
 /*!
     \property QPieSlice::pen
-    Pen used to draw the slice border.
+    \brief The pen used to draw the slice border.
 */
 
 /*!
     \fn void QPieSlice::penChanged()
-    This signal is emitted when the pen of the slice has changed.
+    This signal is emitted when the pen used to draw the slice border changes.
     \sa pen
 */
 
 /*!
     \property QPieSlice::borderColor
-    Color used to draw the slice border.
+    \brief The color used to draw the slice border.
     This is a convenience property for modifying the slice pen.
     \sa pen, borderWidth
 */
 /*!
     \qmlproperty color PieSlice::borderColor
-    Color used to draw the slice border (pen color).
+    The color used to draw the slice border (pen color).
     \sa borderWidth
 */
 
 /*!
     \fn void QPieSlice::borderColorChanged()
-    This signal is emitted when slice border color changes.
+    This signal is emitted when the slice border color changes.
     \sa pen, borderColor
-*/
-/*!
-    \qmlsignal PieSlice::onBorderColorChanged()
-    This signal is emitted when slice border color changes.
-    \sa borderColor
 */
 
 /*!
     \property QPieSlice::borderWidth
-    Width of the slice border.
+    \brief The width of the slice border.
     This is a convenience property for modifying the slice pen.
     \sa pen, borderColor
 */
 /*!
     \qmlproperty int PieSlice::borderWidth
-    Width of the slice border.
+    The width of the slice border.
     This is a convenience property for modifying the slice pen.
     \sa borderColor
 */
 
 /*!
     \fn void QPieSlice::borderWidthChanged()
-    This signal is emitted when slice border width changes.
+    This signal is emitted when the slice border width changes.
     \sa pen, borderWidth
-*/
-/*!
-    \qmlsignal PieSlice::onBorderWidthChanged()
-    This signal is emitted when slice border width changes.
-    \sa borderWidth
 */
 
 /*!
     \property QPieSlice::brush
-    Brush used to draw the slice.
+    \brief The brush used to fill the slice.
 */
 
 /*!
     \fn void QPieSlice::brushChanged()
-    This signal is emitted when the brush of the slice has changed.
+    This signal is emitted when the brush used to fill the slice changes.
     \sa brush
 */
 
 /*!
-    \qmlproperty QString PieSlice::brushFilename
+    \qmlproperty string PieSlice::brushFilename
     The name of the file used as a brush for the slice.
 */
 
 /*!
     \property QPieSlice::color
-    Fill (brush) color of the slice.
+    \brief The fill (brush) color of the slice.
     This is a convenience property for modifying the slice brush.
     \sa brush
 */
 /*!
     \qmlproperty color PieSlice::color
-    Fill (brush) color of the slice.
+    The fill (brush) color of the slice.
 */
 
 /*!
     \fn void QPieSlice::colorChanged()
-    This signal is emitted when slice color changes.
+    This signal is emitted when the slice color changes.
     \sa brush
-*/
-/*!
-    \qmlsignal PieSlice::onColorChanged()
-    This signal is emitted when slice color changes.
 */
 
 /*!
     \property QPieSlice::labelBrush
-    Brush used to draw label and label arm of the slice.
+    \brief The brush used to draw the label and label arm of the slice.
     \sa label, labelVisible, labelFont, labelArmLengthFactor
 */
 
 /*!
     \fn void QPieSlice::labelBrushChanged()
-    This signal is emitted when the label brush of the slice has changed.
+    This signal is emitted when the label brush of the slice changes.
     \sa labelBrush
 */
 
 /*!
     \property QPieSlice::labelColor
-    Color used to draw the slice label.
+    \brief The color used to draw the slice label.
     This is a convenience property for modifying the slice label brush.
     \sa labelBrush
 */
 /*!
     \qmlproperty color PieSlice::labelColor
-    Color used to draw the slice label.
+    The color used to draw the slice label.
 */
 
 /*!
     \fn void QPieSlice::labelColorChanged()
-    This signal is emitted when slice label color changes.
-    \sa labelColor
-*/
-/*!
-    \qmlsignal PieSlice::onLabelColorChanged()
-    This signal is emitted when slice label color changes.
+    This signal is emitted when the slice label color changes.
     \sa labelColor
 */
 
 /*!
     \property QPieSlice::labelFont
-    Font used for drawing label text.
+    \brief The font used for drawing the label text.
     \sa label, labelVisible, labelArmLengthFactor
 */
 
 /*!
     \fn void QPieSlice::labelFontChanged()
-    This signal is emitted when the label font of the slice has changed.
+    This signal is emitted when the label font of the slice changes.
     \sa labelFont
 */
 
 /*!
-    \qmlproperty Font PieSlice::labelFont
+    \qmlproperty font PieSlice::labelFont
 
-    Defines the font used for slice label.
+    The font used for the slice label.
 
-    See the Qt documentation for more details of Font.
+    For more information, see \l [QML]{font}.
 
     \sa labelVisible, labelPosition
 */
 
 /*!
     \property QPieSlice::labelPosition
-    Position of the slice label.
+    \brief The position of the slice label.
     \sa label, labelVisible
 */
 /*!
-    \qmlproperty LabelPosition PieSlice::labelPosition
-    Position of the slice label. One of PieSlice.LabelOutside, PieSlice.LabelInsideHorizontal,
-    PieSlice.LabelInsideTangential or PieSlice.LabelInsideNormal. By default the position is
-    PieSlice.LabelOutside.
+    \qmlproperty enumeration PieSlice::labelPosition
+
+    Describes the position of the slice label.
+
+    \value  PieSlice.LabelOutside
+            The label is located outside the slice connected to it with an arm.
+            This is the default value.
+    \value  PieSlice.LabelInsideHorizontal
+            The label is centered within the slice and laid out horizontally.
+    \value  PieSlice.LabelInsideTangential
+            The label is centered within the slice and rotated to be parallel with
+            the tangential of the slice's arc.
+    \value  PieSlice.LabelInsideNormal
+            The label is centered within the slice and rotated to be parallel with
+            the normal of the slice's arc.
+
     \sa labelVisible
 */
 
 /*!
     \property QPieSlice::labelArmLengthFactor
-    Defines the length of the label arm.
-    The factor is relative to pie radius. For example:
-    1.0 means the length is the same as the radius.
-    0.5 means the length is half of the radius.
-    By default the arm length is 0.15
+    \brief The length of the label arm.
+    The factor is relative to the pie radius. For example:
+    \list
+        \li 1.0 means that the length is the same as the radius.
+        \li 0.5 means that the length is half of the radius.
+    \endlist
+    By default, the arm length is 0.15
     \sa label, labelVisible, labelBrush, labelFont
 */
 /*!
     \qmlproperty real PieSlice::labelArmLengthFactor
-    Defines the length of the label arm.
-    The factor is relative to pie radius. For example:
-    1.0 means the length is the same as the radius.
-    0.5 means the length is half of the radius.
-    By default the arm length is 0.15
+    The length of the label arm.
+    The factor is relative to the pie radius. For example:
+    \list
+        \li 1.0 means that the length is the same as the radius.
+        \li 0.5 means that the length is half of the radius.
+    \endlist
+    By default, the arm length is 0.15
+
     \sa labelVisible
 */
 
 /*!
     \property QPieSlice::explodeDistanceFactor
-    When the slice is exploded this factor defines how far the slice is exploded away from the pie.
-    The factor is relative to pie radius. For example:
-    1.0 means the distance is the same as the radius.
-    0.5 means the distance is half of the radius.
-    By default the distance is is 0.15
+    \brief Determines how far away from the pie the slice is exploded.
+    \list
+        \li 1.0 means that the distance is the same as the radius.
+        \li 0.5 means that the distance is half of the radius.
+    \endlist
+    By default, the distance is 0.15
     \sa exploded
 */
 /*!
     \qmlproperty real PieSlice::explodeDistanceFactor
-    When the slice is exploded this factor defines how far the slice is exploded away from the pie.
-    The factor is relative to pie radius. For example:
-    1.0 means the distance is the same as the radius.
-    0.5 means the distance is half of the radius.
-    By default the distance is is 0.15
+    Determines how far away from the pie the slice is exploded.
+    \list
+        \li 1.0 means that the distance is the same as the radius.
+        \li 0.5 means that the distance is half of the radius.
+    \endlist
+    By default, the distance is 0.15
+
     \sa exploded
 */
 
 /*!
     \property QPieSlice::percentage
-    Percentage of the slice compared to the sum of all slices in the series.
+    \brief The percentage of the slice compared to the sum of all slices in the series.
     The actual value ranges from 0.0 to 1.0.
     Updated automatically once the slice is added to the series.
     \sa value, QPieSeries::sum
 */
 /*!
     \qmlproperty real PieSlice::percentage
-    Percentage of the slice compared to the sum of all slices in the series.
+    The percentage of the slice compared to the sum of all slices in the series.
     The actual value ranges from 0.0 to 1.0.
     Updated automatically once the slice is added to the series.
 */
 
 /*!
     \fn void QPieSlice::percentageChanged()
-    This signal is emitted when the percentage of the slice has changed.
-    \sa percentage
-*/
-/*!
-    \qmlsignal void PieSlice::onPercentageChanged()
-    This signal is emitted when the percentage of the slice has changed.
+    This signal is emitted when the percentage of the slice changes.
     \sa percentage
 */
 
 /*!
     \property QPieSlice::startAngle
-    Defines the starting angle of this slice in the series it belongs to.
-    Full pie is 360 degrees where 0 degrees is at 12 a'clock.
+    \brief The starting angle of this slice in the series it belongs to.
+    A full pie is 360 degrees, where 0 degrees is at 12 a'clock.
     Updated automatically once the slice is added to the series.
 */
 /*!
     \qmlproperty real PieSlice::startAngle
-    Defines the starting angle of this slice in the series it belongs to.
-    Full pie is 360 degrees where 0 degrees is at 12 a'clock.
+    The starting angle of this slice in the series it belongs to.
+    A full pie is 360 degrees, where 0 degrees is at 12 a'clock.
     Updated automatically once the slice is added to the series.
 */
 
 /*!
     \fn void QPieSlice::startAngleChanged()
-    This signal is emitted when the starting angle f the slice has changed.
-    \sa startAngle
-*/
-/*!
-    \qmlsignal PieSlice::onStartAngleChanged()
-    This signal is emitted when the starting angle f the slice has changed.
+    This signal is emitted when the starting angle of the slice changes.
     \sa startAngle
 */
 
 /*!
     \property QPieSlice::angleSpan
-    Span of the slice in degrees.
-    Full pie is 360 degrees where 0 degrees is at 12 a'clock.
+    \brief  The span of the slice in degrees.
+    A full pie is 360 degrees, where 0 degrees is at 12 a'clock.
     Updated automatically once the slice is added to the series.
 */
 /*!
     \qmlproperty real PieSlice::angleSpan
-    Span of the slice in degrees.
-    Full pie is 360 degrees where 0 degrees is at 12 a'clock.
+    The span of the slice in degrees.
+    A full pie is 360 degrees, where 0 degrees is at 12 a'clock.
     Updated automatically once the slice is added to the series.
 */
 
 /*!
     \fn void QPieSlice::angleSpanChanged()
-    This signal is emitted when the angle span of the slice has changed.
-    \sa angleSpan
-*/
-/*!
-    \qmlsignal PieSlice::onAngleSpanChanged()
-    This signal is emitted when the angle span of the slice has changed.
+    This signal is emitted when the angle span of the slice changes.
     \sa angleSpan
 */
 
 /*!
     \fn void QPieSlice::clicked()
-    This signal is emitted when user has clicked the slice.
+    This signal is emitted when the slice is clicked.
     \sa QPieSeries::clicked()
 */
 /*!
-    \qmlsignal PieSlice::onClicked()
-    This signal is emitted when user has clicked the slice.
+    \qmlsignal PieSlice::clicked()
+    This signal is emitted when the slice is clicked.
+
+    The corresponding signal handler is \c onClicked().
 */
 
 /*!
     \fn void QPieSlice::pressed()
-    This signal is emitted when user has pressed the slice.
+    This signal is emitted when the user clicks the slice and holds down the mouse button.
     \sa QPieSeries::pressed()
 */
 /*!
-    \qmlsignal PieSlice::onPressed()
-    This signal is emitted when user has pressed the slice.
+    \qmlsignal PieSlice::pressed()
+    This signal is emitted when user clicks the slice and holds down the mouse button.
+
+    The corresponding signal handler is \c onPressed().
 */
 
 /*!
     \fn void QPieSlice::released()
-    This signal is emitted when user has released the slice.
+    This signal is emitted when the user releases the mouse press on the slice.
     \sa QPieSeries::released()
 */
 /*!
-    \qmlsignal PieSlice::onReleased()
-    This signal is emitted when user has released the slice.
+    \qmlsignal PieSlice::released()
+    This signal is emitted when the user releases the mouse press on the slice.
+
+    The corresponding signal handler is \c onReleased().
 */
 
 /*!
     \fn void QPieSlice::doubleClicked()
-    This signal is emitted when user has doubleclicked the slice.
+    This signal is emitted when user double-clicks the slice.
     \sa QPieSeries::doubleClicked()
 */
 /*!
-    \qmlsignal PieSlice::onDoubleClicked()
-    This signal is emitted when user has doubleclicked the slice.
+    \qmlsignal PieSlice::doubleClicked()
+    This signal is emitted when user double-clicks the slice.
+
+    The corresponding signal handler is \c onDoubleClicked().
 */
 
 /*!
     \fn void QPieSlice::hovered(bool state)
-    This signal is emitted when user has hovered over or away from the slice.
-    \a state is true when user has hovered over the slice and false when hover has moved away from the slice.
+    This signal is emitted when a mouse is hovered over the slice. When the mouse
+    moves over the slice, \a state turns \c true, and when the mouse moves away
+    again, it turns \c false.
     \sa QPieSeries::hovered()
 */
 /*!
-    \qmlsignal PieSlice::onHovered(bool state)
-    This signal is emitted when user has hovered over or away from the slice.
-    \a state is true when user has hovered over the slice and false when hover has moved away from the slice.
+    \qmlsignal PieSlice::hovered(bool state)
+    This signal is emitted when a mouse is hovered over the slice. When the mouse
+    moves over the slice, \a state turns \c true, and when the mouse moves away
+    again, it turns \c false.
+
+    The corresponding signal handler is \c onHovered().
 */
 
 /*!
-    Constructs an empty slice with a \a parent.
+    Constructs an empty slice with the parent \a parent.
     \sa QPieSeries::append(), QPieSeries::insert()
 */
 QPieSlice::QPieSlice(QObject *parent)
@@ -494,7 +504,7 @@ QPieSlice::QPieSlice(QObject *parent)
 }
 
 /*!
-    Constructs an empty slice with given \a value, \a label and a \a parent.
+    Constructs an empty slice with the specified \a value, \a label, and \a parent.
     \sa QPieSeries::append(), QPieSeries::insert()
 */
 QPieSlice::QPieSlice(QString label, qreal value, QObject *parent)
@@ -506,8 +516,7 @@ QPieSlice::QPieSlice(QString label, qreal value, QObject *parent)
 }
 
 /*!
-    Destroys the slice.
-    User should not delete the slice if it has been added to the series.
+    Removes the slice. The slice should not be removed if it has been added to a series.
 */
 QPieSlice::~QPieSlice()
 {
