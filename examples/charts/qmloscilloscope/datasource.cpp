@@ -82,7 +82,7 @@ void DataSource::generateData(int type, int rowCount, int colCount)
             switch (type) {
             case 0:
                 // data with sin + random component
-                y = qSin(3.14159265358979 / 50 * j) + 0.5 + (qreal) rand() / (qreal) RAND_MAX;
+                y = qSin(M_PI / 50 * j) + 0.5 + (qreal) rand() / (qreal) RAND_MAX;
                 x = j;
                 break;
             case 1:

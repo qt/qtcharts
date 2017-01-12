@@ -34,8 +34,6 @@
 #include <QtGui/QPainter>
 #include <QtCore/QtMath>
 
-const float Pi = 3.14159f;
-
 ChartView::ChartView(QWidget *parent) :
     QChartView(new QChart(), parent)
 {
@@ -71,8 +69,8 @@ ChartView::ChartView(QWidget *parent) :
     QPainterPath starPath;
     starPath.moveTo(28, 15);
     for (int i = 1; i < 5; ++i) {
-        starPath.lineTo(14 + 14 * qCos(0.8 * i * Pi),
-                        15 + 14 * qSin(0.8 * i * Pi));
+        starPath.lineTo(14 + 14 * qCos(0.8 * i * M_PI),
+                        15 + 14 * qSin(0.8 * i * M_PI));
     }
     starPath.closeSubpath();
 
