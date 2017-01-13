@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2017 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -47,25 +47,45 @@ QT_CHARTS_BEGIN_NAMESPACE
 
  This enum describes the theme used by the chart.
 
- \value ChartThemeLight The default theme
+ A theme is a built-in collection of UI style related settings applied to all
+ the visual elements of a chart, such as colors, pens, brushes, and fonts of
+ series, as well as axes, title, and legend. The \l {Chart themes example}
+ illustrates how to use themes.
+
+ \note Changing the theme will overwrite all customizations previously applied
+ to the series.
+
+ \value ChartThemeLight
+        The light theme, which is the default theme.
  \value ChartThemeBlueCerulean
+        The cerulean blue theme.
  \value ChartThemeDark
+        The dark theme.
  \value ChartThemeBrownSand
+        The sand brown theme.
  \value ChartThemeBlueNcs
+        The natural color system (NCS) blue theme.
  \value ChartThemeHighContrast
+        The high contrast theme.
  \value ChartThemeBlueIcy
+        The icy blue theme.
  \value ChartThemeQt
+        The Qt theme.
  */
 
 /*!
  \enum QChart::AnimationOption
 
- For enabling/disabling animations. Defaults to NoAnimation.
+ This enum describes the animations enabled in the chart.
 
  \value NoAnimation
+        Animation is disabled in the chart. This is the default value.
  \value GridAxisAnimations
+        Grid axis animation is enabled in the chart.
  \value SeriesAnimations
+        Series animation is enabled in the chart.
  \value AllAnimations
+        All animation types are enabled in the chart.
  */
 
 /*!
@@ -74,95 +94,114 @@ QT_CHARTS_BEGIN_NAMESPACE
  This enum describes the chart type.
 
  \value ChartTypeUndefined
+        The chart type is not defined.
  \value ChartTypeCartesian
+        A cartesian chart.
  \value ChartTypePolar
+        A polar chart.
  */
 
 /*!
  \class QChart
  \inmodule Qt Charts
- \brief Main chart API for Qt Charts.
+ \brief The QChart class manages the graphical representation of the chart's
+ series, legends, and axes.
 
  QChart is a QGraphicsWidget that you can show in a QGraphicsScene. It manages the graphical
  representation of different types of series and other chart related objects like legend and
- axes. If you simply want to show a chart in a layout, you can use the
- convenience class QChartView instead of QChart.
+ axes. To simply show a chart in a layout, the convenience class QChartView can be used
+ instead of QChart. In addition, line, spline, area, and scatter series can be presented as
+ polar charts by using the QPolarChart class.
+
  \sa QChartView, QPolarChart
  */
 
 /*!
  \property QChart::animationOptions
- The animation \a options for the chart. Animations are enabled/disabled based on this setting.
+ \brief The animation options for the chart.
+
+ Animations are enabled or disabled based on this setting.
  */
 
 /*!
  \property QChart::animationDuration
- The duration of the animation for the chart.
+ \brief The duration of the animation for the chart.
  */
 
 /*!
  \property QChart::animationEasingCurve
- The easing curve of the animation for the chart.
+ \brief The easing curve of the animation for the chart.
  */
 
 /*!
  \property QChart::backgroundVisible
- Specifies whether the chart background is visible or not.
+ \brief Whether the chart background is visible.
  \sa setBackgroundBrush(), setBackgroundPen(), plotAreaBackgroundVisible
  */
 
 /*!
  \property QChart::dropShadowEnabled
- If set to true, the background drop shadow effect is enabled. If set to false, it is disabled. Note that the drop
- shadow effect depends on theme, which means the setting may be changed if you switch to another theme.
+ \brief Whether the background drop shadow effect is enabled.
+
+ If set to \c true, the background drop shadow effect is enabled. If set to \c false, it
+ is disabled.
+
+ \note The drop shadow effect depends on the theme, and therefore the setting may
+ change if the theme is changed.
  */
 
 /*!
  \property QChart::backgroundRoundness
- The diameter of the rounding circle at the corners of the chart background.
+ \brief The diameter of the rounding circle at the corners of the chart background.
  */
 
 /*!
  \property QChart::margins
- Margins between the plot area (axes) and the edge of the chart widget.
+ \brief The minimum margins allowed between the edge of the chart rectangle and
+ the plot area.
+
+ The margins are used for drawing the title, axes, and legend.
  */
 
 /*!
  \property QChart::theme
- Theme is a built-in collection of UI style related settings applied for all visual elements of a chart, like colors,
- pens, brushes, and fonts of series, axes, title, and legend. \l {Chart themes example} shows an example with a few
- different themes.
- \note Changing the theme will overwrite all customizations previously applied to the series.
+ \brief The theme used for the chart.
  */
 
 /*!
  \property QChart::title
- Title is the name (label) of a chart. It is shown as a headline on top of the chart. Chart title supports html formatting.
+ \brief The title of the chart.
+
+ The title is shown as a headline on top of the chart. Chart titles support HTML formatting.
  */
 
 /*!
  \property QChart::chartType
- Chart type indicates if the chart is a cartesian chart or a polar chart.
+ \brief Whether the chart is a cartesian chart or a polar chart.
+
  This property is set internally and it is read only.
  \sa QPolarChart
  */
 
 /*!
  \property QChart::plotAreaBackgroundVisible
- Specifies whether the chart plot area background is visible or not.
- \note By default the plot area background is not visible and the plot area uses
+ \brief Whether the chart plot area background is visible.
+
+ \note By default, the plot area background is invisible and the plot area uses
  the general chart background.
  \sa setPlotAreaBackgroundBrush(), setPlotAreaBackgroundPen(), backgroundVisible
  */
 
 /*!
   \property QChart::localizeNumbers
-  \since QtCharts 2.0
+  \brief Whether numbers are localized.
+
   When \c{true}, all generated numbers appearing in various series and axis labels will be
-  localized using the QLocale set with the locale property.
-  When \c{false}, the "C" locale is always used.
+  localized using the QLocale set with the \l locale property.
+  When \c{false}, the \e C locale is always used.
   Defaults to \c{false}.
-  \note This property doesn't affect QDateTimeAxis labels, which always use the QLocale set with
+
+  \note This property does not affect QDateTimeAxis labels, which always use the QLocale set with
   the locale property.
 
   \sa locale
@@ -170,25 +209,27 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
   \property QChart::locale
-  \since QtCharts 2.0
-  Sets the locale used to format various chart labels when localizeNumbers is \c{true}.
-  This also determines the locale used to format QDateTimeAxis labels regardless of
-  localizeNumbers property.
-  Defaults to application default locale at the time the chart is constructed.
+  \brief The locale used to format various chart labels.
+
+  Labels are localized only when \l localizeNumbers is \c true, except for QDateTimeAxis
+  labels, which always use the QLocale set with this property.
+
+  Defaults to the application default locale at the time when the chart is constructed.
 
   \sa localizeNumbers
 */
 
 /*!
   \property QChart::plotArea
-  Holds the rectangle within which the drawing of the chart is done.
-  It does not include the area defined by margins.
+  \brief The rectangle within which the chart is drawn.
+
+  The plot area does not include the area defined by margins.
 */
 
 /*!
  \internal
- Constructs a chart object of \a type which is a child of a \a parent.
- Parameter \a wFlags is passed to the QGraphicsWidget constructor.
+ Constructs a chart object of \a type that is a child of \a parent.
+ The properties specified by \a wFlags are passed to the QGraphicsWidget constructor.
  This constructor is called only by subclasses.
 */
 QChart::QChart(QChart::ChartType type, QGraphicsItem *parent, Qt::WindowFlags wFlags)
@@ -199,8 +240,8 @@ QChart::QChart(QChart::ChartType type, QGraphicsItem *parent, Qt::WindowFlags wF
 }
 
 /*!
- Constructs a chart object which is a child of a \a parent.
- Parameter \a wFlags is passed to the QGraphicsWidget constructor.
+ Constructs a chart object that is a child of \a parent.
+ The properties specified by \a wFlags are passed to the QGraphicsWidget constructor.
  */
 QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags)
     : QGraphicsWidget(parent, wFlags),
@@ -210,7 +251,7 @@ QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags)
 }
 
 /*!
- Destroys the chart object and its children, like series and axis objects added to it.
+ Deletes the chart object and its children, such as the series and axis objects added to it.
  */
 QChart::~QChart()
 {
@@ -220,9 +261,10 @@ QChart::~QChart()
 }
 
 /*!
- Adds the \a series onto the chart and takes the ownership of it.
+ Adds the series \a series to the chart and takes ownership of it.
 
- \note A newly added series is attached to no axes by default, including any axes that were created for the chart
+ \note A newly added series is not attached to any axes by default, not even those that
+ might have been created for the chart
  using createDefaultAxes() before the series was added to the chart. If no axes are attached to
  the newly added series before the chart is shown, the series will get drawn as if it had axes with ranges
  that exactly fit the series to the plot area of the chart. This can be confusing if the same chart also displays other
@@ -238,8 +280,8 @@ void QChart::addSeries(QAbstractSeries *series)
 }
 
 /*!
- Removes the \a series from the chart.
- The chart releases its ownership of the specified \a series object.
+ Removes the series \a series from the chart.
+ The chart releases the ownership of the specified \a series object.
 
  \sa addSeries(), removeAllSeries()
  */
@@ -263,7 +305,7 @@ void QChart::removeAllSeries()
 }
 
 /*!
- Sets the \a brush that is used for painting the background of the chart area.
+ Sets the brush that is used for painting the background of the chart area to \a brush.
  */
 void QChart::setBackgroundBrush(const QBrush &brush)
 {
@@ -279,7 +321,7 @@ QBrush QChart::backgroundBrush() const
 }
 
 /*!
- Sets the \a pen that is used for painting the background of the chart area.
+ Sets the pen that is used for painting the background of the chart area to \a pen.
  */
 void QChart::setBackgroundPen(const QPen &pen)
 {
@@ -305,7 +347,7 @@ QString QChart::title() const
 }
 
 /*!
- Sets the \a font that is used for drawing the chart title.
+ Sets the font that is used for drawing the chart title to \a font.
  */
 void QChart::setTitleFont(const QFont &font)
 {
@@ -321,7 +363,7 @@ QFont QChart::titleFont() const
 }
 
 /*!
- Sets the \a brush used for drawing the title text.
+ Sets the brush used for drawing the title text to \a brush.
  */
 void QChart::setTitleBrush(const QBrush &brush)
 {
@@ -347,7 +389,7 @@ QChart::ChartTheme QChart::theme() const
 }
 
 /*!
- Zooms in the view by a factor of two.
+ Zooms into the view by a factor of two.
  */
 void QChart::zoomIn()
 {
@@ -355,7 +397,8 @@ void QChart::zoomIn()
 }
 
 /*!
- Zooms in the view to a maximum level at which \a rect is still fully visible.
+ Zooms into the view to a maximum level at which the rectangle \a rect is still
+ fully visible.
  \note This is not supported for polar charts.
  */
 void QChart::zoomIn(const QRectF &rect)
@@ -366,7 +409,7 @@ void QChart::zoomIn(const QRectF &rect)
 }
 
 /*!
- Zooms out the view by a factor of two.
+ Zooms out of the view by a factor of two.
  */
 void QChart::zoomOut()
 {
@@ -374,9 +417,10 @@ void QChart::zoomOut()
 }
 
 /*!
- Zooms in the view by a custom \a factor.
+ Zooms into the view by the custom factor \a factor.
 
- A factor over 1.0 zooms the view in and factor between 0.0 and 1.0 zooms out.
+ A factor over 1.0 zooms into the view and a factor between 0.0 and 1.0 zooms
+ out of it.
  */
 void QChart::zoom(qreal factor)
 {
@@ -398,9 +442,10 @@ void QChart::zoom(qreal factor)
 
 /*!
  Resets the series domains to what they were before any zoom method was called.
- Note that this will also reset any scrolls and explicit axis range settings done between
+
+ \note This will also reset scrolling and explicit axis range settings specified between
  the first zoom operation and calling this method. If no zoom operation has been
- done, this method does nothing.
+ performed, this method does nothing.
  */
 void QChart::zoomReset()
 {
@@ -408,7 +453,7 @@ void QChart::zoomReset()
 }
 
 /*!
- Returns true if any series has a zoomed domain.
+ Returns \c true if any series has a zoomed domain.
  */
 bool QChart::isZoomed()
 {
@@ -417,7 +462,7 @@ bool QChart::isZoomed()
 
 /*!
  Returns a pointer to the horizontal axis attached to the specified \a series.
- If no \a series is specified, the first horizontal axis added to the chart is returned.
+ If no series is specified, the first horizontal axis added to the chart is returned.
 
  \sa addAxis(), QAbstractSeries::attachAxis()
  */
@@ -431,7 +476,7 @@ QAbstractAxis *QChart::axisX(QAbstractSeries *series) const
 
 /*!
  Returns a pointer to the vertical axis attached to the specified \a series.
- If no \a series is specified, the first vertical axis added to the chart is returned.
+ If no series is specified, the first vertical axis added to the chart is returned.
 
  \sa addAxis(), QAbstractSeries::attachAxis()
  */
@@ -444,8 +489,9 @@ QAbstractAxis *QChart::axisY(QAbstractSeries *series) const
 }
 
 /*!
- Returns the axes attached to the \a series with \a orientation. If no \a series is provided,
- then all axes added to the chart with the specified orientation are returned.
+ Returns the axes attached to the series \a series with the orientation specified
+ by \a orientation. If no series is specified, all axes added to the chart with
+ the specified orientation are returned.
  \sa addAxis(), createDefaultAxes()
  */
 QList<QAbstractAxis *> QChart::axes(Qt::Orientations orientation, QAbstractSeries *series) const
@@ -498,7 +544,8 @@ QList<QAbstractAxis *> QChart::axes(Qt::Orientations orientation, QAbstractSerie
  If there are several QXYSeries derived series added to the chart and no series of other types have been added, then only one pair of axes is created.
  If there are several series of different types added to the chart, then each series gets its own axes pair.
 
- The axes specific to the series can be later obtained from the chart by providing the series as the parameter for axes() function call.
+ The axes specific to the series can be later obtained from the chart by providing the series
+ as the parameter for the axes() function call.
  QPieSeries does not create any axes.
 
  \sa axisX(), axisY(), axes(), setAxisX(), setAxisY(), QAbstractSeries::attachAxis()
@@ -537,7 +584,7 @@ QRectF QChart::plotArea() const
 }
 
 /*!
-    Sets the \a brush for the background of the plot area of the chart.
+    Sets the brush used to fill the background of the plot area of the chart to \a brush.
 
     \sa plotArea(), plotAreaBackgroundVisible, setPlotAreaBackgroundPen(), plotAreaBackgroundBrush()
  */
@@ -547,7 +594,7 @@ void QChart::setPlotAreaBackgroundBrush(const QBrush &brush)
 }
 
 /*!
-    Returns the brush for the background of the plot area of the chart.
+    Returns the brush used to fill the background of the plot area of the chart.
 
     \sa plotArea(), plotAreaBackgroundVisible, plotAreaBackgroundPen(), setPlotAreaBackgroundBrush()
  */
@@ -557,7 +604,7 @@ QBrush QChart::plotAreaBackgroundBrush() const
 }
 
 /*!
-    Sets the \a pen for the background of the plot area of the chart.
+    Sets the pen used to draw the background of the plot area of the chart to \a pen.
 
     \sa plotArea(), plotAreaBackgroundVisible, setPlotAreaBackgroundBrush(), plotAreaBackgroundPen()
  */
@@ -567,7 +614,7 @@ void QChart::setPlotAreaBackgroundPen(const QPen &pen)
 }
 
 /*!
-    Returns the pen for the background of the plot area of the chart.
+    Returns the pen used to draw the background of the plot area of the chart.
 
     \sa plotArea(), plotAreaBackgroundVisible, plotAreaBackgroundBrush(), setPlotAreaBackgroundPen()
  */
@@ -637,9 +684,9 @@ QEasingCurve QChart::animationEasingCurve() const
 }
 
 /*!
-    Scrolls the visible area of the chart by the distance defined in the \a dx and \a dy.
+    Scrolls the visible area of the chart by the distance specified by \a dx and \a dy.
 
-    For polar charts, \a dx indicates the angle along angular axis instead of distance.
+    For polar charts, \a dx indicates the angle along the angular axis instead of distance.
  */
 void QChart::scroll(qreal dx, qreal dy)
 {
@@ -687,9 +734,10 @@ QList<QAbstractSeries *> QChart::series() const
 }
 
 /*!
-  Adds the \a axis to the chart and attaches it to the \a series as a bottom-aligned horizontal axis.
-  The chart takes ownership of both the \a axis and the \a series.
-  Any horizontal axes previously attached to the \a series are deleted.
+  Adds the axis \a axis to the chart and attaches it to the series \a series as a
+  bottom-aligned horizontal axis.
+  The chart takes ownership of both the axis and the  series.
+  Any horizontal axes previously attached to the series are deleted.
 
   \sa axisX(), axisY(), setAxisY(), createDefaultAxes(), QAbstractSeries::attachAxis()
 */
@@ -708,9 +756,10 @@ void QChart::setAxisX(QAbstractAxis *axis ,QAbstractSeries *series)
 }
 
 /*!
-  Adds the \a axis to the chart and attaches it to the \a series as a left-aligned vertical axis.
-  The chart takes ownership of both the \a axis and the \a series.
-  Any vertical axes previously attached to the \a series are deleted.
+  Adds the axis \a axis to the chart and attaches it to the series \a series as a
+  left-aligned vertical axis.
+  The chart takes ownership of both the axis and the series.
+  Any vertical axes previously attached to the series are deleted.
 
   \sa axisX(), axisY(), setAxisX(), createDefaultAxes(), QAbstractSeries::attachAxis()
 */
@@ -729,7 +778,8 @@ void QChart::setAxisY(QAbstractAxis *axis ,QAbstractSeries *series)
 }
 
 /*!
-  Adds the \a axis to the chart with \a alignment. The chart takes the ownership of the axis.
+  Adds the axis \a axis to the chart aligned as specified by \a alignment.
+  The chart takes the ownership of the axis.
 
   \sa removeAxis(), createDefaultAxes(), QAbstractSeries::attachAxis()
 */
@@ -739,8 +789,8 @@ void QChart::addAxis(QAbstractAxis *axis, Qt::Alignment alignment)
 }
 
 /*!
-  Removes the \a axis from the chart.
-  The chart releases its ownership of the specified \a axis object.
+  Removes the axis \a axis from the chart.
+  The chart releases the ownership of the specified \a axis object.
 
   \sa addAxis(), createDefaultAxes(), QAbstractSeries::detachAxis()
 */
@@ -750,7 +800,8 @@ void QChart::removeAxis(QAbstractAxis *axis)
 }
 
 /*!
-  Returns the value in the \a series domain that corresponds to the \a position relative to chart widget.
+  Returns the value in the series specified by \a series at the position
+  specified by \a position in a chart.
 */
 QPointF QChart::mapToValue(const QPointF &position, QAbstractSeries *series)
 {
@@ -758,7 +809,8 @@ QPointF QChart::mapToValue(const QPointF &position, QAbstractSeries *series)
 }
 
 /*!
-  Returns the position on the chart widget that corresponds to the \a value in the \a series domain.
+  Returns the position on the chart that corresponds to the value \a value in the
+  series specified by \a series.
 */
 QPointF QChart::mapToPosition(const QPointF &value, QAbstractSeries *series)
 {
