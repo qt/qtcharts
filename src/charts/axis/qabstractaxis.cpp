@@ -176,7 +176,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
-  \qmlproperty Font AbstractAxis::labelsFont
+  \qmlproperty font AbstractAxis::labelsFont
   The font of the axis labels.
 
   For more information, see \l [QML]{font}.
@@ -255,7 +255,7 @@ QT_CHARTS_BEGIN_NAMESPACE
   Empty by default. Axis titles support HTML formatting.
 */
 /*!
-  \qmlproperty String AbstractAxis::titleText
+  \qmlproperty string AbstractAxis::titleText
   The title of the axis. Empty by default. Axis titles support HTML formatting.
 */
 
@@ -271,7 +271,7 @@ QT_CHARTS_BEGIN_NAMESPACE
   \brief The font of the title of the axis.
 */
 /*!
-  \qmlproperty Font AbstractAxis::titleFont
+  \qmlproperty font AbstractAxis::titleFont
   The font of the title of the axis.
 */
 
@@ -323,10 +323,6 @@ QT_CHARTS_BEGIN_NAMESPACE
   \fn void QAbstractAxis::visibleChanged(bool visible)
   This signal is emitted when the visibility of the axis changes to \a visible.
 */
-/*!
-  \qmlsignal AbstractAxis::onVisibleChanged(bool visible)
-  This signal is emitted when the visibility of the axis changes to \a visible.
-*/
 
 /*!
   \fn void QAbstractAxis::linePenChanged(const QPen& pen)
@@ -337,26 +333,14 @@ QT_CHARTS_BEGIN_NAMESPACE
   \fn void QAbstractAxis::lineVisibleChanged(bool visible)
   This signal is emitted when the visibility of the axis line changes to \a visible.
 */
-/*!
-  \qmlsignal AbstractAxis::onLineVisibleChanged(bool visible)
-  This signal is emitted when the visibility of the axis line changes to \a visible.
-*/
 
 /*!
   \fn void QAbstractAxis::labelsVisibleChanged(bool visible)
   This signal is emitted when the visibility of the labels of the axis changes to \a visible.
 */
-/*!
-  \qmlsignal AbstractAxis::onLabelsVisibleChanged(bool visible)
-  This signal is emitted when the visibility of the labels of the axis changes to \a visible.
-*/
 
 /*!
   \fn void QAbstractAxis::labelsFontChanged(const QFont& font)
-  This signal is emitted when the font of the axis labels changes to \a font.
-*/
-/*!
-  \qmlsignal AbstractAxis::onLabelsFontChanged(Font font)
   This signal is emitted when the font of the axis labels changes to \a font.
 */
 
@@ -369,27 +353,14 @@ QT_CHARTS_BEGIN_NAMESPACE
   \fn void QAbstractAxis::labelsAngleChanged(int angle)
   This signal is emitted when the angle of the axis labels changes to \a angle.
 */
-/*!
-  \qmlsignal AbstractAxis::onLabelsAngleChanged(int angle)
-  This signal is emitted when the angle of the axis labels changes to \a angle.
-*/
 
 /*!
   \fn void QAbstractAxis::gridVisibleChanged(bool visible)
   This signal is emitted when the visibility of the grid lines of the axis changes to \a visible.
 */
-/*!
-  \qmlsignal AbstractAxis::onGridVisibleChanged(bool visible)
-  This signal is emitted when the visibility of the grid lines of the axis changes to \a visible.
-*/
 
 /*!
   \fn void QAbstractAxis::minorGridVisibleChanged(bool visible)
-  This signal is emitted when the visibility of the minor grid lines of the axis
-  changes to \a visible.
-*/
-/*!
-  \qmlsignal AbstractAxis::onMinorGridVisibleChanged(bool visible)
   This signal is emitted when the visibility of the minor grid lines of the axis
   changes to \a visible.
 */
@@ -419,17 +390,9 @@ QT_CHARTS_BEGIN_NAMESPACE
   \fn void QAbstractAxis::colorChanged(QColor color)
   This signal is emitted when the color of the axis changes to \a color.
 */
-/*!
-  \qmlsignal AbstractAxis::onColorChanged(QColor color)
-  This signal is emitted when the color of the axis changes to \a color.
-*/
 
 /*!
   \fn void QAbstractAxis::labelsColorChanged(QColor color)
-  This signal is emitted when the color of the axis labels changes to \a color.
-*/
-/*!
-  \qmlsignal AbstractAxis::onLabelsColorChanged(QColor color)
   This signal is emitted when the color of the axis labels changes to \a color.
 */
 
@@ -437,17 +400,9 @@ QT_CHARTS_BEGIN_NAMESPACE
   \fn void QAbstractAxis::titleVisibleChanged(bool visible)
   This signal is emitted when the visibility of the title text of the axis changes to \a visible.
 */
-/*!
-  \qmlsignal AbstractAxis::onTitleVisibleChanged(bool visible)
-  This signal is emitted when the visibility of the title text of the axis changes to \a visible.
-*/
 
 /*!
   \fn void QAbstractAxis::titleTextChanged(const QString& text)
-  This signal is emitted when the text of the axis title changes to \a text.
-*/
-/*!
-  \qmlsignal AbstractAxis::onTitleTextChanged(String text)
   This signal is emitted when the text of the axis title changes to \a text.
 */
 
@@ -460,17 +415,9 @@ QT_CHARTS_BEGIN_NAMESPACE
   \fn void QAbstractAxis::titleFontChanged(const QFont& font)
   This signal is emitted when the font of the axis title changes to \a font.
 */
-/*!
-  \qmlsignal AbstractAxis::onTitleFontChanged(Font font)
-  This signal is emitted when the font of the axis title changes to \a font.
-*/
 
 /*!
   \fn void QAbstractAxis::shadesVisibleChanged(bool)
-  This signal is emitted when the visibility of the axis shades changes to \a visible.
-*/
-/*!
-  \qmlsignal AbstractAxis::onShadesVisibleChanged(bool visible)
   This signal is emitted when the visibility of the axis shades changes to \a visible.
 */
 
@@ -478,17 +425,9 @@ QT_CHARTS_BEGIN_NAMESPACE
   \fn void QAbstractAxis::shadesColorChanged(QColor color)
   This signal is emitted when the color of the axis shades changes to \a color.
 */
-/*!
-  \qmlsignal AbstractAxis::onShadesColorChanged(QColor color)
-  This signal is emitted when the color of the axis shades changes to \a color.
-*/
 
 /*!
   \fn void QAbstractAxis::shadesBorderColorChanged(QColor color)
-  This signal is emitted when the border color of the axis shades changes to \a color.
-*/
-/*!
-  \qmlsignal AbstractAxis::onBorderColorChanged(QColor color)
   This signal is emitted when the border color of the axis shades changes to \a color.
 */
 

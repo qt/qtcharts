@@ -34,6 +34,21 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
+/*!
+    \class QCandlestickLegendMarker
+    \inmodule Qt Charts
+    \since 5.8
+    \brief The QCandlestickLegendMarker class is a legend marker for a candlestick series.
+
+    QCandlestickLegendMarker is related to QCandlestickSeries, so that one candlestick series
+    results in one marker.
+
+    \sa QLegend, QCandlestickSeries
+*/
+
+/*!
+    \internal
+*/
 QCandlestickLegendMarker::QCandlestickLegendMarker(QCandlestickSeries *series, QLegend *legend,
                                                    QObject *parent)
     : QLegendMarker(*new QCandlestickLegendMarkerPrivate(this, series, legend), parent)
@@ -47,11 +62,17 @@ QCandlestickLegendMarker::~QCandlestickLegendMarker()
 {
 }
 
+/*!
+    \reimp
+*/
 QLegendMarker::LegendMarkerType QCandlestickLegendMarker::type()
 {
     return LegendMarkerTypeCandlestick;
 }
 
+/*!
+    \reimp
+*/
 QCandlestickSeries* QCandlestickLegendMarker::series()
 {
     Q_D(QCandlestickLegendMarker);

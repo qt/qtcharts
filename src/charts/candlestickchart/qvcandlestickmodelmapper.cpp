@@ -36,32 +36,48 @@ QT_CHARTS_BEGIN_NAMESPACE
     \class QVCandlestickModelMapper
     \since 5.8
     \inmodule Qt Charts
-    \brief Vertical model mapper for a candlestick series.
+    \brief The QVCandlestickModelMapper class is a vertical model mapper for a candlestick series.
 
-    Model mappers allow the use of a QAbstractItemModel-derived model as a data source for a chart
-    series, creating a connection between a QCandlestickSeries and the model object. A vertical
-    model mapper maintains an equal size across all \l {QCandlestickSet} {QCandlestickSets}, and
-    reads the values of the set from the model's columns.
+    Model mappers enable using a data model derived from the QAbstractItemModel class
+    as a data source for a chart. A vertical model mapper is used to create a connection
+    between a data model and QCandlestickSeries, so that each column in the data model defines a
+    candlestick item and each row maps to the open, high, low, close, and timestamp values
+    of the candlestick item.
 
-    \note The model used must support adding and removing rows/columns and modifying the data of the
-    cells.
+    Both model and candlestick series properties can be used to manipulate the data. The model
+    mapper keeps the candlestick series and the data model in sync.
+
+    The model mapper ensures that all the candlestick items in the candlestick series have equal
+    sizes. Therefore, adding or removing a value from a candlestick item causes the same change to
+    be made in all the candlestick items in the candlestick series.
+
+    \sa QCandlestickSeries, QCandlestickSet, QHCandlestickModelMapper
 */
 
 /*!
     \qmltype VCandlestickModelMapper
-    \since 2.2
+    \since QtCharts 2.2
     \instantiates QVCandlestickModelMapper
     \inqmlmodule QtCharts
     \brief Vertical model mapper for a candlestick series.
 
-    VCandlestickModelMapper allows the use of a QAbstractItemModel-derived model with data in
-    columns as a data source for a candlestick series. It's possible to manipulate the data either
-    through QAbstractItemModel or QCandlestickSeries.
+    Model mappers enable using a data model derived from the QAbstractItemModel class
+    as a data source for a chart. A vertical model mapper is used to create a connection
+    between a data model and CandlestickSeries, so that each column in the data model defines a
+    candlestick item and each row maps to the open, high, low, close, and timestamp values
+    of the candlestick item.
 
-    The following QML example creates a candlestick series with three candlestick sets (assuming the
-    model has at least four columns). Each candlestick set would contain data defined by timestamp,
-    open, high, low and close rows. The name of a set would be defined by the horizontal header of
-    the column.
+    Both model and candlestick series properties can be used to manipulate the data. The model
+    mapper keeps the candlestick series and the data model in sync.
+
+    The model mapper ensures that all the candlestick items in the candlestick series have equal
+    sizes. Therefore, adding or removing a value from a candlestick item causes the same change to
+    be made in all the candlestick items in the candlestick series.
+
+    The following QML example creates a candlestick series with three candlestick items (assuming
+    the model has at least four columns). Each candlestick item contains data defined by the
+    timestamp, open, high, low, and close rows. The name of an item is defined by the horizontal
+    header of the column.
     \qml
         CandlestickSeries {
             VCandlestickModelMapper {
@@ -77,108 +93,125 @@ QT_CHARTS_BEGIN_NAMESPACE
         }
     \endqml
 
-    \note VCandlestickModelMapper keeps the series and the model in sync.
+    \sa CandlestickSeries, CandlestickSet, HCandlestickModelMapper
 */
 
 /*!
     \qmlproperty QAbstractItemModel VCandlestickModelMapper::model
-    \brief The QAbstractItemModel-based model that is used by the mapper. The model must be
+    The QAbstractItemModel-based model that is used by the mapper. The model must be
     implemented and exposed to QML.
 
-    \note The model used must support adding and removing rows/columns and modifying the data of the
-    cells.
+    \note The model used must support adding and removing rows or columns and modifying the data of
+    the cells.
 */
 
 /*!
     \qmlproperty CandlestickSeries VCandlestickModelMapper::series
-    \brief Defines the CandlestickSeries based object that is used by the mapper.
+    The CandlestickSeries based object that is used by the mapper.
 
     All the data in the series is discarded when it is set to the mapper. When a new series is
-    specified, the old series is disconnected (preserving its data).
+    specified, the old series is disconnected (but it preserves its data).
 */
 
 /*!
     \property QVCandlestickModelMapper::timestampRow
-    \brief Defines the row of the model that contains the timestamp values of the
-    \l {QCandlestickSet} {QCandlestickSets} in the series. Default value is -1 (invalid mapping).
+    \brief The row of the model that contains the timestamp values of the
+    candlestick items in the series.
+
+    The default value is -1 (invalid mapping).
 */
 
 /*!
     \qmlproperty int VCandlestickModelMapper::timestampRow
-    \brief Defines the row of the model that contains the timestamp values of the
-    \l {QCandlestickSet} {QCandlestickSets} in the series. Default value is -1 (invalid mapping).
+    The row of the model that contains the timestamp values of the
+    candlestick items in the series. The default value is -1
+    (invalid mapping).
 */
 
 /*!
     \property QVCandlestickModelMapper::openRow
-    \brief Defines the row of the model that contains the open values of the
-    \l {QCandlestickSet} {QCandlestickSets} in the series. Default value is -1 (invalid mapping).
+    \brief The row of the model that contains the open values of the
+    candlestick items in the series.
+
+    The default value is -1 (invalid mapping).
 */
 
 /*!
     \qmlproperty int VCandlestickModelMapper::openRow
-    \brief Defines the row of the model that contains the open values of the
-    \l {QCandlestickSet} {QCandlestickSets} in the series. Default value is -1 (invalid mapping).
+    The row of the model that contains the open values of the
+    candlestick items in the series. The default value is -1
+    (invalid mapping).
 */
 
 /*!
     \property QVCandlestickModelMapper::highRow
-    \brief Defines the row of the model that contains the high values of the
-    \l {QCandlestickSet} {QCandlestickSets} in the series. Default value is -1 (invalid mapping).
+    \brief The row of the model that contains the high values of the
+    candlestick items in the series.
+
+    The default value is -1 (invalid mapping).
 */
 
 /*!
     \qmlproperty int VCandlestickModelMapper::highRow
-    \brief Defines the row of the model that contains the high values of the
-    \l {QCandlestickSet} {QCandlestickSets} in the series. Default value is -1 (invalid mapping).
+    The row of the model that contains the high values of the
+    candlestick items in the series. The default value is -1
+    (invalid mapping).
 */
 
 /*!
     \property QVCandlestickModelMapper::lowRow
-    \brief Defines the row of the model that contains the low values of the
-    \l {QCandlestickSet} {QCandlestickSets} in the series. Default value is -1 (invalid mapping).
+    \brief The row of the model that contains the low values of the
+    candlestick items in the series.
+
+    The default value is -1 (invalid mapping).
 */
 
 /*!
     \qmlproperty int VCandlestickModelMapper::lowRow
-    \brief Defines the row of the model that contains the low values of the
-    \l {QCandlestickSet} {QCandlestickSets} in the series. Default value is -1 (invalid mapping).
+    The row of the model that contains the low values of the
+    candlestick items in the series. The default value is -1
+    (invalid mapping).
 */
 
 /*!
     \property QVCandlestickModelMapper::closeRow
-    \brief Defines the row of the model that contains the close values of the
-    \l {QCandlestickSet} {QCandlestickSets} in the series. Default value is -1 (invalid mapping).
+    \brief The row of the model that contains the close values of the
+    candlestick items in the series.
+
+    The default value is -1 (invalid mapping).
 */
 
 /*!
     \qmlproperty int VCandlestickModelMapper::closeRow
-    \brief Defines the row of the model that contains the close values of the
-    \l {QCandlestickSet} {QCandlestickSets} in the series. Default value is -1 (invalid mapping).
+    The row of the model that contains the close values of the
+    candlestick items in the series. The default value is -1
+    (invalid mapping).
 */
 
 /*!
     \property QVCandlestickModelMapper::firstSetColumn
-    \brief Defines the column of the model that is used as the data source for the first set.
-    Default value is -1 (invalid mapping).
+    \brief The column of the model that is used as the data source for the first item.
+
+    The default value is -1 (invalid mapping).
 */
 
 /*!
     \qmlproperty int VCandlestickModelMapper::firstSetColumn
-    \brief Defines the column of the model that is used as the data source for the first set.
-    Default value is -1 (invalid mapping).
+    The column of the model that is used as the data source for the first item.
+    The default value is -1 (invalid mapping).
 */
 
 /*!
     \property QVCandlestickModelMapper::lastSetColumn
-    \brief Defines the column of the model that is used as the data source for the last set. Default
-    value is -1 (invalid mapping).
+    \brief The column of the model that is used as the data source for the last item.
+
+    The default value is -1 (invalid mapping).
 */
 
 /*!
     \qmlproperty int VCandlestickModelMapper::lastSetColumn
-    \brief Defines the column of the model that is used as the data source for the last set. Default
-    value is -1 (invalid mapping).
+    The column of the model that is used as the data source for the last item.
+    The default value is -1 (invalid mapping).
 */
 
 /*!
@@ -213,13 +246,13 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \fn void QVCandlestickModelMapper::firstSetColumnChanged()
-    \brief Emitted when the column of the model that contains the data of the first set is changed.
+    \brief Emitted when the column of the model that contains the data of the first item is changed.
     \sa firstSetColumn
 */
 
 /*!
     \fn void QVCandlestickModelMapper::lastSetColumnChanged()
-    \brief Emitted when the column of the model that contains the data of the last set is changed.
+    \brief Emitted when the column of the model that contains the data of the last item is changed.
     \sa lastSetColumn
 */
 
@@ -239,7 +272,7 @@ QVCandlestickModelMapper::QVCandlestickModelMapper(QObject *parent)
 }
 
 /*!
-    Returns Qt::Vertical. This means that values of the set are read from columns.
+    Returns Qt::Vertical. This means that values of the item are read from columns.
 */
 Qt::Orientation QVCandlestickModelMapper::orientation() const
 {

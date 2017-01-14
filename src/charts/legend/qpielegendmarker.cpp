@@ -37,16 +37,17 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \class QPieLegendMarker
     \inmodule Qt Charts
-    \brief QLegendMarker subclass for pie series.
+    \brief The QPieLegendMarker class is a legend marker for a pie series.
 
-    QPieLegendMarker is related to QPieSeries. With QPieSeries, each slice of pie is related to one marker in QLegend.
+    A pie legend marker is related to QPieSeries. With a pie series, each slice of the pie
+    is related to one marker in the legend.
 
     \sa QLegend, QPieSeries, QPieSlice
 */
 
 /*!
   \fn virtual LegendMarkerType QPieLegendMarker::type()
-  Returns QLegendMarker::LegendMarkerTypePie
+  \reimp
 */
 
 /*!
@@ -59,7 +60,7 @@ QPieLegendMarker::QPieLegendMarker(QPieSeries *series, QPieSlice *slice, QLegend
 }
 
 /*!
-  Destructor
+    Removes the legend marker for a pie series.
 */
 QPieLegendMarker::~QPieLegendMarker()
 {
@@ -74,7 +75,7 @@ QPieLegendMarker::QPieLegendMarker(QPieLegendMarkerPrivate &d, QObject *parent) 
 }
 
 /*!
-  Returns the related series of marker.
+    \reimp
 */
 QPieSeries* QPieLegendMarker::series()
 {
@@ -83,7 +84,7 @@ QPieSeries* QPieLegendMarker::series()
 }
 
 /*!
-  Returns the related slice of marker.
+    Returns the slice of the pie related to the marker.
 */
 QPieSlice* QPieLegendMarker::slice()
 {

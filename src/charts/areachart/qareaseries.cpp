@@ -151,18 +151,10 @@ QT_CHARTS_BEGIN_NAMESPACE
     \fn void QAreaSeries::colorChanged(QColor color)
     \brief This signal is emitted when the fill (brush) color changes to \a color.
 */
-/*!
-    \qmlsignal AreaSeries::onColorChanged(color color)
-    This signal is emitted when the fill (brush) color changes to \a color.
-*/
 
 /*!
     \fn void QAreaSeries::borderColorChanged(QColor color)
     \brief This signal is emitted when the line (pen) color changes to \a color.
-*/
-/*!
-    \qmlsignal AreaSeries::onBorderColorChanged(color color)
-    This signal is emitted when the line (pen) color changes to \a color.
 */
 
 /*!
@@ -172,10 +164,13 @@ QT_CHARTS_BEGIN_NAMESPACE
     \sa pressed, released, doubleClicked
 */
 /*!
-    \qmlsignal AreaSeries::onClicked(QPointF point)
+    \qmlsignal AreaSeries::clicked(point point)
     This signal is emitted when the user triggers a press on \a point by clicking it in an
     area chart.
-    \sa onPressed, onReleased, onDoubleClicked
+
+    The corresponding signal handler is \c {onClicked}.
+
+    \sa pressed, released, doubleClicked
 */
 
 /*!
@@ -185,10 +180,12 @@ QT_CHARTS_BEGIN_NAMESPACE
     the cursor hovers over the series and turns \e false when it moves away from the series.
 */
 /*!
-    \qmlsignal AreaSeries::onHovered(point point, bool state)
+    \qmlsignal AreaSeries::hovered(point point, bool state)
     This signal is emitted when the user hovers the mouse cursor over a series or moves it away from
     the series. \a point shows the origin (coordinate) of the hover event. \a state is \c true when
     the cursor hovers over the series and turns \e false when it moves away from the series.
+
+    The corresponding signal handler is \c {onHovered}.
 */
 
 /*!
@@ -198,9 +195,12 @@ QT_CHARTS_BEGIN_NAMESPACE
     \sa clicked, released, doubleClicked
 */
 /*!
-    \qmlsignal AreaSeries::onPressed(QPointF point)
+    \qmlsignal AreaSeries::pressed(point point)
     This signal is emitted when the user presses the point specified by \a point in an area chart.
-    \sa onClicked, onReleased, onDoubleClicked
+
+    The corresponding signal handler is \c {onPressed}.
+
+    \sa clicked, released, doubleClicked
 */
 
 /*!
@@ -210,10 +210,13 @@ QT_CHARTS_BEGIN_NAMESPACE
     \sa pressed, clicked, doubleClicked
 */
 /*!
-    \qmlsignal AreaSeries::onReleased(QPointF point)
+    \qmlsignal AreaSeries::released(point point)
     This signal is emitted when the user releases a press that was triggered on
     \a point in an area chart.
-    \sa onPressed, onClicked, onDoubleClicked
+
+    The corresponding signal handler is \c {onReleased}.
+
+    \sa pressed, clicked, doubleClicked
 */
 
 /*!
@@ -223,10 +226,13 @@ QT_CHARTS_BEGIN_NAMESPACE
     \sa pressed, released, clicked
 */
 /*!
-    \qmlsignal AreaSeries::onDoubleClicked(QPointF point)
+    \qmlsignal AreaSeries::doubleClicked(point point)
     This signal is emitted when the user triggers the first press in an area chart
     by doubleclicking \a point.
-    \sa onPressed, onReleased, onClicked
+
+    The corresponding signal handler is \c {onDoubleClicked}.
+
+    \sa pressed, released, clicked
 */
 
 /*!
@@ -273,10 +279,6 @@ QT_CHARTS_BEGIN_NAMESPACE
     \fn void QAreaSeries::pointLabelsFormatChanged(const QString &format)
     This signal is emitted when the \a format of data point labels is changed.
 */
-/*!
-    \qmlsignal AreaSeries::onPointLabelsFormatChanged(string format)
-    This signal is emitted when the \a format of data point labels is changed.
-*/
 
 /*!
     \property QAreaSeries::pointLabelsVisible
@@ -294,10 +296,6 @@ QT_CHARTS_BEGIN_NAMESPACE
     \fn void QAreaSeries::pointLabelsVisibilityChanged(bool visible)
     This signal is emitted when the visibility of the data point labels changes to \a visible.
 */
-/*!
-    \qmlsignal AreaSeries::onPointLabelsVisibilityChanged(bool visible)
-    This signal is emitted when the visibility of the data point labels changes to \a visible.
-*/
 
 /*!
     \property QAreaSeries::pointLabelsFont
@@ -313,10 +311,6 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 /*!
     \fn void QAreaSeries::pointLabelsFontChanged(const QFont &font);
-    This signal is emitted when the font used for data point labels changes to \a font.
-*/
-/*!
-    \qmlsignal AreaSeries::onPointLabelsFontChanged(Font font)
     This signal is emitted when the font used for data point labels changes to \a font.
 */
 
@@ -338,10 +332,6 @@ QT_CHARTS_BEGIN_NAMESPACE
     \fn void QAreaSeries::pointLabelsColorChanged(const QColor &color);
     This signal is emitted when the color used for data point labels changes to \a color.
 */
-/*!
-    \qmlsignal AreaSeries::onPointLabelsColorChanged(Color color)
-    This signal is emitted when the color used for data point labels changes to \a color.
-*/
 
 /*!
     \property QAreaSeries::pointLabelsClipping
@@ -359,10 +349,6 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 /*!
     \fn void QAreaSeries::pointLabelsClippingChanged(bool clipping)
-    This signal is emitted when the clipping of the data point labels changes to \a clipping.
-*/
-/*!
-    \qmlsignal AreaSeries::onPointLabelsClippingChanged(bool clipping)
     This signal is emitted when the clipping of the data point labels changes to \a clipping.
 */
 

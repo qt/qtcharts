@@ -37,16 +37,17 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \class QXYLegendMarker
     \inmodule Qt Charts
-    \brief QLegendMarker subclass for QXYSeries.
+    \brief The QXYLegendMarker class is a legend marker for a line, spline, or scatter series.
 
-    QXYLegendMarker is related to QXYSeries derived classes. Each marker is related to one series.
+    An XY legend marker is related to QXYSeries derived classes: QLineSeries, QSplineSeries,
+    and QScatterSeries. Each marker is related to one series.
 
     \sa QLegend, QXYSeries, QSplineSeries, QScatterSeries, QLineSeries
 */
 
 /*!
   \fn virtual LegendMarkerType QXYLegendMarker::type()
-  Returns QLegendMarker::LegendMarkerTypeXY
+  \reimp
 */
 
 /*!
@@ -59,7 +60,7 @@ QXYLegendMarker::QXYLegendMarker(QXYSeries *series, QLegend *legend, QObject *pa
 }
 
 /*!
-  Destructor
+    Removes the legend marker for a line, spline, or scatter series.
 */
 QXYLegendMarker::~QXYLegendMarker()
 {
@@ -74,7 +75,7 @@ QXYLegendMarker::QXYLegendMarker(QXYLegendMarkerPrivate &d, QObject *parent) :
 }
 
 /*!
-  Returns the related series
+    \reimp
 */
 QXYSeries* QXYLegendMarker::series()
 {

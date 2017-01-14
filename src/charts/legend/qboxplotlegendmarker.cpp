@@ -37,16 +37,16 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \class QBoxPlotLegendMarker
     \inmodule Qt Charts
-    \brief QLegendMarker subclass for box plot series.
+    \brief The QBoxPlotLegendMarker class is a legend marker for a box plot series.
 
-    QBoxPlotLegendMarker is related to QBoxPlotSeries classes.
+    A box plot legend marker is related to a QBoxPlotSeries object.
 
     \sa QLegend, QBoxPlotSeries
 */
 
 /*!
   \fn virtual LegendMarkerType QBoxPlotLegendMarker::type()
-  Returns QLegendMarker::LegendMarkerTypeBoxPlot
+  \reimp
 */
 
 /*!
@@ -59,7 +59,7 @@ QBoxPlotLegendMarker::QBoxPlotLegendMarker(QBoxPlotSeries *series, QLegend *lege
 }
 
 /*!
-  Destructor
+    Removes the legend marker for a box plot series.
 */
 QBoxPlotLegendMarker::~QBoxPlotLegendMarker()
 {
@@ -74,7 +74,7 @@ QBoxPlotLegendMarker::QBoxPlotLegendMarker(QBoxPlotLegendMarkerPrivate &d, QObje
 }
 
 /*!
-  Returns the related series
+    \reimp
 */
 QBoxPlotSeries* QBoxPlotLegendMarker::series()
 {

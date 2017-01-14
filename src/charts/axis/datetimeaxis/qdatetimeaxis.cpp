@@ -132,17 +132,9 @@ QT_CHARTS_BEGIN_NAMESPACE
   \fn void QDateTimeAxis::minChanged(QDateTime min)
   This signal is emitted when the minimum value of the axis, specified by \a min, changes.
 */
-/*!
-  \qmlsignal DateTimeAxis::onMinChanged(datetime min)
-  This signal is emitted when the minimum value of the axis, specified by \a min, changes.
-*/
 
 /*!
   \fn void QDateTimeAxis::maxChanged(QDateTime max)
-  This signal is emitted when the maximum value of the axis, specified by \a max, changes.
-*/
-/*!
-  \qmlsignal DateTimeAxis::onMaxChanged(datetime max)
   This signal is emitted when the maximum value of the axis, specified by \a max, changes.
 */
 
@@ -182,18 +174,9 @@ QT_CHARTS_BEGIN_NAMESPACE
   This signal is emitted when the number of tick marks on the axis, specified by \a tickCount,
   changes.
 */
-/*!
-  \qmlsignal DateTimeAxis::tickCountChanged(int tickCount)
-  This signal is emitted when the number of tick marks on the axis, specified by \a tickCount,
-  changes.
-*/
 
 /*!
   \fn void QDateTimeAxis::formatChanged(QString format)
-  This signal is emitted when the \a format of the axis changes.
-*/
-/*!
-  \qmlsignal DateTimeAxis::onFormatChanged(string format)
   This signal is emitted when the \a format of the axis changes.
 */
 

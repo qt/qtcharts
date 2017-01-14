@@ -47,10 +47,9 @@ QT_CHARTS_BEGIN_NAMESPACE
     \class QCandlestickSeries
     \since 5.8
     \inmodule Qt Charts
-    \brief Series for creating a candlestick chart.
+    \brief The QCandlestickSeries class presents data as candlesticks.
 
-    QCandlestickSeries represents a series of data shown as candlesticks. The purpose of this class
-    is to act as a container for single candlestick items. Each item is drawn to its own category
+    This class acts as a container for single candlestick items. Each item is drawn to its own category
     when using QBarCategoryAxis. QDateTimeAxis and QValueAxis can be used as alternatives to
     QBarCategoryAxis. In this case, each candlestick item is drawn according to its timestamp value.
 
@@ -69,16 +68,16 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \qmltype CandlestickSeries
-    \since 2.2
+    \since QtCharts 2.2
     \instantiates QCandlestickSeries
     \inqmlmodule QtCharts
     \inherits AbstractSeries
-    \brief Series for creating a candlestick chart.
+    \brief Represents a series of data as candlesticks.
 
-    CandlestickSeries represents a series of data shown as candlesticks. The purpose of this class
-    is to act as a container for single candlestick items. Each item is drawn to its own category
+    The CandlestickSeries type acts as a container for single candlestick items.
+    Each item is drawn to its own category
     when using BarCategoryAxis. DateTimeAxis and ValueAxis can be used as an alternative to
-    BarCategoryAxis. In this case each candlestick item is drawn according to its timestamp value.
+    BarCategoryAxis. In this case, each candlestick item is drawn according to its timestamp value.
 
     \note The timestamps must be unique within a CandlestickSeries. When using BarCategoryAxis, only
     the first one of the candlestick items sharing a timestamp is drawn. If the chart includes
@@ -120,12 +119,12 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \property QCandlestickSeries::count
-    \brief The count of sets in series.
+    \brief The number of candlestick items in a series.
 */
 
 /*!
     \qmlproperty int CandlestickSeries::count
-    The count of sets in series.
+    The number of candlestick items in a series.
 */
 
 /*!
@@ -135,8 +134,8 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
-    \qmlproperty qreal CandlestickSeries::maximumColumnWidth
-    \brief The maximum width of the candlestick items in pixels. Setting a negative value means
+    \qmlproperty real CandlestickSeries::maximumColumnWidth
+    The maximum width of the candlestick items in pixels. Setting a negative value means
     there is no maximum width. All negative values are converted to -1.0.
 */
 
@@ -147,50 +146,46 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
-    \qmlproperty qreal CandlestickSeries::minimumColumnWidth
-    \brief The minimum width of the candlestick items in pixels. Setting a negative value means
+    \qmlproperty real CandlestickSeries::minimumColumnWidth
+    The minimum width of the candlestick items in pixels. Setting a negative value means
     there is no minimum width. All negative values are converted to -1.0.
 */
 
 /*!
     \property QCandlestickSeries::bodyWidth
-    \brief The width of the candlestick items.
+    \brief The relative width of the candlestick item within its own slot, in the range
+    from 0.0 to 1.0.
 
-    The value signifies the relative width of the candlestick item inside its own slot, in the range
-    0.0 to 1.0. Values outside this range are clamped to 0.0 or 1.0.
+    Values outside this range are clamped to 0.0 or 1.0.
 */
 
 /*!
-    \qmlproperty qreal CandlestickSeries::bodyWidth
-    \brief The width of the candlestick items.
-
-    The value signifies the relative width of the candlestick item inside its own slot, in the range
-    0.0 to 1.0. Values outside this range are clamped to 0.0 or 1.0.
+    \qmlproperty real CandlestickSeries::bodyWidth
+    The relative width of the candlestick item within its own slot, in the range
+    from 0.0 to 1.0. Values outside this range are clamped to 0.0 or 1.0.
 */
 
 /*!
     \property QCandlestickSeries::bodyOutlineVisible
-    \brief The visibility of the candlestick body outlines.
+    \brief The visibility of the candlestick body outline.
 */
 
 /*!
     \qmlproperty bool CandlestickSeries::bodyOutlineVisible
-    \brief The visibility of the candlestick body outlines.
+    The visibility of the candlestick body outlines.
 */
 
 /*!
     \property QCandlestickSeries::capsWidth
-    \brief The width of the caps.
+    \brief The relative width of the caps within a candlestick, in the range from 0.0
+    to 1.0.
 
-    The value signifies the relative width of the caps inside its own candlestick, in the range 0.0
-    to 1.0. Values outside this range are clamped to 0.0 or 1.0.
+    Values outside this range are clamped to 0.0 or 1.0.
 */
 
 /*!
-    \qmlproperty qreal CandlestickSeries::capsWidth
-    \brief The width of the caps.
-
-    The value signifies the relative width of the caps inside its own candlestick, in the range 0.0
+    \qmlproperty real CandlestickSeries::capsWidth
+    The relative width of the caps within a candlestick, in the range from 0.0
     to 1.0. Values outside this range are clamped to 0.0 or 1.0.
 */
 
@@ -201,274 +196,237 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \qmlproperty bool CandlestickSeries::capsVisible
-    \brief The visibility of the caps.
+    The visibility of the caps.
 */
 
 /*!
     \property QCandlestickSeries::increasingColor
-    \brief The color of the increasing candlestick item body. Candlestick is \e increasing when its
-    close value is higher than the open value. By default this property is set to brush color.
-    Default color is used also when the property is set to an invalid color value.
+    \brief The color of the increasing candlestick item body.
+
+    A candlestick is \e increasing when its close value is higher than the open
+    value. By default, this property is set to the brush color. The default
+    color is used also when the property is set to an invalid color value.
 */
 
 /*!
-    \qmlproperty QColor CandlestickSeries::increasingColor
-    \brief The color of the increasing candlestick item body. Candlestick is \e increasing when its
-    close value is higher than the open value. By default this property is set to brush color.
-    Default color is used also when the property is set to an invalid color value.
+    \qmlproperty color CandlestickSeries::increasingColor
+    The color of the increasing candlestick item body.
+    A candlestick is \e increasing when its close value is higher than the open
+    value. By default, this property is set to the brush color. The default
+    color is used also when the property is set to an invalid color value.
 */
 
 /*!
     \property QCandlestickSeries::decreasingColor
-    \brief The color of the decreasing candlestick item body. Candlestick is \e decreasing when its
-    open value is higher than the close value. By default this property is set to brush color with
-    alpha channel set to 128. Default color is used also when the property is set to an invalid
-    color value.
+    \brief The color of the decreasing candlestick item body.
+
+    A candlestick is \e decreasing when its open value is higher than the close
+    value. By default, this property is set to the brush color with the alpha
+    channel set to 128. The default color is used also when the property is set
+    to an invalid color value.
 */
 
 /*!
-    \qmlproperty QColor CandlestickSeries::decreasingColor
-    \brief The color of the decreasing candlestick item body. Candlestick is \e decreasing when its
-    open value is higher than the close value. By default this property is set to brush color with
-    alpha channel set to 128. Default color is used also when the property is set to an invalid
-    color value.
+    \qmlproperty color CandlestickSeries::decreasingColor
+    The color of the decreasing candlestick item body.
+    A candlestick is \e decreasing when its open value is higher than the close
+    value. By default, this property is set to the brush color with the alpha
+    channel set to 128. The default color is used also when the property is set
+    to an invalid color value.
 */
 
 /*!
     \property QCandlestickSeries::brush
-    \brief The brush of the candlestick items.
+    \brief The brush used to fill the candlestick items.
 */
 
 /*!
     \property QCandlestickSeries::pen
-    \brief The pen of the candlestick items.
+    \brief The pen used to draw the lines of the candlestick items.
 */
 
 /*!
-    \qmlproperty QString CandlestickSeries::brushFilename
-    \brief The name of the file used as a brush for the series.
+    \qmlproperty string CandlestickSeries::brushFilename
+    The name of the file used as a brush image for the series.
 */
 
 /*!
     \fn void QCandlestickSeries::clicked(QCandlestickSet *set)
-    \brief Emitted when a \a set is clicked (pressed and released) on the chart.
+    This signal is emitted when the candlestick item specified by \a set
+    is clicked on the chart.
 */
 
 /*!
     \qmlsignal CandlestickSeries::clicked(CandlestickSet set)
-    \brief Emitted when a \a set is clicked (pressed and released) on the chart.
+    This signal is emitted when the candlestick item specified by \a set
+    is clicked on the chart.
 
     The corresponding signal handler is \c {onClicked}.
 */
 
 /*!
     \fn void QCandlestickSeries::hovered(bool status, QCandlestickSet *set)
-    \brief Emitted when there is change in hover \a status over the \a set.
+    This signal is emitted when a mouse is hovered over the candlestick
+    item specified by \a set in a chart.
+
+    When the mouse moves over the item, \a status turns \c true, and when the
+    mouse moves away again, it turns \c false.
 */
 
 /*!
     \qmlsignal CandlestickSeries::hovered(bool status, CandlestickSet set)
-    \brief Emitted when there is change in hover \a status over the \a set.
+    This signal is emitted when a mouse is hovered over the candlestick
+    item specified by \a set in a chart.
+
+    When the mouse moves over the item, \a status turns \c true, and when the
+    mouse moves away again, it turns \c false.
 
     The corresponding signal handler is \c {onHovered}.
 */
 
 /*!
     \fn void QCandlestickSeries::pressed(QCandlestickSet *set)
-    \brief Emitted when a \a set is pressed on the chart.
+    This signal is emitted when the user clicks the candlestick item
+    specified by \a set and holds down the mouse button.
 */
 
 /*!
     \qmlsignal CandlestickSeries::pressed(CandlestickSet set)
-    \brief Emitted when a \a set is pressed on the chart.
+    This signal is emitted when the user clicks the candlestick item
+    specified by \a set and holds down the mouse button.
 
     The corresponding signal handler is \c {onPressed}.
 */
 
 /*!
     \fn void QCandlestickSeries::released(QCandlestickSet *set)
-    \brief Emitted when a \a set is released on the chart.
+    This signal is emitted when the user releases the mouse press on the
+    candlestick item specified by \a set.
 */
 
 /*!
     \qmlsignal CandlestickSeries::released(CandlestickSet set)
-    \brief Emitted when a \a set is released on the chart.
+    This signal is emitted when the user releases the mouse press on the
+    candlestick item specified by \a set.
 
     The corresponding signal handler is \c {onReleased}.
 */
 
 /*!
     \fn void QCandlestickSeries::doubleClicked(QCandlestickSet *set)
-    \brief Emitted when a \a set is double-clicked on the chart.
+    This signal is emitted when the candlestick item specified by \a set
+    is double-clicked on the chart.
 */
 
 /*!
     \qmlsignal CandlestickSeries::doubleClicked(CandlestickSet set)
-    \brief Emitted when a \a set is double-clicked on the chart.
+    This signal is emitted when the candlestick item specified by \a set
+    is double-clicked on the chart.
 
     The corresponding signal handler is \c {onDoubleClicked}.
 */
 
 /*!
     \fn void QCandlestickSeries::candlestickSetsAdded(const QList<QCandlestickSet *> &sets)
-    \brief Emitted when new \a sets are added to the series.
+    This signal is emitted when the candlestick items specified by \a
+    sets are added to the series.
 */
 
 /*!
     \qmlsignal CandlestickSeries::candlestickSetsAdded(list<CandlestickSet> sets)
-    \brief Emitted when new \a sets are added to the series.
+    This signal is emitted when the candlestick items specified by
+    \a sets are added to the series.
 
     The corresponding signal handler is \c {onCandlestickSetsAdded}.
 */
 
 /*!
     \fn void QCandlestickSeries::candlestickSetsRemoved(const QList<QCandlestickSet *> &sets)
-    \brief Emitted when \a sets are removed from the series.
+    This signal is emitted when the candlestick items specified by
+    \a sets are removed from the series.
 */
 
 /*!
     \qmlsignal CandlestickSeries::candlestickSetsRemoved(list<CandlestickSet> sets)
-    \brief Emitted when \a sets are removed from the series.
+    This signal is emitted when the candlestick items specified by
+    \a sets are removed from the series.
 
     The corresponding signal handler is \c {onCandlestickSetsRemoved}.
 */
 
 /*!
     \fn void QCandlestickSeries::countChanged()
-    \brief Emitted when there is a change in the count of candlestick items in the series.
+    This signal is emitted when the number of candlestick items in the
+    series changes.
     \sa count
-*/
-
-/*!
-    \qmlsignal CandlestickSeries::countChanged()
-    \brief Emitted when there is a change in the count of candlestick items in the series.
-    \sa count
-
-    The corresponding signal handler is \c {onCountChanged}.
 */
 
 /*!
     \fn void QCandlestickSeries::maximumColumnWidthChanged()
-    \brief Emitted when there is a change in the maximum column width of candlestick items.
+    This signal is emitted when there is a change in the maximum column width of candlestick items.
     \sa maximumColumnWidth
-*/
-
-/*!
-    \qmlsignal CandlestickSeries::maximumColumnWidthChanged()
-    \brief Emitted when there is a change in the maximum column width of candlestick items.
-    \sa maximumColumnWidth
-
-    The corresponding signal handler is \c {onMaximumColumnWidthChanged}.
 */
 
 /*!
     \fn void QCandlestickSeries::minimumColumnWidthChanged()
-    \brief Emitted when there is a change in the minimum column width of candlestick items.
+    This signal is emitted when there is a change in the minimum column width of candlestick items.
     \sa minimumColumnWidth
-*/
-
-/*!
-    \qmlsignal CandlestickSeries::minimumColumnWidthChanged()
-    \brief Emitted when there is a change in the minimum column width of candlestick items.
-    \sa minimumColumnWidth
-
-    The corresponding signal handler is \c {onMinimumColumnWidthChanged}.
 */
 
 /*!
     \fn void QCandlestickSeries::bodyWidthChanged()
-    \brief Emitted when the candlestick item width is changed.
+    This signal is emitted when the candlestick item width changes.
     \sa bodyWidth
-*/
-
-/*!
-    \qmlsignal CandlestickSeries::bodyWidthChanged()
-    \brief Emitted when the candlestick item width is changed.
-    \sa bodyWidth
-
-    The corresponding signal handler is \c {onBodyWidthChanged}.
 */
 
 /*!
     \fn void QCandlestickSeries::bodyOutlineVisibilityChanged()
-    \brief Emitted when the visibility of the candlestick item body outline is changed.
+    This signal is emitted when the visibility of the candlestick item body outline changes.
     \sa bodyOutlineVisible
-*/
-
-/*!
-    \qmlsignal CandlestickSeries::bodyOutlineVisibilityChanged()
-    \brief Emitted when the visibility of the candlestick item body outline is changed.
-    \sa bodyOutlineVisible
-
-    The corresponding signal handler is \c {onBodyOutlineVisibilityChanged}.
 */
 
 /*!
     \fn void QCandlestickSeries::capsWidthChanged()
-    \brief Emitted when the candlestick item caps width is changed.
+    This signal is emitted when the candlestick item caps width changes.
     \sa capsWidth
-*/
-
-/*!
-    \qmlsignal CandlestickSeries::capsWidthChanged()
-    \brief Emitted when the candlestick item caps width is changed.
-    \sa capsWidth
-
-    The corresponding signal handler is \c {onCapsWidthChanged}.
 */
 
 /*!
     \fn void QCandlestickSeries::capsVisibilityChanged()
-    \brief Emitted when the visibility of the candlestick item caps is changed.
+    This signal is emitted when the visibility of the candlestick item caps changes.
     \sa capsVisible
-*/
-
-/*!
-    \qmlsignal CandlestickSeries::capsVisibilityChanged()
-    \brief Emitted when the visibility of the candlestick item caps is changed.
-    \sa capsVisible
-
-    The corresponding signal handler is \c {onCapsVisibilityChanged}.
 */
 
 /*!
     \fn void QCandlestickSeries::increasingColorChanged()
-    \brief Emitted when the candlestick item increasing color is changed.
+    This signal is emitted when the candlestick item increasing color changes.
     \sa increasingColor
-*/
-
-/*!
-    \qmlsignal CandlestickSeries::increasingColorChanged()
-    \brief Emitted when the candlestick item increasing color is changed.
-    \sa increasingColor
-
-    The corresponding signal handler is \c {onIncreasingColorChanged}.
 */
 
 /*!
     \fn void QCandlestickSeries::decreasingColorChanged()
-    \brief Emitted when the candlestick item decreasing color is changed.
+    This signal is emitted when the candlestick item decreasing color changes.
     \sa decreasingColor
-*/
-
-/*!
-    \qmlsignal CandlestickSeries::decreasingColorChanged()
-    \brief Emitted when the candlestick item decreasing color is changed.
-    \sa decreasingColor
-
-    The corresponding signal handler is \c {onDecreasingColorChanged}.
 */
 
 /*!
     \fn void QCandlestickSeries::brushChanged()
-    \brief Emitted when the candlestick item brush is changed.
+    This signal is emitted when the candlestick item brush changes.
+
     \sa brush
 */
 
 /*!
     \fn void QCandlestickSeries::penChanged()
-    \brief Emitted when the candlestick item pen is changed.
+    This signal is emitted when the candlestick item pen changes.
+
     \sa pen
+*/
+
+/*!
+    \qmlmethod CandlestickSeries::at(int index)
+    Returns the candlestick item at the position specified by \a index. Returns
+    null if the index is not valid.
 */
 
 /*!
@@ -490,8 +448,18 @@ QCandlestickSeries::~QCandlestickSeries()
 }
 
 /*!
-    Adds a single set to the series. Takes ownership of the \a set. If the set is \e null or is
-    already in the series, it won't be appended.
+    \qmlmethod CandlestickSeries::append(CandlestickSet set)
+    Adds a single candlestick item specified by \a set to the series and takes
+    ownership of it. If the item is null or it is already in the series, it
+    is not appended.
+
+    Returns \c true if appending succeeded, \c false otherwise.
+*/
+
+/*!
+    Adds a single candlestick item specified by \a set to the series and takes
+    ownership of it. If the item is null or it is already in the series, it
+    is not appended.
     Returns \c true if appending succeeded, \c false otherwise.
 */
 bool QCandlestickSeries::append(QCandlestickSet *set)
@@ -503,8 +471,15 @@ bool QCandlestickSeries::append(QCandlestickSet *set)
 }
 
 /*!
-    Removes a single set from the series.
-    Returns \c true if the \a set is successfully deleted, \c false otherwise.
+    \qmlmethod CandlestickSeries::remove(CandlestickSet set)
+    Removes a single candlestick item, specified by \a set, from the series.
+
+    Returns \c true if the item is successfully deleted, \c false otherwise.
+*/
+
+/*!
+    Removes a single candlestick item, specified by \a set, from the series.
+    Returns \c true if the item is successfully deleted, \c false otherwise.
 */
 bool QCandlestickSeries::remove(QCandlestickSet *set)
 {
@@ -515,10 +490,10 @@ bool QCandlestickSeries::remove(QCandlestickSet *set)
 }
 
 /*!
-    Adds a list of sets to the series. Takes ownership of the \a sets. If any of the sets are
-    \e null, already appended to the series, or the list contains duplicated sets, nothing is
-    appended.
-    Returns \c true if all sets were appended successfully, \c false otherwise.
+    Adds a list of candlestick items specified by \a sets to the series and
+    takes ownership of it. If any of the items are null, already belong to
+    the series, or appear in the list more than once, nothing is appended.
+    Returns \c true if all items were appended successfully, \c false otherwise.
 */
 bool QCandlestickSeries::append(const QList<QCandlestickSet *> &sets)
 {
@@ -534,9 +509,10 @@ bool QCandlestickSeries::append(const QList<QCandlestickSet *> &sets)
 }
 
 /*!
-    Removes a list of sets from the series. If any of the \a sets are \e null, already removed from
-    the series, or the list contains duplicated sets, nothing is removed.
-    Returns \c true if all sets were removed successfully, \c false otherwise.
+    Removes a list of candlestick items specified by \a sets from the series. If
+    any of the items are null, were already removed from the series, or appear
+    in the list more than once, nothing is removed. Returns \c true if all items
+    were removed successfully, \c false otherwise.
 */
 bool QCandlestickSeries::remove(const QList<QCandlestickSet *> &sets)
 {
@@ -554,8 +530,18 @@ bool QCandlestickSeries::remove(const QList<QCandlestickSet *> &sets)
 }
 
 /*!
-    Inserts a set to the series at \a index position. Takes ownership of the \a set. If the set is
-    \e null or already in the series, it won't be appended.
+    \qmlmethod CandlestickSeries::insert(int index, CandlestickSet set)
+    Inserts the candlestick item specified by \a set to the series at the
+    position specified by \a index. Takes ownership of the item. If the
+    item is null or already belongs to the series, it is not inserted.
+
+    Returns \c true if inserting succeeded, \c false otherwise.
+*/
+
+/*!
+    Inserts the candlestick item specified by \a set to the series at the
+    position specified by \a index. Takes ownership of the item. If the
+    item is null or already belongs to the series, it is not inserted.
     Returns \c true if inserting succeeded, \c false otherwise.
 */
 bool QCandlestickSeries::insert(int index, QCandlestickSet *set)
@@ -574,10 +560,10 @@ bool QCandlestickSeries::insert(int index, QCandlestickSet *set)
 }
 
 /*!
-    Takes a single \a set from the series. Does not delete the set object.
-    Returns \c true if take was successful, \c false otherwise.
-    \note The series remains as the set's parent object. You must set the parent object to take full
-    ownership.
+    Takes a single candlestick item, specified by \a set, from the series. Does
+    not delete the item. Returns \c true if the take operation was successful, \c false otherwise.
+    \note The series remains the item's parent object. You must set the parent
+    object to take full ownership.
 */
 bool QCandlestickSeries::take(QCandlestickSet *set)
 {
@@ -596,7 +582,12 @@ bool QCandlestickSeries::take(QCandlestickSet *set)
 }
 
 /*!
-    Removes all sets from the series, and deletes them.
+    \qmlmethod CandlestickSeries::clear()
+    Removes all candlestick items from the series and permanently deletes them.
+*/
+
+/*!
+    Removes all candlestick items from the series and permanently deletes them.
 */
 void QCandlestickSeries::clear()
 {
@@ -614,7 +605,8 @@ void QCandlestickSeries::clear()
 }
 
 /*!
-    Returns the list of sets in the series. Ownership of the sets is unchanged.
+    Returns the list of candlestick items in the series. Ownership of the
+    items does not change.
  */
 QList<QCandlestickSet *> QCandlestickSeries::sets() const
 {
@@ -624,7 +616,7 @@ QList<QCandlestickSet *> QCandlestickSeries::sets() const
 }
 
 /*!
-    Returns the number of the sets in the series.
+    Returns the number of the candlestick items in the series.
 */
 int QCandlestickSeries::count() const
 {
