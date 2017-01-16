@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2017 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -36,22 +36,30 @@
 /*!
     \enum QChartView::RubberBand
 
-    This enum describes the different types of rubber bands that can be used for zoom rect selection
+    This enum describes the different types of rubber band effects that can
+    be applied to the rectangular zooming area.
 
     \value NoRubberBand
+           No zooming area is specified, and therefore zooming is not enabled.
     \value VerticalRubberBand
+           The rubber band is locked to the size of the chart horizontally
+           and can be pulled vertically to specify the zooming area.
     \value HorizontalRubberBand
+           The rubber band is locked to the size of the chart vertically
+           and can be pulled horizontally to specify the zooming area.
     \value RectangleRubberBand
+           The rubber band is fixed to the point that was clicked and can be
+           pulled both vertically and horizontally.
 */
 
 /*!
     \class QChartView
     \inmodule Qt Charts
-    \brief Standalone charting widget.
+    \brief The QChartView is a standalone widget that can display charts.
 
-    QChartView is a standalone widget that can display charts. It does not require separate
-    QGraphicsScene to work. If you want to display a chart in your existing QGraphicsScene,
-    you need to use the QChart (or QPolarChart) class instead.
+    A chart view does not require a QGraphicsScene object to work. To display
+    a chart in an existing QGraphicsScene, the QChart or QPolarChart class should
+    be used instead.
 
     \sa QChart, QPolarChart
 */
@@ -59,7 +67,7 @@
 QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
-    Constructs a chartView object with parent \a parent.
+    Constructs a chart view object with the parent \a parent.
 */
 
 QChartView::QChartView(QWidget *parent)
@@ -70,8 +78,8 @@ QChartView::QChartView(QWidget *parent)
 }
 
 /*!
-    Constructs a chartview object with parent \a parent to display a \a chart.
-    Ownership of the \a chart is passed to chartview.
+    Constructs a chart view object with the parent \a parent to display the
+    chart \a chart. The ownership of the chart is passed to the chart view.
 */
 
 QChartView::QChartView(QChart *chart, QWidget *parent)
@@ -83,7 +91,7 @@ QChartView::QChartView(QChart *chart, QWidget *parent)
 
 
 /*!
-    Destroys the chartview object and the associated chart.
+    Deletes the chart view object and the associated chart.
 */
 QChartView::~QChartView()
 {
@@ -98,10 +106,10 @@ QChart *QChartView::chart() const
 }
 
 /*!
-    Sets the current chart to \a chart. Ownership of the new chart is passed to chartview
-    and ownership of the previous chart is released.
+    Sets the current chart to \a chart. The ownership of the new chart is passed to
+    the chart view and the ownership of the previous chart is released.
 
-    To avoid memory leaks users need to make sure the previous chart is deleted.
+    To avoid memory leaks, the previous chart must be deleted.
 */
 
 void QChartView::setChart(QChart *chart)
@@ -111,7 +119,7 @@ void QChartView::setChart(QChart *chart)
 
 /*!
     Sets the rubber band flags to \a rubberBand.
-    Selected flags determine the way zooming is performed.
+    The selected flags determine the way zooming is performed.
 
     \note Rubber band zooming is not supported for polar charts.
 */
@@ -137,7 +145,7 @@ void QChartView::setRubberBand(const RubberBands &rubberBand)
 }
 
 /*!
-    Returns the rubber band flags that are currently being used by the widget.
+    Returns the rubber band flags that are currently being used by the chart view.
 */
 QChartView::RubberBands QChartView::rubberBand() const
 {
@@ -145,8 +153,12 @@ QChartView::RubberBands QChartView::rubberBand() const
 }
 
 /*!
-    If Left mouse button is pressed and the rubber band is enabled the \a event is accepted and the rubber band is displayed on the screen allowing the user to select the zoom area.
-    If different mouse button is pressed and/or the rubber band is disabled then the \a event is passed to QGraphicsView::mousePressEvent() implementation.
+    If the left mouse button is pressed and the rubber band is enabled, the event
+    \a event is accepted and the rubber band is displayed on the screen. This
+    enables the user to select the zoom area.
+
+    If some other mouse button is pressed or the rubber band is disabled, the event
+    is passed to QGraphicsView::mousePressEvent().
 */
 void QChartView::mousePressEvent(QMouseEvent *event)
 {
@@ -167,8 +179,9 @@ void QChartView::mousePressEvent(QMouseEvent *event)
 }
 
 /*!
-    If the rubber band rectange has been displayed in pressEvent then \a event data is used to update the rubber band geometry.
-    Otherwise the default QGraphicsView::mouseMoveEvent implementation is called.
+    If the rubber band rectangle is displayed in the press event specified by
+    \a event, the event data is used to update the rubber band geometry.
+    Otherwise, the default QGraphicsView::mouseMoveEvent() implementation is called.
 */
 void QChartView::mouseMoveEvent(QMouseEvent *event)
 {
@@ -195,9 +208,10 @@ void QChartView::mouseMoveEvent(QMouseEvent *event)
 }
 
 /*!
-    If left mouse button is released and the rubber band is enabled then \a event is accepted and
-    the view is zoomed into the rect specified by the rubber band.
-    If it is a right mouse button \a event then the view is zoomed out.
+    If the left mouse button is released and the rubber band is enabled, the
+    event \a event is accepted and the view is zoomed into the rectangle
+    specified by the rubber band. If releasing the right mouse button triggered
+    the event, the view is zoomed out.
 */
 void QChartView::mouseReleaseEvent(QMouseEvent *event)
 {
@@ -248,7 +262,7 @@ void QChartView::mouseReleaseEvent(QMouseEvent *event)
 }
 
 /*!
-    Resizes and updates the chart area using the \a event data
+    Resizes and updates the chart area using the data specified by \a event.
 */
 void QChartView::resizeEvent(QResizeEvent *event)
 {
