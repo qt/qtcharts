@@ -38,14 +38,16 @@
 /*!
     \class QSplineSeries
     \inmodule Qt Charts
-    \brief Series type used to store data needed to draw a spline.
+    \brief The QSplineSeries class presents data as spline charts.
 
-    QSplineSeries stores the data points along with the segment control points needed by QPainterPath to draw spline
-    Control points are automatically calculated when data changes. The algorithm computes the points so that the normal spline can be drawn.
+    A spline series stores the data points and the segment control points needed
+    by QPainterPath to draw a spline. The control points are automatically
+    calculated when the data changes. The algorithm computes the points so that
+    the normal spline can be drawn.
 
     \image examples_splinechart.png
 
-    Creating basic spline chart is simple:
+    The following code snippet illustrates how to create a basic spline chart:
     \code
     QSplineSeries* series = new QSplineSeries();
     series->append(0, 6);
@@ -61,44 +63,50 @@
 
     \inherits XYSeries
 
-    \brief The SplineSeries type is used for making spline charts.
+    \brief Presents data as spline charts.
 
-    The following QML shows how to create a simple spline chart:
-    \snippet qmlchart/qml/qmlchart/View3.qml 1
-    \beginfloatleft
+    A spline series stores the data points and the segment control points needed
+    by QPainterPath to draw a spline. The control points are automatically
+    calculated when the data changes. The algorithm computes the points so that
+    the normal spline can be drawn.
+
     \image examples_qmlchart3.png
-    \endfloat
-    \clearfloat
-*/
 
-/*!
-    \fn QSeriesType QSplineSeries::type() const
-    Returns the type of the series
+    The following QML code shows how to create a simple spline chart:
+    \snippet qmlchart/qml/qmlchart/View3.qml 1
 */
 
 /*!
     \qmlproperty real SplineSeries::width
-    The width of the line. By default the width is 2.0.
+    The width of the line. By default, the width is 2.0.
 */
 
 /*!
     \qmlproperty Qt::PenStyle SplineSeries::style
-    Controls the style of the line. Set to one of Qt.NoPen, Qt.SolidLine, Qt.DashLine, Qt.DotLine,
-    Qt.DashDotLine or Qt.DashDotDotLine. Using Qt.CustomDashLine is not supported in the QML API.
-    By default the style is Qt.SolidLine.
+    Controls the style of the line. Set to one of \l{Qt::NoPen}{Qt.NoPen},
+    \l{Qt::SolidLine}{Qt.SolidLine}, \l{Qt::DashLine}{Qt.DashLine}, \l{Qt::DotLine}{Qt.DotLine},
+    \l{Qt::DashDotLine}{Qt.DashDotLine}, or \l{Qt::DashDotDotLine}{Qt.DashDotDotLine}.
+    Using \l{Qt::CustomDashLine}{Qt.CustomDashLine} is not supported in the QML API.
+    By default, the style is Qt.SolidLine.
+
+    \sa Qt::PenStyle
 */
 
 /*!
     \qmlproperty Qt::PenCapStyle SplineSeries::capStyle
-    Controls the cap style of the line. Set to one of Qt.FlatCap, Qt.SquareCap or Qt.RoundCap. By
-    default the cap style is Qt.SquareCap.
+    Controls the cap style of the line. Set to one of \l{Qt::FlatCap}{Qt.FlatCap},
+    \l{Qt::SquareCap}{Qt.SquareCap} or \l{Qt::RoundCap}{Qt.RoundCap}. By
+    default, the cap style is Qt.SquareCap.
+
+    \sa Qt::PenCapStyle
 */
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
-    Constructs empty series object which is a child of \a parent.
-    When series object is added to a QChart instance then the ownerships is transferred.
+    Constructs an empty series object that is a child of \a parent.
+    When the series object is added to a QChart instance, the ownerships is
+    transferred.
   */
 
 QSplineSeries::QSplineSeries(QObject *parent)
@@ -107,7 +115,7 @@ QSplineSeries::QSplineSeries(QObject *parent)
 }
 
 /*!
-  Destroys the object.
+  Deletes the spline series.
 */
 QSplineSeries::~QSplineSeries()
 {
@@ -116,6 +124,9 @@ QSplineSeries::~QSplineSeries()
         d->m_chart->removeSeries(this);
 }
 
+/*!
+    \reimp
+*/
 QAbstractSeries::SeriesType QSplineSeries::type() const
 {
     return QAbstractSeries::SeriesTypeSpline;
