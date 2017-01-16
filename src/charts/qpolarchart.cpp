@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2017 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -35,41 +35,47 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \enum QPolarChart::PolarOrientation
 
-   This type is used to specify the polar orientation of an axis.
+    This enum type specifies the polar orientation of an axis.
 
     \value PolarOrientationRadial
+           A radial axis, where the values are placed along the radius of the
+           chart, starting at the pole.
     \value PolarOrientationAngular
+           An angular axis, where the values are placed around the chart.
 */
 
 /*!
  \class QPolarChart
  \inmodule Qt Charts
- \brief Polar chart API for Qt Charts.
+ \brief The QPolarChart presents data in polar charts.
 
- QPolarChart is a specialization of QChart to show a polar chart.
+ Polar charts present data in a circular graph, where the placement of data
+ is based on the angle and distance from the center of the graph, the \e pole.
 
- Polar charts support line, spline, area, and scatter series, and all axis types
- supported by those series.
+ \image examples_polarchart.png
 
- \note When setting ticks to an angular QValueAxis, keep in mind that the first and last tick
- are co-located at 0/360 degree angle.
+ A polar chart is a specialization of QChart that supports line, spline, area,
+ and scatter series, and all axis types supported by them. Each axis can be used
+ either as a radial or an angular axis.
 
- \note If the angular distance between two consecutive points in a series is more than 180 degrees,
- any line connecting the two points becomes meaningless, so choose the axis ranges accordingly
- when displaying line, spline, or area series. In such case series don't draw a direct line between
- the two points, but instead draw a line to and from the center of the chart.
+ The first and last tick mark on an angular QValueAxis are co-located at a 0/360 degree angle.
 
- \note Polar charts draw all axes of same orientation in the same position, so using multiple
- axes of same orientation can be confusing, unless the extra axes are only used to customize the
- grid (e.g. you can display a highlighted range with a secondary shaded QCategoryAxis or provide
- unlabeled subticks with a secondary QValueAxis that has its labels hidden).
+ If the angular distance between two consecutive points in a series is more than 180 degrees,
+ any direct line connecting the two points becomes meaningless, and will not be drawn. Instead,
+ a line will be drawn to and from the center of the chart. Therefore, the axis ranges must be
+ chosen accordingly when displaying line, spline, or area series.
+
+ Polar charts draw all axes of the same orientation in the same position, so using multiple
+ axes of the same orientation can be confusing, unless the extra axes are only used to customize the
+ grid. For example, you can display a highlighted range with a secondary shaded QCategoryAxis
+ or provide unlabeled subticks with a secondary QValueAxis thas has hidden labels.
 
  \sa QChart
  */
 
 /*!
- Constructs a polar chart as a child of the \a parent.
- Parameter \a wFlags is passed to the QChart constructor.
+ Constructs a polar chart as a child of \a parent.
+ The properties specified by \a wFlags are passed to the QChart constructor.
  */
 QPolarChart::QPolarChart(QGraphicsItem *parent, Qt::WindowFlags wFlags)
     : QChart(QChart::ChartTypePolar, parent, wFlags)
@@ -77,14 +83,15 @@ QPolarChart::QPolarChart(QGraphicsItem *parent, Qt::WindowFlags wFlags)
 }
 
 /*!
- Destroys the polar chart object and its children, like series and axis objects added to it.
+ Deletes the polar chart object and its children, such as the series and axis objects added to it.
  */
 QPolarChart::~QPolarChart()
 {
 }
 
 /*!
- Returns the axes added for the \a series with \a polarOrientation. If no series is provided, then any axis with the
+ Returns the axes added for the series \a series with the polar orientation
+ \a polarOrientation. If no series is provided, any axis with the
  specified polar orientation is returned.
 
  \sa addAxis()
@@ -101,12 +108,13 @@ QList<QAbstractAxis *> QPolarChart::axes(PolarOrientations polarOrientation, QAb
 }
 
 /*!
-  This convenience method adds \a axis to the polar chart with \a polarOrientation.
+  This convenience method adds the axis \a axis to the polar chart with the polar
+  orientation \a polarOrientation.
   The chart takes the ownership of the axis.
 
-  \note Axes can be added to a polar chart also with QChart::addAxis() instead of this method.
-  The specified alignment determines the polar orientation: horizontal alignments indicate angular
-  axis and vertical alignments indicate radial axis.
+  \note Axes can be added to a polar chart also with QChart::addAxis().
+  The specified alignment determines the polar orientation: horizontal alignments indicate
+  an angular axis and vertical alignments indicate a radial axis.
 
   \sa QChart::removeAxis(), QChart::createDefaultAxes(), QAbstractSeries::attachAxis(), QChart::addAxis()
 */
@@ -123,10 +131,10 @@ void QPolarChart::addAxis(QAbstractAxis *axis, PolarOrientation polarOrientation
 }
 
 /*!
-  Angular axes of a polar chart report horizontal orientation and radial axes report
+  The angular axes of a polar chart report horizontal orientation and the radial axes report
   vertical orientation.
-  This function is a convenience function for converting the orientation of an \a axis to
-  corresponding polar orientation. If the \a axis is NULL or not added to a polar chart,
+  This function is a convenience function for converting the orientation of the axis \a axis to
+  the corresponding polar orientation. If the \a axis is null or not added to a polar chart,
   the return value is meaningless.
 */
 QPolarChart::PolarOrientation QPolarChart::axisPolarOrientation(QAbstractAxis *axis)
