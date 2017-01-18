@@ -91,48 +91,56 @@ QT_CHARTS_BEGIN_NAMESPACE
     Sets the value specified by \a value in the position specified by \a index.
 */
 /*!
-    \qmlsignal BoxSet::onClicked()
+    \qmlsignal BoxSet::clicked()
     This signal is emitted when the user clicks a box-and-whiskers item in the chart.
+
+    The corresponding signal handler is \c onClicked().
 */
 /*!
-    \qmlsignal BoxSet::onPressed()
+    \qmlsignal BoxSet::pressed()
     This signal is emitted when the user clicks a box-and-whiskers item in the chart
     and holds down the mouse button.
+
+    The corresponding signal handler is \c onPressed.
 */
 /*!
-    \qmlsignal BoxSet::onReleased()
+    \qmlsignal BoxSet::released()
     This signal is emitted when the user releases the mouse press on a box-and-whiskers item.
+
+    The corresponding signal handler is \c onReleased().
 */
 /*!
-    \qmlsignal BoxSet::onDoubleClicked()
+    \qmlsignal BoxSet::doubleClicked()
     This signal is emitted when the user double-clicks a box-and-whiskers item.
+
+    The corresponding signal handler is \c onDoubleClicked().
 */
 /*!
-    \qmlsignal BoxSet::onHovered(bool status)
+    \qmlsignal BoxSet::hovered(bool status)
     This signal is emitted when a mouse is hovered over a box-and-whiskers item in a chart.
     When the mouse moves over the item, \a status turns \c true, and when the mouse moves
     away again, it turns \c false.
+
+    The corresponding signal handler is \c onHovered().
 */
 /*!
-    \qmlsignal BoxSet::onPenChanged()
-    This signal is emitted when the pen used to draw the lines of the box-and-whiskers item changes.
-*/
-/*!
-    \qmlsignal BoxSet::onBrushChanged()
-    This signal is emitted when the brush used to fill the box of the box-and-whiskers item changes.
-*/
-/*!
-    \qmlsignal BoxSet::onChangedValues()
+    \qmlsignal BoxSet::valuesChanged()
     This signal is emitted when multiple values of the box-and-whiskers item change.
+
+    The corresponding signal handler is \c onValuesChanged().
 */
 /*!
-    \qmlsignal BoxSet::onChangedValue(int index)
+    \qmlsignal BoxSet::valueChanged(int index)
     This signal is emitted when the value of the box-and-whiskers item specified by \a index
     changes.
+
+    The corresponding signal handler is \c onValueChanged().
 */
 /*!
-    \qmlsignal BoxSet::onCleared()
+    \qmlsignal BoxSet::cleared()
     This signal is emitted when all the values of the box-and-whiskers item are set to 0.
+
+    The corresponding signal handler is \c onCleared().
 */
 
 /*!
@@ -206,41 +214,52 @@ QT_CHARTS_BEGIN_NAMESPACE
     Removes all box-and-whiskers items from the series and permanently deletes them.
 */
 /*!
-    \qmlsignal BoxPlotSeries::onClicked(BoxSet boxset);
+    \qmlsignal BoxPlotSeries::clicked(BoxSet boxset);
     This signal is emitted when the user clicks the box-and-whiskers item specified by
     \a boxset in the chart.
+
+    The corresponding signal handler is \c onClicked().
 */
 /*!
-    \qmlsignal BoxPlotSeries::onHovered(bool status, BoxSet boxset);
+    \qmlsignal BoxPlotSeries::hovered(bool status, BoxSet boxset);
     This signal is emitted when a mouse is hovered over the box-and-whiskers item specified by
     \a boxset in the chart. When the mouse moves over the item, \a status turns \c true, and
     when the mouse moves away again, it turns \c false.
+
+    The corresponding signal handler is \c onHovered().
 */
 /*!
-    \qmlsignal BoxPlotSeries::onPressed(BoxSet boxset)
+    \qmlsignal BoxPlotSeries::pressed(BoxSet boxset)
     This signal is emitted when the user presses the \a boxset on the chart.
+
+    The corresponding signal handler is \c onPressed.
 */
 /*!
-    \qmlsignal BoxPlotSeries::onReleased(BoxSet boxset)
+    \qmlsignal BoxPlotSeries::released(BoxSet boxset)
     This signal is emitted when the user releases the mouse press on the box-and-whiskers
     item specified by \a boxset in the chart.
+
+    The corresponding signal handler is \c onReleased().
 */
 /*!
-    \qmlsignal BoxPlotSeries::onDoubleClicked(BoxSet boxset)
+    \qmlsignal BoxPlotSeries::doubleClicked(BoxSet boxset)
     This signal is emitted when the user double-clicks the box-and-whiskers item specified by
     \a boxset in the chart.
+
+    The corresponding signal handler is \c onDoubleClicked().
 */
 /*!
-    \qmlsignal BoxPlotSeries::onCountChanged();
-    This signal is emitted when the number of box-and-whiskers items in the series changes.
-*/
+    \qmlsignal BoxPlotSeries::boxsetsAdded(list sets)
+    This signal is emitted when the box-and-whiskers items specified by \sets
+    are added to the series.
+
+     The corresponding signal handler is \c onBoxsetsAdded().
 /*!
-    \qmlsignal BoxPlotSeries::onBoxsetsAdded()
-    This signal is emitted when new box-and-whiskers items are added to the series.
- */
-/*!
-    \qmlsignal BoxPlotSeries::onBoxsetsRemoved()
-    This signal is emitted when box-and-whiskers items are removed from the series.
+    \qmlsignal BoxPlotSeries::boxsetsRemoved(list sets)
+    This signal is emitted when the box-and-whiskers items specified by \sets
+    are removed from the series.
+
+     The corresponding signal handler is \c onBoxsetsRemoved().
  */
 /*!
     \qmlproperty AbstractAxis BoxPlotSeries::axisX
@@ -280,14 +299,6 @@ QT_CHARTS_BEGIN_NAMESPACE
     width of the item within its category. The value can be between 0.0 and 1.0. Negative values
     are replaced with 0.0 and values greater than 1.0 are replaced with 1.0.
 */
-/*!
-    \qmlproperty Pen BoxPlotSeries::pen
-    The pen used to draw the lines of the box-and-whiskers items.
-*/
-/*!
-    \qmlproperty Brush BoxPlotSeries::brush
-    The brush used to fill the boxes of the box-and-whiskers items.
-*/
 
 /*!
     \qmlproperty string BoxPlotSeries::brushFilename
@@ -297,40 +308,6 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \qmlproperty int BoxPlotSeries::count
     The number of box-and-whiskers items in a box plot series.
-*/
-/*!
-    \qmlsignal BoxPlotSeries::onBoxOutlineVisibilityChanged()
-    This signal is emitted when the box outline visibility changes.
- */
-/*!
-    \qmlsignal BoxPlotSeries::onBoxWidthChanged()
-    This signal is emitted when the width of the box-and-whiskers item changes.
- */
-/*!
-    \qmlsignal BoxPlotSeries::onPenChanged()
-    This signal is emitted when the pen used to draw the lines of the box-and-whiskers
-    items changes.
-*/
-/*!
-    \qmlsignal BoxPlotSeries::onBrushChanged()
-    This signal is emitted when the brush used to fill the boxes of the box-and-whiskers
-    items changes.
-*/
-/*!
-    \qmlsignal BoxPlotSeries::onAxisXChanged(AbstractAxis axis)
-    This signal is emitted when the x-axis changes to \a axis.
-*/
-/*!
-    \qmlsignal BoxPlotSeries::onAxisYChanged(AbstractAxis axis)
-    This signal is emitted when the y-axis changes to \a axis.
-*/
-/*!
-    \qmlsignal BoxPlotSeries::onAxisXTopChanged(AbstractAxis axis)
-    This signal is emitted when the top x-axis changes to \a axis.
-*/
-/*!
-    \qmlsignal BoxPlotSeries::onAxisYRightChanged(AbstractAxis axis)
-    This signal is emitted when the right y-axis changes to \a axis.
 */
 
 
