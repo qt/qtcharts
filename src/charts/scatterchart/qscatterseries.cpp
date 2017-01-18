@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2017 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -38,14 +38,15 @@
 /*!
     \class QScatterSeries
     \inmodule Qt Charts
-    \brief The QScatterSeries class is used for making scatter charts.
+    \brief The QScatterSeries class presents data in scatter charts.
 
-    The scatter data is displayed as a collection of points on the chart. Each point determines the position on the horizontal axis
-    and the vertical axis.
+    The scatter data is displayed as a collection of points on the chart. For
+    each point, two values are specified that determine its position on the
+    horizontal axis and the vertical axis.
 
     \image examples_scatterchart.png
 
-    Creating basic scatter chart is simple:
+    The following code snippet illustrates how to create a basic scatter chart:
     \code
     QScatterSeries* series = new QScatterSeries();
     series->append(0, 6);
@@ -53,6 +54,9 @@
     ...
     chart->addSeries(series);
     \endcode
+
+    For more information, see \l{ScatterChart Example} and
+    \l {Scatter Interactions Example}.
 */
 /*!
     \qmltype ScatterSeries
@@ -61,122 +65,125 @@
 
     \inherits XYSeries
 
-    \brief The ScatterSeries type is used for making scatter charts.
+    \brief The ScatterSeries type presents data in scatter charts.
 
-    The following QML shows how to create a chart with two simple scatter series:
+    The scatter data is displayed as a collection of points on the chart. For
+    each point, two values are specified that determine its position on the
+    horizontal axis and the vertical axis.
+
+    \image examples_qmlchart5.png
+
+    The following QML code shows how to create a chart with two simple scatter
+    series:
     \snippet qmlchart/qml/qmlchart/View5.qml 1
 
-    \beginfloatleft
-    \image examples_qmlchart5.png
-    \endfloat
-    \clearfloat
+    For more information, see \l{Qml Charts Example}.
 */
 
 /*!
     \enum QScatterSeries::MarkerShape
 
-    This enum describes the shape used when rendering marker items.
+    This enum value describes the shape used when rendering marker items.
 
     \value MarkerShapeCircle
+           The marker is a circle. This is the default value.
     \value MarkerShapeRectangle
+           The marker is a rectangle.
 */
 
 /*!
     \property QScatterSeries::brush
-    Brush used to draw the series.
+    \brief The brush used to draw the scatter series markers.
+
+    The brush can be an image that can be created using QPainterPath,
+    for example.
 */
 
 /*!
     \property QScatterSeries::color
-    Fill (brush) color of the series. This is a convenience property for modifying the color of brush.
+    \brief The color used to fill the series markers.
+
+    This is a convenience property for modifying the color of the brush.
     \sa QScatterSeries::brush()
 */
 
 /*!
     \property QScatterSeries::borderColor
-    Line (pen) color of the series. This is a convenience property for modifying the color of pen.
+    \brief The color used to draw the marker borders.
+
+    This is a convenience property for modifying the color of the pen.
     \sa QScatterSeries::pen()
 */
 /*!
     \qmlproperty color ScatterSeries::borderColor
-    Border (pen) color of the series.
+    The color used to draw the marker borders.
 */
 
 /*!
     \qmlproperty real ScatterSeries::borderWidth
-    The width of the border line. By default the width is 2.0.
+    The width of the border line. By default, the width is 2.0.
 */
 
 /*!
     \property QScatterSeries::markerShape
-    Defines the shape of the marker used to draw the points in the series. The default shape is MarkerShapeCircle.
+    \brief The shape of the marker used to render the points in the series.
+
+    The default shape is MarkerShapeCircle.
+
+    \sa MarkerShape
 */
 /*!
-    \qmlproperty MarkerShape ScatterSeries::markerShape
-    Defines the shape of the marker used to draw the points in the series. One of ScatterSeries
-    ScatterSeries.MarkerShapeCircle or ScatterSeries.MarkerShapeRectangle.
-    The default shape is ScatterSeries.MarkerShapeCircle.
+    \qmlproperty enumeration ScatterSeries::markerShape
+
+    The shape used when rendering marker items:
+
+    \value ScatterSeries.MarkerShapeCircle
+           The marker is a circle. This is the default value.
+    \value ScatterSeries.MarkerShapeRectangle
+           The marker is a rectangle.
 */
 
 /*!
     \property QScatterSeries::markerSize
-    Defines the size of the marker used to draw the points in the series. The default size is 15.0.
+    \brief The size of the marker used to render the points in the series.
+
+    The default size is 15.0.
 */
 /*!
     \qmlproperty real ScatterSeries::markerSize
-    Defines the size of the marker used to draw the points in the series. The default size is 15.0.
+    The size of the marker used to render the points in the series.
+    The default size is 15.0.
 */
 
 /*!
-    \qmlproperty QString ScatterSeries::brushFilename
+    \qmlproperty string ScatterSeries::brushFilename
     The name of the file used as a brush for the series.
 */
 
 /*!
     \fn void QScatterSeries::colorChanged(QColor color)
-    Signal is emitted when the fill (brush) color has changed to \a color.
-*/
-/*!
-    \qmlsignal ScatterSeries::onColorChanged(color color)
-    Signal is emitted when the fill (brush) color has changed to \a color.
+    This signal is emitted when the fill (brush) color changes to \a color.
 */
 
 /*!
     \fn void QScatterSeries::borderColorChanged(QColor color)
-    Signal is emitted when the line (pen) color has changed to \a color.
-*/
-/*!
-    \qmlsignal ScatterSeries::onBorderColorChanged(color color)
-    Signal is emitted when the line (pen) color has changed to \a color.
-*/
-
-/*!
-    \fn QAbstractSeries::SeriesType QScatterSeries::type() const
-    Returns QAbstractSeries::SeriesTypeScatter.
-    \sa QAbstractSeries, SeriesType
+    This signal is emitted when the line (pen) color changes to \a color.
 */
 
 /*!
     \fn void QScatterSeries::markerShapeChanged(MarkerShape shape)
-    Signal is emitted when the marker shape has changed to \a shape.
+    This signal is emitted when the marker shape changes to \a shape.
 */
-/*!
-    \qmlsignal ScatterSeries::onMarkerShapeChanged(MarkerShape shape)
-    Signal is emitted when the marker shape has changed to \a shape.
-*/
+
 /*!
     \fn void QScatterSeries::markerSizeChanged(qreal size)
-    Signal is emitted when the marker size has changed to \a size.
-*/
-/*!
-    \qmlsignal ScatterSeries::onMarkerSizeChanged(real size)
-    Signal is emitted when the marker size has changed to \a size.
+    This signal is emitted when the marker size changes to \a size.
 */
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
-    Constructs a series object which is a child of \a parent.
+    Constructs a series object that is a child of \a parent.
 */
 QScatterSeries::QScatterSeries(QObject *parent)
     : QXYSeries(*new QScatterSeriesPrivate(this), parent)
@@ -184,7 +191,9 @@ QScatterSeries::QScatterSeries(QObject *parent)
 }
 
 /*!
-    Destroys the object. Note that adding series to QChart transfers the ownership to the chart.
+    Deletes the scatter series.
+
+    \note Adding the series to QChart transfers the ownership to the chart.
 */
 QScatterSeries::~QScatterSeries()
 {
@@ -193,15 +202,16 @@ QScatterSeries::~QScatterSeries()
         d->m_chart->removeSeries(this);
 }
 
+/*!
+    \reimp
+*/
 QAbstractSeries::SeriesType QScatterSeries::type() const
 {
     return QAbstractSeries::SeriesTypeScatter;
 }
 
 /*!
-    Sets \a pen used for drawing points' border on the chart. If the pen is not defined, the
-    pen from chart theme is used.
-    \sa QChart::setTheme()
+    \reimp
 */
 void QScatterSeries::setPen(const QPen &pen)
 {
@@ -216,9 +226,7 @@ void QScatterSeries::setPen(const QPen &pen)
 }
 
 /*!
-    Sets \a brush used for drawing points on the chart. If the brush is not defined, brush
-    from chart theme setting is used.
-    \sa QChart::setTheme()
+    \reimp
 */
 void QScatterSeries::setBrush(const QBrush &brush)
 {
