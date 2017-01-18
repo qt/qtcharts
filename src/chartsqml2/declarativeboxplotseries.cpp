@@ -54,20 +54,17 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
-    \qmlproperty enumeration BoxSet::ValuePositions
-
-    This enum type defines the values of a box-and-whiskers item:
+    \qmlproperty list BoxSet::values
+    The values of the box-and-whiskers item. The following enumerations can be
+    used as indexes when accessing the list of values:
 
     \value BoxSet.LowerExtreme The smallest value of the box-and-whiskers item.
     \value BoxSet.LowerQuartile The median value of the lower half of the box-and-whiskers item.
     \value BoxSet.Median The median value of the box-and-whiskers item.
     \value BoxSet.UpperQuartile The median value of the upper half of the box-and-whiskers item.
     \value BoxSet.UpperExtreme The largest value of the box-and-whiskers item.
-*/
 
-/*!
-    \qmlproperty string BoxSet::values
-    The values of the box-and-whiskers item.
+    \sa at(), setValue()
 */
 /*!
     \qmlproperty string BoxSet::label
