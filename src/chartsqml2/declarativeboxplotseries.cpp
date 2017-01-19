@@ -250,13 +250,14 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 /*!
     \qmlsignal BoxPlotSeries::boxsetsAdded(list sets)
-    This signal is emitted when the box-and-whiskers items specified by \sets
+    This signal is emitted when the box-and-whiskers items specified by \a sets
     are added to the series.
 
      The corresponding signal handler is \c onBoxsetsAdded().
+*/
 /*!
     \qmlsignal BoxPlotSeries::boxsetsRemoved(list sets)
-    This signal is emitted when the box-and-whiskers items specified by \sets
+    This signal is emitted when the box-and-whiskers items specified by \a sets
     are removed from the series.
 
      The corresponding signal handler is \c onBoxsetsRemoved().
