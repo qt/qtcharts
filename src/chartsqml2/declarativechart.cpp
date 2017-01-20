@@ -84,17 +84,19 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
-    \qmlproperty enumeration ChartView::Theme
+    \qmlproperty enumeration ChartView::theme
 
     The theme used by the chart.
 
     A theme is a built-in collection of UI style related settings applied to all
     the visual elements of a chart, such as colors, pens, brushes, and fonts of
-    series, as well as axes, title, and legend. The \l {Chart themes example}
-    illustrates how to use themes.
+    series, as well as axes, title, and legend. The \l {Qml Oscilloscope}
+    example illustrates how to set a theme.
 
     \note Changing the theme will overwrite all customizations previously
     applied to the series.
+
+    The following values are supported:
 
     \value  ChartView.ChartThemeLight
             The light theme, which is the default theme.
@@ -115,9 +117,9 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
-    \qmlproperty enumeration ChartView::Animation
+    \qmlproperty enumeration ChartView::animationOptions
 
-    The animations enabled in the chart.
+    The animations enabled in the chart:
 
     \value  ChartView.NoAnimation
             Animation is disabled in the chart. This is the default value.
@@ -127,55 +129,6 @@ QT_CHARTS_BEGIN_NAMESPACE
             Series animation is enabled in the chart.
     \value  ChartView.AllAnimations
             All animation types are enabled in the chart.
-*/
-
-/*!
-    \qmlproperty enumeration ChartView::SeriesType
-
-    The series added to the chart.
-
-    \value  ChartView.SeriesTypeLine
-            A line series.
-    \value  ChartView.SeriesTypeArea
-            An area series.
-    \value  ChartView.SeriesTypeBar
-            A bar series.
-    \value  ChartView.SeriesTypeStackedBar
-            A stacked bar series.
-    \value  ChartView.SeriesTypePercentBar
-            A percent bar series.
-    \value  ChartView.SeriesTypeBoxPlot
-            A box plot series.
-    \value  ChartView.SeriesTypeCandlestick
-            A candlestick series.
-    \value  ChartView.SeriesTypePie
-            A pie series.
-    \value  ChartView.SeriesTypeScatter
-            A scatter series.
-    \value  ChartView.SeriesTypeSpline
-            A spline series.
-    \value  ChartView.SeriesTypeHorizontalBar
-            A horizontal bar series.
-    \value  ChartView.SeriesTypeHorizontalStackedBar
-            A horizontal stacked bar series.
-    \value  ChartView.SeriesTypeHorizontalPercentBar
-            A horizontal percent bar series.
-*/
-
-/*!
-  \qmlproperty Theme ChartView::theme
-  The theme used by the chart.
-
-  \sa Theme
-*/
-
-/*!
-  \qmlproperty Animation ChartView::animationOptions
-  The animation options for the chart.
-
-  Animations are enabled or disabled based on this setting.
-
-  \sa Animation
 */
 
 /*!
@@ -224,7 +177,7 @@ QT_CHARTS_BEGIN_NAMESPACE
   The color of the chart's background. By default, the background color is
   specified by the chart theme.
 
-  \sa Theme
+  \sa theme
 */
 
 /*!
@@ -238,7 +191,7 @@ QT_CHARTS_BEGIN_NAMESPACE
   area background uses the chart's background color, which is specified by the
   chart theme.
 
-  \sa backgroundColor, Theme
+  \sa backgroundColor, theme
 */
 
 /*!
@@ -316,7 +269,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
-  \qmlmethod AbstractSeries ChartView::createSeries(SeriesType type, string name, AbstractAxis axisX, AbstractAxis axisY)
+  \qmlmethod AbstractSeries ChartView::createSeries(enumeration type, string name, AbstractAxis axisX, AbstractAxis axisY)
   Adds a series of the type \a type to the chart with the name \a name
   and, optionally, the axes \a axisX and \a axisY. For example:
   \code
@@ -325,6 +278,35 @@ QT_CHARTS_BEGIN_NAMESPACE
     var myAxisY = chartView.axisY(lineSeries);
     var scatter = chartView.createSeries(ChartView.SeriesTypeScatter, "scatter series", myAxisX, myAxisY);
   \endcode
+
+  The following enumeration values can be used as values of \a type:
+
+    \value  ChartView.SeriesTypeLine
+            A line series.
+    \value  ChartView.SeriesTypeArea
+            An area series.
+    \value  ChartView.SeriesTypeBar
+            A bar series.
+    \value  ChartView.SeriesTypeStackedBar
+            A stacked bar series.
+    \value  ChartView.SeriesTypePercentBar
+            A percent bar series.
+    \value  ChartView.SeriesTypeBoxPlot
+            A box plot series.
+    \value  ChartView.SeriesTypeCandlestick
+            A candlestick series.
+    \value  ChartView.SeriesTypePie
+            A pie series.
+    \value  ChartView.SeriesTypeScatter
+            A scatter series.
+    \value  ChartView.SeriesTypeSpline
+            A spline series.
+    \value  ChartView.SeriesTypeHorizontalBar
+            A horizontal bar series.
+    \value  ChartView.SeriesTypeHorizontalStackedBar
+            A horizontal stacked bar series.
+    \value  ChartView.SeriesTypeHorizontalPercentBar
+            A horizontal percent bar series.
 */
 
 /*!
