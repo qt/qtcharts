@@ -70,15 +70,68 @@ QT_CHARTS_BEGIN_NAMESPACE
 
     \brief Presents data in area charts.
 
+    An area series is used to show quantitative data. It is based on a line
+    series, in the way that the area between the boundary lines is emphasized
+    with color. The LineSeries type defines the \e upper boundary of the
+    area. The area chart is drawn using the bottom of the plot area as the
+    \e lower boundary by default. Instead of the bottom of the plot area, the
+    lower boundary can be specified by another line. In that case, the
+    AreaSeries should use two LineSeries types.
+
+    \note The terms \e upper and \e lower boundary can be misleading in cases
+    where the value of the lower boundary is greater than that of the upper
+    boundary. The main point is that the area between these two boundary lines
+    will be filled.
+
+    \image examples_qmlchart4.png
+
     The following QML shows how to create a simple area chart:
     \snippet qmlchart/qml/qmlchart/View4.qml 1
-    \beginfloatleft
-    \image examples_qmlchart4.png
-    \endfloat
-    \clearfloat
 
     \note Adding the same line series to a chart and area series is not supported. The series used as
     boundary lines should be defined only for the area series.
+*/
+
+/*!
+    \qmlproperty AbstractAxis AreaSeries::axisX
+    The x-axis used for the series. If you leave both axisX and axisXTop
+    undefined, a value axis is created for the series.
+    \sa axisXTop, ValueAxis
+*/
+
+/*!
+    \qmlproperty AbstractAxis AreaSeries::axisY
+    The y-axis used for the series. If you leave both axisY and axisYRight
+    undefined, a value axis is created for the series.
+    \sa axisYRight, ValueAxis
+*/
+
+/*!
+    \qmlproperty AbstractAxis AreaSeries::axisXTop
+    The x-axis used for the series, drawn on top of the chart view.
+
+    \note You can only provide either axisX or axisXTop, not both.
+    \sa axisX
+*/
+
+/*!
+    \qmlproperty AbstractAxis AreaSeries::axisYRight
+    The y-axis used for the series, drawn to the right on the chart view.
+
+    \note You can only provide either axisY or axisYRight, not both.
+    \sa axisY
+*/
+
+/*!
+    \qmlproperty AbstractAxis AreaSeries::axisAngular
+    The angular axis used for the series, drawn around the polar chart view.
+    \sa axisX, PolarChartView
+*/
+
+/*!
+    \qmlproperty AbstractAxis AreaSeries::axisRadial
+    The radial axis used for the series, drawn inside the polar chart view.
+    \sa axisY, PolarChartView
 */
 
 /*!
