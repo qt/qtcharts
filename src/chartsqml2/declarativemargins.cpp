@@ -37,9 +37,13 @@ QT_CHARTS_BEGIN_NAMESPACE
     \qmltype Margins
     \inqmlmodule QtCharts
 
-    \brief Type is used to define margins.
+    \brief Defines margins between the edge of the chart rectangle and the plot
+    area.
 
-    Uncreatable type that is used to define top, bottom, left and right margins.
+    An uncreatable type that is used to define the top, bottom, left, and right
+    margins. The margins are used for drawing the title, axes, and legend.
+
+    \sa {ChartView::margins}{ChartView.margins}
 */
 
 /*!
