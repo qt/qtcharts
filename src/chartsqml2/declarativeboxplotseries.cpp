@@ -74,6 +74,12 @@ QT_CHARTS_BEGIN_NAMESPACE
     \qmlproperty int BoxSet::count
     The number of values of the box-and-whiskers item.
 */
+
+/*!
+    \qmlproperty string BoxSet::brushFilename
+    The name of the file used as a brush for the box-and-whiskers item.
+*/
+
 /*!
     \qmlmethod void BoxSet::at(int index)
     Returns the value in the position specified by \a index.
@@ -189,6 +195,11 @@ QT_CHARTS_BEGIN_NAMESPACE
     \clearfloat
 
     \sa BoxSet, BarCategoryAxis
+*/
+
+/*!
+    \qmlmethod BoxPlotSeries::at(int index)
+    Returns the box-and-whiskers item in the position specified by \a index.
 */
 
 /*!
