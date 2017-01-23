@@ -118,6 +118,36 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
+    \qmlproperty AbstractAxis CandlestickSeries::axisX
+    The x-axis used for the series. If you leave both axisX and axisXTop
+    undefined, a value axis is created for the series.
+    \sa axisXTop, ValueAxis
+*/
+
+/*!
+    \qmlproperty AbstractAxis CandlestickSeries::axisY
+    The y-axis used for the series. If you leave both axisY and axisYRight
+    undefined, a value axis is created for the series.
+    \sa axisYRight, ValueAxis
+*/
+
+/*!
+    \qmlproperty AbstractAxis CandlestickSeries::axisXTop
+    The x-axis used for the series, drawn on top of the chart view.
+
+    \note You can only provide either axisX or axisXTop, not both.
+    \sa axisX
+*/
+
+/*!
+    \qmlproperty AbstractAxis CandlestickSeries::axisYRight
+    The y-axis used for the series, drawn to the right on the chart view.
+
+    \note You can only provide either axisY or axisYRight, not both.
+    \sa axisY
+*/
+
+/*!
     \property QCandlestickSeries::count
     \brief The number of candlestick items in a series.
 */
