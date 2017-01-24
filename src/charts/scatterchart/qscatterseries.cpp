@@ -114,6 +114,12 @@
     This is a convenience property for modifying the color of the pen.
     \sa QScatterSeries::pen()
 */
+
+/*!
+    \qmlproperty int ScatterSeries::count
+    The number of data points in the series.
+*/
+
 /*!
     \qmlproperty color ScatterSeries::borderColor
     The color used to draw the marker borders.

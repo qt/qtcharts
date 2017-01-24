@@ -75,6 +75,11 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
+    \qmlproperty int LineSeries::count
+    The number of data points in the series.
+*/
+
+/*!
     \qmlproperty real LineSeries::width
     The width of the line. By default, the width is 2.0.
 */

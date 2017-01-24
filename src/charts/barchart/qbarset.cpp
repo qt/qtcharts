@@ -146,10 +146,28 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
+    \qmlmethod BarSet::clicked(int index)
+
+    This signal is emitted when the user clicks the bar specified by \a index
+    in a bar set.
+
+    The corresponding signal handler is \c onClicked.
+*/
+
+/*!
     \fn void QBarSet::pressed(int index)
 
     This signal is emitted when the user clicks the bar specified by \a index in a bar set
     and holds down the mouse button.
+*/
+
+/*!
+    \qmlmethod BarSet::pressed(int index)
+
+    This signal is emitted when the user clicks the bar specified by \a index in
+    a bar set and holds down the mouse button.
+
+    The corresponding signal handler is \c onPressed.
 */
 
 /*!
@@ -160,9 +178,27 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
+    \qmlmethod BarSet::released(int index)
+
+    This signal is emitted when the user releases the mouse press on the bar
+    specified by \a index in a bar set.
+
+    The corresponding signal handler is \c onReleased.
+*/
+
+/*!
     \fn void QBarSet::doubleClicked(int index)
 
     This signal is emitted when the user double-clicks the bar specified by \a index in a bar set.
+*/
+
+/*!
+    \qmlmethod BarSet::doubleClicked(int index)
+
+    This signal is emitted when the user double-clicks the bar specified by
+    \a index in a bar set.
+
+    The corresponding signal handler is \c onDoubleClicked.
 */
 
 /*!
