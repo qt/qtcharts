@@ -45,22 +45,26 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \class QPieSeries
     \inmodule Qt Charts
-    \brief Pie series API for Qt Charts.
+    \brief The QPieSeries class presents data in pie charts.
 
-    The pie series defines a pie chart which consists of pie slices which are defined as QPieSlice objects.
-    The slices can have any values as the QPieSeries will calculate its relative value to the sum of all slices.
-    The actual slice size is determined by that relative value.
+    A pie series consists of slices that are defined as QPieSlice objects.
+    The slices can have any values as the QPieSeries object calculates
+    the percentage of a slice compared with the sum of all slices in the series
+    to determine the actual size of the slice in the chart.
 
-    Pie size and position on the chart is controlled by using relative values which range from 0.0 to 1.0.
+    Pie size and position on the chart are controlled by using relative values
+    that range from 0.0 to 1.0.
     These relate to the actual chart rectangle.
 
-    By default the pie is defined as a full pie but it can also be a partial pie.
-    This can be done by setting a starting angle and angle span to the series.
-    Full pie is 360 degrees where 0 is at 12 a'clock.
+    By default, the pie is defined as a full pie. A partial pie can be created
+    by setting a starting angle and angle span for the series.
+    A full pie is 360 degrees, where 0 is at 12 a'clock.
 
     See the \l {PieChart Example} {pie chart example} or \l {DonutChart Example} {donut chart example} to learn how to use QPieSeries.
     \image examples_piechart.png
     \image examples_donutchart.png
+
+    \sa QPieSlice, QChart
 */
 /*!
     \qmltype PieSeries
@@ -69,9 +73,22 @@ QT_CHARTS_BEGIN_NAMESPACE
 
     \inherits AbstractSeries
 
-    \brief The PieSeries type is used for making pie charts.
+    \brief Presents data in pie charts.
 
-    The following QML shows how to create a simple pie chart.
+    A pie series consists of slices that are defined using the PieSlice type.
+    The slices can have any values as the PieSeries type calculates
+    the percentage of a slice compared with the sum of all slices in the series
+    to determine the actual size of the slice in the chart.
+
+    Pie size and position on the chart are controlled by using relative values
+    that range from 0.0 to 1.0.
+    These relate to the actual chart rectangle.
+
+    By default, the pie is defined as a full pie. A partial pie can be created
+    by setting a starting angle and angle span for the series.
+    A full pie is 360 degrees, where 0 is at 12 a'clock.
+
+    The following QML example shows how to create a simple pie chart.
 
     \snippet qmlchart/qml/qmlchart/View1.qml 1
 
@@ -79,318 +96,345 @@ QT_CHARTS_BEGIN_NAMESPACE
     \image examples_qmlchart1.png
     \endfloat
     \clearfloat
+
+    \sa PieSlice, ChartView
 */
 
 /*!
     \property QPieSeries::horizontalPosition
-    \brief Defines the horizontal position of the pie.
+    \brief The horizontal position of the pie.
 
-    The value is a relative value to the chart rectangle where:
+    The value is relative to the chart rectangle, so that:
 
     \list
     \li 0.0 is the absolute left.
     \li 1.0 is the absolute right.
     \endlist
-    Default value is 0.5 (center).
+    The default value is 0.5 (center).
     \sa verticalPosition
 */
 
 /*!
     \qmlproperty real PieSeries::horizontalPosition
 
-    Defines the horizontal position of the pie.
+    The horizontal position of the pie.
 
-    The value is a relative value to the chart rectangle where:
+    The value is relative to the chart rectangle, so that:
 
     \list
     \li 0.0 is the absolute left.
     \li 1.0 is the absolute right.
     \endlist
-    Default value is 0.5 (center).
+    The default value is 0.5 (center).
     \sa verticalPosition
 */
 
 /*!
     \property QPieSeries::verticalPosition
-    \brief Defines the vertical position of the pie.
+    \brief The vertical position of the pie.
 
-    The value is a relative value to the chart rectangle where:
+    The value is relative to the chart rectangle, so that:
 
     \list
     \li 0.0 is the absolute top.
     \li 1.0 is the absolute bottom.
     \endlist
-    Default value is 0.5 (center).
+    The default value is 0.5 (center).
     \sa horizontalPosition
 */
 
 /*!
     \qmlproperty real PieSeries::verticalPosition
 
-    Defines the vertical position of the pie.
+    The vertical position of the pie.
 
-    The value is a relative value to the chart rectangle where:
+    The value is relative to the chart rectangle, so that:
 
     \list
     \li 0.0 is the absolute top.
     \li 1.0 is the absolute bottom.
     \endlist
-    Default value is 0.5 (center).
+    The default value is 0.5 (center).
     \sa horizontalPosition
 */
 
 /*!
     \property QPieSeries::size
-    \brief Defines the pie size.
+    \brief The pie size.
 
-    The value is a relative value to the chart rectangle where:
+    The value is relative to the chart rectangle, so that:
 
     \list
     \li 0.0 is the minimum size (pie not drawn).
     \li 1.0 is the maximum size that can fit the chart.
     \endlist
 
-    When setting this property the holeSize property is adjusted if necessary, to ensure that the hole size is not greater than the outer size.
+    When setting this property, the holeSize property is adjusted if necessary,
+    to ensure that the hole size is not greater than the pie size.
 
-    Default value is 0.7.
+    The default value is 0.7.
 */
 
 /*!
     \qmlproperty real PieSeries::size
 
-    Defines the pie size.
+    The pie size.
 
-    The value is a relative value to the chart rectangle where:
+    The value is relative to the chart rectangle, so that:
 
     \list
     \li 0.0 is the minimum size (pie not drawn).
     \li 1.0 is the maximum size that can fit the chart.
     \endlist
 
-    Default value is 0.7.
+    When setting this property, the holeSize property is adjusted if necessary,
+    to ensure that the hole size is not greater than the pie size.
+
+    The default value is 0.7.
 */
 
 /*!
     \property QPieSeries::holeSize
-    \brief Defines the donut hole size.
+    \brief The donut hole size.
 
-    The value is a relative value to the chart rectangle where:
+    The value is relative to the chart rectangle, so that:
 
     \list
-    \li 0.0 is the minimum size (full pie drawn, without any hole inside).
-    \li 1.0 is the maximum size that can fit the chart. (donut has no width)
+    \li 0.0 is the minimum size (full pie drawn without a hole).
+    \li 1.0 is the maximum size that can fit the chart (the donut has no width).
     \endlist
 
-    The value is never greater then size property.
-    Default value is 0.0.
+    When setting this property, the \l size property is adjusted if necessary,
+    to ensure that the hole size is not greater than the pie size.
+
+    The default value is 0.0.
 */
 
 /*!
     \qmlproperty real PieSeries::holeSize
 
-    Defines the donut hole size.
+    The donut hole size.
 
-    The value is a relative value to the chart rectangle where:
+    The value is relative to the chart rectangle, so that:
 
     \list
-    \li 0.0 is the minimum size (full pie drawn, without any hole inside).
-    \li 1.0 is the maximum size that can fit the chart. (donut has no width)
+    \li 0.0 is the minimum size (full pie drawn without a hole).
+    \li 1.0 is the maximum size that can fit the chart (the donut has no width).
     \endlist
 
-    When setting this property the size property is adjusted if necessary, to ensure that the inner size is not greater than the outer size.
+    When setting this property, the \l size property is adjusted if necessary,
+    to ensure that the hole size is not greater than the pie size.
 
-    Default value is 0.0.
+    The default value is 0.0.
 */
 
 /*!
     \property QPieSeries::startAngle
-    \brief Defines the starting angle of the pie.
+    \brief The starting angle of the pie.
 
-    Full pie is 360 degrees where 0 degrees is at 12 a'clock.
+    A full pie is 360 degrees, where 0 degrees is at 12 a'clock.
 
-    Default is value is 0.
+    The default value is 0.
 */
 
 /*!
     \qmlproperty real PieSeries::startAngle
 
-    Defines the starting angle of the pie.
+    The starting angle of the pie.
 
-    Full pie is 360 degrees where 0 degrees is at 12 a'clock.
+    A full pie is 360 degrees, where 0 degrees is at 12 a'clock.
 
-    Default is value is 0.
+    The default value is 0.
 */
 
 /*!
     \property QPieSeries::endAngle
-    \brief Defines the ending angle of the pie.
+    \brief The ending angle of the pie.
 
-    Full pie is 360 degrees where 0 degrees is at 12 a'clock.
+    A full pie is 360 degrees, where 0 degrees is at 12 a'clock.
 
-    Default is value is 360.
+    The default value is 360.
 */
 
 /*!
     \qmlproperty real PieSeries::endAngle
 
-    Defines the ending angle of the pie.
+    The ending angle of the pie.
 
-    Full pie is 360 degrees where 0 degrees is at 12 a'clock.
+    A full pie is 360 degrees, where 0 degrees is at 12 a'clock.
 
-    Default is value is 360.
+    The default value is 360.
 */
 
 /*!
     \property QPieSeries::count
 
-    Number of slices in the series.
+    \brief The number of slices in the series.
 */
 
 /*!
     \qmlproperty int PieSeries::count
 
-    Number of slices in the series.
+    The number of slices in the series.
 */
 
 /*!
     \fn void QPieSeries::countChanged()
-    Emitted when the slice count has changed.
+    This signal is emitted when the slice count changes.
     \sa count
-*/
-/*!
-    \qmlsignal PieSeries::onCountChanged()
-    Emitted when the slice count has changed.
 */
 
 /*!
     \property QPieSeries::sum
 
-    Sum of all slices.
+    \brief The sum of all slices.
 
-    The series keeps track of the sum of all slices it holds.
+    The series keeps track of the sum of all the slices it holds.
 */
 
 /*!
     \qmlproperty real PieSeries::sum
 
-    Sum of all slices.
+    The sum of all slices.
 
-    The series keeps track of the sum of all slices it holds.
+    The series keeps track of the sum of all the slices it holds.
 */
 
 /*!
     \fn void QPieSeries::sumChanged()
-    Emitted when the sum of all slices has changed.
+    This signal is emitted when the sum of all slices changes.
     \sa sum
-*/
-/*!
-    \qmlsignal PieSeries::onSumChanged()
-    Emitted when the sum of all slices has changed. This may happen for example if you add or remove slices, or if you
-    change value of a slice.
 */
 
 /*!
     \fn void QPieSeries::added(QList<QPieSlice*> slices)
 
-    This signal is emitted when \a slices have been added to the series.
+    This signal is emitted when the slices specified by \a slices are added to the series.
 
     \sa append(), insert()
 */
 /*!
-    \qmlsignal PieSeries::onAdded(list<PieSlice> slices)
-    Emitted when \a slices have been added to the series.
+    \qmlsignal PieSeries::added(list<PieSlice> slices)
+    This signal is emitted when the slices specified by \a slices are added to the series.
+
+    The corresponding signal handler is \c onAdded.
 */
 
 /*!
     \fn void QPieSeries::removed(QList<QPieSlice*> slices)
-    This signal is emitted when \a slices have been removed from the series.
+    This signal is emitted when the slices specified by \a slices are removed from the series.
     \sa remove()
 */
 /*!
-    \qmlsignal PieSeries::onRemoved(list<PieSlice> slices)
-    Emitted when \a slices have been removed from the series.
+    \qmlsignal PieSeries::removed(list<PieSlice> slices)
+    This signal is emitted when the slices specified by \a slices are removed from the series.
+
+    The corresponding signal handler is \c onRemoved.
 */
 
 /*!
-    \qmlsignal PieSeries::onSliceAdded(PieSlice slice)
-    Emitted when \a slice has been added to the series.
+    \qmlsignal PieSeries::sliceAdded(PieSlice slice)
+    This signal is emitted when the slice specified by \a slice is added to the series.
+
+    The corresponding signal handler is \c onSliceAdded.
 */
 
 /*!
-    \qmlsignal PieSeries::onSliceRemoved(PieSlice slice)
-    Emitted when \a slice has been removed from the series.
+    \qmlsignal PieSeries::sliceRemoved(PieSlice slice)
+    This signal is emitted when the slice specified by \a slice is removed from the series.
+
+    The corresponding signal handler is \c onSliceRemoved.
 */
 
 /*!
     \fn void QPieSeries::clicked(QPieSlice *slice)
-    This signal is emitted when a \a slice has been clicked.
+    This signal is emitted when the slice specified by \a slice is clicked.
     \sa QPieSlice::clicked()
 */
 /*!
-  \qmlsignal PieSeries::onClicked(PieSlice slice)
-  This signal is emitted when a \a slice has been clicked.
+  \qmlsignal PieSeries::clicked(PieSlice slice)
+  This signal is emitted when the slice specified by \a slice is clicked.
+
+  The corresponding signal handler is \c onClicked.
 */
 
 /*!
     \fn void QPieSeries::pressed(QPieSlice *slice)
-    This signal is emitted when a \a slice has been pressed.
+    This signal is emitted when the user clicks the slice specified by \a slice
+    and holds down the mouse button.
     \sa QPieSlice::pressed()
 */
 /*!
-    \qmlsignal PieSeries::onPressed(PieSlice slice)
-    This signal is emitted when a \a slice has been pressed.
+    \qmlsignal PieSeries::pressed(PieSlice slice)
+    This signal is emitted when the user clicks the slice specified by \a slice
+    and holds down the mouse button.
+
+    The corresponding signal handler is \c onPressed.
 */
 
 /*!
     \fn void QPieSeries::released(QPieSlice *slice)
-    This signal is emitted when a \a slice has been released.
+    This signal is emitted when the user releases the mouse press on the slice
+    specified by \a slice.
     \sa QPieSlice::released()
 */
 /*!
-    \qmlsignal PieSeries::onReleased(PieSlice slice)
-    This signal is emitted when a \a slice has been released.
+    \qmlsignal PieSeries::released(PieSlice slice)
+    This signal is emitted when the user releases the mouse press on the slice
+    specified by \a slice.
+
+    The corresponding signal handler is \c onReleased.
 */
 
 /*!
     \fn void QPieSeries::doubleClicked(QPieSlice *slice)
-    This signal is emitted when a \a slice has been doubleClicked.
+    This signal is emitted when the slice specified by \a slice is double-clicked.
     \sa QPieSlice::doubleClicked()
 */
 /*!
-    \qmlsignal PieSeries::onDoubleClicked(PieSlice slice)
-    This signal is emitted when a \a slice has been doubleClicked.
+    \qmlsignal PieSeries::doubleClicked(PieSlice slice)
+    This signal is emitted when the slice specified by \a slice is double-clicked.
+
+    The corresponding signal handler is \c onDoubleClicked.
 */
 
 /*!
     \fn void QPieSeries::hovered(QPieSlice* slice, bool state)
-    This signal is emitted when user has hovered over or away from the \a slice.
-    \a state is true when user has hovered over the slice and false when hover has moved away from the slice.
+    This signal is emitted when a mouse is hovered over the slice specified by
+    \a slice. When the mouse moves over the slice, \a state turns \c true, and
+    when the mouse moves away again, it turns \c false.
     \sa QPieSlice::hovered()
 */
 /*!
-    \qmlsignal PieSeries::onHovered(PieSlice slice, bool state)
-    This signal is emitted when user has hovered over or away from the \a slice. \a state is true when user has hovered
-    over the slice and false when hover has moved away from the slice.
+    \qmlsignal PieSeries::hovered(PieSlice slice, bool state)
+    This signal is emitted when a mouse is hovered over the slice specified by
+    \a slice. When the mouse moves over the slice, \a state turns \c true, and
+    when the mouse moves away again, it turns \c false.
+
+    The corresponding signal handler is \c onHovered.
 */
 
 /*!
     \qmlmethod PieSlice PieSeries::at(int index)
-    Returns slice at \a index. Returns null if the index is not valid.
+    Returns the slice at the position specified by \a index. Returns null if the
+    index is not valid.
 */
 
 /*!
     \qmlmethod PieSlice PieSeries::find(string label)
-    Returns the first slice with \a label. Returns null if the index is not valid.
+    Returns the first slice that has the label \a label. Returns null if the label
+    is not found.
 */
 
 /*!
     \qmlmethod PieSlice PieSeries::append(string label, real value)
-    Adds a new slice with \a label and \a value to the pie.
+    Adds a new slice with the label \a label and the value \a value to the pie.
 */
 
 /*!
     \qmlmethod bool PieSeries::remove(PieSlice slice)
-    Removes the \a slice from the pie. Returns true if the removal was successful, false otherwise.
+    Removes the slice specified by \a slice from the pie. Returns \c true if the
+    removal was successful, \c false otherwise.
 */
 
 /*!
@@ -399,7 +443,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
-    Constructs a series object which is a child of \a parent.
+    Constructs a series object that is a child of \a parent.
 */
 QPieSeries::QPieSeries(QObject *parent)
     : QAbstractSeries(*new QPieSeriesPrivate(this), parent)
@@ -409,7 +453,7 @@ QPieSeries::QPieSeries(QObject *parent)
 }
 
 /*!
-    Destroys the series and its slices.
+    Removes the pie series and its slices.
 */
 QPieSeries::~QPieSeries()
 {
@@ -418,7 +462,9 @@ QPieSeries::~QPieSeries()
 }
 
 /*!
-    Returns QAbstractSeries::SeriesTypePie.
+    \reimp
+
+    Returns the type of the series.
 */
 QAbstractSeries::SeriesType QPieSeries::type() const
 {
@@ -426,10 +472,10 @@ QAbstractSeries::SeriesType QPieSeries::type() const
 }
 
 /*!
-    Appends a single \a slice to the series.
+    Appends the slice specified by \a slice to the series.
     Slice ownership is passed to the series.
 
-    Returns true if append was succesfull.
+    Returns \c true if appending succeeds.
 */
 bool QPieSeries::append(QPieSlice *slice)
 {
@@ -437,10 +483,10 @@ bool QPieSeries::append(QPieSlice *slice)
 }
 
 /*!
-    Appends an array of \a slices to the series.
+    Appends the array of slices specified by \a slices to the series.
     Slice ownership is passed to the series.
 
-    Returns true if append was successful.
+    Returns \c true if appending succeeds.
 */
 bool QPieSeries::append(QList<QPieSlice *> slices)
 {
@@ -482,7 +528,7 @@ bool QPieSeries::append(QList<QPieSlice *> slices)
 }
 
 /*!
-    Appends a single \a slice to the series and returns a reference to the series.
+    Appends the slice specified by \a slice to the series and returns a reference to the series.
     Slice ownership is passed to the series.
 */
 QPieSeries &QPieSeries::operator << (QPieSlice *slice)
@@ -493,9 +539,10 @@ QPieSeries &QPieSeries::operator << (QPieSlice *slice)
 
 
 /*!
-    Appends a single slice to the series with give \a value and \a label.
+    Appends a single slice with the specified \a value and \a label to the series.
     Slice ownership is passed to the series.
-    Returns NULL if value is NaN, Inf or -Inf and no slice is added to the series.
+    Returns null if \a value is \c NaN, \c Inf, or \c -Inf and adds nothing to the
+    series.
 */
 QPieSlice *QPieSeries::append(QString label, qreal value)
 {
@@ -509,10 +556,11 @@ QPieSlice *QPieSeries::append(QString label, qreal value)
 }
 
 /*!
-    Inserts a single \a slice to the series before the slice at \a index position.
+    Inserts the slice specified by \a slice to the series before the slice at
+    the position specified by \a index.
     Slice ownership is passed to the series.
 
-    Returns true if insert was successful.
+    Returns \c true if inserting succeeds.
 */
 bool QPieSeries::insert(int index, QPieSlice *slice)
 {
@@ -550,11 +598,12 @@ bool QPieSeries::insert(int index, QPieSlice *slice)
 }
 
 /*!
-    Removes a single \a slice from the series and deletes the slice.
+    Removes a single slice, specified by \a slice, from the series and deletes it
+    permanently.
 
-    Do not reference the pointer after this call.
+    The pointer cannot be referenced after this call.
 
-    Returns true if remove was successful.
+    Returns \c true if the removal succeeds.
 */
 bool QPieSeries::remove(QPieSlice *slice)
 {
@@ -575,12 +624,13 @@ bool QPieSeries::remove(QPieSlice *slice)
 }
 
 /*!
-    Takes a single \a slice from the series. Does not destroy the slice object.
+    Takes a single slice, specified by \a slice, from the series. Does not delete
+    the slice object.
 
-    \note The series remains as the slice's parent object. You must set the
+    \note The series remains the slice's parent object. You must set the
     parent object to take full ownership.
 
-    Returns true if take was successful.
+    Returns \c true if the take operation was successful.
 */
 bool QPieSeries::take(QPieSlice *slice)
 {
@@ -632,7 +682,7 @@ QList<QPieSlice *> QPieSeries::slices() const
 }
 
 /*!
-    returns the number of the slices in this series.
+    Returns the number of the slices in this series.
 */
 int QPieSeries::count() const
 {
@@ -641,7 +691,7 @@ int QPieSeries::count() const
 }
 
 /*!
-    Returns true is the series is empty.
+    Returns \c true if the series is empty.
 */
 bool QPieSeries::isEmpty() const
 {
@@ -749,9 +799,9 @@ qreal QPieSeries::pieStartAngle() const
 /*!
     Sets the end angle of the pie.
 
-    Full pie is 360 degrees where 0 degrees is at 12 a'clock.
+    A full pie is 360 degrees, where 0 degrees is at 12 a'clock.
 
-    \a angle must be greater than start angle.
+    \a angle must be greater than the start angle.
 
     \sa pieEndAngle(), pieStartAngle(), setPieStartAngle()
 */
@@ -768,7 +818,7 @@ void QPieSeries::setPieEndAngle(qreal angle)
 /*!
     Returns the end angle of the pie.
 
-    Full pie is 360 degrees where 0 degrees is at 12 a'clock.
+    A full pie is 360 degrees, where 0 degrees is at 12 a'clock.
 
     \sa setPieEndAngle(), pieStartAngle(), setPieStartAngle()
 */
@@ -779,10 +829,10 @@ qreal QPieSeries::pieEndAngle() const
 }
 
 /*!
-    Sets the all the slice labels \a visible or invisible.
+    Sets the visibility of all slice labels to \a visible.
 
-    Note that this affects only the current slices in the series.
-    If user adds a new slice the default label visibility is false.
+    \note This function affects only the current slices in the series.
+    If a new slice is added, the default label visibility is \c false.
 
     \sa QPieSlice::isLabelVisible(), QPieSlice::setLabelVisible()
 */
@@ -794,10 +844,10 @@ void QPieSeries::setLabelsVisible(bool visible)
 }
 
 /*!
-    Sets the all the slice labels \a position
+    Sets the position of all the slice labels to \a position.
 
-    Note that this affects only the current slices in the series.
-    If user adds a new slice the default label position is LabelOutside
+    \note This function affects only the current slices in the series.
+    If a new slice is added, the default label position is QPieSlice::LabelOutside.
 
     \sa QPieSlice::labelPosition(), QPieSlice::setLabelPosition()
 */

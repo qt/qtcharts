@@ -36,11 +36,12 @@ QT_CHARTS_BEGIN_NAMESPACE
     \class QCandlestickSet
     \since 5.8
     \inmodule Qt Charts
-    \brief Building block for a candlestick chart.
+    \brief The QCandlestickSet class represents a single candlestick item in a
+    candlestick chart.
 
-    QCandlestickSet represents a single candlestick item in a QCandlestickSeries. It takes five
-    values to create a graphical representation of a candlestick item: \e open, \e high, \e low,
-    \e close, and \e timestamp. These values can be either passed to a QCandlestickSet constructor,
+    Five values are needed to create a graphical representation of a candlestick
+    item: \e open, \e high, \e low, \e close, and \e timestamp. These values can
+    be either passed to a QCandlestickSet constructor
     or set by using setOpen(), setHigh(), setLow(), setClose(), and setTimestamp().
 
     \sa QCandlestickSeries
@@ -48,233 +49,198 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \qmltype CandlestickSet
-    \since 2.2
+    \since QtCharts 2.2
     \instantiates QCandlestickSet
     \inqmlmodule QtCharts
-    \brief Building block for a candlestick chart.
+    \brief Represents a single candlestick item in a candlestick chart.
 
-    CandlestickSet represents a single candlestick item in a CandlestickSeries. It takes five
-    values to create a graphical representation of a candlestick item: \l open, \l high, \l low,
-    \l close, and \l timestamp.
+    Five values are needed to create a graphical representation of a candlestick
+    item: \l open, \l high, \l low, \l close, and \l timestamp.
 
     \sa CandlestickSeries
 */
 
 /*!
     \property QCandlestickSet::timestamp
-    \brief The timestamp value of the set.
+    \brief The timestamp value of the candlestick item.
 */
 
 /*!
-    \qmlproperty qreal CandlestickSet::timestamp
-    \brief The timestamp value of the set.
+    \qmlproperty real CandlestickSet::timestamp
+    The timestamp value of the candlestick item.
 */
 
 /*!
     \property QCandlestickSet::open
-    \brief The open value of the set.
+    \brief The open value of the candlestick item.
 */
 
 /*!
-    \qmlproperty qreal CandlestickSet::open
-    \brief The open value of the set.
+    \qmlproperty real CandlestickSet::open
+    The open value of the candlestick item.
 */
 
 /*!
     \property QCandlestickSet::high
-    \brief The high value of the set.
+    \brief The high value of the candlestick item.
 */
 
 /*!
-    \qmlproperty qreal CandlestickSet::high
-    \brief The high value of the set.
+    \qmlproperty real CandlestickSet::high
+    The high value of the candlestick item.
 */
 
 /*!
     \property QCandlestickSet::low
-    \brief The low value of the set.
+    \brief The low value of the candlestick item.
 */
 
 /*!
-    \qmlproperty qreal CandlestickSet::low
-    \brief The low value of the set.
+    \qmlproperty real CandlestickSet::low
+    The low value of the candlestick item.
 */
 
 /*!
     \property QCandlestickSet::close
-    \brief The close value of the set.
+    \brief The close value of the candlestick item.
 */
 
 /*!
-    \qmlproperty qreal CandlestickSet::close
-    \brief The close value of the set.
+    \qmlproperty real CandlestickSet::close
+    The close value of the candlestick item.
 */
 
 /*!
     \property QCandlestickSet::brush
-    \brief The brush used for drawing the candlestick.
+    \brief The brush used to fill the candlestick item.
 */
 
 /*!
     \property QCandlestickSet::pen
-    \brief The pen used for drawing the candlestick.
+    \brief The pen used to draw the lines of the candlestick item.
 */
 
 /*!
-    \qmlproperty QString CandlestickSet::brushFilename
-    \brief The name of the file used as a brush for the set.
+    \qmlproperty string CandlestickSet::brushFilename
+    The name of the file used as a brush for the candlestick item.
 */
 
 /*!
     \fn void QCandlestickSet::clicked()
-    \brief Emitted when the candlestick item is clicked (pressed and released).
+    This signal is emitted when the candlestick item is clicked.
 */
 
 /*!
     \qmlsignal CandlestickSet::clicked()
-    \brief Emitted when the candlestick item is clicked (pressed and released).
+    This signal is emitted when the candlestick item is clicked.
 
     The corresponding signal handler is \c {onClicked}.
 */
 
 /*!
     \fn void QCandlestickSet::hovered(bool status)
-    \brief Emitted when there is change in hover \a status over a candlestick item.
+    This signal is emitted when a mouse is hovered over a candlestick
+    item.
 
-    Parameter \a status indicates whether the mouse has entered (\c true) or left (\c false) the
-    area of the candlestick item.
+    When the mouse moves over the item, \a status turns \c true, and when the
+    mouse moves away again, it turns \c false.
 */
 
 /*!
     \qmlsignal CandlestickSet::hovered(bool status)
-    \brief Emitted when there is change in hover \a status over a candlestick item.
+    This signal is emitted when a mouse is hovered over a candlestick
+    item.
 
-    Parameter \a status indicates whether the mouse has entered (\c true) or left (\c false) the
-    area of the candlestick item.
+    When the mouse moves over the item, \a status turns \c true, and when the
+    mouse moves away again, it turns \c false.
 
     The corresponding signal handler is \c {onHovered}.
 */
 
 /*!
     \fn void QCandlestickSet::pressed()
-    \brief Emitted when there is a press on a candlestick item.
+    This signal is emitted when the user clicks the candlestick item and
+    holds down the mouse button.
 */
 
 /*!
     \qmlsignal CandlestickSet::pressed()
-    \brief Emitted when there is a press on a candlestick item.
+    This signal is emitted when the user clicks the candlestick item and
+    holds down the mouse button.
 
     The corresponding signal handler is \c {onPressed}.
 */
 
 /*!
     \fn void QCandlestickSet::released()
-    \brief Emitted when there is a release on a candlestick item.
+    This signal is emitted when the user releases the mouse press on the
+    candlestick item.
 */
 
 /*!
     \qmlsignal CandlestickSet::released()
-    \brief Emitted when there is a release on a candlestick item.
+    This signal is emitted when the user releases the mouse press on the
+    candlestick item.
 
     The corresponding signal handler is \c {onReleased}.
 */
 
 /*!
     \fn void QCandlestickSet::doubleClicked()
-    \brief Emitted when there is a double-click on a candlestick item.
+    This signal is emitted when the user double-clicks a candlestick item.
 */
 
 /*!
     \qmlsignal CandlestickSet::doubleClicked()
-    \brief Emitted when there is a double-click on a candlestick item.
+    This signal is emitted when the user double-clicks a candlestick item.
 
     The corresponding signal handler is \c {onDoubleClicked}.
 */
 
 /*!
     \fn void QCandlestickSet::timestampChanged()
-    \brief Emitted when the candlestick item timestamp is changed.
+    This signal is emitted when the candlestick item timestamp changes.
     \sa timestamp
-*/
-
-/*!
-    \qmlsignal CandlestickSet::timestampChanged()
-    \brief Emitted when the candlestick item timestamp is changed.
-    \sa timestamp
-
-    The corresponding signal handler is \c {onTimestampChanged}.
 */
 
 /*!
     \fn void QCandlestickSet::openChanged()
-    \brief Emitted when the candlestick item open value is changed.
+    This signal is emitted when the candlestick item open value changes.
     \sa open
-*/
-
-/*!
-    \qmlsignal CandlestickSet::openChanged()
-    \brief Emitted when the candlestick item open value is changed.
-    \sa open
-
-    The corresponding signal handler is \c {onOpenChanged}.
 */
 
 /*!
     \fn void QCandlestickSet::highChanged()
-    \brief Emitted when the candlestick item high value is changed.
+    This signal is emitted when the candlestick item high value changes.
     \sa high
-*/
-
-/*!
-    \qmlsignal CandlestickSet::highChanged()
-    \brief Emitted when the candlestick item high value is changed.
-    \sa high
-
-    The corresponding signal handler is \c {onHighChanged}.
 */
 
 /*!
     \fn void QCandlestickSet::lowChanged()
-    \brief Emitted when the candlestick item low value is changed.
+    This signal is emitted when the candlestick item low value changes.
     \sa low
-*/
-
-/*!
-    \qmlsignal CandlestickSet::lowChanged()
-    \brief Emitted when the candlestick item low value is changed.
-    \sa low
-
-    The corresponding signal handler is \c {onLowChanged}.
 */
 
 /*!
     \fn void QCandlestickSet::closeChanged()
-    \brief Emitted when the candlestick item close value is changed.
+    This signal is emitted when the candlestick item close value changes.
     \sa close
-*/
-
-/*!
-    \qmlsignal CandlestickSet::closeChanged()
-    \brief Emitted when the candlestick item close value is changed.
-    \sa close
-
-    The corresponding signal handler is \c {onCloseChanged}.
 */
 
 /*!
     \fn void QCandlestickSet::brushChanged()
-    \brief Emitted when the candlestick item brush is changed.
+    This signal is emitted when the candlestick item brush changes.
     \sa brush
 */
 
 /*!
     \fn void QCandlestickSet::penChanged()
-    \brief Emitted when the candlestick item pen is changed.
+    This signal is emitted when the candlestick item pen changes.
     \sa pen
 */
 
 /*!
-    Constructs a QCandlestickSet with an optional \a timestamp and a \a parent.
+    Constructs a candlestick item with an optional \a timestamp and a \a parent.
 */
 QCandlestickSet::QCandlestickSet(qreal timestamp, QObject *parent)
     : QObject(parent),
@@ -283,7 +249,7 @@ QCandlestickSet::QCandlestickSet(qreal timestamp, QObject *parent)
 }
 
 /*!
-    Constructs a QCandlestickSet with given ordered values. The values \a open, \a high, \a low
+    Constructs a candlestick item with given ordered values. The values \a open, \a high, \a low,
     and \a close are mandatory. The values \a timestamp and \a parent are optional.
 */
 QCandlestickSet::QCandlestickSet(qreal open, qreal high, qreal low, qreal close, qreal timestamp,
@@ -302,7 +268,7 @@ QCandlestickSet::QCandlestickSet(qreal open, qreal high, qreal low, qreal close,
 }
 
 /*!
-    Destroys the set.
+    Destroys the candlestick item.
 */
 QCandlestickSet::~QCandlestickSet()
 {

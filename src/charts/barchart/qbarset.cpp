@@ -179,10 +179,6 @@ QT_CHARTS_BEGIN_NAMESPACE
     This signal is emitted when the label of the bar set changes.
     \sa label
 */
-/*!
-    \qmlsignal BarSet::onLabelChanged()
-    This signal is emitted when the label of the bar set changes.
-*/
 
 /*!
     \fn void QBarSet::penChanged()
@@ -212,26 +208,14 @@ QT_CHARTS_BEGIN_NAMESPACE
     \fn void QBarSet::colorChanged(QColor)
     This signal is emitted when the fill (brush) color of the bar set changes to \a color.
 */
-/*!
-    \qmlsignal BarSet::onColorChanged(color color)
-    This signal is emitted when the fill (brush) color of the bar set changes to \a color.
-*/
 
 /*!
     \fn void QBarSet::borderColorChanged(QColor)
     This signal is emitted when the line (pen) color of the bar set changes to \a color.
 */
-/*!
-    \qmlsignal BarSet::onBorderColorChanged(color color)
-    This signal is emitted when the line (pen) color of the bar set changes to \a color.
-*/
 
 /*!
     \fn void QBarSet::labelColorChanged(QColor)
-    This signal is emitted when the text (label) color of the bar set changes to \a color.
-*/
-/*!
-    \qmlsignal BarSet::onLabelColorChanged(color color)
     This signal is emitted when the text (label) color of the bar set changes to \a color.
 */
 
@@ -243,10 +227,12 @@ QT_CHARTS_BEGIN_NAMESPACE
     \sa append(), insert()
 */
 /*!
-    \qmlsignal BarSet::onValuesAdded(int index, int count)
+    \qmlsignal BarSet::valuesAdded(int index, int count)
     This signal is emitted when new values are added to the bar set.
     \a index indicates the position of the first inserted value, and \a count is the number
     of inserted values.
+
+    The corresponding signal handler is \c onValuesAdded.
 */
 
 /*!
@@ -257,10 +243,12 @@ QT_CHARTS_BEGIN_NAMESPACE
     \sa remove()
 */
 /*!
-    \qmlsignal BarSet::onValuesRemoved(int index, int count)
+    \qmlsignal BarSet::valuesRemoved(int index, int count)
     This signal is emitted when values are removed from the bar set.
     \a index indicates the position of the first removed value, and \a count is the number
     of removed values.
+
+    The corresponding signal handler is \c onValuesRemoved.
 */
 
 /*!
@@ -269,8 +257,10 @@ QT_CHARTS_BEGIN_NAMESPACE
     \sa at()
 */
 /*!
-    \qmlsignal BarSet::onValueChanged(int index)
+    \qmlsignal BarSet::valueChanged(int index)
     This signal is emitted when the value at the position specified by \a index is modified.
+
+    The corresponding signal handler is \c onValueChanged.
 */
 
 /*!
@@ -333,6 +323,11 @@ QString QBarSet::label() const
 }
 
 /*!
+    \qmlmethod BarSet::append(real value)
+    Appends the new value specified by \a value to the end of the bar set.
+*/
+
+/*!
     Appends the new value specified by \a value to the end of the bar set.
 */
 void QBarSet::append(const qreal value)
@@ -380,6 +375,14 @@ void QBarSet::insert(const int index, const qreal value)
 }
 
 /*!
+    \qmlmethod BarSet::remove(int index, int count)
+    Removes the number of values specified by \a count from the bar set starting
+    with the value specified by \a index.
+
+    If you leave out \a count, only the value specified by \a index is removed.
+*/
+
+/*!
     Removes the number of values specified by \a count from the bar set starting with
     the value specified by \a index.
     \sa insert()
@@ -393,6 +396,12 @@ void QBarSet::remove(const int index, const int count)
 }
 
 /*!
+    \qmlmethod BarSet::replace(int index, real value)
+    Adds the value specified by \a value to the bar set at the position
+    specified by \a index.
+*/
+
+/*!
     Adds the value specified by \a value to the bar set at the position specified by \a index.
 */
 void QBarSet::replace(const int index, const qreal value)
@@ -402,6 +411,12 @@ void QBarSet::replace(const int index, const qreal value)
         emit valueChanged(index);
     }
 }
+
+/*!
+    \qmlmethod BarSet::at(int index)
+    Returns the value specified by \a index from the bar set.
+    If the index is out of bounds, 0.0 is returned.
+*/
 
 /*!
     Returns the value specified by \a index from the bar set.

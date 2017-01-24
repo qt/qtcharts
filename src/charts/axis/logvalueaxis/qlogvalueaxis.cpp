@@ -171,17 +171,9 @@ QT_CHARTS_BEGIN_NAMESPACE
   \fn void QLogValueAxis::minChanged(qreal min)
   This signal is emitted when the minimum value of the axis, specified by \a min, changes.
 */
-/*!
-  \qmlsignal LogValueAxis::onMinChanged(qreal min)
-  This signal is emitted when the minimum value of the axis, specified by \a min, changes.
-*/
 
 /*!
   \fn void QLogValueAxis::maxChanged(qreal max)
-  This signal is emitted when the maximum value of the axis, specified by \a max, changes.
-*/
-/*!
-  \qmlsignal LogValueAxis::onMaxChanged(qreal max)
   This signal is emitted when the maximum value of the axis, specified by \a max, changes.
 */
 
@@ -217,17 +209,9 @@ QT_CHARTS_BEGIN_NAMESPACE
   \fn void QLogValueAxis::labelFormatChanged(const QString &format)
   This signal is emitted when the \a format of axis labels changes.
 */
-/*!
-  \qmlsignal LogValueAxis::labelFormatChanged(const QString &format)
-   This signal is emitted when the \a format of axis labels changes.
-*/
 
 /*!
   \fn void QLogValueAxis::baseChanged(qreal base)
-  This signal is emitted when the \a base of the logarithm of the axis changes.
-*/
-/*!
-  \qmlsignal LogValueAxis::baseChanged(qreal base)
   This signal is emitted when the \a base of the logarithm of the axis changes.
 */
 

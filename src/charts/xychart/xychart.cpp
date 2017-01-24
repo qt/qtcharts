@@ -131,7 +131,8 @@ void XYChart::updateGlChart()
 // Doesn't update gl geometry, but refreshes the chart
 void XYChart::refreshGlChart()
 {
-    presenter()->updateGLWidget();
+    if (presenter())
+        presenter()->updateGLWidget();
 }
 
 //handlers

@@ -34,12 +34,15 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \class QVPieModelMapper
     \inmodule Qt Charts
-    \brief Vertical model mapper for pie series.
+    \brief The QVPieModelMapper is a vertical model mapper for pie series.
 
-    Model mappers allow you to use QAbstractItemModel derived models as a data source for a chart series.
-    Vertical model mapper is used to create a connection between QPieSeries and QAbstractItemModel derived model object that keeps the consecutive pie slices data in columns.
-    It is possible to use both QAbstractItemModel and QPieSeries model API. QVPieModelMapper makes sure that Pie and the model are kept in sync.
-    \note Used model has to support adding/removing rows/columns and modifying the data of the cells.
+    Model mappers enable using a data model derived from the QAbstractItemModel class
+    as a data source for a chart. A vertical model mapper is used to create a connection
+    between a data model and QPieSeries, so that each row in the data model defines a
+    pie slice and each column maps to the label or the value of the pie slice.
+
+    Both model and pie series properties can be used to manipulate the data. The model
+    mapper keeps the pie series and the data model in sync.
 */
 /*!
     \qmltype VPieModelMapper
@@ -48,12 +51,16 @@ QT_CHARTS_BEGIN_NAMESPACE
 
     \brief Vertical model mapper for pie series.
 
-    VPieModelMapper allows you to use your own QAbstractItemModel derived model with data in columns
-    as a data source for a pie series. It is possible to use both QAbstractItemModel and PieSeries
-    data API to manipulate data. VPieModelMapper keeps the Pie and the model in sync.
+    Model mappers enable using a data model derived from the QAbstractItemModel class
+    as a data source for a chart. A vertical model mapper is used to create a connection
+    between a data model and PieSeries, so that each row in the data model defines a
+    pie slice and each column maps to the label or the value of the pie slice.
 
-    The following QML example would create a pie series with four slices (assuming the model has at
-    least five rows). Each slice would contain a label from column 1 and a value from column 2.
+    Both model and pie series properties can be used to manipulate the data. The model
+    mapper keeps the pie series and the data model in sync.
+
+    The following QML example creates a pie series with four slices (assuming the model has at
+    least five rows). Each slice gets a label from column 1 and a value from column 2.
     \code
         VPieModelMapper {
             series: pieSeries
@@ -68,112 +75,115 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \property QVPieModelMapper::series
-    \brief Defines the QPieSeries object that is used by the mapper.
+    \brief The pie series that is used by the mapper.
+
     All the data in the series is discarded when it is set to the mapper.
-    When new series is specified the old series is disconnected (it preserves its data)
+    When a new series is specified, the old series is disconnected (but it preserves its data).
 */
 /*!
     \qmlproperty PieSeries VPieModelMapper::series
-    Defines the PieSeries object that is used by the mapper. If you define the mapper element as a child for a
+    The pie series that is used by the mapper. If you define the mapper element as a child for a
     PieSeries, leave this property undefined. All the data in the series is discarded when it is set to the mapper.
-    When new series is specified the old series is disconnected (it preserves its data).
+    When new series is specified the old series is disconnected (but it preserves its data).
 */
 
 /*!
     \property QVPieModelMapper::model
-    \brief Defines the model that is used by the mapper.
+    \brief The model that is used by the mapper.
 */
 /*!
     \qmlproperty SomeModel VPieModelMapper::model
     The QAbstractItemModel based model that is used by the mapper. You need to implement the model
-    and expose it to QML. Note: the model has to support adding/removing rows/columns and modifying
-    the data of the cells.
+    and expose it to QML.
+
+    \note The model has to support adding and removing rows or columns and modifying
+    the data in the cells.
 */
 
 /*!
     \property QVPieModelMapper::valuesColumn
-    \brief Defines which column of the model is kept in sync with the values of the pie's slices.
+    \brief The column of the model that is kept in sync with the values of the pie's slices.
 
-    Default value is: -1 (invalid mapping)
+    The default value is -1 (invalid mapping).
 */
 /*!
     \qmlproperty int VPieModelMapper::valuesColumn
-    Defines which column of the model is kept in sync with the values of the pie's slices. Default value is -1 (invalid
-    mapping).
+    The column of the model that is kept in sync with the values of the pie's slices.
+    The default value is -1 (invalid mapping).
 */
 
 /*!
     \property QVPieModelMapper::labelsColumn
-    \brief Defines which column of the model is kept in sync with the labels of the pie's slices.
+    \brief The column of the model that is kept in sync with the labels of the pie's slices.
 
-    Default value is: -1 (invalid mapping)
+    The default value is -1 (invalid mapping).
 */
 /*!
     \qmlproperty int VPieModelMapper::labelsColumn
-    Defines which column of the model is kept in sync with the labels of the pie's slices. Default value is -1 (invalid
-    mapping).
+    The column of the model that is kept in sync with the labels of the pie's slices.
+    The default value is -1 (invalid mapping).
 */
 
 /*!
     \property QVPieModelMapper::firstRow
-    \brief Defines which row of the model contains the first slice value.
+    \brief The row of the model that contains the first slice value.
 
-    Minimal and default value is: 0
+    The minimum and default value is 0.
 */
 /*!
     \qmlproperty int VPieModelMapper::firstRow
-    Defines which row of the model contains the first slice value.
+    The row of the model that contains the first slice value.
     The default value is 0.
 */
 
 /*!
     \property QVPieModelMapper::rowCount
-    \brief Defines the number of rows of the model that are mapped as the data for QPieSeries.
+    \brief The number of rows of the model that are mapped as the data for a pie series.
 
-    Minimal and default value is: -1 (count limited by the number of rows in the model)
+    The minimum and default value is -1 (number limited by the number of rows in the model).
 */
 /*!
     \qmlproperty int VPieModelMapper::columnCount
-    Defines the number of rows of the model that are mapped as the data for QPieSeries. The default value is
-    -1 (count limited by the number of rows in the model)
+    The number of rows of the model that are mapped as the data for a pie series.
+    The default value is -1 (number limited by the number of rows in the model).
 */
 
 /*!
     \fn void QVPieModelMapper::seriesReplaced()
 
-    Emitted when the series to which mapper is connected to has changed.
+    This signal is emitted when the series that the mapper is connected to changes.
 */
 
 /*!
     \fn void QVPieModelMapper::modelReplaced()
 
-    Emitted when the model to which mapper is connected to has changed.
+    This signal is emitted when the model that the mapper is connected to changes.
 */
 
 /*!
     \fn void QVPieModelMapper::valuesColumnChanged()
 
-    Emitted when the valuesColumn has changed.
+    This signal is emitted when the values column changes.
 */
 
 /*!
     \fn void QVPieModelMapper::labelsColumnChanged()
 
-    Emitted when the labelsColumn has changed.
+    This signal is emitted when the labels column changes.
 */
 
 /*!
     \fn void QVPieModelMapper::firstRowChanged()
-    Emitted when the firstRow has changed.
+    This signal is emitted when the first row changes.
 */
 
 /*!
     \fn void QVPieModelMapper::rowCountChanged()
-    Emitted when the rowCount has changed.
+    This signal is emitted when the number of rows changes.
 */
 
 /*!
-    Constructs a mapper object which is a child of \a parent.
+    Constructs a mapper object that is a child of \a parent.
 */
 QVPieModelMapper::QVPieModelMapper(QObject *parent) :
     QPieModelMapper(parent)
@@ -208,7 +218,7 @@ void QVPieModelMapper::setSeries(QPieSeries *series)
 }
 
 /*!
-    Returns which column of the model is kept in sync with the values of the pie's slices
+    Returns the column of the model that is kept in sync with the values of the pie's slices.
 */
 int QVPieModelMapper::valuesColumn() const
 {
@@ -216,8 +226,7 @@ int QVPieModelMapper::valuesColumn() const
 }
 
 /*!
-    Sets the model column that is kept in sync with the pie slices values.
-    Parameter \a valuesColumn specifies the row of the model.
+    Sets the model column that is kept in sync with the pie slices' values to \a valuesColumn.
 */
 void QVPieModelMapper::setValuesColumn(int valuesColumn)
 {
@@ -228,7 +237,7 @@ void QVPieModelMapper::setValuesColumn(int valuesColumn)
 }
 
 /*!
-    Returns which column of the model is kept in sync with the labels of the pie's slices
+    Returns the column of the model that is kept in sync with the labels of the pie's slices.
 */
 int QVPieModelMapper::labelsColumn() const
 {
@@ -236,8 +245,7 @@ int QVPieModelMapper::labelsColumn() const
 }
 
 /*!
-    Sets the model column that is kept in sync with the pie's slices labels.
-    Parameter \a labelsColumn specifies the row of the model.
+    Sets the model column that is kept in sync with the pies slices' labels to \a labelsColumn.
 */
 void QVPieModelMapper::setLabelsColumn(int labelsColumn)
 {

@@ -36,11 +36,13 @@ QT_CHARTS_BEGIN_NAMESPACE
     \qmltype XYPoint
     \inqmlmodule QtCharts
 
-    \brief Type is used to initialize XY-series coordinate data.
+    \brief Initializes XY-series coordinate data.
 
-    XYPoint is a convenience element for initializing XY-series with static coordinate data. To
-    manipulate an XY-series dynamically, use it's data manipulation functions instead.
-    \sa LineSeries, AreaSeries, ScatterSeries, SplineSeries
+    The XYPoint type is a convenience type for initializing line, spline, and
+    scatter series with static coordinate data. To manipulate a series
+    dynamically, use the data manipulation functions it inherits from the
+    XYSeries type, instead.
+    \sa XYSeries, LineSeries, AreaSeries, ScatterSeries, SplineSeries
 */
 
 /*!

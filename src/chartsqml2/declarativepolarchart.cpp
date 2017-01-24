@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2017 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -37,28 +37,36 @@ QT_CHARTS_BEGIN_NAMESPACE
     \instantiates DeclarativePolarChart
     \inqmlmodule QtCharts
 
-    \brief Polar chart element.
+    \brief Presents data in polar charts.
 
-    PolarChartView element is the parent that is responsible for showing different chart series
-    types in a polar chart.
+    Polar charts present data in a circular graph, where the placement of data
+    is based on the angle and distance from the center of the graph, the
+    \e pole.
 
-    Polar charts support line, spline, area, and scatter series, and all axis types
-    supported by those series.
+    \image examples_qmlpolarchart1.png
 
-    \note When setting ticks to an angular ValueAxis, keep in mind that the first and last tick
-    are co-located at 0/360 degree angle.
+    A polar chart is a specialization of the ChartView type. It supports line,
+    spline, area, and scatter series, and all axis types supported by them. Each
+    axis can be used either as a radial or an angular axis.
 
-    \note If the angular distance between two consecutive points in a series is more than 180
-    degrees, any line connecting the two points becomes meaningless, so choose the axis ranges
+    The first and last tick mark on an angular ValueAxis are co-located at a
+    0/360 degree angle.
+
+    If the angular distance between two consecutive points in a series is more
+    than 180 degrees, any direct line connecting the two points becomes
+    meaningless, and will not be drawn. Instead, a line will be drawn to and
+    from the center of the chart. Therefore, the axis ranges must be chosen
     accordingly when displaying line, spline, or area series.
 
-    The following QML shows how to create a polar chart with two series:
-    \snippet qmlpolarchart/qml/qmlpolarchart/View1.qml 1
+    Polar charts draw all axes of the same orientation in the same position, so
+    using multiple axes of the same orientation can be confusing, unless the
+    extra axes are only used to customize the grid. For example, you can display
+    a highlighted range with a secondary shaded CategoryAxis or provide
+    unlabeled subticks with a secondary ValueAxis thas has hidden labels.
 
-    \beginfloatleft
-    \image examples_qmlpolarchart1.png
-    \endfloat
-    \clearfloat
+    The following QML code shows how to create a polar chart with a spline and
+    scatter series and two value axes:
+    \snippet qmlpolarchart/qml/qmlpolarchart/View1.qml 1
 */
 
 DeclarativePolarChart::DeclarativePolarChart(QQuickItem *parent)

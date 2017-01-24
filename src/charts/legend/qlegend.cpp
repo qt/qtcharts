@@ -49,12 +49,12 @@ QT_CHARTS_BEGIN_NAMESPACE
     \class QLegend
     \inmodule Qt Charts
     \inherits QGraphicsWidget
-    \brief Legend object.
+    \brief The QLegend class displays the legend of a chart.
 
-    QLegend is a graphical object for displaying the legend of the chart. Legend state is updated by QChart, when
-    series have been changed. By default, legend is drawn by QChart, but user can set a new parent to legend and
-    handle the drawing manually.
-    User isn't supposed to create or delete legend objects, but can reference it via QChart class.
+    A legend is a graphical object that displays the legend of a chart. The legend state is updated
+    by QChart when series change. By default, the legend is attached to the chart, but it can be
+    detached to make it independent of chart layout. Legend objects cannot be created or deleted,
+    but they can be referenced via the QChart class.
 
     \image examples_percentbarchart_legend.png
 
@@ -65,10 +65,11 @@ QT_CHARTS_BEGIN_NAMESPACE
     \instantiates QLegend
     \inqmlmodule QtCharts
 
-    \brief Legend is part of Qt Chart QML API.
+    \brief Displays the legend of a chart.
 
-    Legend is a graphical object, which displays legend of the chart. Legend state is updated by
-    ChartView, when series have been changed. Legend is used via ChartView class. For example:
+    A legend is a graphical object that displays the legend of a chart. The legend state is updated
+    by the ChartView type when series change. The \l Legend type properties can be attached to the
+    ChartView type. For example:
     \code
         ChartView {
             legend.visible: true
@@ -79,39 +80,36 @@ QT_CHARTS_BEGIN_NAMESPACE
 
     \image examples_percentbarchart_legend.png
 
-    Please note that there is no QML API available for modifying legend markers, unlike in the Qt
-    API of Charts. The use case of modifying markers can be implemented for example by creating your
-    own custom legend. For an example on how to do this,
-    see \l {qmlcustomlegend}{Qml Custom Example} application.
+    \note There is no QML API available for modifying legend markers. Markers can be modified by
+    creating a custom legend, as illustrated by \l {qmlcustomlegend}{Qml Custom Example}.
 */
 
 /*!
     \property QLegend::alignment
-    \brief The alignment of the legend.
+    \brief How the legend is aligned with the chart.
 
-    Legend paints on the defined position in the chart. The following alignments are supported:
-    Qt::AlignTop, Qt::AlignBottom, Qt::AlignLeft, Qt::AlignRight. If you set more than one flag the result is undefined.
+    Can be Qt::AlignTop, Qt::AlignBottom, Qt::AlignLeft, Qt::AlignRight. If you set more than one
+    flag, the result is undefined.
 */
 /*!
-    \qmlproperty Qt.Alignment Legend::alignment
-    \brief The alignment of the legend.
-
-    Legend paints on the defined position in the chart. The following alignments are supported:
-    Qt.AlignTop, Qt.AlignBottom, Qt.AlignLeft, Qt.AlignRight. If you set more than one flag the result is undefined.
+    \qmlproperty alignment Legend::alignment
+    Defines how the legend is aligned with the chart. Can be \l{Qt::AlignLeft}{Qt.AlignLeft},
+    \l{Qt::AlignRight}{Qt.AlignRight}, \l{Qt::AlignBottom}{Qt.AlignBottom}, or
+    \l{Qt::AlignTop}{Qt.AlignTop}. If you set more than one flag, the result is undefined.
 */
 
 /*!
     \property QLegend::backgroundVisible
-    Whether the legend background is visible or not.
+    \brief Whether the legend background is visible.
 */
 /*!
     \qmlproperty bool Legend::backgroundVisible
-    Whether the legend background is visible or not.
+    Whether the legend background is visible.
 */
 
 /*!
     \qmlproperty bool Legend::visible
-    \brief Whether the legend is visible or not.
+    Whether the legend is visible.
 
     By default, this property is \c true.
     \sa QGraphicsObject::visible
@@ -119,55 +117,60 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \property QLegend::color
-    The color of the legend, i.e. the background (brush) color. Note that if you change the color
-    of the legend, the style of the legend brush is set to Qt::SolidPattern.
+    \brief The background (brush) color of the legend.
+
+    If you change the color of the legend, the style of the legend brush is set to
+    Qt::SolidPattern.
 */
 /*!
     \qmlproperty color Legend::color
-    The color of the legend, i.e. the background (brush) color.
+    The background (brush) color of the legend.
 */
 
 /*!
     \property QLegend::borderColor
-    The border color of the legend, i.e. the line color.
+    \brief The line color of the legend.
 */
 /*!
     \qmlproperty color Legend::borderColor
-    The border color of the legend, i.e. the line color.
+    The line color of the legend.
 */
 
 /*!
     \property QLegend::font
-    The font of markers used by legend.
+    \brief The font of the markers used by the legend.
 */
 /*!
     \qmlproperty Font Legend::font
-    The font of markers used by legend.
+    The font of the markers used by the legend.
 */
 
 /*!
     \property QLegend::labelColor
-    The color of brush used to draw labels.
+    \brief The color of the brush used to draw labels.
 */
 /*!
     \qmlproperty color Legend::labelColor
-    The color of brush used to draw labels.
+    The color of the brush used to draw labels.
 */
 
 /*!
     \property QLegend::reverseMarkers
-    Whether reverse order is used for the markers in legend or not. False by default.
+    \brief Whether reverse order is used for the markers in the legend.
+
+    This property is \c false by default.
 */
 /*!
     \qmlproperty bool Legend::reverseMarkers
-    Whether reverse order is used for the markers in legend or not. False by default.
+    Whether reverse order is used for the markers in the legend. This property
+    is \c false by default.
 */
 
 /*!
     \property QLegend::showToolTips
-    Whether tooltips are shown when the text is truncated. This is false by default.
+    \brief Whether tooltips are shown when the text is truncated.
 
-    This will not have any effect when used in QML.
+    This property is \c false by default.
 */
 
 /*!
@@ -213,38 +216,40 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \qmlproperty bool Legend::showToolTips
-    Whether tooltips are shown when the text is truncated. This is false by default.
-    This currently has no effect as there is no support for tooltips in QML.
+    Whether tooltips are shown when the text is truncated. This property is \c false by default.
+    This property currently has no effect as there is no support for tooltips in QML.
 */
 
 /*!
     \fn void QLegend::backgroundVisibleChanged(bool)
-    The visibility of the legend background changed to \a visible.
+    This signal is emitted when the visibility of the legend background changes to \a visible.
 */
 
 /*!
     \fn void QLegend::colorChanged(QColor)
-    The color of the legend background changed to \a color.
+    This signal is emitted when the color of the legend background changes to \a color.
 */
 
 /*!
     \fn void QLegend::borderColorChanged(QColor)
-    The border color of the legend background changed to \a color.
+    This signal is emitted when the border color of the legend background changes to \a color.
 */
 
 /*!
     \fn void QLegend::fontChanged(QFont)
-    The font of markers of the legend changed to \a font.
+    This signal is emitted when the font of the markers of the legend changes to \a font.
 */
 
 /*!
     \fn void QLegend::labelColorChanged(QColor color)
-    This signal is emitted when the color of brush used to draw labels has changed to \a color.
+    This signal is emitted when the color of the brush used to draw the legend
+    labels changes to \a color.
 */
 
 /*!
     \fn void QLegend::reverseMarkersChanged(bool)
-    The use of reverse order for the markers in legend is changed to \a reverseMarkers.
+    This signal is emitted when the use of reverse order for the markers in the
+    legend is changed to \a reverseMarkers.
 */
 
 /*!
@@ -263,7 +268,8 @@ QLegend::QLegend(QChart *chart): QGraphicsWidget(chart),
 }
 
 /*!
-    Destroys the legend object. Legend is always owned by a QChart, so an application should never call this.
+    Destroys the legend object. The legend is always owned by a QChart, so an application
+    should never call this function.
 */
 QLegend::~QLegend()
 {
@@ -288,7 +294,7 @@ void QLegend::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 
 
 /*!
- Sets the \a brush of legend. Brush affects the background of legend.
+    Sets the \a brush that is used to draw the background of the legend.
  */
 void QLegend::setBrush(const QBrush &brush)
 {
@@ -300,7 +306,7 @@ void QLegend::setBrush(const QBrush &brush)
 }
 
 /*!
- Returns the brush used by legend.
+    Returns the brush used by the legend.
  */
 QBrush QLegend::brush() const
 {
@@ -326,7 +332,7 @@ QColor QLegend::color()
 }
 
 /*!
- Sets the \a pen of legend. Pen affects the legend borders.
+    Sets the \a pen that is used to draw the legend borders.
  */
 void QLegend::setPen(const QPen &pen)
 {
@@ -338,7 +344,7 @@ void QLegend::setPen(const QPen &pen)
 }
 
 /*!
- Returns the pen used by legend.
+    Returns the pen used by the legend.
  */
 
 QPen QLegend::pen() const
@@ -383,7 +389,7 @@ QColor QLegend::borderColor()
 }
 
 /*!
-    Set brush used to draw labels to \a brush.
+    Sets the brush used to draw the legend labels to \a brush.
 */
 void QLegend::setLabelBrush(const QBrush &brush)
 {
@@ -400,7 +406,7 @@ void QLegend::setLabelBrush(const QBrush &brush)
 }
 
 /*!
-    Brush used to draw labels.
+    Returns the brush used to draw labels.
 */
 QBrush QLegend::labelBrush() const
 {
@@ -440,7 +446,7 @@ Qt::Alignment QLegend::alignment() const
 }
 
 /*!
- Detaches the legend from chart. Chart won't change layout of the legend.
+    Detaches the legend from the chart. The chart will no longer adjust the layout of the legend.
  */
 void QLegend::detachFromChart()
 {
@@ -452,7 +458,7 @@ void QLegend::detachFromChart()
 }
 
 /*!
- Attaches the legend to chart. Chart may change layout of the legend.
+    Attaches the legend to a chart. The chart may adjust the layout of the legend.
  */
 void QLegend::attachToChart()
 {
@@ -463,7 +469,7 @@ void QLegend::attachToChart()
 }
 
 /*!
- Returns true, if legend is attached to chart.
+    Returns \c true, if the legend is attached to a chart.
  */
 bool QLegend::isAttachedToChart()
 {
@@ -471,7 +477,7 @@ bool QLegend::isAttachedToChart()
 }
 
 /*!
- Sets the visibility of legend background to \a visible
+    Sets the visibility of the legend background to \a visible.
  */
 void QLegend::setBackgroundVisible(bool visible)
 {
@@ -483,7 +489,7 @@ void QLegend::setBackgroundVisible(bool visible)
 }
 
 /*!
- Returns the visibility of legend background
+    Returns the visibility of the legend background.
  */
 bool QLegend::isBackgroundVisible() const
 {
@@ -491,8 +497,8 @@ bool QLegend::isBackgroundVisible() const
 }
 
 /*!
-  Returns the list of markers in legend. The list can be filtered with \a series parameter.
-  If \a series is given, only markers related to that series are returned.
+    Returns the list of markers in the legend. The list can be filtered by specifying
+    the \a series for which the markers are returned.
 */
 QList<QLegendMarker*> QLegend::markers(QAbstractSeries *series) const
 {
@@ -514,7 +520,7 @@ void QLegend::setReverseMarkers(bool reverseMarkers)
 }
 
 /*!
-    Returns whether the tooltips are shown or not for the legend labels
+    Returns whether the tooltips are shown for the legend labels
     when they are elided.
 */
 
@@ -524,9 +530,9 @@ bool QLegend::showToolTips() const
 }
 
 /*!
-    When \a show is true, the legend labels will show a tooltip when
+    When \a show is \c true, the legend labels will show a tooltip when
     the mouse hovers over them if the label itself is shown elided.
-    This is false by default.
+    This is \c false by default.
 */
 
 void QLegend::setShowToolTips(bool show)
@@ -556,7 +562,8 @@ void QLegend::setMarkerShape(QLegend::MarkerShape shape)
 }
 
 /*!
- \internal \a event see QGraphicsWidget for details
+    \internal
+    \a event, see QGraphicsWidget for details.
  */
 void QLegend::hideEvent(QHideEvent *event)
 {
@@ -565,7 +572,8 @@ void QLegend::hideEvent(QHideEvent *event)
     QGraphicsWidget::hideEvent(event);
 }
 /*!
- \internal \a event see QGraphicsWidget for details
+    \internal
+    \a event, see QGraphicsWidget for details.
  */
 void QLegend::showEvent(QShowEvent *event)
 {

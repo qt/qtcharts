@@ -36,6 +36,17 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
+/*!
+    \class QBoxPlotModelMapper
+    \inmodule Qt Charts
+    \brief The QBoxPlotModelMapper class is the base class for box plot model
+    mapper classes.
+    \internal
+
+    Model mappers enable using a data model derived from the QAbstractItemModel
+    class as a data source for a chart.
+*/
+
 QBoxPlotModelMapper::QBoxPlotModelMapper(QObject *parent) :
     QObject(parent),
     d_ptr(new QBoxPlotModelMapperPrivate(this))

@@ -36,8 +36,23 @@ QT_CHARTS_BEGIN_NAMESPACE
     \qmltype CategoryRange
     \inqmlmodule QtCharts
 
-    \brief With CategoryRange you can define a range used by a CategoryAxis.
+    \brief Defines a range on a category axis.
+
+    The CategoryRange type is used together with the CategoryAxis type to
+    specify labeled ranges on category axes. The widths of the category ranges
+    can be specified freely.
+
     \sa CategoryAxis
+*/
+
+/*!
+    \qmlproperty int CategoryRange::endValue
+    The high end of the category.
+*/
+
+/*!
+    \qmlproperty string CategoryRange::label
+    The label of the category.
 */
 
 DeclarativeCategoryRange::DeclarativeCategoryRange(QObject *parent) :

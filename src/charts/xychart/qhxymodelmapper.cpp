@@ -34,133 +34,158 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \class QHXYModelMapper
     \inmodule Qt Charts
-    \brief Horizontal model mapper for QXYSeries.
+    \brief The QHXYModelMapper class is a horizontal model mapper for line,
+    spline, and scatter series.
 
-    Model mappers allow you to use QAbstractItemModel derived models as a data source for a chart series.
-    Horizontal model mapper is used to create a connection between QXYSeries and QAbstractItemModel derived model object.
-    It is possible to use both QAbstractItemModel and QXYSeries model API. QXYModelMapper makes sure that QXYSeries and the model are kept in sync.
-    Note: used model has to support adding/removing rows/columns and modifying the data of the cells.
+    Model mappers enable using a data model derived from the QAbstractItemModel
+    class as a data source for a chart. A horizontal model mapper is used to
+    create a connection between a line, spline, or scatter series and the data
+    model that holds the consecutive data point coordinates on rows.
+
+    Both model and series properties can be used to manipulate the data. The
+    model mapper keeps the series and the data model in sync.
+
+    \sa QVXYModelMapper, QXYSeries
 */
 /*!
     \qmltype HXYModelMapper
     \instantiates QHXYModelMapper
     \inqmlmodule QtCharts
 
-    \brief Horizontal model mapper for QXYSeries
+    \brief A horizontal model mapper for XYSeries.
 
-    HXYModelMapper allows you to use your own QAbstractItemModel derived model with data in rows as
-    a data source for XYSeries based series. It is possible to use both QAbstractItemModel and
-    XYSeries data API to manipulate data. HXYModelMapper keeps the series and the model in sync.
+    Model mappers enable using a data model derived from the QAbstractItemModel
+    class as a data source for a chart. A horizontal model mapper is used to
+    create a connection between a line, spline, or scatter series and the data
+    model that holds the consecutive data point coordinates on rows.
+
+    Both model and series properties can be used to manipulate the data. The
+    model mapper keeps the series and the data model in sync.
+
+    \sa VXYModelMapper, XYSeries
 */
 
 /*!
     \property QHXYModelMapper::series
-    \brief Defines the QXYSeries object that is used by the mapper.
+    \brief The series that is used by the mapper.
 
     All the data in the series is discarded when it is set to the mapper.
-    When new series is specified the old series is disconnected (it preserves its data)
+    When a new series is specified, the old series is disconnected (but it
+    preserves its data).
 */
 /*!
     \qmlproperty XYSeries HXYModelMapper::series
-    Defines the XYSeries object that is used by the mapper. All the data in the series is discarded when it is set to
-    the mapper. When new series is specified the old series is disconnected (it preserves its data).
+    The series that is used by the mapper. All the data in the series is
+    discarded when it is set to the mapper. When a new series is specified, the
+    old series is disconnected (but it preserves its data).
 */
 
 /*!
     \property QHXYModelMapper::model
-    \brief Defines the model that is used by the mapper.
+    \brief The model that is used by the mapper.
 */
 /*!
     \qmlproperty SomeModel HXYModelMapper::model
-    The QAbstractItemModel based model that is used by the mapper. You need to implement the model
-    and expose it to QML. Note: the model has to support adding/removing rows/columns and modifying
-    the data of the cells.
+    The data model that is used by the mapper. You need to implement the model
+    and expose it to QML.
+
+    \note The model has to support adding and removing rows or columns and
+    modifying the data in the cells.
 */
 
 /*!
     \property QHXYModelMapper::xRow
-    \brief Defines which row of the model is kept in sync with the x values of the QXYSeries.
+    \brief The row of the model that contains the x-coordinates of the data
+    points.
 
-    Default value is: -1 (invalid mapping)
+    The default value is -1 (invalid mapping).
 */
 /*!
     \qmlproperty int HXYModelMapper::xRow
-    Defines which row of the model is kept in sync with the x values of the series. Default value is -1 (invalid
-    mapping).
+    The row of the model that contains the x-coordinates of the data points.
+    The default value is -1 (invalid mapping).
 */
 
 /*!
     \property QHXYModelMapper::yRow
-    \brief Defines which row of the model is kept in sync with the  y values of the QXYSeries.
+    \brief The row of the model that contains the y-coordinates of the data
+    points.
 
-    Default value is: -1 (invalid mapping)
+    The default value is -1 (invalid mapping).
 */
 /*!
     \qmlproperty int HXYModelMapper::yRow
-    Defines which row of the model is kept in sync with the  y values of the series. Default value is -1
-    (invalid mapping).
+    The row of the model that contains the y-coordinates of the data points.
+
+    The default value is -1 (invalid mapping).
 */
 
 /*!
     \property QHXYModelMapper::firstColumn
-    \brief Defines which column of the model contains the data for the first point of the series.
+    \brief The column of the model that contains the data for the first point of the series.
 
-    Minimal and default value is: 0
+    The minimum and default value is 0.
 */
 /*!
     \qmlproperty int HXYModelMapper::firstColumn
-    Defines which column of the model contains the data for the first point of the series.
+    The column of the model that contains the data for the first point of the series.
     The default value is 0.
 */
 
 /*!
     \property QHXYModelMapper::columnCount
-    \brief Defines the number of columns of the model that are mapped as the data for series.
+    \brief The number of columns of the model that are mapped as the data for series.
 
-    Minimal and default value is: -1 (count limited by the number of columns in the model)
+    The minimum and default value is -1 (the number is limited by the number of
+    columns in the model).
 */
 /*!
     \qmlproperty int HXYModelMapper::columnCount
-    Defines the number of columns of the model that are mapped as the data for series. The default value is
-    -1 (count limited by the number of columns in the model)
+    The number of columns of the model that are mapped as the data for series.
+    The default value is -1 (the number is limited by the number of columns in
+    the model).
 */
 
 /*!
     \fn void QHXYModelMapper::seriesReplaced()
 
-    Emitted when the series to which mapper is connected to has changed.
+    This signal is emitted when the series that the mapper is connected to
+    changes.
 */
 
 /*!
     \fn void QHXYModelMapper::modelReplaced()
 
-    Emitted when the model to which mapper is connected to has changed.
+    This signal is emitted when the model that the mapper is connected to
+    changes.
 */
 
 /*!
     \fn void QHXYModelMapper::xRowChanged()
 
-    Emitted when the xRow has changed.
+    This signal is emitted when the row that contains the x-coordinates of data
+    points changes.
 */
 
 /*!
     \fn void QHXYModelMapper::yRowChanged()
 
-    Emitted when the yRow has changed.
+    This signal is emitted when the row that contains the y-coordinates of data
+    points changes.
 */
 
 /*!
     \fn void QHXYModelMapper::firstColumnChanged()
-    Emitted when the firstColumn has changed.
+    This signal is emitted when the first column changes.
 */
 
 /*!
     \fn void QHXYModelMapper::columnCountChanged()
-    Emitted when the columnCount has changed.
+    This signal is emitted when the number of columns changes.
 */
 
 /*!
-    Constructs a mapper object which is a child of \a parent.
+    Constructs a mapper object that is a child of \a parent.
 */
 QHXYModelMapper::QHXYModelMapper(QObject *parent) :
     QXYModelMapper(parent)

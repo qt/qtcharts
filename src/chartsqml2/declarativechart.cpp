@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2017 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -69,31 +69,66 @@ QT_CHARTS_BEGIN_NAMESPACE
     \instantiates DeclarativeChart
     \inqmlmodule QtCharts
 
-    \brief Chart element.
+    \brief Manages the graphical representation of the chart's series, legends,
+    and axes.
 
-    ChartView element is the parent that is responsible for showing different chart series types.
+    The ChartView type displays different series types as charts.
 
-    The following QML shows how to create a simple chart with one pie series:
+    \image examples_qmlpiechart.png
+
+    The following QML code shows how to create a simple chart with one pie
+    series:
     \snippet qmlpiechart/qml/qmlpiechart/main.qml 1
     \snippet qmlpiechart/qml/qmlpiechart/main.qml 2
     \snippet qmlpiechart/qml/qmlpiechart/main.qml 3
-
-    \beginfloatleft
-    \image examples_qmlpiechart.png
-    \endfloat
-    \clearfloat
 */
 
 /*!
-  \qmlproperty Theme ChartView::theme
-  Theme defines the visual appearance of the chart, including for example colors, fonts, line
-  widths and chart background.
+    \qmlproperty enumeration ChartView::theme
+
+    The theme used by the chart.
+
+    A theme is a built-in collection of UI style related settings applied to all
+    the visual elements of a chart, such as colors, pens, brushes, and fonts of
+    series, as well as axes, title, and legend. The \l {Qml Oscilloscope}
+    example illustrates how to set a theme.
+
+    \note Changing the theme will overwrite all customizations previously
+    applied to the series.
+
+    The following values are supported:
+
+    \value  ChartView.ChartThemeLight
+            The light theme, which is the default theme.
+    \value  ChartView.ChartThemeBlueCerulean
+            The cerulean blue theme.
+    \value  ChartView.ChartThemeDark
+            The dark theme.
+    \value  ChartView.ChartThemeBrownSand
+            The sand brown theme.
+    \value  ChartView.ChartThemeBlueNcs
+            The natural color system (NCS) blue theme.
+    \value  ChartView.ChartThemeHighContrast
+            The high contrast theme.
+    \value  ChartView.ChartThemeBlueIcy
+            The icy blue theme.
+    \value  ChartView.ChartThemeQt
+            The Qt theme.
 */
 
 /*!
-  \qmlproperty Animation ChartView::animationOptions
-  Animation configuration of the chart. One of ChartView.NoAnimation, ChartView.GridAxisAnimations,
-  ChartView.SeriesAnimations or ChartView.AllAnimations.
+    \qmlproperty enumeration ChartView::animationOptions
+
+    The animations enabled in the chart:
+
+    \value  ChartView.NoAnimation
+            Animation is disabled in the chart. This is the default value.
+    \value  ChartView.GridAxisAnimations
+            Grid axis animation is enabled in the chart.
+    \value  ChartView.SeriesAnimations
+            Series animation is enabled in the chart.
+    \value  ChartView.AllAnimations
+            All animation types are enabled in the chart.
 */
 
 /*!
@@ -107,16 +142,18 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
-  \qmlproperty Font ChartView::titleFont
+  \qmlproperty font ChartView::titleFont
   The title font of the chart.
 
-  See the Qt documentation for more details of Font.
+  For more information, see \l [QML]{font}.
 */
 
 /*!
   \qmlproperty string ChartView::title
-  The title of the chart, shown on top of the chart.
-  \sa ChartView::titleColor
+  The title is shown as a headline on top of the chart. Chart titles support
+  HTML formatting.
+
+  \sa titleColor
 */
 
 /*!
@@ -126,18 +163,21 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
   \qmlproperty Legend ChartView::legend
-  The legend of the chart. Legend lists all the series, pie slices and bar sets added on the chart.
+  The legend of the chart. The legend lists all the series, pie slices, and bar
+  sets added to the chart.
 */
 
 /*!
   \qmlproperty int ChartView::count
-  The count of series added to the chart.
+  The number of series added to the chart.
 */
 
 /*!
   \qmlproperty color ChartView::backgroundColor
-  The color of the chart's background. By default background color is defined by chart theme.
-  \sa ChartView::theme
+  The color of the chart's background. By default, the background color is
+  specified by the chart theme.
+
+  \sa theme
 */
 
 /*!
@@ -147,41 +187,53 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
   \qmlproperty color ChartView::plotAreaColor
-  The color of the background of the chart's plot area. By default plot area background uses chart's
-  background color.
-  \sa ChartView::backgroundColor
+  The color of the background of the chart's plot area. By default, the plot
+  area background uses the chart's background color, which is specified by the
+  chart theme.
+
+  \sa backgroundColor, theme
 */
 
 /*!
   \qmlproperty list<AbstractAxis> ChartView::axes
-  The axes of the ChartView.
+  The axes of the chart.
 */
 
 /*!
   \qmlproperty bool ChartView::dropShadowEnabled
-  The chart's border drop shadow. Set to true to enable drop shadow.
+  Whether the background drop shadow effect is enabled.
+
+ If set to \c true, the background drop shadow effect is enabled. If set to
+ \c false, it is disabled.
 */
 
 /*!
   \qmlproperty rect ChartView::plotArea
-  The area on the ChartView that is used for drawing series. This is the ChartView rect without the
-  margins.
-  \sa ChartView::margins
+  The rectangle within which the chart is drawn.
+
+  The plot area does not include the area defined by margins.
+
+  \sa margins
 */
 
 /*!
   \qmlproperty Margins ChartView::margins
-  The minimum margins allowed between the outer bounds and the plotArea of the ChartView. Margins
-  area of ChartView is used for drawing title, axes and legend.
+  The minimum margins allowed between the edge of the chart rectangle and the
+  plot area. The margins are used for drawing the title, axes, and legend.
 */
 
 /*!
   \qmlproperty bool ChartView::localizeNumbers
   \since QtCharts 2.0
-  When \c{true}, all generated numbers appearing in various series and axis labels will be
-  localized using the default QLocale of the application, which defaults to the system locale.
-  When \c{false}, the "C" locale is always used.
-  Defaults to \c{false}.
+
+  Whether numbers are localized.
+
+  When \c true, all generated numbers appearing in various series and axis
+  labels will be localized using the QLocale set with the \l locale property.
+  When \c{false}, the \e C locale is always used. Defaults to \c{false}.
+
+  \note This property does not affect DateTimeAxis labels, which always use the
+  QLocale set with the locale property.
 
   \sa locale
 */
@@ -189,45 +241,84 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
   \qmlproperty locale ChartView::locale
   \since QtCharts 2.0
-  Sets the locale used to format various chart labels when localizeNumbers is \c{true}.
-  This also determines the locale used to format DateTimeAxis labels regardless of
-  localizeNumbers property.
-  Defaults to application default locale at the time the chart is constructed.
+
+  The locale used to format various chart labels.
+
+  Labels are localized only when \l localizeNumbers is \c true, except for
+  DateTimeAxis labels, which always use the QLocale set with this property.
+
+  Defaults to the application default locale at the time when the chart is
+  constructed.
 
   \sa localizeNumbers
 */
 
 /*!
   \qmlmethod AbstractSeries ChartView::series(int index)
-  Returns the series with \a index on the chart. This allows you to loop through the series of a chart together with
-  the count property of the chart.
+  Returns the series with the index \a index on the chart. Together with the
+  \l count property of the chart, this enables looping through the series of a
+  chart.
+
+  \sa count
 */
 
 /*!
   \qmlmethod AbstractSeries ChartView::series(string name)
-  Returns the first series on the chart with \a name. If there is no series with that name, returns null.
+  Returns the first series in the chart with the name \a name. If there is no
+  series with that name, returns null.
 */
 
 /*!
-  \qmlmethod AbstractSeries ChartView::createSeries(SeriesType type, string name, AbstractAxis axisX, AbstractAxis axisY)
-  Creates a series object of \a type to the chart with name \a name, optional axis \a axisX and
-  optional axis \a axisY. For example:
+  \qmlmethod AbstractSeries ChartView::createSeries(enumeration type, string name, AbstractAxis axisX, AbstractAxis axisY)
+  Adds a series of the type \a type to the chart with the name \a name
+  and, optionally, the axes \a axisX and \a axisY. For example:
   \code
-    // lineSeries is a LineSeries object that has already been added to the ChartView; re-use it's axes
+    // lineSeries is a LineSeries object that has already been added to the ChartView; re-use its axes
     var myAxisX = chartView.axisX(lineSeries);
     var myAxisY = chartView.axisY(lineSeries);
     var scatter = chartView.createSeries(ChartView.SeriesTypeScatter, "scatter series", myAxisX, myAxisY);
   \endcode
+
+  The following enumeration values can be used as values of \a type:
+
+    \value  ChartView.SeriesTypeLine
+            A line series.
+    \value  ChartView.SeriesTypeArea
+            An area series.
+    \value  ChartView.SeriesTypeBar
+            A bar series.
+    \value  ChartView.SeriesTypeStackedBar
+            A stacked bar series.
+    \value  ChartView.SeriesTypePercentBar
+            A percent bar series.
+    \value  ChartView.SeriesTypeBoxPlot
+            A box plot series.
+    \value  ChartView.SeriesTypeCandlestick
+            A candlestick series.
+    \value  ChartView.SeriesTypePie
+            A pie series.
+    \value  ChartView.SeriesTypeScatter
+            A scatter series.
+    \value  ChartView.SeriesTypeSpline
+            A spline series.
+    \value  ChartView.SeriesTypeHorizontalBar
+            A horizontal bar series.
+    \value  ChartView.SeriesTypeHorizontalStackedBar
+            A horizontal stacked bar series.
+    \value  ChartView.SeriesTypeHorizontalPercentBar
+            A horizontal percent bar series.
 */
 
 /*!
   \qmlmethod ChartView::removeSeries(AbstractSeries series)
-  Removes the \a series from the chart. The series object is also destroyed.
+  Removes the series \a series from the chart and permanently deletes the series
+  object.
 */
 
 /*!
   \qmlmethod ChartView::removeAllSeries()
-  Removes all series from the chart. All the series objects are also destroyed.
+  Removes all series from the chart and permanently deletes all the series
+  objects.
 */
 
 /*!
@@ -237,7 +328,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
   \qmlmethod ChartView::setAxisX(AbstractAxis axis, AbstractSeries series)
-  Set the x-axis of the series.
+  Sets the x-axis of the series.
 */
 
 /*!
@@ -247,85 +338,93 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
   \qmlmethod ChartView::setAxisY(AbstractAxis axis, AbstractSeries series)
-  Set the y-axis of the series.
+  Sets the y-axis of the series.
 */
 
 /*!
   \qmlmethod ChartView::zoom(real factor)
-  Zooms in by \a factor on the center of the chart.
+  Zooms into the chart by the custom factor \a factor.
 
-  A factor over 1.0 zooms the view in and factor between 0.0 and 1.0 zooms out.
+  A factor over 1.0 zooms into the view in and a factor between 0.0 and 1.0
+  zooms out of it.
 */
 
 /*!
   \qmlmethod ChartView::zoomIn()
-  Zooms in the view by a factor of two.
+  Zooms into the view by a factor of two.
 */
 
 /*!
   \qmlmethod ChartView::zoomIn(rect rectangle)
-  Zooms in the view to a maximum level at which \a rectangle is still fully visible.
+  Zooms into the view to a maximum level at which the rectangle \a rectangle is
+  still fully visible.
   \note This is not supported for polar charts.
 */
 
 /*!
   \qmlmethod ChartView::zoomOut()
-  Zooms out the view by a factor of two.
+  Zooms out of the view by a factor of two.
 */
 
 /*!
   \qmlmethod ChartView::zoomReset()
   Resets the series domains to what they were before any zoom method was called.
-  Note that this will also reset any scrolls and explicit axis range settings done between
-  the first zoom operation and calling this method. If no zoom operation has been
-  done, this method does nothing.
+
+  \note This will also reset scrolling and explicit axis range settings
+  specified between the first zoom operation and calling this method. If no zoom
+  operation has been performed, this method does nothing.
 */
 
 /*!
   \qmlmethod ChartView::isZoomed()
-  Returns true if any series has a zoomed domain.
+  Returns \c true if any series has a zoomed domain.
 */
 
 /*!
   \qmlmethod ChartView::scrollLeft(real pixels)
-  Scrolls to left by \a pixels. This is a convenience function that suits for example for key navigation.
+  Scrolls to left by the number of pixels specified by \a pixels. This is a
+  convenience method suitable for key navigation, for example.
 */
 
 /*!
   \qmlmethod ChartView::scrollRight(real pixels)
-  Scrolls to right by \a pixels. This is a convenience function that suits for example for key navigation.
+  Scrolls to right by by the number of pixels specified by \a pixels. This is a
+  convenience method suitable for key navigation, for example.
 */
 
 /*!
   \qmlmethod ChartView::scrollUp(real pixels)
-  Scrolls up by \a pixels. This is a convenience function that suits for example for key navigation.
+  Scrolls up by the number of pixels specified by \a pixels. This is a
+  convenience method suitable for key navigation, for example.
 */
 
 /*!
   \qmlmethod ChartView::scrollDown(real pixels)
-  Scrolls down by \a pixels. This is a convenience function that suits for example for key navigation.
+  Scrolls down by the number of pixels specified by \a pixels. This is a
+  convenience method suitable for key navigation, for example.
 */
 
 /*!
   \qmlmethod point ChartView::mapToValue(point position, AbstractSeries series)
-  Returns the value in the \a series domain that corresponds to the \a position relative to the
-  chart.
+  Returns the value in the series \a series located at the position \a position
+  in the chart.
 */
 
 /*!
   \qmlmethod point ChartView::mapToPosition(point value, AbstractSeries series)
-  Returns the position on the chart that corresponds to the \a value in the \a series domain.
+  Returns the position in the chart of the value \a value in the series
+  \a series.
 */
 
 /*!
   \qmlsignal ChartView::seriesAdded(AbstractSeries series)
-  The \a series has been added to the chart.
+  This signal is emitted when the series \a series is added to the chart.
 */
 
 /*!
   \qmlsignal ChartView::seriesRemoved(AbstractSeries series)
-  The \a series has been removed from the chart. Please note that \a series is no longer a valid
-  object after the signal handler has completed.
+  This signal is emitted when the series \a series is removed from the chart.
+  The series object becomes invalid when the signal handler completes.
 */
 
 DeclarativeChart::DeclarativeChart(QQuickItem *parent)

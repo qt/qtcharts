@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2017 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -42,7 +42,8 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \class QXYSeries
     \inmodule Qt Charts
-    \brief The QXYSeries class is a base class for line, spline and scatter series.
+    \brief The QXYSeries class is a base class for line, spline, and scatter
+    series.
 */
 /*!
     \qmltype XYSeries
@@ -51,37 +52,36 @@ QT_CHARTS_BEGIN_NAMESPACE
 
     \inherits AbstractSeries
 
-    \brief The XYSeries type is a base type for line, spline and scatter series.
-
-    The XYSeries class is a base class for line, spline and scatter series.
-    The class cannot be instantiated directly.
+    \brief A base type for line, spline, and scatter series.
 */
 
 /*!
     \qmlproperty AbstractAxis XYSeries::axisX
-    The x axis used for the series. If you leave both axisX and axisXTop undefined, a ValueAxis is created for
-    the series.
-    \sa axisXTop
+    The x-axis used for the series. If you leave both axisX and axisXTop
+    undefined, a value axis is created for the series.
+    \sa axisXTop, QValueAxis
 */
 
 /*!
     \qmlproperty AbstractAxis XYSeries::axisY
-    The y axis used for the series. If you leave both axisY and axisYRight undefined, a ValueAxis is created for
-    the series.
-    \sa axisYRight
+    The y-axis used for the series. If you leave both axisY and axisYRight
+    undefined, a value axis is created for the series.
+    \sa axisYRight, ValueAxis
 */
 
 /*!
     \qmlproperty AbstractAxis XYSeries::axisXTop
-    The x axis used for the series, drawn on top of the chart view. Note that you can only provide either axisX or
-    axisXTop, but not both.
+    The x-axis used for the series, drawn on top of the chart view.
+
+    \note You can only provide either axisX or axisXTop, not both.
     \sa axisX
 */
 
 /*!
     \qmlproperty AbstractAxis XYSeries::axisYRight
-    The y axis used for the series, drawn to the right on the chart view. Note that you can only provide either axisY
-    or axisYRight, but not both.
+    The y-axis used for the series, drawn to the right on the chart view.
+
+    \note You can only provide either axisY or axisYRight, not both.
     \sa axisY
 */
 
@@ -99,174 +99,169 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \property QXYSeries::pointsVisible
-    Controls if the data points are visible and should be drawn.
+    \brief Whether the data points are visible and should be drawn.
 */
 /*!
     \qmlproperty bool XYSeries::pointsVisible
-    Controls if the data points are visible and should be drawn.
+    Whether the data points are visible and should be drawn.
 */
 
 /*!
    \fn QPen QXYSeries::pen() const
-   \brief  Returns pen used to draw points for series.
+   Returns the pen used to draw the outline of the data points for the series.
     \sa setPen()
 */
 
 /*!
    \fn QBrush QXYSeries::brush() const
-   \brief  Returns brush used to draw points for series.
+   Returns the brush used to fill the data points for the series.
     \sa setBrush()
 */
 
 /*!
     \property QXYSeries::color
-    The color of the series. This is line (pen) color in case of QLineSeries or QSplineSeries and
+    \brief The color of the series.
+
+    This is the line (pen) color in case of QLineSeries or QSplineSeries and the
     fill (brush) color in case of QScatterSeries or QAreaSeries.
     \sa pen(), brush()
 */
 /*!
     \qmlproperty color XYSeries::color
-    The color of the series. This is line (pen) color in case of LineSeries or SplineSeries and
-    fill (brush) color in case of ScatterSeries or AreaSeries.
+    The color of the series. This is the line (pen) color in case of LineSeries
+    or SplineSeries and the fill (brush) color in case of ScatterSeries or
+    AreaSeries.
 */
 
 /*!
     \property QXYSeries::pointLabelsFormat
-    The \a format used for showing labels with series points.
+    \brief The format used for showing labels with data points.
 
     QXYSeries supports the following format tags:
     \table
       \row
-        \li @xPoint      \li The x value of the data point
+        \li @xPoint      \li The x-coordinate of the data point.
       \row
-        \li @yPoint      \li The y value of the data point
+        \li @yPoint      \li The y-coordinate of the data point.
     \endtable
 
-    For example, the following usage of the format tags would produce labels that have the data
-    point (x, y) shown inside brackets separated by a comma:
+    For example, the following usage of the format tags would produce labels
+    that display the data point shown inside brackets separated by a comma
+    (x, y):
+
     \code
     series->setPointLabelsFormat("(@xPoint, @yPoint)");
     \endcode
 
-    By default, the labels format is set to '@xPoint, @yPoint'. The labels are shown on the plot
-    area, labels on the edge of the plot area are cut. If the points are close to each other the
-    labels may overlap.
+    By default, the labels' format is set to \c {@xPoint, @yPoint}. The labels
+    are shown on the plot area, and the labels on the edge of the plot area are
+    cut. If the points are close to each other, the labels may overlap.
 
     \sa pointLabelsVisible, pointLabelsFont, pointLabelsColor
 */
 /*!
     \qmlproperty string XYSeries::pointLabelsFormat
-    The \a format used for showing labels with series points.
+    The format used for showing labels with data points.
 
-    \sa pointLabelsFormat, pointLabelsVisible, pointLabelsFont, pointLabelsColor
+    \sa pointLabelsVisible, pointLabelsFont, pointLabelsColor
 */
 /*!
     \fn void QXYSeries::pointLabelsFormatChanged(const QString &format)
-    Signal is emitted when the \a format of data point labels is changed.
-*/
-/*!
-    \qmlsignal XYSeries::onPointLabelsFormatChanged(string format)
-    Signal is emitted when the \a format of data point labels is changed.
+    This signal is emitted when the format of data point labels changes to
+    \a format.
 */
 
 /*!
     \property QXYSeries::pointLabelsVisible
-    Defines the visibility for data point labels. False by default.
+    \brief The visibility of data point labels.
+
+    This property is \c false by default.
 
     \sa pointLabelsFormat, pointLabelsClipping
 */
 /*!
     \qmlproperty bool XYSeries::pointLabelsVisible
-    Defines the visibility for data point labels.
+    The visibility of data point labels. This property is \c false by default.
 
     \sa pointLabelsFormat, pointLabelsClipping
 */
 /*!
     \fn void QXYSeries::pointLabelsVisibilityChanged(bool visible)
-    The visibility of the data point labels is changed to \a visible.
-*/
-/*!
-    \qmlsignal XYSeries::onPointLabelsVisibilityChanged(bool visible)
-    The visibility of the data point labels is changed to \a visible.
+    This signal is emitted when the visibility of the data point labels
+    changes to \a visible.
 */
 
 /*!
     \property QXYSeries::pointLabelsFont
-    Defines the font used for data point labels.
+    \brief The font used for data point labels.
 
     \sa pointLabelsFormat
 */
 /*!
     \qmlproperty font XYSeries::pointLabelsFont
-    Defines the font used for data point labels.
+    The font used for data point labels.
 
     \sa pointLabelsFormat
 */
 /*!
     \fn void QXYSeries::pointLabelsFontChanged(const QFont &font);
-    The font used for data point labels is changed to \a font.
-*/
-/*!
-    \qmlsignal XYSeries::onPointLabelsFontChanged(Font font)
-    The font used for data point labels is changed to \a font.
+    This signal is emitted when the font used for data point labels changes to
+    \a font.
 */
 
 /*!
     \property QXYSeries::pointLabelsColor
-    Defines the color used for data point labels. By default, the color is the color of the brush
+    \brief The color used for data point labels. By default, the color is the color of the brush
     defined in theme for labels.
 
     \sa pointLabelsFormat
 */
 /*!
     \qmlproperty font XYSeries::pointLabelsColor
-    Defines the color used for data point labels. By default, the color is the color of the brush
+    The color used for data point labels. By default, the color is the color of the brush
     defined in theme for labels.
 
     \sa pointLabelsFormat
 */
 /*!
     \fn void QXYSeries::pointLabelsColorChanged(const QColor &color);
-    The color used for data point labels is changed to \a color.
-*/
-/*!
-    \qmlsignal XYSeries::onPointLabelsColorChanged(Color color)
-    The color used for data point labels is changed to \a color.
+    This signal is emitted when the color used for data point labels changes to
+    \a color.
 */
 
 /*!
     \property QXYSeries::pointLabelsClipping
-    Defines the clipping for data point labels. True by default. The labels on the edge of the plot
-    area are cut when clipping is enabled.
+    \brief The clipping for data point labels.
+
+    This property is \c true by default. The labels on the edge of the plot area
+    are cut when clipping is enabled.
 
     \sa pointLabelsVisible
 */
 /*!
     \qmlproperty bool XYSeries::pointLabelsClipping
-    Defines the clipping for data point labels. True by default. The labels on the edge of the plot
-    area are cut when clipping is enabled.
+    The clipping for data point labels. This property is \c true by default. The
+    labels on the edge of the plot area are cut when clipping is enabled.
 
     \sa pointLabelsVisible
 */
 /*!
     \fn void QXYSeries::pointLabelsClippingChanged(bool clipping)
-    The clipping of the data point labels is changed to \a clipping.
-*/
-/*!
-    \qmlsignal XYSeries::onPointLabelsClippingChanged(bool clipping)
-    The clipping of the data point labels is changed to \a clipping.
+    This signal is emitted when the clipping of the data point labels changes to
+    \a clipping.
 */
 
 /*!
     \fn void QXYSeries::clicked(const QPointF& point)
-    \brief Signal is emitted when user clicks the \a point on chart. The \a point is the point
-    where the press was triggered.
-    \sa pressed, released, doubleClicked
+    This signal is emitted when the user triggers a mouse event by
+    clicking the point \a point in the chart.
+
+    \sa pressed(), released(), doubleClicked()
 */
 /*!
-    \qmlsignal XYSeries::onClicked(QPointF point)
-    Signal is emitted when user clicks the \a point on chart. The \a point is the point where the
-    press was triggered. For example:
+    \qmlsignal XYSeries::clicked(point point)
+    This signal is emitted when the user triggers a mouse event by clicking the
+    point \a point in the chart. For example:
     \code
     LineSeries {
         XYPoint { x: 0; y: 0 }
@@ -274,30 +269,38 @@ QT_CHARTS_BEGIN_NAMESPACE
         onClicked: console.log("onClicked: " + point.x + ", " + point.y);
     }
     \endcode
-    \sa onPressed, onReleased, onDoubleClicked
+
+    The corresponding signal handler is \c onClicked().
+
+    \sa pressed(), released(), doubleClicked()
 */
 
 /*!
     \fn void QXYSeries::hovered(const QPointF &point, bool state)
-    This signal is emitted when user has hovered over or away from the series. \a point shows the origin (coordinate)
-    of the hover event. \a state is true when user has hovered over the series and false when hover has moved away from
-    the series.
+    This signal is emitted when a mouse is hovered over the point \a point in
+    the chart. When the mouse moves over the point, \a state turns \c true,
+    and when the mouse moves away again, it turns \c false.
 */
 /*!
-    \qmlsignal XYSeries::onHovered(point point, bool state)
-    This signal is emitted when user has hovered over or away from the series. \a point shows the origin (coordinate)
-    of the hover event. \a state is true when user has hovered over the series and false when hover has moved away from
-    the series.
+    \qmlsignal XYSeries::hovered(point point, bool state)
+    This signal is emitted when a mouse is hovered over the point \a point in
+    the chart. When the mouse moves over the point, \a state turns \c true,
+    and when the mouse moves away again, it turns \c false.
+
+    The corresponding signal handler is \c onHovered().
 */
 
 /*!
     \fn void QXYSeries::pressed(const QPointF& point)
-    \brief Signal is emitted when user presses the \a point on chart.
-    \sa clicked, released, doubleClicked
+    This signal is emitted when the user presses the data point \a point in the
+    chart and holds down the mouse button.
+
+    \sa clicked(), released(), doubleClicked()
 */
 /*!
-    \qmlsignal XYSeries::onPressed(QPointF point)
-    Signal is emitted when user presses the \a point on chart. For example:
+    \qmlsignal XYSeries::pressed(point point)
+    This signal is emitted when the user presses the data point \a point in the
+    chart and holds down the mouse button. For example:
     \code
     LineSeries {
         XYPoint { x: 0; y: 0 }
@@ -305,17 +308,22 @@ QT_CHARTS_BEGIN_NAMESPACE
         onPressed: console.log("onPressed: " + point.x + ", " + point.y);
     }
     \endcode
-    \sa onClicked, onReleased, onDoubleClicked
+
+    The corresponding signal handler is \c onPressed().
+
+    \sa clicked(), released(), doubleClicked()
 */
 
 /*!
     \fn void QXYSeries::released(const QPointF& point)
-    \brief Signal is emitted when user releases a press that was triggered on a \a point on chart.
-    \sa pressed, clicked, doubleClicked
+    This signal is emitted when the user releases the mouse press on the data
+    point specified by \a point.
+    \sa pressed(), clicked(), doubleClicked()
 */
 /*!
-    \qmlsignal XYSeries::onReleased(QPointF point)
-    Signal is emitted when user releases a press that was triggered on a \a point on chart.
+    \qmlsignal XYSeries::released(point point)
+    This signal is emitted when the user releases the mouse press on the data
+    point specified by \a point.
     For example:
     \code
     LineSeries {
@@ -324,19 +332,23 @@ QT_CHARTS_BEGIN_NAMESPACE
         onReleased: console.log("onReleased: " + point.x + ", " + point.y);
     }
     \endcode
-    \sa onPressed, onClicked, onDoubleClicked
+
+    The corresponding signal handler is \c onReleased().
+
+    \sa pressed(), clicked(), doubleClicked()
 */
 
 /*!
     \fn void QXYSeries::doubleClicked(const QPointF& point)
-    \brief Signal is emitted when user doubleclicks the \a point on chart. The \a point is the
-    point where the first press was triggered.
-    \sa pressed, released, clicked
+    This signal is emitted when the user double-clicks the data point \a point
+    in the chart. The \a point is the point where the first press was triggered.
+    \sa pressed(), released(), clicked()
 */
 /*!
-    \qmlsignal XYSeries::onDoubleClicked(QPointF point)
-    Signal is emitted when user doubleclicks the \a point on chart. The \a point is the point where
-    the first press was triggered. For example:
+    \qmlsignal XYSeries::doubleClicked(point point)
+    This signal is emitted when the user double-clicks the data point \a point
+    in the chart. The \a point is the point where the first press was triggered.
+    For example:
     \code
     LineSeries {
         XYPoint { x: 0; y: 0 }
@@ -344,122 +356,146 @@ QT_CHARTS_BEGIN_NAMESPACE
         onDoubleClicked: console.log("onDoubleClicked: " + point.x + ", " + point.y);
     }
     \endcode
-    \sa onPressed, onReleased, onClicked
+
+    The corresponding signal handler is \c onDoubleClicked().
+
+    \sa pressed(), released(), clicked()
 */
 
 /*!
     \fn void QXYSeries::pointReplaced(int index)
-    Signal is emitted when a point has been replaced at \a index.
+    This signal is emitted when a point is replaced at the position specified by
+    \a index.
     \sa replace()
 */
 /*!
-    \qmlsignal XYSeries::onPointReplaced(int index)
-    Signal is emitted when a point has been replaced at \a index.
+    \qmlsignal XYSeries::pointReplaced(int index)
+    This signal is emitted when a point is replaced at the position specified by
+    \a index.
+
+    The corresponding signal handler is \c onPointReplaced().
 */
 
 /*!
     \fn void QXYSeries::pointsReplaced()
-    Signal is emitted when all points have been replaced with other points.
+    This signal is emitted when all points are replaced with other points.
     \sa replace()
 */
 /*!
-    \qmlsignal XYSeries::onPointsReplaced()
-    Signal is emitted when all points have been replaced with other points.
+    \qmlsignal XYSeries::pointsReplaced()
+    This signal is emitted when all points are replaced with other points.
+
+    The corresponding signal handler is \c onPointsReplaced().
 */
 
 /*!
     \fn void QXYSeries::pointAdded(int index)
-    Signal is emitted when a point has been added at \a index.
+    This signal is emitted when a point is added at the position specified by
+    \a index.
     \sa append(), insert()
 */
 /*!
-    \qmlsignal XYSeries::onPointAdded(int index)
-    Signal is emitted when a point has been added at \a index.
+    \qmlsignal XYSeries::pointAdded(int index)
+    This signal is emitted when a point is added at the position specified by
+    \a index.
+
+    The corresponding signal handler is \c onPointAdded().
 */
 
 /*!
     \fn void QXYSeries::pointRemoved(int index)
-    Signal is emitted when a point has been removed from \a index.
+    This signal is emitted when a point is removed from the position specified
+    by \a index.
     \sa remove()
 */
 
 /*!
-    \qmlsignal XYSeries::onPointRemoved(int index)
-    Signal is emitted when a point has been removed from \a index.
+    \qmlsignal XYSeries::pointRemoved(int index)
+    This signal is emitted when a point is removed from the position specified
+    by \a index.
+
+    The corresponding signal handler is \c onPointRemoved().
 */
 
 /*!
     \fn void QXYSeries::pointsRemoved(int index, int count)
-    Signal is emitted when a \a count of points has been removed starting at \a index.
+    This signal is emitted when the number of points specified by \a count
+    is removed starting at the position specified by \a index.
     \sa removePoints(), clear()
 */
 
 /*!
-    \qmlsignal XYSeries::onPointsRemoved(int index, int count)
-    Signal is emitted when a \a count of points has been removed starting at \a index.
+    \qmlsignal XYSeries::pointsRemoved(int index, int count)
+    This signal is emitted when the number of points specified by \a count
+    is removed starting at the position specified by \a index.
+
+    The corresponding signal handler is \c onPointRemoved().
 */
 
 /*!
     \fn void QXYSeries::colorChanged(QColor color)
-    \brief Signal is emitted when the line (pen) color has changed to \a color.
-*/
-/*!
-    \qmlsignal XYSeries::onColorChanged(color color)
-    Signal is emitted when the line (pen) color has changed to \a color.
+    This signal is emitted when the line (pen) color changes to \a color.
 */
 
 /*!
     \fn void QXYSeries::penChanged(const QPen &pen)
-    \brief Signal is emitted when the line pen has changed to \a pen.
+    This signal is emitted when the pen changes to \a pen.
 */
 
 /*!
     \fn void QXYSeriesPrivate::updated()
-    \brief \internal
+    \internal
 */
 
 /*!
     \qmlmethod XYSeries::append(real x, real y)
-    Append point (\a x, \a y) to the series
+    Appends a point with the coordinates \a x and \a y to the series.
 */
 
 /*!
     \qmlmethod XYSeries::replace(real oldX, real oldY, real newX, real newY)
-    Replaces point (\a oldX, \a oldY) with point (\a newX, \a newY). Does nothing, if point (oldX, oldY) does not
-    exist.
+    Replaces the point with the coordinates \a oldX and \a oldY with the point
+    with the coordinates \a newX and \a newY. Does nothing if the old point does
+    not exist.
 */
 
 /*!
     \qmlmethod XYSeries::remove(real x, real y)
-    Removes point (\a x, \a y) from the series. Does nothing, if point (x, y) does not exist.
+    Removes the point with the coordinates \a x and \a y from the series. Does
+    nothing if the point does not exist.
 */
 
 /*!
     \qmlmethod XYSeries::remove(int index)
-    Removes a point from the series at \a index.
+    Removes the point at the position specified by \a index from the series.
 */
 
 /*!
     \qmlmethod XYSeries::removePoints(int index, int count)
-    Removes \a count points from the series starting at \a index.
+    Removes the number of points specified by \a count from the series starting
+    at the position specified by \a index.
 */
 
 /*!
     \qmlmethod XYSeries::insert(int index, real x, real y)
-    Inserts point (\a x, \a y) to the \a index. If index is 0 or smaller than 0 the point is prepended to the list of
-    points. If index is the same as or bigger than count, the point is appended to the list of points.
+    Inserts a point with the coordinates \a x and \a y to the position specified
+    by \a index in the series. If the index is 0 or less than 0, the point is
+    prepended to the list of points. If the index is equal to or greater than
+    than the number of points in the series, the point is appended to the
+    list of points.
 */
 
 /*!
     \qmlmethod QPointF XYSeries::at(int index)
-    Returns point at \a index. Returns (0, 0) if the index is not valid.
+    Returns the point at the position specified by \a index. Returns (0, 0) if
+    the index is not valid.
 */
 
 /*!
     \internal
 
-    Constructs empty series object which is a child of \a parent.
-    When series object is added to QChart instance ownerships is transferred.
+    Constructs an empty series object that is a child of \a parent.
+    When the series object is added to QChart, instance ownerships is transferred.
 */
 QXYSeries::QXYSeries(QXYSeriesPrivate &d, QObject *parent)
     : QAbstractSeries(d, parent)
@@ -467,15 +503,15 @@ QXYSeries::QXYSeries(QXYSeriesPrivate &d, QObject *parent)
 }
 
 /*!
-    Destroys the object. Series added to QChart instances are owned by those,
-    and are destroyed when QChart instances are destroyed.
+    Deletes the series. Series added to QChart instances are owned by them,
+    and are deleted when the QChart instances are deleted.
 */
 QXYSeries::~QXYSeries()
 {
 }
 
 /*!
-    Adds data point (\a x, \a y) to the series.
+    Adds the data point with the coordinates \a x and \a y to the series.
  */
 void QXYSeries::append(qreal x, qreal y)
 {
@@ -483,8 +519,8 @@ void QXYSeries::append(qreal x, qreal y)
 }
 
 /*!
-   This is an overloaded function.
-   Adds data \a point to the series.
+   \overload
+   Adds the data point \a point to the series.
  */
 void QXYSeries::append(const QPointF &point)
 {
@@ -497,8 +533,8 @@ void QXYSeries::append(const QPointF &point)
 }
 
 /*!
-   This is an overloaded function.
-   Adds list of data \a points to the series.
+   \overload
+   Adds the list of data points specified by \a points to the series.
  */
 void QXYSeries::append(const QList<QPointF> &points)
 {
@@ -507,8 +543,11 @@ void QXYSeries::append(const QList<QPointF> &points)
 }
 
 /*!
-  Replaces data point (\a oldX, \a oldY) with data point (\a newX, \a newY).
-  \sa pointReplaced()
+    Replaces the point with the coordinates \a oldX and \a oldY with the point
+    with the coordinates \a newX and \a newY. Does nothing if the old point does
+    not exist.
+
+    \sa pointReplaced()
 */
 void QXYSeries::replace(qreal oldX, qreal oldY, qreal newX, qreal newY)
 {
@@ -516,7 +555,8 @@ void QXYSeries::replace(qreal oldX, qreal oldY, qreal newX, qreal newY)
 }
 
 /*!
-  Replaces \a oldPoint with \a newPoint.
+  Replaces the point specified by \a oldPoint with the one specified by
+  \a newPoint.
   \sa pointReplaced()
 */
 void QXYSeries::replace(const QPointF &oldPoint, const QPointF &newPoint)
@@ -529,7 +569,8 @@ void QXYSeries::replace(const QPointF &oldPoint, const QPointF &newPoint)
 }
 
 /*!
-  Replaces the point at \a index with data point (\a newX, \a newY).
+  Replaces the point at the position specified by \a index with the point that
+  has the coordinates \a newX and \a newY.
   \sa pointReplaced()
 */
 void QXYSeries::replace(int index, qreal newX, qreal newY)
@@ -538,7 +579,8 @@ void QXYSeries::replace(int index, qreal newX, qreal newY)
 }
 
 /*!
-  Replaces the point at \a index with \a newPoint.
+  Replaces the point at the position specified by \a index with the point
+  specified by \a newPoint.
   \sa pointReplaced()
 */
 void QXYSeries::replace(int index, const QPointF &newPoint)
@@ -551,7 +593,7 @@ void QXYSeries::replace(int index, const QPointF &newPoint)
 }
 
 /*!
-  Replaces the current points with \a points.
+  Replaces the current points with the points specified by \a points.
   \note This is much faster than replacing data points one by one,
   or first clearing all data, and then appending the new data. Emits QXYSeries::pointsReplaced()
   when the points have been replaced. However, note that using the overload that takes
@@ -564,7 +606,7 @@ void QXYSeries::replace(QList<QPointF> points)
 }
 
 /*!
-  Replaces the current points with \a points.
+  Replaces the current points with the points specified by \a points.
   \note This is much faster than replacing data points one by one,
   or first clearing all data, and then appending the new data. Emits QXYSeries::pointsReplaced()
   when the points have been replaced.
@@ -578,7 +620,7 @@ void QXYSeries::replace(QVector<QPointF> points)
 }
 
 /*!
-  Removes the point (\a x, \a y) from the series.
+  Removes the point that has the coordinates \a x and \a y from the series.
   \sa pointRemoved()
 */
 void QXYSeries::remove(qreal x, qreal y)
@@ -587,7 +629,7 @@ void QXYSeries::remove(qreal x, qreal y)
 }
 
 /*!
-  Removes the \a point from the series.
+  Removes the data point \a point from the series.
   \sa pointRemoved()
 */
 void QXYSeries::remove(const QPointF &point)
@@ -600,7 +642,7 @@ void QXYSeries::remove(const QPointF &point)
 }
 
 /*!
-  Removes the point at \a index from the series.
+  Removes the point at the position specified by \a index from the series.
   \sa pointRemoved()
 */
 void QXYSeries::remove(int index)
@@ -611,7 +653,8 @@ void QXYSeries::remove(int index)
 }
 
 /*!
-  Removes \a count number of points from the series starting at \a index.
+  Removes the number of points specified by \a count from the series starting at
+  the position specified by \a index.
   \sa pointsRemoved()
 */
 void QXYSeries::removePoints(int index, int count)
@@ -626,7 +669,8 @@ void QXYSeries::removePoints(int index, int count)
 }
 
 /*!
-   Inserts a \a point in the series at \a index position.
+  Inserts the data point \a point in the series at the position specified by
+  \a index.
   \sa pointAdded()
 */
 void QXYSeries::insert(int index, const QPointF &point)
@@ -651,7 +695,7 @@ void QXYSeries::clear()
 
 /*!
     Returns the points in the series as a list.
-    Use QXYSeries::pointsVector() for better performance.
+    Use pointsVector() for better performance.
 */
 QList<QPointF> QXYSeries::points() const
 {
@@ -661,7 +705,7 @@ QList<QPointF> QXYSeries::points() const
 
 /*!
     Returns the points in the series as a vector.
-    This is more efficient that calling QXYSeries::points();
+    This is more efficient than calling points().
 */
 QVector<QPointF> QXYSeries::pointsVector() const
 {
@@ -670,7 +714,8 @@ QVector<QPointF> QXYSeries::pointsVector() const
 }
 
 /*!
-    Returns point at \a index in internal points vector.
+    Returns the data point at the position specified by \a index in the internal
+    points vector.
 */
 const QPointF &QXYSeries::at(int index) const
 {
@@ -679,7 +724,7 @@ const QPointF &QXYSeries::at(int index) const
 }
 
 /*!
-    Returns number of data points within series.
+    Returns the number of data points in a series.
 */
 int QXYSeries::count() const
 {
@@ -689,8 +734,8 @@ int QXYSeries::count() const
 
 
 /*!
-    Sets \a pen used for drawing points on the chart. If the pen is not defined, the
-    pen from chart theme is used.
+    Sets the pen used for drawing points on the chart to \a pen. If the pen is
+    not defined, the pen from the chart theme is used.
     \sa QChart::setTheme()
 */
 void QXYSeries::setPen(const QPen &pen)
@@ -716,8 +761,8 @@ QPen QXYSeries::pen() const
 }
 
 /*!
-    Sets \a brush used for drawing points on the chart. If the brush is not defined, brush
-    from chart theme setting is used.
+    Sets the brush used for drawing points on the chart to \a brush. If the
+    brush is not defined, the brush from the chart theme setting is used.
     \sa QChart::setTheme()
 */
 void QXYSeries::setBrush(const QBrush &brush)
@@ -846,7 +891,7 @@ bool QXYSeries::pointLabelsClipping() const
 }
 
 /*!
-    Stream operator for adding a data \a point to the series.
+    Stream operator for adding the data point \a point to the series.
     \sa append()
 */
 QXYSeries &QXYSeries::operator<< (const QPointF &point)
@@ -857,7 +902,8 @@ QXYSeries &QXYSeries::operator<< (const QPointF &point)
 
 
 /*!
-    Stream operator for adding a list of \a points to the series.
+    Stream operator for adding the list of data points specified by \a points
+    to the series.
     \sa append()
 */
 
