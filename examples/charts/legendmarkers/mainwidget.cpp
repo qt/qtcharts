@@ -82,7 +82,7 @@ void MainWidget::addSeries()
     int offset = m_chart->series().count();
     for (int i = 0; i < 360; i++) {
         qreal x = offset * 20 + i;
-        data.append(QPointF(i, qSin(2.0 * 3.141592 * x / 360.0)));
+        data.append(QPointF(i, qSin(qDegreesToRadians(x))));
     }
 
     series->append(data);

@@ -89,8 +89,8 @@ QVector<QPointF> PolarDomain::calculateGeometryPoints(const QVector<QPointF> &ve
 
 QPointF PolarDomain::polarCoordinateToPoint(qreal angularCoordinate, qreal radialCoordinate) const
 {
-    qreal dx = qSin(angularCoordinate * (M_PI / 180)) * radialCoordinate;
-    qreal dy = qCos(angularCoordinate * (M_PI / 180)) * radialCoordinate;
+    qreal dx = qSin(qDegreesToRadians(angularCoordinate)) * radialCoordinate;
+    qreal dy = qCos(qDegreesToRadians(angularCoordinate)) * radialCoordinate;
 
     return QPointF(dx, -dy);
 }

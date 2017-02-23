@@ -43,8 +43,8 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 QPointF offset(qreal angle, qreal length)
 {
-    qreal dx = qSin(angle * (M_PI / 180)) * length;
-    qreal dy = qCos(angle * (M_PI / 180)) * length;
+    qreal dx = qSin(qDegreesToRadians(angle)) * length;
+    qreal dy = qCos(qDegreesToRadians(angle)) * length;
     return QPointF(dx, -dy);
 }
 
