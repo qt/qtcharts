@@ -36,7 +36,7 @@ class PieChart: public Chart
 public:
     QString name() { return QObject::tr("PieChart"); }
     QString category()  { return QObject::tr("PieSeries"); }
-    QString subCategory() { return QString::null; }
+    QString subCategory() { return QString(); }
 
     QChart *createChart(const DataTable &table)
     {

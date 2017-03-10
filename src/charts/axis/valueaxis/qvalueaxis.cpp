@@ -354,7 +354,7 @@ QValueAxisPrivate::QValueAxisPrivate(QValueAxis *q)
       m_max(0),
       m_tickCount(5),
       m_minorTickCount(0),
-      m_format(QString::null),
+      m_format(),
       m_applying(false)
 {
 

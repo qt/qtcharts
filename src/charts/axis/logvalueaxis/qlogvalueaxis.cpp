@@ -380,7 +380,7 @@ QLogValueAxisPrivate::QLogValueAxisPrivate(QLogValueAxis *q)
       m_base(10),
       m_tickCount(0),
       m_minorTickCount(0),
-      m_labelFormat(QString::null)
+      m_labelFormat()
 {
 }
 

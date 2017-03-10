@@ -37,7 +37,7 @@ public:
     FontChart(int fontSize): m_fontSize(fontSize) {};
     QString name() { return QObject::tr("Font") + " " + QString::number(m_fontSize); }
     QString category()  { return QObject::tr("Font"); }
-    QString subCategory() { return QString::null; }
+    QString subCategory() { return QString(); }
 
     QChart *createChart(const DataTable &table)
     {
