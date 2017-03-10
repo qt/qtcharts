@@ -143,7 +143,7 @@ QT_CHARTS_BEGIN_NAMESPACE
     The minimum and default value is -1 (number limited by the number of rows in the model).
 */
 /*!
-    \qmlproperty int VPieModelMapper::columnCount
+    \qmlproperty int VPieModelMapper::rowCount
     The number of rows of the model that are mapped as the data for a pie series.
     The default value is -1 (number limited by the number of rows in the model).
 */

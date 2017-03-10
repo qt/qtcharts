@@ -267,6 +267,7 @@ void ScatterChartItem::handleUpdated()
     m_visible = m_series->isVisible();
     m_size = m_series->markerSize();
     m_shape = m_series->markerShape();
+    setVisible(m_visible);
     setOpacity(m_series->opacity());
     m_pointLabelsFormat = m_series->pointLabelsFormat();
     m_pointLabelsVisible = m_series->pointLabelsVisible();

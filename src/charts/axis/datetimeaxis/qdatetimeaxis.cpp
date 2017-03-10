@@ -145,6 +145,14 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
+  \qmlmethod DateTimeAxis::rangeChanged(datetime min, datetime max)
+  This signal is emitted when the minimum or maximum value of the axis, specified by \a min
+  and \a max, changes.
+
+  The corresponding signal handler is \c onRangeChanged().
+*/
+
+/*!
   \property QDateTimeAxis::tickCount
   \brief The number of tick marks on the axis.
 */

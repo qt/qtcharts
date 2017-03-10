@@ -59,7 +59,7 @@ QT_CHARTS_BEGIN_NAMESPACE
     \qmlproperty AbstractAxis XYSeries::axisX
     The x-axis used for the series. If you leave both axisX and axisXTop
     undefined, a value axis is created for the series.
-    \sa axisXTop, QValueAxis
+    \sa axisXTop, ValueAxis
 */
 
 /*!
