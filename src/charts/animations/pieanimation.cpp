@@ -39,6 +39,7 @@ PieAnimation::PieAnimation(PieChartItem *item, int duration, QEasingCurve &curve
       m_animationDuration(duration),
       m_animationCurve(curve)
 {
+    Q_UNUSED(m_item);
 }
 
 PieAnimation::~PieAnimation()
