@@ -57,7 +57,7 @@ void HorizontalStackedBarChartItem::initializeLayout(int set, int category,
             checkIndex--;
             QBarSet *checkSet = m_series->barSets().at(checkIndex);
             const qreal checkValue = checkSet->at(category);
-            if (value < 0.0 == checkValue < 0.0) {
+            if ((value < 0.0) == (checkValue < 0.0)) {
                 Bar *checkBar = m_indexForBarMap.value(checkSet).value(category);
                 rect = m_layout.at(checkBar->layoutIndex());
                 found = true;
