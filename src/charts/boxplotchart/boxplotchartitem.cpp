@@ -43,7 +43,10 @@ BoxPlotChartItem::BoxPlotChartItem(QBoxPlotSeries *series, QGraphicsItem *item) 
     m_series(series),
     m_animation(0)
 {
+    setAcceptedMouseButtons(0);
     connect(series, SIGNAL(boxsetsRemoved(QList<QBoxSet *>)), this, SLOT(handleBoxsetRemove(QList<QBoxSet *>)));
+    connect(series, SIGNAL(visibleChanged()), this, SLOT(handleSeriesVisibleChanged()));
+    connect(series, SIGNAL(opacityChanged()), this, SLOT(handleOpacityChanged()));
     connect(series->d_func(), SIGNAL(restructuredBoxes()), this, SLOT(handleDataStructureChanged()));
     connect(series->d_func(), SIGNAL(updatedLayout()), this, SLOT(handleLayoutChanged()));
     connect(series->d_func(), SIGNAL(updatedBoxes()), this, SLOT(handleUpdatedBars()));
@@ -71,6 +74,16 @@ void BoxPlotChartItem::setAnimation(BoxPlotAnimation *animation)
             m_animation->addBox(item);
         handleDomainUpdated();
     }
+}
+
+void BoxPlotChartItem::handleSeriesVisibleChanged()
+{
+    setVisible(m_series->isVisible());
+}
+
+void BoxPlotChartItem::handleOpacityChanged()
+{
+    setOpacity(m_series->opacity());
 }
 
 void BoxPlotChartItem::handleDataStructureChanged()

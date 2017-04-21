@@ -130,11 +130,12 @@ QT_CHARTS_BEGIN_NAMESPACE
   \property QAbstractAxis::minorGridVisible
   \brief The visibility of the minor grid lines.
 
-  Applies only to QValueAxis.
+  Applies only to axes that support minor grid lines.
 */
 /*!
   \qmlproperty bool AbstractAxis::minorGridVisible
-  The visibility of the minor grid lines. Applies only to ValueAxis.
+  The visibility of the minor grid lines. Applies only to axes that support
+  minor grid lines.
 */
 
 /*!
@@ -155,7 +156,7 @@ QT_CHARTS_BEGIN_NAMESPACE
   \property QAbstractAxis::minorGridLinePen
   \brief The pen used to draw the minor grid line.
 
-  Applies only to QValueAxis.
+  Applies only to axes that support minor grid lines.
 */
 
 /*!
@@ -164,10 +165,22 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
+  \qmlproperty color AbstractAxis::gridLineColor
+  The color of the grid line.
+*/
+
+/*!
   \property QAbstractAxis::minorGridLineColor
   \brief The color of the minor grid line.
 
-  Applies only to QValueAxis.
+  Applies only to axes that support minor grid lines.
+*/
+
+/*!
+  \qmlproperty color AbstractAxis::minorGridLineColor
+  The color of the minor grid line.
+
+  Applies only to axes that support minor grid lines.
 */
 
 /*!

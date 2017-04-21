@@ -37,7 +37,7 @@ class SizeChart: public Chart
 public:
     QString name() { return QObject::tr("PlotArea"); }
     QString category()  { return QObject::tr("Size"); }
-    QString subCategory() { return QString::null; }
+    QString subCategory() { return QString(); }
 
     QChart *createChart(const DataTable &table)
     {

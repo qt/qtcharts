@@ -39,8 +39,6 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-const qreal mouseEventMinWidth(12);
-
 LineChartItem::LineChartItem(QLineSeries *series, QGraphicsItem *item)
     : XYChart(series,item),
       m_series(series),

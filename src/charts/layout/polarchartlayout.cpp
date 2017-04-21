@@ -34,8 +34,6 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-static const qreal golden_ratio = 0.4;
-
 PolarChartLayout::PolarChartLayout(ChartPresenter *presenter)
     : AbstractChartLayout(presenter)
 {

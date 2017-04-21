@@ -101,6 +101,11 @@
     \sa Qt::PenCapStyle
 */
 
+/*!
+    \qmlproperty int SplineSeries::count
+    The number of data points in the series.
+*/
+
 QT_CHARTS_BEGIN_NAMESPACE
 
 /*!

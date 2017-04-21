@@ -37,7 +37,7 @@ class CategoryLineChart: public Chart
 public:
     QString name() { return QObject::tr("CategoryAxis"); }
     QString category()  { return QObject::tr("Axis"); }
-    QString subCategory() { return QString::null; }
+    QString subCategory() { return QString(); }
 
     QChart *createChart(const DataTable &table)
     {

@@ -64,6 +64,8 @@ public:
     QRectF boundingRect() const;
 
 public Q_SLOTS:
+    void handleSeriesVisibleChanged();
+    void handleOpacityChanged();
     void handleDataStructureChanged();
     void handleDomainUpdated();
     void handleLayoutChanged();

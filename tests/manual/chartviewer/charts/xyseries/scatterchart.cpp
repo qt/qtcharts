@@ -36,7 +36,7 @@ class ScatterChart: public Chart
 public:
     QString name() { return QObject::tr("ScatterChart"); }
     QString category()  { return QObject::tr("XYSeries"); }
-    QString subCategory() { return QString::null; }
+    QString subCategory() { return QString(); }
 
     QChart *createChart(const DataTable &table)
     {

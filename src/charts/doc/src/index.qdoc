@@ -57,6 +57,11 @@
 
     \snippet doc_src_qtcharts.pro 0
 
+    \section1 Articles and Guides
+    \list
+        \li \l{Qt Charts Overview}
+    \endlist
+
     \section1 Examples
     \list
         \li \l{Qt Charts Examples}
