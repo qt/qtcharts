@@ -75,6 +75,7 @@ void QXYModelMapper::setModel(QAbstractItemModel *model)
     connect(d->m_model, SIGNAL(columnsInserted(QModelIndex,int,int)), d, SLOT(modelColumnsAdded(QModelIndex,int,int)));
     connect(d->m_model, SIGNAL(columnsRemoved(QModelIndex,int,int)), d, SLOT(modelColumnsRemoved(QModelIndex,int,int)));
     connect(d->m_model, SIGNAL(modelReset()), d, SLOT(initializeXYFromModel()));
+    connect(d->m_model, SIGNAL(layoutChanged()), d, SLOT(initializeXYFromModel()));
     connect(d->m_model, SIGNAL(destroyed()), d, SLOT(handleModelDestroyed()));
 }
 
@@ -379,6 +380,7 @@ void QXYModelMapperPrivate::modelUpdated(QModelIndex topLeft, QModelIndex bottom
                         oldPoint = m_series->points().at(index.row() - m_first);
                         newPoint.setX(valueFromModel(xIndex));
                         newPoint.setY(valueFromModel(yIndex));
+                        m_series->replace(index.row() - m_first, newPoint);
                     }
                 }
             } else if (m_orientation == Qt::Horizontal && (index.row() == m_xSection || index.row() == m_ySection)) {
@@ -389,12 +391,10 @@ void QXYModelMapperPrivate::modelUpdated(QModelIndex topLeft, QModelIndex bottom
                         oldPoint = m_series->points().at(index.column() - m_first);
                         newPoint.setX(valueFromModel(xIndex));
                         newPoint.setY(valueFromModel(yIndex));
+                        m_series->replace(index.column() - m_first, newPoint);
                     }
                 }
-            } else {
-                continue;
             }
-            m_series->replace(oldPoint, newPoint);
         }
     }
     blockSeriesSignals(false);
