@@ -139,6 +139,13 @@ QML_DECLARE_TYPE(QScatterSeries)
 QML_DECLARE_TYPE(QSplineSeries)
 QML_DECLARE_TYPE(QStackedBarSeries)
 
+static void initResources()
+{
+#ifdef QT_STATIC
+    Q_INIT_RESOURCE(qmake_QtCharts);
+#endif
+}
+
 QT_CHARTS_BEGIN_NAMESPACE
 
 class QtChartsQml2Plugin : public QQmlExtensionPlugin
@@ -148,6 +155,7 @@ class QtChartsQml2Plugin : public QQmlExtensionPlugin
     Q_PLUGIN_METADATA(IID QQmlExtensionInterface_iid)
 
 public:
+    QtChartsQml2Plugin(QObject *parent = 0) : QQmlExtensionPlugin(parent) { initResources(); }
     virtual void registerTypes(const char *uri)
     {
         Q_ASSERT(QLatin1String(uri) == QLatin1String("QtCharts"));

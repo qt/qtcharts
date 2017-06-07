@@ -37,6 +37,9 @@ SUBDIRS += \
 qtHaveModule(quick) {
     SUBDIRS += qml \
                qml-qtquicktest
+
+    # QTBUG-20268
+    boot2qt: SUBDIRS -= qml-qtquicktest
 }
 
 !contains(QT_CONFIG, private_tests): SUBDIRS -= \

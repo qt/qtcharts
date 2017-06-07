@@ -58,3 +58,5 @@ qhp.QtCharts.subprojects.examples.sortPages  = true
 navigation.landingpage = Qt Charts
 navigation.cppclassespage = Qt Charts C++ Classes
 navigation.qmltypespage = Qt Charts QML Types
+
+manifestmeta.highlighted.names += "QtCharts/Chart Themes Example"

@@ -105,7 +105,7 @@ void VerticalAxis::updateGeometry()
     //title
     QRectF titleBoundingRect;
     QString titleText = axis()->titleText();
-    qreal availableSpace = axisRect.width() - labelPadding();
+    qreal availableSpace = axisRect.height() - labelPadding();
     if (!titleText.isEmpty() && titleItem()->isVisible()) {
         availableSpace -= titlePadding() * 2.0;
         qreal minimumLabelWidth = ChartPresenter::textBoundingRect(axis()->labelsFont(),
