@@ -32,7 +32,7 @@
 #include <QtCharts/QScatterSeries>
 #include <QtCharts/QSplineSeries>
 #include <QtCharts/QAreaSeries>
-#include <QtCore/QTime>
+#include <QtCore/QRandomGenerator>
 
 ChartView::ChartView(QChart *chart, QWidget *parent)
     : QChartView(chart, parent),
@@ -62,7 +62,7 @@ ChartView::ChartView(QChart *chart, QWidget *parent)
     int numPoints = 10;
 
     for (int x = 0; x <= numPoints; ++x) {
-        qreal y = qrand() % 100;
+        qreal y = QRandomGenerator::bounded(100);
         series0->append(x, y);
         series1->append(x, y);
         series2->append(x, y);

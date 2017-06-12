@@ -28,7 +28,6 @@
 ****************************************************************************/
 #include <private/qabstractseries_p.h>
 #include <private/qabstractaxis_p.h>
-#include <QtCore/QTime>
 //themes
 #include <private/chartthemesystem_p.h>
 #include <private/chartthemelight_p.h>
@@ -45,7 +44,6 @@ QT_CHARTS_BEGIN_NAMESPACE
 ChartThemeManager::ChartThemeManager(QChart* chart) :
     m_chart(chart)
 {
-    qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
 }
 
 

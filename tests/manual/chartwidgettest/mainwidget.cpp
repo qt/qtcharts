@@ -50,6 +50,7 @@
 #include <QtWidgets/QMessageBox>
 #include <qmath.h>
 #include <QtCore/QDebug>
+#include <QtCore/QRandomGenerator>
 #include <QtGui/QStandardItemModel>
 #include <QtCharts/QBarCategoryAxis>
 #include <QtWidgets/QOpenGLWidget>
@@ -218,9 +219,9 @@ QList<RealList> MainWidget::generateTestData(int columnCount, int rowCount, QStr
             if (dataCharacteristics == "Sin") {
                 newColumn.append(std::abs(sin(M_PI / 50 * i) * 100));
             } else if (dataCharacteristics == "Sin + random") {
-                newColumn.append(std::abs(sin(M_PI / 50 * i) * 100) + (rand() % 5));
+                newColumn.append(std::abs(sin(M_PI / 50 * i) * 100) + QRandomGenerator::bounded(5));
             } else if (dataCharacteristics == "Random") {
-                newColumn.append(rand() % 10 + (qreal) rand() / (qreal) RAND_MAX);
+                newColumn.append(QRandomGenerator::bounded(11.0));
             } else if (dataCharacteristics == "Linear") {
                 //newColumn.append(i * (j + 1.0));
                 // TODO: temporary hack to make pie work; prevent zero values:

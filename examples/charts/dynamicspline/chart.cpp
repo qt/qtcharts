@@ -31,7 +31,7 @@
 #include <QtCharts/QAbstractAxis>
 #include <QtCharts/QSplineSeries>
 #include <QtCharts/QValueAxis>
-#include <QtCore/QTime>
+#include <QtCore/QRandomGenerator>
 #include <QtCore/QDebug>
 
 Chart::Chart(QGraphicsItem *parent, Qt::WindowFlags wFlags):
@@ -42,8 +42,6 @@ Chart::Chart(QGraphicsItem *parent, Qt::WindowFlags wFlags):
     m_x(5),
     m_y(1)
 {
-    qsrand((uint) QTime::currentTime().msec());
-
     QObject::connect(&m_timer, SIGNAL(timeout()), this, SLOT(handleTimeout()));
     m_timer.setInterval(1000);
 
@@ -73,7 +71,7 @@ void Chart::handleTimeout()
     qreal x = plotArea().width() / m_axis->tickCount();
     qreal y = (m_axis->max() - m_axis->min()) / m_axis->tickCount();
     m_x += y;
-    m_y = qrand() % 5 - 2.5;
+    m_y = QRandomGenerator::bounded(5) - 2.5;
     m_series->append(m_x, m_y);
     scroll(x, 0);
     if (m_x == 100)

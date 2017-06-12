@@ -49,7 +49,7 @@
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QLabel>
-#include <QtCore/QTime>
+#include <QtCore/QRandomGenerator>
 #include <QtCharts/QBarCategoryAxis>
 
 ThemeWidget::ThemeWidget(QWidget *parent) :
@@ -129,16 +129,13 @@ DataTable ThemeWidget::generateRandomData(int listCount, int valueMax, int value
 {
     DataTable dataTable;
 
-    // set seed for random stuff
-    qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
-
     // generate random data
     for (int i(0); i < listCount; i++) {
         DataList dataList;
         qreal yValue(0);
         for (int j(0); j < valueCount; j++) {
-            yValue = yValue + (qreal)(qrand() % valueMax) / (qreal) valueCount;
-            QPointF value((j + (qreal) rand() / (qreal) RAND_MAX) * ((qreal) m_valueMax / (qreal) valueCount),
+            yValue = yValue + QRandomGenerator::bounded(valueMax / (qreal) valueCount);
+            QPointF value((j + QRandomGenerator::getReal()) * ((qreal) m_valueMax / (qreal) valueCount),
                           yValue);
             QString label = "Slice " + QString::number(i) + ":" + QString::number(j);
             dataList << Data(value, label);

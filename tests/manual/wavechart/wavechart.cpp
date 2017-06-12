@@ -29,6 +29,7 @@
 
 #include "wavechart.h"
 #include <qmath.h>
+#include <qrandom.h>
 
 QT_CHARTS_USE_NAMESPACE
 
@@ -45,9 +46,6 @@ WaveChart::WaveChart(QChart* chart, QWidget* parent) :
     m_series->setPen(blue);
 
     chart->legend()->setVisible(false);
-
-    QTime now = QTime::currentTime();
-    qsrand((uint) now.msec());
 
     int fluctuate = 100;
 
@@ -69,7 +67,7 @@ void WaveChart::update()
     int fluctuate;
     const QList<QPointF>& points = m_series->points();
     for (qreal i = 0, x = 0; x <= 2 * M_PI; x += m_step, i++) {
-        fluctuate = qrand() % 100;
+        fluctuate = QRandomGenerator::bounded(100);
         m_series->replace(x,points[i].y(),x,fabs(sin(x) * fluctuate));
 
     }

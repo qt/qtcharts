@@ -35,6 +35,7 @@
 #include <QtCharts/QValueAxis>
 #include <QtCore/QDateTime>
 #include <QtCore/QDebug>
+#include <QtCore/QRandomGenerator>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDoubleSpinBox>
@@ -64,8 +65,6 @@ MainWidget::MainWidget(QWidget *parent)
       m_customDecreasingColor(false),
       m_hModelMapper(new QHCandlestickModelMapper(this))
 {
-    qsrand(QDateTime::currentDateTime().toTime_t());
-
     m_chartView->setRenderHint(QPainter::Antialiasing, false);
 
     m_hModelMapper->setModel(new CustomTableModel(this));
@@ -285,7 +284,9 @@ QGridLayout *MainWidget::createModelMapperControlsLayout()
 
 qreal MainWidget::randomValue(int min, int max) const
 {
-    return (qrand() / (qreal(RAND_MAX) + 1)) * ((qMax(min, max) - qMin(min, max)) + qMin(min, max));
+    if (min > max)
+        qSwap(min, max);
+    return QRandomGenerator::bounded(min, max);
 }
 
 QCandlestickSet *MainWidget::randomSet(qreal timestamp)

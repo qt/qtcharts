@@ -40,7 +40,6 @@
 #include <QtCharts/QHorizontalStackedBarSeries>
 #include <QtCharts/QPercentBarSeries>
 #include <QtCharts/QStackedBarSeries>
-#include <QtCore/QTime>
 #include <QElapsedTimer>
 #include <QDebug>
 
@@ -151,8 +150,6 @@ ChartWidget::ChartWidget(QWidget *parent) :
         series->setLabelsVisible(initialLabels);
         series->setBarWidth(barWidth);
     }
-
-    qsrand((uint) QTime::currentTime().msec());
 
     resize(800, 300);
     m_horizontalLayout = new QHBoxLayout(this);

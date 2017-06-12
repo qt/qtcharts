@@ -33,6 +33,7 @@
 #include <QtQuick/QQuickView>
 #include <QtQuick/QQuickItem>
 #include <QtCore/QDebug>
+#include <QtCore/QRandomGenerator>
 #include <QtCore/QtMath>
 
 QT_CHARTS_USE_NAMESPACE
@@ -82,7 +83,7 @@ void DataSource::generateData(int type, int rowCount, int colCount)
             switch (type) {
             case 0:
                 // data with sin + random component
-                y = qSin(M_PI / 50 * j) + 0.5 + (qreal) rand() / (qreal) RAND_MAX;
+                y = qSin(M_PI / 50 * j) + 0.5 + QRandomGenerator::getReal();
                 x = j;
                 break;
             case 1:

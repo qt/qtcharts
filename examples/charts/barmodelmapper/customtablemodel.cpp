@@ -31,13 +31,12 @@
 #include <QtCore/QVector>
 #include <QtCore/QTime>
 #include <QtCore/QRect>
+#include <QtCore/QRandomGenerator>
 #include <QtGui/QColor>
 
 CustomTableModel::CustomTableModel(QObject *parent) :
     QAbstractTableModel(parent)
 {
-    qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
-
     m_columnCount = 6;
     m_rowCount = 12;
 
@@ -46,9 +45,9 @@ CustomTableModel::CustomTableModel(QObject *parent) :
         QVector<qreal>* dataVec = new QVector<qreal>(m_columnCount);
         for (int k = 0; k < dataVec->size(); k++) {
             if (k % 2 == 0)
-                dataVec->replace(k, i * 50 + qrand() % 20);
+                dataVec->replace(k, i * 50 + QRandomGenerator::bounded(20));
             else
-                dataVec->replace(k, qrand() % 100);
+                dataVec->replace(k, QRandomGenerator::bounded(100));
         }
         m_data.append(dataVec);
     }

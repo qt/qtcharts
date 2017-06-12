@@ -36,6 +36,7 @@
 #include <QtCharts/QDateTimeAxis>
 #include <QtCharts/QCategoryAxis>
 #include <QtCharts/QChart>
+#include <QtCore/QRandomGenerator>
 #include <QtCore/QDebug>
 #include <QtCore/QDateTime>
 
@@ -548,7 +549,7 @@ void MainWindow::addSeries(bool gl)
 
     if (m_seriesList.size() < maxSeriesCount) {
         QXYSeries *series;
-        if (qrand() % 2) {
+        if (QRandomGenerator::bounded(2)) {
             series = new QLineSeries;
             series->setPen(QPen(QBrush(color), width));
         } else {
