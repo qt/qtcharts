@@ -899,8 +899,8 @@ void tst_QChart::zoomOut()
     else
         QCOMPARE(minY, axisY->min());
 
-    QVERIFY(maxX == axisX->max());
-    QVERIFY(maxY == axisY->max());
+    QCOMPARE(maxX, axisX->max());
+    QCOMPARE(maxY, axisY->max());
 
 }
 
