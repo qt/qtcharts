@@ -36,7 +36,7 @@ MainSlice::MainSlice(QPieSeries *breakdownSeries, QObject *parent)
     : QPieSlice(parent),
       m_breakdownSeries(breakdownSeries)
 {
-    connect(this, SIGNAL(percentageChanged()), this, SLOT(updateLabel()));
+    connect(this, &MainSlice::percentageChanged, this, &MainSlice::updateLabel);
 }
 //![1]
 

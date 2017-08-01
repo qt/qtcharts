@@ -94,7 +94,8 @@ ThemeWidget::ThemeWidget(QWidget *parent) :
     m_charts << chartView;
 
     chartView = new QChartView(createPieChart());
-    chartView->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored); // funny things happen if the pie slice labels no not fit the screen...
+    // Funny things happen if the pie slice labels do not fit the screen, so we ignore size policy
+    chartView->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     baseLayout->addWidget(chartView, 2, 0);
     m_charts << chartView;
 
@@ -119,10 +120,16 @@ ThemeWidget::~ThemeWidget()
 
 void ThemeWidget::connectSignals()
 {
-    connect(m_themeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateUI()));
-    connect(m_antialiasCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateUI()));
-    connect(m_animatedComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateUI()));
-    connect(m_legendComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateUI()));
+    connect(m_themeComboBox,
+            static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            this, &ThemeWidget::updateUI);
+    connect(m_antialiasCheckBox, &QCheckBox::toggled, this, &ThemeWidget::updateUI);
+    connect(m_animatedComboBox,
+            static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            this, &ThemeWidget::updateUI);
+    connect(m_legendComboBox,
+            static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            this, &ThemeWidget::updateUI);
 }
 
 DataTable ThemeWidget::generateRandomData(int listCount, int valueMax, int valueCount) const
@@ -321,7 +328,8 @@ QChart *ThemeWidget::createScatterChart() const
 
 void ThemeWidget::updateUI()
 {
-    QChart::ChartTheme theme = (QChart::ChartTheme) m_themeComboBox->itemData(m_themeComboBox->currentIndex()).toInt();
+    QChart::ChartTheme theme = static_cast<QChart::ChartTheme>(
+                m_themeComboBox->itemData(m_themeComboBox->currentIndex()).toInt());
 
     if (m_charts.at(0)->chart()->theme() != theme) {
         foreach (QChartView *chartView, m_charts)
@@ -360,7 +368,8 @@ void ThemeWidget::updateUI()
     foreach (QChartView *chart, m_charts)
         chart->setRenderHint(QPainter::Antialiasing, checked);
 
-    QChart::AnimationOptions options(m_animatedComboBox->itemData(m_animatedComboBox->currentIndex()).toInt());
+    QChart::AnimationOptions options(
+                m_animatedComboBox->itemData(m_animatedComboBox->currentIndex()).toInt());
     if (m_charts.at(0)->chart()->animationOptions() != options) {
         foreach (QChartView *chartView, m_charts)
             chartView->chart()->setAnimationOptions(options);

@@ -44,7 +44,7 @@ Chart::Chart(QGraphicsItem *parent, Qt::WindowFlags wFlags):
 {
     qsrand((uint) QTime::currentTime().msec());
 
-    QObject::connect(&m_timer, SIGNAL(timeout()), this, SLOT(handleTimeout()));
+    QObject::connect(&m_timer, &QTimer::timeout, this, &Chart::handleTimeout);
     m_timer.setInterval(1000);
 
     m_series = new QSplineSeries(this);

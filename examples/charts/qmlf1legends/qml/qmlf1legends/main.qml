@@ -70,10 +70,12 @@ Item {
         onTriggered: {
             currentIndex++;
             if (currentIndex < speedsXml.count) {
-                // Check if there is a series for the data already (we are using driver name to identify series)
+                // Check if there is a series for the data already
+                // (we are using driver name to identify series)
                 var lineSeries = chartView.series(speedsXml.get(currentIndex).driver);
                 if (!lineSeries) {
-                    lineSeries = chartView.createSeries(ChartView.SeriesTypeLine, speedsXml.get(currentIndex).driver);
+                    lineSeries = chartView.createSeries(ChartView.SeriesTypeLine,
+                                                        speedsXml.get(currentIndex).driver);
                     chartView.axisY().min = 0;
                     chartView.axisY().max = 250;
                     chartView.axisY().tickCount = 6;
@@ -81,7 +83,8 @@ Item {
                     chartView.axisX().titleText = "speed trap";
                     chartView.axisX().labelFormat = "%.0f";
                 }
-                lineSeries.append(speedsXml.get(currentIndex).speedTrap, speedsXml.get(currentIndex).speed);
+                lineSeries.append(speedsXml.get(currentIndex).speedTrap,
+                                  speedsXml.get(currentIndex).speed);
 
                 if (speedsXml.get(currentIndex).speedTrap > 3) {
                     chartView.axisX().max = Number(speedsXml.get(currentIndex).speedTrap) + 1;

@@ -69,7 +69,7 @@ Widget::Widget(QWidget *parent)
             slice->setLabelVisible(true);
             slice->setLabelColor(Qt::white);
             slice->setLabelPosition(QPieSlice::LabelInsideTangential);
-            connect(slice, SIGNAL(hovered(bool)), this, SLOT(explodeSlice(bool)));
+            connect(slice, &QPieSlice::hovered, this, &Widget::explodeSlice);
             donut->append(slice);
             donut->setHoleSize(minSize + i * (maxSize - minSize) / donutCount);
             donut->setPieSize(minSize + (i + 1) * (maxSize - minSize) / donutCount);
@@ -88,7 +88,7 @@ Widget::Widget(QWidget *parent)
 
     //! [5]
     updateTimer = new QTimer(this);
-    connect(updateTimer, SIGNAL(timeout()), this, SLOT(updateRotation()));
+    connect(updateTimer, &QTimer::timeout, this, &Widget::updateRotation);
     updateTimer->start(1250);
     //! [5]
 }

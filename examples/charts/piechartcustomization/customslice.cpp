@@ -34,7 +34,7 @@ QT_CHARTS_USE_NAMESPACE
 CustomSlice::CustomSlice(QString label, qreal value)
     : QPieSlice(label, value)
 {
-    connect(this, SIGNAL(hovered(bool)), this, SLOT(showHighlight(bool)));
+    connect(this, &CustomSlice::hovered, this, &CustomSlice::showHighlight);
 }
 
 QBrush CustomSlice::originalBrush()
