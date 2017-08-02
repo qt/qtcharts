@@ -98,7 +98,8 @@ void View::resizeEvent(QResizeEvent *event)
          m_chart->resize(event->size());
          m_coordX->setPos(m_chart->size().width()/2 - 50, m_chart->size().height() - 20);
          m_coordY->setPos(m_chart->size().width()/2 + 50, m_chart->size().height() - 20);
-         foreach (Callout *callout, m_callouts)
+         const auto callouts = m_callouts;
+         for (Callout *callout : callouts)
              callout->updateGeometry();
     }
     QGraphicsView::resizeEvent(event);

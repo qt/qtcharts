@@ -70,7 +70,8 @@ void ChartView::handleClickedPoint(const QPointF &point)
     // Find the closest point from series 1
     QPointF closest(INT_MAX, INT_MAX);
     qreal distance(INT_MAX);
-    foreach (QPointF currentPoint, m_scatter->points()) {
+    const auto points = m_scatter->points();
+    for (const QPointF &currentPoint : points) {
         qreal currentDistance = qSqrt((currentPoint.x() - clickedPoint.x())
                                       * (currentPoint.x() - clickedPoint.x())
                                       + (currentPoint.y() - clickedPoint.y())

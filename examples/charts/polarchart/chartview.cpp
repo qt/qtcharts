@@ -84,31 +84,31 @@ void ChartView::switchChartType()
         newChart = new QChart();
 
     // Move series and axes from old chart to new one
-    QList<QAbstractSeries *> seriesList = oldChart->series();
-    QList<QAbstractAxis *> axisList = oldChart->axes();
+    const QList<QAbstractSeries *> seriesList = oldChart->series();
+    const QList<QAbstractAxis *> axisList = oldChart->axes();
     QList<QPair<qreal, qreal> > axisRanges;
 
-    foreach (QAbstractAxis *axis, axisList) {
+    for (QAbstractAxis *axis : axisList) {
         QValueAxis *valueAxis = static_cast<QValueAxis *>(axis);
         axisRanges.append(QPair<qreal, qreal>(valueAxis->min(), valueAxis->max()));
     }
 
-    foreach (QAbstractSeries *series, seriesList)
+    for (QAbstractSeries *series : seriesList)
         oldChart->removeSeries(series);
 
-    foreach (QAbstractAxis *axis, axisList) {
+    for (QAbstractAxis *axis : axisList) {
         oldChart->removeAxis(axis);
         newChart->addAxis(axis, axis->alignment());
     }
 
-    foreach (QAbstractSeries *series, seriesList) {
+    for (QAbstractSeries *series : seriesList) {
         newChart->addSeries(series);
-        foreach (QAbstractAxis *axis, axisList)
+        for (QAbstractAxis *axis : axisList)
             series->attachAxis(axis);
     }
 
     int count = 0;
-    foreach (QAbstractAxis *axis, axisList) {
+    for (QAbstractAxis *axis : axisList) {
         axis->setRange(axisRanges[count].first, axisRanges[count].second);
         count++;
     }

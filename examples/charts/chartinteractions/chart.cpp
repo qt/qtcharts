@@ -44,10 +44,11 @@ Chart::~Chart()
 
 void Chart::clickPoint(const QPointF &point)
 {
-    // Find the closes data point
+    // Find the closest data point
     m_movingPoint = QPoint();
     m_clicked = false;
-    foreach (QPointF p, m_series->points()) {
+    const auto points = m_series->points();
+    for (QPointF p : points) {
         if (distance(p, point) < distance(m_movingPoint, point)) {
             m_movingPoint = p;
             m_clicked = true;

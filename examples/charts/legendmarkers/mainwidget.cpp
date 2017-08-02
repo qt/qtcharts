@@ -107,7 +107,8 @@ void MainWidget::connectMarkers()
 {
 //![1]
     // Connect all markers to handler
-    foreach (QLegendMarker* marker, m_chart->legend()->markers()) {
+    const auto markers = m_chart->legend()->markers();
+    for (QLegendMarker *marker : markers) {
         // Disconnect possible existing connection to avoid multiple connections
         QObject::disconnect(marker, &QLegendMarker::clicked,
                             this, &MainWidget::handleMarkerClicked);
@@ -119,7 +120,8 @@ void MainWidget::connectMarkers()
 void MainWidget::disconnectMarkers()
 {
 //![2]
-    foreach (QLegendMarker* marker, m_chart->legend()->markers()) {
+    const auto markers = m_chart->legend()->markers();
+    for (QLegendMarker *marker : markers) {
         QObject::disconnect(marker, &QLegendMarker::clicked,
                             this, &MainWidget::handleMarkerClicked);
     }

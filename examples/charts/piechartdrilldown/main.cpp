@@ -62,11 +62,11 @@ int main(int argc, char *argv[])
         "Jane", "John", "Axel", "Mary", "Susan", "Bob"
     };
 
-    foreach (QString name, names) {
+    for (const QString &name : names) {
         QPieSeries *series = new QPieSeries(&window);
         series->setName("Sales by month - " + name);
 
-        foreach (QString month, months)
+        for (const QString &month : months)
             *series << new DrilldownSlice(qrand() % 1000, month, yearSeries);
 
         QObject::connect(series, &QPieSeries::clicked, chart, &DrilldownChart::handleSliceClicked);
