@@ -58,8 +58,8 @@ public:
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event)
     {
-        Q_UNUSED(event)
         m_axis->axisSelected();
+        QGraphicsLineItem::mousePressEvent(event);
     }
 
     QRectF boundingRect() const
