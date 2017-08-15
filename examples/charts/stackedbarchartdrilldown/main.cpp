@@ -50,12 +50,15 @@ int main(int argc, char *argv[])
 
 //! [2]
     // Define categories
-    QStringList months;
-    months << "May" << "Jun" << "Jul" << "Aug" << "Sep";
-    QStringList weeks;
-    weeks << "week 1" << "week 2" << "week 3" << "week 4";
-    QStringList plants;
-    plants << "Habanero" << "Lemon Drop" << "Starfish" << "Aji Amarillo";
+    const QStringList months = {
+        "May", "Jun", "Jul", "Aug", "Sep"
+    };
+    const QStringList weeks = {
+        "week 1", "week 2", "week 3", "week 4"
+    };
+    const QStringList plants = {
+        "Habanero", "Lemon Drop", "Starfish", "Aji Amarillo"
+    };
 //! [2]
 
 //! [3]
@@ -77,16 +80,18 @@ int main(int argc, char *argv[])
         }
 
         // Use clicked signal to implement drilldown
-        QObject::connect(weeklySeries, SIGNAL(clicked(int,QBarSet*)), drilldownChart, SLOT(handleClicked(int,QBarSet*)));
+        QObject::connect(weeklySeries, &DrilldownBarSeries::clicked,
+                         drilldownChart, &DrilldownChart::handleClicked);
     }
 
     // Enable drilldown from season series using clicked signal
-    QObject::connect(seasonSeries, SIGNAL(clicked(int,QBarSet*)), drilldownChart, SLOT(handleClicked(int,QBarSet*)));
+    QObject::connect(seasonSeries, &DrilldownBarSeries::clicked,
+                     drilldownChart, &DrilldownChart::handleClicked);
 //! [3]
 
 //! [4]
     // Fill monthly and weekly series with data
-    foreach (QString plant, plants) {
+    for (const QString &plant : plants) {
         QBarSet *monthlyCrop = new QBarSet(plant);
         for (int month = 0; month < months.count(); month++) {
             QBarSet *weeklyCrop = new QBarSet(plant);

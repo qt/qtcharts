@@ -66,7 +66,8 @@ void DonutBreakdownChart::addBreakdownSeries(QPieSeries *breakdownSeries, QColor
     breakdownSeries->setPieSize(0.8);
     breakdownSeries->setHoleSize(0.7);
     breakdownSeries->setLabelsVisible();
-    foreach (QPieSlice *slice, breakdownSeries->slices()) {
+    const auto slices = breakdownSeries->slices();
+    for (QPieSlice *slice : slices) {
         color = color.lighter(115);
         slice->setBrush(color);
         slice->setLabelFont(font);
@@ -87,7 +88,8 @@ void DonutBreakdownChart::addBreakdownSeries(QPieSeries *breakdownSeries, QColor
 void DonutBreakdownChart::recalculateAngles()
 {
     qreal angle = 0;
-    foreach (QPieSlice *slice, m_mainSeries->slices()) {
+    const auto slices = m_mainSeries->slices();
+    for (QPieSlice *slice : slices) {
         QPieSeries *breakdownSeries = qobject_cast<MainSlice *>(slice)->breakdownSeries();
         breakdownSeries->setPieStartAngle(angle);
         angle += slice->percentage() * 360.0; // full pie is 360.0
@@ -100,8 +102,10 @@ void DonutBreakdownChart::recalculateAngles()
 void DonutBreakdownChart::updateLegendMarkers()
 {
     // go through all markers
-    foreach (QAbstractSeries *series, series()) {
-        foreach (QLegendMarker *marker, legend()->markers(series)) {
+    const auto allseries = series();
+    for (QAbstractSeries *series : allseries) {
+        const auto markers = legend()->markers(series);
+        for (QLegendMarker *marker : markers) {
             QPieLegendMarker *pieMarker = qobject_cast<QPieLegendMarker *>(marker);
             if (series == m_mainSeries) {
                 // hide markers from main series

@@ -61,8 +61,9 @@ BrushTool::BrushTool(QString title, QWidget *parent)
     layout->addRow("Style", m_styleCombo);
     setLayout(layout);
 
-    connect(m_colorButton, SIGNAL(clicked()), this, SLOT(showColorDialog()));
-    connect(m_styleCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(updateStyle()));
+    connect(m_colorButton, &QPushButton::clicked, this, &BrushTool::showColorDialog);
+    connect(m_styleCombo, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            this, &BrushTool::updateStyle);
 }
 
 void BrushTool::setBrush(QBrush brush)

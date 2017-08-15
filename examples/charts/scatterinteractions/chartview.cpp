@@ -45,9 +45,8 @@ ChartView::ChartView(QWidget *parent)
     m_scatter = new QScatterSeries();
     m_scatter->setName("scatter1");
     for (qreal x(0.5); x <= 4.0; x += 0.5) {
-        for (qreal y(0.5); y <= 4.0; y += 0.5) {
+        for (qreal y(0.5); y <= 4.0; y += 0.5)
             *m_scatter << QPointF(x, y);
-        }
     }
     m_scatter2 = new QScatterSeries();
     m_scatter2->setName("scatter2");
@@ -58,7 +57,7 @@ ChartView::ChartView(QWidget *parent)
     chart()->axisX()->setRange(0, 4.5);
     chart()->axisY()->setRange(0, 4.5);
 
-    connect(m_scatter, SIGNAL(clicked(QPointF)), this, SLOT(handleClickedPoint(QPointF)));
+    connect(m_scatter, &QScatterSeries::clicked, this, &ChartView::handleClickedPoint);
 }
 
 ChartView::~ChartView()
@@ -71,7 +70,8 @@ void ChartView::handleClickedPoint(const QPointF &point)
     // Find the closest point from series 1
     QPointF closest(INT_MAX, INT_MAX);
     qreal distance(INT_MAX);
-    foreach (QPointF currentPoint, m_scatter->points()) {
+    const auto points = m_scatter->points();
+    for (const QPointF &currentPoint : points) {
         qreal currentDistance = qSqrt((currentPoint.x() - clickedPoint.x())
                                       * (currentPoint.x() - clickedPoint.x())
                                       + (currentPoint.y() - clickedPoint.y())

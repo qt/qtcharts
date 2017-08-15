@@ -621,16 +621,24 @@ void tst_QBarSeries::mouseclicked()
 
 void tst_QBarSeries::mousehovered_data()
 {
+    QTest::addColumn<uint>("labelsPosition");
+    QTest::addColumn<bool>("labelsVisible");
 
+    QTest::newRow("labelsCenter") << (uint)QAbstractBarSeries::LabelsCenter << true;
+    QTest::newRow("labelsInsideEnd") << (uint)QAbstractBarSeries::LabelsInsideEnd << true;
+    QTest::newRow("labelsInsideBase") << (uint)QAbstractBarSeries::LabelsInsideBase << true;
+    QTest::newRow("labelsOutsideEnd") << (uint)QAbstractBarSeries::LabelsOutsideEnd << true;
+    QTest::newRow("noLabelsCenter") << (uint)QAbstractBarSeries::LabelsCenter << false;
 }
 
 void tst_QBarSeries::mousehovered()
 {
-    SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
-    SKIP_IF_FLAKY_MOUSE_MOVE();
+    QFETCH(uint, labelsPosition);
+    QFETCH(bool, labelsVisible);
 
     QBarSeries* series = new QBarSeries();
-
+    series->setLabelsVisible(labelsVisible);
+    series->setLabelsPosition(static_cast<QAbstractBarSeries::LabelsPosition>(labelsPosition));
     QBarSet* set1 = new QBarSet(QString("set 1"));
     *set1 << 10 << 10 << 10;
     series->append(set1);
@@ -683,21 +691,24 @@ void tst_QBarSeries::mousehovered()
             layout.append(rect);
         }
     }
+    // In order to make it feel like a normal user moving the mouse, we hover across from the edge.
+    // If we go right to the center, we can hit a label which does not emit hovered then, but that
+    // would not be a normal use case.
 
 //=======================================================================
 // move mouse to left border
     QTest::mouseMove(view.viewport(), QPoint(0, layout.at(0).center().y()));
-    QCoreApplication::processEvents(QEventLoop::AllEvents, 10000);
-    TRY_COMPARE(seriesIndexSpy.count(), 0);
-    TRY_COMPARE(setIndexSpy1.count(), 0);
-    TRY_COMPARE(setIndexSpy2.count(), 0);
+    QTest::qWait(5000);
+    QCOMPARE(seriesIndexSpy.count(), 0);
+    QCOMPARE(setIndexSpy1.count(), 0);
+    QCOMPARE(setIndexSpy2.count(), 0);
 
 //=======================================================================
-// move mouse on top of set1
-    QTest::mouseMove(view.viewport(), layout.at(0).center().toPoint());
-    TRY_COMPARE(seriesIndexSpy.count(), 1);
-    TRY_COMPARE(setIndexSpy1.count(), 1);
-    TRY_COMPARE(setIndexSpy2.count(), 0);
+// move mouse to just inside left border to account for labels
+    QTest::mouseMove(view.viewport(), QPoint(layout.at(0).x() + 1, layout.at(0).y() + 1));
+    QTRY_COMPARE(seriesIndexSpy.count(), 1);
+    QTRY_COMPARE(setIndexSpy1.count(), 1);
+    QTRY_COMPARE(setIndexSpy2.count(), 0);
 
     QList<QVariant> seriesIndexSpyArg = seriesIndexSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesIndexSpyArg.at(2)), set1);
@@ -709,11 +720,27 @@ void tst_QBarSeries::mousehovered()
     QVERIFY(setIndexSpyArg.at(0).toBool() == true);
 
 //=======================================================================
+// move mouse to center of set1
+    QTest::mouseMove(view.viewport(), layout.at(0).center().toPoint());
+    QTest::qWait(5000);
+    QCOMPARE(seriesIndexSpy.count(), 0);
+    QCOMPARE(setIndexSpy1.count(), 0);
+    QCOMPARE(setIndexSpy2.count(), 0);
+
+//=======================================================================
+// move mouse to bottom of set1
+    QTest::mouseMove(view.viewport(), QPoint(layout.at(0).center().x(), layout.at(0).bottom()));
+    QTest::qWait(5000);
+    QCOMPARE(seriesIndexSpy.count(), 0);
+    QCOMPARE(setIndexSpy1.count(), 0);
+    QCOMPARE(setIndexSpy2.count(), 0);
+
+//=======================================================================
 // move mouse from top of set1 to top of set2
-    QTest::mouseMove(view.viewport(), layout.at(1).center().toPoint());
-    TRY_COMPARE(seriesIndexSpy.count(), 2);
-    TRY_COMPARE(setIndexSpy1.count(), 1);
-    TRY_COMPARE(setIndexSpy2.count(), 1);
+    QTest::mouseMove(view.viewport(), QPoint(layout.at(1).x() + 1, layout.at(1).y() + 1));
+    QTRY_COMPARE(seriesIndexSpy.count(), 2);
+    QTRY_COMPARE(setIndexSpy1.count(), 1);
+    QTRY_COMPARE(setIndexSpy2.count(), 1);
 
     // should leave set1
     seriesIndexSpyArg = seriesIndexSpy.takeFirst();
@@ -738,9 +765,9 @@ void tst_QBarSeries::mousehovered()
 //=======================================================================
 // move mouse from top of set2 to background
     QTest::mouseMove(view.viewport(), QPoint(layout.at(1).center().x(), 0));
-    TRY_COMPARE(seriesIndexSpy.count(), 1);
-    TRY_COMPARE(setIndexSpy1.count(), 0);
-    TRY_COMPARE(setIndexSpy2.count(), 1);
+    QTRY_COMPARE(seriesIndexSpy.count(), 1);
+    QTRY_COMPARE(setIndexSpy1.count(), 0);
+    QTRY_COMPARE(setIndexSpy2.count(), 1);
 
     // should leave set2
     seriesIndexSpyArg = seriesIndexSpy.takeFirst();
@@ -754,11 +781,11 @@ void tst_QBarSeries::mousehovered()
 
 //=======================================================================
 // move mouse on top of set1, bar0 to check the index (hover into set1)
-    QTest::mouseMove(view.viewport(), layout.at(0).center().toPoint());
+    QTest::mouseMove(view.viewport(), QPoint(layout.at(0).x() + 1, layout.at(0).y() + 1));
 
-    TRY_COMPARE(seriesIndexSpy.count(), 1);
-    TRY_COMPARE(setIndexSpy1.count(), 1);
-    TRY_COMPARE(setIndexSpy2.count(), 0);
+    QTRY_COMPARE(seriesIndexSpy.count(), 1);
+    QTRY_COMPARE(setIndexSpy1.count(), 1);
+    QTRY_COMPARE(setIndexSpy2.count(), 0);
 
     //should enter set1, bar0
     seriesIndexSpyArg = seriesIndexSpy.takeFirst();
@@ -777,11 +804,11 @@ void tst_QBarSeries::mousehovered()
 //=======================================================================
 // move mouse on top of set2, bar0 to check the index (hover out set1,
 // hover in set1)
-    QTest::mouseMove(view.viewport(), layout.at(1).center().toPoint());
+    QTest::mouseMove(view.viewport(), QPoint(layout.at(1).x() + 1, layout.at(1).y() + 1));
 
-    TRY_COMPARE(seriesIndexSpy.count(), 2);
-    TRY_COMPARE(setIndexSpy1.count(), 1);
-    TRY_COMPARE(setIndexSpy2.count(), 1);
+    QTRY_COMPARE(seriesIndexSpy.count(), 2);
+    QTRY_COMPARE(setIndexSpy1.count(), 1);
+    QTRY_COMPARE(setIndexSpy2.count(), 1);
 
     // should leave set1, bar0
     seriesIndexSpyArg = seriesIndexSpy.takeFirst();
@@ -814,11 +841,11 @@ void tst_QBarSeries::mousehovered()
 //=======================================================================
 // move mouse on top of set1, bar1 to check the index (hover out set 2,
 // hover in set1)
-    QTest::mouseMove(view.viewport(), layout.at(2).center().toPoint());
+    QTest::mouseMove(view.viewport(), QPoint(layout.at(2).x() + 1, layout.at(2).y() + 1));
 
-    TRY_COMPARE(seriesIndexSpy.count(), 2);
-    TRY_COMPARE(setIndexSpy1.count(), 1);
-    TRY_COMPARE(setIndexSpy2.count(), 1);
+    QTRY_COMPARE(seriesIndexSpy.count(), 2);
+    QTRY_COMPARE(setIndexSpy1.count(), 1);
+    QTRY_COMPARE(setIndexSpy2.count(), 1);
 
     // should leave set2, bar0
     seriesIndexSpyArg = seriesIndexSpy.takeFirst();
@@ -853,9 +880,9 @@ void tst_QBarSeries::mousehovered()
 // (hover out set1)
     QTest::mouseMove(view.viewport(), QPoint((layout.at(2).right() + layout.at(3).left()) / 2, 0));
 
-    TRY_COMPARE(seriesIndexSpy.count(), 1);
-    TRY_COMPARE(setIndexSpy1.count(), 1);
-    TRY_COMPARE(setIndexSpy2.count(), 0);
+    QTRY_COMPARE(seriesIndexSpy.count(), 1);
+    QTRY_COMPARE(setIndexSpy1.count(), 1);
+    QTRY_COMPARE(setIndexSpy2.count(), 0);
 
     // should leave set1, bar1
     seriesIndexSpyArg = seriesIndexSpy.takeFirst();
@@ -873,11 +900,11 @@ void tst_QBarSeries::mousehovered()
 
 //=======================================================================
 // move mouse on top of set2, bar1 to check the index (hover in set2)
-    QTest::mouseMove(view.viewport(), layout.at(3).center().toPoint());
+    QTest::mouseMove(view.viewport(), QPoint(layout.at(3).x() + 1, layout.at(3).y() + 1));
 
-    TRY_COMPARE(seriesIndexSpy.count(), 1);
-    TRY_COMPARE(setIndexSpy1.count(), 0);
-    TRY_COMPARE(setIndexSpy2.count(), 1);
+    QTRY_COMPARE(seriesIndexSpy.count(), 1);
+    QTRY_COMPARE(setIndexSpy1.count(), 0);
+    QTRY_COMPARE(setIndexSpy2.count(), 1);
 
     // should enter set2, bar1
     seriesIndexSpyArg = seriesIndexSpy.takeFirst();
@@ -898,9 +925,9 @@ void tst_QBarSeries::mousehovered()
 //(hover out set2)
     QTest::mouseMove(view.viewport(), QPoint((layout.at(3).right() + layout.at(3).left()) / 2, 0));
 
-    TRY_COMPARE(seriesIndexSpy.count(), 1);
-    TRY_COMPARE(setIndexSpy1.count(), 0);
-    TRY_COMPARE(setIndexSpy2.count(), 1);
+    QTRY_COMPARE(seriesIndexSpy.count(), 1);
+    QTRY_COMPARE(setIndexSpy1.count(), 0);
+    QTRY_COMPARE(setIndexSpy2.count(), 1);
 
     // should leave set2, bar1
     seriesIndexSpyArg = seriesIndexSpy.takeFirst();

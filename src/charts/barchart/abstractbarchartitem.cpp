@@ -500,6 +500,7 @@ void AbstractBarChartItem::createLabelItems()
             QGraphicsTextItem *label = bars.at(j)->labelItem();
             if (!label) {
                 QGraphicsTextItem *newLabel = new QGraphicsTextItem(this);
+                newLabel->setAcceptHoverEvents(false);
                 newLabel->document()->setDocumentMargin(ChartPresenter::textMargin());
                 bars.at(j)->setLabelItem(newLabel);
             }

@@ -53,24 +53,26 @@ int main(int argc, char *argv[])
     QPieSeries *yearSeries = new QPieSeries(&window);
     yearSeries->setName("Sales by year - All");
 
-    QList<QString> months;
-    months << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
-    QList<QString> names;
-    names << "Jane" << "John" << "Axel" << "Mary" << "Susan" << "Bob";
+    const QStringList months = {
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    };
+    const QStringList names = {
+        "Jane", "John", "Axel", "Mary", "Susan", "Bob"
+    };
 
-    foreach (QString name, names) {
+    for (const QString &name : names) {
         QPieSeries *series = new QPieSeries(&window);
         series->setName("Sales by month - " + name);
 
-        foreach (QString month, months)
-        *series << new DrilldownSlice(QRandomGenerator::bounded(1000), month, yearSeries);
+        for (const QString &month : months)
+            *series << new DrilldownSlice(QRandomGenerator::bounded(1000), month, yearSeries);
 
-        QObject::connect(series, SIGNAL(clicked(QPieSlice*)), chart, SLOT(handleSliceClicked(QPieSlice*)));
+        QObject::connect(series, &QPieSeries::clicked, chart, &DrilldownChart::handleSliceClicked);
 
         *yearSeries << new DrilldownSlice(series->sum(), name, series);
     }
 
-    QObject::connect(yearSeries, SIGNAL(clicked(QPieSlice*)), chart, SLOT(handleSliceClicked(QPieSlice*)));
+    QObject::connect(yearSeries, &QPieSeries::clicked, chart, &DrilldownChart::handleSliceClicked);
 
     chart->changeSeries(yearSeries);
 

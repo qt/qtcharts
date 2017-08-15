@@ -71,11 +71,20 @@ PenTool::PenTool(QString title, QWidget *parent)
     layout->addRow("Join style", m_joinStyleCombo);
     setLayout(layout);
 
-    connect(m_colorButton, SIGNAL(clicked()), this, SLOT(showColorDialog()));
-    connect(m_widthSpinBox, SIGNAL(valueChanged(double)), this, SLOT(updateWidth(double)));
-    connect(m_styleCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(updateStyle(int)));
-    connect(m_capStyleCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(updateCapStyle(int)));
-    connect(m_joinStyleCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(updateJoinStyle(int)));
+    // Use old style connect on some signals because the signal is overloaded
+    connect(m_colorButton, &QPushButton::clicked, this, &PenTool::showColorDialog);
+    connect(m_widthSpinBox,
+            static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+            this, &PenTool::updateWidth);
+    connect(m_styleCombo,
+            static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            this, &PenTool::updateStyle);
+    connect(m_capStyleCombo,
+            static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            this, &PenTool::updateCapStyle);
+    connect(m_joinStyleCombo,
+            static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            this, &PenTool::updateJoinStyle);
 }
 
 void PenTool::setPen(const QPen &pen)

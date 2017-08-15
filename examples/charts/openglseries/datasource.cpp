@@ -96,12 +96,6 @@ void DataSource::startUpdates(const QList<QXYSeries *> &seriesList, QLabel *fpsL
 
 void DataSource::generateData(int seriesCount, int rowCount, int colCount)
 {
-    // Remove previous data
-    foreach (QVector<QVector<QPointF> > seriesData, m_data) {
-        foreach (QVector<QPointF> row, seriesData)
-            row.clear();
-    }
-
     m_data.clear();
 
     qreal xAdjustment = 20.0 / (colCount * rowCount);

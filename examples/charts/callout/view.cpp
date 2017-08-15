@@ -82,11 +82,11 @@ View::View(QWidget *parent)
     m_coordY->setPos(m_chart->size().width()/2 + 50, m_chart->size().height());
     m_coordY->setText("Y: ");
 
-    connect(series, SIGNAL(clicked(QPointF)), this, SLOT(keepCallout()));
-    connect(series, SIGNAL(hovered(QPointF, bool)), this, SLOT(tooltip(QPointF,bool)));
+    connect(series, &QLineSeries::clicked, this, &View::keepCallout);
+    connect(series, &QLineSeries::hovered, this, &View::tooltip);
 
-    connect(series2, SIGNAL(clicked(QPointF)), this, SLOT(keepCallout()));
-    connect(series2, SIGNAL(hovered(QPointF, bool)), this, SLOT(tooltip(QPointF,bool)));
+    connect(series2, &QSplineSeries::clicked, this, &View::keepCallout);
+    connect(series2, &QSplineSeries::hovered, this, &View::tooltip);
 
     this->setMouseTracking(true);
 }
@@ -98,7 +98,8 @@ void View::resizeEvent(QResizeEvent *event)
          m_chart->resize(event->size());
          m_coordX->setPos(m_chart->size().width()/2 - 50, m_chart->size().height() - 20);
          m_coordY->setPos(m_chart->size().width()/2 + 50, m_chart->size().height() - 20);
-         foreach (Callout *callout, m_callouts)
+         const auto callouts = m_callouts;
+         for (Callout *callout : callouts)
              callout->updateGeometry();
     }
     QGraphicsView::resizeEvent(event);

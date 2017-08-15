@@ -62,7 +62,7 @@ MainWidget::MainWidget(QWidget *parent)
     m_series->setLabelsVisible();
     chart->addSeries(m_series);
 
-    connect(m_series, SIGNAL(clicked(QPieSlice*)), this, SLOT(handleSliceClicked(QPieSlice*)));
+    connect(m_series, &QPieSeries::clicked, this, &MainWidget::handleSliceClicked);
 
     // chart settings
     m_themeComboBox = new QComboBox();
@@ -89,10 +89,11 @@ MainWidget::MainWidget(QWidget *parent)
     QGroupBox *chartSettings = new QGroupBox("Chart");
     chartSettings->setLayout(chartSettingsLayout);
 
-    connect(m_themeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateChartSettings()));
-    connect(m_aaCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateChartSettings()));
-    connect(m_animationsCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateChartSettings()));
-    connect(m_legendCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateChartSettings()));
+    connect(m_themeComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            this, &MainWidget::updateChartSettings);
+    connect(m_aaCheckBox, &QCheckBox::toggled, this, &MainWidget::updateChartSettings);
+    connect(m_animationsCheckBox, &QCheckBox::toggled, this, &MainWidget::updateChartSettings);
+    connect(m_legendCheckBox, &QCheckBox::toggled, this, &MainWidget::updateChartSettings);
 
     // series settings
     m_hPosition = new QDoubleSpinBox();
@@ -148,15 +149,27 @@ MainWidget::MainWidget(QWidget *parent)
     QGroupBox *seriesSettings = new QGroupBox("Series");
     seriesSettings->setLayout(seriesSettingsLayout);
 
-    connect(m_vPosition, SIGNAL(valueChanged(double)), this, SLOT(updateSerieSettings()));
-    connect(m_hPosition, SIGNAL(valueChanged(double)), this, SLOT(updateSerieSettings()));
-    connect(m_sizeFactor, SIGNAL(valueChanged(double)), this, SLOT(updateSerieSettings()));
-    connect(m_startAngle, SIGNAL(valueChanged(double)), this, SLOT(updateSerieSettings()));
-    connect(m_endAngle, SIGNAL(valueChanged(double)), this, SLOT(updateSerieSettings()));
-    connect(m_holeSize, SIGNAL(valueChanged(double)), this, SLOT(updateSerieSettings()));
-    connect(appendSlice, SIGNAL(clicked()), this, SLOT(appendSlice()));
-    connect(insertSlice, SIGNAL(clicked()), this, SLOT(insertSlice()));
-    connect(removeSlice, SIGNAL(clicked()), this, SLOT(removeSlice()));
+    connect(m_vPosition,
+            static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+            this, &MainWidget::updateSerieSettings);
+    connect(m_hPosition,
+            static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+            this, &MainWidget::updateSerieSettings);
+    connect(m_sizeFactor,
+            static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+            this, &MainWidget::updateSerieSettings);
+    connect(m_startAngle,
+            static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+            this, &MainWidget::updateSerieSettings);
+    connect(m_endAngle,
+            static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+            this, &MainWidget::updateSerieSettings);
+    connect(m_holeSize,
+            static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+            this, &MainWidget::updateSerieSettings);
+    connect(appendSlice, &QPushButton::clicked, this, &MainWidget::appendSlice);
+    connect(insertSlice, &QPushButton::clicked, this, &MainWidget::insertSlice);
+    connect(removeSlice, &QPushButton::clicked, this, &MainWidget::removeSlice);
 
     // slice settings
     m_sliceName = new QLineEdit("<click a slice>");
@@ -197,21 +210,29 @@ MainWidget::MainWidget(QWidget *parent)
     QGroupBox *sliceSettings = new QGroupBox("Selected slice");
     sliceSettings->setLayout(sliceSettingsLayout);
 
-    connect(m_sliceName, SIGNAL(textChanged(QString)), this, SLOT(updateSliceSettings()));
-    connect(m_sliceValue, SIGNAL(valueChanged(double)), this, SLOT(updateSliceSettings()));
-    connect(m_pen, SIGNAL(clicked()), m_penTool, SLOT(show()));
-    connect(m_penTool, SIGNAL(changed()), this, SLOT(updateSliceSettings()));
-    connect(m_brush, SIGNAL(clicked()), m_brushTool, SLOT(show()));
-    connect(m_brushTool, SIGNAL(changed()), this, SLOT(updateSliceSettings()));
-    connect(m_font, SIGNAL(clicked()), this, SLOT(showFontDialog()));
-    connect(m_labelBrush, SIGNAL(clicked()), m_labelBrushTool, SLOT(show()));
-    connect(m_labelBrushTool, SIGNAL(changed()), this, SLOT(updateSliceSettings()));
-    connect(m_sliceLabelVisible, SIGNAL(toggled(bool)), this, SLOT(updateSliceSettings()));
-    connect(m_sliceLabelVisible, SIGNAL(toggled(bool)), this, SLOT(updateSliceSettings()));
-    connect(m_sliceLabelArmFactor, SIGNAL(valueChanged(double)), this, SLOT(updateSliceSettings()));
-    connect(m_sliceExploded, SIGNAL(toggled(bool)), this, SLOT(updateSliceSettings()));
-    connect(m_sliceExplodedFactor, SIGNAL(valueChanged(double)), this, SLOT(updateSliceSettings()));
-    connect(m_labelPosition, SIGNAL(currentIndexChanged(int)), this, SLOT(updateSliceSettings()));
+    connect(m_sliceName, &QLineEdit::textChanged, this, &MainWidget::updateSliceSettings);
+    connect(m_sliceValue,
+            static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+            this, &MainWidget::updateSliceSettings);
+    connect(m_pen, &QPushButton::clicked, m_penTool, &PenTool::show);
+    connect(m_penTool, &PenTool::changed, this, &MainWidget::updateSliceSettings);
+    connect(m_brush, &QPushButton::clicked, m_brushTool, &BrushTool::show);
+    connect(m_brushTool, &BrushTool::changed, this, &MainWidget::updateSliceSettings);
+    connect(m_font, &QPushButton::clicked, this, &MainWidget::showFontDialog);
+    connect(m_labelBrush, &QPushButton::clicked, m_labelBrushTool, &BrushTool::show);
+    connect(m_labelBrushTool, &BrushTool::changed, this, &MainWidget::updateSliceSettings);
+    connect(m_sliceLabelVisible, &QCheckBox::toggled, this, &MainWidget::updateSliceSettings);
+    connect(m_sliceLabelVisible, &QCheckBox::toggled, this, &MainWidget::updateSliceSettings);
+    connect(m_sliceLabelArmFactor,
+            static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+            this, &MainWidget::updateSliceSettings);
+    connect(m_sliceExploded, &QCheckBox::toggled, this, &MainWidget::updateSliceSettings);
+    connect(m_sliceExplodedFactor,
+            static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+            this, &MainWidget::updateSliceSettings);
+    connect(m_labelPosition,
+            static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            this, &MainWidget::updateSliceSettings);
 
     // create chart view
     m_chartView = new QChartView(chart);
@@ -235,7 +256,8 @@ MainWidget::MainWidget(QWidget *parent)
 
 void MainWidget::updateChartSettings()
 {
-    QChart::ChartTheme theme = (QChart::ChartTheme) m_themeComboBox->itemData(m_themeComboBox->currentIndex()).toInt();
+    QChart::ChartTheme theme = static_cast<QChart::ChartTheme>(m_themeComboBox->itemData(
+                m_themeComboBox->currentIndex()).toInt());
     m_chartView->chart()->setTheme(theme);
     m_chartView->setRenderHint(QPainter::Antialiasing, m_aaCheckBox->isChecked());
 
@@ -276,7 +298,8 @@ void MainWidget::updateSliceSettings()
     m_slice->setLabelBrush(m_labelBrushTool->brush());
     m_slice->setLabelVisible(m_sliceLabelVisible->isChecked());
     m_slice->setLabelArmLengthFactor(m_sliceLabelArmFactor->value());
-    m_slice->setLabelPosition((QPieSlice::LabelPosition)m_labelPosition->currentIndex()); // assumes that index is in sync with the enum
+    // We assume that label position index is in sync with the enum
+    m_slice->setLabelPosition((QPieSlice::LabelPosition)m_labelPosition->currentIndex());
 
     m_slice->setExploded(m_sliceExploded->isChecked());
     m_slice->setExplodeDistanceFactor(m_sliceExplodedFactor->value());
@@ -315,7 +338,8 @@ void MainWidget::handleSliceClicked(QPieSlice *slice)
     m_sliceLabelArmFactor->setValue(slice->labelArmLengthFactor());
     m_sliceLabelArmFactor->blockSignals(false);
     m_labelPosition->blockSignals(true);
-    m_labelPosition->setCurrentIndex(slice->labelPosition()); // assumes that index is in sync with the enum
+    // We assume that label position index is in sync with the enum
+    m_labelPosition->setCurrentIndex(slice->labelPosition());
     m_labelPosition->blockSignals(false);
 
     // exploded

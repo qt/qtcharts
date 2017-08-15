@@ -46,8 +46,10 @@ int main(int argc, char *argv[])
     QBarSet *low = new QBarSet("Min");
     QBarSet *high = new QBarSet("Max");
 
-    *low << -52 << -50 << -45.3 << -37.0 << -25.6 << -8.0 << -6.0 << -11.8 << -19.7 << -32.8 << -43.0 << -48.0;
-    *high << 11.9 << 12.8 << 18.5 << 26.5 << 32.0 << 34.8 << 38.2 << 34.8 << 29.8 << 20.4 << 15.1 << 11.8;
+    *low << -52 << -50 << -45.3 << -37.0 << -25.6 << -8.0
+         << -6.0 << -11.8 << -19.7 << -32.8 << -43.0 << -48.0;
+    *high << 11.9 << 12.8 << 18.5 << 26.5 << 32.0 << 34.8
+          << 38.2 << 34.8 << 29.8 << 20.4 << 15.1 << 11.8;
 //![1]
 
 //![2]
@@ -64,8 +66,9 @@ int main(int argc, char *argv[])
 //![3]
 
 //![4]
-    QStringList categories;
-    categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
+    QStringList categories = {
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    };
 
     QBarCategoryAxis *axis = new QBarCategoryAxis();
     axis->append(categories);

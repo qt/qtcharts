@@ -46,26 +46,26 @@ MainWidget::MainWidget(QWidget *parent) :
     // Create buttons for ui
     m_buttonLayout = new QGridLayout();
     QPushButton *detachLegendButton = new QPushButton("Toggle attached");
-    connect(detachLegendButton, SIGNAL(clicked()), this, SLOT(toggleAttached()));
+    connect(detachLegendButton, &QPushButton::clicked, this, &MainWidget::toggleAttached);
     m_buttonLayout->addWidget(detachLegendButton, 0, 0);
 
     QPushButton *addSetButton = new QPushButton("add barset");
-    connect(addSetButton, SIGNAL(clicked()), this, SLOT(addBarset()));
+    connect(addSetButton, &QPushButton::clicked, this, &MainWidget::addBarset);
     m_buttonLayout->addWidget(addSetButton, 2, 0);
     QPushButton *removeBarsetButton = new QPushButton("remove barset");
-    connect(removeBarsetButton, SIGNAL(clicked()), this, SLOT(removeBarset()));
+    connect(removeBarsetButton, &QPushButton::clicked, this, &MainWidget::removeBarset);
     m_buttonLayout->addWidget(removeBarsetButton, 3, 0);
 
     QPushButton *alignButton = new QPushButton("Align (Bottom)");
-    connect(alignButton, SIGNAL(clicked()), this, SLOT(setLegendAlignment()));
+    connect(alignButton, &QPushButton::clicked, this, &MainWidget::setLegendAlignment);
     m_buttonLayout->addWidget(alignButton, 4, 0);
 
     QPushButton *boldButton = new QPushButton("Toggle bold");
-    connect(boldButton, SIGNAL(clicked()), this, SLOT(toggleBold()));
+    connect(boldButton, &QPushButton::clicked, this, &MainWidget::toggleBold);
     m_buttonLayout->addWidget(boldButton, 8, 0);
 
     QPushButton *italicButton = new QPushButton("Toggle italic");
-    connect(italicButton, SIGNAL(clicked()), this, SLOT(toggleItalic()));
+    connect(italicButton, &QPushButton::clicked, this, &MainWidget::toggleItalic);
     m_buttonLayout->addWidget(italicButton, 9, 0);
 
     m_legendPosX = new QDoubleSpinBox();
@@ -73,10 +73,18 @@ MainWidget::MainWidget(QWidget *parent) :
     m_legendWidth = new QDoubleSpinBox();
     m_legendHeight = new QDoubleSpinBox();
 
-    connect(m_legendPosX, SIGNAL(valueChanged(double)), this, SLOT(updateLegendLayout()));
-    connect(m_legendPosY, SIGNAL(valueChanged(double)), this, SLOT(updateLegendLayout()));
-    connect(m_legendWidth, SIGNAL(valueChanged(double)), this, SLOT(updateLegendLayout()));
-    connect(m_legendHeight, SIGNAL(valueChanged(double)), this, SLOT(updateLegendLayout()));
+    connect(m_legendPosX,
+            static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+            this, &MainWidget::updateLegendLayout);
+    connect(m_legendPosY,
+            static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+            this, &MainWidget::updateLegendLayout);
+    connect(m_legendWidth,
+            static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+            this, &MainWidget::updateLegendLayout);
+    connect(m_legendHeight,
+            static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+            this, &MainWidget::updateLegendLayout);
 
     QFormLayout *legendLayout = new QFormLayout();
     legendLayout->addRow("HPos", m_legendPosX);
@@ -95,7 +103,9 @@ MainWidget::MainWidget(QWidget *parent) :
     // Create spinbox to modify font size
     m_fontSize = new QDoubleSpinBox();
     m_fontSize->setValue(m_chart->legend()->font().pointSizeF());
-    connect(m_fontSize, SIGNAL(valueChanged(double)), this, SLOT(fontSizeChanged()));
+    connect(m_fontSize,
+            static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+            this, &MainWidget::fontSizeChanged);
 
     QFormLayout *fontLayout = new QFormLayout();
     fontLayout->addRow("Legend font size", m_fontSize);

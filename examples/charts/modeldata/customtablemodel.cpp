@@ -86,7 +86,7 @@ QVariant CustomTableModel::data(const QModelIndex &index, int role) const
     } else if (role == Qt::EditRole) {
         return m_data[index.row()]->at(index.column());
     } else if (role == Qt::BackgroundRole) {
-        foreach (QRect rect, m_mapping) {
+        for (const QRect &rect : m_mapping) {
             if (rect.contains(index.column(), index.row()))
                 return QColor(m_mapping.key(rect));
         }

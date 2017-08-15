@@ -69,8 +69,6 @@ void DataSource::update(QAbstractSeries *series)
 void DataSource::generateData(int type, int rowCount, int colCount)
 {
     // Remove previous data
-    foreach (QVector<QPointF> row, m_data)
-        row.clear();
     m_data.clear();
 
     // Append the new data depending on the type

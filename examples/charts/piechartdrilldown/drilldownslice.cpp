@@ -38,8 +38,8 @@ DrilldownSlice::DrilldownSlice(qreal value, QString prefix, QAbstractSeries *dri
     setValue(value);
     updateLabel();
     setLabelFont(QFont("Arial", 8));
-    connect(this, SIGNAL(percentageChanged()), this, SLOT(updateLabel()));
-    connect(this, SIGNAL(hovered(bool)), this, SLOT(showHighlight(bool)));
+    connect(this, &DrilldownSlice::percentageChanged, this, &DrilldownSlice::updateLabel);
+    connect(this, &DrilldownSlice::hovered, this, &DrilldownSlice::showHighlight);
 }
 
 DrilldownSlice::~DrilldownSlice()

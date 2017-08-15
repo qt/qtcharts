@@ -88,9 +88,8 @@ void MainWidget::addSeries()
     series->append(data);
     m_chart->addSeries(series);
 
-    if (m_series.count() == 1) {
+    if (m_series.count() == 1)
         m_chart->createDefaultAxes();
-    }
 }
 
 void MainWidget::removeSeries()
@@ -108,10 +107,12 @@ void MainWidget::connectMarkers()
 {
 //![1]
     // Connect all markers to handler
-    foreach (QLegendMarker* marker, m_chart->legend()->markers()) {
+    const auto markers = m_chart->legend()->markers();
+    for (QLegendMarker *marker : markers) {
         // Disconnect possible existing connection to avoid multiple connections
-        QObject::disconnect(marker, SIGNAL(clicked()), this, SLOT(handleMarkerClicked()));
-        QObject::connect(marker, SIGNAL(clicked()), this, SLOT(handleMarkerClicked()));
+        QObject::disconnect(marker, &QLegendMarker::clicked,
+                            this, &MainWidget::handleMarkerClicked);
+        QObject::connect(marker, &QLegendMarker::clicked, this, &MainWidget::handleMarkerClicked);
     }
 //![1]
 }
@@ -119,8 +120,10 @@ void MainWidget::connectMarkers()
 void MainWidget::disconnectMarkers()
 {
 //![2]
-    foreach (QLegendMarker* marker, m_chart->legend()->markers()) {
-        QObject::disconnect(marker, SIGNAL(clicked()), this, SLOT(handleMarkerClicked()));
+    const auto markers = m_chart->legend()->markers();
+    for (QLegendMarker *marker : markers) {
+        QObject::disconnect(marker, &QLegendMarker::clicked,
+                            this, &MainWidget::handleMarkerClicked);
     }
 //![2]
 }
@@ -151,9 +154,8 @@ void MainWidget::handleMarkerClicked()
         // Dim the marker, if series is not visible
         qreal alpha = 1.0;
 
-        if (!marker->series()->isVisible()) {
+        if (!marker->series()->isVisible())
             alpha = 0.5;
-        }
 
         QColor color;
         QBrush brush = marker->labelBrush();
