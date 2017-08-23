@@ -40,6 +40,7 @@
 #include <QtCharts/QStackedBarSeries>
 #include <QtCharts/QValueAxis>
 #include <QtCharts/QBarCategoryAxis>
+#include <QtCharts/QDateTimeAxis>
 #include "tst_definitions.h"
 
 QT_CHARTS_USE_NAMESPACE
@@ -122,6 +123,8 @@ private slots:
     void createDefaultAxesForLineSeries();
     void axisPolarOrientation();
     void backgroundRoundness();
+    void zoomInAndOut_data();
+    void zoomInAndOut();
 private:
     void createTestData();
 
@@ -1086,6 +1089,115 @@ void tst_QChart::backgroundRoundness()
     m_chart->createDefaultAxes();
     m_chart->setBackgroundRoundness(100.0);
     QVERIFY(m_chart->backgroundRoundness() == 100.0);
+}
+
+void tst_QChart::zoomInAndOut_data()
+{
+    const qreal hourInMSecs = 60.0 * 60.0 * 1000.0;
+
+    QTest::addColumn<QString>("axisXType");
+    QTest::addColumn<QString>("axisYType");
+    QTest::addColumn<qreal>("minX");
+    QTest::addColumn<qreal>("maxX");
+    QTest::addColumn<qreal>("minY");
+    QTest::addColumn<qreal>("maxY");
+
+    QTest::newRow("value-value-normal") << "QValueAxis" << "QValueAxis" << 0.0 << 100.0 << 0.0 << 100.0;
+    QTest::newRow("value-value-small") << "QValueAxis" << "QValueAxis" << -1e-12 << 1e-13 << -1e-12 << 1e-13;
+    QTest::newRow("value-value-mixed") << "QValueAxis" << "QValueAxis" << 0.0 << 100.0 << -1e-12 << 1e-13;
+
+    QTest::newRow("datetime-datetime-normal") << "QDateTimeAxis" << "QDateTimeAxis"
+        << 0.0 << hourInMSecs << 0.0 << hourInMSecs;
+    QTest::newRow("datetime-datetime-small") << "QDateTimeAxis" << "QDateTimeAxis"
+        << 0.0 << 60.0 << 0.0 << 60.0;
+    QTest::newRow("datetime-datetime-mixed") << "QDateTimeAxis" << "QDateTimeAxis"
+        << 0.0 << hourInMSecs << 0.0 << 60.0;
+}
+
+#define CHECK_AXIS_RANGES_MATCH \
+    if (valueAxisX) { \
+        QVERIFY(valueAxisX->min() == minX); \
+        QVERIFY(valueAxisX->max() == maxX); \
+    } else if (dateTimeAxisX) { \
+        QVERIFY(dateTimeAxisX->min().toMSecsSinceEpoch() == minX); \
+        QVERIFY(dateTimeAxisX->max().toMSecsSinceEpoch() == maxX); \
+    } \
+    if (valueAxisY) { \
+        QVERIFY(valueAxisY->min() == minY); \
+        QVERIFY(valueAxisY->max() == maxY); \
+    } else if (dateTimeAxisY) { \
+        QVERIFY(dateTimeAxisY->min().toMSecsSinceEpoch() == minY); \
+        QVERIFY(dateTimeAxisY->max().toMSecsSinceEpoch() == maxY); \
+    }
+
+void tst_QChart::zoomInAndOut()
+{
+    QFETCH(QString, axisXType);
+    QFETCH(QString, axisYType);
+    QFETCH(qreal, minX);
+    QFETCH(qreal, maxX);
+    QFETCH(qreal, minY);
+    QFETCH(qreal, maxY);
+
+    createTestData();
+    QAbstractAxis *axisX = 0;
+    QAbstractAxis *axisY = 0;
+    QValueAxis *valueAxisX = 0;
+    QValueAxis *valueAxisY = 0;
+    QDateTimeAxis *dateTimeAxisX = 0;
+    QDateTimeAxis *dateTimeAxisY = 0;
+
+    if (axisXType == "QValueAxis") {
+        axisX = valueAxisX = new QValueAxis(m_chart);
+        valueAxisX->setRange(minX, maxX);
+    } else if (axisXType == "QDateTimeAxis") {
+        axisX = dateTimeAxisX = new QDateTimeAxis(m_chart);
+        dateTimeAxisX->setRange(QDateTime::fromMSecsSinceEpoch(minX), QDateTime::fromMSecsSinceEpoch(maxX));
+    }
+    if (axisXType == "QValueAxis") {
+        axisY = valueAxisY = new QValueAxis(m_chart);
+        valueAxisY->setRange(minY, maxY);
+    } else if (axisXType == "QDateTimeAxis") {
+        axisY = dateTimeAxisY = new QDateTimeAxis(m_chart);
+        dateTimeAxisY->setRange(QDateTime::fromMSecsSinceEpoch(minY), QDateTime::fromMSecsSinceEpoch(maxY));
+    }
+
+    m_chart->setAxisX(axisX, m_chart->series().first());
+    m_chart->setAxisY(axisY, m_chart->series().first());
+    CHECK_AXIS_RANGES_MATCH
+
+    m_chart->zoomIn();
+    if (valueAxisX) {
+        QVERIFY(valueAxisX->min() != minX);
+        QVERIFY(valueAxisX->max() != maxX);
+    } else if (dateTimeAxisX) {
+        QVERIFY(dateTimeAxisX->min().toMSecsSinceEpoch() != minX);
+        QVERIFY(dateTimeAxisX->max().toMSecsSinceEpoch() != maxX);
+    }
+    if (valueAxisY) {
+        QVERIFY(valueAxisY->min() != minY);
+        QVERIFY(valueAxisY->max() != maxY);
+    } else if (dateTimeAxisY) {
+        QVERIFY(dateTimeAxisY->min().toMSecsSinceEpoch() != minY);
+        QVERIFY(dateTimeAxisY->max().toMSecsSinceEpoch() != maxY);
+    }
+
+    m_chart->zoomReset();
+    CHECK_AXIS_RANGES_MATCH
+
+    m_chart->zoomIn();
+    m_chart->zoomIn();
+    m_chart->zoomReset();
+    CHECK_AXIS_RANGES_MATCH
+
+    m_chart->zoomOut();
+    m_chart->zoomReset();
+    CHECK_AXIS_RANGES_MATCH
+
+    m_chart->zoomOut();
+    m_chart->zoomOut();
+    m_chart->zoomReset();
+    CHECK_AXIS_RANGES_MATCH
 }
 
 QTEST_MAIN(tst_QChart)
