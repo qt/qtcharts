@@ -28,6 +28,7 @@
 ****************************************************************************/
 
 #include "themewidget.h"
+#include "ui_themewidget.h"
 
 #include <QtCharts/QChartView>
 #include <QtCharts/QPieSeries>
@@ -59,59 +60,45 @@ ThemeWidget::ThemeWidget(QWidget *parent) :
     m_valueMax(10),
     m_valueCount(7),
     m_dataTable(generateRandomData(m_listCount, m_valueMax, m_valueCount)),
-    m_themeComboBox(createThemeBox()),
-    m_antialiasCheckBox(new QCheckBox("Anti-aliasing")),
-    m_animatedComboBox(createAnimationBox()),
-    m_legendComboBox(createLegendBox())
+    m_ui(new Ui_ThemeWidgetForm)
 {
-    connectSignals();
-    // create layout
-    QGridLayout *baseLayout = new QGridLayout();
-    QHBoxLayout *settingsLayout = new QHBoxLayout();
-    settingsLayout->addWidget(new QLabel("Theme:"));
-    settingsLayout->addWidget(m_themeComboBox);
-    settingsLayout->addWidget(new QLabel("Animation:"));
-    settingsLayout->addWidget(m_animatedComboBox);
-    settingsLayout->addWidget(new QLabel("Legend:"));
-    settingsLayout->addWidget(m_legendComboBox);
-    settingsLayout->addWidget(m_antialiasCheckBox);
-    settingsLayout->addStretch();
-    baseLayout->addLayout(settingsLayout, 0, 0, 1, 3);
+    m_ui->setupUi(this);
+    populateThemeBox();
+    populateAnimationBox();
+    populateLegendBox();
 
     //create charts
 
     QChartView *chartView;
 
     chartView = new QChartView(createAreaChart());
-    baseLayout->addWidget(chartView, 1, 0);
+    m_ui->gridLayout->addWidget(chartView, 1, 0);
     m_charts << chartView;
 
     chartView = new QChartView(createBarChart(m_valueCount));
-    baseLayout->addWidget(chartView, 1, 1);
+    m_ui->gridLayout->addWidget(chartView, 1, 1);
     m_charts << chartView;
 
     chartView = new QChartView(createLineChart());
-    baseLayout->addWidget(chartView, 1, 2);
+    m_ui->gridLayout->addWidget(chartView, 1, 2);
     m_charts << chartView;
 
     chartView = new QChartView(createPieChart());
     // Funny things happen if the pie slice labels do not fit the screen, so we ignore size policy
     chartView->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
-    baseLayout->addWidget(chartView, 2, 0);
+    m_ui->gridLayout->addWidget(chartView, 2, 0);
     m_charts << chartView;
 
     chartView = new QChartView(createSplineChart());
-    baseLayout->addWidget(chartView, 2, 1);
+    m_ui->gridLayout->addWidget(chartView, 2, 1);
     m_charts << chartView;
 
     chartView = new QChartView(createScatterChart());
-    baseLayout->addWidget(chartView, 2, 2);
+    m_ui->gridLayout->addWidget(chartView, 2, 2);
     m_charts << chartView;
 
-    setLayout(baseLayout);
-
     // Set defaults
-    m_antialiasCheckBox->setChecked(true);
+    m_ui->antialiasCheckBox->setChecked(true);
 
     // Set the colors from the light theme as default ones
     QPalette pal = qApp->palette();
@@ -124,20 +111,7 @@ ThemeWidget::ThemeWidget(QWidget *parent) :
 
 ThemeWidget::~ThemeWidget()
 {
-}
-
-void ThemeWidget::connectSignals()
-{
-    connect(m_themeComboBox,
-            static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
-            this, &ThemeWidget::updateUI);
-    connect(m_antialiasCheckBox, &QCheckBox::toggled, this, &ThemeWidget::updateUI);
-    connect(m_animatedComboBox,
-            static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
-            this, &ThemeWidget::updateUI);
-    connect(m_legendComboBox,
-            static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
-            this, &ThemeWidget::updateUI);
+    delete m_ui;
 }
 
 DataTable ThemeWidget::generateRandomData(int listCount, int valueMax, int valueCount) const
@@ -161,41 +135,36 @@ DataTable ThemeWidget::generateRandomData(int listCount, int valueMax, int value
     return dataTable;
 }
 
-QComboBox *ThemeWidget::createThemeBox() const
+void ThemeWidget::populateThemeBox()
 {
-    // settings layout
-    QComboBox *themeComboBox = new QComboBox();
-    themeComboBox->addItem("Light", QChart::ChartThemeLight);
-    themeComboBox->addItem("Blue Cerulean", QChart::ChartThemeBlueCerulean);
-    themeComboBox->addItem("Dark", QChart::ChartThemeDark);
-    themeComboBox->addItem("Brown Sand", QChart::ChartThemeBrownSand);
-    themeComboBox->addItem("Blue NCS", QChart::ChartThemeBlueNcs);
-    themeComboBox->addItem("High Contrast", QChart::ChartThemeHighContrast);
-    themeComboBox->addItem("Blue Icy", QChart::ChartThemeBlueIcy);
-    themeComboBox->addItem("Qt", QChart::ChartThemeQt);
-    return themeComboBox;
+    // add items to theme combobox
+    m_ui->themeComboBox->addItem("Light", QChart::ChartThemeLight);
+    m_ui->themeComboBox->addItem("Blue Cerulean", QChart::ChartThemeBlueCerulean);
+    m_ui->themeComboBox->addItem("Dark", QChart::ChartThemeDark);
+    m_ui->themeComboBox->addItem("Brown Sand", QChart::ChartThemeBrownSand);
+    m_ui->themeComboBox->addItem("Blue NCS", QChart::ChartThemeBlueNcs);
+    m_ui->themeComboBox->addItem("High Contrast", QChart::ChartThemeHighContrast);
+    m_ui->themeComboBox->addItem("Blue Icy", QChart::ChartThemeBlueIcy);
+    m_ui->themeComboBox->addItem("Qt", QChart::ChartThemeQt);
 }
 
-QComboBox *ThemeWidget::createAnimationBox() const
+void ThemeWidget::populateAnimationBox()
 {
-    // settings layout
-    QComboBox *animationComboBox = new QComboBox();
-    animationComboBox->addItem("No Animations", QChart::NoAnimation);
-    animationComboBox->addItem("GridAxis Animations", QChart::GridAxisAnimations);
-    animationComboBox->addItem("Series Animations", QChart::SeriesAnimations);
-    animationComboBox->addItem("All Animations", QChart::AllAnimations);
-    return animationComboBox;
+    // add items to animation combobox
+    m_ui->animatedComboBox->addItem("No Animations", QChart::NoAnimation);
+    m_ui->animatedComboBox->addItem("GridAxis Animations", QChart::GridAxisAnimations);
+    m_ui->animatedComboBox->addItem("Series Animations", QChart::SeriesAnimations);
+    m_ui->animatedComboBox->addItem("All Animations", QChart::AllAnimations);
 }
 
-QComboBox *ThemeWidget::createLegendBox() const
+void ThemeWidget::populateLegendBox()
 {
-    QComboBox *legendComboBox = new QComboBox();
-    legendComboBox->addItem("No Legend ", 0);
-    legendComboBox->addItem("Legend Top", Qt::AlignTop);
-    legendComboBox->addItem("Legend Bottom", Qt::AlignBottom);
-    legendComboBox->addItem("Legend Left", Qt::AlignLeft);
-    legendComboBox->addItem("Legend Right", Qt::AlignRight);
-    return legendComboBox;
+    // add items to legend combobox
+    m_ui->legendComboBox->addItem("No Legend ", 0);
+    m_ui->legendComboBox->addItem("Legend Top", Qt::AlignTop);
+    m_ui->legendComboBox->addItem("Legend Bottom", Qt::AlignBottom);
+    m_ui->legendComboBox->addItem("Legend Left", Qt::AlignLeft);
+    m_ui->legendComboBox->addItem("Legend Right", Qt::AlignRight);
 }
 
 QChart *ThemeWidget::createAreaChart() const
@@ -334,10 +303,10 @@ QChart *ThemeWidget::createScatterChart() const
 void ThemeWidget::updateUI()
 {
     QChart::ChartTheme theme = static_cast<QChart::ChartTheme>(
-                m_themeComboBox->itemData(m_themeComboBox->currentIndex()).toInt());
+                m_ui->themeComboBox->itemData(m_ui->themeComboBox->currentIndex()).toInt());
 
     const auto charts = m_charts;
-    if (m_charts.at(0)->chart()->theme() != theme) {
+    if (!m_charts.isEmpty() && m_charts.at(0)->chart()->theme() != theme) {
         for (QChartView *chartView : charts)
             chartView->chart()->setTheme(theme);
 
@@ -370,18 +339,19 @@ void ThemeWidget::updateUI()
         window()->setPalette(pal);
     }
 
-    bool checked = m_antialiasCheckBox->isChecked();
+    bool checked = m_ui->antialiasCheckBox->isChecked();
     for (QChartView *chart : charts)
         chart->setRenderHint(QPainter::Antialiasing, checked);
 
     QChart::AnimationOptions options(
-                m_animatedComboBox->itemData(m_animatedComboBox->currentIndex()).toInt());
-    if (m_charts.at(0)->chart()->animationOptions() != options) {
+                m_ui->animatedComboBox->itemData(m_ui->animatedComboBox->currentIndex()).toInt());
+    if (!m_charts.isEmpty() && m_charts.at(0)->chart()->animationOptions() != options) {
         for (QChartView *chartView : charts)
             chartView->chart()->setAnimationOptions(options);
     }
 
-    Qt::Alignment alignment(m_legendComboBox->itemData(m_legendComboBox->currentIndex()).toInt());
+    Qt::Alignment alignment(
+                m_ui->legendComboBox->itemData(m_ui->legendComboBox->currentIndex()).toInt());
 
     if (!alignment) {
         for (QChartView *chartView : charts)
