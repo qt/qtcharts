@@ -53,6 +53,7 @@
 #include <QtCore/QRandomGenerator>
 #include <QtCharts/QBarCategoryAxis>
 #include <QtWidgets/QApplication>
+#include <QtCharts/QValueAxis>
 
 ThemeWidget::ThemeWidget(QWidget *parent) :
     QWidget(parent),
@@ -75,7 +76,9 @@ ThemeWidget::ThemeWidget(QWidget *parent) :
     m_ui->gridLayout->addWidget(chartView, 1, 0);
     m_charts << chartView;
 
-    chartView = new QChartView(createBarChart(m_valueCount));
+    chartView = new QChartView(createPieChart());
+    // Funny things happen if the pie slice labels do not fit the screen, so we ignore size policy
+    chartView->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     m_ui->gridLayout->addWidget(chartView, 1, 1);
     m_charts << chartView;
 
@@ -83,9 +86,7 @@ ThemeWidget::ThemeWidget(QWidget *parent) :
     m_ui->gridLayout->addWidget(chartView, 1, 2);
     m_charts << chartView;
 
-    chartView = new QChartView(createPieChart());
-    // Funny things happen if the pie slice labels do not fit the screen, so we ignore size policy
-    chartView->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+    chartView = new QChartView(createBarChart(m_valueCount));
     m_ui->gridLayout->addWidget(chartView, 2, 0);
     m_charts << chartView;
 
@@ -191,9 +192,14 @@ QChart *ThemeWidget::createAreaChart() const
         area->setName(name + QString::number(nameIndex));
         nameIndex++;
         chart->addSeries(area);
-        chart->createDefaultAxes();
         lowerSeries = upperSeries;
     }
+
+    chart->createDefaultAxes();
+    chart->axisX()->setRange(0, m_valueCount - 1);
+    chart->axisY()->setRange(0, m_valueMax);
+    // Add space to label to add space between labels and axis
+    static_cast<QValueAxis *>(chart->axisY())->setLabelFormat("%.1f  ");
 
     return chart;
 }
@@ -212,7 +218,11 @@ QChart *ThemeWidget::createBarChart(int valueCount) const
         series->append(set);
     }
     chart->addSeries(series);
+
     chart->createDefaultAxes();
+    chart->axisY()->setRange(0, m_valueMax * 2);
+    // Add space to label to add space between labels and axis
+    static_cast<QValueAxis *>(chart->axisY())->setLabelFormat("%.1f  ");
 
     return chart;
 }
@@ -232,7 +242,12 @@ QChart *ThemeWidget::createLineChart() const
         nameIndex++;
         chart->addSeries(series);
     }
+
     chart->createDefaultAxes();
+    chart->axisX()->setRange(0, m_valueMax);
+    chart->axisY()->setRange(0, m_valueCount);
+    // Add space to label to add space between labels and axis
+    static_cast<QValueAxis *>(chart->axisY())->setLabelFormat("%.1f  ");
 
     return chart;
 }
@@ -242,29 +257,24 @@ QChart *ThemeWidget::createPieChart() const
     QChart *chart = new QChart();
     chart->setTitle("Pie chart");
 
-    qreal pieSize = 1.0 / m_dataTable.count();
-    for (int i = 0; i < m_dataTable.count(); i++) {
-        QPieSeries *series = new QPieSeries(chart);
-        for (const Data &data : m_dataTable[i]) {
-            QPieSlice *slice = series->append(data.second, data.first.y());
-            if (data == m_dataTable[i].first()) {
-                slice->setLabelVisible();
-                slice->setExploded();
-            }
+    QPieSeries *series = new QPieSeries(chart);
+    for (const Data &data : m_dataTable[0]) {
+        QPieSlice *slice = series->append(data.second, data.first.y());
+        if (data == m_dataTable[0].first()) {
+            // Show the first slice exploded with label
+            slice->setLabelVisible();
+            slice->setExploded();
+            slice->setExplodeDistanceFactor(0.5);
         }
-        qreal hPos = (pieSize / 2) + (i / (qreal) m_dataTable.count());
-        series->setPieSize(pieSize);
-        series->setHorizontalPosition(hPos);
-        series->setVerticalPosition(0.5);
-        chart->addSeries(series);
     }
+    series->setPieSize(0.4);
+    chart->addSeries(series);
 
     return chart;
 }
 
 QChart *ThemeWidget::createSplineChart() const
 {
-    // spine chart
     QChart *chart = new QChart();
     chart->setTitle("Spline chart");
     QString name("Series ");
@@ -277,7 +287,13 @@ QChart *ThemeWidget::createSplineChart() const
         nameIndex++;
         chart->addSeries(series);
     }
+
     chart->createDefaultAxes();
+    chart->axisX()->setRange(0, m_valueMax);
+    chart->axisY()->setRange(0, m_valueCount);
+    // Add space to label to add space between labels and axis
+    static_cast<QValueAxis *>(chart->axisY())->setLabelFormat("%.1f  ");
+
     return chart;
 }
 
@@ -296,7 +312,13 @@ QChart *ThemeWidget::createScatterChart() const
         nameIndex++;
         chart->addSeries(series);
     }
+
     chart->createDefaultAxes();
+    chart->axisX()->setRange(0, m_valueMax);
+    chart->axisY()->setRange(0, m_valueCount);
+    // Add space to label to add space between labels and axis
+    static_cast<QValueAxis *>(chart->axisY())->setLabelFormat("%.1f  ");
+
     return chart;
 }
 
@@ -310,6 +332,7 @@ void ThemeWidget::updateUI()
         for (QChartView *chartView : charts)
             chartView->chart()->setTheme(theme);
 
+        // Set palette colors based on selected theme
         QPalette pal = window()->palette();
         if (theme == QChart::ChartThemeLight) {
             pal.setColor(QPalette::Window, QRgb(0xf0f0f0));
@@ -339,10 +362,12 @@ void ThemeWidget::updateUI()
         window()->setPalette(pal);
     }
 
+    // Update antialiasing
     bool checked = m_ui->antialiasCheckBox->isChecked();
     for (QChartView *chart : charts)
         chart->setRenderHint(QPainter::Antialiasing, checked);
 
+    // Update animation options
     QChart::AnimationOptions options(
                 m_ui->animatedComboBox->itemData(m_ui->animatedComboBox->currentIndex()).toInt());
     if (!m_charts.isEmpty() && m_charts.at(0)->chart()->animationOptions() != options) {
@@ -350,6 +375,7 @@ void ThemeWidget::updateUI()
             chartView->chart()->setAnimationOptions(options);
     }
 
+    // Update legend alignment
     Qt::Alignment alignment(
                 m_ui->legendComboBox->itemData(m_ui->legendComboBox->currentIndex()).toInt());
 
