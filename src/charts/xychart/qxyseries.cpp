@@ -1001,6 +1001,9 @@ void QXYSeriesPrivate::initializeAnimations(QtCharts::QChart::AnimationOptions o
 void QXYSeriesPrivate::drawSeriesPointLabels(QPainter *painter, const QVector<QPointF> &points,
                                              const int offset)
 {
+    if (points.size() == 0)
+        return;
+
     static const QString xPointTag(QLatin1String("@xPoint"));
     static const QString yPointTag(QLatin1String("@yPoint"));
     const int labelOffset = offset + 2;
@@ -1010,7 +1013,8 @@ void QXYSeriesPrivate::drawSeriesPointLabels(QPainter *painter, const QVector<QP
     QFontMetrics fm(painter->font());
     // m_points is used for the label here as it has the series point information
     // points variable passed is used for positioning because it has the coordinates
-    for (int i(0); i < m_points.size(); i++) {
+    const int pointCount = qMin(points.size(), m_points.size());
+    for (int i(0); i < pointCount; i++) {
         QString pointLabel = m_pointLabelsFormat;
         pointLabel.replace(xPointTag, presenter()->numberToString(m_points.at(i).x()));
         pointLabel.replace(yPointTag, presenter()->numberToString(m_points.at(i).y()));
