@@ -55,7 +55,7 @@ Item {
     }
 
     Component.onCompleted: {
-        // You can also manipulate slices dynamically
+        // You can also manipulate slices dynamically, like append a slice or set a slice exploded
         othersSlice = pieSeries.append("Others", 52.0);
         pieSeries.find("Volkswagen").exploded = true;
     }

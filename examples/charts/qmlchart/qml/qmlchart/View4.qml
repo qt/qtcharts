@@ -39,6 +39,7 @@ Item {
         anchors.fill: parent
         antialiasing: true
 
+        // Define x-axis to be used with the series instead of default one
         ValueAxis {
             id: valueAxis
             min: 2000
@@ -49,9 +50,6 @@ Item {
 
         AreaSeries {
             name: "Russian"
-            color: "#FFD52B1E"
-            borderColor: "#FF0039A5"
-            borderWidth: 3
             axisX: valueAxis
             upperSeries: LineSeries {
                 XYPoint { x: 2000; y: 1 }
@@ -72,9 +70,6 @@ Item {
 
         AreaSeries {
             name: "Swedish"
-            color: "#AF005292"
-            borderColor: "#AFFDCA00"
-            borderWidth: 3
             axisX: valueAxis
             upperSeries: LineSeries {
                 XYPoint { x: 2000; y: 1 }
@@ -94,9 +89,6 @@ Item {
 
         AreaSeries {
             name: "Finnish"
-            color: "#00357F"
-            borderColor: "#FEFEFE"
-            borderWidth: 3
             axisX: valueAxis
             upperSeries: LineSeries {
                 XYPoint { x: 2000; y: 0 }
