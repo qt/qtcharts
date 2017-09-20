@@ -73,13 +73,13 @@ public Q_SLOTS:
     void cleanXYSeriesResources(const QXYSeries *series);
 
 protected:
-    void initializeGL() Q_DECL_OVERRIDE;
-    void paintGL() Q_DECL_OVERRIDE;
-    void resizeGL(int width, int height) Q_DECL_OVERRIDE;
-    void mouseDoubleClickEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
-    void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
-    void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
-    void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    void initializeGL() override;
+    void paintGL() override;
+    void resizeGL(int width, int height) override;
+    void mouseDoubleClickEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
 
 private:
     QXYSeries *findSeriesAtEvent(QMouseEvent *event);
