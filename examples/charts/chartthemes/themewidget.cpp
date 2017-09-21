@@ -126,8 +126,8 @@ DataTable ThemeWidget::generateRandomData(int listCount, int valueMax, int value
         DataList dataList;
         qreal yValue(0);
         for (int j(0); j < valueCount; j++) {
-            yValue = yValue + QRandomGenerator::bounded(valueMax / (qreal) valueCount);
-            QPointF value((j + QRandomGenerator::getReal()) * ((qreal) m_valueMax / (qreal) valueCount),
+            yValue = yValue + QRandomGenerator::global()->bounded(valueMax / (qreal) valueCount);
+            QPointF value((j + QRandomGenerator::global()->generateDouble()) * ((qreal) m_valueMax / (qreal) valueCount),
                           yValue);
             QString label = "Slice " + QString::number(i) + ":" + QString::number(j);
             dataList << Data(value, label);

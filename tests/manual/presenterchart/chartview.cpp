@@ -62,7 +62,7 @@ ChartView::ChartView(QChart *chart, QWidget *parent)
     int numPoints = 10;
 
     for (int x = 0; x <= numPoints; ++x) {
-        qreal y = QRandomGenerator::bounded(100);
+        qreal y = QRandomGenerator::global()->bounded(100);
         series0->append(x, y);
         series1->append(x, y);
         series2->append(x, y);

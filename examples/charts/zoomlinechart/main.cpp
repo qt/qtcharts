@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
     QLineSeries *series = new QLineSeries();
     for (int i = 0; i < 500; i++) {
         QPointF p((qreal) i, qSin(M_PI / 50 * i) * 100);
-        p.ry() += QRandomGenerator::bounded(20);
+        p.ry() += QRandomGenerator::global()->bounded(20);
         *series << p;
     }
 //![1]

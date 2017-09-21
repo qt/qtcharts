@@ -286,7 +286,7 @@ qreal MainWidget::randomValue(int min, int max) const
 {
     if (min > max)
         qSwap(min, max);
-    return QRandomGenerator::bounded(min, max);
+    return QRandomGenerator::global()->bounded(min, max);
 }
 
 QCandlestickSet *MainWidget::randomSet(qreal timestamp)

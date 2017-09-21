@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
         series->setName("Sales by month - " + name);
 
         for (const QString &month : months)
-            *series << new DrilldownSlice(QRandomGenerator::bounded(1000), month, yearSeries);
+            *series << new DrilldownSlice(QRandomGenerator::global()->bounded(1000), month, yearSeries);
 
         QObject::connect(series, &QPieSeries::clicked, chart, &DrilldownChart::handleSliceClicked);
 

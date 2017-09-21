@@ -71,7 +71,7 @@ void Chart::handleTimeout()
     qreal x = plotArea().width() / m_axis->tickCount();
     qreal y = (m_axis->max() - m_axis->min()) / m_axis->tickCount();
     m_x += y;
-    m_y = QRandomGenerator::bounded(5) - 2.5;
+    m_y = QRandomGenerator::global()->bounded(5) - 2.5;
     m_series->append(m_x, m_y);
     scroll(x, 0);
     if (m_x == 100)
