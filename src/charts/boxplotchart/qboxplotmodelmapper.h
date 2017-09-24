@@ -47,7 +47,7 @@ class QT_CHARTS_EXPORT QBoxPlotModelMapper : public QObject
     Q_OBJECT
 
 protected:
-    explicit QBoxPlotModelMapper(QObject *parent = Q_NULLPTR);
+    explicit QBoxPlotModelMapper(QObject *parent = nullptr);
 
     QAbstractItemModel *model() const;
     void setModel(QAbstractItemModel *model);

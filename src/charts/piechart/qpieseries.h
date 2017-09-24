@@ -49,7 +49,7 @@ class QT_CHARTS_EXPORT QPieSeries : public QAbstractSeries
     Q_PROPERTY(qreal holeSize READ holeSize WRITE setHoleSize)
 
 public:
-    explicit QPieSeries(QObject *parent = Q_NULLPTR);
+    explicit QPieSeries(QObject *parent = nullptr);
     virtual ~QPieSeries();
 
     QAbstractSeries::SeriesType type() const;

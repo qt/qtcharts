@@ -53,8 +53,8 @@ class QT_CHARTS_EXPORT QAreaSeries : public QAbstractSeries
     Q_PROPERTY(bool pointLabelsClipping READ pointLabelsClipping WRITE setPointLabelsClipping NOTIFY pointLabelsClippingChanged)
 
 public:
-    explicit QAreaSeries(QObject *parent = Q_NULLPTR);
-    explicit QAreaSeries(QLineSeries *upperSeries, QLineSeries *lowerSeries = Q_NULLPTR);
+    explicit QAreaSeries(QObject *parent = nullptr);
+    explicit QAreaSeries(QLineSeries *upperSeries, QLineSeries *lowerSeries = nullptr);
     ~QAreaSeries();
 
 public:

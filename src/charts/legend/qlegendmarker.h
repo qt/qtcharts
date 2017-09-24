@@ -105,7 +105,7 @@ Q_SIGNALS:
     void shapeChanged();
 
 protected:
-    explicit QLegendMarker(QLegendMarkerPrivate &d, QObject *parent = Q_NULLPTR);
+    explicit QLegendMarker(QLegendMarkerPrivate &d, QObject *parent = nullptr);
 
     QScopedPointer<QLegendMarkerPrivate> d_ptr;
     friend class QLegendPrivate;

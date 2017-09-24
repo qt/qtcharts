@@ -46,11 +46,11 @@ class QT_CHARTS_EXPORT QValueAxis : public QAbstractAxis
     Q_PROPERTY(int minorTickCount READ minorTickCount WRITE setMinorTickCount NOTIFY minorTickCountChanged)
 
 public:
-    explicit QValueAxis(QObject *parent = Q_NULLPTR);
+    explicit QValueAxis(QObject *parent = nullptr);
     ~QValueAxis();
 
 protected:
-    QValueAxis(QValueAxisPrivate &d, QObject *parent = Q_NULLPTR);
+    QValueAxis(QValueAxisPrivate &d, QObject *parent = nullptr);
 
 public:
     AxisType type() const;

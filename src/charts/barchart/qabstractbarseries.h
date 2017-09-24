@@ -86,7 +86,7 @@ public:
     QAbstractBarSeries::LabelsPosition labelsPosition() const;
 
 protected:
-    explicit QAbstractBarSeries(QAbstractBarSeriesPrivate &d, QObject *parent = Q_NULLPTR);
+    explicit QAbstractBarSeries(QAbstractBarSeriesPrivate &d, QObject *parent = nullptr);
 
 Q_SIGNALS:
     void clicked(int index, QBarSet *barset);

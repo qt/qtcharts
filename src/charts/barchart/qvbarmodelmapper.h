@@ -45,7 +45,7 @@ class QT_CHARTS_EXPORT QVBarModelMapper : public QBarModelMapper
     Q_PROPERTY(int rowCount READ rowCount WRITE setRowCount NOTIFY rowCountChanged)
 
 public:
-    explicit QVBarModelMapper(QObject *parent = Q_NULLPTR);
+    explicit QVBarModelMapper(QObject *parent = nullptr);
 
     QAbstractItemModel *model() const;
     void setModel(QAbstractItemModel *model);

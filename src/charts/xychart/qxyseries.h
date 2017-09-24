@@ -56,7 +56,7 @@ class QT_CHARTS_EXPORT QXYSeries : public QAbstractSeries
     Q_PROPERTY(bool pointLabelsClipping READ pointLabelsClipping WRITE setPointLabelsClipping NOTIFY pointLabelsClippingChanged)
 
 protected:
-    explicit QXYSeries(QXYSeriesPrivate &d, QObject *parent = Q_NULLPTR);
+    explicit QXYSeries(QXYSeriesPrivate &d, QObject *parent = nullptr);
 
 public:
     ~QXYSeries();

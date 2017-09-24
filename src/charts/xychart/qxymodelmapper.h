@@ -47,7 +47,7 @@ class QT_CHARTS_EXPORT QXYModelMapper : public QObject
     Q_OBJECT
 
 protected:
-    explicit QXYModelMapper(QObject *parent = Q_NULLPTR);
+    explicit QXYModelMapper(QObject *parent = nullptr);
 
     QAbstractItemModel *model() const;
     void setModel(QAbstractItemModel *model);

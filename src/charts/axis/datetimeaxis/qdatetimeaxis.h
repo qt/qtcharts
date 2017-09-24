@@ -49,11 +49,11 @@ class QT_CHARTS_EXPORT QDateTimeAxis : public QAbstractAxis
     Q_PROPERTY(QString format READ format WRITE setFormat NOTIFY formatChanged)
 
 public:
-    explicit QDateTimeAxis(QObject *parent = Q_NULLPTR);
+    explicit QDateTimeAxis(QObject *parent = nullptr);
     ~QDateTimeAxis();
 
 protected:
-    QDateTimeAxis(QDateTimeAxisPrivate &d, QObject *parent = Q_NULLPTR);
+    QDateTimeAxis(QDateTimeAxisPrivate &d, QObject *parent = nullptr);
 
 public:
     AxisType type() const;

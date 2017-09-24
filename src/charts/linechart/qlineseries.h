@@ -43,12 +43,12 @@ class QT_CHARTS_EXPORT QLineSeries : public QXYSeries
     Q_OBJECT
 
 public:
-    explicit QLineSeries(QObject *parent = Q_NULLPTR);
+    explicit QLineSeries(QObject *parent = nullptr);
     ~QLineSeries();
     QAbstractSeries::SeriesType type() const;
 
 protected:
-    QLineSeries(QLineSeriesPrivate &d, QObject *parent = Q_NULLPTR);
+    QLineSeries(QLineSeriesPrivate &d, QObject *parent = nullptr);
 
 private:
     Q_DECLARE_PRIVATE(QLineSeries)

@@ -43,7 +43,7 @@ class QT_CHARTS_EXPORT QAreaLegendMarker : public QLegendMarker
     Q_OBJECT
 
 public:
-    explicit QAreaLegendMarker(QAreaSeries *series, QLegend *legend, QObject *parent = Q_NULLPTR);
+    explicit QAreaLegendMarker(QAreaSeries *series, QLegend *legend, QObject *parent = nullptr);
     virtual ~QAreaLegendMarker();
 
     virtual LegendMarkerType type() { return LegendMarkerTypeArea; }
@@ -52,7 +52,7 @@ public:
     virtual QAreaSeries* series();
 
 protected:
-    QAreaLegendMarker(QAreaLegendMarkerPrivate &d, QObject *parent = Q_NULLPTR);
+    QAreaLegendMarker(QAreaLegendMarkerPrivate &d, QObject *parent = nullptr);
 
 private:
     Q_DECLARE_PRIVATE(QAreaLegendMarker)

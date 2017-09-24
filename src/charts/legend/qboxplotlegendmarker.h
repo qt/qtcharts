@@ -43,7 +43,7 @@ class QT_CHARTS_EXPORT QBoxPlotLegendMarker : public QLegendMarker
     Q_OBJECT
 
 public:
-    explicit QBoxPlotLegendMarker(QBoxPlotSeries *series, QLegend *legend, QObject *parent = Q_NULLPTR);
+    explicit QBoxPlotLegendMarker(QBoxPlotSeries *series, QLegend *legend, QObject *parent = nullptr);
     virtual ~QBoxPlotLegendMarker();
 
     virtual LegendMarkerType type() { return LegendMarkerTypeBoxPlot; }
@@ -52,7 +52,7 @@ public:
     virtual QBoxPlotSeries* series();
 
 protected:
-    QBoxPlotLegendMarker(QBoxPlotLegendMarkerPrivate &d, QObject *parent = Q_NULLPTR);
+    QBoxPlotLegendMarker(QBoxPlotLegendMarkerPrivate &d, QObject *parent = nullptr);
 
 private:
     Q_DECLARE_PRIVATE(QBoxPlotLegendMarker)

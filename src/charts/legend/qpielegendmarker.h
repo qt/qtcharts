@@ -44,7 +44,7 @@ class QT_CHARTS_EXPORT QPieLegendMarker : public QLegendMarker
     Q_OBJECT
 
 public:
-    explicit QPieLegendMarker(QPieSeries *series, QPieSlice *slice, QLegend *legend, QObject *parent = Q_NULLPTR);
+    explicit QPieLegendMarker(QPieSeries *series, QPieSlice *slice, QLegend *legend, QObject *parent = nullptr);
     virtual ~QPieLegendMarker();
 
     virtual LegendMarkerType type() { return LegendMarkerTypePie; }
@@ -54,7 +54,7 @@ public:
     QPieSlice* slice();
 
 protected:
-    QPieLegendMarker(QPieLegendMarkerPrivate &d, QObject *parent = Q_NULLPTR);
+    QPieLegendMarker(QPieLegendMarkerPrivate &d, QObject *parent = nullptr);
 
 private:
     Q_DECLARE_PRIVATE(QPieLegendMarker)

@@ -45,7 +45,7 @@ class QT_CHARTS_EXPORT QVBoxPlotModelMapper : public QBoxPlotModelMapper
     Q_PROPERTY(int rowCount READ rowCount WRITE setRowCount NOTIFY rowCountChanged)
 
 public:
-    explicit QVBoxPlotModelMapper(QObject *parent = Q_NULLPTR);
+    explicit QVBoxPlotModelMapper(QObject *parent = nullptr);
 
     QAbstractItemModel *model() const;
     void setModel(QAbstractItemModel *model);

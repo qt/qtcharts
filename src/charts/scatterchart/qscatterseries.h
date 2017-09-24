@@ -54,7 +54,7 @@ public:
     };
 
 public:
-    explicit QScatterSeries(QObject *parent = Q_NULLPTR);
+    explicit QScatterSeries(QObject *parent = nullptr);
     ~QScatterSeries();
     QAbstractSeries::SeriesType type() const;
     void setPen(const QPen &pen);

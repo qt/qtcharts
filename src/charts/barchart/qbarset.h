@@ -51,7 +51,7 @@ class QT_CHARTS_EXPORT QBarSet : public QObject
     Q_PROPERTY(QColor labelColor READ labelColor WRITE setLabelColor NOTIFY labelColorChanged)
 
 public:
-    explicit QBarSet(const QString label, QObject *parent = Q_NULLPTR);
+    explicit QBarSet(const QString label, QObject *parent = nullptr);
     virtual ~QBarSet();
 
     void setLabel(const QString label);

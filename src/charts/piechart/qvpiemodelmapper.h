@@ -45,7 +45,7 @@ class QT_CHARTS_EXPORT QVPieModelMapper : public QPieModelMapper
     Q_PROPERTY(int rowCount READ rowCount WRITE setRowCount NOTIFY rowCountChanged)
 
 public:
-    explicit QVPieModelMapper(QObject *parent = Q_NULLPTR);
+    explicit QVPieModelMapper(QObject *parent = nullptr);
 
     QAbstractItemModel *model() const;
     void setModel(QAbstractItemModel *model);
