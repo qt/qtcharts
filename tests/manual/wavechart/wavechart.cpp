@@ -28,7 +28,7 @@
 ****************************************************************************/
 
 #include "wavechart.h"
-#include <cmath>
+#include <math.h>
 
 QT_CHARTS_USE_NAMESPACE
 
