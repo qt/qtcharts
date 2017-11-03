@@ -48,12 +48,13 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QMessageBox>
-#include <qmath.h>
 #include <QtCore/QDebug>
 #include <QtCore/QRandomGenerator>
 #include <QtGui/QStandardItemModel>
 #include <QtCharts/QBarCategoryAxis>
 #include <QtWidgets/QOpenGLWidget>
+
+#include <qmath.h>
 
 QT_CHARTS_USE_NAMESPACE
 

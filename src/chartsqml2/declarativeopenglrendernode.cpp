@@ -88,6 +88,26 @@ DeclarativeOpenGLRenderNode::~DeclarativeOpenGLRenderNode()
     qDeleteAll(m_mouseEvents);
 }
 
+static const char *vertexSourceCore =
+        "#version 150\n"
+        "in vec2 points;\n"
+        "uniform vec2 min;\n"
+        "uniform vec2 delta;\n"
+        "uniform float pointSize;\n"
+        "uniform mat4 matrix;\n"
+        "void main() {\n"
+        "  vec2 normalPoint = vec2(-1, -1) + ((points - min) / delta);\n"
+        "  gl_Position = matrix * vec4(normalPoint, 0, 1);\n"
+        "  gl_PointSize = pointSize;\n"
+        "}";
+static const char *fragmentSourceCore =
+        "#version 150\n"
+        "uniform vec3 color;\n"
+        "out vec4 fragColor;\n"
+        "void main() {\n"
+        "  fragColor = vec4(color,1);\n"
+        "}\n";
+
 static const char *vertexSource =
         "attribute highp vec2 points;\n"
         "uniform highp vec2 min;\n"
@@ -111,8 +131,13 @@ void DeclarativeOpenGLRenderNode::initGL()
     recreateFBO();
 
     m_program = new QOpenGLShaderProgram;
-    m_program->addShaderFromSourceCode(QOpenGLShader::Vertex, vertexSource);
-    m_program->addShaderFromSourceCode(QOpenGLShader::Fragment, fragmentSource);
+    if (QOpenGLContext::currentContext()->format().profile() == QSurfaceFormat::CoreProfile) {
+        m_program->addShaderFromSourceCode(QOpenGLShader::Vertex, vertexSourceCore);
+        m_program->addShaderFromSourceCode(QOpenGLShader::Fragment, fragmentSourceCore);
+    } else {
+        m_program->addShaderFromSourceCode(QOpenGLShader::Vertex, vertexSource);
+        m_program->addShaderFromSourceCode(QOpenGLShader::Fragment, fragmentSource);
+    }
     m_program->bindAttributeLocation("points", 0);
     m_program->link();
 
