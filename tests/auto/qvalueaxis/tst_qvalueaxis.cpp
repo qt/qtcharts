@@ -285,6 +285,7 @@ void tst_QValueAxis::range_raw_data()
     QTest::newRow("1.0 - 101.0") << (qreal)-1.0 << (qreal)101.0;
     QTest::newRow("25.0 - 75.0") << (qreal)25.0 << (qreal)75.0;
     QTest::newRow("101.0") << (qreal)40.0 << (qreal)60.0;
+    QTest::newRow("smallNumbers") << (qreal)-1e-12 << (qreal)1e-13;
 }
 
 void tst_QValueAxis::range_raw()
