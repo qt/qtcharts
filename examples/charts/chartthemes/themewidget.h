@@ -36,6 +36,7 @@
 QT_BEGIN_NAMESPACE
 class QComboBox;
 class QCheckBox;
+class Ui_ThemeWidgetForm;
 QT_END_NAMESPACE
 
 QT_CHARTS_BEGIN_NAMESPACE
@@ -61,9 +62,9 @@ private Q_SLOTS:
 
 private:
     DataTable generateRandomData(int listCount, int valueMax, int valueCount) const;
-    QComboBox *createThemeBox() const;
-    QComboBox *createAnimationBox() const;
-    QComboBox *createLegendBox() const;
+    void populateThemeBox();
+    void populateAnimationBox();
+    void populateLegendBox();
     void connectSignals();
     QChart *createAreaChart() const;
     QChart *createBarChart(int valueCount) const;
@@ -79,10 +80,7 @@ private:
     QList<QChartView *> m_charts;
     DataTable m_dataTable;
 
-    QComboBox *m_themeComboBox;
-    QCheckBox *m_antialiasCheckBox;
-    QComboBox *m_animatedComboBox;
-    QComboBox *m_legendComboBox;
+    Ui_ThemeWidgetForm *m_ui;
 };
 
 #endif /* THEMEWIDGET_H */

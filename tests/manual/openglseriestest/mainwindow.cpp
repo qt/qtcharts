@@ -549,7 +549,7 @@ void MainWindow::addSeries(bool gl)
 
     if (m_seriesList.size() < maxSeriesCount) {
         QXYSeries *series;
-        if (QRandomGenerator::bounded(2)) {
+        if (QRandomGenerator::global()->bounded(2)) {
             series = new QLineSeries;
             series->setPen(QPen(QBrush(color), width));
         } else {

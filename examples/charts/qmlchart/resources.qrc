@@ -13,5 +13,6 @@
         <file>qml/qmlchart/View10.qml</file>
         <file>qml/qmlchart/View11.qml</file>
         <file>qml/qmlchart/View12.qml</file>
+        <file>qml/qmlchart/MainForm.ui.qml</file>
     </qresource>
 </RCC>

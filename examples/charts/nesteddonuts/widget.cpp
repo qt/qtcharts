@@ -61,9 +61,9 @@ Widget::Widget(QWidget *parent)
     //! [3]
     for (int i = 0; i < donutCount; i++) {
         QPieSeries *donut = new QPieSeries;
-        int sliceCount =  3 + QRandomGenerator::bounded(3);
+        int sliceCount =  3 + QRandomGenerator::global()->bounded(3);
         for (int j = 0; j < sliceCount; j++) {
-            qreal value = 100 + QRandomGenerator::bounded(100);
+            qreal value = 100 + QRandomGenerator::global()->bounded(100);
             QPieSlice *slice = new QPieSlice(QString("%1").arg(value), value);
             slice->setLabelVisible(true);
             slice->setLabelColor(Qt::white);
@@ -102,7 +102,7 @@ void Widget::updateRotation()
 {
     for (int i = 0; i < m_donuts.count(); i++) {
         QPieSeries *donut = m_donuts.at(i);
-        qreal phaseShift =  -50 + QRandomGenerator::bounded(100);
+        qreal phaseShift =  -50 + QRandomGenerator::global()->bounded(100);
         donut->setPieStartAngle(donut->pieStartAngle() + phaseShift);
         donut->setPieEndAngle(donut->pieEndAngle() + phaseShift);
     }

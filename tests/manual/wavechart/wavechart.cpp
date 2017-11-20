@@ -67,7 +67,7 @@ void WaveChart::update()
     int fluctuate;
     const QList<QPointF>& points = m_series->points();
     for (qreal i = 0, x = 0; x <= 2 * M_PI; x += m_step, i++) {
-        fluctuate = QRandomGenerator::bounded(100);
+        fluctuate = QRandomGenerator::global()->bounded(100);
         m_series->replace(x,points[i].y(),x,fabs(sin(x) * fluctuate));
 
     }

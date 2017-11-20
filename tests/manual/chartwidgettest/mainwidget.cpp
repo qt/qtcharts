@@ -48,12 +48,13 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QMessageBox>
-#include <qmath.h>
 #include <QtCore/QDebug>
 #include <QtCore/QRandomGenerator>
 #include <QtGui/QStandardItemModel>
 #include <QtCharts/QBarCategoryAxis>
 #include <QtWidgets/QOpenGLWidget>
+
+#include <qmath.h>
 
 QT_CHARTS_USE_NAMESPACE
 
@@ -219,9 +220,9 @@ QList<RealList> MainWidget::generateTestData(int columnCount, int rowCount, QStr
             if (dataCharacteristics == "Sin") {
                 newColumn.append(std::abs(sin(M_PI / 50 * i) * 100));
             } else if (dataCharacteristics == "Sin + random") {
-                newColumn.append(std::abs(sin(M_PI / 50 * i) * 100) + QRandomGenerator::bounded(5));
+                newColumn.append(std::abs(sin(M_PI / 50 * i) * 100) + QRandomGenerator::global()->bounded(5));
             } else if (dataCharacteristics == "Random") {
-                newColumn.append(QRandomGenerator::bounded(11.0));
+                newColumn.append(QRandomGenerator::global()->bounded(11.0));
             } else if (dataCharacteristics == "Linear") {
                 //newColumn.append(i * (j + 1.0));
                 // TODO: temporary hack to make pie work; prevent zero values:

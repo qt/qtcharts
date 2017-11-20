@@ -325,7 +325,7 @@ void tst_QXYSeries::remove_raw()
     // (simulate e.g. spamming a hypothetical "remove last point"-button)
     QList<QPointF> bunchOfPoints;
     for (int i = 0; i < 10; i++)
-        bunchOfPoints.append(QPointF(i, QRandomGenerator::getReal()));
+        bunchOfPoints.append(QPointF(i, QRandomGenerator::global()->generateDouble()));
     m_series->replace(bunchOfPoints);
     QCOMPARE(m_series->points(), bunchOfPoints);
     QTest::qWait(1500); // Wait for append animations to be over
@@ -337,7 +337,7 @@ void tst_QXYSeries::remove_raw()
 
     // Removal using index
     for (int i = 0; i < 10; i++)
-        bunchOfPoints.append(QPointF(i, QRandomGenerator::getReal()));
+        bunchOfPoints.append(QPointF(i, QRandomGenerator::global()->generateDouble()));
     m_series->replace(bunchOfPoints);
     m_series->remove(5);
     m_series->remove(0);
@@ -350,7 +350,7 @@ void tst_QXYSeries::remove_raw()
 
     // Multiple removal using index
     for (int i = 0; i < 10; i++)
-        bunchOfPoints.append(QPointF(i, QRandomGenerator::getReal()));
+        bunchOfPoints.append(QPointF(i, QRandomGenerator::global()->generateDouble()));
     m_series->replace(bunchOfPoints);
     m_series->removePoints(5, 2);
     m_series->removePoints(0, 3);
@@ -463,7 +463,7 @@ void tst_QXYSeries::replace_raw()
     // Replace all points
     QList<QPointF> allPoints;
     for (int i = 0; i < 10; i++)
-        allPoints.append(QPointF(i, QRandomGenerator::getReal()));
+        allPoints.append(QPointF(i, QRandomGenerator::global()->generateDouble()));
     m_series->replace(allPoints);
     TRY_COMPARE(pointReplacedSpy.count(), points.count());
     TRY_COMPARE(pointsReplacedSpy.count(), 1);

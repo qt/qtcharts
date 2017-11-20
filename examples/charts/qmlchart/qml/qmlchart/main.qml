@@ -34,66 +34,19 @@ import QtQuick 2.0
 Item {
     width: 600
     height: 400
-    property bool sourceLoaded: false
 
-    ListView {
-        id: root
-        focus: true
-        anchors.fill: parent
-        snapMode: ListView.SnapOneItem
-        highlightRangeMode: ListView.StrictlyEnforceRange
-        highlightMoveDuration: 250
-        orientation: ListView.Horizontal
-        boundsBehavior: Flickable.StopAtBounds
-
+    MainForm {
+        // Hide the default info text once view changes away from the first view
         onCurrentIndexChanged: {
-            if (infoText.opacity > 0.0) {
+            if (info.opacity > 0.0) {
                 if (sourceLoaded)
-                    infoText.opacity = 0.0;
+                    info.opacity = 0.0;
                 else if (currentIndex != 0)
                     currentIndex = 0;
             }
         }
 
-        model: ListModel {
-            ListElement {component: "View1.qml"}
-            ListElement {component: "View2.qml"}
-            ListElement {component: "View3.qml"}
-            ListElement {component: "View4.qml"}
-            ListElement {component: "View5.qml"}
-            ListElement {component: "View6.qml"}
-            ListElement {component: "View7.qml"}
-            ListElement {component: "View8.qml"}
-            ListElement {component: "View9.qml"}
-            ListElement {component: "View10.qml"}
-            ListElement {component: "View11.qml"}
-            ListElement {component: "View12.qml"}
-        }
-
-        delegate: Loader {
-            width: root.width
-            height: root.height
-
-            source: component
-            asynchronous: true
-
-            onLoaded: sourceLoaded = true
-        }
-    }
-
-    Rectangle {
-        id: infoText
-        anchors.centerIn: parent
-        width: parent.width
-        height: 40
-        color: "black"
-        Text {
-            color: "white"
-            anchors.centerIn: parent
-            text: "You can navigate between views using swipe or arrow keys"
-        }
-
-        Behavior on opacity {
+        Behavior on info.opacity {
             NumberAnimation { duration: 400 }
         }
     }

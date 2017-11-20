@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
         for (int month = 0; month < months.count(); month++) {
             QBarSet *weeklyCrop = new QBarSet(plant);
             for (int week = 0; week < weeks.count(); week++)
-                *weeklyCrop << QRandomGenerator::bounded(20);
+                *weeklyCrop << QRandomGenerator::global()->bounded(20);
             // Get the drilldown series from season series and add crop to it.
             seasonSeries->drilldownSeries(month)->append(weeklyCrop);
             *monthlyCrop << weeklyCrop->sum();
