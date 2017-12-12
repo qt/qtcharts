@@ -394,6 +394,15 @@ void AbstractBarChartItem::handleBarValueRemove(int index, int count, QBarSet *b
 
     // Value removals from the middle of barset need to dirty the rest of the labels of the set.
     markLabelsDirty(barset, index, -1);
+
+    // make sure labels are not visible for removed bars
+    const auto bars = m_barMap.value(barset);
+    for (int c = barset->count(); c < bars.count(); ++c) {
+        auto label = bars.at(c)->labelItem();
+        if (label)
+            label->setVisible(false);
+    }
+
     handleLayoutChanged();
 }
 
