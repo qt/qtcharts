@@ -79,6 +79,9 @@ ChartView {
                                                 + format);
         onLabelsPositionChanged:    console.log("percentBarSeries.onLabelsPositionChanged: "
                                                 + series.labelsPosition);
+        onLabelsPrecisionChanged:   console.log(
+                                        "percentBarSeries.onLabelsPrecisionChanged: "
+                                        + series.labelsPrecision);
         onPressed:       console.log("percentBarSeries.onPressed: " + barset + " " + index);
         onReleased:      console.log("percentBarSeries.onReleased: " + barset + " " + index);
         onDoubleClicked: console.log("percentBarSeries.onDoubleClicked: " + barset + " " + index);

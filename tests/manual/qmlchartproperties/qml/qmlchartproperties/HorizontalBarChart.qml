@@ -78,6 +78,9 @@ ChartView {
                                                 + format);
         onLabelsPositionChanged:    console.log("horizontalBarSeries.onLabelsPositionChanged: "
                                                 + series.labelsPosition);
+        onLabelsPrecisionChanged:   console.log(
+                                        "horizontalBarSeries.onLabelsPrecisionChanged: "
+                                        + series.labelsPrecision);
         onPressed:          console.log("horizontalBarSeries.onPressed: " + barset + " " + index);
         onReleased:         console.log("horizontalBarSeries.onReleased: " + barset + " " + index);
         onDoubleClicked:    console.log("horizontalBarSeries.onDoubleClicked: " + barset + " " + index);

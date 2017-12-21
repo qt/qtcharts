@@ -48,6 +48,7 @@ class QT_CHARTS_EXPORT QAbstractBarSeries : public QAbstractSeries
     Q_PROPERTY(QString labelsFormat READ labelsFormat WRITE setLabelsFormat NOTIFY labelsFormatChanged)
     Q_PROPERTY(LabelsPosition labelsPosition READ labelsPosition WRITE setLabelsPosition NOTIFY labelsPositionChanged)
     Q_PROPERTY(qreal labelsAngle READ labelsAngle WRITE setLabelsAngle NOTIFY labelsAngleChanged)
+    Q_PROPERTY(int labelsPrecision READ labelsPrecision WRITE setLabelsPrecision NOTIFY labelsPrecisionChanged)
     Q_ENUMS(LabelsPosition)
 
 public:
@@ -85,6 +86,9 @@ public:
     void setLabelsPosition(QAbstractBarSeries::LabelsPosition position);
     QAbstractBarSeries::LabelsPosition labelsPosition() const;
 
+    void setLabelsPrecision(int precision);
+    int labelsPrecision() const;
+
 protected:
     explicit QAbstractBarSeries(QAbstractBarSeriesPrivate &d, QObject *parent = nullptr);
 
@@ -99,6 +103,7 @@ Q_SIGNALS:
     void labelsFormatChanged(const QString &format);
     void labelsPositionChanged(QAbstractBarSeries::LabelsPosition position);
     void labelsAngleChanged(qreal angle);
+    void labelsPrecisionChanged(int precision);
 
     void barsetsAdded(QList<QBarSet *> sets);
     void barsetsRemoved(QList<QBarSet *> sets);

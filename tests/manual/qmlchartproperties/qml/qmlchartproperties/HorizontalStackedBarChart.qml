@@ -80,6 +80,9 @@ ChartView {
         onLabelsPositionChanged:    console.log(
                                         "horizontalStackedBarSeries.onLabelsPositionChanged: "
                                         + series.labelsPosition);
+        onLabelsPrecisionChanged:   console.log(
+                                        "horizontalPercentBarSeries.onLabelsPrecisionChanged: "
+                                        + series.labelsPrecision);
         onPressed:          console.log("horizontalStackedBarSeries.onPressed: " + barset + " " + index);
         onReleased:         console.log("horizontalStackedBarSeries.onReleased: " + barset + " " + index);
         onDoubleClicked:    console.log("horizontalStackedBarSeries.onDoubleClicked: " + barset + " " + index);

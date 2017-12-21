@@ -133,6 +133,7 @@ protected:
     QString m_labelsFormat;
     QAbstractBarSeries::LabelsPosition m_labelsPosition;
     qreal m_labelsAngle;
+    int m_labelsPrecision;
     bool m_visualsDirty;
     bool m_labelsDirty;
 

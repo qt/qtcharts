@@ -78,6 +78,9 @@ ChartView {
                                                 + format);
         onLabelsPositionChanged:    console.log("stackedBarSeries.onLabelsPositionChanged: "
                                                 + series.labelsPosition);
+        onLabelsPrecisionChanged:   console.log(
+                                        "stackedBarSeries.onLabelsPrecisionChanged: "
+                                        + series.labelsPrecision);
         onPressed:       console.log("stackedBarSeries.onPressed: " + barset + " " + index);
         onReleased:      console.log("stackedBarSeries.onReleased: " + barset + " " + index);
         onDoubleClicked: console.log("stackedBarSeries.onDoubleClicked: " + barset + " " + index);

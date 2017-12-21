@@ -185,7 +185,7 @@ QT_CHARTS_BEGIN_NAMESPACE
     after the value. The labels are shown on the plot area, whereas labels on the edge of the plot
     area are cut. If the bars are close to each other, the labels may overlap.
 
-    \sa labelsVisible, labelsPosition
+    \sa labelsVisible, labelsPosition, labelsPrecision
 */
 /*!
     \qmlproperty string AbstractBarSeries::labelsFormat
@@ -247,6 +247,23 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \fn void QAbstractBarSeries::labelsAngleChanged(qreal angle)
     This signal is emitted when the \a angle of the value labels changes.
+*/
+
+/*!
+    \property QAbstractBarSeries::labelsPrecision
+    \brief The maximum amount of significant digits shown in value labels.
+
+    Default value is 6.
+*/
+/*!
+    \qmlproperty real AbstractBarSeries::labelsPrecision
+    The maximum amount of significant digits shown in value labels.
+
+    Default value is 6.
+*/
+/*!
+    \fn void QAbstractBarSeries::labelsPrecisionChanged(int precision)
+    This signal is emitted when the \a precision of the value labels changes.
 */
 
 /*!
@@ -629,6 +646,22 @@ QAbstractBarSeries::LabelsPosition QAbstractBarSeries::labelsPosition() const
     return d->m_labelsPosition;
 }
 
+void QAbstractBarSeries::setLabelsPrecision(int precision)
+{
+    Q_D(QAbstractBarSeries);
+    if (d->m_labelsPrecision != precision) {
+        d->m_labelsPrecision = precision;
+        d->setLabelsDirty(true);
+        emit labelsPrecisionChanged(precision);
+    }
+}
+
+int QAbstractBarSeries::labelsPrecision() const
+{
+    Q_D(const QAbstractBarSeries);
+    return d->m_labelsPrecision;
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QAbstractBarSeriesPrivate::QAbstractBarSeriesPrivate(QAbstractBarSeries *q) :
@@ -640,6 +673,7 @@ QAbstractBarSeriesPrivate::QAbstractBarSeriesPrivate(QAbstractBarSeries *q) :
     m_labelsFormat(),
     m_labelsPosition(QAbstractBarSeries::LabelsCenter),
     m_labelsAngle(0),
+    m_labelsPrecision(6),
     m_visualsDirty(true),
     m_labelsDirty(true)
 {

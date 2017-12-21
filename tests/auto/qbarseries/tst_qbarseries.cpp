@@ -72,6 +72,7 @@ private slots:
     void setLabelsFormat();
     void setLabelsPosition();
     void setLabelsAngle();
+    void setLabelsPrecision();
     void opacity();
     void mouseclicked_data();
     void mouseclicked();
@@ -428,6 +429,19 @@ void tst_QBarSeries::setLabelsAngle()
     QList<QVariant> arguments = labelsAngleSpy.takeFirst();
     QVERIFY(arguments.at(0).value<qreal>() == 55.0);
     QCOMPARE(m_barseries->labelsAngle(), 55.0);
+}
+
+void tst_QBarSeries::setLabelsPrecision()
+{
+    QSignalSpy labelsPrecisionSpy(m_barseries,
+                             SIGNAL(labelsPrecisionChanged(int)));
+    QCOMPARE(m_barseries->labelsPrecision(), 6);
+
+    m_barseries->setLabelsPrecision(9);
+    TRY_COMPARE(labelsPrecisionSpy.count(), 1);
+    QList<QVariant> arguments = labelsPrecisionSpy.takeFirst();
+    QVERIFY(arguments.at(0).value<int>() == 9);
+    QCOMPARE(m_barseries->labelsPrecision(), 9);
 }
 
 void tst_QBarSeries::opacity()

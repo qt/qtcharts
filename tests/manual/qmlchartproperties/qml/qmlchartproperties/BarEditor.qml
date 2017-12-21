@@ -205,6 +205,16 @@ Row {
             text: "labels angle -"
             onClicked: series.labelsAngle = series.labelsAngle - 5;
         }
+        Button {
+            text: "labels precision"
+            onClicked: {
+                if (series.labelsPrecision == 2)
+                    series.labelsPrecision = 4;
+                else
+                    series.labelsPrecision = 2;
+            }
+        }
+
         FontEditor {
             id: fontEditor
             fontDescription: "label"

@@ -75,6 +75,10 @@ AbstractBarChartItem::AbstractBarChartItem(QAbstractBarSeries *series, QGraphics
     connect(series, SIGNAL(labelsPositionChanged(QAbstractBarSeries::LabelsPosition)),
             this, SLOT(handleLabelsPositionChanged()));
     connect(series, SIGNAL(labelsAngleChanged(qreal)), this, SLOT(positionLabels()));
+    connect(series, &QAbstractBarSeries::labelsPrecisionChanged,
+            this, &AbstractBarChartItem::handleUpdatedBars);
+    connect(series, &QAbstractBarSeries::labelsPrecisionChanged,
+            this, &AbstractBarChartItem::positionLabels);
     connect(series->chart()->d_ptr->m_dataset, &ChartDataSet::seriesAdded,
             this, &AbstractBarChartItem::handleSeriesAdded);
     connect(series->chart()->d_ptr->m_dataset, &ChartDataSet::seriesRemoved,
@@ -543,13 +547,15 @@ QString AbstractBarChartItem::generateLabelText(int set, int category, qreal val
     Q_UNUSED(set);
     Q_UNUSED(category);
     static const QString valueTag(QLatin1String("@value"));
+    QString valueString = presenter()->numberToString(value, 'g', m_series->labelsPrecision());
     QString valueLabel;
     if (m_series->labelsFormat().isEmpty()) {
-        valueLabel = presenter()->numberToString(value);
+        valueLabel = valueString;
     } else {
         valueLabel = m_series->labelsFormat();
-        valueLabel.replace(valueTag, presenter()->numberToString(value));
+        valueLabel.replace(valueTag, valueString);
     }
+
     return valueLabel;
 }
 
