@@ -343,7 +343,7 @@ QStringList ChartAxisElement::createValueLabels(qreal min, qreal max, int ticks,
     if (max <= min || ticks < 1)
         return labels;
 
-    if (format.isNull()) {
+    if (format.isEmpty()) {
         int n = qMax(int(-qFloor(std::log10((max - min) / (ticks - 1)))), 0) + 1;
         for (int i = 0; i < ticks; i++) {
             qreal value = min + (i * (max - min) / (ticks - 1));
@@ -395,7 +395,7 @@ QStringList ChartAxisElement::createLogValueLabels(qreal min, qreal max, qreal b
     else
         firstTick = qCeil(std::log10(max) / std::log10(base));
 
-    if (format.isNull()) {
+    if (format.isEmpty()) {
         int n = 0;
         if (ticks > 1)
             n = qMax(int(-qFloor(std::log10((max - min) / (ticks - 1)))), 0);
