@@ -41,7 +41,8 @@ PRIVATE_HEADERS += \
     $$PWD/scroller_p.h \
     $$PWD/qabstractseries_p.h \
     $$PWD/charttitle_p.h \
-    $$PWD/charthelpers_p.h
+    $$PWD/charthelpers_p.h \
+    $$PWD/qchartglobal_p.h
 
 contains(QT_CONFIG, opengl): PRIVATE_HEADERS += $$PWD/glwidget_p.h
 

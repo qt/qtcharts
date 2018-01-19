@@ -41,6 +41,7 @@
 
 #include <QtCharts/QChartGlobal>
 #include <QtCharts/QChart>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -49,7 +50,7 @@ class ChartPresenter;
 class QLegend;
 class ChartDataSet;
 
-class QChartPrivate
+class QT_CHARTS_PRIVATE_EXPORT QChartPrivate
 {
 
 public:

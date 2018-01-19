@@ -42,11 +42,12 @@
 #include <QtCore/QObject>
 #include <QtCharts/QPieSlice>
 #include <private/pieslicedata_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 class QPieSeries;
 
-class QPieSlicePrivate : public QObject
+class QT_CHARTS_PRIVATE_EXPORT QPieSlicePrivate : public QObject
 {
     Q_OBJECT
 

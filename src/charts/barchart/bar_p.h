@@ -40,6 +40,7 @@
 #define BAR_H
 
 #include <QtCharts/QChartGlobal>
+#include <QtCharts/private/qchartglobal_p.h>
 #include <QtWidgets/QGraphicsRectItem>
 #include <QtWidgets/QGraphicsTextItem>
 
@@ -48,7 +49,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 class QBarSet;
 
 // Single visual bar item of chart
-class Bar : public QObject, public QGraphicsRectItem
+class QT_CHARTS_PRIVATE_EXPORT Bar : public QObject, public QGraphicsRectItem
 {
     Q_OBJECT
 public:

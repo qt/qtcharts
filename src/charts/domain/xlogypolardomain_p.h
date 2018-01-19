@@ -39,12 +39,13 @@
 #ifndef XLOGYPOLARDOMAIN_H
 #define XLOGYPOLARDOMAIN_H
 #include <private/polardomain_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 #include <QtCore/QRectF>
 #include <QtCore/QSizeF>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class Q_AUTOTEST_EXPORT XLogYPolarDomain: public PolarDomain
+class QT_CHARTS_PRIVATE_EXPORT XLogYPolarDomain: public PolarDomain
 {
     Q_OBJECT
 public:

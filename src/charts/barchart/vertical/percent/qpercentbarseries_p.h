@@ -41,11 +41,12 @@
 
 #include <private/qabstractbarseries_p.h>
 #include <private/abstractdomain_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 
-class QPercentBarSeriesPrivate: public QAbstractBarSeriesPrivate
+class QT_CHARTS_PRIVATE_EXPORT QPercentBarSeriesPrivate: public QAbstractBarSeriesPrivate
 {
 public:
     QPercentBarSeriesPrivate(QPercentBarSeries *q);

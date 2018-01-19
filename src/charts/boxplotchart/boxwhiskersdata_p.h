@@ -40,11 +40,12 @@
 #define BOXWHISKERSDATA_P_H
 
 #include <QtCharts/QChartGlobal>
+#include <QtCharts/private/qchartglobal_p.h>
 #include <QtCore/QSizeF>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class BoxWhiskersData
+class QT_CHARTS_PRIVATE_EXPORT BoxWhiskersData
 {
 public:
     BoxWhiskersData() :

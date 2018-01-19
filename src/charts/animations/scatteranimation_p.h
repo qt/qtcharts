@@ -38,13 +38,15 @@
 
 #ifndef SCATTERANIMATION_P_H
 #define SCATTERANIMATION_P_H
+
 #include <private/xyanimation_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 class ScatterChartItem;
 
-class ScatterAnimation : public XYAnimation
+class QT_CHARTS_PRIVATE_EXPORT ScatterAnimation : public XYAnimation
 {
 public:
     ScatterAnimation(ScatterChartItem *item, int duration, QEasingCurve &curve);

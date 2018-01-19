@@ -43,6 +43,7 @@
 #include <private/chartitem_p.h>
 #include <private/piesliceitem_p.h>
 #include <QtCore/QPointer>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_BEGIN_NAMESPACE
 class QGraphicsItem;
@@ -53,7 +54,7 @@ class QPieSlice;
 class ChartPresenter;
 class PieAnimation;
 
-class PieChartItem : public ChartItem
+class QT_CHARTS_PRIVATE_EXPORT PieChartItem : public ChartItem
 {
     Q_OBJECT
 

@@ -44,12 +44,13 @@
 #include <QtWidgets/QGraphicsEllipseItem>
 #include <QtGui/QPen>
 #include <QtWidgets/QGraphicsSceneMouseEvent>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 class QScatterSeries;
 
-class ScatterChartItem : public XYChart
+class QT_CHARTS_PRIVATE_EXPORT ScatterChartItem : public XYChart
 {
     Q_OBJECT
     Q_INTERFACES(QGraphicsItem)
@@ -102,7 +103,7 @@ private:
     bool m_mousePressed;
 };
 
-class CircleMarker: public QGraphicsEllipseItem
+class QT_CHARTS_PRIVATE_EXPORT CircleMarker: public QGraphicsEllipseItem
 {
 
 public:
@@ -149,7 +150,7 @@ private:
     ScatterChartItem *m_parent;
 };
 
-class RectangleMarker: public QGraphicsRectItem
+class QT_CHARTS_PRIVATE_EXPORT RectangleMarker: public QGraphicsRectItem
 {
 
 public:

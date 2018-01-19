@@ -43,13 +43,14 @@
 #include <private/xychart_p.h>
 #include <QtCharts/QChart>
 #include <QtGui/QPen>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 class QLineSeries;
 class ChartPresenter;
 
-class LineChartItem :  public XYChart
+class QT_CHARTS_PRIVATE_EXPORT LineChartItem :  public XYChart
 {
     Q_OBJECT
     Q_INTERFACES(QGraphicsItem)

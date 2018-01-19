@@ -41,6 +41,7 @@
 
 #include <QtCore/QObject>
 #include <QtCharts/QBarModelMapper>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_BEGIN_NAMESPACE
 class QModelIndex;
@@ -50,7 +51,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 class QBarSet;
 
-class QBarModelMapperPrivate : public QObject
+class QT_CHARTS_PRIVATE_EXPORT QBarModelMapperPrivate : public QObject
 {
     Q_OBJECT
 public:

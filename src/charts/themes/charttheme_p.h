@@ -42,10 +42,11 @@
 #include <private/chartthememanager_p.h>
 #include <QtGui/QColor>
 #include <QtGui/QGradientStops>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class ChartTheme
+class QT_CHARTS_PRIVATE_EXPORT ChartTheme
 {
 
 public:

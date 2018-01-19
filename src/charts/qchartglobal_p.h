@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2018 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -27,51 +27,22 @@
 **
 ****************************************************************************/
 
+#ifndef QCHARTGLOBAL_P_H
+#define QCHARTGLOBAL_P_H
+
+//
 //  W A R N I N G
 //  -------------
 //
-// This file is not part of the Qt Chart API.  It exists purely as an
+// This file is not part of the Qt API.  It exists purely as an
 // implementation detail.  This header file may change from version to
 // version without notice, or even be removed.
 //
 // We mean it.
+//
 
-#ifndef QCHARTVIEW_P_H
-#define QCHARTVIEW_P_H
+#include "qchartglobal.h"
 
-#include <QtCharts/QChartView>
-#include <QtCharts/private/qchartglobal_p.h>
+#define QT_CHARTS_PRIVATE_EXPORT QT_CHARTS_EXPORT
 
-QT_BEGIN_NAMESPACE
-class QGraphicsScene;
-QT_END_NAMESPACE
-
-QT_CHARTS_BEGIN_NAMESPACE
-
-class QChart;
-class ChartPresenter;
-class QChartView;
-
-class QT_CHARTS_PRIVATE_EXPORT QChartViewPrivate
-{
-public:
-    explicit QChartViewPrivate(QChartView *q, QChart *chart = 0);
-    ~QChartViewPrivate();
-    void setChart(QChart *chart);
-    void resize();
-
-protected:
-    QChartView *q_ptr;
-
-public:
-    QGraphicsScene *m_scene;
-    QChart *m_chart;
-    QPoint m_rubberBandOrigin;
-#ifndef QT_NO_RUBBERBAND
-    QRubberBand *m_rubberBand;
-#endif
-    QChartView::RubberBands m_rubberBandFlags;
-};
-
-QT_CHARTS_END_NAMESPACE
-#endif
+#endif // QCHARTGLOBAL_P_H

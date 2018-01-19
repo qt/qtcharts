@@ -42,12 +42,13 @@
 
 #include <private/abstractbarchartitem_p.h>
 #include <QtWidgets/QGraphicsItem>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 class QAbstractBarSeries;
 
-class PercentBarChartItem : public AbstractBarChartItem
+class QT_CHARTS_PRIVATE_EXPORT PercentBarChartItem : public AbstractBarChartItem
 {
     Q_OBJECT
 public:

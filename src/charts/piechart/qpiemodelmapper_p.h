@@ -41,6 +41,7 @@
 
 #include <QtCore/QObject>
 #include <QtCharts/QPieModelMapper>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_BEGIN_NAMESPACE
 class QModelIndex;
@@ -50,7 +51,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 class QPieSlice;
 
-class QPieModelMapperPrivate : public QObject
+class QT_CHARTS_PRIVATE_EXPORT QPieModelMapperPrivate : public QObject
 {
     Q_OBJECT
 

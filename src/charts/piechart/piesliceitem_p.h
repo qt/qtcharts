@@ -43,6 +43,7 @@
 #include <private/charttheme_p.h>
 #include <QtCharts/QPieSeries>
 #include <private/pieslicedata_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 #include <QtWidgets/QGraphicsItem>
 #include <QtCore/QRectF>
 #include <QtGui/QColor>
@@ -55,7 +56,7 @@ class PieChartItem;
 class PieSliceLabel;
 class QPieSlice;
 
-class PieSliceItem : public QGraphicsObject
+class QT_CHARTS_PRIVATE_EXPORT PieSliceItem : public QGraphicsObject
 {
     Q_OBJECT
 

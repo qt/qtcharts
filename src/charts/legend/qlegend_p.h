@@ -40,6 +40,7 @@
 #define QLEGEND_P_H
 
 #include <QtCharts/QLegend>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -49,7 +50,7 @@ class QAbstractSeries;
 class LegendLayout;
 class QLegendMarker;
 
-class QLegendPrivate : public QObject
+class QT_CHARTS_PRIVATE_EXPORT QLegendPrivate : public QObject
 {
     Q_OBJECT
 public:

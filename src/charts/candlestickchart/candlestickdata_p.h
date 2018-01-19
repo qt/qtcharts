@@ -40,10 +40,11 @@
 #define CANDLESTICKDATA_P_H
 
 #include <QtCharts/QCandlestickSeries>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class CandlestickData
+class QT_CHARTS_PRIVATE_EXPORT CandlestickData
 {
 public:
     CandlestickData() :

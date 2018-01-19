@@ -39,12 +39,13 @@
 #ifndef XYDOMAIN_H
 #define XYDOMAIN_H
 #include <private/abstractdomain_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 #include <QtCore/QRectF>
 #include <QtCore/QSizeF>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class Q_AUTOTEST_EXPORT XYDomain: public AbstractDomain
+class QT_CHARTS_PRIVATE_EXPORT XYDomain: public AbstractDomain
 {
     Q_OBJECT
 public:

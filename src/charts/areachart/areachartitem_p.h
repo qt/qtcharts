@@ -41,6 +41,7 @@
 
 #include <QtCharts/QChartGlobal>
 #include <private/linechartitem_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 #include <QtCharts/QAreaSeries>
 #include <QtGui/QPen>
 
@@ -48,7 +49,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 class AreaChartItem;
 
-class AreaChartItem : public ChartItem
+class QT_CHARTS_PRIVATE_EXPORT AreaChartItem : public ChartItem
 {
     Q_OBJECT
 public:
@@ -113,7 +114,7 @@ private:
 
 };
 
-class AreaBoundItem : public LineChartItem
+class QT_CHARTS_PRIVATE_EXPORT AreaBoundItem : public LineChartItem
 {
 public:
     AreaBoundItem(AreaChartItem *area, QLineSeries *lineSeries,QGraphicsItem* item = 0)

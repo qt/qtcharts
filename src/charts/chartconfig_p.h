@@ -40,10 +40,11 @@
 #define CHARTCONFIG_H
 
 #include <QtCharts/QChartGlobal>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class ChartConfig
+class QT_CHARTS_PRIVATE_EXPORT ChartConfig
 {
 private:
     ChartConfig() {

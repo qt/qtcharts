@@ -40,13 +40,14 @@
 #define XYANIMATION_P_H
 
 #include <private/chartanimation_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 #include <QtCore/QPointF>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 class XYChart;
 
-class XYAnimation : public ChartAnimation
+class QT_CHARTS_PRIVATE_EXPORT XYAnimation : public ChartAnimation
 {
 protected:
     enum Animation { AddPointAnimation, RemovePointAnimation, ReplacePointAnimation, NewAnimation };

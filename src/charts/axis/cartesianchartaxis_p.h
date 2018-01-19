@@ -41,12 +41,13 @@
 
 #include <QtCharts/QChartGlobal>
 #include <private/chartaxiselement_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 class QAbstractAxis;
 
-class CartesianChartAxis : public ChartAxisElement
+class QT_CHARTS_PRIVATE_EXPORT CartesianChartAxis : public ChartAxisElement
 {
     Q_OBJECT
     Q_INTERFACES(QGraphicsLayoutItem)

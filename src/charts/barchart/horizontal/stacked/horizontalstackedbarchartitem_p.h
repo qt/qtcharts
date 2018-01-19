@@ -40,11 +40,12 @@
 #define HORIZONTALSTACKEDBARCHARTITEM_P_H
 
 #include <private/abstractbarchartitem_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 #include <QtWidgets/QGraphicsItem>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class HorizontalStackedBarChartItem : public AbstractBarChartItem
+class QT_CHARTS_PRIVATE_EXPORT HorizontalStackedBarChartItem : public AbstractBarChartItem
 {
     Q_OBJECT
 public:

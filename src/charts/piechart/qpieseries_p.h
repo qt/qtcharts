@@ -41,11 +41,12 @@
 
 #include <QtCharts/QPieSeries>
 #include <private/qabstractseries_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 class QLegendPrivate;
 
-class QPieSeriesPrivate : public QAbstractSeriesPrivate
+class QT_CHARTS_PRIVATE_EXPORT QPieSeriesPrivate : public QAbstractSeriesPrivate
 {
     Q_OBJECT
 
