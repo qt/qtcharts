@@ -1,4 +1,5 @@
 QT += charts
+requires(qtConfig(combobox))
 
 HEADERS += \
     brushtool.h \

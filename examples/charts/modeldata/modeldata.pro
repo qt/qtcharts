@@ -1,4 +1,5 @@
 QT += charts
+requires(qtConfig(tableview))
 
 HEADERS += \
     customtablemodel.h \
