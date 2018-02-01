@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2018 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -27,37 +27,28 @@
 **
 ****************************************************************************/
 
-#ifndef DECLARATIVE_MARGINS_H
-#define DECLARATIVE_MARGINS_H
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the Qt Chart API.  It exists purely as an
+// implementation detail.  This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
 
-#include <QtCharts/QChartGlobal>
-#include <QtCore/QObject>
-#include <QtCore/QMargins>
+#ifndef DECLARATIVECHARTGLOBAL_H
+#define DECLARATIVECHARTGLOBAL_H
 
-QT_CHARTS_BEGIN_NAMESPACE
+#include <QtCore/QtGlobal>
 
-class DeclarativeMargins : public QObject, public QMargins
-{
-    Q_OBJECT
-    Q_PROPERTY(int top READ top WRITE setTop NOTIFY topChanged)
-    Q_PROPERTY(int bottom READ bottom WRITE setBottom NOTIFY bottomChanged)
-    Q_PROPERTY(int left READ left WRITE setLeft NOTIFY leftChanged)
-    Q_PROPERTY(int right READ right WRITE setRight NOTIFY rightChanged)
+#ifndef QT_STATIC
+#  if defined(QT_BUILD_QMLCHARTS_LIB)
+#    define QT_QMLCHARTS_PRIVATE_EXPORT Q_DECL_EXPORT
+#  else
+#    define QT_QMLCHARTS_PRIVATE_EXPORT Q_DECL_IMPORT
+#  endif
+#else
+#  define QT_QMLCHARTS_PRIVATE_EXPORT
+#endif
 
-public:
-    explicit DeclarativeMargins(QObject *parent = 0);
-    void setTop(int top);
-    void setBottom(int bottom);
-    void setLeft(int left);
-    void setRight(int right);
-
-Q_SIGNALS:
-    void topChanged(int top, int bottom, int left, int right);
-    void bottomChanged(int top, int bottom, int left, int right);
-    void leftChanged(int top, int bottom, int left, int right);
-    void rightChanged(int top, int bottom, int left, int right);
-};
-
-QT_CHARTS_END_NAMESPACE
-
-#endif // DECLARATIVE_MARGINS_H
+#endif // DECLARATIVECHARTGLOBAL_H

@@ -27,19 +27,29 @@
 **
 ****************************************************************************/
 
-#ifndef DECLARATIVESPLINESERIES_H
-#define DECLARATIVESPLINESERIES_H
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the Qt Chart API.  It exists purely as an
+// implementation detail.  This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
 
-#include <QtCharts/QSplineSeries>
-#include "declarativexyseries.h"
-#include "declarativeaxes.h"
+#ifndef DECLARATIVELINESERIES_H
+#define DECLARATIVELINESERIES_H
+
+#include <QtCharts/QLineSeries>
+#include <private/declarativechartglobal_p.h>
+#include <private/declarativexyseries_p.h>
+#include <private/declarativeaxes_p.h>
 
 #include <QtQml/QQmlListProperty>
 #include <QtQml/QQmlParserStatus>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class DeclarativeSplineSeries : public QSplineSeries, public DeclarativeXySeries, public QQmlParserStatus
+class QT_QMLCHARTS_PRIVATE_EXPORT DeclarativeLineSeries : public QLineSeries, public DeclarativeXySeries, public QQmlParserStatus
 {
     Q_OBJECT
     Q_INTERFACES(QQmlParserStatus)
@@ -57,7 +67,7 @@ class DeclarativeSplineSeries : public QSplineSeries, public DeclarativeXySeries
     Q_CLASSINFO("DefaultProperty", "declarativeChildren")
 
 public:
-    explicit DeclarativeSplineSeries(QObject *parent = 0);
+    explicit DeclarativeLineSeries(QObject *parent = 0);
     QXYSeries *xySeries() { return this; }
     QAbstractAxis *axisX() { return m_axes->axisX(); }
     void setAxisX(QAbstractAxis *axis) { m_axes->setAxisX(axis); }
@@ -116,4 +126,4 @@ public:
 
 QT_CHARTS_END_NAMESPACE
 
-#endif // DECLARATIVESPLINESERIES_H
+#endif // DECLARATIVELINESERIES_H

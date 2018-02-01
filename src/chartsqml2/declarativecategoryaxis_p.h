@@ -27,17 +27,27 @@
 **
 ****************************************************************************/
 
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the Qt Chart API.  It exists purely as an
+// implementation detail.  This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
+
 #ifndef DECLARATIVECATEGORYAXIS_H
 #define DECLARATIVECATEGORYAXIS_H
 
 #include <QtCharts/QCategoryAxis>
+#include <private/declarativechartglobal_p.h>
 
 #include <QtQml/QQmlListProperty>
 #include <QtQml/QQmlParserStatus>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class DeclarativeCategoryRange : public QObject
+class QT_QMLCHARTS_PRIVATE_EXPORT DeclarativeCategoryRange : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(qreal endValue READ endValue WRITE setEndValue)

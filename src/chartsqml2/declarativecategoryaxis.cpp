@@ -27,7 +27,7 @@
 **
 ****************************************************************************/
 
-#include "declarativecategoryaxis.h"
+#include "declarativecategoryaxis_p.h"
 #include <QtCore/QDebug>
 
 QT_CHARTS_BEGIN_NAMESPACE
@@ -133,6 +133,6 @@ void DeclarativeCategoryAxis::setLabelsPosition(AxisLabelsPosition position)
     }
 }
 
-#include "moc_declarativecategoryaxis.cpp"
+#include "moc_declarativecategoryaxis_p.cpp"
 
 QT_CHARTS_END_NAMESPACE

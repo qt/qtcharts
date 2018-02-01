@@ -27,15 +27,15 @@
 **
 ****************************************************************************/
 
-#include "declarativechartnode.h"
-#include "declarativeabstractrendernode.h"
+#include "declarativechartnode_p.h"
+#include "declarativeabstractrendernode_p.h"
 
 #include <QtQuick/QQuickWindow>
 #include <QtQuick/QSGImageNode>
 #include <QtQuick/QSGRendererInterface>
 
 #ifndef QT_NO_OPENGL
-# include "declarativeopenglrendernode.h"
+# include "declarativeopenglrendernode_p.h"
 #endif
 
 QT_CHARTS_BEGIN_NAMESPACE

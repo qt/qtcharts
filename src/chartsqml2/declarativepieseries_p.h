@@ -27,18 +27,28 @@
 **
 ****************************************************************************/
 
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the Qt Chart API.  It exists purely as an
+// implementation detail.  This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
+
 #ifndef DECLARATIVEPIESERIES_H
 #define DECLARATIVEPIESERIES_H
 
 #include <QtCharts/QPieSeries>
 #include <QtCharts/QPieSlice>
+#include <private/declarativechartglobal_p.h>
 
 #include <QtQuick/QQuickItem>
 #include <QtQml/QQmlParserStatus>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class DeclarativePieSlice : public QPieSlice
+class QT_QMLCHARTS_PRIVATE_EXPORT DeclarativePieSlice : public QPieSlice
 {
     Q_OBJECT
     Q_PROPERTY(QString brushFilename READ brushFilename WRITE setBrushFilename NOTIFY brushFilenameChanged)

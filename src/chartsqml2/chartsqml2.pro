@@ -1,6 +1,7 @@
 
 TARGET = qtchartsqml2
 CXX_MODULE = charts
+DEFINES += QT_BUILD_QMLCHARTS_LIB
 
 QT += qml quick
 QT += charts charts-private
@@ -27,30 +28,33 @@ SOURCES += \
     declarativechartnode.cpp \
     declarativecandlestickseries.cpp
 
-HEADERS += \
-    declarativechart.h \
-    declarativexypoint.h \
-    declarativexyseries.h \
-    declarativelineseries.h \
-    declarativesplineseries.h \
-    declarativeareaseries.h \
-    declarativescatterseries.h \
-    declarativepieseries.h \
-    declarativebarseries.h \
-    declarativecategoryaxis.h \
-    declarativemargins.h \
-    declarativeaxes.h \
-    declarativepolarchart.h \
-    declarativeboxplotseries.h \
-    declarativechartnode.h \
-    declarativecandlestickseries.h \
-    declarativeabstractrendernode.h
+PRIVATE_HEADERS += \
+    declarativechart_p.h \
+    declarativexypoint_p.h \
+    declarativexyseries_p.h \
+    declarativelineseries_p.h \
+    declarativesplineseries_p.h \
+    declarativeareaseries_p.h \
+    declarativescatterseries_p.h \
+    declarativepieseries_p.h \
+    declarativebarseries_p.h \
+    declarativecategoryaxis_p.h \
+    declarativemargins_p.h \
+    declarativeaxes_p.h \
+    declarativepolarchart_p.h \
+    declarativeboxplotseries_p.h \
+    declarativecandlestickseries_p.h \
+    declarativeabstractrendernode_p.h \
+    declarativechartnode_p.h \
+    declarativechartglobal_p.h
 
 contains(QT_CONFIG, opengl) {
     SOURCES += declarativeopenglrendernode.cpp
-    HEADERS += declarativeopenglrendernode.h
+    PRIVATE_HEADERS += declarativeopenglrendernode_p.h
 }
 
+HEADERS += $$PRIVATE_HEADERS
+INCLUDEPATH += $$PWD
 
 load(qml_plugin)
 

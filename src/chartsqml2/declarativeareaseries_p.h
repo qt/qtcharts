@@ -27,16 +27,26 @@
 **
 ****************************************************************************/
 
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the Qt Chart API.  It exists purely as an
+// implementation detail.  This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
+
 #ifndef DECLARATIVEAREASERIES_H
 #define DECLARATIVEAREASERIES_H
 
 #include <QtCharts/QAreaSeries>
-#include "declarativeaxes.h"
+#include <private/declarativechartglobal_p.h>
+#include <private/declarativeaxes_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 class DeclarativeLineSeries;
 
-class DeclarativeAreaSeries : public QAreaSeries
+class QT_QMLCHARTS_PRIVATE_EXPORT DeclarativeAreaSeries : public QAreaSeries
 {
     Q_OBJECT
     Q_PROPERTY(DeclarativeLineSeries *upperSeries READ upperSeries WRITE setUpperSeries)

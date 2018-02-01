@@ -29,8 +29,8 @@
 
 #include <QtCharts/QHCandlestickModelMapper>
 #include <QtCharts/QVCandlestickModelMapper>
-#include "declarativeaxes.h"
-#include "declarativecandlestickseries.h"
+#include "declarativeaxes_p.h"
+#include "declarativecandlestickseries_p.h"
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -239,6 +239,6 @@ void DeclarativeCandlestickSeries::handleBrushChanged()
     }
 }
 
-#include "moc_declarativecandlestickseries.cpp"
+#include "moc_declarativecandlestickseries_p.cpp"
 
 QT_CHARTS_END_NAMESPACE

@@ -27,7 +27,7 @@
 **
 ****************************************************************************/
 
-#include "declarativepieseries.h"
+#include "declarativepieseries_p.h"
 #include <QtCharts/QPieSlice>
 #include <QtCharts/QVPieModelMapper>
 #include <QtCharts/QHPieModelMapper>
@@ -158,6 +158,6 @@ void DeclarativePieSeries::handleRemoved(QList<QPieSlice *> slices)
         emit sliceRemoved(slice);
 }
 
-#include "moc_declarativepieseries.cpp"
+#include "moc_declarativepieseries_p.cpp"
 
 QT_CHARTS_END_NAMESPACE

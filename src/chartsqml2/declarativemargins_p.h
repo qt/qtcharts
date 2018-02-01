@@ -27,24 +27,47 @@
 **
 ****************************************************************************/
 
-#ifndef DECLARATIVEPOLARCHART_H
-#define DECLARATIVEPOLARCHART_H
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the Qt Chart API.  It exists purely as an
+// implementation detail.  This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
 
-#include <QtCore/QtGlobal>
-#include <QtQuick/QQuickItem>
+#ifndef DECLARATIVE_MARGINS_H
+#define DECLARATIVE_MARGINS_H
 
-#include "declarativechart.h"
+#include <QtCharts/QChartGlobal>
+#include <QtCore/QObject>
+#include <QtCore/QMargins>
+#include <private/declarativechartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class DeclarativePolarChart : public DeclarativeChart
+class QT_QMLCHARTS_PRIVATE_EXPORT DeclarativeMargins : public QObject, public QMargins
 {
     Q_OBJECT
+    Q_PROPERTY(int top READ top WRITE setTop NOTIFY topChanged)
+    Q_PROPERTY(int bottom READ bottom WRITE setBottom NOTIFY bottomChanged)
+    Q_PROPERTY(int left READ left WRITE setLeft NOTIFY leftChanged)
+    Q_PROPERTY(int right READ right WRITE setRight NOTIFY rightChanged)
+
 public:
-    DeclarativePolarChart(QQuickItem *parent = 0);
-    ~DeclarativePolarChart();
+    explicit DeclarativeMargins(QObject *parent = 0);
+    void setTop(int top);
+    void setBottom(int bottom);
+    void setLeft(int left);
+    void setRight(int right);
+
+Q_SIGNALS:
+    void topChanged(int top, int bottom, int left, int right);
+    void bottomChanged(int top, int bottom, int left, int right);
+    void leftChanged(int top, int bottom, int left, int right);
+    void rightChanged(int top, int bottom, int left, int right);
 };
 
 QT_CHARTS_END_NAMESPACE
 
-#endif // DECLARATIVEPOLARCHART_H
+#endif // DECLARATIVE_MARGINS_H

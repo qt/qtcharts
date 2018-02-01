@@ -27,25 +27,48 @@
 **
 ****************************************************************************/
 
-#ifndef DECLARATIVE_XY_POINT_H
-#define DECLARATIVE_XY_POINT_H
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the Qt Chart API.  It exists purely as an
+// implementation detail.  This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
 
-#include <QtCharts/QChartGlobal>
-#include <QtCore/QObject>
-#include <QtCore/QPointF>
+#ifndef DECLARATIVE_XY_SERIES_H
+#define DECLARATIVE_XY_SERIES_H
+
+#include <QtCharts/QXYSeries>
+#include <private/declarativechartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class DeclarativeXYPoint : public QObject, public QPointF
+class QChart;
+class QAbstractSeries;
+
+class QT_QMLCHARTS_PRIVATE_EXPORT DeclarativeXySeries
 {
-    Q_OBJECT
-    Q_PROPERTY(qreal x READ x WRITE setX)
-    Q_PROPERTY(qreal y READ y WRITE setY)
+public:
+    explicit DeclarativeXySeries();
+    ~DeclarativeXySeries();
 
 public:
-    explicit DeclarativeXYPoint(QObject *parent = 0);
+    void classBegin();
+    void componentComplete();
+    virtual QXYSeries *xySeries() = 0;
+
+    void append(qreal x, qreal y);
+    void replace(qreal oldX, qreal oldY, qreal newX, qreal newY);
+    void replace(int index, qreal newX, qreal newY);
+    void remove(qreal x, qreal y);
+    void remove(int index);
+    void removePoints(int index, int count);
+    void insert(int index, qreal x, qreal y);
+    void clear();
+    QPointF at(int index);
 };
 
 QT_CHARTS_END_NAMESPACE
 
-#endif // DECLARATIVE_XY_POINT_H
+#endif // DECLARATIVE_XY_SERIES_H
