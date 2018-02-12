@@ -44,6 +44,7 @@
 #include <QtCore/QBasicTimer>
 #include <QtCore/QTime>
 #include <QtCore/QPointF>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_BEGIN_NAMESPACE
 class QGraphicsSceneMouseEvent;
@@ -54,7 +55,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 class Scroller;
 class QLegend;
 
-class ScrollTicker : public QObject
+class QT_CHARTS_PRIVATE_EXPORT ScrollTicker : public QObject
 {
     Q_OBJECT
 public:
@@ -69,7 +70,7 @@ private:
     Scroller *m_scroller;
 };
 
-class Scroller
+class QT_CHARTS_PRIVATE_EXPORT Scroller
 {
 public:
     enum State {

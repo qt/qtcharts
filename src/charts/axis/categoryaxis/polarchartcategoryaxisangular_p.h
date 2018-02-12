@@ -40,12 +40,13 @@
 #define POLARCHARTCATEGORYAXISANGULAR_P_H
 
 #include <private/polarchartaxisangular_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 class QCategoryAxis;
 
-class PolarChartCategoryAxisAngular : public PolarChartAxisAngular
+class QT_CHARTS_PRIVATE_EXPORT PolarChartCategoryAxisAngular : public PolarChartAxisAngular
 {
     Q_OBJECT
 

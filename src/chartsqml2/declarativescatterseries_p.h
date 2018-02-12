@@ -27,19 +27,29 @@
 **
 ****************************************************************************/
 
-#ifndef DECLARATIVELINESERIES_H
-#define DECLARATIVELINESERIES_H
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the Qt Chart API.  It exists purely as an
+// implementation detail.  This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
 
-#include <QtCharts/QLineSeries>
-#include "declarativexyseries.h"
-#include "declarativeaxes.h"
+#ifndef DECLARATIVESCATTERSERIES_H
+#define DECLARATIVESCATTERSERIES_H
+
+#include <QtCharts/QScatterSeries>
+#include <private/declarativechartglobal_p.h>
+#include <private/declarativexyseries_p.h>
+#include <private/declarativeaxes_p.h>
 
 #include <QtQml/QQmlListProperty>
 #include <QtQml/QQmlParserStatus>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class DeclarativeLineSeries : public QLineSeries, public DeclarativeXySeries, public QQmlParserStatus
+class QT_QMLCHARTS_PRIVATE_EXPORT DeclarativeScatterSeries : public QScatterSeries, public DeclarativeXySeries, public QQmlParserStatus
 {
     Q_OBJECT
     Q_INTERFACES(QQmlParserStatus)
@@ -50,14 +60,14 @@ class DeclarativeLineSeries : public QLineSeries, public DeclarativeXySeries, pu
     Q_PROPERTY(QAbstractAxis *axisYRight READ axisYRight WRITE setAxisYRight NOTIFY axisYRightChanged REVISION 2)
     Q_PROPERTY(QAbstractAxis *axisAngular READ axisAngular WRITE setAxisAngular NOTIFY axisAngularChanged REVISION 3)
     Q_PROPERTY(QAbstractAxis *axisRadial READ axisRadial WRITE setAxisRadial NOTIFY axisRadialChanged REVISION 3)
-    Q_PROPERTY(qreal width READ width WRITE setWidth NOTIFY widthChanged REVISION 1)
-    Q_PROPERTY(Qt::PenStyle style READ style WRITE setStyle NOTIFY styleChanged REVISION 1)
-    Q_PROPERTY(Qt::PenCapStyle capStyle READ capStyle WRITE setCapStyle NOTIFY capStyleChanged REVISION 1)
+    Q_PROPERTY(qreal borderWidth READ borderWidth WRITE setBorderWidth NOTIFY borderWidthChanged REVISION 1)
     Q_PROPERTY(QQmlListProperty<QObject> declarativeChildren READ declarativeChildren)
+    Q_PROPERTY(QString brushFilename READ brushFilename WRITE setBrushFilename NOTIFY brushFilenameChanged REVISION 4)
+    Q_PROPERTY(QBrush brush READ brush WRITE setBrush NOTIFY brushChanged REVISION 4)
     Q_CLASSINFO("DefaultProperty", "declarativeChildren")
 
 public:
-    explicit DeclarativeLineSeries(QObject *parent = 0);
+    explicit DeclarativeScatterSeries(QObject *parent = 0);
     QXYSeries *xySeries() { return this; }
     QAbstractAxis *axisX() { return m_axes->axisX(); }
     void setAxisX(QAbstractAxis *axis) { m_axes->setAxisX(axis); }
@@ -71,13 +81,13 @@ public:
     void setAxisAngular(QAbstractAxis *axis) { m_axes->setAxisX(axis); }
     QAbstractAxis *axisRadial() { return m_axes->axisY(); }
     void setAxisRadial(QAbstractAxis *axis) { m_axes->setAxisY(axis); }
-    qreal width() const;
-    void setWidth(qreal width);
-    Qt::PenStyle style() const;
-    void setStyle(Qt::PenStyle style);
-    Qt::PenCapStyle capStyle() const;
-    void setCapStyle(Qt::PenCapStyle capStyle);
+    qreal borderWidth() const;
+    void setBorderWidth(qreal borderWidth);
     QQmlListProperty<QObject> declarativeChildren();
+    QString brushFilename() const;
+    void setBrushFilename(const QString &brushFilename);
+    void setBrush(const QBrush &brush);
+    QBrush brush() const;
 
 public: // from QDeclarativeParserStatus
     void classBegin() { DeclarativeXySeries::classBegin(); }
@@ -89,7 +99,7 @@ public:
     Q_REVISION(3) Q_INVOKABLE void replace(int index, qreal newX, qreal newY) { DeclarativeXySeries::replace(index, newX, newY); }
     Q_INVOKABLE void remove(qreal x, qreal y) { DeclarativeXySeries::remove(x, y); }
     Q_REVISION(3) Q_INVOKABLE void remove(int index) { DeclarativeXySeries::remove(index); }
-    Q_REVISION(4) Q_INVOKABLE void removePoints(int index, int count) { DeclarativeXySeries::removePoints(index, count); }
+    Q_REVISION(5) Q_INVOKABLE void removePoints(int index, int count) { DeclarativeXySeries::removePoints(index, count); }
     Q_INVOKABLE void insert(int index, qreal x, qreal y) { DeclarativeXySeries::insert(index, x, y); }
     Q_INVOKABLE void clear() { DeclarativeXySeries::clear(); }
     Q_INVOKABLE QPointF at(int index) { return DeclarativeXySeries::at(index); }
@@ -98,22 +108,29 @@ Q_SIGNALS:
     void countChanged(int count);
     Q_REVISION(1) void axisXChanged(QAbstractAxis *axis);
     Q_REVISION(1) void axisYChanged(QAbstractAxis *axis);
+    Q_REVISION(1) void borderWidthChanged(qreal width);
     Q_REVISION(2) void axisXTopChanged(QAbstractAxis *axis);
     Q_REVISION(2) void axisYRightChanged(QAbstractAxis *axis);
     Q_REVISION(3) void axisAngularChanged(QAbstractAxis *axis);
     Q_REVISION(3) void axisRadialChanged(QAbstractAxis *axis);
-    Q_REVISION(1) void widthChanged(qreal width);
-    Q_REVISION(1) void styleChanged(Qt::PenStyle style);
-    Q_REVISION(1) void capStyleChanged(Qt::PenCapStyle capStyle);
+    Q_REVISION(4) void brushFilenameChanged(const QString &brushFilename);
+    Q_REVISION(4) void brushChanged();
 
 public Q_SLOTS:
     static void appendDeclarativeChildren(QQmlListProperty<QObject> *list, QObject *element);
     void handleCountChanged(int index);
 
+private Q_SLOTS:
+    void handleBrushChanged();
+
 public:
     DeclarativeAxes *m_axes;
+
+private:
+    QString m_brushFilename;
+    QImage m_brushImage;
 };
 
 QT_CHARTS_END_NAMESPACE
 
-#endif // DECLARATIVELINESERIES_H
+#endif // DECLARATIVESCATTERSERIES_H

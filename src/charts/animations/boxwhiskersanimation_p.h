@@ -42,13 +42,14 @@
 #include <private/chartanimation_p.h>
 #include <private/boxwhiskers_p.h>
 #include <private/boxwhiskersdata_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 class BoxPlotChartItem;
 class BoxPlotAnimation;
 
-class BoxWhiskersAnimation : public ChartAnimation
+class QT_CHARTS_PRIVATE_EXPORT BoxWhiskersAnimation : public ChartAnimation
 {
     Q_OBJECT
 

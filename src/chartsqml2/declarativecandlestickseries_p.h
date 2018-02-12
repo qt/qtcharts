@@ -27,6 +27,15 @@
 **
 ****************************************************************************/
 
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the Qt Chart API.  It exists purely as an
+// implementation detail.  This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
+
 #ifndef DECLARATIVECANDLESTICKSERIES_H
 #define DECLARATIVECANDLESTICKSERIES_H
 
@@ -34,13 +43,14 @@
 #include <QtCharts/QCandlestickSet>
 #include <QtQml/QQmlParserStatus>
 #include <QtQuick/QQuickItem>
+#include <private/declarativechartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 class DeclarativeAxes;
 class QAbstractAxis;
 
-class DeclarativeCandlestickSet : public QCandlestickSet
+class QT_QMLCHARTS_PRIVATE_EXPORT DeclarativeCandlestickSet : public QCandlestickSet
 {
     Q_OBJECT
     Q_PROPERTY(QString brushFilename READ brushFilename WRITE setBrushFilename NOTIFY brushFilenameChanged)

@@ -41,6 +41,7 @@
 
 #include <QtCharts/QChartGlobal>
 #include <QtWidgets/QGraphicsRectItem>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_BEGIN_NAMESPACE
 class QGraphicsDropShadowEffect;
@@ -48,7 +49,7 @@ QT_END_NAMESPACE
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class ChartBackground: public QGraphicsRectItem
+class QT_CHARTS_PRIVATE_EXPORT ChartBackground: public QGraphicsRectItem
 {
 public:
     ChartBackground(QGraphicsItem *parent = 0);

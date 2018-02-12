@@ -40,12 +40,13 @@
 #define BARANIMATION_P_H
 
 #include <private/chartanimation_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 class AbstractBarChartItem;
 
-class BarAnimation : public ChartAnimation
+class QT_CHARTS_PRIVATE_EXPORT BarAnimation : public ChartAnimation
 {
     Q_OBJECT
 

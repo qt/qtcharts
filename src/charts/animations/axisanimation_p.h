@@ -40,13 +40,14 @@
 #define AXISANIMATION_H
 
 #include <private/chartanimation_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 #include <QtCore/QPointF>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 class ChartAxisElement;
 
-class AxisAnimation: public ChartAnimation
+class QT_CHARTS_PRIVATE_EXPORT AxisAnimation: public ChartAnimation
 {
 public:
     enum Animation { DefaultAnimation, ZoomOutAnimation, ZoomInAnimation, MoveForwardAnimation, MoveBackwordAnimation};

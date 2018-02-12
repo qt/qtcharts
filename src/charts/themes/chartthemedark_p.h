@@ -40,10 +40,11 @@
 #define CHARTTHEMEDARK_P_H
 
 #include <private/charttheme_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class ChartThemeDark : public ChartTheme
+class QT_CHARTS_PRIVATE_EXPORT ChartThemeDark : public ChartTheme
 {
 public:
     ChartThemeDark() : ChartTheme(QChart::ChartThemeDark)

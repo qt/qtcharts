@@ -42,6 +42,7 @@
 #include <QtCore/QMap>
 #include <QtCharts/QAbstractSeries>
 #include <QtCharts/QXYSeries>
+#include <QtCharts/private/qchartglobal_p.h>
 #include <QtGui/QVector3D>
 #include <QtGui/QVector2D>
 #include <QtGui/QMatrix4x4>
@@ -78,7 +79,7 @@ public:
 typedef QMap<const QXYSeries *, GLXYSeriesData *> GLXYDataMap;
 typedef QMapIterator<const QXYSeries *, GLXYSeriesData *> GLXYDataMapIterator;
 
-class GLXYSeriesDataManager : public QObject
+class QT_CHARTS_PRIVATE_EXPORT GLXYSeriesDataManager : public QObject
 {
     Q_OBJECT
 

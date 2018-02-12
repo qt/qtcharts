@@ -40,10 +40,11 @@
 #define CHARTTHEMEBLUEICY_P_H
 
 #include <private/charttheme_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class ChartThemeBlueIcy: public ChartTheme
+class QT_CHARTS_PRIVATE_EXPORT ChartThemeBlueIcy: public ChartTheme
 {
 public:
     ChartThemeBlueIcy() : ChartTheme(QChart::ChartThemeBlueIcy)

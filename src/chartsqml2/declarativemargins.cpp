@@ -27,7 +27,7 @@
 **
 ****************************************************************************/
 
-#include "declarativemargins.h"
+#include "declarativemargins_p.h"
 #include <QtCore/QDataStream>
 #include <QtCore/QDebug>
 
@@ -123,6 +123,6 @@ void DeclarativeMargins::setRight(int right)
     }
 }
 
-#include "moc_declarativemargins.cpp"
+#include "moc_declarativemargins_p.cpp"
 
 QT_CHARTS_END_NAMESPACE

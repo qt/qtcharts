@@ -42,6 +42,7 @@
 #include <QtCharts/QAbstractSeries>
 #include <private/abstractdomain_p.h>
 #include <private/qabstractaxis_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 #include <QtCore/QVector>
 
 QT_CHARTS_BEGIN_NAMESPACE
@@ -50,7 +51,7 @@ class QAbstractAxis;
 class ChartPresenter;
 class GLXYSeriesDataManager;
 
-class Q_AUTOTEST_EXPORT ChartDataSet : public QObject
+class QT_CHARTS_PRIVATE_EXPORT ChartDataSet : public QObject
 {
     Q_OBJECT
 public:

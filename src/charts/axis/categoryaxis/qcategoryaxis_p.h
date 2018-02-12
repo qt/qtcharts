@@ -41,12 +41,13 @@
 
 #include <QtCharts/QCategoryAxis>
 #include <private/qvalueaxis_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 typedef QPair<qreal, qreal> Range;
 
-class QCategoryAxisPrivate : public QValueAxisPrivate
+class QT_CHARTS_PRIVATE_EXPORT QCategoryAxisPrivate : public QValueAxisPrivate
 {
     Q_OBJECT
 

@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2018 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -27,37 +27,22 @@
 **
 ****************************************************************************/
 
-#ifndef DECLARATIVE_MARGINS_H
-#define DECLARATIVE_MARGINS_H
+#ifndef QCHARTGLOBAL_P_H
+#define QCHARTGLOBAL_P_H
 
-#include <QtCharts/QChartGlobal>
-#include <QtCore/QObject>
-#include <QtCore/QMargins>
+//
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the Qt API.  It exists purely as an
+// implementation detail.  This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
+//
 
-QT_CHARTS_BEGIN_NAMESPACE
+#include "qchartglobal.h"
 
-class DeclarativeMargins : public QObject, public QMargins
-{
-    Q_OBJECT
-    Q_PROPERTY(int top READ top WRITE setTop NOTIFY topChanged)
-    Q_PROPERTY(int bottom READ bottom WRITE setBottom NOTIFY bottomChanged)
-    Q_PROPERTY(int left READ left WRITE setLeft NOTIFY leftChanged)
-    Q_PROPERTY(int right READ right WRITE setRight NOTIFY rightChanged)
+#define QT_CHARTS_PRIVATE_EXPORT QT_CHARTS_EXPORT
 
-public:
-    explicit DeclarativeMargins(QObject *parent = 0);
-    void setTop(int top);
-    void setBottom(int bottom);
-    void setLeft(int left);
-    void setRight(int right);
-
-Q_SIGNALS:
-    void topChanged(int top, int bottom, int left, int right);
-    void bottomChanged(int top, int bottom, int left, int right);
-    void leftChanged(int top, int bottom, int left, int right);
-    void rightChanged(int top, int bottom, int left, int right);
-};
-
-QT_CHARTS_END_NAMESPACE
-
-#endif // DECLARATIVE_MARGINS_H
+#endif // QCHARTGLOBAL_P_H

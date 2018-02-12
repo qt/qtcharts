@@ -28,8 +28,8 @@
 ****************************************************************************/
 
 
-#include "declarativexyseries.h"
-#include "declarativexypoint.h"
+#include "declarativexyseries_p.h"
+#include "declarativexypoint_p.h"
 #include <QtCharts/QVXYModelMapper>
 #include <QtCharts/QHXYModelMapper>
 

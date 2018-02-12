@@ -43,10 +43,11 @@
 #include <QtCharts/qlegend.h>
 #include <private/qlegend_p.h>
 #include <private/scroller_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class LegendScroller: public QLegend, public Scroller
+class QT_CHARTS_PRIVATE_EXPORT LegendScroller: public QLegend, public Scroller
 {
     Q_OBJECT
 

@@ -43,6 +43,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QRect>
 #include <QGraphicsObject>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -53,7 +54,7 @@ class ChartThemeManager;
 class AbstractDomain;
 class ChartDataSet;
 
-class ChartElement: public QGraphicsObject
+class QT_CHARTS_PRIVATE_EXPORT ChartElement: public QGraphicsObject
 {
 
 public:

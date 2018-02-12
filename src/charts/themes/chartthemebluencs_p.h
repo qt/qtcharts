@@ -40,10 +40,11 @@
 #define CHARTTHEMEBLUENCS_P_H
 
 #include <private/charttheme_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class ChartThemeBlueNcs: public ChartTheme
+class QT_CHARTS_PRIVATE_EXPORT ChartThemeBlueNcs: public ChartTheme
 {
 public:
     ChartThemeBlueNcs() : ChartTheme(QChart::ChartThemeBlueNcs)

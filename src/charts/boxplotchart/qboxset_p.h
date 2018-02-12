@@ -40,6 +40,7 @@
 #define QBOXSET_P_H
 
 #include <QtCharts/QBoxSet>
+#include <QtCharts/private/qchartglobal_p.h>
 #include <QtCore/QMap>
 #include <QtGui/QPen>
 #include <QtGui/QBrush>
@@ -49,7 +50,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 class QBoxPlotSeriesPrivate;
 
-class QBoxSetPrivate : public QObject
+class QT_CHARTS_PRIVATE_EXPORT QBoxSetPrivate : public QObject
 {
     Q_OBJECT
 

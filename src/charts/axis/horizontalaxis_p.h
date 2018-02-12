@@ -40,10 +40,11 @@
 #define HORIZONTALAXIS_P_H
 
 #include <private/cartesianchartaxis_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class HorizontalAxis : public CartesianChartAxis
+class QT_CHARTS_PRIVATE_EXPORT HorizontalAxis : public CartesianChartAxis
 {
 public:
     HorizontalAxis(QAbstractAxis *axis, QGraphicsItem *item = nullptr, bool intervalAxis = false);

@@ -27,11 +27,21 @@
 **
 ****************************************************************************/
 
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the Qt Chart API.  It exists purely as an
+// implementation detail.  This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
+
 #ifndef DECLARATIVECHART_H
 #define DECLARATIVECHART_H
 
 #include <private/glxyseriesdata_p.h>
-#include "declarativeabstractrendernode.h"
+#include <private/declarativechartglobal_p.h>
+#include <private/declarativeabstractrendernode_p.h>
 
 #include <QtCore/QtGlobal>
 #include <QtQuick/QQuickItem>
@@ -47,7 +57,7 @@ class DeclarativeMargins;
 class Domain;
 class DeclarativeAxes;
 
-class DeclarativeChart : public QQuickItem
+class QT_QMLCHARTS_PRIVATE_EXPORT DeclarativeChart : public QQuickItem
 {
     Q_OBJECT
     Q_PROPERTY(Theme theme READ theme WRITE setTheme)

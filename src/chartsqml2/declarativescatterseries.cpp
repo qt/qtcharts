@@ -27,7 +27,7 @@
 **
 ****************************************************************************/
 
-#include "declarativescatterseries.h"
+#include "declarativescatterseries_p.h"
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -119,6 +119,6 @@ void DeclarativeScatterSeries::handleBrushChanged()
     }
 }
 
-#include "moc_declarativescatterseries.cpp"
+#include "moc_declarativescatterseries_p.cpp"
 
 QT_CHARTS_END_NAMESPACE

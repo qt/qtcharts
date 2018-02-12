@@ -27,25 +27,44 @@
 **
 ****************************************************************************/
 
-#ifndef DECLARATIVE_XY_POINT_H
-#define DECLARATIVE_XY_POINT_H
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the Qt Chart API.  It exists purely as an
+// implementation detail.  This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
+
+#ifndef DECLARATIVECHARTNODE_P_H
+#define DECLARATIVECHARTNODE_P_H
 
 #include <QtCharts/QChartGlobal>
-#include <QtCore/QObject>
-#include <QtCore/QPointF>
+#include <QtQuick/QSGNode>
+#include <QtQuick/QQuickWindow>
+#include <QtQuick/QSGImageNode>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class DeclarativeXYPoint : public QObject, public QPointF
+class DeclarativeAbstractRenderNode;
+class DeclarativeChartNode : public QSGRootNode
 {
-    Q_OBJECT
-    Q_PROPERTY(qreal x READ x WRITE setX)
-    Q_PROPERTY(qreal y READ y WRITE setY)
-
 public:
-    explicit DeclarativeXYPoint(QObject *parent = 0);
+    DeclarativeChartNode(QQuickWindow *window);
+    ~DeclarativeChartNode();
+
+    void createTextureFromImage(const QImage &chartImage);
+    DeclarativeAbstractRenderNode *renderNode() const { return m_renderNode; }
+
+    void setRect(const QRectF &rect);
+
+private:
+    QRectF m_rect;
+    QQuickWindow *m_window;
+    DeclarativeAbstractRenderNode *m_renderNode;
+    QSGImageNode *m_imageNode;
 };
 
 QT_CHARTS_END_NAMESPACE
 
-#endif // DECLARATIVE_XY_POINT_H
+#endif // DECLARATIVECHARTNODE_P_H

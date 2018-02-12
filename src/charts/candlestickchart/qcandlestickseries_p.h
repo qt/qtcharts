@@ -40,6 +40,7 @@
 #define QCANDLESTICKSERIES_P_H
 
 #include <private/qabstractseries_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -49,7 +50,7 @@ class QCandlestickSeries;
 class QCandlestickSet;
 class QDateTimeAxis;
 
-class QCandlestickSeriesPrivate : public QAbstractSeriesPrivate
+class QT_CHARTS_PRIVATE_EXPORT QCandlestickSeriesPrivate : public QAbstractSeriesPrivate
 {
     Q_OBJECT
 

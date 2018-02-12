@@ -40,12 +40,13 @@
 #define CHARTVALUEAXISY_H
 
 #include <private/verticalaxis_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 class QValueAxis;
 
-class ChartValueAxisY : public VerticalAxis
+class QT_CHARTS_PRIVATE_EXPORT ChartValueAxisY : public VerticalAxis
 {
     Q_OBJECT
 public:

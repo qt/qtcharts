@@ -40,10 +40,11 @@
 #define CHARTTHEMELIGHT_P_H
 
 #include <private/charttheme_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class ChartThemeLight: public ChartTheme
+class QT_CHARTS_PRIVATE_EXPORT ChartThemeLight: public ChartTheme
 {
 public:
     ChartThemeLight() : ChartTheme(QChart::ChartThemeLight)

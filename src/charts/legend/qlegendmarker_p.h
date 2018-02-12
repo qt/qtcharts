@@ -44,6 +44,7 @@
 #include <QtGui/QBrush>
 #include <QtGui/QPen>
 #include <QtWidgets/QGraphicsLayoutItem>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -53,7 +54,7 @@ class QLegend;
 class QLegendMarker;
 class LegendMarkerItem;
 
-class QLegendMarkerPrivate : public QObject
+class QT_CHARTS_PRIVATE_EXPORT QLegendMarkerPrivate : public QObject
 {
     Q_OBJECT
 public:

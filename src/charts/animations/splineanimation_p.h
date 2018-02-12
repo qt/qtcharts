@@ -38,7 +38,9 @@
 
 #ifndef SPLINEANIMATION_P_H
 #define SPLINEANIMATION_P_H
+
 #include <private/xyanimation_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 #include <QtCore/QPointF>
 
 typedef  QPair<QVector<QPointF >, QVector<QPointF > >  SplineVector;
@@ -47,7 +49,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 class SplineChartItem;
 
-class SplineAnimation : public XYAnimation
+class QT_CHARTS_PRIVATE_EXPORT SplineAnimation : public XYAnimation
 {
 public:
     SplineAnimation(SplineChartItem *item, int duration, QEasingCurve &curve);

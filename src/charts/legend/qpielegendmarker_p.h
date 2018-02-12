@@ -44,12 +44,13 @@
 #include <private/legendmarkeritem_p.h>
 #include <QtCharts/QPieSeries>
 #include <QtCharts/QPieSlice>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 class QPieLegendMarker;
 
-class QPieLegendMarkerPrivate : public QLegendMarkerPrivate
+class QT_CHARTS_PRIVATE_EXPORT QPieLegendMarkerPrivate : public QLegendMarkerPrivate
 {
     Q_OBJECT
 public:

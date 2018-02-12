@@ -40,12 +40,13 @@
 #define QDATETIMEAXIS_P_H
 
 #include <QtCharts/QDateTimeAxis>
+#include <QtCharts/private/qchartglobal_p.h>
 #include <private/qabstractaxis_p.h>
 #include <QtCore/QDateTime>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class QDateTimeAxisPrivate : public QAbstractAxisPrivate
+class QT_CHARTS_PRIVATE_EXPORT QDateTimeAxisPrivate : public QAbstractAxisPrivate
 {
     Q_OBJECT
 public:

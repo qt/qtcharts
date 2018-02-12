@@ -40,6 +40,7 @@
 #define CHARTAXISELEMENT_H
 
 #include <QtCharts/QChartGlobal>
+#include <QtCharts/private/qchartglobal_p.h>
 #include <private/chartelement_p.h>
 #include <private/axisanimation_p.h>
 #include <QtWidgets/QGraphicsItem>
@@ -51,7 +52,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 class ChartPresenter;
 class QAbstractAxis;
 
-class ChartAxisElement : public ChartElement, public QGraphicsLayoutItem
+class QT_CHARTS_PRIVATE_EXPORT ChartAxisElement : public ChartElement, public QGraphicsLayoutItem
 {
     Q_OBJECT
 

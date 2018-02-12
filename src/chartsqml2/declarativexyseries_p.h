@@ -36,42 +36,39 @@
 //
 // We mean it.
 
-#ifndef QCHARTVIEW_P_H
-#define QCHARTVIEW_P_H
+#ifndef DECLARATIVE_XY_SERIES_H
+#define DECLARATIVE_XY_SERIES_H
 
-#include <QtCharts/QChartView>
-#include <QtCharts/private/qchartglobal_p.h>
-
-QT_BEGIN_NAMESPACE
-class QGraphicsScene;
-QT_END_NAMESPACE
+#include <QtCharts/QXYSeries>
+#include <private/declarativechartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 class QChart;
-class ChartPresenter;
-class QChartView;
+class QAbstractSeries;
 
-class QT_CHARTS_PRIVATE_EXPORT QChartViewPrivate
+class QT_QMLCHARTS_PRIVATE_EXPORT DeclarativeXySeries
 {
 public:
-    explicit QChartViewPrivate(QChartView *q, QChart *chart = 0);
-    ~QChartViewPrivate();
-    void setChart(QChart *chart);
-    void resize();
-
-protected:
-    QChartView *q_ptr;
+    explicit DeclarativeXySeries();
+    ~DeclarativeXySeries();
 
 public:
-    QGraphicsScene *m_scene;
-    QChart *m_chart;
-    QPoint m_rubberBandOrigin;
-#ifndef QT_NO_RUBBERBAND
-    QRubberBand *m_rubberBand;
-#endif
-    QChartView::RubberBands m_rubberBandFlags;
+    void classBegin();
+    void componentComplete();
+    virtual QXYSeries *xySeries() = 0;
+
+    void append(qreal x, qreal y);
+    void replace(qreal oldX, qreal oldY, qreal newX, qreal newY);
+    void replace(int index, qreal newX, qreal newY);
+    void remove(qreal x, qreal y);
+    void remove(int index);
+    void removePoints(int index, int count);
+    void insert(int index, qreal x, qreal y);
+    void clear();
+    QPointF at(int index);
 };
 
 QT_CHARTS_END_NAMESPACE
-#endif
+
+#endif // DECLARATIVE_XY_SERIES_H

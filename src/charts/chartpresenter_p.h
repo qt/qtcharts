@@ -41,6 +41,7 @@
 
 #include <QtCharts/QChartGlobal>
 #include <QtCharts/QChart> //because of QChart::ChartThemeId
+#include <QtCharts/private/qchartglobal_p.h>
 #include <private/glwidget_p.h>
 #include <QtCore/QRectF>
 #include <QtCore/QMargins>
@@ -62,7 +63,7 @@ class ChartTitle;
 class ChartAnimation;
 class AbstractChartLayout;
 
-class ChartPresenter: public QObject
+class QT_CHARTS_PRIVATE_EXPORT ChartPresenter: public QObject
 {
     Q_OBJECT
 public:

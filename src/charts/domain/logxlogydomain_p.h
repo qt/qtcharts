@@ -39,12 +39,13 @@
 #ifndef LOGXLOGYDOMAIN_H
 #define LOGXLOGYDOMAIN_H
 #include <private/abstractdomain_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 #include <QtCore/QRectF>
 #include <QtCore/QSizeF>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class Q_AUTOTEST_EXPORT LogXLogYDomain: public AbstractDomain
+class QT_CHARTS_PRIVATE_EXPORT LogXLogYDomain: public AbstractDomain
 {
     Q_OBJECT
 public:

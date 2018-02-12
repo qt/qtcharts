@@ -40,10 +40,11 @@
 #define POLARCHARTLAYOUT_H
 
 #include <private/abstractchartlayout_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class PolarChartLayout : public AbstractChartLayout
+class QT_CHARTS_PRIVATE_EXPORT PolarChartLayout : public AbstractChartLayout
 {
 public:
     PolarChartLayout(ChartPresenter *presenter);

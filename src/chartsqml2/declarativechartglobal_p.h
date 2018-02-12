@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2018 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -27,24 +27,28 @@
 **
 ****************************************************************************/
 
-#ifndef DECLARATIVEPOLARCHART_H
-#define DECLARATIVEPOLARCHART_H
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the Qt Chart API.  It exists purely as an
+// implementation detail.  This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
+
+#ifndef DECLARATIVECHARTGLOBAL_H
+#define DECLARATIVECHARTGLOBAL_H
 
 #include <QtCore/QtGlobal>
-#include <QtQuick/QQuickItem>
 
-#include "declarativechart.h"
+#ifndef QT_STATIC
+#  if defined(QT_BUILD_QMLCHARTS_LIB)
+#    define QT_QMLCHARTS_PRIVATE_EXPORT Q_DECL_EXPORT
+#  else
+#    define QT_QMLCHARTS_PRIVATE_EXPORT Q_DECL_IMPORT
+#  endif
+#else
+#  define QT_QMLCHARTS_PRIVATE_EXPORT
+#endif
 
-QT_CHARTS_BEGIN_NAMESPACE
-
-class DeclarativePolarChart : public DeclarativeChart
-{
-    Q_OBJECT
-public:
-    DeclarativePolarChart(QQuickItem *parent = 0);
-    ~DeclarativePolarChart();
-};
-
-QT_CHARTS_END_NAMESPACE
-
-#endif // DECLARATIVEPOLARCHART_H
+#endif // DECLARATIVECHARTGLOBAL_H

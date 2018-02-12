@@ -40,6 +40,7 @@
 #define QCANDLESTICKMODELMAPPER_P_H
 
 #include <QtCharts/QCandlestickModelMapper>
+#include <QtCharts/private/qchartglobal_p.h>
 #include <QtCore/QObject>
 
 QT_BEGIN_NAMESPACE
@@ -50,7 +51,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 class QCandlestickSet;
 
-class QCandlestickModelMapperPrivate : public QObject
+class QT_CHARTS_PRIVATE_EXPORT QCandlestickModelMapperPrivate : public QObject
 {
     Q_OBJECT
 

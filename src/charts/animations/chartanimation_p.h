@@ -41,12 +41,13 @@
 
 #include <QtCharts/QChartGlobal>
 #include <QtCore/QVariantAnimation>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 const static int ChartAnimationDuration = 1000;
 
-class ChartAnimation: public QVariantAnimation
+class QT_CHARTS_PRIVATE_EXPORT ChartAnimation: public QVariantAnimation
 {
     Q_OBJECT
 public:

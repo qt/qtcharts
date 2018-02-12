@@ -41,12 +41,13 @@
 
 #include <QtCharts/QSplineSeries>
 #include <private/xychart_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 class SplineAnimation;
 
-class SplineChartItem : public XYChart
+class QT_CHARTS_PRIVATE_EXPORT SplineChartItem : public XYChart
 {
     Q_OBJECT
     Q_INTERFACES(QGraphicsItem)

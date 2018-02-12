@@ -40,10 +40,11 @@
 #define POLARCHARTAXIS_P_H
 
 #include <private/chartaxiselement_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class PolarChartAxis : public ChartAxisElement
+class QT_CHARTS_PRIVATE_EXPORT PolarChartAxis : public ChartAxisElement
 {
     Q_OBJECT
     Q_INTERFACES(QGraphicsLayoutItem)

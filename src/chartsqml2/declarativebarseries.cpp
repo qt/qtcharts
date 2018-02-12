@@ -27,7 +27,7 @@
 **
 ****************************************************************************/
 
-#include "declarativebarseries.h"
+#include "declarativebarseries_p.h"
 #include <QtCharts/QBarSet>
 #include <QtCharts/QVBarModelMapper>
 #include <QtCharts/QHBarModelMapper>
@@ -513,6 +513,6 @@ DeclarativeBarSet *DeclarativeHorizontalPercentBarSeries::insert(int index, QStr
     return 0;
 }
 
-#include "moc_declarativebarseries.cpp"
+#include "moc_declarativebarseries_p.cpp"
 
 QT_CHARTS_END_NAMESPACE

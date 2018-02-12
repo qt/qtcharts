@@ -27,8 +27,8 @@
 **
 ****************************************************************************/
 
-#include "declarativebarseries.h"
-#include "declarativeboxplotseries.h"
+#include "declarativebarseries_p.h"
+#include "declarativeboxplotseries_p.h"
 #include <QtCharts/QBoxSet>
 #include <QtCharts/QVBoxPlotModelMapper>
 
@@ -493,6 +493,6 @@ void DeclarativeBoxPlotSeries::handleBrushChanged()
     }
 }
 
-#include "moc_declarativeboxplotseries.cpp"
+#include "moc_declarativeboxplotseries_p.cpp"
 
 QT_CHARTS_END_NAMESPACE

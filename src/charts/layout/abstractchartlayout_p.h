@@ -42,6 +42,7 @@
 #include <QtWidgets/QGraphicsLayout>
 #include <QtCore/QMargins>
 #include <QtCharts/QChartGlobal>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -51,7 +52,7 @@ class ChartPresenter;
 class QLegend;
 class ChartBackground;
 
-class AbstractChartLayout : public QGraphicsLayout
+class QT_CHARTS_PRIVATE_EXPORT AbstractChartLayout : public QGraphicsLayout
 {
 public:
     AbstractChartLayout(ChartPresenter *presenter);

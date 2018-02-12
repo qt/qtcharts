@@ -40,12 +40,13 @@
 #define POLARCHARTVALUEAXISRADIAL_P_H
 
 #include <private/polarchartaxisradial_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 class QValueAxis;
 
-class PolarChartValueAxisRadial : public PolarChartAxisRadial
+class QT_CHARTS_PRIVATE_EXPORT PolarChartValueAxisRadial : public PolarChartAxisRadial
 {
     Q_OBJECT
 public:

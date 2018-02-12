@@ -40,6 +40,7 @@
 #define CHARTTHEMESYSTEM_P_H
 
 #include <private/charttheme_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 #ifdef Q_OS_WIN
 #include <windows.h>
 #include <stdio.h>
@@ -47,7 +48,7 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class ChartThemeSystem: public ChartTheme
+class QT_CHARTS_PRIVATE_EXPORT ChartThemeSystem: public ChartTheme
 {
 public:
     // System theme not used at the moment (the user is not able to select this theme)

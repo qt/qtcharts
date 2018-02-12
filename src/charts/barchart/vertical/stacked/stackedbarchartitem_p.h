@@ -43,10 +43,11 @@
 #include <private/abstractbarchartitem_p.h>
 #include <QtCharts/QStackedBarSeries>
 #include <QtWidgets/QGraphicsItem>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class StackedBarChartItem : public AbstractBarChartItem
+class QT_CHARTS_PRIVATE_EXPORT StackedBarChartItem : public AbstractBarChartItem
 {
     Q_OBJECT
 public:

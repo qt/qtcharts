@@ -40,13 +40,14 @@
 #define QAREASERIES_P_H
 
 #include <private/qabstractseries_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 class QAreaSeries;
 class QLineSeries;
 
-class QAreaSeriesPrivate: public QAbstractSeriesPrivate
+class QT_CHARTS_PRIVATE_EXPORT QAreaSeriesPrivate: public QAbstractSeriesPrivate
 {
     Q_OBJECT
 
