@@ -43,6 +43,7 @@
 #include <private/qabstractseries_p.h>
 #include <QtCore/QStringList>
 #include <QtCharts/QAbstractSeries>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -50,7 +51,7 @@ class QBarModelMapper;
 class QBarCategoryAxis;
 class QLegendMarker;
 
-class QAbstractBarSeriesPrivate : public QAbstractSeriesPrivate
+class QT_CHARTS_PRIVATE_EXPORT QAbstractBarSeriesPrivate : public QAbstractSeriesPrivate
 {
     Q_OBJECT
 public:

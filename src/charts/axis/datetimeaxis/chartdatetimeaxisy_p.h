@@ -40,12 +40,13 @@
 #define CHARTDATETIMEAXISY_H
 
 #include <private/verticalaxis_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 class QDateTimeAxis;
 
-class ChartDateTimeAxisY : public VerticalAxis
+class QT_CHARTS_PRIVATE_EXPORT ChartDateTimeAxisY : public VerticalAxis
 {
     Q_OBJECT
 public:

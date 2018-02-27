@@ -41,11 +41,12 @@
 
 #include <private/chartelement_p.h>
 #include <private/chartpresenter_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 #include <QtWidgets/QGraphicsItem>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class ChartItem : public ChartElement
+class QT_CHARTS_PRIVATE_EXPORT ChartItem : public ChartElement
 {
     Q_OBJECT
     enum ChartItemTypes { AXIS_ITEM = UserType + 1, XYLINE_ITEM };

@@ -27,7 +27,7 @@
 **
 ****************************************************************************/
 
-#include "declarativepolarchart.h"
+#include "declarativepolarchart_p.h"
 #include <QtCharts/QChart>
 
 QT_CHARTS_BEGIN_NAMESPACE
@@ -78,6 +78,6 @@ DeclarativePolarChart::~DeclarativePolarChart()
 {
 }
 
-#include "moc_declarativepolarchart.cpp"
+#include "moc_declarativepolarchart_p.cpp"
 
 QT_CHARTS_END_NAMESPACE

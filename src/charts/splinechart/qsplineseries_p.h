@@ -40,11 +40,12 @@
 #define QSPLINESERIES_P_H
 
 #include <private/qlineseries_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 
-class QSplineSeriesPrivate: public QLineSeriesPrivate
+class QT_CHARTS_PRIVATE_EXPORT QSplineSeriesPrivate: public QLineSeriesPrivate
 {
     Q_OBJECT
 public:

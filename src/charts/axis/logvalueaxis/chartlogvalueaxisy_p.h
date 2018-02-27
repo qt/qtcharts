@@ -40,12 +40,13 @@
 #define CHARTLOGVALUEAXISY_H
 
 #include <private/verticalaxis_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 class QLogValueAxis;
 
-class ChartLogValueAxisY : public VerticalAxis
+class QT_CHARTS_PRIVATE_EXPORT ChartLogValueAxisY : public VerticalAxis
 {
     Q_OBJECT
 

@@ -27,10 +27,19 @@
 **
 ****************************************************************************/
 
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the Qt Chart API.  It exists purely as an
+// implementation detail.  This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
+
 #ifndef DECLARATIVEOPENGLRENDERNODE_P_H
 #define DECLARATIVEOPENGLRENDERNODE_P_H
 
-#include "declarativeabstractrendernode.h"
+#include <private/declarativeabstractrendernode_p.h>
 
 #include <QtCharts/QChartGlobal>
 #include <private/glxyseriesdata_p.h>

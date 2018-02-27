@@ -42,6 +42,7 @@
 #include <QtCharts/QAbstractSeries>
 #include <QtCharts/QChart>
 #include <private/abstractdomain_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_BEGIN_NAMESPACE
 class QGraphicsItem;
@@ -61,7 +62,7 @@ class ChartAnimation;
 class ChartItem;
 class BoxPlotChartItem;
 
-class QAbstractSeriesPrivate : public QObject
+class QT_CHARTS_PRIVATE_EXPORT QAbstractSeriesPrivate : public QObject
 {
     Q_OBJECT
 public:

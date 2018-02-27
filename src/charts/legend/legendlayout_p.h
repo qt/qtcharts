@@ -40,13 +40,14 @@
 #define LEGENDLAYOUT_H
 #include <QtWidgets/QGraphicsLayout>
 #include <QtCharts/QChartGlobal>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 class QLegend;
 class LegendMarkerItem;
 
-class LegendLayout : public QGraphicsLayout
+class QT_CHARTS_PRIVATE_EXPORT LegendLayout : public QGraphicsLayout
 {
 public:
 

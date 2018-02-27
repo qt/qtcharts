@@ -40,6 +40,7 @@
 #define CANDLESTICKCHARTITEM_P_H
 
 #include <private/chartitem_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -48,7 +49,7 @@ class CandlestickAnimation;
 class QCandlestickSeries;
 class QCandlestickSet;
 
-class CandlestickChartItem : public ChartItem
+class QT_CHARTS_PRIVATE_EXPORT CandlestickChartItem : public ChartItem
 {
     Q_OBJECT
 

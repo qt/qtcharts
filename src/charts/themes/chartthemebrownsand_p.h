@@ -40,10 +40,11 @@
 #define CHARTTHEMEBROWNSAND_P_H
 
 #include <private/charttheme_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class ChartThemeBrownSand: public ChartTheme
+class QT_CHARTS_PRIVATE_EXPORT ChartThemeBrownSand: public ChartTheme
 {
 public:
     ChartThemeBrownSand() : ChartTheme(QChart::ChartThemeBrownSand)

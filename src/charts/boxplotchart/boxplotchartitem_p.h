@@ -42,6 +42,7 @@
 
 #include <private/boxwhiskers_p.h>
 #include <QtCharts/QBoxPlotSeries>
+#include <QtCharts/private/qchartglobal_p.h>
 #include <private/chartitem_p.h>
 #include <private/boxplotanimation_p.h>
 #include <QtCharts/QBoxSet>
@@ -51,7 +52,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 class BoxPlotSeriesPrivate;
 
-class BoxPlotChartItem : public ChartItem
+class QT_CHARTS_PRIVATE_EXPORT BoxPlotChartItem : public ChartItem
 {
     Q_OBJECT
 public:

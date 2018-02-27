@@ -27,17 +27,27 @@
 **
 ****************************************************************************/
 
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the Qt Chart API.  It exists purely as an
+// implementation detail.  This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
+
 #ifndef DECLARATIVEAXES_H
 #define DECLARATIVEAXES_H
 
 #include <QtCharts/QChartGlobal>
 #include <QtCore/QObject>
+#include <private/declarativechartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 class QAbstractAxis;
 
-class DeclarativeAxes : public QObject
+class QT_QMLCHARTS_PRIVATE_EXPORT DeclarativeAxes : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX NOTIFY axisXChanged)

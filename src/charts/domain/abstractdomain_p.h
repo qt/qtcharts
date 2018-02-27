@@ -39,6 +39,7 @@
 #ifndef ABSTRACTDOMAIN_H
 #define ABSTRACTDOMAIN_H
 #include <QtCharts/QChartGlobal>
+#include <QtCharts/private/qchartglobal_p.h>
 #include <QtCore/QRectF>
 #include <QtCore/QSizeF>
 #include <QtCore/QDebug>
@@ -47,7 +48,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 class QAbstractAxis;
 
-class Q_AUTOTEST_EXPORT AbstractDomain: public QObject
+class QT_CHARTS_PRIVATE_EXPORT AbstractDomain: public QObject
 {
     Q_OBJECT
 public:

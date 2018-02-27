@@ -41,10 +41,11 @@
 
 #include <QtCharts/QValueAxis>
 #include <private/qabstractaxis_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class QValueAxisPrivate : public QAbstractAxisPrivate
+class QT_CHARTS_PRIVATE_EXPORT QValueAxisPrivate : public QAbstractAxisPrivate
 {
     Q_OBJECT
 public:

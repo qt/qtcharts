@@ -41,6 +41,7 @@
 
 #include <QtCore/QObject>
 #include <QtCharts/QBoxPlotModelMapper>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_BEGIN_NAMESPACE
 class QModelIndex;
@@ -48,7 +49,7 @@ QT_END_NAMESPACE
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class QBoxSet;
+class QT_CHARTS_PRIVATE_EXPORT QBoxSet;
 
 class QBoxPlotModelMapperPrivate : public QObject
 {

@@ -27,9 +27,10 @@
 **
 ****************************************************************************/
 
-#include "declarativebarseries.h"
-#include "declarativeboxplotseries.h"
+#include "declarativebarseries_p.h"
+#include "declarativeboxplotseries_p.h"
 #include <QtCharts/QBoxSet>
+#include <QtCharts/QHBoxPlotModelMapper>
 #include <QtCharts/QVBoxPlotModelMapper>
 
 QT_CHARTS_BEGIN_NAMESPACE
@@ -405,6 +406,8 @@ void DeclarativeBoxPlotSeries::componentComplete()
         } else if (qobject_cast<QVBoxPlotModelMapper *>(child)) {
             QVBoxPlotModelMapper *mapper = qobject_cast<QVBoxPlotModelMapper *>(child);
             mapper->setSeries(this);
+        } else if (QHBoxPlotModelMapper *mapper = qobject_cast<QHBoxPlotModelMapper *>(child)) {
+            mapper->setSeries(this);
         }
     }
 }
@@ -493,6 +496,6 @@ void DeclarativeBoxPlotSeries::handleBrushChanged()
     }
 }
 
-#include "moc_declarativeboxplotseries.cpp"
+#include "moc_declarativeboxplotseries_p.cpp"
 
 QT_CHARTS_END_NAMESPACE

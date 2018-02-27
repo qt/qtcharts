@@ -40,6 +40,7 @@
 #define QBARSET_P_H
 
 #include <QtCharts/QBarSet>
+#include <QtCharts/private/qchartglobal_p.h>
 #include <QtCore/QMap>
 #include <QtGui/QPen>
 #include <QtGui/QBrush>
@@ -47,7 +48,7 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class QBarSetPrivate : public QObject
+class QT_CHARTS_PRIVATE_EXPORT QBarSetPrivate : public QObject
 {
     Q_OBJECT
 

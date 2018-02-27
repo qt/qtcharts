@@ -43,6 +43,7 @@
 #include <private/chartitem_p.h>
 #include <private/xyanimation_p.h>
 #include <QtCharts/QValueAxis>
+#include <QtCharts/private/qchartglobal_p.h>
 #include <QtGui/QPen>
 
 QT_CHARTS_BEGIN_NAMESPACE
@@ -50,7 +51,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 class ChartPresenter;
 class QXYSeries;
 
-class XYChart :  public ChartItem
+class QT_CHARTS_PRIVATE_EXPORT XYChart :  public ChartItem
 {
     Q_OBJECT
 public:

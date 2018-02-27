@@ -27,26 +27,26 @@
 **
 ****************************************************************************/
 
-#include "declarativechart.h"
+#include "declarativechart_p.h"
 #include <QtGui/QPainter>
-#include "declarativelineseries.h"
-#include "declarativeareaseries.h"
-#include "declarativebarseries.h"
-#include "declarativepieseries.h"
-#include "declarativesplineseries.h"
-#include "declarativeboxplotseries.h"
-#include "declarativecandlestickseries.h"
-#include "declarativescatterseries.h"
-#include "declarativechartnode.h"
-#include "declarativeabstractrendernode.h"
+#include "declarativelineseries_p.h"
+#include "declarativeareaseries_p.h"
+#include "declarativebarseries_p.h"
+#include "declarativepieseries_p.h"
+#include "declarativesplineseries_p.h"
+#include "declarativeboxplotseries_p.h"
+#include "declarativecandlestickseries_p.h"
+#include "declarativescatterseries_p.h"
+#include "declarativechartnode_p.h"
+#include "declarativeabstractrendernode_p.h"
 #include <QtCharts/QBarCategoryAxis>
 #include <QtCharts/QValueAxis>
 #include <QtCharts/QLogValueAxis>
 #include <QtCharts/QCategoryAxis>
 #include <private/qabstractseries_p.h>
-#include "declarativemargins.h"
+#include "declarativemargins_p.h"
 #include <private/chartdataset_p.h>
-#include "declarativeaxes.h"
+#include "declarativeaxes_p.h"
 #include <private/qchart_p.h>
 #include <private/chartpresenter_p.h>
 #include <QtCharts/QPolarChart>
@@ -488,7 +488,7 @@ void DeclarativeChart::initChart(QChart::ChartType type)
             this, SLOT(changeMargins(int,int,int,int)));
     connect(m_chart->d_ptr->m_dataset, SIGNAL(seriesAdded(QAbstractSeries*)), this, SLOT(handleSeriesAdded(QAbstractSeries*)));
     connect(m_chart->d_ptr->m_dataset, SIGNAL(seriesRemoved(QAbstractSeries*)), this, SIGNAL(seriesRemoved(QAbstractSeries*)));
-    connect(m_chart, &QChart::plotAreaChanged, this, &DeclarativeChart::plotAreaChanged);
+    connect(m_chart, SIGNAL(plotAreaChanged(QRectF)), this, SIGNAL(plotAreaChanged(QRectF)));
 }
 
 void DeclarativeChart::handleSeriesAdded(QAbstractSeries *series)
@@ -1469,6 +1469,6 @@ QPointF DeclarativeChart::mapToPosition(const QPointF &value, QAbstractSeries *s
     return m_chart->mapToPosition(value, series);
 }
 
-#include "moc_declarativechart.cpp"
+#include "moc_declarativechart_p.cpp"
 
 QT_CHARTS_END_NAMESPACE

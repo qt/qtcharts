@@ -40,13 +40,14 @@
 #define CHARTBARCATEGORYAXISX_H
 
 #include <private/horizontalaxis_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 class ChartPresenter;
 class QBarCategoryAxis;
 
-class ChartBarCategoryAxisX : public HorizontalAxis
+class QT_CHARTS_PRIVATE_EXPORT ChartBarCategoryAxisX : public HorizontalAxis
 {
     Q_OBJECT
 public:

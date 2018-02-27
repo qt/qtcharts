@@ -41,6 +41,7 @@
 
 #include <private/boxwhiskersdata_p.h>
 #include <QtCharts/QChartGlobal>
+#include <QtCharts/private/qchartglobal_p.h>
 #include <private/abstractdomain_p.h>
 #include <QtCharts/QBoxSet>
 #include <QtWidgets/QGraphicsRectItem>
@@ -52,7 +53,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 class QBarSet;
 
-class BoxWhiskers : public QGraphicsObject
+class QT_CHARTS_PRIVATE_EXPORT BoxWhiskers : public QGraphicsObject
 {
     Q_OBJECT
 

@@ -41,10 +41,11 @@
 
 #include <QtCharts/QChartGlobal>
 #include <QtWidgets/QGraphicsTextItem>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class ChartTitle : public QGraphicsTextItem
+class QT_CHARTS_PRIVATE_EXPORT ChartTitle : public QGraphicsTextItem
 {
 public:
     ChartTitle(QGraphicsItem *parent = 0);

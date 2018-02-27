@@ -40,10 +40,11 @@
 #define CARTESIANCHARTLAYOUT_H
 
 #include <private/abstractchartlayout_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class CartesianChartLayout : public AbstractChartLayout
+class QT_CHARTS_PRIVATE_EXPORT CartesianChartLayout : public AbstractChartLayout
 {
 public:
     CartesianChartLayout(ChartPresenter *presenter);

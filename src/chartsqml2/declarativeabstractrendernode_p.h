@@ -36,42 +36,56 @@
 //
 // We mean it.
 
-#ifndef QCHARTVIEW_P_H
-#define QCHARTVIEW_P_H
+#ifndef DECLARATIVEABSTRACTRENDERNODE_H
+#define DECLARATIVEABSTRACTRENDERNODE_H
 
-#include <QtCharts/QChartView>
-#include <QtCharts/private/qchartglobal_p.h>
-
-QT_BEGIN_NAMESPACE
-class QGraphicsScene;
-QT_END_NAMESPACE
+#include <QtCharts/QChartGlobal>
+#include <QtQuick/QSGNode>
+#include <QtQuick/QQuickWindow>
+#include <private/glxyseriesdata_p.h>
+#include <private/declarativechartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class QChart;
-class ChartPresenter;
-class QChartView;
+class QT_QMLCHARTS_PRIVATE_EXPORT MouseEventResponse {
+public:
+    enum MouseEventType {
+        None,
+        Pressed,
+        Released,
+        Clicked,
+        DoubleClicked,
+        HoverEnter,
+        HoverLeave
+    };
 
-class QT_CHARTS_PRIVATE_EXPORT QChartViewPrivate
+    MouseEventResponse()
+        : type(None),
+          series(nullptr) {}
+    MouseEventResponse(MouseEventType t, const QPoint &p, const QXYSeries *s)
+        : type(t),
+          point(p),
+          series(s) {}
+    MouseEventType type;
+    QPoint point;
+    const QXYSeries *series;
+};
+
+class QT_QMLCHARTS_PRIVATE_EXPORT DeclarativeAbstractRenderNode : public QSGRootNode
 {
 public:
-    explicit QChartViewPrivate(QChartView *q, QChart *chart = 0);
-    ~QChartViewPrivate();
-    void setChart(QChart *chart);
-    void resize();
+    DeclarativeAbstractRenderNode() {}
 
-protected:
-    QChartView *q_ptr;
-
-public:
-    QGraphicsScene *m_scene;
-    QChart *m_chart;
-    QPoint m_rubberBandOrigin;
-#ifndef QT_NO_RUBBERBAND
-    QRubberBand *m_rubberBand;
-#endif
-    QChartView::RubberBands m_rubberBandFlags;
+    virtual void setTextureSize(const QSize &textureSize) = 0;
+    virtual QSize textureSize() const = 0;
+    virtual void setRect(const QRectF &rect) = 0;
+    virtual void setSeriesData(bool mapDirty, const GLXYDataMap &dataMap) = 0;
+    virtual void setAntialiasing(bool enable) = 0;
+    virtual void addMouseEvents(const QVector<QMouseEvent *> &events) = 0;
+    virtual void takeMouseEventResponses(QVector<MouseEventResponse> &responses) = 0;
 };
 
 QT_CHARTS_END_NAMESPACE
-#endif
+
+
+#endif // DECLARATIVEABSTRACTRENDERNODE_H

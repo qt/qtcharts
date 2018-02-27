@@ -42,10 +42,11 @@
 #include <private/chartaxiselement_p.h>
 #include <private/qabstractaxis_p.h>
 #include <QtWidgets/QGraphicsLineItem>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class LineArrowItem: public QGraphicsLineItem
+class QT_CHARTS_PRIVATE_EXPORT LineArrowItem: public QGraphicsLineItem
 {
 public:
     explicit LineArrowItem(ChartAxisElement *axis, QGraphicsItem *parent = 0)

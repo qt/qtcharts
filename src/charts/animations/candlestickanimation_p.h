@@ -40,6 +40,7 @@
 #define CANDLESTICKANIMATION_P_H
 
 #include <private/chartanimation_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -47,7 +48,7 @@ class Candlestick;
 class CandlestickChartItem;
 class CandlestickBodyWicksAnimation;
 
-class CandlestickAnimation : public QObject
+class QT_CHARTS_PRIVATE_EXPORT CandlestickAnimation : public QObject
 {
     Q_OBJECT
 

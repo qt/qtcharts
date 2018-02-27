@@ -41,12 +41,13 @@
 
 #include <private/polarchartaxisangular_p.h>
 #include <QtCharts/QValueAxis>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 class QValueAxis;
 
-class PolarChartValueAxisAngular : public PolarChartAxisAngular
+class QT_CHARTS_PRIVATE_EXPORT PolarChartValueAxisAngular : public PolarChartAxisAngular
 {
     Q_OBJECT
 public:

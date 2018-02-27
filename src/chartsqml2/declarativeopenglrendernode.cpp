@@ -27,7 +27,7 @@
 **
 ****************************************************************************/
 
-#include "declarativeopenglrendernode.h"
+#include "declarativeopenglrendernode_p.h"
 
 #include <QtGui/QOpenGLContext>
 #include <QtGui/QOpenGLFunctions>

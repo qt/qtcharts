@@ -40,11 +40,12 @@
 #define QLINESERIES_P_H
 
 #include <private/qxyseries_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 
-class QLineSeriesPrivate: public QXYSeriesPrivate
+class QT_CHARTS_PRIVATE_EXPORT QLineSeriesPrivate: public QXYSeriesPrivate
 {
 public:
     QLineSeriesPrivate(QLineSeries *q);

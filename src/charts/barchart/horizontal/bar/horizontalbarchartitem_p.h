@@ -41,10 +41,11 @@
 
 #include <private/abstractbarchartitem_p.h>
 #include <QtWidgets/QGraphicsItem>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class HorizontalBarChartItem : public AbstractBarChartItem
+class QT_CHARTS_PRIVATE_EXPORT HorizontalBarChartItem : public AbstractBarChartItem
 {
     Q_OBJECT
 public:

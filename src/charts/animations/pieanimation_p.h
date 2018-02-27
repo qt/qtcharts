@@ -42,12 +42,13 @@
 #include <private/chartanimation_p.h>
 #include <private/piechartitem_p.h>
 #include <private/piesliceanimation_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 class PieChartItem;
 
-class PieAnimation : public ChartAnimation
+class QT_CHARTS_PRIVATE_EXPORT PieAnimation : public ChartAnimation
 {
     Q_OBJECT
 

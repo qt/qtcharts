@@ -40,12 +40,13 @@
 #define CHARTCATEGORYAXISY_H
 
 #include <private/verticalaxis_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 class QCategoryAxis;
 
-class ChartCategoryAxisY : public VerticalAxis
+class QT_CHARTS_PRIVATE_EXPORT ChartCategoryAxisY : public VerticalAxis
 {
     Q_OBJECT
 public:

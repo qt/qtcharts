@@ -43,12 +43,13 @@
 #include <private/qabstractbarseries_p.h>
 #include <private/abstractdomain_p.h>
 #include <QtCharts/QBarSet>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 class BoxPlotAnimation;
 
-class QBoxPlotSeriesPrivate : public QAbstractSeriesPrivate
+class QT_CHARTS_PRIVATE_EXPORT QBoxPlotSeriesPrivate : public QAbstractSeriesPrivate
 {
     Q_OBJECT
 

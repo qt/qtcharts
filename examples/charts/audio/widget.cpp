@@ -28,31 +28,30 @@
 ****************************************************************************/
 
 #include "widget.h"
+#include "xyseriesiodevice.h"
+
 #include <QtMultimedia/QAudioDeviceInfo>
 #include <QtMultimedia/QAudioInput>
+
 #include <QtCharts/QChartView>
 #include <QtCharts/QLineSeries>
 #include <QtCharts/QChart>
-#include <QtWidgets/QVBoxLayout>
 #include <QtCharts/QValueAxis>
-#include "xyseriesiodevice.h"
+
+#include <QtWidgets/QVBoxLayout>
 
 QT_CHARTS_USE_NAMESPACE
 
-Widget::Widget(QWidget *parent)
-    : QWidget(parent),
-      m_device(0),
-      m_chart(0),
-      m_series(0),
-      m_audioInput(0)
+Widget::Widget(const QAudioDeviceInfo &deviceInfo, QWidget *parent) :
+    QWidget(parent),
+    m_chart(new QChart),
+    m_series(new QLineSeries)
 {
-    m_chart = new QChart;
     QChartView *chartView = new QChartView(m_chart);
     chartView->setMinimumSize(800, 600);
-    m_series = new QLineSeries;
     m_chart->addSeries(m_series);
     QValueAxis *axisX = new QValueAxis;
-    axisX->setRange(0, 2000);
+    axisX->setRange(0, XYSeriesIODevice::sampleCount);
     axisX->setLabelFormat("%g");
     axisX->setTitleText("Samples");
     QValueAxis *axisY = new QValueAxis;
@@ -61,11 +60,10 @@ Widget::Widget(QWidget *parent)
     m_chart->setAxisX(axisX, m_series);
     m_chart->setAxisY(axisY, m_series);
     m_chart->legend()->hide();
-    m_chart->setTitle("Data from the microphone");
+    m_chart->setTitle("Data from the microphone (" + deviceInfo.deviceName() + ')');
 
-    QVBoxLayout *mainLayout = new QVBoxLayout;
+    QVBoxLayout *mainLayout = new QVBoxLayout(this);
     mainLayout->addWidget(chartView);
-    setLayout(mainLayout);
 
     QAudioFormat formatAudio;
     formatAudio.setSampleRate(8000);
@@ -75,8 +73,7 @@ Widget::Widget(QWidget *parent)
     formatAudio.setByteOrder(QAudioFormat::LittleEndian);
     formatAudio.setSampleType(QAudioFormat::UnSignedInt);
 
-    QAudioDeviceInfo inputDevices = QAudioDeviceInfo::defaultInputDevice();
-    m_audioInput = new QAudioInput(inputDevices,formatAudio, this);
+    m_audioInput = new QAudioInput(deviceInfo, formatAudio, this);
 
     m_device = new XYSeriesIODevice(m_series, this);
     m_device->open(QIODevice::WriteOnly);

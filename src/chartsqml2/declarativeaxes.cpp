@@ -27,7 +27,7 @@
 **
 ****************************************************************************/
 
-#include "declarativeaxes.h"
+#include "declarativeaxes_p.h"
 #include <QtCharts/QAbstractAxis>
 
 QT_CHARTS_BEGIN_NAMESPACE
@@ -65,6 +65,6 @@ void DeclarativeAxes::setAxisYRight(QAbstractAxis *axis)
     emit axisYRightChanged(axis);
 }
 
-#include "moc_declarativeaxes.cpp"
+#include "moc_declarativeaxes_p.cpp"
 
 QT_CHARTS_END_NAMESPACE

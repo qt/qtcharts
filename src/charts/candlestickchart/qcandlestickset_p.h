@@ -40,6 +40,7 @@
 #define QCANDLESTICKSET_P_H
 
 #include <QtCharts/QChartGlobal>
+#include <QtCharts/private/qchartglobal_p.h>
 #include <QtGui/QBrush>
 #include <QtGui/QPen>
 
@@ -48,7 +49,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 class QCandlestickSeriesPrivate;
 class QCandlestickSet;
 
-class QCandlestickSetPrivate : public QObject
+class QT_CHARTS_PRIVATE_EXPORT QCandlestickSetPrivate : public QObject
 {
     Q_OBJECT
 

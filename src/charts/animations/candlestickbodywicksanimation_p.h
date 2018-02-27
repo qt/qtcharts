@@ -41,13 +41,14 @@
 
 #include <private/candlestickdata_p.h>
 #include <private/chartanimation_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 class Candlestick;
 class CandlestickAnimation;
 
-class CandlestickBodyWicksAnimation : public ChartAnimation
+class QT_CHARTS_PRIVATE_EXPORT CandlestickBodyWicksAnimation : public ChartAnimation
 {
     Q_OBJECT
 

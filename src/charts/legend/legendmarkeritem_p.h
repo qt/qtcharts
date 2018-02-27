@@ -47,12 +47,13 @@
 #include <QtGui/QPen>
 #include <QtWidgets/QGraphicsTextItem>
 #include <QtWidgets/QGraphicsLayoutItem>
+#include <QtCharts/private/qchartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
 class QLegendMarkerPrivate;
 
-class LegendMarkerItem : public QGraphicsObject, public QGraphicsLayoutItem
+class QT_CHARTS_PRIVATE_EXPORT LegendMarkerItem : public QGraphicsObject, public QGraphicsLayoutItem
 {
     Q_OBJECT
     Q_INTERFACES(QGraphicsLayoutItem)
