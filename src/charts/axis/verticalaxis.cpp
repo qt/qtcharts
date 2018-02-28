@@ -75,9 +75,12 @@ QSizeF VerticalAxis::sizeHint(Qt::SizeHint which, const QSizeF &constraint) cons
 void VerticalAxis::updateGeometry()
 {
     const QVector<qreal> &layout = ChartAxisElement::layout();
+    const QVector<qreal> &dynamicMinorTicklayout = ChartAxisElement::dynamicMinorTicklayout();
 
-    if (layout.isEmpty() && axis()->type() != QAbstractAxis::AxisTypeLogValue)
+    if (layout.isEmpty() && dynamicMinorTicklayout.isEmpty()
+            && axis()->type() != QAbstractAxis::AxisTypeLogValue) {
         return;
+    }
 
     QStringList labelList = labels();
 
@@ -362,12 +365,14 @@ void VerticalAxis::updateMinorTickGeometry()
 
         minorTickCount = valueAxis->minorTickCount();
 
-        if (valueAxis->tickCount() >= 2)
-            tickSpacing = layout.at(0) - layout.at(1);
+        if (valueAxis->tickType() == QValueAxis::TicksFixed) {
+            if (valueAxis->tickCount() >= 2)
+                tickSpacing = layout.at(0) - layout.at(1);
 
-        for (int i = 0; i < minorTickCount; ++i) {
-            const qreal ratio = (1.0 / qreal(minorTickCount + 1)) * qreal(i + 1);
-            minorTickSpacings.append(tickSpacing * ratio);
+            for (int i = 0; i < minorTickCount; ++i) {
+                const qreal ratio = (1.0 / qreal(minorTickCount + 1)) * qreal(i + 1);
+                minorTickSpacings.append(tickSpacing * ratio);
+            }
         }
         break;
     }
@@ -421,28 +426,27 @@ void VerticalAxis::updateMinorTickGeometry()
         break;
     }
 
-    if (minorTickCount < 1 || tickSpacing == 0.0 || minorTickSpacings.count() != minorTickCount)
-        return;
+    const QValueAxis *valueAxis = qobject_cast<QValueAxis *>(axis());
+    if (valueAxis && valueAxis->tickType() == QValueAxis::TicksDynamic) {
+        const QVector<qreal> dynamicMinorTicklayout = ChartAxisElement::dynamicMinorTicklayout();
+        const QRectF &gridRect = gridGeometry();
+        const qreal deltaY = gridRect.height() / (valueAxis->max() - valueAxis->min());
+        const qreal bottomPos = gridRect.bottom();
+        const qreal topPos = gridRect.top();
 
-    for (int i = 0; i < layout.size() - 1; ++i) {
-        for (int j = 0; j < minorTickCount; ++j) {
-            const int minorItemIndex = i * minorTickCount + j;
+        for (int i = 0; i < dynamicMinorTicklayout.size(); i++) {
             QGraphicsLineItem *minorGridLineItem =
-                    static_cast<QGraphicsLineItem *>(minorGridItems().value(minorItemIndex));
+                    static_cast<QGraphicsLineItem *>(minorGridItems().value(i));
             QGraphicsLineItem *minorArrowLineItem =
-                    static_cast<QGraphicsLineItem *>(minorArrowItems().value(minorItemIndex));
+                    static_cast<QGraphicsLineItem *>(minorArrowItems().value(i));
             if (!minorGridLineItem || !minorArrowLineItem)
                 continue;
 
-            const qreal minorTickSpacing = minorTickSpacings.value(j, 0.0);
-
             qreal minorGridLineItemY = 0.0;
-            if (axis()->isReverse()) {
-                minorGridLineItemY = qFloor(gridGeometry().top() + gridGeometry().bottom()
-                                            - layout.at(i) + minorTickSpacing);
-            } else {
-                minorGridLineItemY = qCeil(layout.at(i) - minorTickSpacing);
-            }
+            if (axis()->isReverse())
+                minorGridLineItemY = topPos + dynamicMinorTicklayout.at(i) * deltaY;
+            else
+                minorGridLineItemY = bottomPos - dynamicMinorTicklayout.at(i) * deltaY;
 
             qreal minorArrowLineItemX1;
             qreal minorArrowLineItemX2;
@@ -471,6 +475,59 @@ void VerticalAxis::updateMinorTickGeometry()
                                          && minorGridLineItemY <= gridGeometry().bottom());
             minorGridLineItem->setVisible(minorGridLineVisible);
             minorArrowLineItem->setVisible(minorGridLineVisible);
+        }
+    } else {
+        if (minorTickCount < 1 || tickSpacing == 0.0 || minorTickSpacings.count() != minorTickCount)
+            return;
+
+        for (int i = 0; i < layout.size() - 1; ++i) {
+            for (int j = 0; j < minorTickCount; ++j) {
+                const int minorItemIndex = i * minorTickCount + j;
+                QGraphicsLineItem *minorGridLineItem =
+                        static_cast<QGraphicsLineItem *>(minorGridItems().value(minorItemIndex));
+                QGraphicsLineItem *minorArrowLineItem =
+                        static_cast<QGraphicsLineItem *>(minorArrowItems().value(minorItemIndex));
+                if (!minorGridLineItem || !minorArrowLineItem)
+                    continue;
+
+                const qreal minorTickSpacing = minorTickSpacings.value(j, 0.0);
+
+                qreal minorGridLineItemY = 0.0;
+                if (axis()->isReverse()) {
+                    minorGridLineItemY = qFloor(gridGeometry().top() + gridGeometry().bottom()
+                                                - layout.at(i) + minorTickSpacing);
+                } else {
+                    minorGridLineItemY = qCeil(layout.at(i) - minorTickSpacing);
+                }
+
+                qreal minorArrowLineItemX1;
+                qreal minorArrowLineItemX2;
+                switch (axis()->alignment()) {
+                case Qt::AlignLeft:
+                    minorArrowLineItemX1 = gridGeometry().left() - labelPadding() / 2.0;
+                    minorArrowLineItemX2 = gridGeometry().left();
+                    break;
+                case Qt::AlignRight:
+                    minorArrowLineItemX1 = gridGeometry().right();
+                    minorArrowLineItemX2 = gridGeometry().right() + labelPadding() / 2.0;
+                    break;
+                default:
+                    minorArrowLineItemX1 = 0.0;
+                    minorArrowLineItemX2 = 0.0;
+                    break;
+                }
+
+                minorGridLineItem->setLine(gridGeometry().left(), minorGridLineItemY,
+                                           gridGeometry().right(), minorGridLineItemY);
+                minorArrowLineItem->setLine(minorArrowLineItemX1, minorGridLineItemY,
+                                            minorArrowLineItemX2, minorGridLineItemY);
+
+                // check if the minor grid line and the minor axis arrow should be shown
+                bool minorGridLineVisible = (minorGridLineItemY >= gridGeometry().top()
+                                             && minorGridLineItemY <= gridGeometry().bottom());
+                minorGridLineItem->setVisible(minorGridLineVisible);
+                minorArrowLineItem->setVisible(minorGridLineVisible);
+            }
         }
     }
 }

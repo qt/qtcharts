@@ -72,6 +72,7 @@ private slots:
     void autoscale();
     void reverse();
     void labels();
+    void dynamicTicks();
 
 private:
     QValueAxis* m_valuesaxis;
@@ -471,6 +472,43 @@ void tst_QValueAxis::labels()
     for (QGraphicsTextItem *i : textItems)
         updatedStrings << i->toPlainText();
     QCOMPARE(originalStrings, updatedStrings);
+}
+
+void tst_QValueAxis::dynamicTicks()
+{
+    QValueAxis *valuesaxis = new QValueAxis();
+    m_chart->setAxisX(m_valuesaxis, m_series);
+    m_chart->setAxisY(valuesaxis, m_series);
+    m_view->resize(400, 400);
+    m_valuesaxis->setRange(-111.0, 111);
+    m_valuesaxis->setTickType(QValueAxis::TicksDynamic);
+    m_valuesaxis->setTickAnchor(100.0);
+    m_valuesaxis->setTickInterval(100.0);
+    valuesaxis->setRange(-111.0, 111);
+    valuesaxis->setTickType(QValueAxis::TicksDynamic);
+    valuesaxis->setTickAnchor(100.0);
+    valuesaxis->setTickInterval(50.0);
+    valuesaxis->setLabelFormat("%.2f");
+    m_view->show();
+    QTest::qWaitForWindowShown(m_view);
+
+    QStringList expectedList;
+    expectedList << "" << "100.00" << "50.00" << "0.00" << "-50.00" << "-100.00" <<
+                    "100.0" << "0.0" << "-100.0";
+
+    QList<QGraphicsItem *> childItems = m_chart->scene()->items();
+    QList<QGraphicsTextItem *> textItems;
+    QStringList observedStrings;
+    for (QGraphicsItem *i : childItems) {
+        if (QGraphicsTextItem *text = qgraphicsitem_cast<QGraphicsTextItem *>(i)) {
+            if (text->parentItem() != m_chart) {
+                textItems << text;
+                observedStrings << text->toPlainText();
+            }
+        }
+    }
+
+    QCOMPARE(expectedList, observedStrings);
 }
 
 QTEST_MAIN(tst_QValueAxis)

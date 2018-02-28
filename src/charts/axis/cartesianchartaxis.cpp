@@ -107,8 +107,47 @@ void CartesianChartAxis::updateMinorTickItems()
     int expectedCount = 0;
     if (axis()->type() == QAbstractAxis::AxisTypeValue) {
         QValueAxis *valueAxis = qobject_cast<QValueAxis *>(axis());
-        expectedCount = valueAxis->minorTickCount() * (valueAxis->tickCount() - 1);
-        expectedCount = qMax(expectedCount, 0);
+        if (valueAxis->tickType() == QValueAxis::TicksFixed) {
+            expectedCount = valueAxis->minorTickCount() * (valueAxis->tickCount() - 1);
+            expectedCount = qMax(expectedCount, 0);
+        } else {
+            const qreal interval = valueAxis->tickInterval();
+            qreal firstMajorTick = valueAxis->tickAnchor();
+            const qreal max = valueAxis->max();
+            const qreal min = valueAxis->min();
+            const int _minorTickCount = valueAxis->minorTickCount();
+
+            if (min < firstMajorTick)
+                firstMajorTick = firstMajorTick - qCeil((firstMajorTick - min) / interval) * interval;
+            else
+                firstMajorTick = firstMajorTick + int((min - firstMajorTick) / interval) * interval;
+
+            const qreal deltaMinor = interval / qreal(_minorTickCount + 1);
+            qreal minorTick = firstMajorTick + deltaMinor;
+            int minorCounter = 0;
+
+            while (minorTick < min) {
+                minorTick += deltaMinor;
+                minorCounter++;
+            }
+
+            QVector<qreal> points;
+
+            // Calculate the points on axis value space. Conversion to graphical points
+            // will be done on axis specific geometry update function
+            while (minorTick <= max || qFuzzyCompare(minorTick, max)) {
+                if (minorCounter < _minorTickCount) {
+                    expectedCount++;
+                    minorCounter++;
+                    points << (minorTick - min);
+                } else {
+                    minorCounter = 0;
+                }
+                minorTick += deltaMinor;
+            }
+
+            setDynamicMinorTickLayout(points);
+        }
     } else if (axis()->type() == QAbstractAxis::AxisTypeLogValue) {
         QLogValueAxis *logValueAxis = qobject_cast<QLogValueAxis *>(axis());
 

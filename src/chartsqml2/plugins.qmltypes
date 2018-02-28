@@ -2943,6 +2943,9 @@ Module {
         Property { name: "max"; type: "double" }
         Property { name: "labelFormat"; type: "string" }
         Property { name: "minorTickCount"; type: "int" }
+        Property { name: "tickInterval"; type: "double" }
+        Property { name: "tickAnchor"; type: "double" }
+        Property { name: "tickType"; type: "TickType" }
         Signal {
             name: "minChanged"
             Parameter { name: "min"; type: "double" }
@@ -2967,6 +2970,18 @@ Module {
         Signal {
             name: "labelFormatChanged"
             Parameter { name: "format"; type: "string" }
+        }
+        Signal {
+            name: "tickIntervalChanged"
+            Parameter { name: "interval"; type: "double" }
+        }
+        Signal {
+            name: "tickAnchorChanged"
+            Parameter { name: "anchor"; type: "double" }
+        }
+        Signal {
+            name: "tickTypeChanged"
+            Parameter { name: "type"; type: "TickType" }
         }
         Method { name: "applyNiceNumbers" }
     }

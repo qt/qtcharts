@@ -45,6 +45,7 @@
 #include <private/axisanimation_p.h>
 #include <QtWidgets/QGraphicsItem>
 #include <QtWidgets/QGraphicsLayoutItem>
+#include <QtCharts/QValueAxis>
 #include <QtGui/QFont>
 
 QT_CHARTS_BEGIN_NAMESPACE
@@ -71,6 +72,8 @@ public:
     QAbstractAxis *axis() const { return m_axis; }
     void setLayout(QVector<qreal> &layout) { m_layout = layout; }
     QVector<qreal> &layout() { return m_layout; } // Modifiable reference
+    void setDynamicMinorTickLayout(const QVector<qreal> &layout) { m_dynamicMinorTickLayout = layout; }
+    QVector<qreal> &dynamicMinorTicklayout() { return m_dynamicMinorTickLayout; } // Modifiable reference
     inline qreal labelPadding() const { return qreal(4.0); }
     inline qreal titlePadding() const { return qreal(2.0); }
     void setLabels(const QStringList &labels) { m_labelsList = labels; }
@@ -78,6 +81,9 @@ public:
 
     qreal min() const;
     qreal max() const;
+
+    qreal tickInterval() const;
+    qreal tickAnchor() const;
 
     QRectF axisGeometry() const { return m_axisRect; }
     void setAxisGeometry(const QRectF &axisGeometry) { m_axisRect = axisGeometry; }
@@ -87,7 +93,9 @@ public:
     //this flag indicates that axis is used to show intervals it means labels are in between ticks
     bool intervalAxis() const { return m_intervalAxis; }
 
-    QStringList createValueLabels(qreal max, qreal min, int ticks, const QString &format) const;
+    QStringList createValueLabels(qreal max, qreal min, int ticks,
+                                  qreal tickInterval, qreal tickAnchor,
+                                  QValueAxis::TickType tickType, const QString &format) const;
     QStringList createLogValueLabels(qreal min, qreal max, qreal base, int ticks,
                                      const QString &format) const;
     QStringList createDateTimeLabels(qreal max, qreal min, int ticks, const QString &format) const;
@@ -160,6 +168,7 @@ private:
     QAbstractAxis *m_axis;
     AxisAnimation *m_animation;
     QVector<qreal> m_layout;
+    QVector<qreal> m_dynamicMinorTickLayout;
     QStringList m_labelsList;
     QRectF m_axisRect;
     QScopedPointer<QGraphicsItemGroup> m_grid;

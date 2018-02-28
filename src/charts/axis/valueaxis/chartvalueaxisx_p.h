@@ -61,6 +61,9 @@ private Q_SLOTS:
     void handleTickCountChanged(int tick);
     void handleMinorTickCountChanged(int tick);
     void handleLabelFormatChanged(const QString &format);
+    void handleTickIntervalChanged(qreal interval);
+    void handleTickAnchorChanged(qreal anchor);
+    void handleTickTypeChanged(QValueAxis::TickType type);
 
 private:
     QValueAxis *m_axis;

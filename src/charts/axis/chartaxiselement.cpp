@@ -297,6 +297,24 @@ qreal ChartAxisElement::max() const
     return m_axis->d_ptr->max();
 }
 
+qreal ChartAxisElement::tickInterval() const
+{
+    QValueAxis *valueAxis = qobject_cast<QValueAxis *>(m_axis);
+    if (valueAxis)
+        return valueAxis->tickInterval();
+    else
+        return 0.0;
+}
+
+qreal ChartAxisElement::tickAnchor() const
+{
+    QValueAxis *valueAxis = qobject_cast<QValueAxis *>(m_axis);
+    if (valueAxis)
+        return valueAxis->tickAnchor();
+    else
+        return 0.0;
+}
+
 QString ChartAxisElement::formatLabel(const QString &formatSpec, const QByteArray &array,
                                       qreal value, int precision, const QString &preStr,
                                       const QString &postStr) const
@@ -336,6 +354,8 @@ QString ChartAxisElement::formatLabel(const QString &formatSpec, const QByteArra
 }
 
 QStringList ChartAxisElement::createValueLabels(qreal min, qreal max, int ticks,
+                                                qreal tickInterval, qreal tickAnchor,
+                                                QValueAxis::TickType tickType,
                                                 const QString &format) const
 {
     QStringList labels;
@@ -345,9 +365,22 @@ QStringList ChartAxisElement::createValueLabels(qreal min, qreal max, int ticks,
 
     if (format.isEmpty()) {
         int n = qMax(int(-qFloor(std::log10((max - min) / (ticks - 1)))), 0) + 1;
-        for (int i = 0; i < ticks; i++) {
-            qreal value = min + (i * (max - min) / (ticks - 1));
-            labels << presenter()->numberToString(value, 'f', n);
+        if (tickType == QValueAxis::TicksFixed) {
+            for (int i = 0; i < ticks; i++) {
+                qreal value = min + (i * (max - min) / (ticks - 1));
+                labels << presenter()->numberToString(value, 'f', n);
+            }
+        } else {
+            qreal value = tickAnchor;
+            if (value > min)
+                value = value - int((value - min) / tickInterval) * tickInterval;
+            else
+                value = value + qCeil((min - value) / tickInterval) * tickInterval;
+
+            while (value <= max || qFuzzyCompare(value, max)) {
+                labels << presenter()->numberToString(value, 'f', n);
+                value += tickInterval;
+            }
         }
     } else {
         QByteArray array = format.toLatin1();
@@ -372,9 +405,22 @@ QStringList ChartAxisElement::createValueLabels(qreal min, qreal max, int ticks,
             if (labelFormatMatcher->indexIn(format, 0) != -1)
                 formatSpec = labelFormatMatcher->cap(1);
         }
-        for (int i = 0; i < ticks; i++) {
-            qreal value = min + (i * (max - min) / (ticks - 1));
-            labels << formatLabel(formatSpec, array, value, precision, preStr, postStr);
+        if (tickType == QValueAxis::TicksFixed) {
+            for (int i = 0; i < ticks; i++) {
+                qreal value = min + (i * (max - min) / (ticks - 1));
+                labels << formatLabel(formatSpec, array, value, precision, preStr, postStr);
+            }
+        } else {
+            qreal value = tickAnchor;
+            if (value > min)
+                value = value - int((value - min) / tickInterval) * tickInterval;
+            else
+                value = value + qCeil((min - value) / tickInterval) * tickInterval;
+
+            while (value <= max || qFuzzyCompare(value, max)) {
+                labels << formatLabel(formatSpec, array, value, precision, preStr, postStr);
+                value += tickInterval;
+            }
         }
     }
 

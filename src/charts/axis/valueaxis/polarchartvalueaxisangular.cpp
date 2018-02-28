@@ -66,7 +66,9 @@ QVector<qreal> PolarChartValueAxisAngular::calculateLayout() const
 
 void PolarChartValueAxisAngular::createAxisLabels(const QVector<qreal> &layout)
 {
-    QStringList labelList = createValueLabels(min(), max(), layout.size(), static_cast<QValueAxis *>(axis())->labelFormat());
+    QStringList labelList = createValueLabels(min(), max(), layout.size(), 0.0, 0.0,
+                                              QValueAxis::TicksFixed,
+                                              static_cast<QValueAxis *>(axis())->labelFormat());
     setLabels(labelList);
 }
 

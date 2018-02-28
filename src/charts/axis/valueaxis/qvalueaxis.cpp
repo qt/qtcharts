@@ -139,6 +139,48 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
+  \property QValueAxis::tickAnchor
+  \brief The base value where the dynamically placed tick marks and labels are started from.
+*/
+/*!
+  \qmlproperty real ValueAxis::tickAnchor
+  The base value where the dynamically placed tick marks and labels are started from.
+*/
+
+/*!
+  \property QValueAxis::tickInterval
+  \brief The interval between dynamically placed tick marks and labels.
+*/
+/*!
+  \qmlproperty real ValueAxis::tickInterval
+  The interval between dynamically placed tick marks and labels.
+*/
+
+/*!
+ \enum QValueAxis::TickType
+
+ This enum describes how the ticks and labels are positioned on the axis.
+
+ \value TicksDynamic Ticks are placed according to tickAnchor and tickInterval values.
+ \value TicksFixed Ticks are placed evenly across the axis range. The tickCount value
+ specifies the number of ticks.
+ */
+/*!
+  \property QValueAxis::tickType
+  \brief The positioning method of tick and labels.
+*/
+/*!
+  \qmlproperty enumeration ValueAxis::tickType
+
+  The positioning method of tick and labels.
+
+ \value ValueAxis.TicksDynamic
+        Ticks are placed according to tickAnchor and tickInterval values.
+ \value ValueAxis.TicksFixed
+        Ticks are placed evenly across the axis range. The tickCount value specifies the number of ticks.
+*/
+
+/*!
   \property QValueAxis::labelFormat
   \brief The label format of the axis.
 
@@ -296,6 +338,52 @@ int QValueAxis::minorTickCount() const
     return d->m_minorTickCount;
 }
 
+
+void QValueAxis::setTickInterval(qreal interval)
+{
+    Q_D(QValueAxis);
+    if (d->m_tickInterval != interval) {
+        d->m_tickInterval = interval;
+        emit tickIntervalChanged(interval);
+    }
+}
+
+qreal QValueAxis::tickInterval() const
+{
+    Q_D(const QValueAxis);
+    return d->m_tickInterval;
+}
+
+void QValueAxis::setTickAnchor(qreal anchor)
+{
+    Q_D(QValueAxis);
+    if (d->m_tickAnchor != anchor) {
+        d->m_tickAnchor = anchor;
+        emit tickAnchorChanged(anchor);
+    }
+}
+
+qreal QValueAxis::tickAnchor() const
+{
+    Q_D(const QValueAxis);
+    return d->m_tickAnchor;
+}
+
+void QValueAxis::setTickType(QValueAxis::TickType type)
+{
+    Q_D(QValueAxis);
+    if (d->m_tickType != type) {
+        d->m_tickType = type;
+        emit tickTypeChanged(type);
+    }
+}
+
+QValueAxis::TickType QValueAxis::tickType() const
+{
+    Q_D(const QValueAxis);
+    return d->m_tickType;
+}
+
 void QValueAxis::setLabelFormat(const QString &format)
 {
     Q_D(QValueAxis);
@@ -355,7 +443,10 @@ QValueAxisPrivate::QValueAxisPrivate(QValueAxis *q)
       m_tickCount(5),
       m_minorTickCount(0),
       m_format(),
-      m_applying(false)
+      m_applying(false),
+      m_tickInterval(0.0),
+      m_tickAnchor(0.0),
+      m_tickType(QValueAxis::TicksFixed)
 {
 
 }
