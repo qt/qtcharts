@@ -229,7 +229,7 @@ void tst_QXYSeries::chart_append()
     append_raw();
     m_chart->addSeries(m_series);
     m_view->show();
-    QTest::qWaitForWindowShown(m_view);
+    QVERIFY(QTest::qWaitForWindowExposed(m_view));
 }
 
 void tst_QXYSeries::append_chart_data()
@@ -241,7 +241,7 @@ void tst_QXYSeries::append_chart()
 {
     m_view->show();
     m_chart->addSeries(m_series);
-    QTest::qWaitForWindowShown(m_view);
+    QVERIFY(QTest::qWaitForWindowExposed(m_view));
     append_raw();
 
 }
@@ -368,7 +368,7 @@ void tst_QXYSeries::remove_chart()
 {
     m_view->show();
     m_chart->addSeries(m_series);
-    QTest::qWaitForWindowShown(m_view);
+    QVERIFY(QTest::qWaitForWindowExposed(m_view));
     remove_raw();
 }
 
@@ -412,7 +412,7 @@ void tst_QXYSeries::clear_chart()
 {
     m_view->show();
     m_chart->addSeries(m_series);
-    QTest::qWaitForWindowShown(m_view);
+    QVERIFY(QTest::qWaitForWindowExposed(m_view));
     clear_raw();
 }
 
@@ -513,7 +513,7 @@ void tst_QXYSeries::replace_chart()
 {
     m_view->show();
     m_chart->addSeries(m_series);
-    QTest::qWaitForWindowShown(m_view);
+    QVERIFY(QTest::qWaitForWindowExposed(m_view));
     replace_raw();
 }
 

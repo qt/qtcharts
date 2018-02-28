@@ -121,7 +121,7 @@ void tst_QValueAxis::qvalueaxis()
 
     m_chart->setAxisX(m_valuesaxis, m_series);
     m_view->show();
-    QTest::qWaitForWindowShown(m_view);
+    QVERIFY(QTest::qWaitForWindowExposed(m_view));
 
     QVERIFY(!qFuzzyCompare(m_valuesaxis->max(), 0));
     QVERIFY(!qFuzzyCompare(m_valuesaxis->min(), 0));
@@ -164,7 +164,7 @@ void tst_QValueAxis::max()
 {
     m_chart->setAxisX(m_valuesaxis, m_series);
     m_view->show();
-    QTest::qWaitForWindowShown(m_view);
+    QVERIFY(QTest::qWaitForWindowExposed(m_view));
     max_raw();
 }
 
@@ -212,7 +212,7 @@ void tst_QValueAxis::min()
 {
     m_chart->setAxisX(m_valuesaxis, m_series);
     m_view->show();
-    QTest::qWaitForWindowShown(m_view);
+    QVERIFY(QTest::qWaitForWindowExposed(m_view));
     min_raw();
 }
 
@@ -316,7 +316,7 @@ void tst_QValueAxis::range()
 {
     m_chart->setAxisX(m_valuesaxis, m_series);
     m_view->show();
-    QTest::qWaitForWindowShown(m_view);
+    QVERIFY(QTest::qWaitForWindowExposed(m_view));
     range_raw();
 }
 
@@ -359,7 +359,7 @@ void tst_QValueAxis::ticksCount()
 
     m_chart->setAxisX(m_valuesaxis, m_series);
     m_view->show();
-    QTest::qWaitForWindowShown(m_view);
+    QVERIFY(QTest::qWaitForWindowExposed(m_view));
 
     QCOMPARE(m_valuesaxis->tickCount(), ticksCount);
 }
@@ -392,7 +392,7 @@ void tst_QValueAxis::noautoscale()
 
     m_chart->setAxisX(m_valuesaxis, m_series);
     m_view->show();
-    QTest::qWaitForWindowShown(m_view);
+    QVERIFY(QTest::qWaitForWindowExposed(m_view));
     QVERIFY2(qFuzzyCompare(m_valuesaxis->min(), min), "Min not equal");
     QVERIFY2(qFuzzyCompare(m_valuesaxis->max(), max), "Max not equal");
 }
@@ -417,7 +417,7 @@ void tst_QValueAxis::autoscale()
     QCOMPARE(spy2.count(), 1);
 
     m_view->show();
-    QTest::qWaitForWindowShown(m_view);
+    QVERIFY(QTest::qWaitForWindowExposed(m_view));
     QVERIFY2(qFuzzyCompare(m_valuesaxis->min(), -100), "Min not equal");
     QVERIFY2(qFuzzyCompare(m_valuesaxis->max(), 100), "Max not equal");
 }
@@ -434,7 +434,7 @@ void tst_QValueAxis::reverse()
     QCOMPARE(spy.count(), 1);
 
     m_view->show();
-    QTest::qWaitForWindowShown(m_view);
+    QVERIFY(QTest::qWaitForWindowExposed(m_view));
     QCOMPARE(m_valuesaxis->isReverse(), true);
 }
 
@@ -443,7 +443,7 @@ void tst_QValueAxis::labels()
     m_chart->setAxisX(m_valuesaxis, m_series);
     m_view->resize(300, 300);
     m_view->show();
-    QTest::qWaitForWindowShown(m_view);
+    QVERIFY(QTest::qWaitForWindowExposed(m_view));
 
     QList<QGraphicsItem *> childItems = m_chart->scene()->items();
     QList<QGraphicsTextItem *> textItems;

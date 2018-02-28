@@ -598,7 +598,7 @@ void tst_QCandlestickSeries::mouseClicked()
     view.chart()->addSeries(m_series);
     view.chart()->createDefaultAxes();
     view.show();
-    QTest::qWaitForWindowShown(&view);
+    QVERIFY(QTest::qWaitForWindowExposed(&view));
 
     // Calculate expected layout for candlesticks
     QRectF plotArea = view.chart()->plotArea();
@@ -662,7 +662,7 @@ void tst_QCandlestickSeries::mouseHovered()
     view.chart()->addSeries(m_series);
     view.chart()->createDefaultAxes();
     view.show();
-    QTest::qWaitForWindowShown(&view);
+    QVERIFY(QTest::qWaitForWindowExposed(&view));
 
     // This is hack since view does not get events otherwise
     view.setMouseTracking(true);
@@ -777,7 +777,7 @@ void tst_QCandlestickSeries::mousePressed()
     view.chart()->addSeries(m_series);
     view.chart()->createDefaultAxes();
     view.show();
-    QTest::qWaitForWindowShown(&view);
+    QVERIFY(QTest::qWaitForWindowExposed(&view));
 
     // Calculate expected layout for candlesticks
     QRectF plotArea = view.chart()->plotArea();
@@ -840,7 +840,7 @@ void tst_QCandlestickSeries::mouseReleased()
     view.chart()->addSeries(m_series);
     view.chart()->createDefaultAxes();
     view.show();
-    QTest::qWaitForWindowShown(&view);
+    QVERIFY(QTest::qWaitForWindowExposed(&view));
 
     // Calculate expected layout for candlesticks
     QRectF plotArea = view.chart()->plotArea();
@@ -903,7 +903,7 @@ void tst_QCandlestickSeries::mouseDoubleClicked()
     view.chart()->addSeries(m_series);
     view.chart()->createDefaultAxes();
     view.show();
-    QTest::qWaitForWindowShown(&view);
+    QVERIFY(QTest::qWaitForWindowExposed(&view));
 
     // Calculate expected layout for candlesticks
     QRectF plotArea = view.chart()->plotArea();

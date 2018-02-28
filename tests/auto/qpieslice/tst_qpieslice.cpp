@@ -193,7 +193,7 @@ void tst_qpieslice::customize()
     view.resize(200, 200);
     view.chart()->addSeries(series);
     view.show();
-    QTest::qWaitForWindowShown(&view);
+    QVERIFY(QTest::qWaitForWindowExposed(&view));
     //QTest::qWait(1000);
 
     // check that customizations persist
@@ -257,7 +257,7 @@ void tst_qpieslice::clickedSignal()
     view.chart()->legend()->setVisible(false);
     view.chart()->addSeries(series);
     view.show();
-    QTest::qWaitForWindowShown(&view);
+    QVERIFY(QTest::qWaitForWindowExposed(&view));
 
     // simulate clicks
     series->setPieSize(1.0);
@@ -295,7 +295,7 @@ void tst_qpieslice::hoverSignal()
     view.chart()->legend()->setVisible(false);
     view.chart()->addSeries(series);
     view.show();
-    QTest::qWaitForWindowShown(&view);
+    QVERIFY(QTest::qWaitForWindowExposed(&view));
 
     // try to ensure focus
     QApplication::setActiveWindow(&view);
@@ -375,7 +375,7 @@ void tst_qpieslice::pressedSignal()
     view.chart()->legend()->setVisible(false);
     view.chart()->addSeries(series);
     view.show();
-    QTest::qWaitForWindowShown(&view);
+    QVERIFY(QTest::qWaitForWindowExposed(&view));
 
     // simulate clicks
     series->setPieSize(1.0);
@@ -416,7 +416,7 @@ void tst_qpieslice::releasedSignal()
     view.chart()->legend()->setVisible(false);
     view.chart()->addSeries(series);
     view.show();
-    QTest::qWaitForWindowShown(&view);
+    QVERIFY(QTest::qWaitForWindowExposed(&view));
 
     // simulate clicks
     series->setPieSize(1.0);
@@ -451,7 +451,7 @@ void tst_qpieslice::doubleClickedSignal()
     view.chart()->legend()->setVisible(false);
     view.chart()->addSeries(series);
     view.show();
-    QTest::qWaitForWindowShown(&view);
+    QVERIFY(QTest::qWaitForWindowExposed(&view));
 
     // simulate clicks
     series->setPieSize(1.0);

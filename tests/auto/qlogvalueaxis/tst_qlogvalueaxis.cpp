@@ -119,7 +119,7 @@ void tst_QLogValueAxis::qlogvalueaxis()
 
     m_chart->setAxisX(m_logvaluesaxis, m_series);
     m_view->show();
-    QTest::qWaitForWindowShown(m_view);
+    QVERIFY(QTest::qWaitForWindowExposed(m_view));
 
     QCOMPARE(m_logvaluesaxis->max(), (qreal)100);
     QCOMPARE(m_logvaluesaxis->min(), (qreal)1);
@@ -172,7 +172,7 @@ void tst_QLogValueAxis::max()
 {
     m_chart->setAxisX(m_logvaluesaxis, m_series);
     m_view->show();
-    QTest::qWaitForWindowShown(m_view);
+    QVERIFY(QTest::qWaitForWindowExposed(m_view));
     max_raw();
 }
 
@@ -227,7 +227,7 @@ void tst_QLogValueAxis::min()
 {
     m_chart->setAxisX(m_logvaluesaxis, m_series);
     m_view->show();
-    QTest::qWaitForWindowShown(m_view);
+    QVERIFY(QTest::qWaitForWindowExposed(m_view));
     min_raw();
 }
 
@@ -291,7 +291,7 @@ void tst_QLogValueAxis::range()
 {
     m_chart->setAxisX(m_logvaluesaxis, m_series);
     m_view->show();
-    QTest::qWaitForWindowShown(m_view);
+    QVERIFY(QTest::qWaitForWindowExposed(m_view));
     range_raw();
 }
 
@@ -306,7 +306,7 @@ void tst_QLogValueAxis::range_before_show()
 
     m_chart->setAxisX(m_logvaluesaxis, m_series);
     m_view->show();
-    QTest::qWaitForWindowShown(m_view);
+    QVERIFY(QTest::qWaitForWindowExposed(m_view));
 }
 
 void tst_QLogValueAxis::range_animation_data()
@@ -345,7 +345,7 @@ void tst_QLogValueAxis::noautoscale()
     QCOMPARE(spy1.count(), 1);
     QCOMPARE(spy2.count(), 1);
     m_view->show();
-    QTest::qWaitForWindowShown(m_view);
+    QVERIFY(QTest::qWaitForWindowExposed(m_view));
     QCOMPARE(m_logvaluesaxis->min(), min);
     QCOMPARE(m_logvaluesaxis->max(), max);
 }
@@ -370,7 +370,7 @@ void tst_QLogValueAxis::autoscale()
     QCOMPARE(spy2.count(), 1);
 
     m_view->show();
-    QTest::qWaitForWindowShown(m_view);
+    QVERIFY(QTest::qWaitForWindowExposed(m_view));
     QCOMPARE(m_logvaluesaxis->min(), (qreal)1);
     QCOMPARE(m_logvaluesaxis->max(), (qreal)100);
 }
@@ -379,7 +379,7 @@ void tst_QLogValueAxis::zoom()
 {
     m_chart->setAxisX(m_logvaluesaxis, m_series);
     m_view->show();
-    QTest::qWaitForWindowShown(m_view);
+    QVERIFY(QTest::qWaitForWindowExposed(m_view));
     m_logvaluesaxis->setBase(2);
     m_logvaluesaxis->setRange(0.5, 2);
 
@@ -420,7 +420,7 @@ void tst_QLogValueAxis::reverse()
     QCOMPARE(spy.count(), 1);
 
     m_view->show();
-    QTest::qWaitForWindowShown(m_view);
+    QVERIFY(QTest::qWaitForWindowExposed(m_view));
     QCOMPARE(m_logvaluesaxis->isReverse(), true);
 }
 

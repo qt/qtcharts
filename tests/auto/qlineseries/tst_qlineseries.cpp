@@ -114,7 +114,7 @@ void tst_QLineSeries::qlineseries()
 
     m_chart->addSeries(&series);
     m_view->show();
-    QTest::qWaitForWindowShown(m_view);
+    QVERIFY(QTest::qWaitForWindowExposed(m_view));
 }
 
 void tst_QLineSeries::pressedSignal()
@@ -132,7 +132,7 @@ void tst_QLineSeries::pressedSignal()
     view.chart()->legend()->setVisible(false);
     view.chart()->addSeries(lineSeries);
     view.show();
-    QTest::qWaitForWindowShown(&view);
+    QVERIFY(QTest::qWaitForWindowExposed(&view));
 
     QSignalSpy seriesSpy(lineSeries, SIGNAL(pressed(QPointF)));
 
@@ -164,7 +164,7 @@ void tst_QLineSeries::releasedSignal()
     view.chart()->legend()->setVisible(false);
     view.chart()->addSeries(lineSeries);
     view.show();
-    QTest::qWaitForWindowShown(&view);
+    QVERIFY(QTest::qWaitForWindowExposed(&view));
 
     QSignalSpy seriesSpy(lineSeries, SIGNAL(released(QPointF)));
 
@@ -218,7 +218,7 @@ void tst_QLineSeries::doubleClickedSignal()
     view.chart()->legend()->setVisible(false);
     view.chart()->addSeries(lineSeries);
     view.show();
-    QTest::qWaitForWindowShown(&view);
+    QVERIFY(QTest::qWaitForWindowExposed(&view));
 
     QSignalSpy seriesSpy(lineSeries, SIGNAL(doubleClicked(QPointF)));
 
