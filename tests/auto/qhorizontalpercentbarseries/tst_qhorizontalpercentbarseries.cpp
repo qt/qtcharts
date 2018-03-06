@@ -207,7 +207,7 @@ void tst_QHorizontalPercentBarSeries::mouseclicked()
     view.resize(400,300);
     view.chart()->addSeries(series);
     view.show();
-    QTest::qWaitForWindowShown(&view);
+    QVERIFY(QTest::qWaitForWindowExposed(&view));
 
     // Calculate expected layout for bars
     QRectF plotArea = view.chart()->plotArea();
@@ -343,7 +343,7 @@ void tst_QHorizontalPercentBarSeries::mousehovered()
     view.resize(400,300);
     view.chart()->addSeries(series);
     view.show();
-    QTest::qWaitForWindowShown(&view);
+    QVERIFY(QTest::qWaitForWindowExposed(&view));
 
     //this is hack since view does not get events otherwise
     view.setMouseTracking(true);
@@ -629,7 +629,7 @@ void tst_QHorizontalPercentBarSeries::zeroValuesInSeries()
     view.chart()->createDefaultAxes();
     view.show();
 
-    QTest::qWaitForWindowShown(&view);
+    QVERIFY(QTest::qWaitForWindowExposed(&view));
 }
 
 
@@ -656,7 +656,7 @@ void tst_QHorizontalPercentBarSeries::mousePressed()
     view.resize(400,300);
     view.chart()->addSeries(series);
     view.show();
-    QTest::qWaitForWindowShown(&view);
+    QVERIFY(QTest::qWaitForWindowExposed(&view));
 
     // Calculate expected layout for bars
     QRectF plotArea = view.chart()->plotArea();
@@ -821,7 +821,7 @@ void tst_QHorizontalPercentBarSeries::mouseReleased()
     view.resize(400,300);
     view.chart()->addSeries(series);
     view.show();
-    QTest::qWaitForWindowShown(&view);
+    QVERIFY(QTest::qWaitForWindowExposed(&view));
 
     // Calculate expected layout for bars
     QRectF plotArea = view.chart()->plotArea();
@@ -986,7 +986,7 @@ void tst_QHorizontalPercentBarSeries::mouseDoubleClicked()
     view.resize(400,300);
     view.chart()->addSeries(series);
     view.show();
-    QTest::qWaitForWindowShown(&view);
+    QVERIFY(QTest::qWaitForWindowExposed(&view));
 
     // Calculate expected layout for bars
     QRectF plotArea = view.chart()->plotArea();

@@ -271,3 +271,7 @@ wrapper.sh
 wrapper.bat
 *_wrapper.sh
 *_wrapper.bat
+
+# QML cache files
+*.qmlc
+*.jsc

@@ -447,7 +447,7 @@ void tst_QBarSet::customize()
     view.resize(200, 200);
     view.chart()->addSeries(series);
     view.show();
-    QTest::qWaitForWindowShown(&view);
+    QVERIFY(QTest::qWaitForWindowExposed(&view));
 
     // Test adding data to the sets
     *set1 << 1 << 2 << 1 << 3;

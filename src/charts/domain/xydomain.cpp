@@ -154,8 +154,12 @@ void XYDomain::move(qreal dx, qreal dy)
 
 QPointF XYDomain::calculateGeometryPoint(const QPointF &point, bool &ok) const
 {
-    const qreal deltaX = m_size.width() / (m_maxX - m_minX);
-    const qreal deltaY = m_size.height() / (m_maxY - m_minY);
+    const qreal xd = m_maxX - m_minX;
+    const qreal yd = m_maxY - m_minY;
+    if (qFuzzyIsNull(xd) || qFuzzyIsNull(yd))
+        return QPointF();
+    const qreal deltaX = m_size.width() / xd;
+    const qreal deltaY = m_size.height() / yd;
     qreal x = (point.x() - m_minX) * deltaX;
     if (m_reverseX)
         x = m_size.width() - x;
@@ -168,8 +172,12 @@ QPointF XYDomain::calculateGeometryPoint(const QPointF &point, bool &ok) const
 
 QVector<QPointF> XYDomain::calculateGeometryPoints(const QVector<QPointF> &vector) const
 {
-    const qreal deltaX = m_size.width() / (m_maxX - m_minX);
-    const qreal deltaY = m_size.height() / (m_maxY - m_minY);
+    const qreal xd = m_maxX - m_minX;
+    const qreal yd = m_maxY - m_minY;
+    if (qFuzzyIsNull(xd) || qFuzzyIsNull(yd))
+        return QVector<QPointF>();
+    const qreal deltaX = m_size.width() / xd;
+    const qreal deltaY = m_size.height() / yd;
 
     QVector<QPointF> result;
     result.resize(vector.count());
@@ -189,8 +197,12 @@ QVector<QPointF> XYDomain::calculateGeometryPoints(const QVector<QPointF> &vecto
 
 QPointF XYDomain::calculateDomainPoint(const QPointF &point) const
 {
-    const qreal deltaX = m_size.width() / (m_maxX - m_minX);
-    const qreal deltaY = m_size.height() / (m_maxY - m_minY);
+    const qreal xd = m_maxX - m_minX;
+    const qreal yd = m_maxY - m_minY;
+    if (qFuzzyIsNull(xd) || qFuzzyIsNull(yd))
+        return QPointF();
+    const qreal deltaX = m_size.width() / xd;
+    const qreal deltaY = m_size.height() / yd;
     qreal x = m_reverseX ? (m_size.width() - point.x()) : point.x();
     x /= deltaX;
     x += m_minX;

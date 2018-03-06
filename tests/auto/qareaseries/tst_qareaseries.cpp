@@ -123,7 +123,7 @@ void tst_QAreaSeries::areaSeries()
     series->attachAxis(m_axisX);
     series->attachAxis(m_axisY);
     m_view->show();
-    QTest::qWaitForWindowShown(m_view);
+    QVERIFY(QTest::qWaitForWindowExposed(m_view));
 
     checkPixels(m_backgroundColor, m_brushColor, m_backgroundColor);
 }
@@ -137,7 +137,7 @@ void tst_QAreaSeries::dynamicEdgeSeriesChange()
     series->attachAxis(m_axisX);
     series->attachAxis(m_axisY);
     m_view->show();
-    QTest::qWaitForWindowShown(m_view);
+    QVERIFY(QTest::qWaitForWindowExposed(m_view));
 
     checkPixels(m_backgroundColor, m_backgroundColor, m_backgroundColor);
 

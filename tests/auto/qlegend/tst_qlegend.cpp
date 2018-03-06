@@ -557,7 +557,7 @@ void tst_QLegend::markerSignals()
     QChartView view(chart);
     view.resize(400, 400);
     view.show();
-    QTest::qWaitForWindowShown(&view);
+    QVERIFY(QTest::qWaitForWindowExposed(&view));
 
     // Sweep mouse over all legend items
     for (int i = 0; i < 400; i++)

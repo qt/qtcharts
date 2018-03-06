@@ -96,7 +96,7 @@ void tst_qpieseries::init()
     m_view->resize(200, 200);
     m_series = new QPieSeries(m_view);
     m_view->show();
-    QTest::qWaitForWindowShown(m_view);
+    QVERIFY(QTest::qWaitForWindowExposed(m_view));
 
 }
 
@@ -523,7 +523,7 @@ void tst_qpieseries::clickedSignal()
     m_view->chart()->legend()->setVisible(false);
     m_view->chart()->addSeries(m_series);
     m_view->show();
-    QTest::qWaitForWindowShown(m_view);
+    QVERIFY(QTest::qWaitForWindowExposed(m_view));
 
     // test maximum size
     m_series->setPieSize(1.0);
@@ -576,7 +576,7 @@ void tst_qpieseries::hoverSignal()
     m_view->chart()->legend()->setVisible(false);
     m_view->chart()->addSeries(m_series);
     m_view->show();
-    QTest::qWaitForWindowShown(m_view);
+    QVERIFY(QTest::qWaitForWindowExposed(m_view));
 
     // move inside the slices
     m_series->setPieSize(1.0);
@@ -678,7 +678,7 @@ void tst_qpieseries::pressedSignal()
     m_view->chart()->legend()->setVisible(false);
     m_view->chart()->addSeries(m_series);
     m_view->show();
-    QTest::qWaitForWindowShown(m_view);
+    QVERIFY(QTest::qWaitForWindowExposed(m_view));
 
     // test maximum size
     m_series->setPieSize(1.0);
@@ -731,7 +731,7 @@ void tst_qpieseries::releasedSignal()
     m_view->chart()->legend()->setVisible(false);
     m_view->chart()->addSeries(m_series);
     m_view->show();
-    QTest::qWaitForWindowShown(m_view);
+    QVERIFY(QTest::qWaitForWindowExposed(m_view));
 
     // test maximum size
     m_series->setPieSize(1.0);
@@ -781,7 +781,7 @@ void tst_qpieseries::doubleClickedSignal()
     m_view->chart()->legend()->setVisible(false);
     m_view->chart()->addSeries(m_series);
     m_view->show();
-    QTest::qWaitForWindowShown(m_view);
+    QVERIFY(QTest::qWaitForWindowExposed(m_view));
 
     // test maximum size
     m_series->setPieSize(1.0);
