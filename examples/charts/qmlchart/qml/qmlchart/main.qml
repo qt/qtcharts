@@ -36,6 +36,7 @@ Item {
     height: 400
 
     MainForm {
+        anchors.fill: parent
         // Hide the default info text once view changes away from the first view
         onCurrentIndexChanged: {
             if (info.opacity > 0.0) {
