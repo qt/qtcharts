@@ -315,8 +315,6 @@ void LegendLayout::setDettachedGeometry(const QRectF &rect)
     getContentsMargins(&left, &top, &right, &bottom);
     QRectF geometry = rect.adjusted(left, top, -right, -bottom);
 
-    QSizeF size(0, 0);
-
     QList<QLegendMarker *> markers = m_legend->d_ptr->markers();
 
     if (markers.isEmpty())
