@@ -70,6 +70,7 @@ public:
     virtual void initializeLayout(int set, int category, int layoutIndex, bool resetAnimation) = 0;
     virtual void applyLayout(const QVector<QRectF> &layout);
     virtual void setAnimation(BarAnimation *animation);
+    virtual ChartAnimation *animation() const;
     void setLayout(const QVector<QRectF> &layout);
     QRectF geometry() const { return m_rect;}
     void resetAnimation();
