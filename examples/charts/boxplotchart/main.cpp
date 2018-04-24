@@ -88,8 +88,8 @@ int main(int argc, char *argv[])
 
     //! [5]
     chart->createDefaultAxes();
-    chart->axisY()->setMin(15.0);
-    chart->axisY()->setMax(34.0);
+    chart->axes(Qt::Vertical).first()->setMin(15.0);
+    chart->axes(Qt::Horizontal).first()->setMax(34.0);
     //! [5]
 
     //! [6]

@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
     chart->addSeries(series);
     chart->setTitle("Simple spline chart example");
     chart->createDefaultAxes();
-    chart->axisY()->setRange(0, 10);
+    chart->axes(Qt::Vertical).first()->setRange(0, 10);
     //![3]
 
     //![4]

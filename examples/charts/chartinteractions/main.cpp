@@ -58,16 +58,17 @@ int main(int argc, char *argv[])
     QPen p = series->pen();
     p.setWidth(5);
     series->setPen(p);
-    chart->createDefaultAxes();
     chart->setTitle("Drag'n drop to move data points");
 
     QValueAxis *axisX = new QValueAxis();
-    chart->setAxisX(axisX, series);
+    chart->addAxis(axisX, Qt::AlignBottom);
     axisX->setRange(0, 20);
+    series->attachAxis(axisX);
 
     QValueAxis *axisY = new QValueAxis();
-    chart->setAxisY(axisY, series);
+    chart->addAxis(axisY, Qt::AlignLeft);
     axisY->setRange(0, 13);
+    series->attachAxis(axisY);
 
     QObject::connect(series, &QLineSeries::pressed, chart, &Chart::clickPoint);
 

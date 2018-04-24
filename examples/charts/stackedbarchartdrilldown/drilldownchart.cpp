@@ -29,13 +29,18 @@
 
 #include "drilldownchart.h"
 #include <QtCharts/QBarCategoryAxis>
+#include <QtCharts/QValueAxis>
 
 QT_CHARTS_USE_NAMESPACE
 
 DrilldownChart::DrilldownChart(QGraphicsItem *parent, Qt::WindowFlags wFlags)
     : QChart(QChart::ChartTypeCartesian, parent, wFlags),
-      m_currentSeries(0)
+      m_currentSeries(0),
+      m_axisX(new QBarCategoryAxis()),
+      m_axisY(new QValueAxis())
 {
+      addAxis(m_axisY, Qt::AlignLeft);
+      addAxis(m_axisX, Qt::AlignBottom);
 }
 
 void DrilldownChart::changeSeries(DrilldownBarSeries *series)
@@ -46,15 +51,11 @@ void DrilldownChart::changeSeries(DrilldownBarSeries *series)
     m_currentSeries = series;
 
     // Reset axis
-    QBarCategoryAxis *axis = new QBarCategoryAxis();
-    axis->append(m_currentSeries->categories());
-
+    m_axisX->setCategories(m_currentSeries->categories());
     addSeries(series);
-
-    createDefaultAxes();
-    setAxisX(axis, series);
-    axisY()->setTitleText("Crops");
-
+    series->attachAxis(m_axisX);
+    series->attachAxis(m_axisY);
+    m_axisY->setRange(0,m_currentSeries->maxValue());
     setTitle(series->name());
 }
 

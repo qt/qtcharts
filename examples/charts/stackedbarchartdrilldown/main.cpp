@@ -63,14 +63,14 @@ int main(int argc, char *argv[])
 
 //! [3]
     // Create drilldown structure
-    DrilldownBarSeries *seasonSeries = new DrilldownBarSeries(months, drilldownChart);
+    DrilldownBarSeries *seasonSeries = new DrilldownBarSeries(months, 320, drilldownChart);
     seasonSeries->setName("Crop by month - Season");
 
     // Each month in season series has drilldown series for weekly data
     for (int month = 0; month < months.count(); month++) {
 
         // Create drilldown series for every week
-        DrilldownBarSeries *weeklySeries = new DrilldownBarSeries(weeks, drilldownChart);
+        DrilldownBarSeries *weeklySeries = new DrilldownBarSeries(weeks, 80, drilldownChart);
         seasonSeries->mapDrilldownSeries(month, weeklySeries);
 
         // Drilling down from weekly data brings us back to season data.
@@ -112,7 +112,7 @@ int main(int argc, char *argv[])
 //! [5]
 
 //! [6]
-    drilldownChart->axisX()->setGridLineVisible(false);
+    drilldownChart->axes(Qt::Horizontal).first()->setGridLineVisible(false);
     drilldownChart->legend()->setVisible(true);
     drilldownChart->legend()->setAlignment(Qt::AlignBottom);
 //! [6]

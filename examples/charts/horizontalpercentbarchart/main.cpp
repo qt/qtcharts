@@ -35,6 +35,7 @@
 #include <QtCharts/QLegend>
 #include <QtCharts/QBarCategoryAxis>
 #include <QtCharts/QHorizontalPercentBarSeries>
+#include <QtCharts/QValueAxis>
 
 QT_CHARTS_USE_NAMESPACE
 
@@ -76,10 +77,13 @@ int main(int argc, char *argv[])
 //![4]
     QStringList categories;
     categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun";
-    QBarCategoryAxis *axis = new QBarCategoryAxis();
-    axis->append(categories);
-    chart->createDefaultAxes();
-    chart->setAxisY(axis, series);
+    QBarCategoryAxis *axisY = new QBarCategoryAxis();
+    axisY->append(categories);
+    chart->addAxis(axisY, Qt::AlignLeft);
+    series->attachAxis(axisY);
+    QValueAxis *axisX = new QValueAxis();
+    chart->addAxis(axisX, Qt::AlignBottom);
+    series->attachAxis(axisX);
 //![4]
 
 //![5]

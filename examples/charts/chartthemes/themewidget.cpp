@@ -198,10 +198,12 @@ QChart *ThemeWidget::createAreaChart() const
     }
 
     chart->createDefaultAxes();
-    chart->axisX()->setRange(0, m_valueCount - 1);
-    chart->axisY()->setRange(0, m_valueMax);
+    chart->axes(Qt::Horizontal).first()->setRange(0, m_valueCount - 1);
+    chart->axes(Qt::Vertical).first()->setRange(0, m_valueMax);
     // Add space to label to add space between labels and axis
-    static_cast<QValueAxis *>(chart->axisY())->setLabelFormat("%.1f  ");
+    QValueAxis *axisY = qobject_cast<QValueAxis*>(chart->axes(Qt::Vertical).first());
+    Q_ASSERT(axisY);
+    axisY->setLabelFormat("%.1f  ");
 
     return chart;
 }
@@ -222,9 +224,11 @@ QChart *ThemeWidget::createBarChart(int valueCount) const
     chart->addSeries(series);
 
     chart->createDefaultAxes();
-    chart->axisY()->setRange(0, m_valueMax * 2);
+    chart->axes(Qt::Vertical).first()->setRange(0, m_valueMax * 2);
     // Add space to label to add space between labels and axis
-    static_cast<QValueAxis *>(chart->axisY())->setLabelFormat("%.1f  ");
+    QValueAxis *axisY = qobject_cast<QValueAxis*>(chart->axes(Qt::Vertical).first());
+    Q_ASSERT(axisY);
+    axisY->setLabelFormat("%.1f  ");
 
     return chart;
 }
@@ -251,12 +255,14 @@ QChart *ThemeWidget::createLineChart() const
 
     //![3]
     chart->createDefaultAxes();
-    chart->axisX()->setRange(0, m_valueMax);
-    chart->axisY()->setRange(0, m_valueCount);
+    chart->axes(Qt::Horizontal).first()->setRange(0, m_valueMax);
+    chart->axes(Qt::Vertical).first()->setRange(0, m_valueCount);
     //![3]
     //![4]
     // Add space to label to add space between labels and axis
-    static_cast<QValueAxis *>(chart->axisY())->setLabelFormat("%.1f  ");
+    QValueAxis *axisY = qobject_cast<QValueAxis*>(chart->axes(Qt::Vertical).first());
+    Q_ASSERT(axisY);
+    axisY->setLabelFormat("%.1f  ");
     //![4]
 
     return chart;
@@ -299,11 +305,13 @@ QChart *ThemeWidget::createSplineChart() const
     }
 
     chart->createDefaultAxes();
-    chart->axisX()->setRange(0, m_valueMax);
-    chart->axisY()->setRange(0, m_valueCount);
-    // Add space to label to add space between labels and axis
-    static_cast<QValueAxis *>(chart->axisY())->setLabelFormat("%.1f  ");
+    chart->axes(Qt::Horizontal).first()->setRange(0, m_valueMax);
+    chart->axes(Qt::Vertical).first()->setRange(0, m_valueCount);
 
+    // Add space to label to add space between labels and axis
+    QValueAxis *axisY = qobject_cast<QValueAxis*>(chart->axes(Qt::Vertical).first());
+    Q_ASSERT(axisY);
+    axisY->setLabelFormat("%.1f  ");
     return chart;
 }
 
@@ -324,11 +332,12 @@ QChart *ThemeWidget::createScatterChart() const
     }
 
     chart->createDefaultAxes();
-    chart->axisX()->setRange(0, m_valueMax);
-    chart->axisY()->setRange(0, m_valueCount);
+    chart->axes(Qt::Horizontal).first()->setRange(0, m_valueMax);
+    chart->axes(Qt::Vertical).first()->setRange(0, m_valueCount);
     // Add space to label to add space between labels and axis
-    static_cast<QValueAxis *>(chart->axisY())->setLabelFormat("%.1f  ");
-
+    QValueAxis *axisY = qobject_cast<QValueAxis*>(chart->axes(Qt::Vertical).first());
+    Q_ASSERT(axisY);
+    axisY->setLabelFormat("%.1f  ");
     return chart;
 }
 

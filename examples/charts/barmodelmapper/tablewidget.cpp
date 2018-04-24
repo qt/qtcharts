@@ -39,6 +39,7 @@
 #include <QtCharts/QVBarModelMapper>
 #include <QtWidgets/QHeaderView>
 #include <QtCharts/QBarCategoryAxis>
+#include <QtCharts/QValueAxis>
 
 QT_CHARTS_USE_NAMESPACE
 
@@ -97,10 +98,13 @@ TableWidget::TableWidget(QWidget *parent)
     //! [6]
     QStringList categories;
     categories << "April" << "May" << "June" << "July" << "August";
-    QBarCategoryAxis *axis = new QBarCategoryAxis();
-    axis->append(categories);
-    chart->createDefaultAxes();
-    chart->setAxisX(axis, series);
+    QBarCategoryAxis *axisX = new QBarCategoryAxis();
+    axisX->append(categories);
+    chart->addAxis(axisX, Qt::AlignBottom);
+    series->attachAxis(axisX);
+    QValueAxis *axisY = new QValueAxis();
+    chart->addAxis(axisY, Qt::AlignLeft);
+    series->attachAxis(axisY);
     //! [6]
 
     //! [7]

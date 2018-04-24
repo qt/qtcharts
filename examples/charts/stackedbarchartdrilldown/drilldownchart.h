@@ -33,6 +33,11 @@
 #include <QtCharts/QChart>
 #include "drilldownseries.h"
 
+namespace QtCharts {
+class QBarCategoryAxis;
+class QValueAxis;
+}
+
 QT_CHARTS_USE_NAMESPACE
 
 //! [1]
@@ -49,6 +54,8 @@ public Q_SLOTS:
 
 private:
     DrilldownBarSeries *m_currentSeries;
+    QBarCategoryAxis *m_axisX;
+    QValueAxis *m_axisY;
 };
 //! [1]
 

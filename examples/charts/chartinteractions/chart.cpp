@@ -78,12 +78,12 @@ void Chart::handlePointMove(const QPoint &point)
 
         //Get the x- and y axis to be able to convert the mapped
         //coordinate point to the charts scale.
-        QAbstractAxis *axisx = this->axisX();
+        QAbstractAxis *axisx = axes(Qt::Horizontal).first();
         QValueAxis *haxis = 0;
         if (axisx->type() == QAbstractAxis::AxisTypeValue)
             haxis = qobject_cast<QValueAxis *>(axisx);
 
-        QAbstractAxis *axisy = this->axisY();
+        QAbstractAxis *axisy = axes(Qt::Vertical).first();
         QValueAxis *vaxis = 0;
         if (axisy->type() == QAbstractAxis::AxisTypeValue)
             vaxis = qobject_cast<QValueAxis *>(axisy);

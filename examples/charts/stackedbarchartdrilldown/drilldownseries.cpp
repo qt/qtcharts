@@ -31,8 +31,9 @@
 
 QT_CHARTS_USE_NAMESPACE
 
-DrilldownBarSeries::DrilldownBarSeries(QStringList categories, QObject *parent)
-    : QStackedBarSeries(parent)
+DrilldownBarSeries::DrilldownBarSeries(QStringList categories, int maxValue, QObject *parent)
+    : QStackedBarSeries(parent),
+      m_maxValue(maxValue)
 {
     m_categories = categories;
 }
@@ -50,6 +51,11 @@ DrilldownBarSeries *DrilldownBarSeries::drilldownSeries(int index)
 QStringList DrilldownBarSeries::categories()
 {
     return m_categories;
+}
+
+int DrilldownBarSeries::maxValue()
+{
+    return m_maxValue;
 }
 
 #include "moc_drilldownseries.cpp"

@@ -78,9 +78,11 @@ int main(int argc, char *argv[])
     categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun";
     QBarCategoryAxis *axisY = new QBarCategoryAxis();
     axisY->append(categories);
-    chart->setAxisY(axisY, series);
+    chart->addAxis(axisY, Qt::AlignLeft);
+    series->attachAxis(axisY);
     QValueAxis *axisX = new QValueAxis();
-    chart->setAxisX(axisX, series);
+    chart->addAxis(axisX, Qt::AlignBottom);
+    series->attachAxis(axisX);
     axisX->applyNiceNumbers();
 //![4]
 

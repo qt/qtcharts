@@ -37,7 +37,8 @@
 Chart::Chart(QGraphicsItem *parent, Qt::WindowFlags wFlags):
     QChart(QChart::ChartTypeCartesian, parent, wFlags),
     m_series(0),
-    m_axis(new QValueAxis),
+    m_axisX(new QValueAxis()),
+    m_axisY(new QValueAxis()),
     m_step(0),
     m_x(5),
     m_y(1)
@@ -52,11 +53,14 @@ Chart::Chart(QGraphicsItem *parent, Qt::WindowFlags wFlags):
     m_series->append(m_x, m_y);
 
     addSeries(m_series);
-    createDefaultAxes();
-    setAxisX(m_axis, m_series);
-    m_axis->setTickCount(5);
-    axisX()->setRange(0, 10);
-    axisY()->setRange(-5, 10);
+
+    addAxis(m_axisX,Qt::AlignBottom);
+    addAxis(m_axisY,Qt::AlignLeft);
+    m_series->attachAxis(m_axisX);
+    m_series->attachAxis(m_axisY);
+    m_axisX->setTickCount(5);
+    m_axisX->setRange(0, 10);
+    m_axisY->setRange(-5, 10);
 
     m_timer.start();
 }
@@ -68,8 +72,8 @@ Chart::~Chart()
 
 void Chart::handleTimeout()
 {
-    qreal x = plotArea().width() / m_axis->tickCount();
-    qreal y = (m_axis->max() - m_axis->min()) / m_axis->tickCount();
+    qreal x = plotArea().width() / m_axisX->tickCount();
+    qreal y = (m_axisX->max() - m_axisX->min()) / m_axisX->tickCount();
     m_x += y;
     m_y = QRandomGenerator::global()->bounded(5) - 2.5;
     m_series->append(m_x, m_y);

@@ -89,13 +89,15 @@ int main(int argc, char *argv[])
     categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun";
     QBarCategoryAxis *axisX = new QBarCategoryAxis();
     axisX->append(categories);
-    chart->setAxisX(axisX, lineseries);
-    chart->setAxisX(axisX, barseries);
+    chart->addAxis(axisX, Qt::AlignBottom);
+    lineseries->attachAxis(axisX);
+    barseries->attachAxis(axisX);
     axisX->setRange(QString("Jan"), QString("Jun"));
 
     QValueAxis *axisY = new QValueAxis();
-    chart->setAxisY(axisY, lineseries);
-    chart->setAxisY(axisY, barseries);
+    chart->addAxis(axisY, Qt::AlignLeft);
+    lineseries->attachAxis(axisY);
+    barseries->attachAxis(axisY);
     axisY->setRange(0, 20);
 //![4]
 

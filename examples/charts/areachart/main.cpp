@@ -70,8 +70,8 @@ int main(int argc, char *argv[])
     chart->addSeries(series);
     chart->setTitle("Simple areachart example");
     chart->createDefaultAxes();
-    chart->axisX()->setRange(0, 20);
-    chart->axisY()->setRange(0, 10);
+    chart->axes(Qt::Horizontal).first()->setRange(0, 20);
+    chart->axes(Qt::Vertical).first()->setRange(0, 10);
 //![4]
 
 //![5]

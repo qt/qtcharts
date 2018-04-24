@@ -35,6 +35,7 @@
 #include <QtCharts/QLegend>
 #include <QtCharts/QBarCategoryAxis>
 #include <QtCharts/QStackedBarSeries>
+#include <QtCharts/QValueAxis>
 
 QT_CHARTS_USE_NAMESPACE
 
@@ -70,13 +71,16 @@ int main(int argc, char *argv[])
         "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
     };
 
-    QBarCategoryAxis *axis = new QBarCategoryAxis();
-    axis->append(categories);
-    axis->setTitleText("Month");
-    chart->createDefaultAxes();
-    chart->setAxisX(axis, series);
-    chart->axisY(series)->setRange(-52, 52);
-    chart->axisY(series)->setTitleText("Temperature [&deg;C]");
+    QBarCategoryAxis *axisX = new QBarCategoryAxis();
+    axisX->append(categories);
+    axisX->setTitleText("Month");
+    chart->addAxis(axisX, Qt::AlignBottom);
+    QValueAxis *axisY = new QValueAxis();
+    axisY->setRange(-52, 52);
+    axisY->setTitleText("Temperature [&deg;C]");
+    chart->addAxis(axisY, Qt::AlignLeft);
+    series->attachAxis(axisX);
+    series->attachAxis(axisY);
 //![4]
 
 //![5]

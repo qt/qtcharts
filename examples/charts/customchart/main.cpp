@@ -120,8 +120,10 @@ int main(int argc, char *argv[])
     axisY->append("fast", 30);
     axisY->setRange(0, 30);
 
-    chart->setAxisX(axisX, series);
-    chart->setAxisY(axisY, series);
+    chart->addAxis(axisX, Qt::AlignBottom);
+    chart->addAxis(axisY, Qt::AlignLeft);
+    series->attachAxis(axisX);
+    series->attachAxis(axisY);
 //![4]
 
 //![5]

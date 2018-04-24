@@ -104,12 +104,10 @@ public:
     void removeAllSeries();
     QList<QAbstractSeries *> series() const;
 
-    // *** deprecated ***
-    void setAxisX(QAbstractAxis *axis, QAbstractSeries *series = nullptr);
-    void setAxisY(QAbstractAxis *axis, QAbstractSeries *series = nullptr);
-    QAbstractAxis *axisX(QAbstractSeries *series = nullptr) const;
-    QAbstractAxis *axisY(QAbstractSeries *series = nullptr) const;
-    // ******************
+    Q_DECL_DEPRECATED void setAxisX(QAbstractAxis *axis, QAbstractSeries *series = nullptr);
+    Q_DECL_DEPRECATED void setAxisY(QAbstractAxis *axis, QAbstractSeries *series = nullptr);
+    Q_DECL_DEPRECATED QAbstractAxis *axisX(QAbstractSeries *series = nullptr) const;
+    Q_DECL_DEPRECATED QAbstractAxis *axisY(QAbstractSeries *series = nullptr) const;
 
     void addAxis(QAbstractAxis *axis, Qt::Alignment alignment);
     void removeAxis(QAbstractAxis *axis);

@@ -55,7 +55,8 @@ private:
     QTimer m_timer;
     QSplineSeries *m_series;
     QStringList m_titles;
-    QValueAxis *m_axis;
+    QValueAxis *m_axisX;
+    QValueAxis *m_axisY;
     qreal m_step;
     qreal m_x;
     qreal m_y;
