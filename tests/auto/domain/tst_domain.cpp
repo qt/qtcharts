@@ -27,8 +27,8 @@
 **
 ****************************************************************************/
 #include <QtTest/QtTest>
-#include <private/xydomain_p.h>
-#include <private/qabstractaxis_p.h>
+#include <QtCharts/private/xydomain_p.h>
+#include <QtCharts/private/qabstractaxis_p.h>
 #include <tst_definitions.h>
 
 QT_CHARTS_USE_NAMESPACE

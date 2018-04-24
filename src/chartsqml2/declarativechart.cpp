@@ -29,38 +29,51 @@
 
 #include "declarativechart_p.h"
 #include <QtGui/QPainter>
+#if QT_CONFIG(charts_line_chart)
 #include "declarativelineseries_p.h"
+#endif
+#if QT_CONFIG(charts_area_chart)
 #include "declarativeareaseries_p.h"
+#endif
 #include "declarativebarseries_p.h"
+#if QT_CONFIG(charts_pie_chart)
 #include "declarativepieseries_p.h"
+#endif
+#if QT_CONFIG(charts_spline_chart)
 #include "declarativesplineseries_p.h"
+#endif
+#if QT_CONFIG(charts_boxplot_chart)
 #include "declarativeboxplotseries_p.h"
+#endif
+#if QT_CONFIG(charts_candlestick_chart)
 #include "declarativecandlestickseries_p.h"
+#endif
+#if QT_CONFIG(charts_scatter_chart)
 #include "declarativescatterseries_p.h"
+#endif
 #include "declarativechartnode_p.h"
 #include "declarativeabstractrendernode_p.h"
+#include "declarativemargins_p.h"
+#include "declarativeaxes_p.h"
+#include <QtCharts/private/qabstractseries_p.h>
+#include <QtCharts/private/chartdataset_p.h>
+#include <QtCharts/private/qchart_p.h>
+#include <QtCharts/private/chartpresenter_p.h>
 #include <QtCharts/QBarCategoryAxis>
 #include <QtCharts/QValueAxis>
 #include <QtCharts/QLogValueAxis>
 #include <QtCharts/QCategoryAxis>
-#include <private/qabstractseries_p.h>
-#include "declarativemargins_p.h"
-#include <private/chartdataset_p.h>
-#include "declarativeaxes_p.h"
-#include <private/qchart_p.h>
-#include <private/chartpresenter_p.h>
 #include <QtCharts/QPolarChart>
-
-#ifndef QT_QREAL_IS_FLOAT
-    #include <QtCharts/QDateTimeAxis>
-#endif
-
 #include <QtWidgets/QGraphicsSceneMouseEvent>
 #include <QtWidgets/QGraphicsSceneHoverEvent>
 #include <QtWidgets/QApplication>
 #include <QtCore/QTimer>
 #include <QtCore/QThread>
 #include <QtQuick/QQuickWindow>
+
+#ifndef QT_QREAL_IS_FLOAT
+#include <QtCharts/QDateTimeAxis>
+#endif
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -442,6 +455,7 @@ DeclarativeChart::DeclarativeChart(QChart::ChartType type, QQuickItem *parent)
     initChart(type);
 }
 
+#if QT_CONFIG(charts_bar_chart)
 // QTBUG-71013
 // The symbol resides in qbarmodelmapper.cpp#548 in the C++ module.
 // Here, it gets imported and reset to the DeclarativeBarSet allocator
@@ -458,6 +472,7 @@ QBarSet *qt_allocate_bar_set_qml(const QString &label)
     bar->setLabel(label);
     return bar;
 }
+#endif
 
 void DeclarativeChart::initChart(QChart::ChartType type)
 {
@@ -470,9 +485,11 @@ void DeclarativeChart::initChart(QChart::ChartType type)
 
     setFlag(ItemHasContents, true);
 
+#if QT_CONFIG(charts_bar_chart)
     // Reset allocator for QBarSet to create
     // Declarative BarSets by default
     qt_allocate_bar_set = &qt_allocate_bar_set_qml;
+#endif
 
     if (type == QChart::ChartTypePolar)
         m_chart = new QPolarChart();
@@ -612,7 +629,10 @@ void DeclarativeChart::componentComplete()
             m_chart->addSeries(series);
 
             // Connect to axis changed signals (unless this is a pie series)
-            if (!qobject_cast<DeclarativePieSeries *>(series)) {
+#if QT_CONFIG(charts_pie_chart)
+            if (!qobject_cast<DeclarativePieSeries *>(series))
+#endif
+            {
                 connect(series, SIGNAL(axisXChanged(QAbstractAxis*)), this, SLOT(handleAxisXSet(QAbstractAxis*)));
                 connect(series, SIGNAL(axisXTopChanged(QAbstractAxis*)), this, SLOT(handleAxisXTopSet(QAbstractAxis*)));
                 connect(series, SIGNAL(axisYChanged(QAbstractAxis*)), this, SLOT(handleAxisYSet(QAbstractAxis*)));
@@ -1271,9 +1291,12 @@ QAbstractSeries *DeclarativeChart::createSeries(int type, QString name, QAbstrac
     QAbstractSeries *series = 0;
 
     switch (type) {
+#if QT_CONFIG(charts_line_chart)
     case DeclarativeChart::SeriesTypeLine:
         series = new DeclarativeLineSeries();
         break;
+#endif
+#if QT_CONFIG(charts_area_chart)
     case DeclarativeChart::SeriesTypeArea: {
         DeclarativeAreaSeries *area = new DeclarativeAreaSeries();
         DeclarativeLineSeries *line = new DeclarativeLineSeries();
@@ -1282,6 +1305,8 @@ QAbstractSeries *DeclarativeChart::createSeries(int type, QString name, QAbstrac
         series = area;
         break;
     }
+#endif
+#if QT_CONFIG(charts_bar_chart)
     case DeclarativeChart::SeriesTypeStackedBar:
         series = new DeclarativeStackedBarSeries();
         break;
@@ -1300,28 +1325,42 @@ QAbstractSeries *DeclarativeChart::createSeries(int type, QString name, QAbstrac
     case DeclarativeChart::SeriesTypeHorizontalStackedBar:
         series = new DeclarativeHorizontalStackedBarSeries();
         break;
+#endif
+#if QT_CONFIG(charts_boxplot_chart)
     case DeclarativeChart::SeriesTypeBoxPlot:
         series = new DeclarativeBoxPlotSeries();
         break;
+#endif
+#if QT_CONFIG(charts_candlestick_chart)
     case DeclarativeChart::SeriesTypeCandlestick:
         series = new DeclarativeCandlestickSeries();
         break;
+#endif
+#if QT_CONFIG(charts_pie_chart)
     case DeclarativeChart::SeriesTypePie:
         series = new DeclarativePieSeries();
         break;
+#endif
+#if QT_CONFIG(charts_scatter_chart)
     case DeclarativeChart::SeriesTypeScatter:
         series = new DeclarativeScatterSeries();
         break;
+#endif
+#if QT_CONFIG(charts_spline_chart)
     case DeclarativeChart::SeriesTypeSpline:
         series = new DeclarativeSplineSeries();
         break;
+#endif
     default:
         qWarning() << "Illegal series type";
     }
 
     if (series) {
         // Connect to axis changed signals (unless this is a pie series)
-        if (!qobject_cast<DeclarativePieSeries *>(series)) {
+#if QT_CONFIG(charts_pie_chart)
+        if (!qobject_cast<DeclarativePieSeries *>(series))
+#endif
+        {
             connect(series, SIGNAL(axisXChanged(QAbstractAxis*)), this, SLOT(handleAxisXSet(QAbstractAxis*)));
             connect(series, SIGNAL(axisXTopChanged(QAbstractAxis*)), this, SLOT(handleAxisXSet(QAbstractAxis*)));
             connect(series, SIGNAL(axisYChanged(QAbstractAxis*)), this, SLOT(handleAxisYSet(QAbstractAxis*)));
@@ -1396,14 +1435,25 @@ QAbstractAxis *DeclarativeChart::defaultAxis(Qt::Orientation orientation, QAbstr
 
 void DeclarativeChart::initializeAxes(QAbstractSeries *series)
 {
-    if (qobject_cast<DeclarativeLineSeries *>(series))
+    if (false) {
+    }
+#if QT_CONFIG(charts_line_chart)
+    else if (qobject_cast<DeclarativeLineSeries *>(series))
         doInitializeAxes(series, qobject_cast<DeclarativeLineSeries *>(series)->m_axes);
+#endif
+#if QT_CONFIG(charts_scatter_chart)
     else if (qobject_cast<DeclarativeScatterSeries *>(series))
         doInitializeAxes(series, qobject_cast<DeclarativeScatterSeries *>(series)->m_axes);
+#endif
+#if QT_CONFIG(charts_spline_chart)
     else if (qobject_cast<DeclarativeSplineSeries *>(series))
         doInitializeAxes(series, qobject_cast<DeclarativeSplineSeries *>(series)->m_axes);
+#endif
+#if QT_CONFIG(charts_area_chart)
     else if (qobject_cast<DeclarativeAreaSeries *>(series))
         doInitializeAxes(series, qobject_cast<DeclarativeAreaSeries *>(series)->m_axes);
+#endif
+#if QT_CONFIG(charts_bar_chart)
     else if (qobject_cast<DeclarativeBarSeries *>(series))
         doInitializeAxes(series, qobject_cast<DeclarativeBarSeries *>(series)->m_axes);
     else if (qobject_cast<DeclarativeStackedBarSeries *>(series))
@@ -1416,10 +1466,15 @@ void DeclarativeChart::initializeAxes(QAbstractSeries *series)
         doInitializeAxes(series, qobject_cast<DeclarativeHorizontalStackedBarSeries *>(series)->m_axes);
     else if (qobject_cast<DeclarativeHorizontalPercentBarSeries *>(series))
         doInitializeAxes(series, qobject_cast<DeclarativeHorizontalPercentBarSeries *>(series)->m_axes);
+#endif
+#if QT_CONFIG(charts_boxplot_chart)
     else if (qobject_cast<DeclarativeBoxPlotSeries *>(series))
         doInitializeAxes(series, qobject_cast<DeclarativeBoxPlotSeries *>(series)->m_axes);
+#endif
+#if QT_CONFIG(charts_candlestick_chart)
     else if (qobject_cast<DeclarativeCandlestickSeries *>(series))
         doInitializeAxes(series, qobject_cast<DeclarativeCandlestickSeries *>(series)->m_axes);
+#endif
     // else: do nothing
 }
 

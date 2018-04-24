@@ -2,6 +2,6 @@
     error( "Couldn't find the auto.pri file!" )
 }
 
-QT += charts-private
+QT += charts-private core-private
 
 SOURCES += tst_domain.cpp

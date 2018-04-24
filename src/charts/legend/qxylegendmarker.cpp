@@ -31,7 +31,9 @@
 #include <private/qxylegendmarker_p.h>
 #include <private/qxyseries_p.h>
 #include <QtCharts/QXYSeries>
+#if QT_CONFIG(charts_scatter_chart)
 #include <QtCharts/QScatterSeries>
+#endif
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -118,7 +120,7 @@ void QXYLegendMarkerPrivate::updated()
         m_item->setLabel(m_series->name());
         labelChanged = true;
     }
-
+#if QT_CONFIG(charts_scatter_chart)
     if (m_series->type()== QAbstractSeries::SeriesTypeScatter)  {
         if (!m_customBrush && (m_item->brush() != m_series->brush())) {
             m_item->setBrush(m_series->brush());
@@ -136,7 +138,9 @@ void QXYLegendMarkerPrivate::updated()
                     m_item->updateMarkerShapeAndSize();
             }
         }
-    } else {
+    } else
+#endif
+    {
         QBrush emptyBrush;
         if (!m_customBrush
             && (m_item->brush() == emptyBrush

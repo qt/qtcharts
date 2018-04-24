@@ -29,7 +29,9 @@
 
 #include "private/glxyseriesdata_p.h"
 #include "private/abstractdomain_p.h"
+#if QT_CONFIG(charts_scatter_chart)
 #include <QtCharts/QScatterSeries>
+#endif
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -52,6 +54,7 @@ void GLXYSeriesDataManager::setPoints(QXYSeries *series, const AbstractDomain *d
         data->type = series->type();
         data->visible = series->isVisible();
         QColor sc;
+#if QT_CONFIG(charts_scatter_chart)
         if (data->type == QAbstractSeries::SeriesTypeScatter) {
             QScatterSeries *scatter = static_cast<QScatterSeries *>(series);
             data->width = float(scatter->markerSize());
@@ -60,7 +63,9 @@ void GLXYSeriesDataManager::setPoints(QXYSeries *series, const AbstractDomain *d
                     &GLXYSeriesDataManager::handleScatterColorChange);
             connect(scatter, &QScatterSeries::markerSizeChanged, this,
                     &GLXYSeriesDataManager::handleScatterMarkerSizeChange);
-        } else {
+        } else
+#endif
+        {
             data->width = float(series->pen().widthF());
             sc = series->color();
             connect(series, &QXYSeries::penChanged, this,
@@ -196,6 +201,7 @@ void GLXYSeriesDataManager::handleSeriesVisibilityChange()
     }
 }
 
+#if QT_CONFIG(charts_scatter_chart)
 void GLXYSeriesDataManager::handleScatterColorChange()
 {
     QScatterSeries *series = qobject_cast<QScatterSeries *>(sender());
@@ -220,6 +226,7 @@ void GLXYSeriesDataManager::handleScatterMarkerSizeChange()
         }
     }
 }
+#endif
 
 void GLXYSeriesDataManager::handleAxisReverseChanged(const QList<QAbstractSeries *> &seriesList)
 {

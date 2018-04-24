@@ -106,8 +106,10 @@ public Q_SLOTS:
     void handleSeriesPenChange();
     void handleSeriesOpenGLChange();
     void handleSeriesVisibilityChange();
+#if QT_CONFIG(charts_scatter_chart)
     void handleScatterColorChange();
     void handleScatterMarkerSizeChange();
+#endif
 
 Q_SIGNALS:
     void seriesRemoved(const QXYSeries *series);

@@ -4,14 +4,9 @@ SOURCES += \
     $$PWD/qlegend.cpp \
     $$PWD/legendlayout.cpp \
     $$PWD/qlegendmarker.cpp \
-    $$PWD/qpielegendmarker.cpp \
     $$PWD/legendmarkeritem.cpp \
-    $$PWD/qbarlegendmarker.cpp \
     $$PWD/qxylegendmarker.cpp \
-    $$PWD/qarealegendmarker.cpp \
-    $$PWD/legendscroller.cpp \
-    $$PWD/qboxplotlegendmarker.cpp \
-    $$PWD/qcandlesticklegendmarker.cpp
+    $$PWD/legendscroller.cpp
 
 PRIVATE_HEADERS += \
     $$PWD/legendscroller_p.h \
@@ -19,19 +14,35 @@ PRIVATE_HEADERS += \
     $$PWD/legendlayout_p.h \
     $$PWD/qlegendmarker_p.h \
     $$PWD/legendmarkeritem_p.h \
-    $$PWD/qpielegendmarker_p.h \
-    $$PWD/qbarlegendmarker_p.h \
-    $$PWD/qxylegendmarker_p.h \
-    $$PWD/qarealegendmarker_p.h \
-    $$PWD/qboxplotlegendmarker_p.h \
-    $$PWD/qcandlesticklegendmarker_p.h
+    $$PWD/qxylegendmarker_p.h
 
 PUBLIC_HEADERS += \
     $$PWD/qlegend.h \
     $$PWD/qlegendmarker.h \
-    $$PWD/qpielegendmarker.h \
-    $$PWD/qbarlegendmarker.h \
-    $$PWD/qxylegendmarker.h \
-    $$PWD/qarealegendmarker.h \
-    $$PWD/qboxplotlegendmarker.h \
-    $$PWD/qcandlesticklegendmarker.h
+    $$PWD/qxylegendmarker.h
+
+qtConfig(charts-area-chart) {
+    PRIVATE_HEADERS += $$PWD/qarealegendmarker_p.h
+    PUBLIC_HEADERS += $$PWD/qarealegendmarker.h
+    SOURCES += $$PWD/qarealegendmarker.cpp
+}
+qtConfig(charts-pie-chart) {
+    PRIVATE_HEADERS += $$PWD/qpielegendmarker_p.h
+    PUBLIC_HEADERS += $$PWD/qpielegendmarker.h
+    SOURCES +=  $$PWD/qpielegendmarker.cpp
+}
+qtConfig(charts-bar-chart) {
+    PRIVATE_HEADERS += $$PWD/qbarlegendmarker_p.h
+    PUBLIC_HEADERS += $$PWD/qbarlegendmarker.h
+    SOURCES +=  $$PWD/qbarlegendmarker.cpp
+}
+qtConfig(charts-boxplot-chart) {
+    PRIVATE_HEADERS += $$PWD/qboxplotlegendmarker_p.h
+    PUBLIC_HEADERS += $$PWD/qboxplotlegendmarker.h
+    SOURCES += $$PWD/qboxplotlegendmarker.cpp
+}
+qtConfig(charts-candlestick-chart) {
+    PRIVATE_HEADERS += $$PWD/qcandlesticklegendmarker_p.h
+    PUBLIC_HEADERS += $$PWD/qcandlesticklegendmarker.h
+    SOURCES += $$PWD/qcandlesticklegendmarker.cpp
+}

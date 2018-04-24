@@ -27,10 +27,12 @@
 **
 ****************************************************************************/
 
+
 #ifndef QAREALEGENDMARKER_H
 #define QAREALEGENDMARKER_H
 
 #include <QtCharts/QChartGlobal>
+#if QT_CONFIG(charts_area_chart)
 #include <QtCharts/QLegendMarker>
 #include <QtCharts/QAreaSeries>
 
@@ -62,4 +64,5 @@ private:
 
 QT_CHARTS_END_NAMESPACE
 
+#endif // QT_CONFIG(charts_area_chart)
 #endif // QAREALEGENDMARKER_H

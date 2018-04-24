@@ -30,7 +30,8 @@
 #ifndef QCHARTGLOBAL_H
 #define QCHARTGLOBAL_H
 
-#include <QtCore/QtGlobal>
+#include <QtCore/qglobal.h>
+#include <QtCharts/qtcharts-config.h>
 
 #define QT_CHARTS_VERSION_STR QT_VERSION_STR
 /*

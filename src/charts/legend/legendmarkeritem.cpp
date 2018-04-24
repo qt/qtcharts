@@ -27,6 +27,21 @@
 **
 ****************************************************************************/
 
+#include "legendmarkeritem_p.h"
+#include "qlegendmarker_p.h"
+#include "chartpresenter_p.h"
+#include "qlegend.h"
+#include "qlegend_p.h"
+#include "qlegendmarker.h"
+#if QT_CONFIG(charts_scatter_chart)
+#include "qscatterseries.h"
+#endif
+#if QT_CONFIG(charts_line_chart)
+#include "qlineseries.h"
+#endif
+#if QT_CONFIG(charts_spline_chart)
+#include "qsplineseries.h"
+#endif
 #include <QtGui/QPainter>
 #include <QtWidgets/QGraphicsSceneEvent>
 #include <QtWidgets/QGraphicsTextItem>
@@ -35,16 +50,6 @@
 #include <QtWidgets/QGraphicsLineItem>
 #include <QtGui/QTextDocument>
 #include <QtCore/QtMath>
-
-#include <QtCharts/QLegend>
-#include <QtCharts/QScatterSeries>
-#include <QtCharts/QLineSeries>
-#include <QtCharts/QSplineSeries>
-#include <private/qlegend_p.h>
-#include <QtCharts/QLegendMarker>
-#include <private/qlegendmarker_p.h>
-#include <private/legendmarkeritem_p.h>
-#include <private/chartpresenter_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -268,17 +273,24 @@ void LegendMarkerItem::updateMarkerShapeAndSize()
     ItemType itemType = TypeRect;
     QRectF newRect = m_defaultMarkerRect;
     if (shape == QLegend::MarkerShapeFromSeries) {
+#if QT_CONFIG(charts_scatter_chart)
         QScatterSeries *scatter = qobject_cast<QScatterSeries *>(m_marker->series());
         if (scatter) {
             newRect.setSize(QSizeF(scatter->markerSize(), scatter->markerSize()));
             if (scatter->markerShape() == QScatterSeries::MarkerShapeCircle)
                 itemType = TypeCircle;
-        } else if (qobject_cast<QLineSeries *>(m_marker->series())
+        } else
+#endif
+#if QT_CONFIG(charts_spline_chart)
+        if (qobject_cast<QLineSeries *>(m_marker->series())
                    || qobject_cast<QSplineSeries *>(m_marker->series())) {
             newRect.setHeight(m_seriesPen.width());
             newRect.setWidth(qRound(m_defaultMarkerRect.width() * 1.5));
             itemType = TypeLine;
         }
+#else
+        { }
+#endif
     } else if (shape == QLegend::MarkerShapeCircle) {
         itemType = TypeCircle;
     }
