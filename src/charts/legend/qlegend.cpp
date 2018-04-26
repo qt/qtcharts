@@ -707,70 +707,124 @@ void QLegendPrivate::handleSeriesVisibleChanged()
         m_layout->invalidate();
 }
 
+QObject *QLegendPrivate::relatedObject(const QLegendMarker *l)
+{
+    return l->d_ptr->relatedObject();
+}
+
+// Find equivalent QLegendMarker by checking for relatedObject()
+static int indexOfEquivalent(const QLegendMarker *needle,
+                             const QList<QLegendMarker *> &hayStack)
+{
+    const QObject *needleObject = QLegendPrivate::relatedObject(needle);
+    for (int i = 0, size = hayStack.size(); i < size; ++i) {
+        if (QLegendPrivate::relatedObject(hayStack.at(i)) == needleObject)
+            return i;
+    }
+    return -1;
+}
+
+// Find QLegendMarker for series
+static int indexOfSeries(const QAbstractSeries *series,
+                         const QList<QLegendMarker *> &hayStack)
+{
+    for (int i = 0, size = hayStack.size(); i < size; ++i) {
+        if (hayStack.at(i)->series() == series)
+            return i;
+    }
+    return -1;
+}
+
 void QLegendPrivate::handleCountChanged()
 {
     // Here we handle the changes in marker count.
     // Can happen for example when pieslice(s) have been added to or removed from pieseries.
 
-    QAbstractSeriesPrivate *series = qobject_cast<QAbstractSeriesPrivate *> (sender());
-    QList<QLegendMarker *> createdMarkers = series->createLegendMarkers(q_ptr);
+    QAbstractSeriesPrivate *seriesP = qobject_cast<QAbstractSeriesPrivate *>(sender());
+    QAbstractSeries *series = seriesP->q_ptr;
+    QList<QLegendMarker *> createdMarkers = seriesP->createLegendMarkers(q_ptr);
+    QVector<bool> isNew(createdMarkers.size(), true);
 
-    // Find out removed markers and created markers
-    QList<QLegendMarker *> removedMarkers;
-    foreach (QLegendMarker *oldMarker, m_markers) {
-        // we have marker, which is related to sender.
-        if (oldMarker->series() == series->q_ptr) {
-            bool found = false;
-            foreach(QLegendMarker *newMarker, createdMarkers) {
-                // New marker considered existing if:
-                // - d_ptr->relatedObject() is same for both markers.
-                if (newMarker->d_ptr->relatedObject() == oldMarker->d_ptr->relatedObject()) {
-                    // Delete the new marker, since we already have existing marker, that might be connected on user side.
-                    found = true;
-                    createdMarkers.removeOne(newMarker);
-                    delete newMarker;
-                }
-            }
-            if (!found) {
-                // No related object found for marker, add to removedMarkers list
-                removedMarkers << oldMarker;
+    const int pos = indexOfSeries(series, m_markers);
+    // Remove markers of the series from m_markers and check against the newly
+    // created ones.
+    if (pos != -1) {
+        while (pos < m_markers.size() && m_markers.at(pos)->series() == series) {
+            QLegendMarker *oldMarker = m_markers.takeAt(pos);
+            const int newIndex = indexOfEquivalent(oldMarker, createdMarkers);
+            if (newIndex == -1) {
+                removeMarkerHelper(oldMarker); // no longer exists
+            } else {
+                 // Replace newly created marker by its equivalent
+                delete createdMarkers[newIndex];
+                createdMarkers[newIndex] = oldMarker;
+                isNew[newIndex] = false;
             }
         }
     }
 
-    removeMarkers(removedMarkers);
-    decorateMarkers(createdMarkers);
-    addMarkers(createdMarkers);
+    for (int i = 0, size = createdMarkers.size(); i < size; ++i) {
+        if (isNew.at(i)) {
+            insertMarkerHelper(createdMarkers.at(i));
+            decorateMarker(createdMarkers.at(i));
+        }
+    }
+
+    // Re-insert createdMarkers into m_markers in correct order.
+    if (pos != -1 || pos == m_markers.size()) {
+        m_markers.append(createdMarkers);
+    } else {
+        for (int c = createdMarkers.size() - 1; c >= 0; --c)
+            m_markers.insert(pos, createdMarkers.at(c));
+    }
 
     q_ptr->layout()->invalidate();
+}
+
+// Helper function for marker insertion except m_markers handling
+void QLegendPrivate::insertMarkerHelper(QLegendMarker *marker)
+{
+    LegendMarkerItem *item = marker->d_ptr->item();
+    m_items->addToGroup(item);
+    m_markerHash.insert(item, marker);
 }
 
 void QLegendPrivate::addMarkers(QList<QLegendMarker *> markers)
 {
     foreach (QLegendMarker *marker, markers) {
-        m_items->addToGroup(marker->d_ptr.data()->item());
+        insertMarkerHelper(marker);
         m_markers << marker;
-        m_markerHash.insert(marker->d_ptr->item(), marker);
     }
+}
+
+// Helper function for marker removal except m_markers handling
+void QLegendPrivate::removeMarkerHelper(QLegendMarker *marker)
+{
+    LegendMarkerItem *item = marker->d_ptr->item();
+    item->setVisible(false);
+    m_items->removeFromGroup(item);
+    m_markerHash.remove(item);
+    delete marker;
 }
 
 void QLegendPrivate::removeMarkers(QList<QLegendMarker *> markers)
 {
     foreach (QLegendMarker *marker, markers) {
-        marker->d_ptr->item()->setVisible(false);
-        m_items->removeFromGroup(marker->d_ptr->item());
         m_markers.removeOne(marker);
-        m_markerHash.remove(marker->d_ptr->item());
-        delete marker;
+        removeMarkerHelper(marker);
     }
+}
+
+void QLegendPrivate::decorateMarker(QLegendMarker *marker)
+{
+    marker->setFont(m_font);
+    marker->setLabelBrush(m_labelBrush);
 }
 
 void QLegendPrivate::decorateMarkers(QList<QLegendMarker *> markers)
 {
-    foreach (QLegendMarker *marker, markers) {
-        marker->setFont(m_font);
-        marker->setLabelBrush(m_labelBrush);
-    }
+    for (QLegendMarker *marker : markers)
+        decorateMarker(marker);
 }
 
 void QLegendPrivate::updateToolTips()
@@ -786,3 +840,4 @@ void QLegendPrivate::updateToolTips()
 #include "moc_qlegend_p.cpp"
 
 QT_CHARTS_END_NAMESPACE
+
