@@ -31,6 +31,8 @@
 #include <tst_definitions.h>
 #include <QtCharts/QChartView>
 #include <QtCharts/QChart>
+#include <QtCharts/QLegend>
+#include <QtCharts/QLegendMarker>
 #include <QtCharts/QPieSlice>
 #include <QtCharts/QPieSeries>
 
@@ -217,11 +219,19 @@ void tst_qpieslice::customize()
     QCOMPARE(s1->labelFont(), f1);
 
     // insert a slice
-    series->insert(0, new QPieSlice("slice 5", 5));
+    series->insert(0, new QPieSlice("slice 0", 5));
     QCOMPARE(s1->pen(), p1);
     QCOMPARE(s1->brush(), b1);
     QCOMPARE(s1->labelBrush(), b1);
     QCOMPARE(s1->labelFont(), f1);
+
+    // QTBUG-62082, verify correct insertion at 0.
+    const QStringList expectedLabels{"slice 0", "slice 1", "slice 3", "slice 4"};
+    const auto legendMarkers = view.chart()->legend()->markers();
+    const int legendMarkersSize = legendMarkers.size();
+    QCOMPARE(legendMarkersSize, expectedLabels.size());
+    for (int m = 0; m < legendMarkersSize; ++m)
+        QCOMPARE(legendMarkers.at(m)->label(), expectedLabels.at(m));
 
     // change theme
     // theme will overwrite customizations

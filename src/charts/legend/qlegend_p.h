@@ -66,6 +66,8 @@ public:
     QList<QLegendMarker*> markers(QAbstractSeries *series = 0);
     qreal maxMarkerWidth() const;
 
+    static QObject *relatedObject(const QLegendMarker *l);
+
 public Q_SLOTS:
     void handleSeriesAdded(QAbstractSeries *series);
     void handleSeriesRemoved(QAbstractSeries *series);
@@ -74,8 +76,11 @@ public Q_SLOTS:
 
 private:
     // Internal helpers
+    void insertMarkerHelper(QLegendMarker *marker);
     void addMarkers(QList<QLegendMarker *> markers);
+    void removeMarkerHelper(QLegendMarker *marker);
     void removeMarkers(QList<QLegendMarker *> markers);
+    void decorateMarker(QLegendMarker *marker);
     void decorateMarkers(QList<QLegendMarker *> markers);
     void updateToolTips();
 
