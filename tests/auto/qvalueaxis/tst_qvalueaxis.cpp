@@ -36,10 +36,8 @@ class tst_QValueAxis: public tst_QAbstractAxis
 Q_OBJECT
 
 public slots:
-    void initTestCase();
-    void cleanupTestCase();
     void init();
-    void cleanup();
+    void cleanup() override;
 
 private slots:
     void qvalueaxis_data();
@@ -78,21 +76,12 @@ private:
     QLineSeries* m_series;
 };
 
-void tst_QValueAxis::initTestCase()
-{
-}
-
-void tst_QValueAxis::cleanupTestCase()
-{
-    QTest::qWait(1); // Allow final deleteLaters to run
-}
-
 void tst_QValueAxis::init()
 {
     m_valuesaxis = new QValueAxis();
     m_series = new QLineSeries();
     *m_series << QPointF(-100, -100) << QPointF(0, 0) << QPointF(100, 100);
-    tst_QAbstractAxis::init(m_valuesaxis,m_series);
+    tst_QAbstractAxis::initAxes(m_valuesaxis,m_series);
     m_chart->addSeries(m_series);
     m_chart->createDefaultAxes();
 }

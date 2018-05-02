@@ -37,10 +37,8 @@ class tst_QLogValueAxis: public tst_QAbstractAxis
 Q_OBJECT
 
 public slots:
-    void initTestCase();
-    void cleanupTestCase();
     void init();
-    void cleanup();
+    void cleanup() override;
 
 private slots:
     void qlogvalueaxis_data();
@@ -77,21 +75,12 @@ private:
     QLineSeries* m_series;
 };
 
-void tst_QLogValueAxis::initTestCase()
-{
-}
-
-void tst_QLogValueAxis::cleanupTestCase()
-{
-    QTest::qWait(1); // Allow final deleteLaters to run
-}
-
 void tst_QLogValueAxis::init()
 {
     m_logvaluesaxis = new QLogValueAxis();
     m_series = new QLineSeries();
     *m_series << QPointF(1, 1) << QPointF(100, 100);
-    tst_QAbstractAxis::init(m_logvaluesaxis,m_series);
+    tst_QAbstractAxis::initAxes(m_logvaluesaxis, m_series);
     m_chart->addSeries(m_series);
     m_chart->createDefaultAxes();
 }

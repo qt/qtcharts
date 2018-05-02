@@ -41,7 +41,7 @@ void tst_QAbstractAxis::cleanupTestCase()
     QTest::qWait(1); // Allow final deleteLaters to run
 }
 
-void tst_QAbstractAxis::init(QAbstractAxis* axis, QAbstractSeries* series)
+void tst_QAbstractAxis::initAxes(QAbstractAxis *axis, QAbstractSeries *series)
 {
     m_axis = axis;
     m_series = series;
