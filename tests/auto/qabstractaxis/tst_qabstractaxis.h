@@ -44,8 +44,10 @@ class tst_QAbstractAxis : public QObject
 public slots:
     virtual void initTestCase();
     virtual void cleanupTestCase();
-    virtual void init(QAbstractAxis* axis,QAbstractSeries* series);
     virtual void cleanup();
+
+protected:
+    void initAxes(QAbstractAxis *axis, QAbstractSeries *series);
 
 private slots:
     void axisPen_data();

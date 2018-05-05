@@ -88,7 +88,7 @@ void tst_QDateTimeAxis::init()
     m_dateTimeAxisY = new QDateTimeAxis();
     m_series = new QLineSeries();
     *m_series << QPointF(-100, -100) << QPointF(0, 0) << QPointF(100, 100);
-    //    tst_QAbstractAxis::init(m_datetimeaxis, m_series);
+    //    tst_QAbstractAxis::initAxes(m_datetimeaxis, m_series);
 
     m_view = new QChartView;
     m_view->resize(200, 200);

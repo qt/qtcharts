@@ -37,10 +37,8 @@ class tst_QBarCategoriesAxis: public tst_QAbstractAxis
 Q_OBJECT
 
 public slots:
-    void initTestCase();
-    void cleanupTestCase();
     void init();
-    void cleanup();
+    void cleanup() override;
 
 private slots:
     void qbarcategoryaxis_data();
@@ -90,15 +88,6 @@ private:
     QBarSeries* m_series;
 };
 
-void tst_QBarCategoriesAxis::initTestCase()
-{
-}
-
-void tst_QBarCategoriesAxis::cleanupTestCase()
-{
-    QTest::qWait(1); // Allow final deleteLaters to run
-}
-
 void tst_QBarCategoriesAxis::init()
 {
     m_baraxis = new QBarCategoryAxis();
@@ -128,7 +117,7 @@ void tst_QBarCategoriesAxis::init()
     foreach(QString category, categories)
         m_baraxis->append(category);
 
-    tst_QAbstractAxis::init(m_baraxis, m_series);
+    tst_QAbstractAxis::initAxes(m_baraxis, m_series);
     m_chart->addSeries(m_series);
     m_chart->createDefaultAxes();
 }
