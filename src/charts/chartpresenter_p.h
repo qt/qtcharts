@@ -98,9 +98,11 @@ public:
     ChartPresenter(QChart *chart, QChart::ChartType type);
     virtual ~ChartPresenter();
 
-
+    bool isFixedGeometry() const { return !m_fixedRect.isNull(); }
+    void setFixedGeometry(const QRectF &rect);
     void setGeometry(QRectF rect);
     QRectF geometry() const;
+    void updateGeometry(const QRectF &rect);
 
     QGraphicsItem *rootItem(){ return m_chart; }
     ChartBackground *backgroundElement();
@@ -215,6 +217,7 @@ private:
     QPointer<GLWidget> m_glWidget;
 #endif
     bool m_glUseWidget;
+    QRectF m_fixedRect;
 };
 
 QT_CHARTS_END_NAMESPACE

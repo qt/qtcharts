@@ -63,17 +63,23 @@ public:
     virtual void setGeometry(const QRectF &rect);
 
 protected:
-    virtual QRectF calculateBackgroundGeometry(const QRectF &geometry, ChartBackground *background) const;
+    virtual QRectF calculateBackgroundGeometry(const QRectF &geometry, ChartBackground *background,
+                                               bool update = true) const;
     virtual QRectF calculateBackgroundMinimum(const QRectF &minimum) const;
     virtual QRectF calculateContentGeometry(const QRectF &geometry) const;
     virtual QRectF calculateContentMinimum(const QRectF &minimum) const;
-    virtual QRectF calculateTitleGeometry(const QRectF &geometry, ChartTitle *title) const;
+    virtual QRectF calculateTitleGeometry(const QRectF &geometry, ChartTitle *title,
+                                          bool update = true) const;
     virtual QRectF calculateTitleMinimum(const QRectF &minimum, ChartTitle *title) const;
-    virtual QRectF calculateLegendGeometry(const QRectF &geometry, QLegend *legend) const;
+    virtual QRectF calculateLegendGeometry(const QRectF &geometry, QLegend *legend,
+                                           bool update = true) const;
     virtual QRectF calculateLegendMinimum(const QRectF &minimum, QLegend *legend) const;
 
-    virtual QRectF calculateAxisGeometry(const QRectF &geometry, const QList<ChartAxisElement *>& axes) const = 0;
-    virtual QRectF calculateAxisMinimum(const QRectF &minimum, const QList<ChartAxisElement *>& axes) const = 0;
+    virtual QRectF calculateAxisGeometry(const QRectF &geometry,
+                                         const QList<ChartAxisElement *>& axes,
+                                         bool update = true) const = 0;
+    virtual QRectF calculateAxisMinimum(const QRectF &minimum,
+                                        const QList<ChartAxisElement *>& axes) const = 0;
 
     // from QGraphicsLayout
     QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const;

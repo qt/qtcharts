@@ -223,7 +223,9 @@ QT_CHARTS_BEGIN_NAMESPACE
   \property QChart::plotArea
   \brief The rectangle within which the chart is drawn.
 
-  The plot area does not include the area defined by margins.
+  The plot area does not include the area defined by margins. By default this will resize if inside
+  a QChartView. If an explicit size is set for the plot area then it will respect this, to revert
+  back to the default behavior, then calling \c{setPlotArea(QRectF());} will achieve this.
 */
 
 /*!
@@ -581,6 +583,11 @@ QChart::ChartType QChart::chartType() const
 QRectF QChart::plotArea() const
 {
     return d_ptr->m_presenter->geometry();
+}
+
+void QChart::setPlotArea(const QRectF &rect)
+{
+    d_ptr->m_presenter->setFixedGeometry(rect);
 }
 
 /*!

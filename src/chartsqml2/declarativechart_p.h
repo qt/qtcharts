@@ -73,7 +73,7 @@ class QT_QMLCHARTS_PRIVATE_EXPORT DeclarativeChart : public QQuickItem
     Q_PROPERTY(bool dropShadowEnabled READ dropShadowEnabled WRITE setDropShadowEnabled NOTIFY dropShadowEnabledChanged)
     Q_PROPERTY(qreal backgroundRoundness READ backgroundRoundness WRITE setBackgroundRoundness NOTIFY backgroundRoundnessChanged REVISION 3)
     Q_PROPERTY(DeclarativeMargins *margins READ margins NOTIFY marginsChanged REVISION 2)
-    Q_PROPERTY(QRectF plotArea READ plotArea NOTIFY plotAreaChanged REVISION 1)
+    Q_PROPERTY(QRectF plotArea READ plotArea WRITE setPlotArea NOTIFY plotAreaChanged REVISION 1)
     Q_PROPERTY(QColor plotAreaColor READ plotAreaColor WRITE setPlotAreaColor NOTIFY plotAreaColorChanged REVISION 3)
     Q_PROPERTY(QQmlListProperty<QAbstractAxis> axes READ axes REVISION 2)
     Q_PROPERTY(bool localizeNumbers READ localizeNumbers WRITE setLocalizeNumbers NOTIFY localizeNumbersChanged REVISION 4)
@@ -171,6 +171,7 @@ public:
     // Margins & plotArea
     DeclarativeMargins *margins() { return m_margins; }
     QRectF plotArea() { return m_chart->plotArea(); }
+    void setPlotArea(const QRectF &rect);
 
     // Axis handling
     QAbstractAxis *defaultAxis(Qt::Orientation orientation, QAbstractSeries *series);

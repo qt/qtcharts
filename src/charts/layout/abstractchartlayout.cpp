@@ -53,30 +53,33 @@ void AbstractChartLayout::setGeometry(const QRectF &rect)
 {
     if (!rect.isValid())
         return;
-
+    // If the chart has a fixed geometry then don't update visually
+    const bool updateLayout = (!m_presenter->isFixedGeometry() || m_presenter->geometry() == rect);
     if (m_presenter->chart()->isVisible()) {
         QList<ChartAxisElement *> axes = m_presenter->axisItems();
         ChartTitle *title = m_presenter->titleElement();
         QLegend *legend = m_presenter->legend();
         ChartBackground *background = m_presenter->backgroundElement();
 
-        QRectF contentGeometry = calculateBackgroundGeometry(rect, background);
+        QRectF contentGeometry = calculateBackgroundGeometry(rect, background, updateLayout);
 
         contentGeometry = calculateContentGeometry(contentGeometry);
 
         if (title && title->isVisible())
-            contentGeometry = calculateTitleGeometry(contentGeometry, title);
+            contentGeometry = calculateTitleGeometry(contentGeometry, title, updateLayout);
 
         if (legend->isAttachedToChart() && legend->isVisible())
-            contentGeometry = calculateLegendGeometry(contentGeometry, legend);
+            contentGeometry = calculateLegendGeometry(contentGeometry, legend, updateLayout);
 
-        contentGeometry = calculateAxisGeometry(contentGeometry, axes);
+        contentGeometry = calculateAxisGeometry(contentGeometry, axes, updateLayout);
 
         m_presenter->setGeometry(contentGeometry);
-        if (m_presenter->chart()->chartType() == QChart::ChartTypeCartesian)
-            static_cast<QGraphicsRectItem *>(m_presenter->plotAreaElement())->setRect(contentGeometry);
-        else
-            static_cast<QGraphicsEllipseItem *>(m_presenter->plotAreaElement())->setRect(contentGeometry);
+        if (updateLayout) {
+            if (m_presenter->chart()->chartType() == QChart::ChartTypeCartesian)
+                static_cast<QGraphicsRectItem *>(m_presenter->plotAreaElement())->setRect(contentGeometry);
+            else
+                static_cast<QGraphicsEllipseItem *>(m_presenter->plotAreaElement())->setRect(contentGeometry);
+        }
     }
 
     QGraphicsLayout::setGeometry(rect);
@@ -93,7 +96,9 @@ QRectF AbstractChartLayout::calculateContentMinimum(const QRectF &minimum) const
 }
 
 
-QRectF AbstractChartLayout::calculateBackgroundGeometry(const QRectF &geometry, ChartBackground *background) const
+QRectF AbstractChartLayout::calculateBackgroundGeometry(const QRectF &geometry,
+                                                        ChartBackground *background,
+                                                        bool update) const
 {
     qreal left;
     qreal top;
@@ -101,7 +106,7 @@ QRectF AbstractChartLayout::calculateBackgroundGeometry(const QRectF &geometry, 
     qreal bottom;
     getContentsMargins(&left, &top, &right, &bottom);
     QRectF backgroundGeometry = geometry.adjusted(left, top, -right, -bottom);
-    if (background)
+    if (background && update)
         background->setRect(backgroundGeometry);
     return backgroundGeometry;
 }
@@ -116,7 +121,8 @@ QRectF AbstractChartLayout::calculateBackgroundMinimum(const QRectF &minimum) co
     return minimum.adjusted(0, 0, left + right, top + bottom);
 }
 
-QRectF AbstractChartLayout::calculateLegendGeometry(const QRectF &geometry, QLegend *legend) const
+QRectF AbstractChartLayout::calculateLegendGeometry(const QRectF &geometry, QLegend *legend,
+                                                    bool update) const
 {
     QSizeF size = legend->effectiveSizeHint(Qt::PreferredSize, QSizeF(-1, -1));
     QRectF legendRect;
@@ -151,8 +157,8 @@ QRectF AbstractChartLayout::calculateLegendGeometry(const QRectF &geometry, QLeg
         break;
     }
     }
-
-    legend->setGeometry(legendRect);
+    if (update)
+        legend->setGeometry(legendRect);
 
     return result;
 }
@@ -167,16 +173,18 @@ QRectF AbstractChartLayout::calculateLegendMinimum(const QRectF &geometry, QLege
     }
 }
 
-QRectF AbstractChartLayout::calculateTitleGeometry(const QRectF &geometry, ChartTitle *title) const
+QRectF AbstractChartLayout::calculateTitleGeometry(const QRectF &geometry, ChartTitle *title,
+                                                   bool update) const
 {
-    title->setGeometry(geometry);
+    if (update)
+        title->setGeometry(geometry);
     if (title->text().isEmpty()) {
         return geometry;
     } else {
         // Round to full pixel via QPoint to avoid one pixel clipping on the edge in some cases
         QPointF center((geometry.center() - title->boundingRect().center()).toPoint());
-
-        title->setPos(center.x(), title->pos().y());
+        if (update)
+            title->setPos(center.x(), title->pos().y());
         return geometry.adjusted(0, title->boundingRect().height() + 1, 0, 0);
     }
 }

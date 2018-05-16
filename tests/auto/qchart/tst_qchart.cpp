@@ -125,6 +125,7 @@ private slots:
     void backgroundRoundness();
     void zoomInAndOut_data();
     void zoomInAndOut();
+    void fixedPlotArea();
 private:
     void createTestData();
 
@@ -1198,6 +1199,24 @@ void tst_QChart::zoomInAndOut()
     m_chart->zoomOut();
     m_chart->zoomReset();
     CHECK_AXIS_RANGES_MATCH
+}
+
+void tst_QChart::fixedPlotArea()
+{
+    createTestData();
+    const QRectF originalPlotArea = m_chart->plotArea();
+    m_chart->setPlotArea(originalPlotArea);
+    QCOMPARE(m_chart->plotArea(), originalPlotArea);
+    m_view->resize(400, 400);
+    // Should still be the same size
+    QCOMPARE(m_chart->plotArea(), originalPlotArea);
+    m_chart->setPlotArea(QRectF());
+    // Should still be the same size as we have not triggered an update
+    QCOMPARE(m_chart->plotArea(), originalPlotArea);
+    m_view->resize(401, 401);
+    QVERIFY(m_chart->plotArea() != originalPlotArea);
+    m_chart->setPlotArea(originalPlotArea);
+    QCOMPARE(m_chart->plotArea(), originalPlotArea);
 }
 
 QTEST_MAIN(tst_QChart)

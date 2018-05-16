@@ -43,7 +43,9 @@ PolarChartLayout::~PolarChartLayout()
 {
 }
 
-QRectF PolarChartLayout::calculateAxisGeometry(const QRectF &geometry, const QList<ChartAxisElement *> &axes) const
+QRectF PolarChartLayout::calculateAxisGeometry(const QRectF &geometry,
+                                               const QList<ChartAxisElement *> &axes,
+                                               bool update) const
 {
     // How to handle multiple angular/radial axes?
     qreal axisRadius = geometry.height() / 2.0;
@@ -74,8 +76,10 @@ QRectF PolarChartLayout::calculateAxisGeometry(const QRectF &geometry, const QLi
     axisRect.moveCenter(geometry.center());
     axisRect.adjust(0, titleHeight, 0, titleHeight);
 
-    foreach (ChartAxisElement *chartAxis, axes)
-        chartAxis->setGeometry(axisRect, QRectF());
+    if (update) {
+        foreach (ChartAxisElement *chartAxis, axes)
+            chartAxis->setGeometry(axisRect, QRectF());
+    }
 
     return axisRect;
 }

@@ -78,25 +78,49 @@ ChartPresenter::~ChartPresenter()
 #endif
 }
 
+void ChartPresenter::setFixedGeometry(const QRectF &rect)
+{
+    if (rect == m_fixedRect)
+        return;
+    const bool isSame = m_fixedRect == m_rect;
+    m_fixedRect = rect;
+    if (m_fixedRect.isNull()) {
+        // Update to the latest geometry properly if changed
+        if (!isSame) {
+            updateGeometry(m_rect);
+            m_layout->updateGeometry();
+        }
+    } else {
+        updateGeometry(m_fixedRect);
+    }
+}
+
 void ChartPresenter::setGeometry(const QRectF rect)
 {
     if (m_rect != rect) {
         m_rect = rect;
-        foreach (ChartItem *chart, m_chartItems) {
-            chart->domain()->setSize(rect.size());
-            chart->setPos(rect.topLeft());
-        }
-#ifndef QT_NO_OPENGL
-        if (!m_glWidget.isNull())
-            m_glWidget->setGeometry(m_rect.toRect());
-#endif
-        emit plotAreaChanged(m_rect);
+        if (!m_fixedRect.isNull())
+            return;
+        updateGeometry(rect);
     }
+}
+
+void ChartPresenter::updateGeometry(const QRectF &rect)
+{
+    foreach (ChartItem *chart, m_chartItems) {
+        chart->domain()->setSize(rect.size());
+        chart->setPos(rect.topLeft());
+    }
+#ifndef QT_NO_OPENGL
+    if (!m_glWidget.isNull())
+        m_glWidget->setGeometry(rect.toRect());
+#endif
+    emit plotAreaChanged(rect);
 }
 
 QRectF ChartPresenter::geometry() const
 {
-    return m_rect;
+    return m_fixedRect.isNull() ? m_rect : m_fixedRect;
 }
 
 void ChartPresenter::handleAxisAdded(QAbstractAxis *axis)
@@ -134,8 +158,8 @@ void ChartPresenter::handleSeriesAdded(QAbstractSeries *series)
     chart->setPresenter(this);
     chart->setThemeManager(m_chart->d_ptr->m_themeManager);
     chart->setDataSet(m_chart->d_ptr->m_dataset);
-    chart->domain()->setSize(m_rect.size());
-    chart->setPos(m_rect.topLeft());
+    chart->domain()->setSize(geometry().size());
+    chart->setPos(geometry().topLeft());
     chart->handleDomainUpdated(); //this could be moved to intializeGraphics when animator is refactored
     m_chartItems<<chart;
     m_series<<series;
@@ -576,7 +600,7 @@ void ChartPresenter::updateGLWidget()
             QGraphicsView *firstView = views.at(0);
             m_glWidget = new GLWidget(m_chart->d_ptr->m_dataset->glXYSeriesDataManager(),
                                       m_chart, firstView);
-            m_glWidget->setGeometry(m_rect.toRect());
+            m_glWidget->setGeometry(geometry().toRect());
             m_glWidget->show();
         }
     }

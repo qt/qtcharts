@@ -45,7 +45,9 @@ CartesianChartLayout::~CartesianChartLayout()
 {
 }
 
-QRectF CartesianChartLayout::calculateAxisGeometry(const QRectF &geometry, const QList<ChartAxisElement *> &axes) const
+QRectF CartesianChartLayout::calculateAxisGeometry(const QRectF &geometry,
+                                                   const QList<ChartAxisElement *> &axes,
+                                                   bool update) const
 {
     QSizeF left(0,0);
     QSizeF minLeft(0,0);
@@ -171,6 +173,11 @@ QRectF CartesianChartLayout::calculateAxisGeometry(const QRectF &geometry, const
     qreal rightOffset = 0;
     qreal topOffset = 0;
     qreal bottomOffset = 0;
+
+    // The axes are positioned here for the first time, so we need to catch any possible resizing
+    // of the chart when in fixed geometry to prevent them being moved out of place.
+    if (m_presenter->isFixedGeometry())
+        chartRect = m_presenter->geometry();
 
     foreach (ChartAxisElement *axis , axes) {
 

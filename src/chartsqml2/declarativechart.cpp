@@ -211,7 +211,9 @@ QT_CHARTS_BEGIN_NAMESPACE
   \qmlproperty rect ChartView::plotArea
   The rectangle within which the chart is drawn.
 
-  The plot area does not include the area defined by margins.
+  The plot area does not include the area defined by margins. By default this will resize if inside
+  a ChartView. If an explicit rectangle is set for the plot area then it will respect this, to revert
+  back to the default behavior, then setting it to \c{Qt.rect(0, 0, 0, 0)} will achieve this.
 
   \sa margins
 */
@@ -1467,6 +1469,11 @@ QPointF DeclarativeChart::mapToValue(const QPointF &position, QAbstractSeries *s
 QPointF DeclarativeChart::mapToPosition(const QPointF &value, QAbstractSeries *series)
 {
     return m_chart->mapToPosition(value, series);
+}
+
+void DeclarativeChart::setPlotArea(const QRectF &rect)
+{
+    m_chart->setPlotArea(rect);
 }
 
 #include "moc_declarativechart_p.cpp"
