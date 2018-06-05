@@ -117,20 +117,26 @@ void GLXYSeriesDataManager::setPoints(QXYSeries *series, const AbstractDomain *d
         data->min = QVector2D(0, 0);
         data->delta = QVector2D(domain->size().width() / 2.0f, domain->size().height() / 2.0f);
     } else {
-        // Regular value axes, so we can do the math easily on shaders.
+        // Regular value axes, so we can optimize it a bit.
         if (reverseX)
             matrix.scale(-1.0, 1.0);
         if (reverseY)
             matrix.scale(1.0, -1.0);
-        QVector<QPointF> seriesPoints = series->pointsVector();
-        for (int i = 0; i < count; i++) {
-            const QPointF &point = seriesPoints.at(i);
-            array[index++] = float(point.x());
-            array[index++] = float(point.y());
+
+        const qreal mx = domain->minX();
+        const qreal my = domain->minY();
+        const qreal xd = domain->maxX() - mx;
+        const qreal yd = domain->maxY() - my;
+
+        if (!qFuzzyIsNull(xd) && !qFuzzyIsNull(yd)) {
+            const QVector<QPointF> seriesPoints = series->pointsVector();
+            for (const QPointF &point : seriesPoints) {
+                array[index++] = float((point.x() - mx) / xd);
+                array[index++] = float((point.y() - my) / yd);
+            }
         }
-        data->min = QVector2D(domain->minX(), domain->minY());
-        data->delta = QVector2D((domain->maxX() - domain->minX()) / 2.0f,
-                                (domain->maxY() - domain->minY()) / 2.0f);
+        data->min = QVector2D(0.0f, 0.0f);
+        data->delta = QVector2D(0.5f, 0.5f);
     }
     data->matrix = matrix;
     data->dirty = true;
