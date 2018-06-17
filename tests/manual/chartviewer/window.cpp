@@ -48,6 +48,7 @@
 #include <QtWidgets/QOpenGLWidget>
 #include <QtWidgets/QApplication>
 #include <QtCore/QDebug>
+#include <QtCore/QRegularExpression>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QPushButton>
 
@@ -272,13 +273,14 @@ void Window::initializeFromParamaters(const QVariantHash &parameters)
     if (parameters.contains("chart")) {
         QString t = parameters["chart"].toString();
 
-        QRegExp rx("([a-zA-Z0-9_]*)::([a-zA-Z0-9_]*)::([a-zA-Z0-9_]*)");
-        int pos = rx.indexIn(t);
+        QRegularExpression rx("([a-zA-Z0-9_]*)::([a-zA-Z0-9_]*)::([a-zA-Z0-9_]*)");
+        QRegularExpressionMatch rmatch;
+        int pos = t.indexOf(rx, 0, &rmatch);
 
         if (pos > -1) {
-            m_category = rx.cap(1);
-            m_subcategory = rx.cap(2);
-            m_name = rx.cap(3);
+            m_category = rmatch.captured(1);
+            m_subcategory = rmatch.captured(2);
+            m_name = rmatch.captured(3);
             m_templateComboBox->setCurrentIndex(0);
         }
         else {
