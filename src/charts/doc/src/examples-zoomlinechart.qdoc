@@ -30,7 +30,7 @@
     \title Zoom Line Example
     \ingroup qtcharts_examples
 
-    \brief The example shows how to create your own custom zooming effect
+    \brief The example shows how to create your own custom zooming effect.
 
     The example shows how to create your own custom zooming effect with QRubberBand by using a mouse
     and how to use touch gestures for paning and zooming.
