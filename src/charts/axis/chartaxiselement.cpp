@@ -34,6 +34,7 @@
 #include <QtCharts/QCategoryAxis>
 #include <QtCore/QtMath>
 #include <QtCore/QDateTime>
+#include <QtCore/QRegularExpression>
 #include <QtGui/QTextDocument>
 #include <cmath>
 
@@ -41,8 +42,8 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 static const char *labelFormatMatchString = "%[\\-\\+#\\s\\d\\.\\'lhjztL]*([dicuoxfegXFEG])";
 static const char *labelFormatMatchLocalizedString = "^([^%]*)%\\.(\\d+)([defgiEG])(.*)$";
-static QRegExp *labelFormatMatcher = 0;
-static QRegExp *labelFormatMatcherLocalized = 0;
+static QRegularExpression *labelFormatMatcher = 0;
+static QRegularExpression *labelFormatMatcherLocalized = 0;
 class StaticLabelFormatMatcherDeleter
 {
 public:
@@ -391,19 +392,21 @@ QStringList ChartAxisElement::createValueLabels(qreal min, qreal max, int ticks,
         if (presenter()->localizeNumbers()) {
             if (!labelFormatMatcherLocalized)
                 labelFormatMatcherLocalized
-                        = new QRegExp(QString::fromLatin1(labelFormatMatchLocalizedString));
-            if (labelFormatMatcherLocalized->indexIn(format, 0) != -1) {
-                preStr = labelFormatMatcherLocalized->cap(1);
-                if (!labelFormatMatcherLocalized->cap(2).isEmpty())
-                    precision = labelFormatMatcherLocalized->cap(2).toInt();
-                formatSpec = labelFormatMatcherLocalized->cap(3);
-                postStr = labelFormatMatcherLocalized->cap(4);
+                        = new QRegularExpression(QString::fromLatin1(labelFormatMatchLocalizedString));
+            QRegularExpressionMatch rmatch;
+            if (format.indexOf(*labelFormatMatcherLocalized, 0, &rmatch) != -1) {
+                preStr = rmatch.captured(1);
+                if (!rmatch.captured(2).isEmpty())
+                    precision = rmatch.captured(2).toInt();
+                formatSpec = rmatch.captured(3);
+                postStr = rmatch.captured(4);
             }
         } else {
             if (!labelFormatMatcher)
-                labelFormatMatcher = new QRegExp(QString::fromLatin1(labelFormatMatchString));
-            if (labelFormatMatcher->indexIn(format, 0) != -1)
-                formatSpec = labelFormatMatcher->cap(1);
+                labelFormatMatcher = new QRegularExpression(QString::fromLatin1(labelFormatMatchString));
+            QRegularExpressionMatch rmatch;
+            if (format.indexOf(*labelFormatMatcher, 0, &rmatch) != -1)
+                formatSpec = rmatch.captured(1);
         }
         if (tickType == QValueAxis::TicksFixed) {
             for (int i = 0; i < ticks; i++) {
@@ -459,19 +462,21 @@ QStringList ChartAxisElement::createLogValueLabels(qreal min, qreal max, qreal b
         if (presenter()->localizeNumbers()) {
             if (!labelFormatMatcherLocalized)
                 labelFormatMatcherLocalized =
-                        new QRegExp(QString::fromLatin1(labelFormatMatchLocalizedString));
-            if (labelFormatMatcherLocalized->indexIn(format, 0) != -1) {
-                preStr = labelFormatMatcherLocalized->cap(1);
-                if (!labelFormatMatcherLocalized->cap(2).isEmpty())
-                    precision = labelFormatMatcherLocalized->cap(2).toInt();
-                formatSpec = labelFormatMatcherLocalized->cap(3);
-                postStr = labelFormatMatcherLocalized->cap(4);
+                        new QRegularExpression(QString::fromLatin1(labelFormatMatchLocalizedString));
+            QRegularExpressionMatch rmatch;
+            if (format.indexOf(*labelFormatMatcherLocalized, 0, &rmatch) != -1) {
+                preStr = rmatch.captured(1);
+                if (!rmatch.captured(2).isEmpty())
+                    precision = rmatch.captured(2).toInt();
+                formatSpec = rmatch.captured(3);
+                postStr = rmatch.captured(4);
             }
         } else {
             if (!labelFormatMatcher)
-                labelFormatMatcher = new QRegExp(QString::fromLatin1(labelFormatMatchString));
-            if (labelFormatMatcher->indexIn(format, 0) != -1)
-                formatSpec = labelFormatMatcher->cap(1);
+                labelFormatMatcher = new QRegularExpression(QString::fromLatin1(labelFormatMatchString));
+            QRegularExpressionMatch rmatch;
+            if (format.indexOf(*labelFormatMatcher, 0, &rmatch) != -1)
+                formatSpec = rmatch.captured(1);
         }
         for (int i = firstTick; i < ticks + firstTick; i++) {
             qreal value = qPow(base, i);

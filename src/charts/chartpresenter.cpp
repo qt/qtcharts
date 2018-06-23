@@ -41,6 +41,7 @@
 #include <private/cartesianchartlayout_p.h>
 #include <private/polarchartlayout_p.h>
 #include <private/charttitle_p.h>
+#include <QtCore/QRegularExpression>
 #include <QtCore/QTimer>
 #include <QtGui/QTextDocument>
 #include <QtWidgets/QGraphicsScene>
@@ -510,7 +511,7 @@ QString ChartPresenter::truncatedText(const QFont &font, const QString &text, qr
         // It can be assumed that almost any amount of string manipulation is faster
         // than calculating one bounding rectangle, so first prepare a list of truncated strings
         // to try.
-        static QRegExp truncateMatcher(QStringLiteral("&#?[0-9a-zA-Z]*;$"));
+        static QRegularExpression truncateMatcher(QStringLiteral("&#?[0-9a-zA-Z]*;$"));
 
         QVector<QString> testStrings(text.length());
         int count(0);
@@ -526,7 +527,7 @@ QString ChartPresenter::truncatedText(const QFont &font, const QString &text, qr
             if (lastChar == closeTag)
                 chopIndex = truncatedString.lastIndexOf(openTag);
             else if (lastChar == semiColon)
-                chopIndex = truncateMatcher.indexIn(truncatedString, 0);
+                chopIndex = truncatedString.indexOf(truncateMatcher);
 
             if (chopIndex != -1)
                 chopCount = truncatedString.length() - chopIndex;
