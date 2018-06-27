@@ -38,7 +38,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \class QCandlestickModelMapper
     \since 5.8
-    \inmodule Qt Charts
+    \inmodule QtCharts
     \brief Abstract model mapper class for candlestick series.
 
     Model mappers allow the use of a QAbstractItemModel-derived model as a data source for a chart

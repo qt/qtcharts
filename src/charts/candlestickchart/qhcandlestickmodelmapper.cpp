@@ -35,7 +35,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \class QHCandlestickModelMapper
     \since 5.8
-    \inmodule Qt Charts
+    \inmodule QtCharts
     \brief The QHCandlestickModelMapper class is a horizontal model mapper for a candlestick series.
 
     Model mappers enable using a data model derived from the QAbstractItemModel class

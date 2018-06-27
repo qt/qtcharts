@@ -33,7 +33,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \class QVBoxPlotModelMapper
-    \inmodule Qt Charts
+    \inmodule QtCharts
     \brief The QVBoxPlotModelMapper is a vertical model mapper for box plot
     series.
 

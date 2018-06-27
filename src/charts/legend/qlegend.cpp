@@ -47,7 +47,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \class QLegend
-    \inmodule Qt Charts
+    \inmodule QtCharts
     \inherits QGraphicsWidget
     \brief The QLegend class displays the legend of a chart.
 

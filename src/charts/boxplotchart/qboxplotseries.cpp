@@ -45,7 +45,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \class QBoxPlotSeries
-    \inmodule Qt Charts
+    \inmodule QtCharts
     \brief The QBoxPlotSeries class presents data in box-and-whiskers charts.
 
     A box plot series acts as a container for box-and-whiskers items. Items from multiple series

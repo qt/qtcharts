@@ -39,7 +39,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \class QLogValueAxis
-    \inmodule Qt Charts
+    \inmodule QtCharts
     \brief The QLogValueAxis class adds a logarithmic scale to a chart's axis.
 
     A logarithmic scale is a nonlinear scale that is based on orders of magnitude,

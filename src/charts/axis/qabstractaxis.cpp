@@ -37,7 +37,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \class QAbstractAxis
-    \inmodule Qt Charts
+    \inmodule QtCharts
     \brief The QAbstractAxis class is a base class used for specialized axis classes.
 
     Each series can be bound to one or more horizontal and vertical axes, but mixing axis types

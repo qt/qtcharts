@@ -37,7 +37,7 @@
 
 /*!
     \class QScatterSeries
-    \inmodule Qt Charts
+    \inmodule QtCharts
     \brief The QScatterSeries class presents data in scatter charts.
 
     The scatter data is displayed as a collection of points on the chart. For

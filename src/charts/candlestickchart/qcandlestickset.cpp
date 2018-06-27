@@ -35,7 +35,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \class QCandlestickSet
     \since 5.8
-    \inmodule Qt Charts
+    \inmodule QtCharts
     \brief The QCandlestickSet class represents a single candlestick item in a
     candlestick chart.
 

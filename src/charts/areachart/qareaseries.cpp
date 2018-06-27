@@ -42,7 +42,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \class QAreaSeries
-    \inmodule Qt Charts
+    \inmodule QtCharts
     \brief The QAreaSeries class presents data in area charts.
 
     An area series is used to show quantitative data. It is based on a line series, in the way that

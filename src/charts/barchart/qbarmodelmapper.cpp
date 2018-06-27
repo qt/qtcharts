@@ -38,7 +38,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \class QBarModelMapper
-    \inmodule Qt Charts
+    \inmodule QtCharts
     \brief The QBarModelMapper class is the base class for model mapper classes.
     \internal
 

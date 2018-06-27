@@ -37,7 +37,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \class QXYLegendMarker
-    \inmodule Qt Charts
+    \inmodule QtCharts
     \brief The QXYLegendMarker class is a legend marker for a line, spline, or scatter series.
 
     An XY legend marker is related to QXYSeries derived classes: QLineSeries, QSplineSeries,

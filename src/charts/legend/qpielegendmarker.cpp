@@ -36,7 +36,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \class QPieLegendMarker
-    \inmodule Qt Charts
+    \inmodule QtCharts
     \brief The QPieLegendMarker class is a legend marker for a pie series.
 
     A pie legend marker is related to QPieSeries. With a pie series, each slice of the pie

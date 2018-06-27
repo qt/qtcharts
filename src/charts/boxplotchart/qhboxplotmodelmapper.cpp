@@ -34,7 +34,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \class QHBoxPlotModelMapper
-    \inmodule Qt Charts
+    \inmodule QtCharts
     \brief The QHBoxPlotModelMapper class is a horizontal model mapper for box
     plot series.
 

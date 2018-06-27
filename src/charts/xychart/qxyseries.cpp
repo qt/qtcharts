@@ -41,7 +41,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \class QXYSeries
-    \inmodule Qt Charts
+    \inmodule QtCharts
     \brief The QXYSeries class is a base class for line, spline, and scatter
     series.
 */

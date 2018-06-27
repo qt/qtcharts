@@ -36,7 +36,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \class QCandlestickLegendMarker
-    \inmodule Qt Charts
+    \inmodule QtCharts
     \since 5.8
     \brief The QCandlestickLegendMarker class is a legend marker for a candlestick series.
 

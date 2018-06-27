@@ -38,7 +38,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \class QStackedBarSeries
-    \inmodule Qt Charts
+    \inmodule QtCharts
     \brief The QStackedBarSeries class presents a series of data as vertically stacked bars,
     with one bar per category.
 

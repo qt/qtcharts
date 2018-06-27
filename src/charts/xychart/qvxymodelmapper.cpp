@@ -33,7 +33,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \class QVXYModelMapper
-    \inmodule Qt Charts
+    \inmodule QtCharts
     \brief The QVXYModelMapper class is a vertical model mapper for line,
     spline, and scatter series.
 

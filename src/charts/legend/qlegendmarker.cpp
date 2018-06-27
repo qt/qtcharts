@@ -41,7 +41,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \class QLegendMarker
-    \inmodule Qt Charts
+    \inmodule QtCharts
     \brief The QLegendMarker class is an abstract object that can be used to access
     markers within a legend.
 

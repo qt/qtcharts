@@ -46,7 +46,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \class QCandlestickSeries
     \since 5.8
-    \inmodule Qt Charts
+    \inmodule QtCharts
     \brief The QCandlestickSeries class presents data as candlesticks.
 
     This class acts as a container for single candlestick items. Each item is drawn to its own category

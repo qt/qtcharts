@@ -36,7 +36,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \class QBarLegendMarker
-    \inmodule Qt Charts
+    \inmodule QtCharts
     \brief The QBarLegendMarker class is a legend marker for a bar series.
 
     A bar legend marker is related to QAbstractBarSeries derived classes. With a bar series,

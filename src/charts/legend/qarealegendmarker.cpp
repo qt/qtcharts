@@ -36,7 +36,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \class QAreaLegendMarker
-    \inmodule Qt Charts
+    \inmodule QtCharts
     \brief The QAreaLegendMarker class is a legend marker for an area series.
 
     An area legend marker is related to a QAreaSeries object, so that one area series
