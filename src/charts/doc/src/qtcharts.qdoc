@@ -35,16 +35,27 @@
     Charts API is built on top of Qt Graphics View Framework. Charts can be displayed as QGraphicsWidget using the QChart class. However
     there is also the convenience class QChartView, which is QWidget based. These enable us to quickly use Qt Charts as a normal Qt widget.
 
+    If you intend to use Qt Charts C++ classes in your application, use the
+    following include and using directives:
+
+    \snippet doc_src_qtcharts.cpp 0
+
+    \if !defined(qtforpython)
+    \note Projects created with Qt Creator's Qt Quick Application
+    wizard are based on the Qt Quick 2 template that uses QGuiApplication by default.
+    All such QGuiApplication instances in the project must be replaced with
+    QApplication as the module depends on Qt's \l{Graphics View Framework}
+    for rendering.
+
+    To link against the Qt Charts module, add this line to your \c qmake project file:
+
+    \snippet doc_src_qtcharts.pro 0
+    \endif
+
     Each chart type is represented by the QAbstractSeries derived class. To create charts, the users have to use an instance of the related
     series class and add it to a QChart instance.
-    \code
-    QLineSeries* series = new QLineSeries();
-    series->add(0, 6);
-    series->add(2, 4);
-    ...
-    chartView->chart()->addSeries(series);
-    chartView->chart()->createDefaultAxes();
-    \endcode
+
+    \snippet doc_src_qtcharts.cpp 3
 */
 
 /*!
