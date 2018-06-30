@@ -37,7 +37,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \class QHorizontalPercentBarSeries
-    \inmodule Qt Charts
+    \inmodule QtCharts
     \brief The QHorizontalPercentBarSeries class presents a series of categorized data as
     a percentage of each category.
 

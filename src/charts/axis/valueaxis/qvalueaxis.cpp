@@ -42,7 +42,7 @@
 QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \class QValueAxis
-    \inmodule Qt Charts
+    \inmodule QtCharts
     \brief The QValueAxis class adds values to a chart's axes.
 
     A value axis can be set up to show an axis line with tick marks, grid lines, and shades.

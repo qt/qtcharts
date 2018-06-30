@@ -33,7 +33,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \class QHXYModelMapper
-    \inmodule Qt Charts
+    \inmodule QtCharts
     \brief The QHXYModelMapper class is a horizontal model mapper for line,
     spline, and scatter series.
 

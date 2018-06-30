@@ -44,7 +44,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \class QPieSeries
-    \inmodule Qt Charts
+    \inmodule QtCharts
     \brief The QPieSeries class presents data in pie charts.
 
     A pie series consists of slices that are defined as QPieSlice objects.

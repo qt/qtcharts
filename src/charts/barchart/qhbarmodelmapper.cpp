@@ -33,7 +33,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \class QHBarModelMapper
-    \inmodule Qt Charts
+    \inmodule QtCharts
     \brief The QHBarModelMapper class is a horizontal model mapper for bar series.
 
     Model mappers enable using a data model derived from the QAbstractItemModel class

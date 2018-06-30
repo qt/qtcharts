@@ -42,7 +42,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \class QAbstractSeries
-    \inmodule Qt Charts
+    \inmodule QtCharts
     \brief The QAbstractSeries class is a base class for all Qt Chart series.
 
     Usually, the series type specific inherited classes are used instead of the base class.

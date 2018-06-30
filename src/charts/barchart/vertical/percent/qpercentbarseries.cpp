@@ -38,7 +38,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \class QPercentBarSeries
-    \inmodule Qt Charts
+    \inmodule QtCharts
     \brief The QPercentBarSeries class presents a series of categorized data as
     a percentage of each category.
 

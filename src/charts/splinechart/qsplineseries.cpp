@@ -37,7 +37,7 @@
 
 /*!
     \class QSplineSeries
-    \inmodule Qt Charts
+    \inmodule QtCharts
     \brief The QSplineSeries class presents data as spline charts.
 
     A spline series stores the data points and the segment control points needed

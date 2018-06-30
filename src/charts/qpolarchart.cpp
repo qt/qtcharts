@@ -46,7 +46,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
  \class QPolarChart
- \inmodule Qt Charts
+ \inmodule QtCharts
  \brief The QPolarChart presents data in polar charts.
 
  Polar charts present data in a circular graph, where the placement of data

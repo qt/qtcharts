@@ -33,7 +33,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \class QVPieModelMapper
-    \inmodule Qt Charts
+    \inmodule QtCharts
     \brief The QVPieModelMapper is a vertical model mapper for pie series.
 
     Model mappers enable using a data model derived from the QAbstractItemModel class

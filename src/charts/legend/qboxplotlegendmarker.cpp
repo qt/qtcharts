@@ -36,7 +36,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \class QBoxPlotLegendMarker
-    \inmodule Qt Charts
+    \inmodule QtCharts
     \brief The QBoxPlotLegendMarker class is a legend marker for a box plot series.
 
     A box plot legend marker is related to a QBoxPlotSeries object.

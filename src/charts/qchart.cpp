@@ -103,7 +103,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
  \class QChart
- \inmodule Qt Charts
+ \inmodule QtCharts
  \brief The QChart class manages the graphical representation of the chart's
  series, legends, and axes.
 

@@ -38,7 +38,7 @@
 QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \class QBarCategoryAxis
-    \inmodule Qt Charts
+    \inmodule QtCharts
     \brief The QBarCategoryAxis class adds categories to a chart's axes.
 
     QBarCategoryAxis can be set up to show an axis line with tick marks, grid lines, and shades.

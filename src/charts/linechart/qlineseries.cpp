@@ -37,7 +37,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \class QLineSeries
-    \inmodule Qt Charts
+    \inmodule QtCharts
     \brief The QLineSeries class presents data in line charts.
 
     A line chart is used to show information as a series of data points
