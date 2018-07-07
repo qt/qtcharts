@@ -45,8 +45,9 @@
 
     \snippet doc_src_qtcharts.cpp 0
 
-    \note Since Qt Creator 3.0, projects created with Qt Quick Application
-    wizard based on the Qt Quick 2 template uses QGuiApplication by default.
+    \if !defined(qtforpython)
+    \note Projects created with Qt Creator's Qt Quick Application
+    wizard are based on the Qt Quick 2 template that uses QGuiApplication by default.
     All such QGuiApplication instances in the project must be replaced with
     QApplication as the module depends on Qt's \l{Graphics View Framework}
     for rendering.
@@ -54,6 +55,7 @@
     To link against the Qt Charts module, add this line to your \c qmake project file:
 
     \snippet doc_src_qtcharts.pro 0
+    \endif
 
     \section1 Licenses
 

@@ -44,3 +44,12 @@ qmake
 make
 ./qmlpolarchart
 //! [2]
+
+//! [3]
+QLineSeries* series = new QLineSeries();
+series->append(0, 6);
+series->append(2, 4);
+...
+chartView->chart()->addSeries(series);
+chartView->chart()->createDefaultAxes();
+//! [3]
