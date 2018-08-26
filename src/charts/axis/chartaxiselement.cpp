@@ -495,8 +495,6 @@ QStringList ChartAxisElement::createDateTimeLabels(qreal min, qreal max,int tick
     if (max <= min || ticks < 1)
         return labels;
 
-    int n = qMax(int(-qFloor(std::log10((max - min) / (ticks - 1)))), 0);
-    n++;
     for (int i = 0; i < ticks; i++) {
         qreal value = min + (i * (max - min) / (ticks - 1));
         labels << presenter()->locale().toString(QDateTime::fromMSecsSinceEpoch(value), format);
