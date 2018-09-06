@@ -3,6 +3,7 @@ include($QT_INSTALL_DOCS/global/qt-module-defaults.qdocconf)
 project = QtCharts
 description = Qt Charts Reference Documentation
 version = $QT_VERSION
+buildversion = Qt Charts | Commercial or GPLv3
 
 sourcedirs += .. \
               ../../chartsqml2
