@@ -1,6 +1,6 @@
 MetaInfo {
     Type {
-        name: "QtCharts.AreaSeries"
+        name: "QtCharts.ChartView"
         icon: "images/areaseries-chart-icon16.png"
 
         ItemLibraryEntry {
@@ -14,7 +14,7 @@ MetaInfo {
         }
     }
     Type {
-        name: "QtCharts.BarSeries"
+        name: "QtCharts.ChartView"
         icon: "images/barseries-icon16.png"
 
         ItemLibraryEntry {
@@ -28,7 +28,7 @@ MetaInfo {
         }
     }
     Type {
-        name: "QtCharts.BoxPlotSeries"
+        name: "QtCharts.ChartView"
         icon: "images/boxplotseries-chart-icon16.png"
 
         ItemLibraryEntry {
@@ -42,7 +42,7 @@ MetaInfo {
         }
     }
     Type {
-        name: "QtCharts.HorizontalBarSeries"
+        name: "QtCharts.ChartView"
         icon: "images/horizontalbarseries-icon16.png"
 
         ItemLibraryEntry {
@@ -56,7 +56,7 @@ MetaInfo {
         }
     }
     Type {
-        name: "QtCharts.HorizontalPercentBarSeries"
+        name: "QtCharts.ChartView"
         icon: "images/horizontalpercentbarseries-icon16.png"
 
         ItemLibraryEntry {
@@ -70,7 +70,7 @@ MetaInfo {
         }
     }
     Type {
-        name: "QtCharts.HorizontalStackedBarSeries"
+        name: "QtCharts.ChartView"
         icon: "images/horizontalstackedbarseries-icon16.png"
 
         ItemLibraryEntry {
@@ -84,7 +84,7 @@ MetaInfo {
         }
     }
     Type {
-        name: "QtCharts.LineSeries"
+        name: "QtCharts.ChartView"
         icon: "images/lineseries-chart-icon16.png"
 
         ItemLibraryEntry {
@@ -98,7 +98,7 @@ MetaInfo {
         }
     }
     Type {
-        name: "QtCharts.PercentBarSeries"
+        name: "QtCharts.ChartView"
         icon: "images/percentbarseries-icon16.png"
 
         ItemLibraryEntry {
@@ -112,7 +112,7 @@ MetaInfo {
         }
     }
     Type {
-        name: "QtCharts.PieSeries"
+        name: "QtCharts.ChartView"
         icon: "images/pieseries-chart-icon16.png"
 
         ItemLibraryEntry {
@@ -126,7 +126,7 @@ MetaInfo {
         }
     }
     Type {
-        name: "QtCharts.ScatterSeries"
+        name: "QtCharts.ChartView"
         icon: "images/scatterseries-chart-icon16.png"
 
         ItemLibraryEntry {
@@ -140,7 +140,7 @@ MetaInfo {
         }
     }
     Type {
-        name: "QtCharts.SplineSeries"
+        name: "QtCharts.ChartView"
         icon: "images/splineseries-chart-icon16.png"
 
         ItemLibraryEntry {
@@ -154,7 +154,7 @@ MetaInfo {
         }
     }
     Type {
-        name: "QtCharts.StackedBarSeries"
+        name: "QtCharts.ChartView"
         icon: "images/stackedbarseries-icon16.png"
 
         ItemLibraryEntry {
@@ -169,7 +169,7 @@ MetaInfo {
     }
 
     Type {
-        name: "QtCharts.AreaSeries"
+        name: "QtCharts.ChartView"
         icon: "images/areaseries-polar-icon16.png"
 
         ItemLibraryEntry {
@@ -183,7 +183,7 @@ MetaInfo {
         }
     }
     Type {
-        name: "QtCharts.LineSeries"
+        name: "QtCharts.ChartView"
         icon: "images/lineseries-polar-icon16.png"
 
         ItemLibraryEntry {
@@ -197,7 +197,7 @@ MetaInfo {
         }
     }
     Type {
-        name: "QtCharts.ScatterSeries"
+        name: "QtCharts.ChartView"
         icon: "images/scatterseries-polar-icon16.png"
 
         ItemLibraryEntry {
@@ -211,7 +211,7 @@ MetaInfo {
         }
     }
     Type {
-        name: "QtCharts.SplineSeries"
+        name: "QtCharts.ChartView"
         icon: "images/splineseries-polar-icon16.png"
 
         ItemLibraryEntry {
