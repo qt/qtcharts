@@ -54,6 +54,7 @@ class QT_CHARTS_EXPORT QAbstractAxis : public QObject
     Q_PROPERTY(int labelsAngle READ labelsAngle WRITE setLabelsAngle NOTIFY labelsAngleChanged)
     Q_PROPERTY(QFont labelsFont READ labelsFont WRITE setLabelsFont NOTIFY labelsFontChanged)
     Q_PROPERTY(QColor labelsColor READ labelsColor WRITE setLabelsColor NOTIFY labelsColorChanged)
+    Q_PROPERTY(bool labelsEditable READ labelsEditable WRITE setLabelsEditable NOTIFY labelsEditableChanged)
     //grid
     Q_PROPERTY(bool gridVisible READ isGridLineVisible WRITE setGridLineVisible NOTIFY gridVisibleChanged)
     Q_PROPERTY(QPen gridLinePen READ gridLinePen WRITE setGridLinePen NOTIFY gridLinePenChanged)
@@ -173,6 +174,10 @@ public:
     void setReverse(bool reverse = true);
     bool isReverse() const;
 
+    //label editable handling
+    void setLabelsEditable(bool editable = true);
+    bool labelsEditable() const;
+
 Q_SIGNALS:
     void visibleChanged(bool visible);
     void linePenChanged(const QPen &pen);
@@ -199,6 +204,7 @@ Q_SIGNALS:
     void shadesPenChanged(const QPen &pen);
     void shadesBrushChanged(const QBrush &brush);
     void reverseChanged(bool reverse);
+    void labelsEditableChanged(bool editable);
 
 protected:
     QScopedPointer<QAbstractAxisPrivate> d_ptr;

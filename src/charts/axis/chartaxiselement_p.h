@@ -43,6 +43,7 @@
 #include <QtCharts/private/qchartglobal_p.h>
 #include <private/chartelement_p.h>
 #include <private/axisanimation_p.h>
+#include <private/valueaxislabel_p.h>
 #include <QtWidgets/QGraphicsItem>
 #include <QtWidgets/QGraphicsLayoutItem>
 #include <QtCharts/QValueAxis>
@@ -111,6 +112,9 @@ public:
     {
     }
 
+    bool labelsEditable() const;
+    void setLabelsEditable(bool labelsEditable);
+
 protected:
     virtual QVector<qreal> calculateLayout() const = 0;
     virtual void updateLayout(QVector<qreal> &layout) = 0;
@@ -155,6 +159,7 @@ public Q_SLOTS:
     void handleMinorArrowVisibleChanged(bool visible);
     void handleMinorGridVisibleChanged(bool visible);
     void handleLabelsPositionChanged();
+    void labelEdited(qreal oldValue, qreal newValue);
 
 Q_SIGNALS:
     void clicked();
@@ -179,6 +184,7 @@ private:
     QScopedPointer<QGraphicsItemGroup> m_labels;
     QScopedPointer<QGraphicsTextItem> m_title;
     bool m_intervalAxis;
+    bool m_labelsEditable = false;
 };
 
 QT_CHARTS_END_NAMESPACE

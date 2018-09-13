@@ -117,6 +117,7 @@ private:
     QPen m_minorGridLinePen;
 
     bool m_labelsVisible;
+    bool m_labelsEditable;
     QBrush m_labelsBrush;
     QFont m_labelsFont;
     int m_labelsAngle;

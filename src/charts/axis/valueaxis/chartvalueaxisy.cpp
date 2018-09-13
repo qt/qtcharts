@@ -32,6 +32,7 @@
 #include <private/chartpresenter_p.h>
 #include <QtCharts/QValueAxis>
 #include <private/abstractchartlayout_p.h>
+#include <private/valueaxislabel_p.h>
 #include <QtWidgets/QGraphicsLayout>
 #include <QtCore/QtMath>
 #include <QtCore/QDebug>
@@ -108,6 +109,7 @@ void ChartValueAxisY::updateGeometry()
     setLabels(createValueLabels(min(), max(), layout.size(), m_axis->tickInterval(),
                                 m_axis->tickAnchor(), m_axis->tickType(), m_axis->labelFormat()));
     VerticalAxis::updateGeometry();
+    updateLabelsValues(m_axis);
 }
 
 void ChartValueAxisY::handleTickCountChanged(int tick)

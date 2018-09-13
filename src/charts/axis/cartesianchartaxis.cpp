@@ -81,7 +81,17 @@ void CartesianChartAxis::createItems(int count)
     for (int i = 0; i < count; ++i) {
         QGraphicsLineItem *arrow = new QGraphicsLineItem(this);
         QGraphicsLineItem *grid = new QGraphicsLineItem(this);
-        QGraphicsTextItem *label = new QGraphicsTextItem(this);
+        QGraphicsTextItem *label = axis()->type() == QAbstractAxis::AxisTypeValue
+                ? new ValueAxisLabel(this)
+                : new QGraphicsTextItem(this);
+        if (axis()->type() == QAbstractAxis::AxisTypeValue) {
+            ValueAxisLabel *valueLabel = static_cast<ValueAxisLabel *>(label);
+            connect(valueLabel, &ValueAxisLabel::valueChanged,
+                    this, &ChartAxisElement::labelEdited);
+            // only QValueAxis labels editable for now
+            if (labelsEditable())
+                valueLabel->setEditable(true);
+        }
         label->document()->setDocumentMargin(ChartPresenter::textMargin());
         arrow->setPen(axis()->linePen());
         grid->setPen(axis()->gridLinePen());
@@ -325,6 +335,35 @@ void CartesianChartAxis::handleShadesPenChanged(const QPen &pen)
 {
     foreach (QGraphicsItem *item, shadeItems())
         static_cast<QGraphicsRectItem *>(item)->setPen(pen);
+}
+
+void CartesianChartAxis::updateLabelsValues(QValueAxis *axis)
+{
+    const QVector<qreal> &layout = ChartAxisElement::layout();
+    if (layout.isEmpty())
+        return;
+
+    if (axis->tickType() == QValueAxis::TicksFixed) {
+        for (int i = 0; i < layout.size(); ++i) {
+            qreal value = axis->isReverse()
+                    ? min() + ((layout.size() - 1 - i) * (max() - min()) / (layout.size() - 1))
+                    : min() + (i * (max() - min()) / (layout.size() - 1));
+            static_cast<ValueAxisLabel *>(labelItems().at(i))->setValue(value);
+        }
+    } else {
+        qreal value = axis->tickAnchor();
+        if (value > min())
+            value = value - int((value - min()) / axis->tickInterval()) * axis->tickInterval();
+        else
+            value = value + qCeil((min() - value) / axis->tickInterval()) * axis->tickInterval();
+
+        int i = axis->isReverse() ? labelItems().count()-1 : 0;
+        while (value <= max() || qFuzzyCompare(value, max())) {
+            static_cast<ValueAxisLabel *>(labelItems().at(i))->setValue(value);
+            value += axis->tickInterval();
+            i += axis->isReverse() ? -1 : 1;
+        }
+    }
 }
 
 QT_CHARTS_END_NAMESPACE

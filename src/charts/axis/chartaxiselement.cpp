@@ -157,6 +157,30 @@ void ChartAxisElement::handleLabelsPositionChanged()
     presenter()->layout()->invalidate();
 }
 
+void ChartAxisElement::labelEdited(qreal oldValue, qreal newValue)
+{
+    qreal range = max() - min();
+    qreal center = ((max() - min()) / 2) + min();
+    qreal newRange = 0.0;
+    auto label = static_cast<ValueAxisLabel *>(this->sender());
+    if ((oldValue >= center && newValue >=  min())
+     || (oldValue <  center && newValue >= max() && oldValue != min())) {
+        newRange = range * ((newValue - min()) / (oldValue - min()));
+        if (newRange > 0) {
+            m_axis->setRange(min(), min() + newRange);
+            return;
+        }
+    } else if ((oldValue >= center && newValue <= min() && max() != oldValue)
+            || (oldValue <  center && newValue < max())) {
+        newRange = range * ((max() - newValue) / (max() - oldValue));
+        if (newRange > 0) {
+            m_axis->setRange(max() - newRange, max());
+            return;
+        }
+    }
+    label->reloadBeforeEditContent();
+}
+
 void ChartAxisElement::handleLabelsVisibleChanged(bool visible)
 {
     QGraphicsLayoutItem::updateGeometry();
@@ -500,6 +524,23 @@ QStringList ChartAxisElement::createDateTimeLabels(qreal min, qreal max,int tick
         labels << presenter()->locale().toString(QDateTime::fromMSecsSinceEpoch(value), format);
     }
     return labels;
+}
+
+
+bool ChartAxisElement::labelsEditable() const
+{
+    return m_labelsEditable;
+}
+
+void ChartAxisElement::setLabelsEditable(bool labelsEditable)
+{
+    if (axis()->type() == QAbstractAxis::AxisTypeValue) {
+        labelGroup()->setHandlesChildEvents(!labelsEditable);
+        const QList<QGraphicsItem *> childItems = labelGroup()->childItems();
+        for (auto item : childItems)
+            static_cast<ValueAxisLabel *>(item)->setEditable(labelsEditable);
+        m_labelsEditable = labelsEditable;
+    }
 }
 
 void ChartAxisElement::axisSelected()

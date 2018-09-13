@@ -102,6 +102,17 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
+  \property QAbstractAxis::labelsEditable
+  \since 5.13
+  \brief This property holds whether the labels of the axis are editable or not.
+  When the labels set to editable the user will be able to change the range of the
+  axis conveniently by editing any of the labels. This feature is only implemented
+  for the QValueAxis.
+
+  By default, the value is \c false.
+*/
+
+/*!
   \property QAbstractAxis::labelsBrush
   \brief The brush used to draw the labels.
 
@@ -365,6 +376,12 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
   \fn void QAbstractAxis::labelsAngleChanged(int angle)
   This signal is emitted when the angle of the axis labels changes to \a angle.
+*/
+
+/*!
+  \fn void QAbstractAxis::labelsEditableChanged(bool editable)
+  \since 5.13
+  This signal is emitted when the labels editability changes.
 */
 
 /*!
@@ -948,6 +965,25 @@ bool QAbstractAxis::isReverse() const
     return d_ptr->m_reverse;
 }
 
+void QAbstractAxis::setLabelsEditable(bool editable)
+{
+    if (d_ptr->m_labelsEditable != editable) {
+        // In the case if the axis already added to a chart
+        // set the labels editability on the axisItem().
+        // Otherwise the labels editability will be set in the
+        // QValueAxisPrivate::initializeGraphics.
+        if (d_ptr->axisItem() != nullptr)
+            d_ptr->axisItem()->setLabelsEditable(editable);
+        d_ptr->m_labelsEditable = editable;
+        emit labelsEditableChanged(editable);
+    }
+}
+
+bool QAbstractAxis::labelsEditable() const
+{
+    return d_ptr->m_labelsEditable;
+}
+
 void QAbstractAxis::setReverse(bool reverse)
 {
     if (d_ptr->m_reverse != reverse && type() != QAbstractAxis::AxisTypeBarCategory) {
@@ -972,6 +1008,7 @@ QAbstractAxisPrivate::QAbstractAxisPrivate(QAbstractAxis *q)
       m_minorGridLineVisible(true),
       m_minorGridLinePen(QChartPrivate::defaultPen()),
       m_labelsVisible(true),
+      m_labelsEditable(false),
       m_labelsBrush(QChartPrivate::defaultBrush()),
       m_labelsFont(QChartPrivate::defaultFont()),
       m_labelsAngle(0),

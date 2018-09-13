@@ -533,6 +533,7 @@ void QValueAxisPrivate::initializeGraphics(QGraphicsItem *parent)
             axis = new ChartValueAxisY(q,parent);
         if (orientation() == Qt::Horizontal)
             axis = new ChartValueAxisX(q,parent);
+        axis->setLabelsEditable(q->labelsEditable());
     }
 
     if (m_chart->chartType() == QChart::ChartTypePolar) {

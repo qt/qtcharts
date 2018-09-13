@@ -15,6 +15,7 @@ SOURCES += \
     $$PWD/valueaxis/chartvalueaxisx.cpp \
     $$PWD/valueaxis/chartvalueaxisy.cpp \
     $$PWD/valueaxis/qvalueaxis.cpp \
+    $$PWD/valueaxis/valueaxislabel.cpp \
     $$PWD/barcategoryaxis/chartbarcategoryaxisx.cpp \
     $$PWD/barcategoryaxis/chartbarcategoryaxisy.cpp \
     $$PWD/barcategoryaxis/qbarcategoryaxis.cpp \
@@ -35,6 +36,7 @@ PRIVATE_HEADERS += \
     $$PWD/valueaxis/chartvalueaxisx_p.h \
     $$PWD/valueaxis/chartvalueaxisy_p.h \
     $$PWD/valueaxis/qvalueaxis_p.h \
+    $$PWD/valueaxis/valueaxislabel_p.h \
     $$PWD/barcategoryaxis/chartbarcategoryaxisx_p.h \
     $$PWD/barcategoryaxis/chartbarcategoryaxisy_p.h \
     $$PWD/barcategoryaxis/qbarcategoryaxis_p.h \
