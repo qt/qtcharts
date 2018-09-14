@@ -343,6 +343,9 @@ public:
             QLatin1String("Trying to create uncreatable: CandlestickModelMapper."));
         qmlRegisterType<QHCandlestickModelMapper>(uri, 2, 2, "HCandlestickModelMapper");
         qmlRegisterType<QVCandlestickModelMapper>(uri, 2, 2, "VCandlestickModelMapper");
+
+        // QtCharts 2.3
+        qmlRegisterType<QValueAxis, 1>(uri, 2, 3, "ValueAxis");
     }
 
 };

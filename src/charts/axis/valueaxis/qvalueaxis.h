@@ -44,9 +44,9 @@ class QT_CHARTS_EXPORT QValueAxis : public QAbstractAxis
     Q_PROPERTY(qreal max READ max WRITE setMax NOTIFY maxChanged)
     Q_PROPERTY(QString labelFormat READ labelFormat WRITE setLabelFormat NOTIFY labelFormatChanged)
     Q_PROPERTY(int minorTickCount READ minorTickCount WRITE setMinorTickCount NOTIFY minorTickCountChanged)
-    Q_PROPERTY(qreal tickAnchor READ tickAnchor WRITE setTickAnchor NOTIFY tickAnchorChanged)
-    Q_PROPERTY(qreal tickInterval READ tickInterval WRITE setTickInterval NOTIFY tickIntervalChanged)
-    Q_PROPERTY(TickType tickType READ tickType WRITE setTickType NOTIFY tickTypeChanged)
+    Q_PROPERTY(qreal tickAnchor READ tickAnchor WRITE setTickAnchor NOTIFY tickAnchorChanged REVISION 1)
+    Q_PROPERTY(qreal tickInterval READ tickInterval WRITE setTickInterval NOTIFY tickIntervalChanged REVISION 1)
+    Q_PROPERTY(TickType tickType READ tickType WRITE setTickType NOTIFY tickTypeChanged REVISION 1)
     Q_ENUMS(TickType)
 
 public:
@@ -97,9 +97,9 @@ Q_SIGNALS:
     void tickCountChanged(int tickCount);
     void minorTickCountChanged(int tickCount);
     void labelFormatChanged(const QString &format);
-    void tickIntervalChanged(qreal interval);
-    void tickAnchorChanged(qreal anchor);
-    void tickTypeChanged(QValueAxis::TickType type);
+    Q_REVISION(1) void tickIntervalChanged(qreal interval);
+    Q_REVISION(1) void tickAnchorChanged(qreal anchor);
+    Q_REVISION(1) void tickTypeChanged(QValueAxis::TickType type);
 
 private:
     Q_DECLARE_PRIVATE(QValueAxis)
