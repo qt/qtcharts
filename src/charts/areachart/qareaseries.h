@@ -42,8 +42,8 @@ class QAreaSeriesPrivate;
 class QT_CHARTS_EXPORT QAreaSeries : public QAbstractSeries
 {
     Q_OBJECT
-    Q_PROPERTY(QLineSeries *upperSeries READ upperSeries)
-    Q_PROPERTY(QLineSeries *lowerSeries READ lowerSeries)
+    Q_PROPERTY(QtCharts::QLineSeries *upperSeries READ upperSeries)
+    Q_PROPERTY(QtCharts::QLineSeries *lowerSeries READ lowerSeries)
     Q_PROPERTY(QColor color READ color WRITE setColor NOTIFY colorChanged)
     Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor NOTIFY borderColorChanged)
     Q_PROPERTY(QString pointLabelsFormat READ pointLabelsFormat WRITE setPointLabelsFormat NOTIFY pointLabelsFormatChanged)
