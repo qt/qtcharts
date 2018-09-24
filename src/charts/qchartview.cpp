@@ -130,7 +130,7 @@ void QChartView::setRubberBand(const RubberBands &rubberBand)
 
     if (!d_ptr->m_rubberBandFlags) {
         delete d_ptr->m_rubberBand;
-        d_ptr->m_rubberBand = 0;
+        d_ptr->m_rubberBand = nullptr;
         return;
     }
 
@@ -277,7 +277,7 @@ QChartViewPrivate::QChartViewPrivate(QChartView *q, QChart *chart)
       m_scene(new QGraphicsScene(q)),
       m_chart(chart),
 #ifndef QT_NO_RUBBERBAND
-      m_rubberBand(0),
+      m_rubberBand(nullptr),
 #endif
       m_rubberBandFlags(QChartView::NoRubberBand)
 {
