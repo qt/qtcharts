@@ -331,7 +331,8 @@ void QChartViewPrivate::resize()
     }
 
     m_chart->resize(chartSize);
-    q_ptr->setMinimumSize(m_chart->minimumSize().toSize());
+    q_ptr->setMinimumSize(m_chart->minimumSize().toSize().expandedTo(q_ptr->minimumSize()));
+    q_ptr->setMaximumSize(q_ptr->maximumSize().boundedTo(m_chart->maximumSize().toSize()));
     q_ptr->setSceneRect(m_chart->geometry());
 }
 
