@@ -140,19 +140,23 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
   \property QValueAxis::tickAnchor
+  \since 5.12
   \brief The base value where the dynamically placed tick marks and labels are started from.
 */
 /*!
   \qmlproperty real ValueAxis::tickAnchor
+  \since QtCharts 2.3
   The base value where the dynamically placed tick marks and labels are started from.
 */
 
 /*!
   \property QValueAxis::tickInterval
+  \since 5.12
   \brief The interval between dynamically placed tick marks and labels.
 */
 /*!
   \qmlproperty real ValueAxis::tickInterval
+  \since QtCharts 2.3
   The interval between dynamically placed tick marks and labels.
 */
 
@@ -167,10 +171,12 @@ QT_CHARTS_BEGIN_NAMESPACE
  */
 /*!
   \property QValueAxis::tickType
+  \since 5.12
   \brief The positioning method of tick and labels.
 */
 /*!
   \qmlproperty enumeration ValueAxis::tickType
+  \since QtCharts 2.3
 
   The positioning method of tick and labels.
 

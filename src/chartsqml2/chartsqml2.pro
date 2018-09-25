@@ -56,6 +56,9 @@ contains(QT_CONFIG, opengl) {
 HEADERS += $$PRIVATE_HEADERS
 INCLUDEPATH += $$PWD
 
+IMPORT_VERSION = 2.3
+QMAKE_QMLPLUGINDUMP_FLAGS = -qapp
+
 load(qml_plugin)
 
 win32 {
