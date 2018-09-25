@@ -37,7 +37,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 class QT_CHARTS_EXPORT QHXYModelMapper : public QXYModelMapper
 {
     Q_OBJECT
-    Q_PROPERTY(QXYSeries *series READ series WRITE setSeries NOTIFY seriesReplaced)
+    Q_PROPERTY(QtCharts::QXYSeries *series READ series WRITE setSeries NOTIFY seriesReplaced)
     Q_PROPERTY(QAbstractItemModel *model READ model WRITE setModel NOTIFY modelReplaced)
     Q_PROPERTY(int xRow READ xRow WRITE setXRow NOTIFY xRowChanged)
     Q_PROPERTY(int yRow READ yRow WRITE setYRow NOTIFY yRowChanged)

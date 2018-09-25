@@ -63,7 +63,7 @@ public:
     Q_PROPERTY(QPen pen READ pen WRITE setPen NOTIFY penChanged)
     Q_PROPERTY(QBrush brush READ brush WRITE setBrush NOTIFY brushChanged)
     Q_PROPERTY(bool visible READ isVisible WRITE setVisible NOTIFY visibleChanged)
-    Q_PROPERTY(QLegend::MarkerShape shape READ shape WRITE setShape NOTIFY shapeChanged)
+    Q_PROPERTY(QtCharts::QLegend::MarkerShape shape READ shape WRITE setShape NOTIFY shapeChanged)
     Q_ENUMS(LegendMarkerType)
 
 public:
