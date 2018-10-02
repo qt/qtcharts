@@ -37,7 +37,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 class QT_CHARTS_EXPORT QHPieModelMapper : public QPieModelMapper
 {
     Q_OBJECT
-    Q_PROPERTY(QPieSeries *series READ series WRITE setSeries NOTIFY seriesReplaced)
+    Q_PROPERTY(QtCharts::QPieSeries *series READ series WRITE setSeries NOTIFY seriesReplaced)
     Q_PROPERTY(QAbstractItemModel *model READ model WRITE setModel NOTIFY modelReplaced)
     Q_PROPERTY(int valuesRow READ valuesRow WRITE setValuesRow NOTIFY valuesRowChanged)
     Q_PROPERTY(int labelsRow READ labelsRow WRITE setLabelsRow NOTIFY labelsRowChanged)
