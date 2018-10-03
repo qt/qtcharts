@@ -62,6 +62,6 @@ DeclarativeXYPoint::DeclarativeXYPoint(QObject *parent) :
     setY(0.0);
 }
 
-#include "moc_declarativexypoint_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_declarativexypoint_p.cpp"

@@ -133,6 +133,6 @@ void DeclarativeCategoryAxis::setLabelsPosition(AxisLabelsPosition position)
     }
 }
 
-#include "moc_declarativecategoryaxis_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_declarativecategoryaxis_p.cpp"

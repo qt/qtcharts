@@ -109,6 +109,6 @@ void DeclarativeLineSeries::appendDeclarativeChildren(QQmlListProperty<QObject> 
     // Empty implementation, children are parsed in componentComplete
 }
 
-#include "moc_declarativelineseries_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_declarativelineseries_p.cpp"

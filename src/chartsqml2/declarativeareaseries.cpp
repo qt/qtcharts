@@ -119,6 +119,6 @@ QBrush DeclarativeAreaSeries::brush() const
     return QAreaSeries::brush();
 }
 
-#include "moc_declarativeareaseries_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_declarativeareaseries_p.cpp"

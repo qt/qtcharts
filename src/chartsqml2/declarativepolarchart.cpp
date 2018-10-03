@@ -78,6 +78,6 @@ DeclarativePolarChart::~DeclarativePolarChart()
 {
 }
 
-#include "moc_declarativepolarchart_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_declarativepolarchart_p.cpp"

@@ -119,6 +119,6 @@ void DeclarativeScatterSeries::handleBrushChanged()
     }
 }
 
-#include "moc_declarativescatterseries_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_declarativescatterseries_p.cpp"

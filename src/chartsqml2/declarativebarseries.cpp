@@ -513,6 +513,6 @@ DeclarativeBarSet *DeclarativeHorizontalPercentBarSeries::insert(int index, QStr
     return 0;
 }
 
-#include "moc_declarativebarseries_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_declarativebarseries_p.cpp"
