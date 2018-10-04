@@ -83,7 +83,6 @@ void PolarChartCategoryAxisAngular::handleCategoriesChanged()
     presenter()->layout()->invalidate();
 }
 
+QT_CHARTS_END_NAMESPACE
 
 #include "moc_polarchartcategoryaxisangular_p.cpp"
-
-QT_CHARTS_END_NAMESPACE

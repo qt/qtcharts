@@ -300,7 +300,6 @@ QRectF AbstractDomain::fixZoomRect(const QRectF &rect)
     return fixRect;
 }
 
+QT_CHARTS_END_NAMESPACE
 
 #include "moc_abstractdomain_p.cpp"
-
-QT_CHARTS_END_NAMESPACE

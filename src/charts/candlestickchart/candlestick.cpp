@@ -346,6 +346,6 @@ void Candlestick::updateGeometry(AbstractDomain *domain)
     m_boundingRect.adjust(-extra, -extra, extra, extra);
 }
 
-#include "moc_candlestick_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_candlestick_p.cpp"

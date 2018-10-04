@@ -822,8 +822,7 @@ void QAreaSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bool forc
     }
 }
 
+QT_CHARTS_END_NAMESPACE
 
 #include "moc_qareaseries.cpp"
 #include "moc_qareaseries_p.cpp"
-
-QT_CHARTS_END_NAMESPACE

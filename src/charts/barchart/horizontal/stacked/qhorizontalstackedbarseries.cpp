@@ -123,6 +123,6 @@ void QHorizontalStackedBarSeriesPrivate::initializeGraphics(QGraphicsItem *paren
     QAbstractSeriesPrivate::initializeGraphics(parent);
 }
 
-#include "moc_qhorizontalstackedbarseries.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_qhorizontalstackedbarseries.cpp"

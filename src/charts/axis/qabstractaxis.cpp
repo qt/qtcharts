@@ -1071,9 +1071,7 @@ void QAbstractAxisPrivate::initializeAnimations(QChart::AnimationOptions options
         axis->setAnimation(0);
 }
 
-
+QT_CHARTS_END_NAMESPACE
 
 #include "moc_qabstractaxis.cpp"
 #include "moc_qabstractaxis_p.cpp"
-
-QT_CHARTS_END_NAMESPACE

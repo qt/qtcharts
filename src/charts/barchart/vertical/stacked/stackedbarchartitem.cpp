@@ -189,6 +189,6 @@ void StackedBarChartItem::positionLabels()
     positionLabelsVertical();
 }
 
-#include "moc_stackedbarchartitem_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_stackedbarchartitem_p.cpp"

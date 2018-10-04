@@ -137,6 +137,6 @@ QSizeF ChartDateTimeAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint
     return sh;
 }
 
-#include "moc_chartdatetimeaxisx_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_chartdatetimeaxisx_p.cpp"

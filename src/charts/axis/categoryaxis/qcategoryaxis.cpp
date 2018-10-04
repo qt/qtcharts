@@ -381,7 +381,7 @@ void QCategoryAxisPrivate::initializeGraphics(QGraphicsItem *parent)
     QAbstractAxisPrivate::initializeGraphics(parent);
 }
 
+QT_CHARTS_END_NAMESPACE
+
 #include "moc_qcategoryaxis.cpp"
 #include "moc_qcategoryaxis_p.cpp"
-
-QT_CHARTS_END_NAMESPACE

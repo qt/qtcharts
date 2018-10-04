@@ -147,7 +147,7 @@ void QPieLegendMarkerPrivate::updated()
         emit q_ptr->penChanged();
 }
 
+QT_CHARTS_END_NAMESPACE
+
 #include "moc_qpielegendmarker.cpp"
 #include "moc_qpielegendmarker_p.cpp"
-
-QT_CHARTS_END_NAMESPACE

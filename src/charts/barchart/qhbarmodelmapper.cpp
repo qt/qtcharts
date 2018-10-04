@@ -282,6 +282,6 @@ void QHBarModelMapper::setColumnCount(int columnCount)
     }
 }
 
-#include "moc_qhbarmodelmapper.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_qhbarmodelmapper.cpp"

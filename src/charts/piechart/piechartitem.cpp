@@ -271,6 +271,6 @@ PieSliceData PieChartItem::updateSliceGeometry(QPieSlice *slice)
     return sliceData;
 }
 
-#include "moc_piechartitem_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_piechartitem_p.cpp"

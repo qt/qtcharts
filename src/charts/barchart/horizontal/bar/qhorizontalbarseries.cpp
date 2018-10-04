@@ -130,6 +130,6 @@ void QHorizontalBarSeriesPrivate::initializeGraphics(QGraphicsItem* parent)
     QAbstractSeriesPrivate::initializeGraphics(parent);
 }
 
-#include "moc_qhorizontalbarseries.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_qhorizontalbarseries.cpp"

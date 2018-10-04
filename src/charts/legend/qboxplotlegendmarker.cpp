@@ -128,8 +128,7 @@ void QBoxPlotLegendMarkerPrivate::updated()
         emit q_ptr->brushChanged();
 }
 
-#include "moc_qboxplotlegendmarker.cpp"
-#include "moc_qboxplotlegendmarker_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
 
+#include "moc_qboxplotlegendmarker.cpp"
+#include "moc_qboxplotlegendmarker_p.cpp"

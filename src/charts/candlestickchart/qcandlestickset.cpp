@@ -447,7 +447,7 @@ bool QCandlestickSetPrivate::setTimestamp(qreal timestamp)
     return true;
 }
 
+QT_CHARTS_END_NAMESPACE
+
 #include "moc_qcandlestickset.cpp"
 #include "moc_qcandlestickset_p.cpp"
-
-QT_CHARTS_END_NAMESPACE

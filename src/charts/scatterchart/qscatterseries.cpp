@@ -376,6 +376,6 @@ void QScatterSeriesPrivate::initializeAnimations(QChart::AnimationOptions option
     QAbstractSeriesPrivate::initializeAnimations(options, duration, curve);
 }
 
-#include "moc_qscatterseries.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_qscatterseries.cpp"

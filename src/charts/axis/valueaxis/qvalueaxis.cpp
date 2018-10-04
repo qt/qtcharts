@@ -563,7 +563,7 @@ void QValueAxisPrivate::initializeDomain(AbstractDomain *domain)
     }
 }
 
+QT_CHARTS_END_NAMESPACE
+
 #include "moc_qvalueaxis.cpp"
 #include "moc_qvalueaxis_p.cpp"
-
-QT_CHARTS_END_NAMESPACE

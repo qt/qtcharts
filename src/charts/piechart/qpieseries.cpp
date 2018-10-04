@@ -1067,8 +1067,7 @@ void QPieSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bool force
     }
 }
 
+QT_CHARTS_END_NAMESPACE
 
 #include "moc_qpieseries.cpp"
 #include "moc_qpieseries_p.cpp"
-
-QT_CHARTS_END_NAMESPACE

@@ -103,6 +103,6 @@ void Bar::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidg
     QGraphicsRectItem::paint(painter, &barOption, widget);
 }
 
-#include "moc_bar_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_bar_p.cpp"

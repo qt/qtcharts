@@ -239,6 +239,6 @@ bool BoxPlotChartItem::updateBoxGeometry(BoxWhiskers *box, int index)
     return changed;
 }
 
-#include "moc_boxplotchartitem_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_boxplotchartitem_p.cpp"

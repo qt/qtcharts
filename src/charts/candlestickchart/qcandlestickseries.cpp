@@ -1154,7 +1154,7 @@ void QCandlestickSeriesPrivate::populateBarCategories(QBarCategoryAxis *axis)
     }
 }
 
+QT_CHARTS_END_NAMESPACE
+
 #include "moc_qcandlestickseries.cpp"
 #include "moc_qcandlestickseries_p.cpp"
-
-QT_CHARTS_END_NAMESPACE

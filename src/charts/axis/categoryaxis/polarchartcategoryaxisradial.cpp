@@ -83,6 +83,6 @@ void PolarChartCategoryAxisRadial::handleCategoriesChanged()
     presenter()->layout()->invalidate();
 }
 
-#include "moc_polarchartcategoryaxisradial_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_polarchartcategoryaxisradial_p.cpp"

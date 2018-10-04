@@ -135,7 +135,6 @@ void QPercentBarSeriesPrivate::initializeGraphics(QGraphicsItem* parent)
     QAbstractSeriesPrivate::initializeGraphics(parent);
 }
 
-#include "moc_qpercentbarseries.cpp"
-
 QT_CHARTS_END_NAMESPACE
 
+#include "moc_qpercentbarseries.cpp"

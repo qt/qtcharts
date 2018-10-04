@@ -57,6 +57,6 @@ void ChartItem::handleDomainUpdated()
     qWarning() <<  __FUNCTION__<< "Slot not implemented";
 }
 
-#include "moc_chartitem_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_chartitem_p.cpp"

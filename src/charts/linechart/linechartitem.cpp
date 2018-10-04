@@ -467,6 +467,6 @@ void LineChartItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
     QGraphicsItem::mouseDoubleClickEvent(event);
 }
 
-#include "moc_linechartitem_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_linechartitem_p.cpp"

@@ -85,7 +85,6 @@ void BarAnimation::setup(const QVector<QRectF> &oldLayout, const QVector<QRectF>
     setKeyValueAt(1.0, qVariantFromValue(newLayout));
 }
 
-#include "moc_baranimation_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
 
+#include "moc_baranimation_p.cpp"

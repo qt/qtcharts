@@ -83,6 +83,6 @@ void PolarChartDateTimeAxisRadial::handleFormatChanged(const QString &format)
         presenter()->layout()->invalidate();
 }
 
-#include "moc_polarchartdatetimeaxisradial_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_polarchartdatetimeaxisradial_p.cpp"

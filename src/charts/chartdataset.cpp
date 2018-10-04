@@ -661,6 +661,6 @@ void ChartDataSet::reverseChanged()
         m_glXYSeriesDataManager->handleAxisReverseChanged(axis->d_ptr->m_series);
 }
 
-#include "moc_chartdataset_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_chartdataset_p.cpp"

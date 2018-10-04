@@ -92,6 +92,6 @@ void PolarChartLogValueAxisRadial::handleLabelFormatChanged(const QString &forma
         presenter()->layout()->invalidate();
 }
 
-#include "moc_polarchartlogvalueaxisradial_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_polarchartlogvalueaxisradial_p.cpp"

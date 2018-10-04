@@ -518,7 +518,7 @@ void QLogValueAxisPrivate::initializeDomain(AbstractDomain *domain)
     }
 }
 
+QT_CHARTS_END_NAMESPACE
+
 #include "moc_qlogvalueaxis.cpp"
 #include "moc_qlogvalueaxis_p.cpp"
-
-QT_CHARTS_END_NAMESPACE

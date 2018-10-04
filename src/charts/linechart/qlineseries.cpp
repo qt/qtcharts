@@ -188,6 +188,6 @@ void QLineSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bool forc
     }
 }
 
-#include "moc_qlineseries.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_qlineseries.cpp"

@@ -368,7 +368,7 @@ qreal QBoxSetPrivate::value(const int index)
     return m_values[index];
 }
 
+QT_CHARTS_END_NAMESPACE
+
 #include "moc_qboxset.cpp"
 #include "moc_qboxset_p.cpp"
-
-QT_CHARTS_END_NAMESPACE

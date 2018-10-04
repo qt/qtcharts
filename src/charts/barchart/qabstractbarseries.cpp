@@ -1260,7 +1260,7 @@ void QAbstractBarSeriesPrivate::initializeAnimations(QChart::AnimationOptions op
     QAbstractSeriesPrivate::initializeAnimations(options, duration, curve);
 }
 
+QT_CHARTS_END_NAMESPACE
+
 #include "moc_qabstractbarseries.cpp"
 #include "moc_qabstractbarseries_p.cpp"
-
-QT_CHARTS_END_NAMESPACE

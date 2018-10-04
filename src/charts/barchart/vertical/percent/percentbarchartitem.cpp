@@ -180,6 +180,6 @@ void PercentBarChartItem::positionLabels()
     positionLabelsVertical();
 }
 
-#include "moc_percentbarchartitem_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_percentbarchartitem_p.cpp"

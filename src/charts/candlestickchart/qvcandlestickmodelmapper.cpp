@@ -349,6 +349,6 @@ int QVCandlestickModelMapper::lastSetColumn() const
     return QCandlestickModelMapper::lastSetSection();
 }
 
-#include "moc_qvcandlestickmodelmapper.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_qvcandlestickmodelmapper.cpp"

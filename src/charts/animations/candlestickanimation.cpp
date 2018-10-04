@@ -111,6 +111,6 @@ void CandlestickAnimation::removeCandlestickAnimation(Candlestick *candlestick)
     m_animations.remove(candlestick);
 }
 
-#include "moc_candlestickanimation_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_candlestickanimation_p.cpp"

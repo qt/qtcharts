@@ -343,6 +343,6 @@ void CandlestickChartItem::updateTimePeriod()
     m_timePeriod = timePeriod;
 }
 
-#include "moc_candlestickchartitem_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_candlestickchartitem_p.cpp"

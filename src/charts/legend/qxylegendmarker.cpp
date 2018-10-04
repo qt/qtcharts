@@ -156,8 +156,7 @@ void QXYLegendMarkerPrivate::updated()
         emit q_ptr->brushChanged();
 }
 
-#include "moc_qxylegendmarker.cpp"
-#include "moc_qxylegendmarker_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
 
+#include "moc_qxylegendmarker.cpp"
+#include "moc_qxylegendmarker_p.cpp"

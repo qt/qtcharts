@@ -718,8 +718,7 @@ qreal QBoxPlotSeriesPrivate::max()
     return max;
 }
 
-#include "moc_qboxplotseries.cpp"
-#include "moc_qboxplotseries_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
 
+#include "moc_qboxplotseries.cpp"
+#include "moc_qboxplotseries_p.cpp"

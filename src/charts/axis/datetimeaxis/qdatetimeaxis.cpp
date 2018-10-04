@@ -399,7 +399,7 @@ void QDateTimeAxisPrivate::initializeDomain(AbstractDomain *domain)
     }
 }
 
+QT_CHARTS_END_NAMESPACE
+
 #include "moc_qdatetimeaxis.cpp"
 #include "moc_qdatetimeaxis_p.cpp"
-
-QT_CHARTS_END_NAMESPACE

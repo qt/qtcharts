@@ -78,6 +78,6 @@ void LegendScroller::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     }
 }
 
+QT_CHARTS_END_NAMESPACE
 
 #include "moc_legendscroller_p.cpp"
-QT_CHARTS_END_NAMESPACE

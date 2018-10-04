@@ -756,7 +756,7 @@ qreal QBarSetPrivate::value(const int index)
     return m_values.at(index).y();
 }
 
+QT_CHARTS_END_NAMESPACE
+
 #include "moc_qbarset.cpp"
 #include "moc_qbarset_p.cpp"
-
-QT_CHARTS_END_NAMESPACE
