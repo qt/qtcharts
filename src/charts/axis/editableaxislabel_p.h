@@ -36,36 +36,43 @@
 //
 // We mean it.
 
-#ifndef VALUEAXISLABEL_H
-#define VALUEAXISLABEL_H
+#ifndef EDITABLEAXISLABEL_P_H
+#define EDITABLEAXISLABEL_P_H
 
-#include <private/editableaxislabel_p.h>
+#include <QtCharts/private/qchartglobal_p.h>
+
+#include <QtWidgets/qgraphicsitem.h>
+#include <QtGui/qevent.h>
+#include <QtGui/qtextdocument.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class QT_CHARTS_PRIVATE_EXPORT ValueAxisLabel : public EditableAxisLabel
+class QT_CHARTS_PRIVATE_EXPORT EditableAxisLabel : public QGraphicsTextItem
 {
     Q_OBJECT
 public:
-    ValueAxisLabel(QGraphicsItem *parent = nullptr);
+    EditableAxisLabel(QGraphicsItem *parent = nullptr);
 
-    void keyPressEvent(QKeyEvent *event);
+    void focusInEvent(QFocusEvent *event);
+    void focusOutEvent(QFocusEvent *event);
+    bool sceneEvent(QEvent *event);
+    void setEditable(bool editable);
+    void reloadBeforeEditContent();
 
-    qreal value() const;
-    void setValue(const qreal &value);
+    QRectF boundingRect() const;
 
-private:
-    qreal m_value = 0.0;
-    qreal m_valueBeforeEdit = 0.0;
+protected:
+    QString m_htmlBeforeEdit;
+    bool m_editing = false;
+    bool m_editable = false;
 
-    void setInitialEditValue() override;
-    void finishEditing() override;
-    void resetBeforeEditValue() override;
+    virtual void setInitialEditValue() = 0;
+    virtual void finishEditing() = 0;
+    virtual void resetBeforeEditValue() = 0;
 
-Q_SIGNALS:
-    void valueChanged(qreal oldValue, qreal newValue);
+    bool isEditEndingKeyPress(QKeyEvent *event);
 };
 
 QT_CHARTS_END_NAMESPACE
 
-#endif // VALUEAXISLABEL_H
+#endif // EDITABLEAXISLABEL_P_H

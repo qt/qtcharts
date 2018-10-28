@@ -107,7 +107,7 @@ QT_CHARTS_BEGIN_NAMESPACE
   \brief This property holds whether the labels of the axis are editable or not.
   When the labels set to editable the user will be able to change the range of the
   axis conveniently by editing any of the labels. This feature is only implemented
-  for the QValueAxis.
+  for the QValueAxis and the QDateTimeAxis.
 
   By default, the value is \c false.
 */

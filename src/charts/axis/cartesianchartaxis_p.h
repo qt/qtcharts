@@ -62,6 +62,8 @@ public:
 
     virtual QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const;
 
+    void setDateTimeLabelsFormat(const QString &format);
+
 protected:
     void setGeometry(const QRectF &size) { Q_UNUSED(size);}
     virtual void updateGeometry() = 0;
@@ -79,6 +81,7 @@ public Q_SLOTS:
 
 protected:
     void updateLabelsValues(QValueAxis *axis);
+    void updateLabelsDateTimes();
 
 private:
     void createItems(int count);

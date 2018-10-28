@@ -43,9 +43,11 @@
 #include <QtCharts/private/qchartglobal_p.h>
 #include <private/chartelement_p.h>
 #include <private/axisanimation_p.h>
+#include <private/datetimeaxislabel_p.h>
 #include <private/valueaxislabel_p.h>
 #include <QtWidgets/QGraphicsItem>
 #include <QtWidgets/QGraphicsLayoutItem>
+#include <QtCharts/qdatetimeaxis.h>
 #include <QtCharts/QValueAxis>
 #include <QtGui/QFont>
 
@@ -159,7 +161,8 @@ public Q_SLOTS:
     void handleMinorArrowVisibleChanged(bool visible);
     void handleMinorGridVisibleChanged(bool visible);
     void handleLabelsPositionChanged();
-    void labelEdited(qreal oldValue, qreal newValue);
+    void valueLabelEdited(qreal oldValue, qreal newValue);
+    void dateTimeLabelEdited(const QDateTime &oldTime, const QDateTime &newTime);
 
 Q_SIGNALS:
     void clicked();

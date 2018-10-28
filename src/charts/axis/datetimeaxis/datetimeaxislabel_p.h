@@ -36,34 +36,38 @@
 //
 // We mean it.
 
-#ifndef VALUEAXISLABEL_H
-#define VALUEAXISLABEL_H
+#ifndef DATETIMEAXISLABEL_H
+#define DATETIMEAXISLABEL_H
 
 #include <private/editableaxislabel_p.h>
 
+#include <QtCore/qdatetime.h>
+
 QT_CHARTS_BEGIN_NAMESPACE
 
-class QT_CHARTS_PRIVATE_EXPORT ValueAxisLabel : public EditableAxisLabel
+class QT_CHARTS_PRIVATE_EXPORT DateTimeAxisLabel : public EditableAxisLabel
 {
     Q_OBJECT
 public:
-    ValueAxisLabel(QGraphicsItem *parent = nullptr);
+    DateTimeAxisLabel(QGraphicsItem *parent = nullptr);
 
     void keyPressEvent(QKeyEvent *event);
 
-    qreal value() const;
-    void setValue(const qreal &value);
+    QDateTime value() const;
+    void setValue(const QDateTime &value);
+    void setFormat(const QString &format);
 
 private:
-    qreal m_value = 0.0;
-    qreal m_valueBeforeEdit = 0.0;
+    QDateTime m_dateTime;
+    QDateTime m_dateTimeBeforeEdit;
+    QString m_format;
 
     void setInitialEditValue() override;
     void finishEditing() override;
     void resetBeforeEditValue() override;
 
 Q_SIGNALS:
-    void valueChanged(qreal oldValue, qreal newValue);
+    void dateTimeChanged(const QDateTime &oldDateTime, const QDateTime &newDateTime);
 };
 
 QT_CHARTS_END_NAMESPACE

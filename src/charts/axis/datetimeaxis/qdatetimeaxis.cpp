@@ -259,6 +259,8 @@ void QDateTimeAxis::setFormat(QString format)
     Q_D(QDateTimeAxis);
     if (d->m_format != format) {
         d->m_format = format;
+        if (d->axisItem())
+            static_cast<CartesianChartAxis*>(d->axisItem())->setDateTimeLabelsFormat(format);
         emit formatChanged(format);
     }
 }
@@ -339,7 +341,6 @@ void QDateTimeAxisPrivate::setRange(qreal min,qreal max)
     }
 }
 
-
 void QDateTimeAxisPrivate::setMin(const QVariant &min)
 {
     Q_Q(QDateTimeAxis);
@@ -371,6 +372,7 @@ void QDateTimeAxisPrivate::initializeGraphics(QGraphicsItem* parent)
             axis = new ChartDateTimeAxisY(q,parent);
         if (orientation() == Qt::Horizontal)
             axis = new ChartDateTimeAxisX(q,parent);
+        axis->setLabelsEditable(q->labelsEditable());
     }
 
     if (m_chart->chartType() == QChart::ChartTypePolar) {

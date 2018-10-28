@@ -157,13 +157,13 @@ void ChartAxisElement::handleLabelsPositionChanged()
     presenter()->layout()->invalidate();
 }
 
-void ChartAxisElement::labelEdited(qreal oldValue, qreal newValue)
+void ChartAxisElement::valueLabelEdited(qreal oldValue, qreal newValue)
 {
     qreal range = max() - min();
-    qreal center = ((max() - min()) / 2) + min();
+    qreal center = ((max() - min()) / 2.0) + min();
     qreal newRange = 0.0;
     auto label = static_cast<ValueAxisLabel *>(this->sender());
-    if ((oldValue >= center && newValue >=  min())
+    if ((oldValue >= center && newValue >= min())
      || (oldValue <  center && newValue >= max() && oldValue != min())) {
         newRange = range * ((newValue - min()) / (oldValue - min()));
         if (newRange > 0) {
@@ -171,7 +171,7 @@ void ChartAxisElement::labelEdited(qreal oldValue, qreal newValue)
             return;
         }
     } else if ((oldValue >= center && newValue <= min() && max() != oldValue)
-            || (oldValue <  center && newValue < max())) {
+            || (oldValue <  center && newValue <  max())) {
         newRange = range * ((max() - newValue) / (max() - oldValue));
         if (newRange > 0) {
             m_axis->setRange(max() - newRange, max());
@@ -179,6 +179,36 @@ void ChartAxisElement::labelEdited(qreal oldValue, qreal newValue)
         }
     }
     label->reloadBeforeEditContent();
+}
+
+void ChartAxisElement::dateTimeLabelEdited(const QDateTime &oldTime, const QDateTime &newTime)
+{
+    qreal range = max() - min();
+    qreal center = ((max() - min()) / 2.0) + min();
+    qreal newRange = 0.0;
+    qint64 oldValue = oldTime.toMSecsSinceEpoch();
+    qint64 newValue = newTime.toMSecsSinceEpoch();
+    if ((oldValue >= center && newValue >= min())
+     || (oldValue <  center && newValue >= max() && oldValue != min())) {
+        newRange = range * ((newValue - min()) / (oldValue - min()));
+        if (newRange > 0) {
+            m_axis->setRange(
+                        QDateTime::fromMSecsSinceEpoch(min()),
+                        QDateTime::fromMSecsSinceEpoch(min() + newRange));
+            return;
+        }
+    } else if ((oldValue >= center && newValue <= min() && max() != oldValue)
+            || (oldValue <  center && newValue <  max())) {
+        newRange = range * ((max() - newValue) / (max() - oldValue));
+        if (newRange > 0) {
+            m_axis->setRange(max() - newRange, max());
+            m_axis->setRange(
+                        QDateTime::fromMSecsSinceEpoch(max() - newRange),
+                        QDateTime::fromMSecsSinceEpoch(max()));
+            return;
+        }
+    }
+    static_cast<DateTimeAxisLabel *>(this->sender())->reloadBeforeEditContent();
 }
 
 void ChartAxisElement::handleLabelsVisibleChanged(bool visible)
@@ -534,11 +564,22 @@ bool ChartAxisElement::labelsEditable() const
 
 void ChartAxisElement::setLabelsEditable(bool labelsEditable)
 {
-    if (axis()->type() == QAbstractAxis::AxisTypeValue) {
+    if (axis()->type() == QAbstractAxis::AxisTypeValue
+            || axis()->type() == QAbstractAxis::AxisTypeDateTime) {
         labelGroup()->setHandlesChildEvents(!labelsEditable);
         const QList<QGraphicsItem *> childItems = labelGroup()->childItems();
-        for (auto item : childItems)
-            static_cast<ValueAxisLabel *>(item)->setEditable(labelsEditable);
+        for (auto item : childItems) {
+            switch (axis()->type()) {
+            case QtCharts::QAbstractAxis::AxisTypeValue:
+                static_cast<ValueAxisLabel *>(item)->setEditable(labelsEditable);
+                break;
+            case QtCharts::QAbstractAxis::AxisTypeDateTime:
+                static_cast<DateTimeAxisLabel *>(item)->setEditable(labelsEditable);
+                break;
+            default:
+                break;
+            }
+        }
         m_labelsEditable = labelsEditable;
     }
 }

@@ -26,56 +26,62 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-#include <private/valueaxislabel_p.h>
+#include "datetimeaxislabel_p.h"
 
-#include <QtCore/qlocale.h>
+#include <QtCore/qdatetime.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-ValueAxisLabel::ValueAxisLabel(QGraphicsItem *parent) :
+DateTimeAxisLabel::DateTimeAxisLabel(QGraphicsItem *parent) :
     EditableAxisLabel(parent)
 {
 
 }
 
-void ValueAxisLabel::finishEditing()
+void DateTimeAxisLabel::finishEditing()
 {
-    bool ok = false;
-    QLocale locale;
-    qreal oldValue = m_value;
-    qreal newValue = locale.toDouble(document()->toPlainText(), &ok);
-    if (ok && newValue != m_value) {
-        m_value = newValue;
-        emit valueChanged(oldValue, newValue);
+    QDateTime oldDateTime = m_dateTime;
+    QDateTime newDateTime = QDateTime::fromString(document()->toPlainText(), m_format);
+    if (newDateTime.isValid() && newDateTime != m_dateTime) {
+        m_dateTime = newDateTime;
+        emit dateTimeChanged(oldDateTime, newDateTime);
     } else {
         document()->setHtml(m_htmlBeforeEdit);
     }
 }
 
-void ValueAxisLabel::resetBeforeEditValue()
+QDateTime DateTimeAxisLabel::value() const
 {
-    m_value = m_valueBeforeEdit;
+    return m_dateTime;
 }
 
-qreal ValueAxisLabel::value() const
-{
-    return m_value;
-}
-
-void ValueAxisLabel::setValue(const qreal &value)
+void DateTimeAxisLabel::setValue(const QDateTime &value)
 {
     setTextInteractionFlags(Qt::NoTextInteraction);
     clearFocus();
-    m_value = value;
+    m_dateTime = value;
 }
 
-void ValueAxisLabel::setInitialEditValue()
+void DateTimeAxisLabel::resetBeforeEditValue()
 {
-    m_valueBeforeEdit = m_value;
-    setHtml(QString::number(m_value));
+    m_dateTime = m_dateTimeBeforeEdit;
 }
 
-void ValueAxisLabel::keyPressEvent(QKeyEvent *event)
+void DateTimeAxisLabel::setFormat(const QString &format)
+{
+    m_format = format;
+    // Labels should be edited as a single line regardless to their
+    // format because enter triggers applying the current text.
+    m_format.replace(QChar::fromLatin1('\n'), QChar::fromLatin1(' '));
+}
+
+void DateTimeAxisLabel::setInitialEditValue()
+{
+    m_dateTimeBeforeEdit = m_dateTime;
+    setHtml(m_dateTime.toString(m_format));
+}
+
+void DateTimeAxisLabel::keyPressEvent(QKeyEvent *event)
 {
     if (isEditEndingKeyPress(event)) {
         // prevent further event processing with a return
@@ -84,21 +90,9 @@ void ValueAxisLabel::keyPressEvent(QKeyEvent *event)
         return;
     }
 
-    if (event->text().length() >= 1) {
-        QLocale locale;
-        if (!event->text().at(0).isDigit()
-                && event->text().at(0) != locale.decimalPoint()
-                && event->text().at(0) != locale.negativeSign()
-                && event->text().at(0) != locale.exponential()
-                && event->key() != Qt::Key_Backspace
-                && event->key() != Qt::Key_Delete) {
-            event->ignore();
-            return;
-        }
-    }
     QGraphicsTextItem::keyPressEvent(event);
 }
 
 QT_CHARTS_END_NAMESPACE
 
-#include "moc_valueaxislabel_p.cpp"
+#include "moc_datetimeaxislabel_p.cpp"

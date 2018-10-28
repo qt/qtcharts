@@ -71,6 +71,7 @@ void ChartDateTimeAxisX::updateGeometry()
         return;
     setLabels(createDateTimeLabels(min(), max(), layout.size(), m_axis->format()));
     HorizontalAxis::updateGeometry();
+    updateLabelsDateTimes();
 }
 
 void ChartDateTimeAxisX::handleTickCountChanged(int tick)
