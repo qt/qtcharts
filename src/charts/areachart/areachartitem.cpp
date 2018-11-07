@@ -261,7 +261,9 @@ void AreaChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
         else
             painter->setClipping(false);
 
-        painter->setFont(m_pointLabelsFont);
+        QFont f(m_pointLabelsFont);
+        f.setPixelSize(QFontInfo(m_pointLabelsFont).pixelSize());
+        painter->setFont(f);
         painter->setPen(QPen(m_pointLabelsColor));
         QFontMetrics fm(painter->font());
 
