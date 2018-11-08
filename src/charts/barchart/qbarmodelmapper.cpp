@@ -540,6 +540,13 @@ void QBarModelMapperPrivate::barValueChanged(int index)
     initializeBarFromModel();
 }
 
+QBarSet *qt_allocate_bar_set_cpp(const QString &label)
+{
+    return new QBarSet(label);
+}
+
+QT_CHARTS_EXPORT QBarSet *(*qt_allocate_bar_set)(const QString &label) = &qt_allocate_bar_set_cpp;
+
 void QBarModelMapperPrivate::initializeBarFromModel()
 {
     if (m_model == 0 || m_series == 0)
@@ -556,7 +563,7 @@ void QBarModelMapperPrivate::initializeBarFromModel()
         QModelIndex barIndex = barModelIndex(i, posInBar);
         // check if there is such model index
         if (barIndex.isValid()) {
-            QBarSet *barSet = new QBarSet(m_model->headerData(i, m_orientation == Qt::Vertical ? Qt::Horizontal : Qt::Vertical).toString());
+            QBarSet *barSet = qt_allocate_bar_set(m_model->headerData(i, m_orientation == Qt::Vertical ? Qt::Horizontal : Qt::Vertical).toString());
             while (barIndex.isValid()) {
                 barSet->append(m_model->data(barIndex, Qt::DisplayRole).toDouble());
                 posInBar++;

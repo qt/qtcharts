@@ -441,6 +441,23 @@ DeclarativeChart::DeclarativeChart(QChart::ChartType type, QQuickItem *parent)
     initChart(type);
 }
 
+// QTBUG-71013
+// The symbol resides in qbarmodelmapper.cpp#548 in the C++ module.
+// Here, it gets imported and reset to the DeclarativeBarSet allocator
+#ifdef Q_OS_WIN
+QT_CHARTS_EXPORT
+#else
+extern
+#endif
+QBarSet *(*qt_allocate_bar_set)(const QString &label);
+
+QBarSet *qt_allocate_bar_set_qml(const QString &label)
+{
+    auto bar = new DeclarativeBarSet();
+    bar->setLabel(label);
+    return bar;
+}
+
 void DeclarativeChart::initChart(QChart::ChartType type)
 {
     m_sceneImage = 0;
@@ -451,6 +468,10 @@ void DeclarativeChart::initChart(QChart::ChartType type)
     m_updatePending = false;
 
     setFlag(ItemHasContents, true);
+
+    // Reset allocator for QBarSet to create
+    // Declarative BarSets by default
+    qt_allocate_bar_set = &qt_allocate_bar_set_qml;
 
     if (type == QChart::ChartTypePolar)
         m_chart = new QPolarChart();
