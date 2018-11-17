@@ -1008,7 +1008,9 @@ void QXYSeriesPrivate::drawSeriesPointLabels(QPainter *painter, const QVector<QP
     static const QString yPointTag(QLatin1String("@yPoint"));
     const int labelOffset = offset + 2;
 
-    painter->setFont(m_pointLabelsFont);
+    QFont f(m_pointLabelsFont);
+    f.setPixelSize(QFontInfo(m_pointLabelsFont).pixelSize());
+    painter->setFont(f);
     painter->setPen(QPen(m_pointLabelsColor));
     QFontMetrics fm(painter->font());
     // m_points is used for the label here as it has the series point information

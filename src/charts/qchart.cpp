@@ -401,6 +401,8 @@ void QChart::zoomIn()
 /*!
  Zooms into the view to a maximum level at which the rectangle \a rect is still
  fully visible.
+ \note Applying a zoom may modify properties of attached axes, for instance QAbstractAxis::min
+       and QAbstractAxis::max.
  \note This is not supported for polar charts.
  */
 void QChart::zoomIn(const QRectF &rect)
