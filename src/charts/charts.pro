@@ -84,7 +84,7 @@ msvc {
     QMAKE_CXXFLAGS_WARN_ON += -wd4267
 }
 
-win32:!winrt:!wince {
+win32:!winrt {
     # ChartThemeSystem uses Windows native API
     LIBS += -luser32
 }
