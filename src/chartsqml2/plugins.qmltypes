@@ -64,14 +64,14 @@ Module {
             "QtCharts/AreaSeries 2.0"
         ]
         exportMetaObjectRevisions: [0, 1, 2, 3, 4, 4]
-        Property { name: "upperSeries"; type: "DeclarativeLineSeries"; isPointer: true }
-        Property { name: "lowerSeries"; type: "DeclarativeLineSeries"; isPointer: true }
-        Property { name: "axisX"; revision: 1; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisY"; revision: 1; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisXTop"; revision: 2; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisYRight"; revision: 2; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisAngular"; revision: 3; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisRadial"; revision: 3; type: "QAbstractAxis"; isPointer: true }
+        Property { name: "upperSeries"; type: "QtCharts::DeclarativeLineSeries"; isPointer: true }
+        Property { name: "lowerSeries"; type: "QtCharts::DeclarativeLineSeries"; isPointer: true }
+        Property { name: "axisX"; revision: 1; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisY"; revision: 1; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisXTop"; revision: 2; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisYRight"; revision: 2; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisAngular"; revision: 3; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisRadial"; revision: 3; type: "QtCharts::QAbstractAxis"; isPointer: true }
         Property { name: "borderWidth"; revision: 1; type: "double" }
         Property { name: "brushFilename"; revision: 4; type: "string" }
         Property { name: "brush"; revision: 4; type: "QBrush" }
@@ -126,10 +126,10 @@ Module {
         ]
         isCreatable: false
         exportMetaObjectRevisions: [0, 0]
-        Property { name: "axisX"; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisY"; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisXTop"; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisYRight"; type: "QAbstractAxis"; isPointer: true }
+        Property { name: "axisX"; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisY"; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisXTop"; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisYRight"; type: "QtCharts::QAbstractAxis"; isPointer: true }
         Signal {
             name: "axisXChanged"
             Parameter { name: "axis"; type: "QAbstractAxis"; isPointer: true }
@@ -158,10 +158,10 @@ Module {
             "QtCharts/BarSeries 2.0"
         ]
         exportMetaObjectRevisions: [0, 1, 2, 2]
-        Property { name: "axisX"; revision: 1; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisY"; revision: 1; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisXTop"; revision: 2; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisYRight"; revision: 2; type: "QAbstractAxis"; isPointer: true }
+        Property { name: "axisX"; revision: 1; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisY"; revision: 1; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisXTop"; revision: 2; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisYRight"; revision: 2; type: "QtCharts::QAbstractAxis"; isPointer: true }
         Property { name: "seriesChildren"; type: "QObject"; isList: true; isReadonly: true }
         Signal {
             name: "axisXChanged"
@@ -275,10 +275,10 @@ Module {
             "QtCharts/BoxPlotSeries 2.0"
         ]
         exportMetaObjectRevisions: [0, 1, 1]
-        Property { name: "axisX"; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisY"; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisXTop"; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisYRight"; type: "QAbstractAxis"; isPointer: true }
+        Property { name: "axisX"; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisY"; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisXTop"; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisYRight"; type: "QtCharts::QAbstractAxis"; isPointer: true }
         Property { name: "seriesChildren"; type: "QObject"; isList: true; isReadonly: true }
         Property { name: "brushFilename"; revision: 1; type: "string" }
         Signal {
@@ -433,10 +433,10 @@ Module {
         prototype: "QtCharts::QCandlestickSeries"
         exports: ["QtCharts/CandlestickSeries 2.2"]
         exportMetaObjectRevisions: [0]
-        Property { name: "axisX"; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisY"; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisXTop"; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisYRight"; type: "QAbstractAxis"; isPointer: true }
+        Property { name: "axisX"; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisY"; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisXTop"; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisYRight"; type: "QtCharts::QAbstractAxis"; isPointer: true }
         Property { name: "seriesChildren"; type: "QObject"; isList: true; isReadonly: true }
         Property { name: "brushFilename"; type: "string" }
         Signal {
@@ -666,7 +666,7 @@ Module {
         Property { name: "title"; type: "string" }
         Property { name: "titleFont"; type: "QFont" }
         Property { name: "titleColor"; type: "QColor" }
-        Property { name: "legend"; type: "QLegend"; isReadonly: true; isPointer: true }
+        Property { name: "legend"; type: "QtCharts::QLegend"; isReadonly: true; isPointer: true }
         Property { name: "count"; type: "int"; isReadonly: true }
         Property { name: "backgroundColor"; type: "QColor" }
         Property { name: "dropShadowEnabled"; type: "bool" }
@@ -674,7 +674,7 @@ Module {
         Property {
             name: "margins"
             revision: 2
-            type: "DeclarativeMargins"
+            type: "QtCharts::DeclarativeMargins"
             isReadonly: true
             isPointer: true
         }
@@ -862,10 +862,10 @@ Module {
             "QtCharts/HorizontalBarSeries 2.0"
         ]
         exportMetaObjectRevisions: [1, 2, 2]
-        Property { name: "axisX"; revision: 1; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisY"; revision: 1; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisXTop"; revision: 2; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisYRight"; revision: 2; type: "QAbstractAxis"; isPointer: true }
+        Property { name: "axisX"; revision: 1; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisY"; revision: 1; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisXTop"; revision: 2; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisYRight"; revision: 2; type: "QtCharts::QAbstractAxis"; isPointer: true }
         Property { name: "seriesChildren"; type: "QObject"; isList: true; isReadonly: true }
         Signal {
             name: "axisXChanged"
@@ -927,10 +927,10 @@ Module {
             "QtCharts/HorizontalPercentBarSeries 2.0"
         ]
         exportMetaObjectRevisions: [1, 2, 2]
-        Property { name: "axisX"; revision: 1; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisY"; revision: 1; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisXTop"; revision: 2; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisYRight"; revision: 2; type: "QAbstractAxis"; isPointer: true }
+        Property { name: "axisX"; revision: 1; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisY"; revision: 1; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisXTop"; revision: 2; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisYRight"; revision: 2; type: "QtCharts::QAbstractAxis"; isPointer: true }
         Property { name: "seriesChildren"; type: "QObject"; isList: true; isReadonly: true }
         Signal {
             name: "axisXChanged"
@@ -992,10 +992,10 @@ Module {
             "QtCharts/HorizontalStackedBarSeries 2.0"
         ]
         exportMetaObjectRevisions: [1, 2, 2]
-        Property { name: "axisX"; revision: 1; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisY"; revision: 1; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisXTop"; revision: 2; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisYRight"; revision: 2; type: "QAbstractAxis"; isPointer: true }
+        Property { name: "axisX"; revision: 1; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisY"; revision: 1; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisXTop"; revision: 2; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisYRight"; revision: 2; type: "QtCharts::QAbstractAxis"; isPointer: true }
         Property { name: "seriesChildren"; type: "QObject"; isList: true; isReadonly: true }
         Signal {
             name: "axisXChanged"
@@ -1061,12 +1061,12 @@ Module {
         ]
         exportMetaObjectRevisions: [0, 1, 2, 3, 3, 4]
         Property { name: "count"; type: "int"; isReadonly: true }
-        Property { name: "axisX"; revision: 1; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisY"; revision: 1; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisXTop"; revision: 2; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisYRight"; revision: 2; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisAngular"; revision: 3; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisRadial"; revision: 3; type: "QAbstractAxis"; isPointer: true }
+        Property { name: "axisX"; revision: 1; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisY"; revision: 1; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisXTop"; revision: 2; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisYRight"; revision: 2; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisAngular"; revision: 3; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisRadial"; revision: 3; type: "QtCharts::QAbstractAxis"; isPointer: true }
         Property { name: "width"; revision: 1; type: "double" }
         Property { name: "style"; revision: 1; type: "Qt::PenStyle" }
         Property { name: "capStyle"; revision: 1; type: "Qt::PenCapStyle" }
@@ -1227,10 +1227,10 @@ Module {
             "QtCharts/PercentBarSeries 2.0"
         ]
         exportMetaObjectRevisions: [0, 1, 2, 2]
-        Property { name: "axisX"; revision: 1; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisY"; revision: 1; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisXTop"; revision: 2; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisYRight"; revision: 2; type: "QAbstractAxis"; isPointer: true }
+        Property { name: "axisX"; revision: 1; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisY"; revision: 1; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisXTop"; revision: 2; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisYRight"; revision: 2; type: "QtCharts::QAbstractAxis"; isPointer: true }
         Property { name: "seriesChildren"; type: "QObject"; isList: true; isReadonly: true }
         Signal {
             name: "axisXChanged"
@@ -1373,12 +1373,12 @@ Module {
         ]
         exportMetaObjectRevisions: [0, 1, 2, 3, 4, 4, 5]
         Property { name: "count"; type: "int"; isReadonly: true }
-        Property { name: "axisX"; revision: 1; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisY"; revision: 1; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisXTop"; revision: 2; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisYRight"; revision: 2; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisAngular"; revision: 3; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisRadial"; revision: 3; type: "QAbstractAxis"; isPointer: true }
+        Property { name: "axisX"; revision: 1; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisY"; revision: 1; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisXTop"; revision: 2; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisYRight"; revision: 2; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisAngular"; revision: 3; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisRadial"; revision: 3; type: "QtCharts::QAbstractAxis"; isPointer: true }
         Property { name: "borderWidth"; revision: 1; type: "double" }
         Property { name: "declarativeChildren"; type: "QObject"; isList: true; isReadonly: true }
         Property { name: "brushFilename"; revision: 4; type: "string" }
@@ -1499,12 +1499,12 @@ Module {
         ]
         exportMetaObjectRevisions: [0, 1, 2, 3, 3, 4]
         Property { name: "count"; type: "int"; isReadonly: true }
-        Property { name: "axisX"; revision: 1; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisY"; revision: 1; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisXTop"; revision: 2; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisYRight"; revision: 2; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisAngular"; revision: 3; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisRadial"; revision: 3; type: "QAbstractAxis"; isPointer: true }
+        Property { name: "axisX"; revision: 1; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisY"; revision: 1; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisXTop"; revision: 2; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisYRight"; revision: 2; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisAngular"; revision: 3; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisRadial"; revision: 3; type: "QtCharts::QAbstractAxis"; isPointer: true }
         Property { name: "width"; revision: 1; type: "double" }
         Property { name: "style"; revision: 1; type: "Qt::PenStyle" }
         Property { name: "capStyle"; revision: 1; type: "Qt::PenCapStyle" }
@@ -1626,10 +1626,10 @@ Module {
             "QtCharts/StackedBarSeries 2.0"
         ]
         exportMetaObjectRevisions: [0, 1, 2, 2]
-        Property { name: "axisX"; revision: 1; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisY"; revision: 1; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisXTop"; revision: 2; type: "QAbstractAxis"; isPointer: true }
-        Property { name: "axisYRight"; revision: 2; type: "QAbstractAxis"; isPointer: true }
+        Property { name: "axisX"; revision: 1; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisY"; revision: 1; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisXTop"; revision: 2; type: "QtCharts::QAbstractAxis"; isPointer: true }
+        Property { name: "axisYRight"; revision: 2; type: "QtCharts::QAbstractAxis"; isPointer: true }
         Property { name: "seriesChildren"; type: "QObject"; isList: true; isReadonly: true }
         Signal {
             name: "axisXChanged"
@@ -1944,8 +1944,8 @@ Module {
     Component {
         name: "QtCharts::QAreaSeries"
         prototype: "QtCharts::QAbstractSeries"
-        Property { name: "upperSeries"; type: "QLineSeries"; isReadonly: true; isPointer: true }
-        Property { name: "lowerSeries"; type: "QLineSeries"; isReadonly: true; isPointer: true }
+        Property { name: "upperSeries"; type: "QtCharts::QLineSeries"; isReadonly: true; isPointer: true }
+        Property { name: "lowerSeries"; type: "QtCharts::QLineSeries"; isReadonly: true; isPointer: true }
         Property { name: "color"; type: "QColor" }
         Property { name: "borderColor"; type: "QColor" }
         Property { name: "pointLabelsFormat"; type: "string" }
@@ -2178,7 +2178,7 @@ Module {
         isCreatable: false
         exportMetaObjectRevisions: [0]
         Property { name: "model"; type: "QAbstractItemModel"; isPointer: true }
-        Property { name: "series"; type: "QCandlestickSeries"; isPointer: true }
+        Property { name: "series"; type: "QtCharts::QCandlestickSeries"; isPointer: true }
         Signal { name: "modelReplaced" }
         Signal { name: "seriesReplaced" }
     }
@@ -2306,7 +2306,7 @@ Module {
             "QtCharts/HBarModelMapper 2.0"
         ]
         exportMetaObjectRevisions: [0, 0]
-        Property { name: "series"; type: "QAbstractBarSeries"; isPointer: true }
+        Property { name: "series"; type: "QtCharts::QAbstractBarSeries"; isPointer: true }
         Property { name: "model"; type: "QAbstractItemModel"; isPointer: true }
         Property { name: "firstBarSetRow"; type: "int" }
         Property { name: "lastBarSetRow"; type: "int" }
@@ -2320,7 +2320,7 @@ Module {
         prototype: "QtCharts::QBoxPlotModelMapper"
         exports: ["QtCharts/HBoxPlotModelMapper 2.0"]
         exportMetaObjectRevisions: [0]
-        Property { name: "series"; type: "QBoxPlotSeries"; isPointer: true }
+        Property { name: "series"; type: "QtCharts::QBoxPlotSeries"; isPointer: true }
         Property { name: "model"; type: "QAbstractItemModel"; isPointer: true }
         Property { name: "firstBoxSetRow"; type: "int" }
         Property { name: "lastBoxSetRow"; type: "int" }
@@ -2350,7 +2350,7 @@ Module {
             "QtCharts/HPieModelMapper 2.0"
         ]
         exportMetaObjectRevisions: [0, 0]
-        Property { name: "series"; type: "QPieSeries"; isPointer: true }
+        Property { name: "series"; type: "QtCharts::QPieSeries"; isPointer: true }
         Property { name: "model"; type: "QAbstractItemModel"; isPointer: true }
         Property { name: "valuesRow"; type: "int" }
         Property { name: "labelsRow"; type: "int" }
@@ -2367,7 +2367,7 @@ Module {
             "QtCharts/HXYModelMapper 2.0"
         ]
         exportMetaObjectRevisions: [0, 0]
-        Property { name: "series"; type: "QXYSeries"; isPointer: true }
+        Property { name: "series"; type: "QtCharts::QXYSeries"; isPointer: true }
         Property { name: "model"; type: "QAbstractItemModel"; isPointer: true }
         Property { name: "xRow"; type: "int" }
         Property { name: "yRow"; type: "int" }
@@ -2623,7 +2623,7 @@ Module {
             "QtCharts/VBarModelMapper 2.0"
         ]
         exportMetaObjectRevisions: [0, 0]
-        Property { name: "series"; type: "QAbstractBarSeries"; isPointer: true }
+        Property { name: "series"; type: "QtCharts::QAbstractBarSeries"; isPointer: true }
         Property { name: "model"; type: "QAbstractItemModel"; isPointer: true }
         Property { name: "firstBarSetColumn"; type: "int" }
         Property { name: "lastBarSetColumn"; type: "int" }
@@ -2637,7 +2637,7 @@ Module {
         prototype: "QtCharts::QBoxPlotModelMapper"
         exports: ["QtCharts/VBoxPlotModelMapper 2.0"]
         exportMetaObjectRevisions: [0]
-        Property { name: "series"; type: "QBoxPlotSeries"; isPointer: true }
+        Property { name: "series"; type: "QtCharts::QBoxPlotSeries"; isPointer: true }
         Property { name: "model"; type: "QAbstractItemModel"; isPointer: true }
         Property { name: "firstBoxSetColumn"; type: "int" }
         Property { name: "lastBoxSetColumn"; type: "int" }
@@ -2667,7 +2667,7 @@ Module {
             "QtCharts/VPieModelMapper 2.0"
         ]
         exportMetaObjectRevisions: [0, 0]
-        Property { name: "series"; type: "QPieSeries"; isPointer: true }
+        Property { name: "series"; type: "QtCharts::QPieSeries"; isPointer: true }
         Property { name: "model"; type: "QAbstractItemModel"; isPointer: true }
         Property { name: "valuesColumn"; type: "int" }
         Property { name: "labelsColumn"; type: "int" }
@@ -2684,7 +2684,7 @@ Module {
             "QtCharts/VXYModelMapper 2.0"
         ]
         exportMetaObjectRevisions: [0, 0]
-        Property { name: "series"; type: "QXYSeries"; isPointer: true }
+        Property { name: "series"; type: "QtCharts::QXYSeries"; isPointer: true }
         Property { name: "model"; type: "QAbstractItemModel"; isPointer: true }
         Property { name: "xColumn"; type: "int" }
         Property { name: "yColumn"; type: "int" }
