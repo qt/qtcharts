@@ -1497,6 +1497,6 @@ void DeclarativeChart::setPlotArea(const QRectF &rect)
     m_chart->setPlotArea(rect);
 }
 
-#include "moc_declarativechart_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_declarativechart_p.cpp"

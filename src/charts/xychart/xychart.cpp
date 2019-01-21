@@ -250,6 +250,6 @@ bool XYChart::isEmpty()
     return domain()->isEmpty() || m_series->points().isEmpty();
 }
 
-#include "moc_xychart_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_xychart_p.cpp"

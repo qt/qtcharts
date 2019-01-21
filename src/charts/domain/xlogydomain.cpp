@@ -264,6 +264,6 @@ QDebug Q_AUTOTEST_EXPORT operator<<(QDebug dbg, const XLogYDomain &domain)
     return dbg.maybeSpace();
 }
 
-#include "moc_xlogydomain_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_xlogydomain_p.cpp"

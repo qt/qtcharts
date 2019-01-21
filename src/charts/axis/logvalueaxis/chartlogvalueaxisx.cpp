@@ -145,6 +145,6 @@ QSizeF ChartLogValueAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint
     return sh;
 }
 
-#include "moc_chartlogvalueaxisx_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_chartlogvalueaxisx_p.cpp"

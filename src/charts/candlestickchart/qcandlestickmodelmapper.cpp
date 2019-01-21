@@ -700,7 +700,7 @@ void QCandlestickModelMapperPrivate::blockSeriesSignals(bool block)
     m_seriesSignalsBlock = block;
 }
 
+QT_CHARTS_END_NAMESPACE
+
 #include "moc_qcandlestickmodelmapper.cpp"
 #include "moc_qcandlestickmodelmapper_p.cpp"
-
-QT_CHARTS_END_NAMESPACE

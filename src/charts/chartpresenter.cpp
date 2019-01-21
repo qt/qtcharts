@@ -611,6 +611,6 @@ void ChartPresenter::updateGLWidget()
 #endif
 }
 
-#include "moc_chartpresenter_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_chartpresenter_p.cpp"

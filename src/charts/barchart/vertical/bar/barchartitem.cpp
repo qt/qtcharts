@@ -141,6 +141,6 @@ void BarChartItem::positionLabels()
     positionLabelsVertical();
 }
 
-#include "moc_barchartitem_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_barchartitem_p.cpp"

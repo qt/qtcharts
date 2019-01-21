@@ -643,7 +643,6 @@ void PolarChartAxisAngular::updateMinorTickItems()
     }
 }
 
+QT_CHARTS_END_NAMESPACE
 
 #include "moc_polarchartaxisangular_p.cpp"
-
-QT_CHARTS_END_NAMESPACE

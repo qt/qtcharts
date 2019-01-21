@@ -148,8 +148,7 @@ void QBarLegendMarkerPrivate::updated()
         emit q_ptr->penChanged();
 }
 
-#include "moc_qbarlegendmarker.cpp"
-#include "moc_qbarlegendmarker_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
 
+#include "moc_qbarlegendmarker.cpp"
+#include "moc_qbarlegendmarker_p.cpp"

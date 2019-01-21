@@ -65,6 +65,6 @@ void DeclarativeAxes::setAxisYRight(QAbstractAxis *axis)
     emit axisYRightChanged(axis);
 }
 
-#include "moc_declarativeaxes_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_declarativeaxes_p.cpp"

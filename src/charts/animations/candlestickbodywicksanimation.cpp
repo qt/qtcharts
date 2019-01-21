@@ -107,6 +107,6 @@ QVariant CandlestickBodyWicksAnimation::interpolated(const QVariant &from, const
     return qVariantFromValue(result);
 }
 
-#include "moc_candlestickbodywicksanimation_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_candlestickbodywicksanimation_p.cpp"

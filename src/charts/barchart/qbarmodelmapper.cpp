@@ -582,7 +582,7 @@ void QBarModelMapperPrivate::initializeBarFromModel()
     blockSeriesSignals(false);
 }
 
+QT_CHARTS_END_NAMESPACE
+
 #include "moc_qbarmodelmapper.cpp"
 #include "moc_qbarmodelmapper_p.cpp"
-
-QT_CHARTS_END_NAMESPACE

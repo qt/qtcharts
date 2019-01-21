@@ -158,6 +158,6 @@ void DeclarativePieSeries::handleRemoved(QList<QPieSlice *> slices)
         emit sliceRemoved(slice);
 }
 
-#include "moc_declarativepieseries_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_declarativepieseries_p.cpp"

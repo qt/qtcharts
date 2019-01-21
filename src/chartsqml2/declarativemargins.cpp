@@ -123,6 +123,6 @@ void DeclarativeMargins::setRight(int right)
     }
 }
 
-#include "moc_declarativemargins_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_declarativemargins_p.cpp"

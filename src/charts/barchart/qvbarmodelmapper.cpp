@@ -284,6 +284,6 @@ void QVBarModelMapper::setRowCount(int rowCount)
     }
 }
 
-#include "moc_qvbarmodelmapper.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_qvbarmodelmapper.cpp"

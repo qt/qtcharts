@@ -298,7 +298,6 @@ void QHBoxPlotModelMapper::setColumnCount(int columnCount)
     }
 }
 
-#include "moc_qhboxplotmodelmapper.cpp"
-
 QT_CHARTS_END_NAMESPACE
 
+#include "moc_qhboxplotmodelmapper.cpp"

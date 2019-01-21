@@ -271,6 +271,6 @@ void QHXYModelMapper::setColumnCount(int columnCount)
     }
 }
 
-#include "moc_qhxymodelmapper.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_qhxymodelmapper.cpp"

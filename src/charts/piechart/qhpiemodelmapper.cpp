@@ -277,6 +277,6 @@ void QHPieModelMapper::setColumnCount(int columnCount)
     }
 }
 
-#include "moc_qhpiemodelmapper.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_qhpiemodelmapper.cpp"

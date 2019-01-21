@@ -836,8 +836,8 @@ void QLegendPrivate::updateToolTips()
             m->d_ptr->m_item->setToolTip(QString());
     }
 }
-#include "moc_qlegend.cpp"
-#include "moc_qlegend_p.cpp"
 
 QT_CHARTS_END_NAMESPACE
 
+#include "moc_qlegend.cpp"
+#include "moc_qlegend_p.cpp"

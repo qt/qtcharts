@@ -251,6 +251,6 @@ QColor ChartThemeManager::colorAt(const QGradient &gradient, qreal pos)
     return colorAt(prev.second, next.second, relativePos);
 }
 
-#include "moc_chartthememanager_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_chartthememanager_p.cpp"

@@ -115,6 +115,6 @@ void PieAnimation::updateCurrentValue(const QVariant &)
     // nothing to do...
 }
 
-#include "moc_pieanimation_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_pieanimation_p.cpp"

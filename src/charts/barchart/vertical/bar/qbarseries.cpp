@@ -128,7 +128,6 @@ void QBarSeriesPrivate::initializeGraphics(QGraphicsItem* parent)
     QAbstractSeriesPrivate::initializeGraphics(parent);
 }
 
-#include "moc_qbarseries.cpp"
-
 QT_CHARTS_END_NAMESPACE
 
+#include "moc_qbarseries.cpp"

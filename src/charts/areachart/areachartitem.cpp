@@ -346,6 +346,6 @@ void AreaChartItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
     ChartItem::mouseDoubleClickEvent(event);
 }
 
-#include "moc_areachartitem_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_areachartitem_p.cpp"

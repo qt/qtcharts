@@ -339,7 +339,6 @@ QPainterPath PieSliceItem::labelArmPath(QPointF start, qreal angle, qreal length
     return path;
 }
 
-#include "moc_piesliceitem_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
 
+#include "moc_piesliceitem_p.cpp"

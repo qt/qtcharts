@@ -281,6 +281,6 @@ void QVPieModelMapper::setRowCount(int rowCount)
     }
 }
 
-#include "moc_qvpiemodelmapper.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_qvpiemodelmapper.cpp"

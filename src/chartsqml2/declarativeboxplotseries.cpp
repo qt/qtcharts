@@ -496,6 +496,6 @@ void DeclarativeBoxPlotSeries::handleBrushChanged()
     }
 }
 
-#include "moc_declarativeboxplotseries_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_declarativeboxplotseries_p.cpp"

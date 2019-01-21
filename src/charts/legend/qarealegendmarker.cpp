@@ -129,7 +129,7 @@ void QAreaLegendMarkerPrivate::updated()
         emit q_ptr->brushChanged();
 }
 
+QT_CHARTS_END_NAMESPACE
+
 #include "moc_qarealegendmarker.cpp"
 #include "moc_qarealegendmarker_p.cpp"
-
-QT_CHARTS_END_NAMESPACE

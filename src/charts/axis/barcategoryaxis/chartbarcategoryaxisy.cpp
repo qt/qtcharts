@@ -146,6 +146,6 @@ QSizeF ChartBarCategoryAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constra
       return sh;
 }
 
-#include "moc_chartbarcategoryaxisy_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_chartbarcategoryaxisy_p.cpp"

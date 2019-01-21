@@ -505,6 +505,6 @@ void PolarChartAxisRadial::updateMinorTickItems()
     }
 }
 
-#include "moc_polarchartaxisradial_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_polarchartaxisradial_p.cpp"

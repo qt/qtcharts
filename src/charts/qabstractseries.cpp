@@ -477,9 +477,7 @@ void QAbstractSeriesPrivate::setBlockOpenGL(bool enable)
         q_ptr->setUseOpenGL(false);
 }
 
-#include "moc_qabstractseries.cpp"
-#include "moc_qabstractseries_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
 
-
+#include "moc_qabstractseries.cpp"
+#include "moc_qabstractseries_p.cpp"

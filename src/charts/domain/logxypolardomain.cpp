@@ -247,6 +247,6 @@ QDebug Q_AUTOTEST_EXPORT operator<<(QDebug dbg, const LogXYPolarDomain &domain)
     return dbg.maybeSpace();
 }
 
-#include "moc_logxypolardomain_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_logxypolardomain_p.cpp"

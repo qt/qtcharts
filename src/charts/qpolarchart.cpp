@@ -145,6 +145,6 @@ QPolarChart::PolarOrientation QPolarChart::axisPolarOrientation(QAbstractAxis *a
         return PolarOrientationRadial;
 }
 
-#include "moc_qpolarchart.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_qpolarchart.cpp"

@@ -125,7 +125,6 @@ void QStackedBarSeriesPrivate::initializeGraphics(QGraphicsItem* parent)
     QAbstractSeriesPrivate::initializeGraphics(parent);
 }
 
-#include "moc_qstackedbarseries.cpp"
-
 QT_CHARTS_END_NAMESPACE
 
+#include "moc_qstackedbarseries.cpp"

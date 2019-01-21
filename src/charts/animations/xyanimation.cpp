@@ -160,5 +160,6 @@ void XYAnimation::updateState(QAbstractAnimation::State newState, QAbstractAnima
     }
 }
 
-#include "moc_chartanimation_p.cpp"
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_chartanimation_p.cpp"

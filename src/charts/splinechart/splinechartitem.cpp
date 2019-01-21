@@ -516,6 +516,6 @@ void SplineChartItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
     QGraphicsItem::mouseDoubleClickEvent(event);
 }
 
-#include "moc_splinechartitem_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_splinechartitem_p.cpp"

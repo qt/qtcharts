@@ -951,6 +951,6 @@ void QChartPrivate::scroll(qreal dx, qreal dy)
     m_presenter->setState(ChartPresenter::ShowState,QPointF());
 }
 
-#include "moc_qchart.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_qchart.cpp"

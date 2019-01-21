@@ -93,6 +93,6 @@ void PolarChartLogValueAxisAngular::handleLabelFormatChanged(const QString &form
         presenter()->layout()->invalidate();
 }
 
-#include "moc_polarchartlogvalueaxisangular_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_polarchartlogvalueaxisangular_p.cpp"

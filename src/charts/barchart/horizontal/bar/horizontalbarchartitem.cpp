@@ -126,6 +126,6 @@ QVector<QRectF> HorizontalBarChartItem::calculateLayout()
     return layout;
 }
 
-#include "moc_horizontalbarchartitem_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_horizontalbarchartitem_p.cpp"

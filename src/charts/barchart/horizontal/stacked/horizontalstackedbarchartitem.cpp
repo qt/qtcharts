@@ -175,7 +175,6 @@ QVector<QRectF> HorizontalStackedBarChartItem::calculateLayout()
     return layout;
 }
 
-#include "moc_horizontalstackedbarchartitem_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
 
+#include "moc_horizontalstackedbarchartitem_p.cpp"

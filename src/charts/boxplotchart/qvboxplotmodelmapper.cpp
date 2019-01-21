@@ -300,7 +300,6 @@ void QVBoxPlotModelMapper::setRowCount(int rowCount)
     }
 }
 
-#include "moc_qvboxplotmodelmapper.cpp"
-
 QT_CHARTS_END_NAMESPACE
 
+#include "moc_qvboxplotmodelmapper.cpp"

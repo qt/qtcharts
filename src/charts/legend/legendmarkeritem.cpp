@@ -370,6 +370,6 @@ bool LegendMarkerItem::useMaxWidth() const
             || m_marker->m_legend->alignment() == Qt::AlignRight);
 }
 
-#include "moc_legendmarkeritem_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_legendmarkeritem_p.cpp"

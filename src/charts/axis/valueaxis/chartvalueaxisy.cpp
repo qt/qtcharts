@@ -198,6 +198,6 @@ QSizeF ChartValueAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint) c
     return sh;
 }
 
-#include "moc_chartvalueaxisy_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_chartvalueaxisy_p.cpp"

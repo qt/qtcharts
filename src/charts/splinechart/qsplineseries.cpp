@@ -185,7 +185,7 @@ void QSplineSeriesPrivate::initializeAnimations(QtCharts::QChart::AnimationOptio
     QAbstractSeriesPrivate::initializeAnimations(options, duration, curve);
 }
 
+QT_CHARTS_END_NAMESPACE
+
 #include "moc_qsplineseries.cpp"
 #include "moc_qsplineseries_p.cpp"
-
-QT_CHARTS_END_NAMESPACE

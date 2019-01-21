@@ -104,6 +104,6 @@ void BoxPlotAnimation::removeBoxAnimation(BoxWhiskers *box)
     m_animations.remove(box);
 }
 
-#include "moc_boxplotanimation_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_boxplotanimation_p.cpp"

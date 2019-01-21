@@ -503,8 +503,7 @@ void QBoxPlotModelMapperPrivate::initializeBoxFromModel()
     blockSeriesSignals(false);
 }
 
-#include "moc_qboxplotmodelmapper.cpp"
-#include "moc_qboxplotmodelmapper_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
 
+#include "moc_qboxplotmodelmapper.cpp"
+#include "moc_qboxplotmodelmapper_p.cpp"

@@ -572,7 +572,7 @@ void QPieModelMapperPrivate::initializePieFromModel()
     blockSeriesSignals(false);
 }
 
+QT_CHARTS_END_NAMESPACE
+
 #include "moc_qpiemodelmapper_p.cpp"
 #include "moc_qpiemodelmapper.cpp"
-
-QT_CHARTS_END_NAMESPACE

@@ -136,6 +136,6 @@ void PolarChartAxis::handleShadesPenChanged(const QPen &pen)
         static_cast<QGraphicsPathItem *>(item)->setPen(pen);
 }
 
-#include "moc_polarchartaxis_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_polarchartaxis_p.cpp"

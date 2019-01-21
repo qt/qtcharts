@@ -95,6 +95,6 @@ QPointF PolarDomain::polarCoordinateToPoint(qreal angularCoordinate, qreal radia
     return QPointF(dx, -dy);
 }
 
-#include "moc_polardomain_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_polardomain_p.cpp"

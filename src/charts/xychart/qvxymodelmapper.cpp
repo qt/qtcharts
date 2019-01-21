@@ -268,6 +268,6 @@ void QVXYModelMapper::setRowCount(int rowCount)
     }
 }
 
-#include "moc_qvxymodelmapper.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_qvxymodelmapper.cpp"

@@ -115,7 +115,7 @@ void BoxWhiskersAnimation::setStartData(const BoxWhiskersData &endData)
     setStartValue(qVariantFromValue(endData));
 }
 
-#include "moc_boxwhiskersanimation_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_boxwhiskersanimation_p.cpp"
 

@@ -352,7 +352,7 @@ void QLegendMarkerPrivate::handleShapeChange()
     m_legend->d_ptr->m_layout->invalidate();
 }
 
+QT_CHARTS_END_NAMESPACE
+
 #include "moc_qlegendmarker.cpp"
 #include "moc_qlegendmarker_p.cpp"
-
-QT_CHARTS_END_NAMESPACE

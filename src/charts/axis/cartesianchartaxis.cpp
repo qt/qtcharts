@@ -327,6 +327,6 @@ void CartesianChartAxis::handleShadesPenChanged(const QPen &pen)
         static_cast<QGraphicsRectItem *>(item)->setPen(pen);
 }
 
-#include "moc_cartesianchartaxis_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_cartesianchartaxis_p.cpp"

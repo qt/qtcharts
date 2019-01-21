@@ -140,7 +140,7 @@ void QCandlestickLegendMarkerPrivate::updated()
         emit q_ptr->brushChanged();
 }
 
+QT_CHARTS_END_NAMESPACE
+
 #include "moc_qcandlesticklegendmarker.cpp"
 #include "moc_qcandlesticklegendmarker_p.cpp"
-
-QT_CHARTS_END_NAMESPACE

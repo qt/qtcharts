@@ -336,6 +336,6 @@ void QChartViewPrivate::resize()
     q_ptr->setSceneRect(m_chart->geometry());
 }
 
-#include "moc_qchartview.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_qchartview.cpp"

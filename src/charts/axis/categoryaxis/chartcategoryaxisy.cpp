@@ -123,6 +123,6 @@ void ChartCategoryAxisY::handleCategoriesChanged()
     presenter()->layout()->invalidate();
 }
 
-#include "moc_chartcategoryaxisy_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_chartcategoryaxisy_p.cpp"

@@ -628,7 +628,7 @@ void QBarCategoryAxisPrivate::initializeDomain(AbstractDomain *domain)
     }
 }
 
+QT_CHARTS_END_NAMESPACE
+
 #include "moc_qbarcategoryaxis.cpp"
 #include "moc_qbarcategoryaxis_p.cpp"
-
-QT_CHARTS_END_NAMESPACE

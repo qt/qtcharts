@@ -348,6 +348,6 @@ int QHCandlestickModelMapper::lastSetRow() const
     return QCandlestickModelMapper::lastSetSection();
 }
 
-#include "moc_qhcandlestickmodelmapper.cpp"
-
 QT_CHARTS_END_NAMESPACE
+
+#include "moc_qhcandlestickmodelmapper.cpp"

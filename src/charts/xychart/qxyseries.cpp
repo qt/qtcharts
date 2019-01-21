@@ -1031,7 +1031,7 @@ void QXYSeriesPrivate::drawSeriesPointLabels(QPainter *painter, const QVector<QP
     }
 }
 
+QT_CHARTS_END_NAMESPACE
+
 #include "moc_qxyseries.cpp"
 #include "moc_qxyseries_p.cpp"
-
-QT_CHARTS_END_NAMESPACE

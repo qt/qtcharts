@@ -163,7 +163,6 @@ QVector<QRectF> HorizontalPercentBarChartItem::calculateLayout()
     return layout;
 }
 
-#include "moc_horizontalpercentbarchartitem_p.cpp"
-
 QT_CHARTS_END_NAMESPACE
 
+#include "moc_horizontalpercentbarchartitem_p.cpp"
