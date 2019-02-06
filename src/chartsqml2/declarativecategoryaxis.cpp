@@ -30,6 +30,8 @@
 #include "declarativecategoryaxis_p.h"
 #include <QtCore/QDebug>
 
+#include <algorithm>
+
 QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
@@ -83,7 +85,7 @@ void DeclarativeCategoryAxis::componentComplete()
     }
 
     // Sort and append the range objects according to end value
-    qSort(ranges.begin(), ranges.end(), endValueLessThan);
+    std::sort(ranges.begin(), ranges.end(), endValueLessThan);
     for (int i(0); i < ranges.count(); i++)
         append(ranges.at(i).first, ranges.at(i).second);
 }
