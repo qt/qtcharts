@@ -289,7 +289,8 @@ void QLegend::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     painter->setOpacity(opacity());
     painter->setPen(d_ptr->m_pen);
     painter->setBrush(d_ptr->m_brush);
-    painter->drawRoundRect(rect(), d_ptr->roundness(rect().width()), d_ptr->roundness(rect().height()));
+    painter->drawRoundedRect(rect(), d_ptr->roundness(rect().width()), d_ptr->roundness(rect().height()),
+                             Qt::RelativeSize);
 }
 
 

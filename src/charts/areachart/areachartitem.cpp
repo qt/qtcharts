@@ -278,7 +278,7 @@ void AreaChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
                                    presenter()->numberToString(m_series->upperSeries()->at(i).y()));
 
                 // Position text in relation to the point
-                int pointLabelWidth = fm.width(pointLabel);
+                int pointLabelWidth = fm.horizontalAdvance(pointLabel);
                 QPointF position(m_upper->geometryPoints().at(i));
                 position.setX(position.x() - pointLabelWidth / 2);
                 position.setY(position.y() - m_series->upperSeries()->pen().width() / 2
@@ -296,7 +296,7 @@ void AreaChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
                                    presenter()->numberToString(m_series->lowerSeries()->at(i).y()));
 
                 // Position text in relation to the point
-                int pointLabelWidth = fm.width(pointLabel);
+                int pointLabelWidth = fm.horizontalAdvance(pointLabel);
                 QPointF position(m_lower->geometryPoints().at(i));
                 position.setX(position.x() - pointLabelWidth / 2);
                 position.setY(position.y() - m_series->lowerSeries()->pen().width() / 2

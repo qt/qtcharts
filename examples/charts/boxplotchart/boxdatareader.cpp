@@ -29,6 +29,8 @@
 
 #include "boxdatareader.h"
 
+#include <algorithm>
+
 BoxDataReader::BoxDataReader(QIODevice *device) :
     QTextStream(device)
 {
@@ -56,7 +58,7 @@ QBoxSet *BoxDataReader::readBox()
     for (int i = 1; i < strList.count(); i++)
         sortedList.append(strList.at(i).toDouble());
 
-    qSort(sortedList.begin(), sortedList.end());
+    std::sort(sortedList.begin(), sortedList.end());
     //! [3]
 
     int count = sortedList.count();
