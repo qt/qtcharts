@@ -55,7 +55,7 @@ Rectangle {
             countChangedSpy.clear();
             var count = 50;
             for (var i = 0; i < count; i++)
-                boxPlotSeries.append("boxplot" + i, Math.random());
+                boxPlotSeries.append("boxplot" + i, [1, 3, 5, 7, 9]);
             compare(addedSpy.count, count);
             compare(countChangedSpy.count, count);
             boxPlotSeries.clear();
@@ -66,7 +66,7 @@ Rectangle {
             countChangedSpy.clear();
             var count = 50;
             for (var i = 0; i < count; i++)
-                boxPlotSeries.append("boxplot" + i, Math.random());
+                boxPlotSeries.append("boxplot" + i, [1, 3, 5, 7, 9]);
             for (var j = 0; j < count; j++)
                 boxPlotSeries.remove(boxPlotSeries.at(0));
             compare(removedSpy.count, count);
