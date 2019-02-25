@@ -102,17 +102,6 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
-  \property QAbstractAxis::labelsEditable
-  \since 5.13
-  \brief This property holds whether the labels of the axis are editable or not.
-  When the labels set to editable the user will be able to change the range of the
-  axis conveniently by editing any of the labels. This feature is only implemented
-  for the QValueAxis and the QDateTimeAxis.
-
-  By default, the value is \c false.
-*/
-
-/*!
   \property QAbstractAxis::labelsBrush
   \brief The brush used to draw the labels.
 
@@ -965,6 +954,16 @@ bool QAbstractAxis::isReverse() const
     return d_ptr->m_reverse;
 }
 
+/*!
+  Sets axis labels editability to \a editable.
+
+  When the labels are editable the user will be able to change the range of the
+  axis conveniently by editing any of the labels. This feature is only supported
+  for the QValueAxis and the QDateTimeAxis.
+
+  By default, labels are not editable.
+  \since 5.13
+*/
 void QAbstractAxis::setLabelsEditable(bool editable)
 {
     if (d_ptr->m_labelsEditable != editable) {
@@ -979,6 +978,10 @@ void QAbstractAxis::setLabelsEditable(bool editable)
     }
 }
 
+/*!
+  Returns \c true if axis labels are editable.
+  \since 5.13
+*/
 bool QAbstractAxis::labelsEditable() const
 {
     return d_ptr->m_labelsEditable;
