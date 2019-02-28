@@ -465,6 +465,9 @@ bool QChart::isZoomed()
 }
 
 /*!
+ \deprecated
+ Use axes() instead.
+
  Returns a pointer to the horizontal axis attached to the specified \a series.
  If no series is specified, the first horizontal axis added to the chart is returned.
 
@@ -479,6 +482,9 @@ QAbstractAxis *QChart::axisX(QAbstractSeries *series) const
 }
 
 /*!
+ \deprecated
+ Use axes() instead.
+
  Returns a pointer to the vertical axis attached to the specified \a series.
  If no series is specified, the first vertical axis added to the chart is returned.
 
@@ -496,6 +502,7 @@ QAbstractAxis *QChart::axisY(QAbstractSeries *series) const
  Returns the axes attached to the series \a series with the orientation specified
  by \a orientation. If no series is specified, all axes added to the chart with
  the specified orientation are returned.
+
  \sa addAxis(), createDefaultAxes()
  */
 QList<QAbstractAxis *> QChart::axes(Qt::Orientations orientation, QAbstractSeries *series) const
@@ -529,8 +536,8 @@ QList<QAbstractAxis *> QChart::axes(Qt::Orientations orientation, QAbstractSerie
  \table
      \header
          \li Series type
-         \li X-axis
-         \li Y-axis
+         \li Horizontal axis (X)
+         \li Vertical axis (Y)
      \row
          \li QXYSeries
          \li QValueAxis
@@ -552,7 +559,7 @@ QList<QAbstractAxis *> QChart::axes(Qt::Orientations orientation, QAbstractSerie
  as the parameter for the axes() function call.
  QPieSeries does not create any axes.
 
- \sa axisX(), axisY(), axes(), setAxisX(), setAxisY(), QAbstractSeries::attachAxis()
+ \sa axes(), QAbstractSeries::attachAxis()
  */
 void QChart::createDefaultAxes()
 {
@@ -743,6 +750,9 @@ QList<QAbstractSeries *> QChart::series() const
 }
 
 /*!
+  \deprecated
+  Use addAxis() instead.
+
   Adds the axis \a axis to the chart and attaches it to the series \a series as a
   bottom-aligned horizontal axis.
   The chart takes ownership of both the axis and the  series.
@@ -765,6 +775,9 @@ void QChart::setAxisX(QAbstractAxis *axis ,QAbstractSeries *series)
 }
 
 /*!
+  \deprecated
+  Use addAxis() instead.
+
   Adds the axis \a axis to the chart and attaches it to the series \a series as a
   left-aligned vertical axis.
   The chart takes ownership of both the axis and the series.
