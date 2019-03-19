@@ -100,6 +100,11 @@
 */
 
 /*!
+    \qmlproperty brush ScatterSeries::brush
+    The brush used to draw the scatter series markers.
+*/
+
+/*!
     \property QScatterSeries::color
     \brief The color used to fill the series markers.
 

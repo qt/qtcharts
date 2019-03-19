@@ -196,6 +196,11 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
+    \qmlproperty brush AreaSeries::brush
+    The brush used to draw to draw the line for this series.
+*/
+
+/*!
     \qmlproperty QString AreaSeries::brushFilename
     The name of the file used as a brush image for the series.
 */
