@@ -53,11 +53,12 @@
 
     \snippet temperaturerecords/main.cpp 3
 
-    To have categories displayed on an axis, we need to create a QBarCategoryAxis. Here we create a category axis with a list of categories and
-    set it to be the x-axis of the chart. The chart takes ownership of the axis. For y-axis we use the default axis, which is created and scaled to the series data
-    by calling createDefaultAxes of the chart. We change the range for the y-axis, since this gives nicer result than with autoscaling.
-
-    Note that the call for createDefaultAxes must be before we set the category axis. Otherwise the default axis will override the category axis.
+    To have the categories displayed on an axis, we need to create a
+    QBarCategoryAxis. Here we create a category axis with a list of
+    categories and add it to the chart aligned to bottom, acting as the
+    x-axis. The chart takes ownership of the axis. For y-axis we use a value
+    axis, aligned to the left-hand side. We change the range for the y-axis,
+    as this gives nicer results than with autoscaling.
 
     \snippet temperaturerecords/main.cpp 4
 

@@ -58,10 +58,11 @@
 
     \snippet horizontalbarchart/main.cpp 3
 
-    To have the categories displayed on axis, we need to create a QBarCategoryAxis. Here we create a category axis with a list of categories and
-    set it to be the y-axis of the chart. The chart takes ownership of axis. For the x-axis we use the default axis, which is created and scaled to series data
-    by calling createDefaultAxes of the chart. Note that the call for createDefaultAxes must be done before we set the category axis. Otherwise the default axis will
-    override the category axis.
+    To have categories displayed on axis, we need to create a QBarCategoryAxis
+    for that. Here we create a category axis with a list of categories and
+    set it to be aligned to the left-hand side, acting as the y-axis, and
+    attach it to the series. The chart takes ownership of the axis. For x-axis
+    we use a value axis, aligned to the bottom.
 
     \snippet horizontalbarchart/main.cpp 4
 
