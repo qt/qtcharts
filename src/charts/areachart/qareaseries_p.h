@@ -47,7 +47,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 class QAreaSeries;
 class QLineSeries;
 
-class QT_CHARTS_PRIVATE_EXPORT QAreaSeriesPrivate: public QAbstractSeriesPrivate
+class Q_CHARTS_PRIVATE_EXPORT QAreaSeriesPrivate: public QAbstractSeriesPrivate
 {
     Q_OBJECT
 

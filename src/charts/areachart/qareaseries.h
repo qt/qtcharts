@@ -39,7 +39,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 class QLineSeries;
 class QAreaSeriesPrivate;
 
-class QT_CHARTS_EXPORT QAreaSeries : public QAbstractSeries
+class Q_CHARTS_EXPORT QAreaSeries : public QAbstractSeries
 {
     Q_OBJECT
     Q_PROPERTY(QtCharts::QLineSeries *upperSeries READ upperSeries)

@@ -43,7 +43,7 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class QT_CHARTS_PRIVATE_EXPORT ValueAxisLabel : public EditableAxisLabel
+class Q_CHARTS_PRIVATE_EXPORT ValueAxisLabel : public EditableAxisLabel
 {
     Q_OBJECT
 public:

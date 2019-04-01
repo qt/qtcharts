@@ -52,7 +52,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 class BoxPlotSeriesPrivate;
 
-class QT_CHARTS_PRIVATE_EXPORT BoxPlotChartItem : public ChartItem
+class Q_CHARTS_PRIVATE_EXPORT BoxPlotChartItem : public ChartItem
 {
     Q_OBJECT
 public:

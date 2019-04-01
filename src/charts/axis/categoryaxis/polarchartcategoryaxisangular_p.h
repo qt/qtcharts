@@ -46,7 +46,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 class QCategoryAxis;
 
-class QT_CHARTS_PRIVATE_EXPORT PolarChartCategoryAxisAngular : public PolarChartAxisAngular
+class Q_CHARTS_PRIVATE_EXPORT PolarChartCategoryAxisAngular : public PolarChartAxisAngular
 {
     Q_OBJECT
 

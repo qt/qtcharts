@@ -50,7 +50,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 class QScatterSeries;
 
-class QT_CHARTS_PRIVATE_EXPORT ScatterChartItem : public XYChart
+class Q_CHARTS_PRIVATE_EXPORT ScatterChartItem : public XYChart
 {
     Q_OBJECT
     Q_INTERFACES(QGraphicsItem)
@@ -103,7 +103,7 @@ private:
     bool m_mousePressed;
 };
 
-class QT_CHARTS_PRIVATE_EXPORT CircleMarker: public QGraphicsEllipseItem
+class Q_CHARTS_PRIVATE_EXPORT CircleMarker: public QGraphicsEllipseItem
 {
 
 public:
@@ -150,7 +150,7 @@ private:
     ScatterChartItem *m_parent;
 };
 
-class QT_CHARTS_PRIVATE_EXPORT RectangleMarker: public QGraphicsRectItem
+class Q_CHARTS_PRIVATE_EXPORT RectangleMarker: public QGraphicsRectItem
 {
 
 public:

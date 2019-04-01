@@ -38,7 +38,7 @@
 QT_CHARTS_BEGIN_NAMESPACE
 class QBarSetPrivate;
 
-class QT_CHARTS_EXPORT QBarSet : public QObject
+class Q_CHARTS_EXPORT QBarSet : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString label READ label WRITE setLabel NOTIFY labelChanged)

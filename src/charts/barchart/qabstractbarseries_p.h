@@ -51,7 +51,7 @@ class QBarModelMapper;
 class QBarCategoryAxis;
 class QLegendMarker;
 
-class QT_CHARTS_PRIVATE_EXPORT QAbstractBarSeriesPrivate : public QAbstractSeriesPrivate
+class Q_CHARTS_PRIVATE_EXPORT QAbstractBarSeriesPrivate : public QAbstractSeriesPrivate
 {
     Q_OBJECT
 public:

@@ -45,7 +45,7 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class QT_CHARTS_PRIVATE_EXPORT PolarDomain: public AbstractDomain
+class Q_CHARTS_PRIVATE_EXPORT PolarDomain: public AbstractDomain
 {
     Q_OBJECT
 public:

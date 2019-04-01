@@ -54,7 +54,7 @@ class QPieSlice;
 class ChartPresenter;
 class PieAnimation;
 
-class QT_CHARTS_PRIVATE_EXPORT PieChartItem : public ChartItem
+class Q_CHARTS_PRIVATE_EXPORT PieChartItem : public ChartItem
 {
     Q_OBJECT
 

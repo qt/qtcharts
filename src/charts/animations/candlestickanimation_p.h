@@ -48,7 +48,7 @@ class Candlestick;
 class CandlestickChartItem;
 class CandlestickBodyWicksAnimation;
 
-class QT_CHARTS_PRIVATE_EXPORT CandlestickAnimation : public QObject
+class Q_CHARTS_PRIVATE_EXPORT CandlestickAnimation : public QObject
 {
     Q_OBJECT
 

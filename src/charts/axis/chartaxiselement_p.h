@@ -56,7 +56,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 class ChartPresenter;
 class QAbstractAxis;
 
-class QT_CHARTS_PRIVATE_EXPORT ChartAxisElement : public ChartElement, public QGraphicsLayoutItem
+class Q_CHARTS_PRIVATE_EXPORT ChartAxisElement : public ChartElement, public QGraphicsLayoutItem
 {
     Q_OBJECT
 

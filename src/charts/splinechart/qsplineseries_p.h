@@ -45,7 +45,7 @@
 QT_CHARTS_BEGIN_NAMESPACE
 
 
-class QT_CHARTS_PRIVATE_EXPORT QSplineSeriesPrivate: public QLineSeriesPrivate
+class Q_CHARTS_PRIVATE_EXPORT QSplineSeriesPrivate: public QLineSeriesPrivate
 {
     Q_OBJECT
 public:

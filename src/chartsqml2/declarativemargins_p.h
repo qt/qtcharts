@@ -46,7 +46,7 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class QT_QMLCHARTS_PRIVATE_EXPORT DeclarativeMargins : public QObject, public QMargins
+class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeMargins : public QObject, public QMargins
 {
     Q_OBJECT
     Q_PROPERTY(int top READ top WRITE setTop NOTIFY topChanged)

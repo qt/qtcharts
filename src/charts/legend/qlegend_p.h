@@ -50,7 +50,7 @@ class QAbstractSeries;
 class LegendLayout;
 class QLegendMarker;
 
-class QT_CHARTS_PRIVATE_EXPORT QLegendPrivate : public QObject
+class Q_CHARTS_PRIVATE_EXPORT QLegendPrivate : public QObject
 {
     Q_OBJECT
 public:

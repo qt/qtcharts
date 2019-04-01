@@ -52,7 +52,7 @@ class QChart;
 class ChartPresenter;
 class QChartView;
 
-class QT_CHARTS_PRIVATE_EXPORT QChartViewPrivate
+class Q_CHARTS_PRIVATE_EXPORT QChartViewPrivate
 {
 public:
     explicit QChartViewPrivate(QChartView *q, QChart *chart = 0);

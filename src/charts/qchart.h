@@ -47,7 +47,7 @@ class QLegend;
 class QChartPrivate;
 class QBoxPlotSeries;
 
-class QT_CHARTS_EXPORT QChart : public QGraphicsWidget
+class Q_CHARTS_EXPORT QChart : public QGraphicsWidget
 {
     Q_OBJECT
     Q_PROPERTY(QChart::ChartTheme theme READ theme WRITE setTheme)

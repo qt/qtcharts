@@ -49,7 +49,7 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class QT_QMLCHARTS_PRIVATE_EXPORT DeclarativeBoxSet : public QBoxSet
+class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeBoxSet : public QBoxSet
 {
     Q_OBJECT
     Q_PROPERTY(QVariantList values READ values WRITE setValues)
@@ -93,7 +93,7 @@ private:
     QImage m_brushImage;
 };
 
-class QT_QMLCHARTS_PRIVATE_EXPORT DeclarativeBoxPlotSeries : public QBoxPlotSeries, public QQmlParserStatus
+class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeBoxPlotSeries : public QBoxPlotSeries, public QQmlParserStatus
 {
     Q_OBJECT
     Q_INTERFACES(QQmlParserStatus)

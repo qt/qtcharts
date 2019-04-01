@@ -49,7 +49,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 class QAreaLegendMarker;
 
-class QT_CHARTS_PRIVATE_EXPORT QAreaLegendMarkerPrivate : public QLegendMarkerPrivate
+class Q_CHARTS_PRIVATE_EXPORT QAreaLegendMarkerPrivate : public QLegendMarkerPrivate
 {
     Q_OBJECT
 public:

@@ -49,7 +49,7 @@ QT_END_NAMESPACE
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class QT_CHARTS_PRIVATE_EXPORT QBoxSet;
+class Q_CHARTS_PRIVATE_EXPORT QBoxSet;
 
 class QBoxPlotModelMapperPrivate : public QObject
 {

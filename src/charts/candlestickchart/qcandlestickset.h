@@ -38,7 +38,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 class QCandlestickSetPrivate;
 
-class QT_CHARTS_EXPORT QCandlestickSet : public QObject
+class Q_CHARTS_EXPORT QCandlestickSet : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(qreal timestamp READ timestamp WRITE setTimestamp NOTIFY timestampChanged)

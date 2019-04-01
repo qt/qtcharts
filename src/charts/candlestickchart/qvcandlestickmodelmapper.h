@@ -34,7 +34,7 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 /* Comment line for syncqt to generate the fwd-include correctly, due to QTBUG-22432 */
-class QT_CHARTS_EXPORT QVCandlestickModelMapper : public QCandlestickModelMapper
+class Q_CHARTS_EXPORT QVCandlestickModelMapper : public QCandlestickModelMapper
 {
     Q_OBJECT
     Q_PROPERTY(int timestampRow READ timestampRow WRITE setTimestampRow NOTIFY timestampRowChanged)

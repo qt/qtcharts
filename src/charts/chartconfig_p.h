@@ -44,7 +44,7 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class QT_CHARTS_PRIVATE_EXPORT ChartConfig
+class Q_CHARTS_PRIVATE_EXPORT ChartConfig
 {
 private:
     ChartConfig() {

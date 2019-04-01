@@ -50,7 +50,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 class QBoxPlotSeriesPrivate;
 
-class QT_CHARTS_PRIVATE_EXPORT QBoxSetPrivate : public QObject
+class Q_CHARTS_PRIVATE_EXPORT QBoxSetPrivate : public QObject
 {
     Q_OBJECT
 

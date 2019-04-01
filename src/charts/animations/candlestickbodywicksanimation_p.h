@@ -48,7 +48,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 class Candlestick;
 class CandlestickAnimation;
 
-class QT_CHARTS_PRIVATE_EXPORT CandlestickBodyWicksAnimation : public ChartAnimation
+class Q_CHARTS_PRIVATE_EXPORT CandlestickBodyWicksAnimation : public ChartAnimation
 {
     Q_OBJECT
 

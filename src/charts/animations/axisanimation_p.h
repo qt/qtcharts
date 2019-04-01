@@ -47,7 +47,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 class ChartAxisElement;
 
-class QT_CHARTS_PRIVATE_EXPORT AxisAnimation: public ChartAnimation
+class Q_CHARTS_PRIVATE_EXPORT AxisAnimation: public ChartAnimation
 {
 public:
     enum Animation { DefaultAnimation, ZoomOutAnimation, ZoomInAnimation, MoveForwardAnimation, MoveBackwordAnimation};

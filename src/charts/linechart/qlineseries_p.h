@@ -45,7 +45,7 @@
 QT_CHARTS_BEGIN_NAMESPACE
 
 
-class QT_CHARTS_PRIVATE_EXPORT QLineSeriesPrivate: public QXYSeriesPrivate
+class Q_CHARTS_PRIVATE_EXPORT QLineSeriesPrivate: public QXYSeriesPrivate
 {
 public:
     QLineSeriesPrivate(QLineSeries *q);

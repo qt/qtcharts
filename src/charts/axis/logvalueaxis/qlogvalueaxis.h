@@ -40,7 +40,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 class QLogValueAxisPrivate;
 
-class QT_CHARTS_EXPORT QLogValueAxis : public QAbstractAxis
+class Q_CHARTS_EXPORT QLogValueAxis : public QAbstractAxis
 {
     Q_OBJECT
     Q_PROPERTY(qreal min READ min WRITE setMin NOTIFY minChanged)

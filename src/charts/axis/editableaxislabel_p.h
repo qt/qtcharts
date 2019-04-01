@@ -47,7 +47,7 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class QT_CHARTS_PRIVATE_EXPORT EditableAxisLabel : public QGraphicsTextItem
+class Q_CHARTS_PRIVATE_EXPORT EditableAxisLabel : public QGraphicsTextItem
 {
     Q_OBJECT
 public:

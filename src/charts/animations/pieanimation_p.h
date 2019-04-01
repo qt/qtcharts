@@ -48,7 +48,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 class PieChartItem;
 
-class QT_CHARTS_PRIVATE_EXPORT PieAnimation : public ChartAnimation
+class Q_CHARTS_PRIVATE_EXPORT PieAnimation : public ChartAnimation
 {
     Q_OBJECT
 

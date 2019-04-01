@@ -45,7 +45,7 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class QT_CHARTS_PRIVATE_EXPORT QHorizontalPercentBarSeriesPrivate: public QAbstractBarSeriesPrivate
+class Q_CHARTS_PRIVATE_EXPORT QHorizontalPercentBarSeriesPrivate: public QAbstractBarSeriesPrivate
 {
 public:
     QHorizontalPercentBarSeriesPrivate(QHorizontalPercentBarSeries *q);

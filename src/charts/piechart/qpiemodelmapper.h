@@ -42,7 +42,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 class QPieModelMapperPrivate;
 class QPieSeries;
 
-class QT_CHARTS_EXPORT QPieModelMapper : public QObject
+class Q_CHARTS_EXPORT QPieModelMapper : public QObject
 {
     Q_OBJECT
 

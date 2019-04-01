@@ -54,7 +54,7 @@ class QLegend;
 class QLegendMarker;
 class LegendMarkerItem;
 
-class QT_CHARTS_PRIVATE_EXPORT QLegendMarkerPrivate : public QObject
+class Q_CHARTS_PRIVATE_EXPORT QLegendMarkerPrivate : public QObject
 {
     Q_OBJECT
 public:

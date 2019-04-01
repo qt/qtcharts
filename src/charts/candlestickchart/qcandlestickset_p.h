@@ -49,7 +49,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 class QCandlestickSeriesPrivate;
 class QCandlestickSet;
 
-class QT_CHARTS_PRIVATE_EXPORT QCandlestickSetPrivate : public QObject
+class Q_CHARTS_PRIVATE_EXPORT QCandlestickSetPrivate : public QObject
 {
     Q_OBJECT
 

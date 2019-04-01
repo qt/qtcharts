@@ -42,7 +42,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 class QBarModelMapperPrivate;
 class QAbstractBarSeries;
 
-class QT_CHARTS_EXPORT QBarModelMapper : public QObject
+class Q_CHARTS_EXPORT QBarModelMapper : public QObject
 {
     Q_OBJECT
 

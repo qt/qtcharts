@@ -46,7 +46,7 @@
 QT_CHARTS_BEGIN_NAMESPACE
 class QLegendPrivate;
 
-class QT_CHARTS_PRIVATE_EXPORT QPieSeriesPrivate : public QAbstractSeriesPrivate
+class Q_CHARTS_PRIVATE_EXPORT QPieSeriesPrivate : public QAbstractSeriesPrivate
 {
     Q_OBJECT
 

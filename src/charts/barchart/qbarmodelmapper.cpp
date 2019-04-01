@@ -545,7 +545,7 @@ QBarSet *qt_allocate_bar_set_cpp(const QString &label)
     return new QBarSet(label);
 }
 
-QT_CHARTS_EXPORT QBarSet *(*qt_allocate_bar_set)(const QString &label) = &qt_allocate_bar_set_cpp;
+Q_CHARTS_EXPORT QBarSet *(*qt_allocate_bar_set)(const QString &label) = &qt_allocate_bar_set_cpp;
 
 void QBarModelMapperPrivate::initializeBarFromModel()
 {

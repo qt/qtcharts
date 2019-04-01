@@ -40,7 +40,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 class QAbstractSeriesPrivate;
 class QChart;
 
-class QT_CHARTS_EXPORT QAbstractSeries : public QObject
+class Q_CHARTS_EXPORT QAbstractSeries : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)

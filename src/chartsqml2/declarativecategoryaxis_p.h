@@ -47,7 +47,7 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class QT_QMLCHARTS_PRIVATE_EXPORT DeclarativeCategoryRange : public QObject
+class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeCategoryRange : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(qreal endValue READ endValue WRITE setEndValue)

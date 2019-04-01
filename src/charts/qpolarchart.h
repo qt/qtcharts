@@ -37,7 +37,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 class QAbstractSeries;
 class QAbstractAxis;
 
-class QT_CHARTS_EXPORT QPolarChart : public QChart
+class Q_CHARTS_EXPORT QPolarChart : public QChart
 {
     Q_OBJECT
     Q_ENUMS(PolarOrientation)

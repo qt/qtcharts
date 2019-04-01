@@ -46,7 +46,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 class QLogValueAxis;
 
-class QT_CHARTS_PRIVATE_EXPORT ChartLogValueAxisY : public VerticalAxis
+class Q_CHARTS_PRIVATE_EXPORT ChartLogValueAxisY : public VerticalAxis
 {
     Q_OBJECT
 
