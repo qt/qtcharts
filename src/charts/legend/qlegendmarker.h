@@ -43,7 +43,7 @@ class QLegendMarkerPrivate;
 class QAbstractSeries;
 class QLegend;
 
-class QT_CHARTS_EXPORT QLegendMarker : public QObject
+class Q_CHARTS_EXPORT QLegendMarker : public QObject
 {
     Q_OBJECT
 

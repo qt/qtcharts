@@ -47,7 +47,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 class QBarCategoryAxis;
 class ChartPresenter;
 
-class QT_CHARTS_PRIVATE_EXPORT ChartBarCategoryAxisY : public VerticalAxis
+class Q_CHARTS_PRIVATE_EXPORT ChartBarCategoryAxisY : public VerticalAxis
 {
     Q_OBJECT
 public:

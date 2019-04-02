@@ -39,7 +39,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 class QAbstractAxisPrivate;
 
-class QT_CHARTS_EXPORT QAbstractAxis : public QObject
+class Q_CHARTS_EXPORT QAbstractAxis : public QObject
 {
     Q_OBJECT
     //visibility

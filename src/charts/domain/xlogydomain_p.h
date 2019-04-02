@@ -45,7 +45,7 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class QT_CHARTS_PRIVATE_EXPORT XLogYDomain: public AbstractDomain
+class Q_CHARTS_PRIVATE_EXPORT XLogYDomain: public AbstractDomain
 {
     Q_OBJECT
 public:

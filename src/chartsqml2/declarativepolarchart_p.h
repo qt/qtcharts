@@ -46,7 +46,7 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class QT_QMLCHARTS_PRIVATE_EXPORT DeclarativePolarChart : public DeclarativeChart
+class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativePolarChart : public DeclarativeChart
 {
     Q_OBJECT
 public:

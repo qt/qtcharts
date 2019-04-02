@@ -44,7 +44,7 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class QT_CHARTS_PRIVATE_EXPORT PolarChartAxis : public ChartAxisElement
+class Q_CHARTS_PRIVATE_EXPORT PolarChartAxis : public ChartAxisElement
 {
     Q_OBJECT
     Q_INTERFACES(QGraphicsLayoutItem)

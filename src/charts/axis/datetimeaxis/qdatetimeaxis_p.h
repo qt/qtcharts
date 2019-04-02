@@ -46,7 +46,7 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class QT_CHARTS_PRIVATE_EXPORT QDateTimeAxisPrivate : public QAbstractAxisPrivate
+class Q_CHARTS_PRIVATE_EXPORT QDateTimeAxisPrivate : public QAbstractAxisPrivate
 {
     Q_OBJECT
 public:

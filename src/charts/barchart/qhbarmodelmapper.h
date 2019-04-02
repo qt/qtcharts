@@ -34,7 +34,7 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 /* Comment line for syncqt to generate the fwd-include correctly, due to QTBUG-22432 */
-class QT_CHARTS_EXPORT QHBarModelMapper : public QBarModelMapper
+class Q_CHARTS_EXPORT QHBarModelMapper : public QBarModelMapper
 {
     Q_OBJECT
     Q_PROPERTY(QtCharts::QAbstractBarSeries *series READ series WRITE setSeries NOTIFY seriesReplaced)

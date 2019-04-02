@@ -45,7 +45,7 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class QT_CHARTS_PRIVATE_EXPORT XLogYPolarDomain: public PolarDomain
+class Q_CHARTS_PRIVATE_EXPORT XLogYPolarDomain: public PolarDomain
 {
     Q_OBJECT
 public:

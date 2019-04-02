@@ -45,7 +45,7 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class QT_CHARTS_PRIVATE_EXPORT DateTimeAxisLabel : public EditableAxisLabel
+class Q_CHARTS_PRIVATE_EXPORT DateTimeAxisLabel : public EditableAxisLabel
 {
     Q_OBJECT
 public:

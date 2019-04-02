@@ -47,7 +47,7 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class QT_CHARTS_PRIVATE_EXPORT LegendScroller: public QLegend, public Scroller
+class Q_CHARTS_PRIVATE_EXPORT LegendScroller: public QLegend, public Scroller
 {
     Q_OBJECT
 

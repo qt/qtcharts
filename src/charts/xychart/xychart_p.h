@@ -51,7 +51,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 class ChartPresenter;
 class QXYSeries;
 
-class QT_CHARTS_PRIVATE_EXPORT XYChart :  public ChartItem
+class Q_CHARTS_PRIVATE_EXPORT XYChart :  public ChartItem
 {
     Q_OBJECT
 public:

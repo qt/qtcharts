@@ -47,7 +47,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 class QXYSeries;
 class QAbstractAxis;
 
-class QT_CHARTS_PRIVATE_EXPORT QXYSeriesPrivate: public QAbstractSeriesPrivate
+class Q_CHARTS_PRIVATE_EXPORT QXYSeriesPrivate: public QAbstractSeriesPrivate
 {
     Q_OBJECT
 

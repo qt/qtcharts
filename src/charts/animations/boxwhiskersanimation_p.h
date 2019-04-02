@@ -49,7 +49,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 class BoxPlotChartItem;
 class BoxPlotAnimation;
 
-class QT_CHARTS_PRIVATE_EXPORT BoxWhiskersAnimation : public ChartAnimation
+class Q_CHARTS_PRIVATE_EXPORT BoxWhiskersAnimation : public ChartAnimation
 {
     Q_OBJECT
 

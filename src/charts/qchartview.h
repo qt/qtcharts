@@ -44,7 +44,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 class QChartViewPrivate;
 
-class QT_CHARTS_EXPORT QChartView : public QGraphicsView
+class Q_CHARTS_EXPORT QChartView : public QGraphicsView
 {
     Q_OBJECT
     Q_ENUMS(RubberBand)

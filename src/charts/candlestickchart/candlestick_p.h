@@ -51,7 +51,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 class AbstractDomain;
 class QCandlestickSet;
 
-class QT_CHARTS_PRIVATE_EXPORT Candlestick : public QGraphicsObject
+class Q_CHARTS_PRIVATE_EXPORT Candlestick : public QGraphicsObject
 {
     Q_OBJECT
 

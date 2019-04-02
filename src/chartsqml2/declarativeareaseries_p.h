@@ -46,7 +46,7 @@
 QT_CHARTS_BEGIN_NAMESPACE
 class DeclarativeLineSeries;
 
-class QT_QMLCHARTS_PRIVATE_EXPORT DeclarativeAreaSeries : public QAreaSeries
+class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeAreaSeries : public QAreaSeries
 {
     Q_OBJECT
     Q_PROPERTY(QtCharts::DeclarativeLineSeries *upperSeries READ upperSeries WRITE setUpperSeries)

@@ -38,7 +38,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 class QBoxPlotSeriesPrivate;
 
-class QT_CHARTS_EXPORT QBoxPlotSeries : public QAbstractSeries
+class Q_CHARTS_EXPORT QBoxPlotSeries : public QAbstractSeries
 {
     Q_OBJECT
     Q_PROPERTY(bool boxOutlineVisible READ boxOutlineVisible WRITE setBoxOutlineVisible NOTIFY boxOutlineVisibilityChanged)

@@ -47,7 +47,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 const static int ChartAnimationDuration = 1000;
 
-class QT_CHARTS_PRIVATE_EXPORT ChartAnimation: public QVariantAnimation
+class Q_CHARTS_PRIVATE_EXPORT ChartAnimation: public QVariantAnimation
 {
     Q_OBJECT
 public:

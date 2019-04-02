@@ -45,7 +45,7 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class QT_CHARTS_PRIVATE_EXPORT PolarChartAxisRadial : public PolarChartAxis
+class Q_CHARTS_PRIVATE_EXPORT PolarChartAxisRadial : public PolarChartAxis
 {
     Q_OBJECT
 

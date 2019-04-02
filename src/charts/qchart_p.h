@@ -50,7 +50,7 @@ class ChartPresenter;
 class QLegend;
 class ChartDataSet;
 
-class QT_CHARTS_PRIVATE_EXPORT QChartPrivate
+class Q_CHARTS_PRIVATE_EXPORT QChartPrivate
 {
 
 public:

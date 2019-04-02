@@ -49,7 +49,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 class BoxPlotAnimation;
 
-class QT_CHARTS_PRIVATE_EXPORT QBoxPlotSeriesPrivate : public QAbstractSeriesPrivate
+class Q_CHARTS_PRIVATE_EXPORT QBoxPlotSeriesPrivate : public QAbstractSeriesPrivate
 {
     Q_OBJECT
 

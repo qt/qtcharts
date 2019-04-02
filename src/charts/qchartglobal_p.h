@@ -43,6 +43,6 @@
 
 #include "qchartglobal.h"
 
-#define QT_CHARTS_PRIVATE_EXPORT QT_CHARTS_EXPORT
+#define Q_CHARTS_PRIVATE_EXPORT Q_CHARTS_EXPORT
 
 #endif // QCHARTGLOBAL_P_H

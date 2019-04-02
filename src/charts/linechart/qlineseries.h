@@ -38,7 +38,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 class QLineSeriesPrivate;
 
-class QT_CHARTS_EXPORT QLineSeries : public QXYSeries
+class Q_CHARTS_EXPORT QLineSeries : public QXYSeries
 {
     Q_OBJECT
 

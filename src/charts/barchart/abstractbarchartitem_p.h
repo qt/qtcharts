@@ -55,7 +55,7 @@ class BarAnimation;
 class QBarSetPrivate;
 class QAbstractAxis;
 
-class QT_CHARTS_PRIVATE_EXPORT AbstractBarChartItem : public ChartItem
+class Q_CHARTS_PRIVATE_EXPORT AbstractBarChartItem : public ChartItem
 {
     Q_OBJECT
 public:

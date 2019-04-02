@@ -46,7 +46,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 class QDateTimeAxis;
 
-class QT_CHARTS_PRIVATE_EXPORT PolarChartDateTimeAxisRadial : public PolarChartAxisRadial
+class Q_CHARTS_PRIVATE_EXPORT PolarChartDateTimeAxisRadial : public PolarChartAxisRadial
 {
     Q_OBJECT
 public:

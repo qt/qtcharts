@@ -47,7 +47,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 class AbstractDomain;
 
-class QT_CHARTS_PRIVATE_EXPORT QBarCategoryAxisPrivate : public QAbstractAxisPrivate
+class Q_CHARTS_PRIVATE_EXPORT QBarCategoryAxisPrivate : public QAbstractAxisPrivate
 {
     Q_OBJECT
 

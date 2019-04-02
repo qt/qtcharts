@@ -36,7 +36,7 @@
 QT_CHARTS_BEGIN_NAMESPACE
 class QPieSeriesPrivate;
 
-class QT_CHARTS_EXPORT QPieSeries : public QAbstractSeries
+class Q_CHARTS_EXPORT QPieSeries : public QAbstractSeries
 {
     Q_OBJECT
     Q_PROPERTY(qreal horizontalPosition READ horizontalPosition WRITE setHorizontalPosition)

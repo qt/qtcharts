@@ -46,7 +46,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 class QDateTimeAxis;
 
-class QT_CHARTS_PRIVATE_EXPORT PolarChartDateTimeAxisAngular : public PolarChartAxisAngular
+class Q_CHARTS_PRIVATE_EXPORT PolarChartDateTimeAxisAngular : public PolarChartAxisAngular
 {
     Q_OBJECT
 public:

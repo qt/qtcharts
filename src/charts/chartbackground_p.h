@@ -49,7 +49,7 @@ QT_END_NAMESPACE
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class QT_CHARTS_PRIVATE_EXPORT ChartBackground: public QGraphicsRectItem
+class Q_CHARTS_PRIVATE_EXPORT ChartBackground: public QGraphicsRectItem
 {
 public:
     ChartBackground(QGraphicsItem *parent = 0);

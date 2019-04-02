@@ -50,7 +50,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 class QLineSeries;
 class ChartPresenter;
 
-class QT_CHARTS_PRIVATE_EXPORT LineChartItem :  public XYChart
+class Q_CHARTS_PRIVATE_EXPORT LineChartItem :  public XYChart
 {
     Q_OBJECT
     Q_INTERFACES(QGraphicsItem)

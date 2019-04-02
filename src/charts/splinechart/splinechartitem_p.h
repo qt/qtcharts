@@ -47,7 +47,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 class SplineAnimation;
 
-class QT_CHARTS_PRIVATE_EXPORT SplineChartItem : public XYChart
+class Q_CHARTS_PRIVATE_EXPORT SplineChartItem : public XYChart
 {
     Q_OBJECT
     Q_INTERFACES(QGraphicsItem)

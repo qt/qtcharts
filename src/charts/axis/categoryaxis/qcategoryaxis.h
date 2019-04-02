@@ -37,7 +37,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 class QCategoryAxisPrivate;
 
-class QT_CHARTS_EXPORT QCategoryAxis : public QValueAxis
+class Q_CHARTS_EXPORT QCategoryAxis : public QValueAxis
 {
     Q_OBJECT
     Q_PROPERTY(qreal startValue READ startValue WRITE setStartValue)

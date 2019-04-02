@@ -79,7 +79,7 @@ public:
 typedef QMap<const QXYSeries *, GLXYSeriesData *> GLXYDataMap;
 typedef QMapIterator<const QXYSeries *, GLXYSeriesData *> GLXYDataMapIterator;
 
-class QT_CHARTS_PRIVATE_EXPORT GLXYSeriesDataManager : public QObject
+class Q_CHARTS_PRIVATE_EXPORT GLXYSeriesDataManager : public QObject
 {
     Q_OBJECT
 

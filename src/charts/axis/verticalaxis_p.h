@@ -44,7 +44,7 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class QT_CHARTS_PRIVATE_EXPORT VerticalAxis : public CartesianChartAxis
+class Q_CHARTS_PRIVATE_EXPORT VerticalAxis : public CartesianChartAxis
 {
 public:
     VerticalAxis(QAbstractAxis *axis, QGraphicsItem *item = nullptr, bool intervalAxis = false);

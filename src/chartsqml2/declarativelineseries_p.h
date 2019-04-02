@@ -49,7 +49,7 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class QT_QMLCHARTS_PRIVATE_EXPORT DeclarativeLineSeries : public QLineSeries, public DeclarativeXySeries, public QQmlParserStatus
+class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeLineSeries : public QLineSeries, public DeclarativeXySeries, public QQmlParserStatus
 {
     Q_OBJECT
     Q_INTERFACES(QQmlParserStatus)

@@ -50,7 +50,7 @@ class QCandlestickSeries;
 class QCandlestickSet;
 class QDateTimeAxis;
 
-class QT_CHARTS_PRIVATE_EXPORT QCandlestickSeriesPrivate : public QAbstractSeriesPrivate
+class Q_CHARTS_PRIVATE_EXPORT QCandlestickSeriesPrivate : public QAbstractSeriesPrivate
 {
     Q_OBJECT
 

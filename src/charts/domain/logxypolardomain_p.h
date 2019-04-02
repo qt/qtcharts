@@ -45,7 +45,7 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class QT_CHARTS_PRIVATE_EXPORT LogXYPolarDomain: public PolarDomain
+class Q_CHARTS_PRIVATE_EXPORT LogXYPolarDomain: public PolarDomain
 {
     Q_OBJECT
 public:

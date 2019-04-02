@@ -47,7 +47,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 class QAbstractAxis;
 
-class QT_QMLCHARTS_PRIVATE_EXPORT DeclarativeAxes : public QObject
+class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeAxes : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QtCharts::QAbstractAxis *axisX READ axisX WRITE setAxisX NOTIFY axisXChanged)

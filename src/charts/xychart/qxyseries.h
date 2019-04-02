@@ -44,7 +44,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 class QXYSeriesPrivate;
 class QXYModelMapper;
 
-class QT_CHARTS_EXPORT QXYSeries : public QAbstractSeries
+class Q_CHARTS_EXPORT QXYSeries : public QAbstractSeries
 {
     Q_OBJECT
     Q_PROPERTY(bool pointsVisible READ pointsVisible WRITE setPointsVisible)

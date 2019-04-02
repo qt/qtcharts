@@ -36,7 +36,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 class QHorizontalBarSeriesPrivate;
 
-class QT_CHARTS_EXPORT QHorizontalBarSeries : public QAbstractBarSeries
+class Q_CHARTS_EXPORT QHorizontalBarSeries : public QAbstractBarSeries
 {
     Q_OBJECT
 public:

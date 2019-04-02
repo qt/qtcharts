@@ -44,7 +44,7 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class QT_CHARTS_PRIVATE_EXPORT PolarChartLayout : public AbstractChartLayout
+class Q_CHARTS_PRIVATE_EXPORT PolarChartLayout : public AbstractChartLayout
 {
 public:
     PolarChartLayout(ChartPresenter *presenter);

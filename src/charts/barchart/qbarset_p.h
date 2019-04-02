@@ -48,7 +48,7 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class QT_CHARTS_PRIVATE_EXPORT QBarSetPrivate : public QObject
+class Q_CHARTS_PRIVATE_EXPORT QBarSetPrivate : public QObject
 {
     Q_OBJECT
 

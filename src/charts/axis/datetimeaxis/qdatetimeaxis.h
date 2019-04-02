@@ -40,7 +40,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 class QDateTimeAxisPrivate;
 
-class QT_CHARTS_EXPORT QDateTimeAxis : public QAbstractAxis
+class Q_CHARTS_EXPORT QDateTimeAxis : public QAbstractAxis
 {
     Q_OBJECT
     Q_PROPERTY(int tickCount READ tickCount WRITE setTickCount NOTIFY tickCountChanged)

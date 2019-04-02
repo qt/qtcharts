@@ -46,7 +46,7 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class QT_CHARTS_PRIVATE_EXPORT ChartItem : public ChartElement
+class Q_CHARTS_PRIVATE_EXPORT ChartItem : public ChartElement
 {
     Q_OBJECT
     enum ChartItemTypes { AXIS_ITEM = UserType + 1, XYLINE_ITEM };

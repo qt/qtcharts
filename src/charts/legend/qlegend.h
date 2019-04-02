@@ -42,7 +42,7 @@ class QLegendPrivate;
 class QLegendMarker;
 class QAbstractSeries;
 
-class QT_CHARTS_EXPORT QLegend : public QGraphicsWidget
+class Q_CHARTS_EXPORT QLegend : public QGraphicsWidget
 {
     Q_OBJECT
     Q_PROPERTY(Qt::Alignment alignment READ alignment WRITE setAlignment)

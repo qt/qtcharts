@@ -44,7 +44,7 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class QT_CHARTS_PRIVATE_EXPORT ChartThemeBlueIcy: public ChartTheme
+class Q_CHARTS_PRIVATE_EXPORT ChartThemeBlueIcy: public ChartTheme
 {
 public:
     ChartThemeBlueIcy() : ChartTheme(QChart::ChartThemeBlueIcy)

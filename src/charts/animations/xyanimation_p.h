@@ -47,7 +47,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 class XYChart;
 
-class QT_CHARTS_PRIVATE_EXPORT XYAnimation : public ChartAnimation
+class Q_CHARTS_PRIVATE_EXPORT XYAnimation : public ChartAnimation
 {
 protected:
     enum Animation { AddPointAnimation, RemovePointAnimation, ReplacePointAnimation, NewAnimation };

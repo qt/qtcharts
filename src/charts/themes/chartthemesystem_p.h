@@ -48,7 +48,7 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class QT_CHARTS_PRIVATE_EXPORT ChartThemeSystem: public ChartTheme
+class Q_CHARTS_PRIVATE_EXPORT ChartThemeSystem: public ChartTheme
 {
 public:
     // System theme not used at the moment (the user is not able to select this theme)

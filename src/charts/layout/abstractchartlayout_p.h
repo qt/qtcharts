@@ -52,7 +52,7 @@ class ChartPresenter;
 class QLegend;
 class ChartBackground;
 
-class QT_CHARTS_PRIVATE_EXPORT AbstractChartLayout : public QGraphicsLayout
+class Q_CHARTS_PRIVATE_EXPORT AbstractChartLayout : public QGraphicsLayout
 {
 public:
     AbstractChartLayout(ChartPresenter *presenter);

@@ -56,7 +56,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 class QChart;
 
-class QT_QMLCHARTS_PRIVATE_EXPORT DeclarativeBarSet : public QBarSet
+class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeBarSet : public QBarSet
 {
     Q_OBJECT
     Q_PROPERTY(QVariantList values READ values WRITE setValues)
@@ -93,7 +93,7 @@ private:
     QImage m_brushImage;
 };
 
-class QT_QMLCHARTS_PRIVATE_EXPORT DeclarativeBarSeries : public QBarSeries, public QQmlParserStatus
+class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeBarSeries : public QBarSeries, public QQmlParserStatus
 {
     Q_OBJECT
     Q_INTERFACES(QQmlParserStatus)
@@ -140,7 +140,7 @@ public:
     DeclarativeAxes *m_axes;
 };
 
-class QT_QMLCHARTS_PRIVATE_EXPORT DeclarativeStackedBarSeries : public QStackedBarSeries, public QQmlParserStatus
+class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeStackedBarSeries : public QStackedBarSeries, public QQmlParserStatus
 {
     Q_OBJECT
     Q_INTERFACES(QQmlParserStatus)
@@ -187,7 +187,7 @@ public:
     DeclarativeAxes *m_axes;
 };
 
-class QT_QMLCHARTS_PRIVATE_EXPORT DeclarativePercentBarSeries : public QPercentBarSeries, public QQmlParserStatus
+class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativePercentBarSeries : public QPercentBarSeries, public QQmlParserStatus
 {
     Q_OBJECT
     Q_INTERFACES(QQmlParserStatus)
@@ -234,7 +234,7 @@ public:
     DeclarativeAxes *m_axes;
 };
 
-class QT_QMLCHARTS_PRIVATE_EXPORT DeclarativeHorizontalBarSeries : public QHorizontalBarSeries, public QQmlParserStatus
+class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeHorizontalBarSeries : public QHorizontalBarSeries, public QQmlParserStatus
 {
     Q_OBJECT
     Q_INTERFACES(QQmlParserStatus)
@@ -281,7 +281,7 @@ public:
     DeclarativeAxes *m_axes;
 };
 
-class QT_QMLCHARTS_PRIVATE_EXPORT DeclarativeHorizontalStackedBarSeries : public QHorizontalStackedBarSeries, public QQmlParserStatus
+class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeHorizontalStackedBarSeries : public QHorizontalStackedBarSeries, public QQmlParserStatus
 {
     Q_OBJECT
     Q_INTERFACES(QQmlParserStatus)
@@ -328,7 +328,7 @@ public:
     DeclarativeAxes *m_axes;
 };
 
-class QT_QMLCHARTS_PRIVATE_EXPORT DeclarativeHorizontalPercentBarSeries : public QHorizontalPercentBarSeries, public QQmlParserStatus
+class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeHorizontalPercentBarSeries : public QHorizontalPercentBarSeries, public QQmlParserStatus
 {
     Q_OBJECT
     Q_INTERFACES(QQmlParserStatus)

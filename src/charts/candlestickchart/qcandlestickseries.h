@@ -37,7 +37,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 class QCandlestickSeriesPrivate;
 class QCandlestickSet;
 
-class QT_CHARTS_EXPORT QCandlestickSeries : public QAbstractSeries
+class Q_CHARTS_EXPORT QCandlestickSeries : public QAbstractSeries
 {
     Q_OBJECT
     Q_PROPERTY(int count READ count NOTIFY countChanged)

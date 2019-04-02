@@ -46,7 +46,7 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class QT_CHARTS_PRIVATE_EXPORT LineArrowItem: public QGraphicsLineItem
+class Q_CHARTS_PRIVATE_EXPORT LineArrowItem: public QGraphicsLineItem
 {
 public:
     explicit LineArrowItem(ChartAxisElement *axis, QGraphicsItem *parent = 0)

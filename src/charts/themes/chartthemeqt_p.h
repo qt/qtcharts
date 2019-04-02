@@ -44,7 +44,7 @@
 
 QT_CHARTS_BEGIN_NAMESPACE
 
-class QT_CHARTS_PRIVATE_EXPORT ChartThemeQt : public ChartTheme
+class Q_CHARTS_PRIVATE_EXPORT ChartThemeQt : public ChartTheme
 {
 public:
     ChartThemeQt() : ChartTheme(QChart::ChartThemeQt)

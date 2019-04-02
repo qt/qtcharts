@@ -47,7 +47,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 class QAbstractAxis;
 
-class QT_CHARTS_PRIVATE_EXPORT CartesianChartAxis : public ChartAxisElement
+class Q_CHARTS_PRIVATE_EXPORT CartesianChartAxis : public ChartAxisElement
 {
     Q_OBJECT
     Q_INTERFACES(QGraphicsLayoutItem)

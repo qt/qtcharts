@@ -444,8 +444,8 @@ DeclarativeChart::DeclarativeChart(QChart::ChartType type, QQuickItem *parent)
 // QTBUG-71013
 // The symbol resides in qbarmodelmapper.cpp#548 in the C++ module.
 // Here, it gets imported and reset to the DeclarativeBarSet allocator
-#ifdef Q_OS_WIN
-QT_CHARTS_EXPORT
+#if defined(Q_OS_WIN) && !defined(QT_STATIC)
+Q_CHARTS_EXPORT
 #else
 extern
 #endif

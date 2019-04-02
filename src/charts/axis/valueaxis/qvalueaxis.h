@@ -36,7 +36,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 class QValueAxisPrivate;
 
-class QT_CHARTS_EXPORT QValueAxis : public QAbstractAxis
+class Q_CHARTS_EXPORT QValueAxis : public QAbstractAxis
 {
     Q_OBJECT
     Q_PROPERTY(int tickCount READ tickCount WRITE setTickCount NOTIFY tickCountChanged)

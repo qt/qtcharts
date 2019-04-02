@@ -63,7 +63,7 @@ class ChartTitle;
 class ChartAnimation;
 class AbstractChartLayout;
 
-class QT_CHARTS_PRIVATE_EXPORT ChartPresenter: public QObject
+class Q_CHARTS_PRIVATE_EXPORT ChartPresenter: public QObject
 {
     Q_OBJECT
 public:
