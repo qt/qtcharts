@@ -38,7 +38,9 @@
 
     To import Qt Charts QML types, add the following import statement to your \c .qml file:
 
-    \snippet doc_src_qmlcharts.cpp 0
+    \qml \QtMinorVersion
+    import QtCharts 2.\1
+    \endqml
 
     If you intend to use Qt Charts C++ classes in your application, use the
     following include and using directives:

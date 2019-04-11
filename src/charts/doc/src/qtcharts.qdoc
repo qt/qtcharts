@@ -59,7 +59,7 @@
 */
 
 /*!
-    \qmlmodule QtCharts 2.3
+    \qmlmodule QtCharts 2.\QtMinorVersion
     \title Qt Charts QML Types
     \ingroup qmlmodules
 
