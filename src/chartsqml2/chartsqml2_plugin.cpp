@@ -346,6 +346,9 @@ public:
 
         // QtCharts 2.3
         qmlRegisterType<QValueAxis, 1>(uri, 2, 3, "ValueAxis");
+
+        // Auto-increment the import to stay in sync with ALL future QtQuick minor versions
+        qmlRegisterModule(uri, 2, QT_VERSION_MINOR);
     }
 
 };
