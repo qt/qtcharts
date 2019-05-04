@@ -34,12 +34,7 @@ qhp.QtCharts.filterAttributes                  = qtcharts $QT_VERSION qtrefdoc
 qhp.QtCharts.customFilters.Qt.name             = QtCharts $QT_VERSION
 qhp.QtCharts.customFilters.Qt.filterAttributes = qtcharts $QT_VERSION
 
-qhp.QtCharts.subprojects = gettingstarted classes types examples
-
-qhp.QtCharts.subprojects.gettingstarted.title      = Getting Started
-qhp.QtCharts.subprojects.gettingstarted.indexTitle = Qt Charts Getting Started
-qhp.QtCharts.subprojects.gettingstarted.selectors  = fake:page
-qhp.QtCharts.subprojects.gettingstarted.sortPages  = true
+qhp.QtCharts.subprojects = classes types examples
 
 qhp.QtCharts.subprojects.classes.title      = C++ Classes
 qhp.QtCharts.subprojects.classes.indexTitle = Qt Charts C++ Classes
