@@ -931,6 +931,7 @@ QCandlestickSeriesPrivate::QCandlestickSeriesPrivate(QCandlestickSeries *q)
 QCandlestickSeriesPrivate::~QCandlestickSeriesPrivate()
 {
     disconnect(this, 0, 0, 0);
+    qDeleteAll(m_sets);
 }
 
 void QCandlestickSeriesPrivate::initializeDomain()
