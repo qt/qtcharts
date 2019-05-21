@@ -553,7 +553,7 @@ bool QCandlestickSeries::remove(const QList<QCandlestickSet *> &sets)
         emit candlestickSetsRemoved(sets);
         emit countChanged();
         foreach (QCandlestickSet *set, sets)
-            set->deleteLater();
+            delete set;
     }
 
     return success;
@@ -630,7 +630,7 @@ void QCandlestickSeries::clear()
         emit candlestickSetsRemoved(sets);
         emit countChanged();
         foreach (QCandlestickSet *set, sets)
-            set->deleteLater();
+            delete set;
     }
 }
 
