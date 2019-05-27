@@ -65,7 +65,7 @@ QVariant BarAnimation::interpolated(const QVariant &from, const QVariant &to, qr
         QRectF value(QPointF(x1, y1), QPointF(x2, y2));
         result << value.normalized();
     }
-    return qVariantFromValue(result);
+    return QVariant::fromValue(result);
 }
 
 void BarAnimation::updateCurrentValue(const QVariant &value)
@@ -81,8 +81,8 @@ void BarAnimation::setup(const QVector<QRectF> &oldLayout, const QVector<QRectF>
 {
     QVariantAnimation::KeyValues value;
     setKeyValues(value); //workaround for wrong interpolation call
-    setKeyValueAt(0.0, qVariantFromValue(oldLayout));
-    setKeyValueAt(1.0, qVariantFromValue(newLayout));
+    setKeyValueAt(0.0, QVariant::fromValue(oldLayout));
+    setKeyValueAt(1.0, QVariant::fromValue(newLayout));
 }
 
 QT_CHARTS_END_NAMESPACE

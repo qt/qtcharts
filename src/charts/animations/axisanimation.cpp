@@ -113,8 +113,8 @@ void AxisAnimation::setValues(QVector<qreal> &oldLayout, QVector<qreal> &newLayo
 
     QVariantAnimation::KeyValues value;
     setKeyValues(value); //workaround for wrong interpolation call
-    setKeyValueAt(0.0, qVariantFromValue(oldLayout));
-    setKeyValueAt(1.0, qVariantFromValue(newLayout));
+    setKeyValueAt(0.0, QVariant::fromValue(oldLayout));
+    setKeyValueAt(1.0, QVariant::fromValue(newLayout));
 }
 
 QVariant AxisAnimation::interpolated(const QVariant &start, const QVariant &end, qreal progress) const
@@ -129,7 +129,7 @@ QVariant AxisAnimation::interpolated(const QVariant &start, const QVariant &end,
         qreal value = startVector[i] + ((endVecotr[i] - startVector[i]) * progress);
         result << value;
     }
-    return qVariantFromValue(result);
+    return QVariant::fromValue(result);
 }
 
 

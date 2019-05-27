@@ -119,8 +119,8 @@ void SplineAnimation::setup(QVector<QPointF> &oldPoints, QVector<QPointF> &newPo
     }
 
 
-    setKeyValueAt(0.0, qVariantFromValue(m_oldSpline));
-    setKeyValueAt(1.0, qVariantFromValue(m_newSpline));
+    setKeyValueAt(0.0, QVariant::fromValue(m_oldSpline));
+    setKeyValueAt(1.0, QVariant::fromValue(m_newSpline));
 
     m_valid = true;
 
@@ -173,7 +173,7 @@ QVariant SplineAnimation::interpolated(const QVariant &start, const QVariant &en
         break;
     }
 
-    return qVariantFromValue(result);
+    return QVariant::fromValue(result);
 }
 
 void SplineAnimation::updateCurrentValue(const QVariant &value)

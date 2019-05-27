@@ -84,7 +84,7 @@ QVariant BoxWhiskersAnimation::interpolated(const QVariant &from, const QVariant
     result.m_seriesIndex = endData.m_seriesIndex;
     result.m_seriesCount = endData.m_seriesCount;
 
-    return qVariantFromValue(result);
+    return QVariant::fromValue(result);
 }
 
 void BoxWhiskersAnimation::updateCurrentValue(const QVariant &value)
@@ -95,8 +95,8 @@ void BoxWhiskersAnimation::updateCurrentValue(const QVariant &value)
 
 void BoxWhiskersAnimation::setup(const BoxWhiskersData &startData, const BoxWhiskersData &endData)
 {
-    setKeyValueAt(0.0, qVariantFromValue(startData));
-    setKeyValueAt(1.0, qVariantFromValue(endData));
+    setKeyValueAt(0.0, QVariant::fromValue(startData));
+    setKeyValueAt(1.0, QVariant::fromValue(endData));
 }
 
 void BoxWhiskersAnimation::setEndData(const BoxWhiskersData &endData)
@@ -104,7 +104,7 @@ void BoxWhiskersAnimation::setEndData(const BoxWhiskersData &endData)
     if (state() != QAbstractAnimation::Stopped)
         stop();
 
-    setEndValue(qVariantFromValue(endData));
+    setEndValue(QVariant::fromValue(endData));
 }
 
 void BoxWhiskersAnimation::setStartData(const BoxWhiskersData &endData)
@@ -112,7 +112,7 @@ void BoxWhiskersAnimation::setStartData(const BoxWhiskersData &endData)
     if (state() != QAbstractAnimation::Stopped)
         stop();
 
-    setStartValue(qVariantFromValue(endData));
+    setStartValue(QVariant::fromValue(endData));
 }
 
 QT_CHARTS_END_NAMESPACE

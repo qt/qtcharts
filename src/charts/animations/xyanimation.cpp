@@ -97,8 +97,8 @@ void XYAnimation::setup(const QVector<QPointF> &oldPoints, const QVector<QPointF
     else if (m_type == NewAnimation)
         m_type = ReplacePointAnimation;
 
-    setKeyValueAt(0.0, qVariantFromValue(m_oldPoints));
-    setKeyValueAt(1.0, qVariantFromValue(m_newPoints));
+    setKeyValueAt(0.0, QVariant::fromValue(m_oldPoints));
+    setKeyValueAt(1.0, QVariant::fromValue(m_newPoints));
 }
 
 QVariant XYAnimation::interpolated(const QVariant &start, const QVariant &end, qreal progress) const
@@ -133,7 +133,7 @@ QVariant XYAnimation::interpolated(const QVariant &start, const QVariant &end, q
         break;
     }
 
-    return qVariantFromValue(result);
+    return QVariant::fromValue(result);
 }
 
 void XYAnimation::updateCurrentValue(const QVariant &value)

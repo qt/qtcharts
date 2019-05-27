@@ -85,8 +85,8 @@ void PieSliceAnimation::setValue(const PieSliceData &startValue, const PieSliceD
 
     m_currentValue = startValue;
 
-    setKeyValueAt(0.0, qVariantFromValue(startValue));
-    setKeyValueAt(1.0, qVariantFromValue(endValue));
+    setKeyValueAt(0.0, QVariant::fromValue(startValue));
+    setKeyValueAt(1.0, QVariant::fromValue(endValue));
 }
 
 void PieSliceAnimation::updateValue(const PieSliceData &endValue)
@@ -94,8 +94,8 @@ void PieSliceAnimation::updateValue(const PieSliceData &endValue)
     if (state() != QAbstractAnimation::Stopped)
         stop();
 
-    setKeyValueAt(0.0, qVariantFromValue(m_currentValue));
-    setKeyValueAt(1.0, qVariantFromValue(endValue));
+    setKeyValueAt(0.0, QVariant::fromValue(m_currentValue));
+    setKeyValueAt(1.0, QVariant::fromValue(endValue));
 }
 
 PieSliceData PieSliceAnimation::currentSliceValue()
@@ -123,7 +123,7 @@ QVariant PieSliceAnimation::interpolated(const QVariant &start, const QVariant &
     result.m_sliceBrush = linearPos(startValue.m_sliceBrush, endValue.m_sliceBrush, progress);
     result.m_holeRadius = linearPos(startValue.m_holeRadius, endValue.m_holeRadius, progress);
 
-    return qVariantFromValue(result);
+    return QVariant::fromValue(result);
 }
 
 void PieSliceAnimation::updateCurrentValue(const QVariant &value)

@@ -58,8 +58,8 @@ CandlestickBodyWicksAnimation::~CandlestickBodyWicksAnimation()
 void CandlestickBodyWicksAnimation::setup(const CandlestickData &startData,
                                           const CandlestickData &endData)
 {
-    setKeyValueAt(0.0, qVariantFromValue(startData));
-    setKeyValueAt(1.0, qVariantFromValue(endData));
+    setKeyValueAt(0.0, QVariant::fromValue(startData));
+    setKeyValueAt(1.0, QVariant::fromValue(endData));
 }
 
 void CandlestickBodyWicksAnimation::setStartData(const CandlestickData &startData)
@@ -67,7 +67,7 @@ void CandlestickBodyWicksAnimation::setStartData(const CandlestickData &startDat
     if (state() != QAbstractAnimation::Stopped)
         stop();
 
-    setStartValue(qVariantFromValue(startData));
+    setStartValue(QVariant::fromValue(startData));
 }
 
 void CandlestickBodyWicksAnimation::setEndData(const CandlestickData &endData)
@@ -75,7 +75,7 @@ void CandlestickBodyWicksAnimation::setEndData(const CandlestickData &endData)
     if (state() != QAbstractAnimation::Stopped)
         stop();
 
-    setEndValue(qVariantFromValue(endData));
+    setEndValue(QVariant::fromValue(endData));
 }
 
 void CandlestickBodyWicksAnimation::updateCurrentValue(const QVariant &value)
@@ -104,7 +104,7 @@ QVariant CandlestickBodyWicksAnimation::interpolated(const QVariant &from, const
         result.m_high = median + progress * (endData.m_high - median);
     }
 
-    return qVariantFromValue(result);
+    return QVariant::fromValue(result);
 }
 
 QT_CHARTS_END_NAMESPACE

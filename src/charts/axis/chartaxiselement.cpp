@@ -382,13 +382,13 @@ QString ChartAxisElement::formatLabel(const QString &formatSpec, const QByteArra
             if (presenter()->localizeNumbers())
                 retVal = preStr + presenter()->locale().toString(qint64(value)) + postStr;
             else
-                retVal = QString().sprintf(array, qint64(value));
+                retVal = QString::asprintf(array.constData(), qint64(value));
         } else if (formatSpec.at(0) == QLatin1Char('u')
                  || formatSpec.at(0) == QLatin1Char('o')
                  || formatSpec.at(0) == QLatin1Char('x')
                  || formatSpec.at(0) == QLatin1Char('X')) {
             // These formats are not supported by localized numbers
-            retVal = QString().sprintf(array, quint64(value));
+            retVal = QString::asprintf(array.constData(), quint64(value));
         } else if (formatSpec.at(0) == QLatin1Char('f')
                    || formatSpec.at(0) == QLatin1Char('F')
                    || formatSpec.at(0) == QLatin1Char('e')
@@ -401,7 +401,7 @@ QString ChartAxisElement::formatLabel(const QString &formatSpec, const QByteArra
                                                          precision)
                         + postStr;
             } else {
-                retVal = QString().sprintf(array, value);
+                retVal = QString::asprintf(array.constData(), value);
             }
         }
     }
