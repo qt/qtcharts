@@ -421,10 +421,7 @@ void Window::checkOpenGL()
 
     bool antialias = m_antialiasCheckBox->isChecked();
 
-    if (opengl)
-        m_view->setRenderHint(QPainter::HighQualityAntialiasing, antialias);
-    else
-        m_view->setRenderHint(QPainter::Antialiasing, antialias);
+    m_view->setRenderHint(QPainter::Antialiasing, antialias);
 }
 
 void Window::checkAnimationOptions()
