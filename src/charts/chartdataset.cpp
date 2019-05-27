@@ -421,7 +421,7 @@ void ChartDataSet::deleteAllSeries()
 {
     foreach (QAbstractSeries *s , m_seriesList){
         removeSeries(s);
-        s->deleteLater();
+        delete s;
     }
     Q_ASSERT(m_seriesList.count() == 0);
 }
@@ -430,7 +430,7 @@ void ChartDataSet::deleteAllAxes()
 {
     foreach (QAbstractAxis *a , m_axisList){
         removeAxis(a);
-        a->deleteLater();
+        delete a;
     }
     Q_ASSERT(m_axisList.count() == 0);
 }
