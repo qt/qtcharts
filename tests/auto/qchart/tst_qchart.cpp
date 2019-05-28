@@ -340,7 +340,8 @@ void tst_QChart::axisX()
     m_view->show();
     QVERIFY(QTest::qWaitForWindowExposed(m_view));
     m_chart->addSeries(series);
-    m_chart->setAxisX(axis,series);
+    m_chart->addAxis(axis, Qt::AlignBottom);
+    series->attachAxis(axis);
     QCOMPARE(m_chart->axes(Qt::Horizontal, series).value(0), axis);
 }
 
@@ -358,7 +359,8 @@ void tst_QChart::axisY()
     m_view->show();
     QVERIFY(QTest::qWaitForWindowExposed(m_view));
     m_chart->addSeries(series);
-    m_chart->setAxisY(axis,series);
+    m_chart->addAxis(axis, Qt::AlignLeft);
+    series->attachAxis(axis);
     QCOMPARE(m_chart->axes(Qt::Vertical, series).value(0), axis);
 }
 
@@ -574,7 +576,8 @@ void tst_QChart::removeSeries()
         axis = m_chart->axes(Qt::Vertical).value(0);
     QVERIFY(axis);
     m_chart->addSeries(series);
-    m_chart->setAxisY(axis,series);
+    m_chart->addAxis(axis, Qt::AlignLeft);
+    series->attachAxis(axis);
     QCOMPARE(m_chart->axes(Qt::Vertical, series).value(0), axis);
     m_chart->removeSeries(series);
     QCOMPARE(m_chart->axes().count(), 1);
@@ -1167,8 +1170,11 @@ void tst_QChart::zoomInAndOut()
         dateTimeAxisY->setRange(QDateTime::fromMSecsSinceEpoch(minY), QDateTime::fromMSecsSinceEpoch(maxY));
     }
 
-    m_chart->setAxisX(axisX, m_chart->series().first());
-    m_chart->setAxisY(axisY, m_chart->series().first());
+    const auto series = m_chart->series().constFirst();
+    m_chart->addAxis(axisX, Qt::AlignBottom);
+    series->attachAxis(axisX);
+    m_chart->addAxis(axisY, Qt::AlignLeft);
+    series->attachAxis(axisY);
     CHECK_AXIS_RANGES_MATCH
 
     m_chart->zoomIn();

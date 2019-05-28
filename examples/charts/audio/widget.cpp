@@ -57,8 +57,10 @@ Widget::Widget(const QAudioDeviceInfo &deviceInfo, QWidget *parent) :
     QValueAxis *axisY = new QValueAxis;
     axisY->setRange(-1, 1);
     axisY->setTitleText("Audio level");
-    m_chart->setAxisX(axisX, m_series);
-    m_chart->setAxisY(axisY, m_series);
+    m_chart->addAxis(axisX, Qt::AlignBottom);
+    m_series->attachAxis(axisX);
+    m_chart->addAxis(axisY, Qt::AlignLeft);
+    m_series->attachAxis(axisY);
     m_chart->legend()->hide();
     m_chart->setTitle("Data from the microphone (" + deviceInfo.deviceName() + ')');
 
