@@ -94,8 +94,10 @@ void tst_QDateTimeAxis::init()
     m_view->resize(200, 200);
     m_chart = m_view->chart();
     m_chart->addSeries(m_series);
-    m_chart->setAxisY(m_dateTimeAxisY, m_series);
-    m_chart->setAxisX(m_dateTimeAxisX, m_series);
+    m_chart->addAxis(m_dateTimeAxisY, Qt::AlignLeft);
+    m_series->attachAxis(m_dateTimeAxisY);
+    m_chart->addAxis(m_dateTimeAxisX, Qt::AlignBottom);
+    m_series->attachAxis(m_dateTimeAxisX);
 }
 
 void tst_QDateTimeAxis::cleanup()

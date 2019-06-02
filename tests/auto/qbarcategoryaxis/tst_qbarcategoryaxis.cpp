@@ -183,7 +183,8 @@ void tst_QBarCategoriesAxis::append()
     QCOMPARE(spy2.count(), 1);
     QCOMPARE(spy3.count(), 1);
 
-    m_chart->setAxisX(&axis, m_series);
+    m_chart->addAxis(&axis, Qt::AlignBottom);
+    m_series->attachAxis(&axis);
     m_view->show();
     QVERIFY(QTest::qWaitForWindowExposed(m_view));
     QCOMPARE(axis.categories(), categories);
@@ -222,7 +223,8 @@ void tst_QBarCategoriesAxis::append2()
     QCOMPARE(spy2.count(), 1);
     QCOMPARE(spy3.count(), categories.count());
 
-    m_chart->setAxisX(&axis, m_series);
+    m_chart->addAxis(&axis, Qt::AlignBottom);
+    m_series->attachAxis(&axis);
     m_view->show();
     QVERIFY(QTest::qWaitForWindowExposed(m_view));
     QCOMPARE(axis.categories(), categories);
@@ -266,7 +268,8 @@ void tst_QBarCategoriesAxis::at()
     QCOMPARE(spy2.count(), 0);
     QCOMPARE(spy3.count(), 0);
 
-    m_chart->setAxisX(&axis, m_series);
+    m_chart->addAxis(&axis, Qt::AlignBottom);
+    m_series->attachAxis(&axis);
     m_view->show();
     QVERIFY(QTest::qWaitForWindowExposed(m_view));
     QCOMPARE(axis.at(index), string);
@@ -304,7 +307,8 @@ void tst_QBarCategoriesAxis::categories()
     QCOMPARE(spy2.count(), 1);
     QCOMPARE(spy3.count(), 1);
 
-    m_chart->setAxisX(&axis, m_series);
+    m_chart->addAxis(&axis, Qt::AlignBottom);
+    m_series->attachAxis(&axis);
     m_view->show();
     QVERIFY(QTest::qWaitForWindowExposed(m_view));
     QCOMPARE(axis.categories(), categories);
@@ -345,7 +349,8 @@ void tst_QBarCategoriesAxis::clear()
     QCOMPARE(spy2.count(), 1);
     QCOMPARE(spy3.count(), 1);
 
-    m_chart->setAxisX(&axis, m_series);
+    m_chart->addAxis(&axis, Qt::AlignBottom);
+    m_series->attachAxis(&axis);
     m_view->show();
     QVERIFY(QTest::qWaitForWindowExposed(m_view));
 
@@ -393,7 +398,8 @@ void tst_QBarCategoriesAxis::count()
     QCOMPARE(spy3.count(), 0);
     QCOMPARE(spy4.count(), 0);
 
-    m_chart->setAxisX(&axis, m_series);
+    m_chart->addAxis(&axis, Qt::AlignBottom);
+    m_series->attachAxis(&axis);
     m_view->show();
     QVERIFY(QTest::qWaitForWindowExposed(m_view));
     QCOMPARE(axis.count(), count);
@@ -432,7 +438,8 @@ void tst_QBarCategoriesAxis::insert()
     QCOMPARE(spy3.count(), 0);
     QCOMPARE(spy4.count(), 1);
 
-    m_chart->setAxisX(&axis, m_series);
+    m_chart->addAxis(&axis, Qt::AlignBottom);
+    m_series->attachAxis(&axis);
     m_view->show();
     QVERIFY(QTest::qWaitForWindowExposed(m_view));
 }
@@ -511,7 +518,8 @@ void tst_QBarCategoriesAxis::max_data()
 
 void tst_QBarCategoriesAxis::max()
 {
-    m_chart->setAxisX(m_baraxis, m_series);
+    m_chart->addAxis(m_baraxis, Qt::AlignBottom);
+    m_series->attachAxis(m_baraxis);
     m_view->show();
     QVERIFY(QTest::qWaitForWindowExposed(m_view));
     max_raw();
@@ -565,7 +573,8 @@ void tst_QBarCategoriesAxis::min_data()
 void tst_QBarCategoriesAxis::min()
 {
     min_raw();
-    m_chart->setAxisX(m_baraxis, m_series);
+    m_chart->addAxis(m_baraxis, Qt::AlignBottom);
+    m_series->attachAxis(m_baraxis);
     m_view->show();
     QVERIFY(QTest::qWaitForWindowExposed(m_view));
 
@@ -623,7 +632,8 @@ void tst_QBarCategoriesAxis::range_data()
 void tst_QBarCategoriesAxis::range()
 {
     range_raw();
-    m_chart->setAxisX(m_baraxis, m_series);
+    m_chart->addAxis(m_baraxis, Qt::AlignBottom);
+    m_series->attachAxis(m_baraxis);
     m_view->show();
     QVERIFY(QTest::qWaitForWindowExposed(m_view));
 
@@ -667,7 +677,8 @@ void tst_QBarCategoriesAxis::noautoscale()
     QCOMPARE(spy1.count(), 1);
     QCOMPARE(spy2.count(), 1);
 
-    m_chart->setAxisX(m_baraxis, m_series);
+    m_chart->addAxis(m_baraxis, Qt::AlignBottom);
+    m_series->attachAxis(m_baraxis);
     m_view->show();
     QVERIFY(QTest::qWaitForWindowExposed(m_view));
     QCOMPARE(m_baraxis->min(),min);
@@ -690,7 +701,8 @@ void tst_QBarCategoriesAxis::autoscale()
 
     QCOMPARE(m_baraxis->min(),QString());
     QCOMPARE(m_baraxis->max(),QString());
-    m_chart->setAxisX(m_baraxis, m_series);
+    m_chart->addAxis(m_baraxis, Qt::AlignBottom);
+    m_series->attachAxis(m_baraxis);
 
     QCOMPARE(spy0.count(), 1);
     QCOMPARE(spy1.count(), 1);

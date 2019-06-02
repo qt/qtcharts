@@ -181,8 +181,8 @@ void tst_QChart::qchart()
     QCOMPARE(m_chart->animationOptions(), QChart::NoAnimation);
     QCOMPARE(m_chart->animationDuration(), 1000);
     QCOMPARE(m_chart->animationEasingCurve(), QEasingCurve(QEasingCurve::OutQuart));
-    QVERIFY(!m_chart->axisX());
-    QVERIFY(!m_chart->axisY());
+    QVERIFY(m_chart->axes(Qt::Horizontal).isEmpty());
+    QVERIFY(m_chart->axes(Qt::Vertical).isEmpty());
     QVERIFY(m_chart->backgroundBrush()!=QBrush());
     QVERIFY(m_chart->backgroundPen()!=QPen());
     QCOMPARE(m_chart->isBackgroundVisible(), true);
@@ -250,11 +250,11 @@ void tst_QChart::addSeries()
     QVERIFY(series->chart() == m_chart);
     m_chart->createDefaultAxes();
     if(series->type()!=QAbstractSeries::SeriesTypePie){
-        QVERIFY(m_chart->axisY(series));
-        QVERIFY(m_chart->axisX(series));
+        QVERIFY(!m_chart->axes(Qt::Vertical, series).isEmpty());
+        QVERIFY(!m_chart->axes(Qt::Horizontal, series).isEmpty());
     }else{
-        QVERIFY(!m_chart->axisY(series));
-        QVERIFY(!m_chart->axisX(series));
+        QVERIFY(m_chart->axes(Qt::Vertical, series).isEmpty());
+        QVERIFY(m_chart->axes(Qt::Horizontal, series).isEmpty());
     }
     m_chart->removeSeries(series);
     QVERIFY(!series->chart());
@@ -336,12 +336,13 @@ void tst_QChart::axisX()
 {
     QFETCH(QAbstractAxis*, axis);
     QFETCH(QAbstractSeries*, series);
-    QVERIFY(!m_chart->axisX());
+    QVERIFY(m_chart->axes(Qt::Horizontal).isEmpty());
     m_view->show();
     QVERIFY(QTest::qWaitForWindowExposed(m_view));
     m_chart->addSeries(series);
-    m_chart->setAxisX(axis,series);
-    QVERIFY(m_chart->axisX(series)==axis);
+    m_chart->addAxis(axis, Qt::AlignBottom);
+    series->attachAxis(axis);
+    QCOMPARE(m_chart->axes(Qt::Horizontal, series).value(0), axis);
 }
 
 void tst_QChart::axisY_data()
@@ -354,12 +355,13 @@ void tst_QChart::axisY()
 {
     QFETCH(QAbstractAxis*, axis);
     QFETCH(QAbstractSeries*, series);
-    QVERIFY(!m_chart->axisY());
+    QVERIFY(m_chart->axes(Qt::Vertical).isEmpty());
     m_view->show();
     QVERIFY(QTest::qWaitForWindowExposed(m_view));
     m_chart->addSeries(series);
-    m_chart->setAxisY(axis,series);
-    QVERIFY(m_chart->axisY(series)==axis);
+    m_chart->addAxis(axis, Qt::AlignLeft);
+    series->attachAxis(axis);
+    QCOMPARE(m_chart->axes(Qt::Vertical, series).value(0), axis);
 }
 
 void tst_QChart::backgroundBrush_data()
@@ -545,14 +547,14 @@ void tst_QChart::removeAllSeries()
     QVERIFY(QTest::qWaitForWindowExposed(m_view));
     m_chart->createDefaultAxes();
     QCOMPARE(m_chart->axes().count(), 2);
-    QVERIFY(m_chart->axisY(series0)!=0);
-    QVERIFY(m_chart->axisY(series1)!=0);
-    QVERIFY(m_chart->axisY(series2)!=0);
+    QVERIFY(!m_chart->axes(Qt::Vertical, series0).isEmpty());
+    QVERIFY(!m_chart->axes(Qt::Vertical, series1).isEmpty());
+    QVERIFY(!m_chart->axes(Qt::Vertical, series2).isEmpty());
 
     m_chart->removeAllSeries();
     QCOMPARE(m_chart->axes().count(), 2);
-    QVERIFY(m_chart->axisX() != 0);
-    QVERIFY(m_chart->axisY() != 0);
+    QVERIFY(!m_chart->axes(Qt::Horizontal).isEmpty());
+    QVERIFY(!m_chart->axes(Qt::Vertical).isEmpty());
     QCOMPARE(deleteSpy1.count(), 1);
     QCOMPARE(deleteSpy2.count(), 1);
     QCOMPARE(deleteSpy3.count(), 1);
@@ -570,14 +572,17 @@ void tst_QChart::removeSeries()
     QSignalSpy deleteSpy(series, SIGNAL(destroyed()));
     m_view->show();
     QVERIFY(QTest::qWaitForWindowExposed(m_view));
-    if(!axis) axis = m_chart->axisY();
+    if (!axis)
+        axis = m_chart->axes(Qt::Vertical).value(0);
+    QVERIFY(axis);
     m_chart->addSeries(series);
-    m_chart->setAxisY(axis,series);
-    QCOMPARE(m_chart->axisY(series),axis);
+    m_chart->addAxis(axis, Qt::AlignLeft);
+    series->attachAxis(axis);
+    QCOMPARE(m_chart->axes(Qt::Vertical, series).value(0), axis);
     m_chart->removeSeries(series);
     QCOMPARE(m_chart->axes().count(), 1);
-    QVERIFY(m_chart->axisY() != 0);
-    QVERIFY(m_chart->axisY(series)==0);
+    QVERIFY(!m_chart->axes(Qt::Vertical).isEmpty());
+    QVERIFY(m_chart->axes(Qt::Vertical, series).isEmpty());
     QCOMPARE(deleteSpy.count(), 0);
     delete series;
 }
@@ -601,8 +606,8 @@ void tst_QChart::scroll_right()
     m_chart->createDefaultAxes();
     m_view->show();
     QVERIFY(QTest::qWaitForWindowExposed(m_view));
-    QAbstractAxis * axis = m_chart->axisX();
-    QVERIFY(axis!=0);
+    QAbstractAxis *axis = m_chart->axes(Qt::Horizontal).value(0);
+    QVERIFY(axis);
 
     switch(axis->type())
     {
@@ -645,8 +650,8 @@ void tst_QChart::scroll_left()
      m_chart->createDefaultAxes();
      m_view->show();
      QVERIFY(QTest::qWaitForWindowExposed(m_view));
-     QAbstractAxis * axis = m_chart->axisX();
-     QVERIFY(axis!=0);
+     QAbstractAxis *axis = m_chart->axes(Qt::Horizontal).value(0);
+     QVERIFY(axis);
 
      switch(axis->type())
         {
@@ -688,8 +693,8 @@ void tst_QChart::scroll_up()
     m_chart->createDefaultAxes();
     m_view->show();
     QVERIFY(QTest::qWaitForWindowExposed(m_view));
-    QAbstractAxis * axis = m_chart->axisY();
-    QVERIFY(axis!=0);
+    QAbstractAxis *axis = m_chart->axes(Qt::Vertical).value(0);
+    QVERIFY(axis);
 
     switch(axis->type())
     {
@@ -731,8 +736,8 @@ void tst_QChart::scroll_down()
      m_chart->createDefaultAxes();
      m_view->show();
      QVERIFY(QTest::qWaitForWindowExposed(m_view));
-     QAbstractAxis * axis = m_chart->axisY();
-     QVERIFY(axis!=0);
+     QAbstractAxis *axis = m_chart->axes(Qt::Vertical).value(0);
+     QVERIFY(axis);
 
      switch(axis->type())
         {
@@ -844,10 +849,10 @@ void tst_QChart::zoomIn()
     m_chart->createDefaultAxes();
     QRectF marigns = m_chart->plotArea();
     rect.adjust(marigns.left(),marigns.top(),-marigns.right(),-marigns.bottom());
-    QValueAxis* axisX = qobject_cast<QValueAxis*>(m_chart->axisX());
-    QVERIFY(axisX!=0);
-    QValueAxis* axisY = qobject_cast<QValueAxis*>(m_chart->axisY());
-    QVERIFY(axisY!=0);
+    auto axisX = qobject_cast<QValueAxis *>(m_chart->axes(Qt::Horizontal).value(0));
+    QVERIFY(axisX);
+    auto axisY = qobject_cast<QValueAxis *>(m_chart->axes(Qt::Vertical).value(0));
+    QVERIFY(axisY);
     qreal minX = axisX->min();
     qreal minY = axisY->min();
     qreal maxX = axisX->max();
@@ -872,10 +877,10 @@ void tst_QChart::zoomOut()
     createTestData();
     m_chart->createDefaultAxes();
 
-    QValueAxis* axisX = qobject_cast<QValueAxis*>(m_chart->axisX());
-    QVERIFY(axisX!=0);
-    QValueAxis* axisY = qobject_cast<QValueAxis*>(m_chart->axisY());
-    QVERIFY(axisY!=0);
+    auto axisX = qobject_cast<QValueAxis *>(m_chart->axes(Qt::Horizontal).value(0));
+    QVERIFY(axisX);
+    auto axisY = qobject_cast<QValueAxis *>(m_chart->axes(Qt::Vertical).value(0));
+    QVERIFY(axisY);
 
     qreal minX = axisX->min();
     qreal minY = axisY->min();
@@ -912,10 +917,10 @@ void tst_QChart::zoomReset()
 {
     createTestData();
     m_chart->createDefaultAxes();
-    QValueAxis *axisX = qobject_cast<QValueAxis *>(m_chart->axisX());
-    QVERIFY(axisX != 0);
-    QValueAxis *axisY = qobject_cast<QValueAxis *>(m_chart->axisY());
-    QVERIFY(axisY != 0);
+    auto axisX = qobject_cast<QValueAxis *>(m_chart->axes(Qt::Horizontal).value(0));
+    QVERIFY(axisX);
+    auto axisY = qobject_cast<QValueAxis *>(m_chart->axes(Qt::Vertical).value(0));
+    QVERIFY(axisY);
 
     qreal minX = axisX->min();
     qreal minY = axisY->min();
@@ -1039,10 +1044,12 @@ void tst_QChart::createDefaultAxesForLineSeries()
     chart->addSeries(series1);
     chart->addSeries(series2);
     chart->createDefaultAxes();
-    QValueAxis *xAxis = (QValueAxis *)chart->axisX();
+    auto xAxis = qobject_cast<QValueAxis *>(chart->axes(Qt::Horizontal).value(0));
+    QVERIFY(xAxis);
     QCOMPARE(xAxis->min(), overallminX);
     QCOMPARE(xAxis->max(), overallmaxX);
-    QValueAxis *yAxis = (QValueAxis *)chart->axisY();
+    auto yAxis = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).value(0));
+    QVERIFY(yAxis);
     QCOMPARE(yAxis->min(), overallminY);
     QCOMPARE(yAxis->max(), overallmaxY);
     QLineSeries *series3 = new QLineSeries(this);
@@ -1163,8 +1170,11 @@ void tst_QChart::zoomInAndOut()
         dateTimeAxisY->setRange(QDateTime::fromMSecsSinceEpoch(minY), QDateTime::fromMSecsSinceEpoch(maxY));
     }
 
-    m_chart->setAxisX(axisX, m_chart->series().first());
-    m_chart->setAxisY(axisY, m_chart->series().first());
+    const auto series = m_chart->series().constFirst();
+    m_chart->addAxis(axisX, Qt::AlignBottom);
+    series->attachAxis(axisX);
+    m_chart->addAxis(axisY, Qt::AlignLeft);
+    series->attachAxis(axisY);
     CHECK_AXIS_RANGES_MATCH
 
     m_chart->zoomIn();
