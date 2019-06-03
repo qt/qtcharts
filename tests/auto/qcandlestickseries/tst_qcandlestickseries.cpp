@@ -81,8 +81,15 @@ private Q_SLOTS:
     void mouseDoubleClicked();
 
 private:
-    QCandlestickSeries *m_series;
-    QList<QCandlestickSet *> m_sets;
+    QPointer<QCandlestickSeries> m_series;
+    struct SetList : QList<QPointer<QCandlestickSet>> {
+        operator QList<QCandlestickSet *> () const {
+            QList<QCandlestickSet *> list;
+            for (int i = 0; i < count(); ++i)
+                list.append(at(i));
+            return list;
+        }
+    }; SetList m_sets;
 };
 
 void tst_QCandlestickSeries::initTestCase()
@@ -119,14 +126,9 @@ void tst_QCandlestickSeries::init()
 
 void tst_QCandlestickSeries::cleanup()
 {
-    foreach (QCandlestickSet *set, m_sets) {
-        m_series->remove(set);
-        m_sets.removeAll(set);
-        delete set;
-    }
-
     delete m_series;
-    m_series = nullptr;
+    qDeleteAll(m_sets);
+    m_sets.clear();
 }
 
 void tst_QCandlestickSeries::qCandlestickSeries()
@@ -177,16 +179,20 @@ void tst_QCandlestickSeries::remove()
 
     // Remove some sets
     const int removeCount = 3;
-    for (int i = 0; i < removeCount; ++i)
+    for (int i = 0; i < removeCount; ++i) {
         QVERIFY(m_series->remove(m_sets.at(i)));
+        QVERIFY(!m_sets.at(i));
+    }
     QCOMPARE(m_series->count(), m_sets.count() - removeCount);
 
     for (int i = removeCount; i < m_sets.count(); ++i)
         QCOMPARE(m_series->sets().at(i - removeCount), m_sets.at(i));
 
     // Try removing all sets again (should be ok, even if some sets have already been removed)
-    for (int i = 0; i < m_sets.count(); ++i)
+    for (int i = 0; i < m_sets.count(); ++i) {
         m_series->remove(m_sets.at(i));
+        QVERIFY(!m_sets.at(i));
+    }
     QCOMPARE(m_series->count(), 0);
 }
 

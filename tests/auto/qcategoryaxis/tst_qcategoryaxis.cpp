@@ -116,7 +116,8 @@ void tst_QCategoryAxis::qcategoryaxis()
     QCOMPARE(m_categoryaxis->type(), QAbstractAxis::AxisTypeCategory);
     QCOMPARE(m_categoryaxis->labelsPosition(), QCategoryAxis::AxisLabelsPositionCenter);
 
-    m_chart->setAxisX(m_categoryaxis, m_series);
+    m_chart->addAxis(m_categoryaxis, Qt::AlignBottom);
+    m_series->attachAxis(m_categoryaxis);
     m_view->show();
     QVERIFY(QTest::qWaitForWindowExposed(m_view));
 
@@ -157,7 +158,8 @@ void tst_QCategoryAxis::max_data()
 
 void tst_QCategoryAxis::max()
 {
-    m_chart->setAxisX(m_categoryaxis, m_series);
+    m_chart->addAxis(m_categoryaxis, Qt::AlignBottom);
+    m_series->attachAxis(m_categoryaxis);
     m_view->show();
     QVERIFY(QTest::qWaitForWindowExposed(m_view));
     max_raw();
@@ -205,7 +207,8 @@ void tst_QCategoryAxis::min_data()
 
 void tst_QCategoryAxis::min()
 {
-    m_chart->setAxisX(m_categoryaxis, m_series);
+    m_chart->addAxis(m_categoryaxis, Qt::AlignBottom);
+    m_series->attachAxis(m_categoryaxis);
     m_view->show();
     QVERIFY(QTest::qWaitForWindowExposed(m_view));
     min_raw();
@@ -259,7 +262,8 @@ void tst_QCategoryAxis::range_data()
 
 void tst_QCategoryAxis::range()
 {
-    m_chart->setAxisX(m_categoryaxis, m_series);
+    m_chart->addAxis(m_categoryaxis, Qt::AlignBottom);
+    m_series->attachAxis(m_categoryaxis);
     m_view->show();
     QVERIFY(QTest::qWaitForWindowExposed(m_view));
     range_raw();
@@ -335,7 +339,8 @@ void tst_QCategoryAxis::reverse()
     m_categoryaxis->setReverse();
     QCOMPARE(m_categoryaxis->isReverse(), true);
 
-    m_chart->setAxisX(m_categoryaxis, m_series);
+    m_chart->addAxis(m_categoryaxis, Qt::AlignBottom);
+    m_series->attachAxis(m_categoryaxis);
     QCOMPARE(spy.count(), 1);
 
     m_view->show();

@@ -553,7 +553,7 @@ bool QCandlestickSeries::remove(const QList<QCandlestickSet *> &sets)
         emit candlestickSetsRemoved(sets);
         emit countChanged();
         foreach (QCandlestickSet *set, sets)
-            set->deleteLater();
+            delete set;
     }
 
     return success;
@@ -630,7 +630,7 @@ void QCandlestickSeries::clear()
         emit candlestickSetsRemoved(sets);
         emit countChanged();
         foreach (QCandlestickSet *set, sets)
-            set->deleteLater();
+            delete set;
     }
 }
 
@@ -931,6 +931,7 @@ QCandlestickSeriesPrivate::QCandlestickSeriesPrivate(QCandlestickSeries *q)
 QCandlestickSeriesPrivate::~QCandlestickSeriesPrivate()
 {
     disconnect(this, 0, 0, 0);
+    qDeleteAll(m_sets);
 }
 
 void QCandlestickSeriesPrivate::initializeDomain()

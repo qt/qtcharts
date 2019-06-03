@@ -73,6 +73,8 @@ private slots:
     void dynamicTicks();
 
 private:
+    void removeAxes();
+
     QValueAxis* m_valuesaxis;
     QLineSeries* m_series;
 };
@@ -89,11 +91,19 @@ void tst_QValueAxis::init()
 
 void tst_QValueAxis::cleanup()
 {
+    removeAxes();
     delete m_series;
     delete m_valuesaxis;
     m_series = 0;
     m_valuesaxis = 0;
     tst_QAbstractAxis::cleanup();
+}
+
+void tst_QValueAxis::removeAxes()
+{
+    const auto oldAxes = m_chart->axes(Qt::Horizontal) + m_chart->axes(Qt::Vertical);
+    for (auto oldAxis : oldAxes)
+        m_chart->removeAxis(oldAxis);
 }
 
 void tst_QValueAxis::qvalueaxis_data()
@@ -109,7 +119,8 @@ void tst_QValueAxis::qvalueaxis()
     QCOMPARE(m_valuesaxis->tickCount(), 5);
     QCOMPARE(m_valuesaxis->type(), QAbstractAxis::AxisTypeValue);
 
-    m_chart->setAxisX(m_valuesaxis, m_series);
+    m_chart->addAxis(m_valuesaxis, Qt::AlignBottom);
+    m_series->attachAxis(m_valuesaxis);
     m_view->show();
     QVERIFY(QTest::qWaitForWindowExposed(m_view));
 
@@ -152,7 +163,8 @@ void tst_QValueAxis::max_data()
 
 void tst_QValueAxis::max()
 {
-    m_chart->setAxisX(m_valuesaxis, m_series);
+    m_chart->addAxis(m_valuesaxis, Qt::AlignBottom);
+    m_series->attachAxis(m_valuesaxis);
     m_view->show();
     QVERIFY(QTest::qWaitForWindowExposed(m_view));
     max_raw();
@@ -200,7 +212,8 @@ void tst_QValueAxis::min_data()
 
 void tst_QValueAxis::min()
 {
-    m_chart->setAxisX(m_valuesaxis, m_series);
+    m_chart->addAxis(m_valuesaxis, Qt::AlignBottom);
+    m_series->attachAxis(m_valuesaxis);
     m_view->show();
     QVERIFY(QTest::qWaitForWindowExposed(m_view));
     min_raw();
@@ -304,7 +317,8 @@ void tst_QValueAxis::range_data()
 
 void tst_QValueAxis::range()
 {
-    m_chart->setAxisX(m_valuesaxis, m_series);
+    m_chart->addAxis(m_valuesaxis, Qt::AlignBottom);
+    m_series->attachAxis(m_valuesaxis);
     m_view->show();
     QVERIFY(QTest::qWaitForWindowExposed(m_view));
     range_raw();
@@ -347,7 +361,8 @@ void tst_QValueAxis::ticksCount()
     QCOMPARE(spy1.count(), 0);
     QCOMPARE(spy2.count(), 0);
 
-    m_chart->setAxisX(m_valuesaxis, m_series);
+    m_chart->addAxis(m_valuesaxis, Qt::AlignBottom);
+    m_series->attachAxis(m_valuesaxis);
     m_view->show();
     QVERIFY(QTest::qWaitForWindowExposed(m_view));
 
@@ -380,7 +395,8 @@ void tst_QValueAxis::noautoscale()
     QCOMPARE(spy1.count(), 1);
     QCOMPARE(spy2.count(), 1);
 
-    m_chart->setAxisX(m_valuesaxis, m_series);
+    m_chart->addAxis(m_valuesaxis, Qt::AlignBottom);
+    m_series->attachAxis(m_valuesaxis);
     m_view->show();
     QVERIFY(QTest::qWaitForWindowExposed(m_view));
     QVERIFY2(qFuzzyCompare(m_valuesaxis->min(), min), "Min not equal");
@@ -400,7 +416,8 @@ void tst_QValueAxis::autoscale()
 
     QVERIFY2(qFuzzyCompare(m_valuesaxis->min(), 0), "Min not equal");
     QVERIFY2(qFuzzyCompare(m_valuesaxis->max(), 0), "Max not equal");
-    m_chart->setAxisX(m_valuesaxis, m_series);
+    m_chart->addAxis(m_valuesaxis, Qt::AlignBottom);
+    m_series->attachAxis(m_valuesaxis);
 
     QCOMPARE(spy0.count(), 1);
     QCOMPARE(spy1.count(), 1);
@@ -420,7 +437,8 @@ void tst_QValueAxis::reverse()
     m_valuesaxis->setReverse();
     QCOMPARE(m_valuesaxis->isReverse(), true);
 
-    m_chart->setAxisX(m_valuesaxis, m_series);
+    m_chart->addAxis(m_valuesaxis, Qt::AlignBottom);
+    m_series->attachAxis(m_valuesaxis);
     QCOMPARE(spy.count(), 1);
 
     m_view->show();
@@ -430,7 +448,8 @@ void tst_QValueAxis::reverse()
 
 void tst_QValueAxis::labels()
 {
-    m_chart->setAxisX(m_valuesaxis, m_series);
+    m_chart->addAxis(m_valuesaxis, Qt::AlignBottom);
+    m_series->attachAxis(m_valuesaxis);
     m_view->resize(300, 300);
     m_view->show();
     QVERIFY(QTest::qWaitForWindowExposed(m_view));
@@ -465,9 +484,12 @@ void tst_QValueAxis::labels()
 
 void tst_QValueAxis::dynamicTicks()
 {
+    removeAxes(); // remove default axes created by init()
     QValueAxis *valuesaxis = new QValueAxis();
-    m_chart->setAxisX(m_valuesaxis, m_series);
-    m_chart->setAxisY(valuesaxis, m_series);
+    m_chart->addAxis(m_valuesaxis, Qt::AlignBottom);
+    m_series->attachAxis(m_valuesaxis);
+    m_chart->addAxis(valuesaxis, Qt::AlignLeft);
+    m_series->attachAxis(valuesaxis);
     m_view->resize(400, 400);
     m_valuesaxis->setRange(-111.0, 111);
     m_valuesaxis->setTickType(QValueAxis::TicksDynamic);
@@ -497,7 +519,7 @@ void tst_QValueAxis::dynamicTicks()
         }
     }
 
-    QCOMPARE(expectedList, observedStrings);
+    QCOMPARE(observedStrings, expectedList);
 }
 
 QTEST_MAIN(tst_QValueAxis)
