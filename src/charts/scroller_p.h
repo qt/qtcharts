@@ -42,7 +42,7 @@
 #include <QtCharts/QChartGlobal>
 #include <QtCore/QObject>
 #include <QtCore/QBasicTimer>
-#include <QtCore/QTime>
+#include <QtCore/QElapsedTimer>
 #include <QtCore/QPointF>
 #include <QtCharts/private/qchartglobal_p.h>
 
@@ -105,7 +105,7 @@ private:
 
 private:
     ScrollTicker m_ticker;
-    QTime m_timeStamp;
+    QElapsedTimer m_timeStamp;
     QPointF m_speed;
     QPointF m_fraction;
     int m_timeTresholdMin;

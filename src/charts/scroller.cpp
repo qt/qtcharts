@@ -52,11 +52,11 @@ void Scroller::move(const QPointF &delta)
 {
     switch (m_state) {
     case Pressed:
-        m_timeStamp = QTime::currentTime();
+        m_timeStamp.restart();
         break;
     case Scroll:
         stopTicker();
-        m_timeStamp = QTime::currentTime();
+        m_timeStamp.restart();
         break;
     default:
         break;
@@ -69,10 +69,10 @@ void Scroller::scrollTo(const QPointF &delta)
     // Starts scrolling, if at least m_timeTresholdMin msecs has gone since timestamp
     // current time is no more than m_timeTresholdMax from timestamp
 
-    if ((m_timeStamp.elapsed() > m_timeTresholdMin) && (m_timeStamp.msecsTo(QTime::currentTime()) < m_timeTresholdMax)) {
+    if ((m_timeStamp.elapsed() > m_timeTresholdMin) && (m_timeStamp.elapsed() < m_timeTresholdMax)) {
         // Release was quick enough. Start scrolling.
         qreal interval = 25;
-        qreal time = m_timeStamp.msecsTo(QTime::currentTime());
+        qreal time = m_timeStamp.elapsed();
         if (qFuzzyCompare(time, 0)) {
             m_speed = delta / 5;
         } else {
