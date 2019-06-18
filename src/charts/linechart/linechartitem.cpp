@@ -354,12 +354,18 @@ void LineChartItem::handleUpdated()
     m_pointLabelsVisible = m_series->pointLabelsVisible();
     m_pointLabelsFont = m_series->pointLabelsFont();
     m_pointLabelsColor = m_series->pointLabelsColor();
+    bool labelClippingChanged = m_pointLabelsClipping != m_series->pointLabelsClipping();
     m_pointLabelsClipping = m_series->pointLabelsClipping();
     if (doGeometryUpdate)
         updateGeometry();
     else if (m_series->useOpenGL() && visibleChanged)
         refreshGlChart();
-    update();
+
+    // Update whole chart in case label clipping changed as labels can be outside series area
+    if (labelClippingChanged)
+        m_series->chart()->update();
+    else
+        update();
 }
 
 void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
