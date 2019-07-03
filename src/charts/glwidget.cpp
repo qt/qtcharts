@@ -327,10 +327,9 @@ void GLWidget::render(bool selection)
     QOpenGLVertexArrayObject::Binder vaoBinder(&m_vao);
     m_program->bind();
 
-    GLXYDataMapIterator i(m_xyDataManager->dataMap());
     int counter = 0;
-    while (i.hasNext()) {
-        i.next();
+    const auto &dataMap = m_xyDataManager->dataMap();
+    for (auto i = dataMap.begin(), end = dataMap.end(); i != end; ++i) {
         QOpenGLBuffer *vbo = m_seriesBufferMap.value(i.key());
         GLXYSeriesData *data = i.value();
 

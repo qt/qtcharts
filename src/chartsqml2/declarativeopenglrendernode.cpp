@@ -225,9 +225,7 @@ void DeclarativeOpenGLRenderNode::setSeriesData(bool mapDirty, const GLXYDataMap
         GLXYDataMap oldMap = m_xyDataMap;
         m_xyDataMap.clear();
 
-        GLXYDataMapIterator i(dataMap);
-        while (i.hasNext()) {
-            i.next();
+        for (auto i = dataMap.begin(), end = dataMap.end(); i != end; ++i) {
             GLXYSeriesData *data = oldMap.take(i.key());
             const GLXYSeriesData *newData = i.value();
             if (!data || newData->dirty) {
@@ -237,18 +235,14 @@ void DeclarativeOpenGLRenderNode::setSeriesData(bool mapDirty, const GLXYDataMap
             m_xyDataMap.insert(i.key(), data);
         }
         // Delete remaining old data
-        i = oldMap;
-        while (i.hasNext()) {
-            i.next();
+        for (auto i = oldMap.begin(), end = oldMap.end(); i != end; ++i) {
             delete i.value();
             cleanXYSeriesResources(i.key());
         }
         dirty = true;
     } else {
         // Series have not changed, so just copy dirty data over
-        GLXYDataMapIterator i(dataMap);
-        while (i.hasNext()) {
-            i.next();
+        for (auto i = dataMap.begin(), end = dataMap.end(); i != end; ++i) {
             const GLXYSeriesData *newData = i.value();
             if (i.value()->dirty) {
                 dirty = true;
@@ -308,10 +302,8 @@ void DeclarativeOpenGLRenderNode::renderGL(bool selection)
 
     glViewport(0, 0, m_textureSize.width(), m_textureSize.height());
 
-    GLXYDataMapIterator i(m_xyDataMap);
     int counter = 0;
-    while (i.hasNext()) {
-        i.next();
+    for (auto i = m_xyDataMap.begin(), end = m_xyDataMap.end(); i != end; ++i) {
         QOpenGLBuffer *vbo = m_seriesBufferMap.value(i.key());
         GLXYSeriesData *data = i.value();
 

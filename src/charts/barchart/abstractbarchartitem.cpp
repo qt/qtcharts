@@ -207,12 +207,9 @@ void AbstractBarChartItem::handleLayoutChanged()
 void AbstractBarChartItem::handleLabelsVisibleChanged(bool visible)
 {
     bool newVisible = visible && m_series->isVisible();
-    QMapIterator<QBarSet *, QList<Bar *> > i(m_barMap);
-    while (i.hasNext()) {
-        i.next();
-        const QList<Bar *> &bars = i.value();
-        for (int j = 0; j < bars.size(); j++) {
-            QGraphicsTextItem *label = bars.at(j)->labelItem();
+    for (const QList<Bar *> &bars : qAsConst(m_barMap)) {
+        for (Bar *bar :  bars) {
+            QGraphicsTextItem *label = bar->labelItem();
             if (label)
                 label->setVisible(newVisible);
         }
@@ -235,9 +232,7 @@ void AbstractBarChartItem::handleVisibleChanged()
     bool visible = m_series->isVisible();
     handleLabelsVisibleChanged(m_series->isLabelsVisible());
 
-    QMapIterator<QBarSet *, QList<Bar *> > i(m_barMap);
-    while (i.hasNext()) {
-        i.next();
+    for (auto i = m_barMap.cbegin(), end = m_barMap.cend(); i != end; ++i) {
         const QList<Bar *> &bars = i.value();
         for (int j = 0; j < bars.size(); j++) {
             Bar *bar = bars.at(j);
@@ -505,17 +500,14 @@ void AbstractBarChartItem::createLabelItems()
 
     m_labelItemsMissing = false;
 
-    QMapIterator<QBarSet *, QList<Bar *> > i(m_barMap);
-    while (i.hasNext()) {
-        i.next();
-        const QList<Bar *> &bars = i.value();
-        for (int j = 0; j < bars.size(); j++) {
-            QGraphicsTextItem *label = bars.at(j)->labelItem();
+    for (const QList<Bar *> &bars : qAsConst(m_barMap)) {
+        for (Bar *bar :  bars) {
+            QGraphicsTextItem *label = bar->labelItem();
             if (!label) {
                 QGraphicsTextItem *newLabel = new QGraphicsTextItem(this);
                 newLabel->setAcceptHoverEvents(false);
                 newLabel->document()->setDocumentMargin(ChartPresenter::textMargin());
-                bars.at(j)->setLabelItem(newLabel);
+                bar->setLabelItem(newLabel);
             }
         }
     }
