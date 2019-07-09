@@ -427,8 +427,13 @@ void SplineChartItem::handleUpdated()
     m_pointLabelsVisible = m_series->pointLabelsVisible();
     m_pointLabelsFont = m_series->pointLabelsFont();
     m_pointLabelsColor = m_series->pointLabelsColor();
+    bool labelClippingChanged = m_pointLabelsClipping != m_series->pointLabelsClipping();
     m_pointLabelsClipping = m_series->pointLabelsClipping();
-    update();
+    // Update whole chart in case label clipping changed as labels can be outside series area
+    if (labelClippingChanged)
+        m_series->chart()->update();
+    else
+        update();
 }
 
 //painter
