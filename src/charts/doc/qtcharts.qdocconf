@@ -1,4 +1,5 @@
 include($QT_INSTALL_DOCS/global/qt-module-defaults.qdocconf)
+include($QT_INSTALL_DOCS/config/exampleurl-qtcharts.qdocconf)
 
 project = QtCharts
 description = Qt Charts Reference Documentation
