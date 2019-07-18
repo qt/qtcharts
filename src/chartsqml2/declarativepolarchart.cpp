@@ -34,6 +34,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
     \qmltype PolarChartView
+    \inherits ChartView
     \instantiates DeclarativePolarChart
     \inqmlmodule QtCharts
 
