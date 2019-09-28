@@ -49,7 +49,7 @@ class Q_CHARTS_PRIVATE_EXPORT ValueAxisLabel : public EditableAxisLabel
 public:
     ValueAxisLabel(QGraphicsItem *parent = nullptr);
 
-    void keyPressEvent(QKeyEvent *event);
+    void keyPressEvent(QKeyEvent *event) override;
 
     qreal value() const;
     void setValue(const qreal &value);
