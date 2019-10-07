@@ -58,7 +58,7 @@ public:
     qreal endValue() { return m_endValue; }
     void setEndValue(qreal endValue) { m_endValue = endValue; }
     QString label() { return m_label; }
-    void setLabel(QString label) { m_label = label; }
+    void setLabel(const QString &label);
 
 private:
     qreal m_endValue;
