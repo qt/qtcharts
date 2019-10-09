@@ -261,6 +261,17 @@ void QChartView::mouseReleaseEvent(QMouseEvent *event)
 #endif
 }
 
+#ifdef Q_OS_MACOS
+#if QT_CONFIG(wheelevent)
+void QChartView::wheelEvent(QWheelEvent *event)
+{
+    Q_UNUSED(event)
+    // We just need to override wheelEvent, or scrolling won't work correctly on macOS trackpad
+    // (QTBUG-77403)
+}
+#endif
+#endif
+
 /*!
     Resizes and updates the chart area using the data specified by \a event.
 */
