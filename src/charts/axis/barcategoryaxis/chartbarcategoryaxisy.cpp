@@ -59,7 +59,7 @@ QVector<qreal> ChartBarCategoryAxisY::calculateLayout() const
         return points;
 
     qreal adjustedMin = min() + 0.5;
-    qreal offset = (qCeil(adjustedMin) - adjustedMin) * delta;
+    qreal offset = (qRound(adjustedMin) - adjustedMin) * delta;
 
     int count = qFloor(range);
     if (count < 1)
@@ -80,7 +80,7 @@ QStringList ChartBarCategoryAxisY::createCategoryLabels(const QVector<qreal>& la
     qreal d = (max() - min()) / gridRect.height();
 
     for (int i = 0; i < layout.count() - 1; ++i) {
-        qreal x = qFloor(((gridRect.height() - (layout[i + 1] + layout[i]) / 2 + gridRect.top()) * d + min() + 0.5));
+        int x = qFloor(((gridRect.height() - (layout[i + 1] + layout[i]) / 2 + gridRect.top()) * d + min() + 0.5));
         if ((x < m_categoriesAxis->categories().count()) && (x >= 0)) {
             result << m_categoriesAxis->categories().at(x);
         } else {
