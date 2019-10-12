@@ -51,7 +51,7 @@ class Q_CHARTS_PRIVATE_EXPORT DateTimeAxisLabel : public EditableAxisLabel
 public:
     DateTimeAxisLabel(QGraphicsItem *parent = nullptr);
 
-    void keyPressEvent(QKeyEvent *event);
+    void keyPressEvent(QKeyEvent *event) override;
 
     QDateTime value() const;
     void setValue(const QDateTime &value);
