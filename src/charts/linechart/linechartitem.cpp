@@ -291,19 +291,8 @@ void LineChartItem::updateGeometry()
         // because shape doesn't get clipped. It doesn't seem possible to do sensibly.
     } else { // not polar
         linePath.moveTo(points.at(0));
-        if (m_pointsVisible) {
-            int size = m_linePen.width();
-            linePath.addEllipse(points.at(0), size, size);
-            linePath.moveTo(points.at(0));
-            for (int i = 1; i < points.size(); i++) {
-                linePath.lineTo(points.at(i));
-                linePath.addEllipse(points.at(i), size, size);
-                linePath.moveTo(points.at(i));
-            }
-        } else {
-            for (int i = 1; i < points.size(); i++)
-                linePath.lineTo(points.at(i));
-        }
+        for (int i = 1; i < points.size(); i++)
+            linePath.lineTo(points.at(i));
         fullPath = linePath;
     }
 
@@ -407,19 +396,12 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
         painter->setClipRect(clipRect);
     }
 
-    if (m_pointsVisible) {
-        painter->setBrush(m_linePen.color());
+    if (m_linePen.style() != Qt::SolidLine || alwaysUsePath) {
+        // If pen style is not solid line, use path painting to ensure proper pattern continuity
         painter->drawPath(m_linePath);
     } else {
-        painter->setBrush(QBrush(Qt::NoBrush));
-        if (m_linePen.style() != Qt::SolidLine || alwaysUsePath) {
-            // If pen style is not solid line, always fall back to path painting
-            // to ensure proper continuity of the pattern
-            painter->drawPath(m_linePath);
-        } else {
-            for (int i(1); i < m_linePoints.size(); i++)
-                painter->drawLine(m_linePoints.at(i - 1), m_linePoints.at(i));
-        }
+        for (int i = 1; i < m_linePoints.size(); ++i)
+            painter->drawLine(m_linePoints.at(i - 1), m_linePoints.at(i));
     }
 
     if (m_pointLabelsVisible) {
@@ -432,6 +414,16 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 
     painter->restore();
 
+    if (m_pointsVisible) {
+        // draw points that lie inside clipRect only
+        qreal ptSize = m_linePen.width() * 1.5;
+        painter->setPen(Qt::NoPen);
+        painter->setBrush(m_linePen.color());
+        for (int i = 0; i < m_linePoints.size(); ++i) {
+            if (clipRect.contains(m_linePoints.at(i)))
+                painter->drawEllipse(m_linePoints.at(i), ptSize, ptSize);
+        }
+    }
 }
 
 void LineChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
