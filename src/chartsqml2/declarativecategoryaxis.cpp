@@ -64,6 +64,14 @@ DeclarativeCategoryRange::DeclarativeCategoryRange(QObject *parent) :
 {
 }
 
+void DeclarativeCategoryRange::setLabel(const QString &label)
+{
+    auto catAxis = qobject_cast<QCategoryAxis *>(parent());
+    if (catAxis)
+        catAxis->replaceLabel(m_label, label);
+    m_label = label;
+}
+
 DeclarativeCategoryAxis::DeclarativeCategoryAxis(QObject *parent) :
     QCategoryAxis(parent),
     m_labelsPosition(AxisLabelsPositionCenter)
