@@ -425,14 +425,23 @@ void tst_qcandlestickmodelmapper::seriesUpdated()
     QList<QCandlestickSet *> newCandlestickSets;
     newCandlestickSets << new QCandlestickSet(3.0, 5.0, 2.0, 4.0, 1234);
     newCandlestickSets << new QCandlestickSet(5.0, 7.0, 4.0, 6.0, 5678);
+    newCandlestickSets << new QCandlestickSet(3.0, 8.0, 4.0, 6.0, 6789);
     m_series->append(newCandlestickSets);
     QCOMPARE(m_model->columnCount(), m_modelColumnCount + newCandlestickSets.count());
 
     // remove sets
     newCandlestickSets.clear();
     newCandlestickSets << m_series->sets().at(m_series->count() - 1);
-    newCandlestickSets << m_series->sets().at(m_series->count() - 2);
+    newCandlestickSets << m_series->sets().at(m_series->count() - 5);
+    newCandlestickSets << m_series->sets().at(m_series->count() - 3);
     m_series->remove(newCandlestickSets);
+
+    // Make sure correct rows have been removed from model
+    for (int i = 0, end =  m_series->sets().size(); i < end; ++i) {
+        QCOMPARE(m_model->data(m_model->index(m_vMapper->timestampRow(), i)).toReal(),
+                 m_series->sets().at(i)->timestamp());
+    }
+
     QCOMPARE(m_model->columnCount(), m_modelColumnCount);
 }
 
