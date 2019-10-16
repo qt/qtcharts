@@ -33,6 +33,8 @@
 #include <QtCore/QAbstractItemModel>
 #include <private/qcandlestickmodelmapper_p.h>
 
+#include <algorithm>
+
 QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
@@ -590,20 +592,33 @@ void QCandlestickModelMapperPrivate::candlestickSetsRemoved(const QList<QCandles
     if (sets.isEmpty())
         return;
 
-    int firstIndex = m_sets.indexOf(sets.at(0));
-    if (firstIndex == -1)
+    QVector<int> removedIndices;
+    for (auto &set : sets) {
+        int index = m_sets.indexOf(set);
+        if (index != -1)
+            removedIndices << index;
+    }
+
+    if (removedIndices.isEmpty())
         return;
 
-    m_lastSetSection -= sets.count();
+    std::sort(removedIndices.begin(), removedIndices.end());
 
-    for (int i = firstIndex + sets.count() - 1; i >= firstIndex; --i)
-        m_sets.removeAt(i);
+    for (int i = removedIndices.size() - 1; i >= 0; --i) {
+        m_sets.removeAt(removedIndices[i]);
+        --m_lastSetSection;
+    }
 
     blockModelSignals();
-    if (q->orientation() == Qt::Vertical)
-        m_model->removeColumns(firstIndex + m_firstSetSection, sets.count());
-    else
-        m_model->removeRows(firstIndex + m_firstSetSection, sets.count());
+
+    // There is no guarantee removed sets are continuous, so remove them one by one
+    for (int i = removedIndices.size() - 1; i >= 0; --i) {
+        if (q->orientation() == Qt::Vertical)
+            m_model->removeColumns(removedIndices[i] + m_firstSetSection, 1);
+        else
+            m_model->removeRows(removedIndices[i] + m_firstSetSection, 1);
+    }
+
     blockModelSignals(false);
     initializeCandlestickFromModel();
 }
