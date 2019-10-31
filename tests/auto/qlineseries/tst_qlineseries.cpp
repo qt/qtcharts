@@ -31,7 +31,6 @@
 #include <QtCharts/QLineSeries>
 
 Q_DECLARE_METATYPE(QList<QPointF>)
-Q_DECLARE_METATYPE(QVector<QPointF>)
 
 class tst_QLineSeries : public tst_QXYSeries
 {

@@ -30,7 +30,6 @@
 #include "../qxyseries/tst_qxyseries.h"
 #include <QtCharts/QScatterSeries>
 
-Q_DECLARE_METATYPE(QList<QPointF>)
 Q_DECLARE_METATYPE(QVector<QPointF>)
 
 class tst_QScatterSeries : public tst_QXYSeries

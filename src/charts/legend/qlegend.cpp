@@ -772,7 +772,7 @@ void QLegendPrivate::handleCountChanged()
     }
 
     // Re-insert createdMarkers into m_markers in correct order.
-    if (pos != -1 || pos == m_markers.size()) {
+    if (pos == -1 || pos == m_markers.size()) {
         m_markers.append(createdMarkers);
     } else {
         for (int c = createdMarkers.size() - 1; c >= 0; --c)

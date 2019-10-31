@@ -596,19 +596,6 @@ void QXYSeries::replace(int index, const QPointF &newPoint)
   Replaces the current points with the points specified by \a points.
   \note This is much faster than replacing data points one by one,
   or first clearing all data, and then appending the new data. Emits QXYSeries::pointsReplaced()
-  when the points have been replaced. However, note that using the overload that takes
-  \c{QVector<QPointF>} as parameter is faster than using this overload.
-  \sa pointsReplaced()
-*/
-void QXYSeries::replace(QList<QPointF> points)
-{
-    replace(points.toVector());
-}
-
-/*!
-  Replaces the current points with the points specified by \a points.
-  \note This is much faster than replacing data points one by one,
-  or first clearing all data, and then appending the new data. Emits QXYSeries::pointsReplaced()
   when the points have been replaced.
   \sa pointsReplaced()
 */

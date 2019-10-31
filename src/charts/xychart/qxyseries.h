@@ -109,7 +109,6 @@ public:
     void setPointLabelsClipping(bool enabled = true);
     bool pointLabelsClipping() const;
 
-    void replace(QList<QPointF> points);
     void replace(QVector<QPointF> points);
 
 Q_SIGNALS:
