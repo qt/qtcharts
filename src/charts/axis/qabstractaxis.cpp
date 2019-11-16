@@ -370,7 +370,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
   \fn void QAbstractAxis::labelsEditableChanged(bool editable)
   \since 5.13
-  This signal is emitted when the labels editability changes.
+  This signal is emitted when the \a editable state of the label changes.
 */
 
 /*!
