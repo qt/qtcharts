@@ -325,22 +325,22 @@ QT_CHARTS_BEGIN_NAMESPACE
 
 /*!
   \qmlmethod Axis ChartView::axisX(AbstractSeries series)
-  The x-axis of the series.
+  The x-axis of the \a series.
 */
 
 /*!
   \qmlmethod ChartView::setAxisX(AbstractAxis axis, AbstractSeries series)
-  Sets the x-axis of the series.
+  Sets the x-axis of the \a series to \a axis.
 */
 
 /*!
   \qmlmethod Axis ChartView::axisY(AbstractSeries series)
-  The y-axis of the series.
+  The y-axis of the \a series.
 */
 
 /*!
   \qmlmethod ChartView::setAxisY(AbstractAxis axis, AbstractSeries series)
-  Sets the y-axis of the series.
+  Sets the y-axis of the \a series to \a axis.
 */
 
 /*!

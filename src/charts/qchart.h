@@ -199,6 +199,8 @@ private:
 
 QT_CHARTS_END_NAMESPACE
 
+#ifndef Q_CLANG_QDOC
 Q_DECLARE_OPERATORS_FOR_FLAGS(QT_CHARTS_NAMESPACE::QChart::AnimationOptions)
+#endif
 
 #endif // QCHART_H
