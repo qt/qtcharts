@@ -273,10 +273,10 @@ void tst_qpieslice::clickedSignal()
     series->setPieSize(1.0);
     QRectF pieRect = view.chart()->plotArea();
     QList<QPoint> points = slicePoints(pieRect);
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, points.at(0));
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, points.at(1));
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, points.at(2));
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, points.at(3));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, points.at(0));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, points.at(1));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, points.at(2));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, points.at(3));
     QCOMPARE(clickSpy1.count(), 1);
     QCOMPARE(clickSpy2.count(), 1);
     QCOMPARE(clickSpy3.count(), 1);
@@ -391,10 +391,10 @@ void tst_qpieslice::pressedSignal()
     series->setPieSize(1.0);
     QRectF pieRect = view.chart()->plotArea();
     QList<QPoint> points = slicePoints(pieRect);
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, points.at(0));
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, points.at(1));
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, points.at(2));
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, points.at(3));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, points.at(0));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, points.at(1));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, points.at(2));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, points.at(3));
     QCOMPARE(clickSpy1.count(), 1);
     QCOMPARE(clickSpy2.count(), 1);
     QCOMPARE(clickSpy3.count(), 1);
@@ -432,10 +432,10 @@ void tst_qpieslice::releasedSignal()
     series->setPieSize(1.0);
     QRectF pieRect = view.chart()->plotArea();
     QList<QPoint> points = slicePoints(pieRect);
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, points.at(0));
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, points.at(1));
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, points.at(2));
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, points.at(3));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, points.at(0));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, points.at(1));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, points.at(2));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, points.at(3));
     QCOMPARE(clickSpy1.count(), 1);
     QCOMPARE(clickSpy2.count(), 1);
     QCOMPARE(clickSpy3.count(), 1);
@@ -467,7 +467,7 @@ void tst_qpieslice::doubleClickedSignal()
     series->setPieSize(1.0);
     QRectF pieRect = view.chart()->plotArea();
     QList<QPoint> points = slicePoints(pieRect);
-    QTest::mouseDClick(view.viewport(), Qt::LeftButton, 0, points.at(0));
+    QTest::mouseDClick(view.viewport(), Qt::LeftButton, {}, points.at(0));
     QCOMPARE(clickSpy1.count(), 1);
 }
 

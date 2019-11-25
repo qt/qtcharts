@@ -43,7 +43,7 @@ class Chart : public QChart
 //![1]
 {
 public:
-    explicit Chart(QGraphicsItem *parent = 0, Qt::WindowFlags wFlags = 0);
+    explicit Chart(QGraphicsItem *parent = nullptr, Qt::WindowFlags wFlags = {});
     ~Chart();
 
 protected:

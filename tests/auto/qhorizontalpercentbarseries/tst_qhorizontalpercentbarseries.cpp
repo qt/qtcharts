@@ -242,7 +242,7 @@ void tst_QHorizontalPercentBarSeries::mouseclicked()
 
 //====================================================================================
 // barset 1, bar 0
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.at(0).center().toPoint());
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.at(0).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -254,7 +254,7 @@ void tst_QHorizontalPercentBarSeries::mouseclicked()
 
 //====================================================================================
 // barset 1, bar 1
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.at(2).center().toPoint());
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.at(2).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -266,7 +266,7 @@ void tst_QHorizontalPercentBarSeries::mouseclicked()
 
 //====================================================================================
 // barset 1, bar 2
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.at(4).center().toPoint());
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.at(4).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -278,7 +278,7 @@ void tst_QHorizontalPercentBarSeries::mouseclicked()
 
 //====================================================================================
 // barset 2, bar 0
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.at(1).center().toPoint());
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.at(1).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -290,7 +290,7 @@ void tst_QHorizontalPercentBarSeries::mouseclicked()
 
 //====================================================================================
 // barset 2, bar 1
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.at(3).center().toPoint());
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.at(3).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -302,7 +302,7 @@ void tst_QHorizontalPercentBarSeries::mouseclicked()
 
 //====================================================================================
 // barset 2, bar 2
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.at(5).center().toPoint());
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.at(5).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -691,7 +691,7 @@ void tst_QHorizontalPercentBarSeries::mousePressed()
 
 //====================================================================================
 // barset 1, bar 0
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.at(0).center().toPoint());
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.at(0).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -709,7 +709,7 @@ void tst_QHorizontalPercentBarSeries::mousePressed()
 
 //====================================================================================
 // barset 1, bar 1
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.at(2).center().toPoint());
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.at(2).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -727,7 +727,7 @@ void tst_QHorizontalPercentBarSeries::mousePressed()
 
 //====================================================================================
 // barset 1, bar 2
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.at(4).center().toPoint());
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.at(4).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -745,7 +745,7 @@ void tst_QHorizontalPercentBarSeries::mousePressed()
 
 //====================================================================================
 // barset 2, bar 0
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.at(1).center().toPoint());
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.at(1).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -763,7 +763,7 @@ void tst_QHorizontalPercentBarSeries::mousePressed()
 
 //====================================================================================
 // barset 2, bar 1
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.at(3).center().toPoint());
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.at(3).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -781,7 +781,7 @@ void tst_QHorizontalPercentBarSeries::mousePressed()
 
 //====================================================================================
 // barset 2, bar 2
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.at(5).center().toPoint());
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.at(5).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -856,7 +856,7 @@ void tst_QHorizontalPercentBarSeries::mouseReleased()
 
 //====================================================================================
 // barset 1, bar 0
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.at(0).center().toPoint());
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.at(0).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -874,7 +874,7 @@ void tst_QHorizontalPercentBarSeries::mouseReleased()
 
 //====================================================================================
 // barset 1, bar 1
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.at(2).center().toPoint());
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.at(2).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -892,7 +892,7 @@ void tst_QHorizontalPercentBarSeries::mouseReleased()
 
 //====================================================================================
 // barset 1, bar 2
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.at(4).center().toPoint());
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.at(4).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -910,7 +910,7 @@ void tst_QHorizontalPercentBarSeries::mouseReleased()
 
 //====================================================================================
 // barset 2, bar 0
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.at(1).center().toPoint());
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.at(1).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -928,7 +928,7 @@ void tst_QHorizontalPercentBarSeries::mouseReleased()
 
 //====================================================================================
 // barset 2, bar 1
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.at(3).center().toPoint());
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.at(3).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -946,7 +946,7 @@ void tst_QHorizontalPercentBarSeries::mouseReleased()
 
 //====================================================================================
 // barset 2, bar 2
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.at(5).center().toPoint());
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.at(5).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -1020,7 +1020,7 @@ void tst_QHorizontalPercentBarSeries::mouseDoubleClicked()
     }
 
     // barset 1, bar 0
-    QTest::mouseDClick(view.viewport(), Qt::LeftButton, 0, layout.at(0).center().toPoint());
+    QTest::mouseDClick(view.viewport(), Qt::LeftButton, {}, layout.at(0).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);

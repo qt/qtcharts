@@ -39,7 +39,7 @@ class Chart : public QChart
 {
     Q_OBJECT
 public:
-    explicit Chart(QGraphicsItem *parent = 0, Qt::WindowFlags wFlags = 0, QLineSeries *series = 0);
+    explicit Chart(QGraphicsItem *parent = nullptr, Qt::WindowFlags wFlags = {}, QLineSeries *series = nullptr);
     ~Chart();
 
 public slots:

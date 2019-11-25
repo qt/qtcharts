@@ -45,7 +45,7 @@ CandlestickChartItem::CandlestickChartItem(QCandlestickSeries *series, QGraphics
       m_timePeriod(0.0),
       m_animation(nullptr)
 {
-    setAcceptedMouseButtons(0);
+    setAcceptedMouseButtons({});
     connect(series, SIGNAL(candlestickSetsAdded(QList<QCandlestickSet *>)),
             this, SLOT(handleCandlestickSetsAdd(QList<QCandlestickSet *>)));
     connect(series, SIGNAL(candlestickSetsRemoved(QList<QCandlestickSet *>)),

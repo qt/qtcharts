@@ -332,8 +332,8 @@ void ChartDataSet::createDefaultAxes()
     if (m_seriesList.isEmpty())
         return;
 
-    QAbstractAxis::AxisTypes typeX(0);
-    QAbstractAxis::AxisTypes typeY(0);
+    QAbstractAxis::AxisTypes typeX;
+    QAbstractAxis::AxisTypes typeY;
 
     // Remove possibly existing axes
     deleteAllAxes();

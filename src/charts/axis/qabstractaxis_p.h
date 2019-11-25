@@ -96,45 +96,45 @@ Q_SIGNALS:
 
 protected:
     QAbstractAxis *q_ptr;
-    QChart *m_chart;
+    QChart *m_chart = nullptr;
     QScopedPointer<ChartAxisElement> m_item;
 
 private:
     QList<QAbstractSeries*> m_series;
 
     Qt::Alignment m_alignment;
-    Qt::Orientation m_orientation;
+    Qt::Orientation m_orientation = Qt::Orientation(0);
 
-    bool m_visible;
+    bool m_visible = true;
 
-    bool m_arrowVisible;
+    bool m_arrowVisible = true;
     QPen m_axisPen;
     QBrush m_axisBrush;
 
-    bool m_gridLineVisible;
+    bool m_gridLineVisible = true;
     QPen m_gridLinePen;
-    bool m_minorGridLineVisible;
+    bool m_minorGridLineVisible = true;
     QPen m_minorGridLinePen;
 
-    bool m_labelsVisible;
-    bool m_labelsEditable;
+    bool m_labelsVisible = true;
+    bool m_labelsEditable = false;
     QBrush m_labelsBrush;
     QFont m_labelsFont;
-    int m_labelsAngle;
+    int m_labelsAngle = 0;
 
-    bool m_titleVisible;
+    bool m_titleVisible = true;
     QBrush m_titleBrush;
     QFont m_titleFont;
     QString m_title;
 
-    bool m_shadesVisible;
+    bool m_shadesVisible = false;
     QPen m_shadesPen;
     QBrush m_shadesBrush;
-    qreal m_shadesOpacity;
+    qreal m_shadesOpacity = 1;
 
-    bool m_dirty;
+    bool m_dirty = false;
 
-    bool m_reverse;
+    bool m_reverse = false;
 
     friend class QAbstractAxis;
     friend class ChartDataSet;

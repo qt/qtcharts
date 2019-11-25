@@ -999,31 +999,16 @@ void QAbstractAxis::setReverse(bool reverse)
 
 QAbstractAxisPrivate::QAbstractAxisPrivate(QAbstractAxis *q)
     : q_ptr(q),
-      m_chart(0),
-      m_alignment(0),
-      m_orientation(Qt::Orientation(0)),
-      m_visible(true),
-      m_arrowVisible(true),
       m_axisPen(QChartPrivate::defaultPen()),
       m_axisBrush(QChartPrivate::defaultBrush()),
-      m_gridLineVisible(true),
       m_gridLinePen(QChartPrivate::defaultPen()),
-      m_minorGridLineVisible(true),
       m_minorGridLinePen(QChartPrivate::defaultPen()),
-      m_labelsVisible(true),
-      m_labelsEditable(false),
       m_labelsBrush(QChartPrivate::defaultBrush()),
       m_labelsFont(QChartPrivate::defaultFont()),
-      m_labelsAngle(0),
-      m_titleVisible(true),
       m_titleBrush(QChartPrivate::defaultBrush()),
       m_titleFont(QChartPrivate::defaultFont()),
-      m_shadesVisible(false),
       m_shadesPen(QChartPrivate::defaultPen()),
-      m_shadesBrush(QChartPrivate::defaultBrush()),
-      m_shadesOpacity(1.0),
-      m_dirty(false),
-      m_reverse(false)
+      m_shadesBrush(QChartPrivate::defaultBrush())
 {
 }
 

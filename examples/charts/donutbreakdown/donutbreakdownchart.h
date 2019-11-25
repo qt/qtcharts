@@ -37,7 +37,7 @@ QT_CHARTS_USE_NAMESPACE
 class DonutBreakdownChart : public QChart
 {
 public:
-    DonutBreakdownChart(QGraphicsItem *parent = 0, Qt::WindowFlags wFlags = 0);
+    DonutBreakdownChart(QGraphicsItem *parent = nullptr, Qt::WindowFlags wFlags = {});
     void addBreakdownSeries(QPieSeries *series, QColor color);
 
 private:

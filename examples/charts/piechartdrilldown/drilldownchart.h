@@ -42,7 +42,7 @@ class DrilldownChart : public QChart
 {
     Q_OBJECT
 public:
-    explicit DrilldownChart(QGraphicsItem *parent = 0, Qt::WindowFlags wFlags = 0);
+    explicit DrilldownChart(QGraphicsItem *parent = nullptr, Qt::WindowFlags wFlags = {});
     ~DrilldownChart();
     void changeSeries(QAbstractSeries *series);
 

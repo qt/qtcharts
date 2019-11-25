@@ -618,7 +618,7 @@ void tst_QCandlestickSeries::mouseClicked()
                                plotArea.top(), candlestickWidth, candlestickHeight));
 
     // Click set 1
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.value(set1).center().toPoint());
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.value(set1).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -633,7 +633,7 @@ void tst_QCandlestickSeries::mouseClicked()
     QVERIFY(setSpy1.takeFirst().isEmpty());
 
     // Click set 2
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.value(set2).center().toPoint());
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.value(set2).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -797,7 +797,7 @@ void tst_QCandlestickSeries::mousePressed()
                                plotArea.top(), candlestickWidth, candlestickHeight));
 
     // Press set 1
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.value(set1).center().toPoint());
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.value(set1).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -812,7 +812,7 @@ void tst_QCandlestickSeries::mousePressed()
     QVERIFY(setSpy1.takeFirst().isEmpty());
 
     // Press set 2
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.value(set2).center().toPoint());
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.value(set2).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -860,7 +860,7 @@ void tst_QCandlestickSeries::mouseReleased()
                                plotArea.top(), candlestickWidth, candlestickHeight));
 
     // Release mouse over set 1
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.value(set1).center().toPoint());
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.value(set1).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -875,7 +875,7 @@ void tst_QCandlestickSeries::mouseReleased()
     QVERIFY(setSpy1.takeFirst().isEmpty());
 
     // Release mouse over set 2
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.value(set2).center().toPoint());
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.value(set2).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -923,7 +923,7 @@ void tst_QCandlestickSeries::mouseDoubleClicked()
                                plotArea.top(), candlestickWidth, candlestickHeight));
 
     // Double-click set 1
-    QTest::mouseDClick(view.viewport(), Qt::LeftButton, 0, layout.value(set1).center().toPoint());
+    QTest::mouseDClick(view.viewport(), Qt::LeftButton, {}, layout.value(set1).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
