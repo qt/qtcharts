@@ -67,7 +67,7 @@ QT_END_NAMESPACE
             b.show(); \
             QTest::qWaitForWindowShown(&b); \
             QSignalSpy spy(&b, SIGNAL(clicked())); \
-            QTest::mouseClick(&b, Qt::LeftButton, 0, b.rect().center()); \
+            QTest::mouseClick(&b, Qt::LeftButton, {}, b.rect().center()); \
             QApplication::processEvents(); \
             if (spy.count() == 0) \
                 QSKIP("Cannot test mouse events in this environment"); \

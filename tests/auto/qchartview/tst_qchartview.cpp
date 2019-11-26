@@ -190,9 +190,9 @@ void tst_QChartView::rubberBand()
     QVERIFY(m_view->hasFocus());
 
     QTest::mouseMove(m_view->viewport(),  min + plotArea.topLeft().toPoint(), 100);
-    QTest::mousePress(m_view->viewport(), Qt::LeftButton, 0,  min + plotArea.topLeft().toPoint(), 100);
+    QTest::mousePress(m_view->viewport(), Qt::LeftButton, {},  min + plotArea.topLeft().toPoint(), 100);
     QTest::mouseMove(m_view->viewport(),  plotArea.bottomRight().toPoint() - max, 100);
-    QTest::mouseRelease(m_view->viewport(), Qt::LeftButton, 0, plotArea.bottomRight().toPoint() - max, 100);
+    QTest::mouseRelease(m_view->viewport(), Qt::LeftButton, {}, plotArea.bottomRight().toPoint() - max, 100);
     QApplication::processEvents();
 
     TRY_COMPARE(spy0.count(), Xcount);

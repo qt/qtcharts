@@ -159,7 +159,7 @@ void tst_QScatterSeries::pressedSignal()
     QSignalSpy seriesSpy(scatterSeries, SIGNAL(pressed(QPointF)));
 
     QPointF checkPoint = view.chart()->mapToPosition(scatterPoint);
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, checkPoint.toPoint());
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, checkPoint.toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -191,7 +191,7 @@ void tst_QScatterSeries::releasedSignal()
     QSignalSpy seriesSpy(scatterSeries, SIGNAL(released(QPointF)));
 
     QPointF checkPoint = view.chart()->mapToPosition(scatterPoint);
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, checkPoint.toPoint());
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, checkPoint.toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -223,7 +223,7 @@ void tst_QScatterSeries::doubleClickedSignal()
     QSignalSpy seriesSpy(scatterSeries, SIGNAL(doubleClicked(QPointF)));
 
     QPointF checkPoint = view.chart()->mapToPosition(scatterPoint);
-    QTest::mouseDClick(view.viewport(), Qt::LeftButton, 0, checkPoint.toPoint());
+    QTest::mouseDClick(view.viewport(), Qt::LeftButton, {}, checkPoint.toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);

@@ -55,7 +55,7 @@ AbstractBarChartItem::AbstractBarChartItem(QAbstractBarSeries *series, QGraphics
     m_orientation(Qt::Horizontal),
     m_resetAnimation(true)
 {
-    setAcceptedMouseButtons(0);
+    setAcceptedMouseButtons({});
     setFlag(ItemClipsChildrenToShape);
     setFlag(QGraphicsItem::ItemIsSelectable);
     connect(series->d_func(), SIGNAL(updatedLayout()), this, SLOT(handleLayoutChanged()));

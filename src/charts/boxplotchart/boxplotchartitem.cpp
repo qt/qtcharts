@@ -43,7 +43,7 @@ BoxPlotChartItem::BoxPlotChartItem(QBoxPlotSeries *series, QGraphicsItem *item) 
     m_series(series),
     m_animation(0)
 {
-    setAcceptedMouseButtons(0);
+    setAcceptedMouseButtons({});
     connect(series, SIGNAL(boxsetsRemoved(QList<QBoxSet *>)), this, SLOT(handleBoxsetRemove(QList<QBoxSet *>)));
     connect(series, SIGNAL(visibleChanged()), this, SLOT(handleSeriesVisibleChanged()));
     connect(series, SIGNAL(opacityChanged()), this, SLOT(handleOpacityChanged()));

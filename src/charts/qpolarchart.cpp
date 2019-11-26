@@ -98,7 +98,7 @@ QPolarChart::~QPolarChart()
  */
 QList<QAbstractAxis *> QPolarChart::axes(PolarOrientations polarOrientation, QAbstractSeries *series) const
 {
-    Qt::Orientations orientation(0);
+    Qt::Orientations orientation;
     if (polarOrientation.testFlag(PolarOrientationAngular))
         orientation |= Qt::Horizontal;
     if (polarOrientation.testFlag(PolarOrientationRadial))
