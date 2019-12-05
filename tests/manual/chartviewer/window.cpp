@@ -70,6 +70,7 @@ Window::Window(const QVariantHash &parameters, QWidget *parent)
       m_openGLCheckBox(0),
       m_zoomCheckBox(0),
       m_scrollCheckBox(0),
+      m_gridCheckBox(0),
       m_baseLayout(new QGraphicsLinearLayout()),
       m_menu(createMenu()),
       m_template(0),
@@ -95,6 +96,7 @@ Window::Window(const QVariantHash &parameters, QWidget *parent)
     settingsLayout->addItem(m_widgetHash["templateComboBox"]);
     settingsLayout->addItem(m_widgetHash["scrollCheckBox"]);
     settingsLayout->addItem(m_widgetHash["zoomCheckBox"]);
+    settingsLayout->addItem(m_widgetHash["gridCheckBox"]);
     settingsLayout->addItem(m_widgetHash["xTickLabel"]);
     settingsLayout->addItem(m_widgetHash["xTickSpinBox"]);
     settingsLayout->addItem(m_widgetHash["yTickLabel"]);
@@ -147,6 +149,7 @@ void Window::connectSignals()
     QObject::connect(m_openGLCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateUI()));
     QObject::connect(m_zoomCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateUI()));
     QObject::connect(m_scrollCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateUI()));
+    QObject::connect(m_gridCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateUI()));
     QObject::connect(m_animatedComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateUI()));
     QObject::connect(m_legendComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateUI()));
     QObject::connect(m_templateComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateUI()));
@@ -171,6 +174,7 @@ void Window::createProxyWidgets()
     m_openGLCheckBox = new QCheckBox(tr("OpenGL"));
     m_zoomCheckBox = new QCheckBox(tr("Zoom"));
     m_scrollCheckBox = new QCheckBox(tr("Scroll"));
+    m_gridCheckBox = new QCheckBox(tr("Grid lines"));
     m_templateComboBox = createTempleteBox();
     m_widgetHash["viewLabel"] = m_scene->addWidget(new QLabel("View"));
     m_widgetHash["viewComboBox"] = m_scene->addWidget(m_viewComboBox);
@@ -194,6 +198,7 @@ void Window::createProxyWidgets()
     m_widgetHash["templateComboBox"] = m_scene->addWidget(m_templateComboBox);
     m_widgetHash["zoomCheckBox"] = m_scene->addWidget(m_zoomCheckBox);
     m_widgetHash["scrollCheckBox"] = m_scene->addWidget(m_scrollCheckBox);
+    m_widgetHash["gridCheckBox"] = m_scene->addWidget(m_gridCheckBox);
 }
 
 QComboBox *Window::createThemeBox()
@@ -354,7 +359,7 @@ void Window::checkXTick()
     foreach (QChart *chart, m_grid->charts()) {
         if (qobject_cast<QValueAxis *>(chart->axisX())) {
             QValueAxis *valueAxis = qobject_cast<QValueAxis *>(chart->axisX());
-            valueAxis->setGridLineVisible();
+            valueAxis->setGridLineVisible(m_gridCheckBox->isChecked());
             valueAxis->setTickCount(m_xTickSpinBox->value());
         }
     }
@@ -365,7 +370,7 @@ void Window::checkYTick()
     foreach (QChart *chart, m_grid->charts()) {
         if (qobject_cast<QValueAxis *>(chart->axisY())) {
             QValueAxis *valueAxis = qobject_cast<QValueAxis *>(chart->axisY());
-            valueAxis->setGridLineVisible();
+            valueAxis->setGridLineVisible(m_gridCheckBox->isChecked());
             valueAxis->setTickCount(m_yTickSpinBox->value());
         }
     }
@@ -376,7 +381,8 @@ void Window::checkMinorXTick()
     foreach (QChart *chart, m_grid->charts()) {
         if (qobject_cast<QValueAxis *>(chart->axisX())) {
             QValueAxis *valueAxis = qobject_cast<QValueAxis *>(chart->axisX());
-            valueAxis->setMinorGridLineVisible();
+            valueAxis->setMinorGridLineVisible(m_gridCheckBox->isChecked());
+            valueAxis->setGridLineVisible(m_gridCheckBox->isChecked());
             valueAxis->setMinorTickCount(m_minorXTickSpinBox->value());
         }
     }
@@ -387,7 +393,8 @@ void Window::checkMinorYTick()
     foreach (QChart *chart, m_grid->charts()) {
         if (qobject_cast<QValueAxis *>(chart->axisY())) {
             QValueAxis *valueAxis = qobject_cast<QValueAxis *>(chart->axisY());
-            valueAxis->setMinorGridLineVisible();
+            valueAxis->setMinorGridLineVisible(m_gridCheckBox->isChecked());
+            valueAxis->setGridLineVisible(m_gridCheckBox->isChecked());
             valueAxis->setMinorTickCount(m_minorYTickSpinBox->value());
         }
     }

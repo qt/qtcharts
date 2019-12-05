@@ -108,6 +108,7 @@ private:
     QCheckBox *m_openGLCheckBox;
     QCheckBox *m_zoomCheckBox;
     QCheckBox *m_scrollCheckBox;
+    QCheckBox *m_gridCheckBox;
     QGraphicsLinearLayout *m_baseLayout;
     QMenu *m_menu;
     int m_template;
