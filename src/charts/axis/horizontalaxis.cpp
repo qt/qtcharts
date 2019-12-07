@@ -485,12 +485,12 @@ void HorizontalAxis::updateMinorTickGeometry()
                 qreal minorArrowLineItemY2;
                 switch (axis()->alignment()) {
                 case Qt::AlignTop:
-                    minorArrowLineItemY1 = gridGeometry().bottom();
-                    minorArrowLineItemY2 = gridGeometry().bottom() - labelPadding() / 2.0;
+                    minorArrowLineItemY1 = gridGeometry().top();
+                    minorArrowLineItemY2 = gridGeometry().top() - labelPadding() / 2.0;
                     break;
                 case Qt::AlignBottom:
-                    minorArrowLineItemY1 = gridGeometry().top();
-                    minorArrowLineItemY2 = gridGeometry().top() + labelPadding() / 2.0;
+                    minorArrowLineItemY1 = gridGeometry().bottom();
+                    minorArrowLineItemY2 = gridGeometry().bottom() + labelPadding() / 2.0;
                     break;
                 default:
                     minorArrowLineItemY1 = 0.0;
