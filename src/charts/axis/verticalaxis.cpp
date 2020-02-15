@@ -108,12 +108,13 @@ void VerticalAxis::updateGeometry()
     //title
     QRectF titleBoundingRect;
     QString titleText = axis()->titleText();
-    qreal availableSpace = axisRect.height() - labelPadding();
+    qreal labelAvailableSpace = axisRect.width();
     if (!titleText.isEmpty() && titleItem()->isVisible()) {
-        availableSpace -= titlePadding() * 2.0;
+        const qreal titleAvailableSpace =
+                axisRect.height() - labelPadding() - (titlePadding() * 2.0);
         qreal minimumLabelWidth = ChartPresenter::textBoundingRect(axis()->labelsFont(),
                                                                    QStringLiteral("...")).width();
-        qreal titleSpace = availableSpace - minimumLabelWidth;
+        qreal titleSpace = titleAvailableSpace - minimumLabelWidth;
         title->setHtml(ChartPresenter::truncatedText(axis()->titleFont(), titleText, qreal(90.0),
                                                      titleSpace, gridRect.height(),
                                                      titleBoundingRect));
@@ -132,8 +133,7 @@ void VerticalAxis::updateGeometry()
 
         title->setTransformOriginPoint(titleBoundingRect.center());
         title->setRotation(270);
-
-        availableSpace -= titleBoundingRect.height();
+        labelAvailableSpace -= titleBoundingRect.height();
     }
 
     QList<QGraphicsItem *> lines = gridItems();
@@ -166,10 +166,9 @@ void VerticalAxis::updateGeometry()
             labelItem->setHtml(text);
         } else {
             qreal labelHeight = (axisRect.height() / layout.count()) - (2 * labelPadding());
-            QString truncatedText = ChartPresenter::truncatedText(axis()->labelsFont(), text,
-                                                                  axis()->labelsAngle(),
-                                                                  availableSpace,
-                                                                  labelHeight, boundingRect);
+            QString truncatedText =
+                    ChartPresenter::truncatedText(axis()->labelsFont(), text, axis()->labelsAngle(),
+                                                  labelAvailableSpace, labelHeight, boundingRect);
             labelItem->setTextWidth(ChartPresenter::textBoundingRect(axis()->labelsFont(),
                                                                      truncatedText).width());
             labelItem->setHtml(truncatedText);
