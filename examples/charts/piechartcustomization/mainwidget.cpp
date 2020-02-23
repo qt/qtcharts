@@ -81,7 +81,10 @@ MainWidget::MainWidget(QWidget *parent)
 
     m_legendCheckBox = new QCheckBox();
 
-    QFormLayout *chartSettingsLayout = new QFormLayout();
+    QScrollArea *settingsScrollBar = new QScrollArea();
+    QWidget *settingsContentWidget = new QWidget();
+
+    QFormLayout *chartSettingsLayout = new QFormLayout(settingsContentWidget);
     chartSettingsLayout->addRow("Theme", m_themeComboBox);
     chartSettingsLayout->addRow("Antialiasing", m_aaCheckBox);
     chartSettingsLayout->addRow("Animations", m_animationsCheckBox);
@@ -136,7 +139,7 @@ MainWidget::MainWidget(QWidget *parent)
     QPushButton *insertSlice = new QPushButton("Insert slice");
     QPushButton *removeSlice = new QPushButton("Remove selected slice");
 
-    QFormLayout *seriesSettingsLayout = new QFormLayout();
+    QFormLayout *seriesSettingsLayout = new QFormLayout(settingsContentWidget);
     seriesSettingsLayout->addRow("Horizontal position", m_hPosition);
     seriesSettingsLayout->addRow("Vertical position", m_vPosition);
     seriesSettingsLayout->addRow("Size factor", m_sizeFactor);
@@ -195,7 +198,7 @@ MainWidget::MainWidget(QWidget *parent)
     m_labelPosition->addItem("Inside tangential", QPieSlice::LabelInsideTangential);
     m_labelPosition->addItem("Inside normal", QPieSlice::LabelInsideNormal);
 
-    QFormLayout *sliceSettingsLayout = new QFormLayout();
+    QFormLayout *sliceSettingsLayout = new QFormLayout(settingsContentWidget);
     sliceSettingsLayout->addRow("Label", m_sliceName);
     sliceSettingsLayout->addRow("Value", m_sliceValue);
     sliceSettingsLayout->addRow("Pen", m_pen);
@@ -242,10 +245,13 @@ MainWidget::MainWidget(QWidget *parent)
     settingsLayout->addWidget(chartSettings);
     settingsLayout->addWidget(seriesSettings);
     settingsLayout->addWidget(sliceSettings);
-    settingsLayout->addStretch();
+
+    settingsContentWidget->setLayout(settingsLayout);
+    settingsScrollBar->setWidget(settingsContentWidget);
+    settingsScrollBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 
     QGridLayout *baseLayout = new QGridLayout();
-    baseLayout->addLayout(settingsLayout, 0, 0);
+    baseLayout->addWidget(settingsScrollBar, 0, 0);
     baseLayout->addWidget(m_chartView, 0, 1);
     setLayout(baseLayout);
 
