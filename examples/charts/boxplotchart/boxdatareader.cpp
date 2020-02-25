@@ -50,7 +50,7 @@ QBoxSet *BoxDataReader::readBox()
     //! [1]
 
     //! [2]
-    QStringList strList = line.split(" ", QString::SkipEmptyParts);
+    QStringList strList = line.split(QLatin1Char(' '), Qt::SkipEmptyParts);
     //! [2]
 
     //! [3]
