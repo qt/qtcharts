@@ -51,6 +51,9 @@
 #include <QtCore/QLocale>
 #include <QQmlComponent>
 
+Q_MOC_INCLUDE(<QtCharts/qlegend.h>)
+Q_MOC_INCLUDE("declarativemargins_p.h")
+
 QT_CHARTS_BEGIN_NAMESPACE
 
 class DeclarativeMargins;

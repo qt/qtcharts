@@ -33,6 +33,9 @@
 
 #include <QtCharts/QBoxPlotModelMapper>
 
+Q_MOC_INCLUDE(<QtCharts/qboxplotseries.h>)
+Q_MOC_INCLUDE(<QtCore/qabstractitemmodel.h>)
+
 QT_CHARTS_BEGIN_NAMESPACE
 /* Comment line for syncqt to generate the fwd-include correctly, due to QTBUG-22432 */
 class Q_CHARTS_EXPORT QHBoxPlotModelMapper : public QBoxPlotModelMapper

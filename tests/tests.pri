@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-QT += charts
+QT += opengl openglwidgets charts
 
 contains(TARGET, qml.*) {
     QT += qml quick

@@ -39,13 +39,11 @@
 #ifndef DECLARATIVEAXES_H
 #define DECLARATIVEAXES_H
 
-#include <QtCharts/QChartGlobal>
+#include <QtCharts/qabstractaxis.h>
 #include <QtCore/QObject>
 #include <private/declarativechartglobal_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
-
-class QAbstractAxis;
 
 class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeAxes : public QObject
 {

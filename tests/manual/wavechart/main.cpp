@@ -30,7 +30,7 @@
 #include "wavechart.h"
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMainWindow>
-#include <QtWidgets/QOpenGLWidget>
+#include <QtOpenGLWidgets/QOpenGLWidget>
 
 int main(int argc, char *argv[])
 {

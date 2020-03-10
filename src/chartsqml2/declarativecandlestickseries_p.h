@@ -40,6 +40,7 @@
 #define DECLARATIVECANDLESTICKSERIES_H
 
 #include <QtCharts/QCandlestickSeries>
+#include <QtCharts/qabstractaxis.h>
 #include <QtCharts/QCandlestickSet>
 #include <QtQml/QQmlParserStatus>
 #include <QtQuick/QQuickItem>
@@ -48,7 +49,6 @@
 QT_CHARTS_BEGIN_NAMESPACE
 
 class DeclarativeAxes;
-class QAbstractAxis;
 
 class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeCandlestickSet : public QCandlestickSet
 {

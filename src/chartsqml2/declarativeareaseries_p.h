@@ -42,9 +42,9 @@
 #include <QtCharts/QAreaSeries>
 #include <private/declarativechartglobal_p.h>
 #include <private/declarativeaxes_p.h>
+#include <private/declarativelineseries_p.h>
 
 QT_CHARTS_BEGIN_NAMESPACE
-class DeclarativeLineSeries;
 
 class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeAreaSeries : public QAreaSeries
 {

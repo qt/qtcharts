@@ -32,9 +32,9 @@
 #include "private/glwidget_p.h"
 #include "private/glxyseriesdata_p.h"
 #include "private/qabstractseries_p.h"
-#include <QtGui/QOpenGLShaderProgram>
+#include <QtOpenGL/QOpenGLShaderProgram>
 #include <QtGui/QOpenGLContext>
-#include <QtGui/QOpenGLBuffer>
+#include <QtOpenGL/QOpenGLBuffer>
 
 //#define QDEBUG_TRACE_GL_FPS
 #ifdef QDEBUG_TRACE_GL_FPS

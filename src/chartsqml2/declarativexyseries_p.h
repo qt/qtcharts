@@ -45,7 +45,6 @@
 QT_CHARTS_BEGIN_NAMESPACE
 
 class QChart;
-class QAbstractSeries;
 
 class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeXySeries
 {

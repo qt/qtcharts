@@ -45,7 +45,7 @@
 #include <QtWidgets/QGraphicsScene>
 #include <QtWidgets/QGraphicsLinearLayout>
 #include <QtWidgets/QGraphicsProxyWidget>
-#include <QtWidgets/QOpenGLWidget>
+#include <QtOpenGLWidgets/QOpenGLWidget>
 #include <QtWidgets/QApplication>
 #include <QtCore/QDebug>
 #include <QtCore/QRegularExpression>

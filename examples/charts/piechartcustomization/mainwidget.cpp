@@ -89,7 +89,7 @@ MainWidget::MainWidget(QWidget *parent)
     QGroupBox *chartSettings = new QGroupBox("Chart");
     chartSettings->setLayout(chartSettingsLayout);
 
-    connect(m_themeComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+    connect(m_themeComboBox, &QComboBox::currentIndexChanged,
             this, &MainWidget::updateChartSettings);
     connect(m_aaCheckBox, &QCheckBox::toggled, this, &MainWidget::updateChartSettings);
     connect(m_animationsCheckBox, &QCheckBox::toggled, this, &MainWidget::updateChartSettings);
@@ -223,15 +223,12 @@ MainWidget::MainWidget(QWidget *parent)
     connect(m_labelBrushTool, &BrushTool::changed, this, &MainWidget::updateSliceSettings);
     connect(m_sliceLabelVisible, &QCheckBox::toggled, this, &MainWidget::updateSliceSettings);
     connect(m_sliceLabelVisible, &QCheckBox::toggled, this, &MainWidget::updateSliceSettings);
-    connect(m_sliceLabelArmFactor,
-            static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+    connect(m_sliceLabelArmFactor, &QDoubleSpinBox::valueChanged,
             this, &MainWidget::updateSliceSettings);
     connect(m_sliceExploded, &QCheckBox::toggled, this, &MainWidget::updateSliceSettings);
-    connect(m_sliceExplodedFactor,
-            static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+    connect(m_sliceExplodedFactor, &QDoubleSpinBox::valueChanged,
             this, &MainWidget::updateSliceSettings);
-    connect(m_labelPosition,
-            static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+    connect(m_labelPosition, &QComboBox::currentIndexChanged,
             this, &MainWidget::updateSliceSettings);
 
     // create chart view

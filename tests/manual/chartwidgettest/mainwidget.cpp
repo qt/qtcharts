@@ -52,7 +52,7 @@
 #include <QtCore/QRandomGenerator>
 #include <QtGui/QStandardItemModel>
 #include <QtCharts/QBarCategoryAxis>
-#include <QtWidgets/QOpenGLWidget>
+#include <QtOpenGLWidgets/QOpenGLWidget>
 
 #include <qmath.h>
 

@@ -41,12 +41,12 @@
 
 #ifndef QT_NO_OPENGL
 
-#include <QtWidgets/QOpenGLWidget>
+#include <QtOpenGLWidgets/QOpenGLWidget>
 #include <QtWidgets/QGraphicsView>
 #include <QtGui/QOpenGLFunctions>
-#include <QtGui/QOpenGLVertexArrayObject>
-#include <QtGui/QOpenGLBuffer>
-#include <QtGui/QOpenGLFramebufferObject>
+#include <QtOpenGL/QOpenGLVertexArrayObject>
+#include <QtOpenGL/QOpenGLBuffer>
+#include <QtOpenGL/QOpenGLFramebufferObject>
 #include <QtCore/QHash>
 #include <QtCharts/QAbstractSeries>
 #include <QtCharts/QXYSeries>

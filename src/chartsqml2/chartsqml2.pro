@@ -3,7 +3,7 @@ TARGET = qtchartsqml2
 CXX_MODULE = charts
 DEFINES += QT_BUILD_QMLCHARTS_LIB
 
-QT += qml quick
+QT += opengl qml quick
 QT += charts charts-private
 contains(QT_COORD_TYPE, float): DEFINES += QT_QREAL_IS_FLOAT
 

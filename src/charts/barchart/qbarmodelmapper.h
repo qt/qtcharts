@@ -33,6 +33,9 @@
 #include <QtCharts/QChartGlobal>
 #include <QtCore/QObject>
 
+Q_MOC_INCLUDE(<QtCharts/qabstractbarseries.h>)
+Q_MOC_INCLUDE(<QtCharts/qvbarmodelmapper.h>)
+
 QT_BEGIN_NAMESPACE
 class QAbstractItemModel;
 QT_END_NAMESPACE

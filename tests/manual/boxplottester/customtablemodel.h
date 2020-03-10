@@ -31,7 +31,7 @@
 #define CUSTOMTABLEMODEL_H
 
 #include <QtCore/QAbstractTableModel>
-#include <QtCore/QHash>
+#include <QtCore/QMultiHash>
 #include <QtCore/QRect>
 
 class CustomTableModel : public QAbstractTableModel
@@ -53,7 +53,7 @@ public:
 
 private:
     QList<QVector<qreal> *> m_data;
-    QHash<QString, QRect> m_mapping;
+    QMultiHash<QString, QRect> m_mapping;
     int m_columnCount;
     int m_rowCount;
 };

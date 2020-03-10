@@ -32,6 +32,7 @@
 #include <QtCharts/QChartView>
 #include <QtCharts/QValueAxis>
 #include <QtCore/QDateTime>
+#include <QtCore/QFile>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMainWindow>
 

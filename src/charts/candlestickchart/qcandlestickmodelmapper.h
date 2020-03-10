@@ -33,6 +33,9 @@
 #include <QtCharts/QChartGlobal>
 #include <QtCore/QObject>
 
+Q_MOC_INCLUDE(<QtCharts/qcandlestickseries.h>)
+Q_MOC_INCLUDE(<QtCore/qabstractitemmodel.h>)
+
 QT_BEGIN_NAMESPACE
 class QAbstractItemModel;
 QT_END_NAMESPACE

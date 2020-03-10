@@ -62,7 +62,7 @@ BrushTool::BrushTool(QString title, QWidget *parent)
     setLayout(layout);
 
     connect(m_colorButton, &QPushButton::clicked, this, &BrushTool::showColorDialog);
-    connect(m_styleCombo, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+    connect(m_styleCombo, &QComboBox::currentIndexChanged,
             this, &BrushTool::updateStyle);
 }
 

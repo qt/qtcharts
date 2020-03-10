@@ -45,11 +45,11 @@
 #include <private/glxyseriesdata_p.h>
 #include <QtQuick/QSGImageNode>
 #include <QtQuick/QQuickWindow>
-#include <QtGui/QOpenGLShaderProgram>
-#include <QtGui/QOpenGLVertexArrayObject>
+#include <QtOpenGL/QOpenGLShaderProgram>
+#include <QtOpenGL/QOpenGLVertexArrayObject>
 #include <QtGui/QOpenGLFunctions>
-#include <QtGui/QOpenGLFramebufferObject>
-#include <QtGui/QOpenGLBuffer>
+#include <QtOpenGL/QOpenGLFramebufferObject>
+#include <QtOpenGL/QOpenGLBuffer>
 
 QT_CHARTS_BEGIN_NAMESPACE
 

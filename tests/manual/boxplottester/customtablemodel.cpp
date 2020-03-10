@@ -152,5 +152,5 @@ Qt::ItemFlags CustomTableModel::flags(const QModelIndex &index) const
 
 void CustomTableModel::addMapping(QString color, QRect area)
 {
-    m_mapping.insertMulti(color, area);
+    m_mapping.insert(color, area);
 }

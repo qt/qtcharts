@@ -35,6 +35,8 @@
 #include <QtGui/QPen>
 #include <QtGui/QBrush>
 
+Q_MOC_INCLUDE(<QtCharts/qlineseries.h>)
+
 QT_CHARTS_BEGIN_NAMESPACE
 class QLineSeries;
 class QAreaSeriesPrivate;

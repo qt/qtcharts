@@ -73,17 +73,13 @@ PenTool::PenTool(QString title, QWidget *parent)
 
     // Use old style connect on some signals because the signal is overloaded
     connect(m_colorButton, &QPushButton::clicked, this, &PenTool::showColorDialog);
-    connect(m_widthSpinBox,
-            static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+    connect(m_widthSpinBox, &QDoubleSpinBox::valueChanged,
             this, &PenTool::updateWidth);
-    connect(m_styleCombo,
-            static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+    connect(m_styleCombo, &QComboBox::currentIndexChanged,
             this, &PenTool::updateStyle);
-    connect(m_capStyleCombo,
-            static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+    connect(m_capStyleCombo, &QComboBox::currentIndexChanged,
             this, &PenTool::updateCapStyle);
-    connect(m_joinStyleCombo,
-            static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+    connect(m_joinStyleCombo, &QComboBox::currentIndexChanged,
             this, &PenTool::updateJoinStyle);
 }
 

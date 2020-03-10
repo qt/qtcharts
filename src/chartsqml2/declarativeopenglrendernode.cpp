@@ -31,10 +31,10 @@
 
 #include <QtGui/QOpenGLContext>
 #include <QtGui/QOpenGLFunctions>
-#include <QtGui/QOpenGLFramebufferObjectFormat>
-#include <QtGui/QOpenGLFramebufferObject>
+#include <QtOpenGL/QOpenGLFramebufferObjectFormat>
+#include <QtOpenGL/QOpenGLFramebufferObject>
 #include <QOpenGLShaderProgram>
-#include <QtGui/QOpenGLBuffer>
+#include <QtOpenGL/QOpenGLBuffer>
 
 //#define QDEBUG_TRACE_GL_FPS
 #ifdef QDEBUG_TRACE_GL_FPS
