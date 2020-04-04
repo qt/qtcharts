@@ -52,7 +52,7 @@ QCandlestickSet *CandlestickDataReader::readCandlestickSet()
     //! [1]
 
     //! [2]
-    QStringList strList = line.split(" ", QString::SkipEmptyParts);
+    QStringList strList = line.split(QLatin1Char(' '), Qt::SkipEmptyParts);
     if (strList.count() != 5)
         return 0;
     //! [2]
