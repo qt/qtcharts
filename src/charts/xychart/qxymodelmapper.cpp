@@ -267,7 +267,7 @@ qreal QXYModelMapperPrivate::valueFromModel(QModelIndex index)
     case QVariant::DateTime:
         return value.toDateTime().toMSecsSinceEpoch();
     case QVariant::Date:
-        return QDateTime(value.toDate()).toMSecsSinceEpoch();
+        return value.toDate().startOfDay().toMSecsSinceEpoch();
     default:
         return value.toReal();
     }
