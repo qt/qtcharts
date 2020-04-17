@@ -34,17 +34,6 @@
 #include <QtTest/QtTest>
 #include <QtWidgets/QPushButton>
 
-QT_BEGIN_NAMESPACE
-namespace QTest
-{
-    // This was deprecated in Qt5. This is a small hack for the sake of compatibility.
-    inline static bool qWaitForWindowShown(QWidget *window)
-    {
-        return QTest::qWaitForWindowExposed(window);
-    }
-}
-QT_END_NAMESPACE
-
 #define TRY_COMPARE(actual, expected) { \
     do { \
         const int timeout(1000); \
@@ -65,7 +54,7 @@ QT_END_NAMESPACE
             QPushButton b; \
             b.resize(120, 100); \
             b.show(); \
-            QTest::qWaitForWindowShown(&b); \
+            QTest::qWaitForWindowExposed(&b); \
             QSignalSpy spy(&b, SIGNAL(clicked())); \
             QTest::mouseClick(&b, Qt::LeftButton, {}, b.rect().center()); \
             QApplication::processEvents(); \
