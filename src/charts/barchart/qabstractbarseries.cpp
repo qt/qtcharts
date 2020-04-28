@@ -182,8 +182,8 @@ QT_CHARTS_BEGIN_NAMESPACE
     \endcode
 
     By default, the labels show the value of the bar. For the percent bar series, \e % is added
-    after the value. The labels are shown on the plot area, whereas labels on the edge of the plot
-    area are cut. If the bars are close to each other, the labels may overlap.
+    after the value. The labels are shown on the plot area, if the bars are close to each other,
+    the labels may overlap.
 
     \sa labelsVisible, labelsPosition, labelsPrecision
 */
