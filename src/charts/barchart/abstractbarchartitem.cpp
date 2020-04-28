@@ -352,14 +352,16 @@ void AbstractBarChartItem::positionLabels()
             case QAbstractBarSeries::LabelsCenter:
                 xPos = m_layout.at(bar->layoutIndex()).center().x() - center.x();
                 break;
+            case QAbstractBarSeries::LabelsOutsideEnd:
+                xPos = m_layout.at(bar->layoutIndex()).right() + offset + xDiff;
+                if (xPos + labelRect.width() - offset <= m_rect.right())
+                    break;
+                Q_FALLTHROUGH();
             case QAbstractBarSeries::LabelsInsideEnd:
                 xPos = m_layout.at(bar->layoutIndex()).right() - labelRect.width() - offset + xDiff;
                 break;
             case QAbstractBarSeries::LabelsInsideBase:
                 xPos = m_layout.at(bar->layoutIndex()).left() + offset + xDiff;
-                break;
-            case QAbstractBarSeries::LabelsOutsideEnd:
-                xPos = m_layout.at(bar->layoutIndex()).right() + offset + xDiff;
                 break;
             default:
                 // Invalid position, never comes here
@@ -473,14 +475,16 @@ void AbstractBarChartItem::positionLabelsVertical()
             case QAbstractBarSeries::LabelsCenter:
                 yPos = m_layout.at(bar->layoutIndex()).center().y() - center.y();
                 break;
+            case QAbstractBarSeries::LabelsOutsideEnd:
+                yPos = m_layout.at(bar->layoutIndex()).top() - labelRect.height() - offset + yDiff;
+                if (yPos + offset >= m_rect.y())
+                    break;
+                Q_FALLTHROUGH();
             case QAbstractBarSeries::LabelsInsideEnd:
                 yPos = m_layout.at(bar->layoutIndex()).top() + offset + yDiff;
                 break;
             case QAbstractBarSeries::LabelsInsideBase:
                 yPos = m_layout.at(bar->layoutIndex()).bottom() - labelRect.height() - offset + yDiff;
-                break;
-            case QAbstractBarSeries::LabelsOutsideEnd:
-                yPos = m_layout.at(bar->layoutIndex()).top() - labelRect.height() - offset + yDiff;
                 break;
             default:
                 // Invalid position, never comes here
