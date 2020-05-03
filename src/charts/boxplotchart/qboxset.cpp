@@ -343,8 +343,9 @@ bool QBoxSetPrivate::append(QList<qreal> values)
 void QBoxSetPrivate::clear()
 {
     m_appendCount = 0;
-    for (int i = 0; i < m_valuesCount; i++)
+    for (int i = 0; i < m_valuesCount; i++) {
          m_values[i] = 0.0;
+    }
     emit restructuredBox();
 }
 
