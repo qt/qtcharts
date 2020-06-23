@@ -29,7 +29,7 @@
 
 #include <QtCharts/QCandlestickSet>
 #include <QtCore/QRect>
-#include <QtCore/QVector>
+#include <QtCore/QList>
 #include <QtGui/QColor>
 #include "customtablemodel.h"
 
@@ -112,7 +112,7 @@ Qt::ItemFlags CustomTableModel::flags(const QModelIndex &index) const
 bool CustomTableModel::insertRows(int row, int count, const QModelIndex &parent)
 {
     beginInsertRows(parent, row, row + count - 1);
-    m_data.append(new QVector<qreal>(columnCount()));
+    m_data.append(new QList<qreal>(columnCount()));
     endInsertRows();
 
     return true;
@@ -133,7 +133,7 @@ void CustomTableModel::addRow(QCandlestickSet *set)
     bool changed = insertRows(m_data.count(), 1);
 
     if (changed) {
-        QVector<qreal> *row = m_data.last();
+        QList<qreal> *row = m_data.last();
         row->insert(0, set->timestamp());
         row->insert(1, set->open());
         row->insert(2, set->high());

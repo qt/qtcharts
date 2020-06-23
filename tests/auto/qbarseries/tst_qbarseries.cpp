@@ -507,7 +507,7 @@ void tst_QBarSeries::mouseclicked()
     qreal domainMinX = -0.5;    // No access to domain from outside, so use hard coded values.
     qreal rectWidth = (scaleX / setCount) * series->barWidth();
 
-    QVector<QRectF> layout;
+    QList<QRectF> layout;
 
     // 3 = count of values in set
     // Note that rects in this vector will be interleaved (set1 bar0, set2 bar0, set1 bar1, set2 bar1, etc.)
@@ -689,7 +689,7 @@ void tst_QBarSeries::mousehovered()
     qreal domainMinX = -0.5;    // No access to domain from outside, so use hard coded values.
     qreal rectWidth = (scaleX / setCount) * series->barWidth();
 
-    QVector<QRectF> layout;
+    QList<QRectF> layout;
 
     // 3 = count of values in set
     // Note that rects in this vector will be interleaved (set1 bar0, set2 bar0, set1 bar1, set2 bar1, etc.)
@@ -1033,7 +1033,7 @@ void tst_QBarSeries::mousePressed()
     qreal domainMinX = -0.5;    // No access to domain from outside, so use hard coded values.
     qreal rectWidth = (scaleX / setCount) * series->barWidth();
 
-    QVector<QRectF> layout;
+    QList<QRectF> layout;
 
     // 3 = count of values in set
     // Note that rects in this vector will be interleaved (set1 bar0, set2 bar0, set1 bar1, set2 bar1, etc.)
@@ -1198,7 +1198,7 @@ void tst_QBarSeries::mouseReleased()
     qreal domainMinX = -0.5;    // No access to domain from outside, so use hard coded values.
     qreal rectWidth = (scaleX / setCount) * series->barWidth();
 
-    QVector<QRectF> layout;
+    QList<QRectF> layout;
 
     // 3 = count of values in set
     // Note that rects in this vector will be interleaved (set1 bar0, set2 bar0, set1 bar1, set2 bar1, etc.)
@@ -1363,7 +1363,7 @@ void tst_QBarSeries::mouseDoubleClicked()
     qreal domainMinX = -0.5;    // No access to domain from outside, so use hard coded values.
     qreal rectWidth = (scaleX / setCount) * series->barWidth();
 
-    QVector<QRectF> layout;
+    QList<QRectF> layout;
 
     // 3 = count of values in set
     // Note that rects in this vector will be interleaved (set1 bar0, set2 bar0, set1 bar1, set2 bar1, etc.)

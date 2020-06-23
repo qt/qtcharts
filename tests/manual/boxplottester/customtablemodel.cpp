@@ -28,7 +28,7 @@
 ****************************************************************************/
 
 #include "customtablemodel.h"
-#include <QtCore/QVector>
+#include <QtCore/QList>
 #include <QtCore/QTime>
 #include <QtCore/QRect>
 #include <QtGui/QColor>
@@ -40,7 +40,7 @@ CustomTableModel::CustomTableModel(QObject *parent) :
 {
     m_columnCount = 6;
     m_rowCount = 5;
-    QVector<qreal>* dataVec_Jan = new QVector<qreal>(m_rowCount);
+    QList<qreal> *dataVec_Jan = new QList<qreal>(m_rowCount);
     dataVec_Jan->insert(0, 3.0);
     dataVec_Jan->insert(1, 4.0);
     dataVec_Jan->insert(2, 4.4);
@@ -48,7 +48,7 @@ CustomTableModel::CustomTableModel(QObject *parent) :
     dataVec_Jan->insert(4, 7.0);
     m_data.append(dataVec_Jan);
 
-    QVector<qreal>* dataVec_Feb = new QVector<qreal>(m_rowCount);
+    QList<qreal> *dataVec_Feb = new QList<qreal>(m_rowCount);
     dataVec_Feb->insert(0, 5.0);
     dataVec_Feb->insert(1, 6.0);
     dataVec_Feb->insert(2, 7.5);
@@ -56,7 +56,7 @@ CustomTableModel::CustomTableModel(QObject *parent) :
     dataVec_Feb->insert(4, 12.0);
     m_data.append(dataVec_Feb);
 
-    QVector<qreal>* dataVec_Mar = new QVector<qreal>(m_rowCount);
+    QList<qreal> *dataVec_Mar = new QList<qreal>(m_rowCount);
     dataVec_Mar->insert(0, 3.0);
     dataVec_Mar->insert(1, 4.0);
     dataVec_Mar->insert(2, 5.7);
@@ -64,7 +64,7 @@ CustomTableModel::CustomTableModel(QObject *parent) :
     dataVec_Mar->insert(4, 9.0);
     m_data.append(dataVec_Mar);
 
-    QVector<qreal>* dataVec_Apr = new QVector<qreal>(m_rowCount);
+    QList<qreal> *dataVec_Apr = new QList<qreal>(m_rowCount);
     dataVec_Apr->insert(0, 5.0);
     dataVec_Apr->insert(1, 6.0);
     dataVec_Apr->insert(2, 6.8);
@@ -72,7 +72,7 @@ CustomTableModel::CustomTableModel(QObject *parent) :
     dataVec_Apr->insert(4, 8.0);
     m_data.append(dataVec_Apr);
 
-    QVector<qreal>* dataVec_May = new QVector<qreal>(m_rowCount);
+    QList<qreal> *dataVec_May = new QList<qreal>(m_rowCount);
     dataVec_May->insert(0, 4.0);
     dataVec_May->insert(1, 5.0);
     dataVec_May->insert(2, 5.2);
@@ -80,7 +80,7 @@ CustomTableModel::CustomTableModel(QObject *parent) :
     dataVec_May->insert(4, 7.0);
     m_data.append(dataVec_May);
 
-    QVector<qreal>* dataVec_Jun = new QVector<qreal>(m_rowCount);
+    QList<qreal> *dataVec_Jun = new QList<qreal>(m_rowCount);
     dataVec_Jun->insert(0, 4.0);
     dataVec_Jun->insert(1, 7.0);
     dataVec_Jun->insert(2, 8.2);

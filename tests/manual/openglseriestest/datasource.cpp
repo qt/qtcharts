@@ -42,13 +42,13 @@ DataSource::DataSource(QObject *parent) :
 void DataSource::update(QXYSeries *series, int seriesIndex)
 {
     if (series) {
-        const QVector<QVector<QPointF> > &seriesData = m_data.at(seriesIndex);
+        const QList<QList<QPointF>> &seriesData = m_data.at(seriesIndex);
         if (seriesIndex == 0)
             m_index++;
         if (m_index > seriesData.count() - 1)
             m_index = 0;
 
-        QVector<QPointF> points = seriesData.at(m_index);
+        QList<QPointF> points = seriesData.at(m_index);
         // Use replace instead of clear + append, it's optimized for performance
         series->replace(points);
     }
@@ -102,7 +102,7 @@ void DataSource::startUpdates(QList<QXYSeries *> &seriesList, QLabel *fpsLabel, 
 void DataSource::generateData(int seriesIndex, int rowCount, int colCount)
 {
     // Remove previous data
-    QVector<QVector<QPointF> > &seriesData = m_data[seriesIndex];
+    QList<QList<QPointF>> &seriesData = m_data[seriesIndex];
     seriesData.clear();
     seriesData.reserve(rowCount);
 
@@ -112,7 +112,7 @@ void DataSource::generateData(int seriesIndex, int rowCount, int colCount)
     // Append the new data depending on the type
     qreal height = qreal(seriesIndex) * (10.0 / qreal(maxSeriesCount)) + 0.3;
     for (int i(0); i < rowCount; i++) {
-        QVector<QPointF> points;
+        QList<QPointF> points;
         points.reserve(colCount);
         for (int j(0); j < colCount; j++) {
             qreal x(0);

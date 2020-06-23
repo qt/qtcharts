@@ -222,7 +222,7 @@ void tst_QStackedBarSeries::mouseclicked()
     qreal domainMinX = -0.5;    // No access to domain from outside, so use hard coded values.
     qreal rectWidth = scaleX * series->barWidth();
 
-    QVector<QRectF> layout;
+    QList<QRectF> layout;
 
     // 3 = count of values in set
     // Note that rects in this vector will be interleaved (set1 bar0, set2 bar0, set1 bar1, set2 bar1, etc.)
@@ -366,7 +366,7 @@ void tst_QStackedBarSeries::mousehovered()
     qreal domainMinX = -0.5;    // No access to domain from outside, so use hard coded values.
     qreal rectWidth = scaleX * series->barWidth();
 
-    QVector<QRectF> layout;
+    QList<QRectF> layout;
 
     // 3 = count of values in set
     // Note that rects in this vector will be interleaved (set1 bar0, set2 bar0, set1 bar1, set2 bar1, etc.)
@@ -661,7 +661,7 @@ void tst_QStackedBarSeries::mousePressed()
     qreal domainMinX = -0.5;    // No access to domain from outside, so use hard coded values.
     qreal rectWidth = scaleX * series->barWidth();
 
-    QVector<QRectF> layout;
+    QList<QRectF> layout;
 
     // 3 = count of values in set
     // Note that rects in this vector will be interleaved (set1 bar0, set2 bar0, set1 bar1, set2 bar1, etc.)
@@ -831,7 +831,7 @@ void tst_QStackedBarSeries::mouseReleased()
     qreal domainMinX = -0.5;    // No access to domain from outside, so use hard coded values.
     qreal rectWidth = scaleX * series->barWidth();
 
-    QVector<QRectF> layout;
+    QList<QRectF> layout;
 
     // 3 = count of values in set
     // Note that rects in this vector will be interleaved (set1 bar0, set2 bar0, set1 bar1, set2 bar1, etc.)
@@ -1001,7 +1001,7 @@ void tst_QStackedBarSeries::mouseDoubleClicked()
     qreal domainMinX = -0.5;    // No access to domain from outside, so use hard coded values.
     qreal rectWidth = scaleX * series->barWidth();
 
-    QVector<QRectF> layout;
+    QList<QRectF> layout;
 
     // 3 = count of values in set
     // Note that rects in this vector will be interleaved (set1 bar0, set2 bar0, set1 bar1, set2 bar1, etc.)

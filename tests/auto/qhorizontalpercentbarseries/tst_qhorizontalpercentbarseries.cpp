@@ -223,7 +223,7 @@ void tst_QHorizontalPercentBarSeries::mouseclicked()
     qreal domainMinX = 0;       // No access to domain from outside, so use hard coded values.
     qreal rectHeight = scaleY * series->barWidth(); // On horizontal chart barWidth of the barseries means height of the rect.
 
-    QVector<QRectF> layout;
+    QList<QRectF> layout;
 
     // 3 = count of values in set
     // Note that rects in this vector will be interleaved (set1 bar0, set2 bar0, set1 bar1, set2 bar1, etc.)
@@ -362,7 +362,7 @@ void tst_QHorizontalPercentBarSeries::mousehovered()
     qreal domainMinX = 0;       // No access to domain from outside, so use hard coded values.
     qreal rectHeight = scaleY * series->barWidth(); // On horizontal chart barWidth of the barseries means height of the rect.
 
-    QVector<QRectF> layout;
+    QList<QRectF> layout;
 
     // 3 = count of values in set
     // Note that rects in this vector will be interleaved (set1 bar0, set2 bar0, set1 bar1, set2 bar1, etc.)
@@ -672,7 +672,7 @@ void tst_QHorizontalPercentBarSeries::mousePressed()
     qreal domainMinX = 0;       // No access to domain from outside, so use hard coded values.
     qreal rectHeight = scaleY * series->barWidth(); // On horizontal chart barWidth of the barseries means height of the rect.
 
-    QVector<QRectF> layout;
+    QList<QRectF> layout;
 
     // 3 = count of values in set
     // Note that rects in this vector will be interleaved (set1 bar0, set2 bar0, set1 bar1, set2 bar1, etc.)
@@ -837,7 +837,7 @@ void tst_QHorizontalPercentBarSeries::mouseReleased()
     qreal domainMinX = 0;       // No access to domain from outside, so use hard coded values.
     qreal rectHeight = scaleY * series->barWidth(); // On horizontal chart barWidth of the barseries means height of the rect.
 
-    QVector<QRectF> layout;
+    QList<QRectF> layout;
 
     // 3 = count of values in set
     // Note that rects in this vector will be interleaved (set1 bar0, set2 bar0, set1 bar1, set2 bar1, etc.)
@@ -1002,7 +1002,7 @@ void tst_QHorizontalPercentBarSeries::mouseDoubleClicked()
     qreal domainMinX = 0;       // No access to domain from outside, so use hard coded values.
     qreal rectHeight = scaleY * series->barWidth(); // On horizontal chart barWidth of the barseries means height of the rect.
 
-    QVector<QRectF> layout;
+    QList<QRectF> layout;
 
     // 3 = count of values in set
     // Note that rects in this vector will be interleaved (set1 bar0, set2 bar0, set1 bar1, set2 bar1, etc.)

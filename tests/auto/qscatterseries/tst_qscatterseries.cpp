@@ -30,7 +30,7 @@
 #include "../qxyseries/tst_qxyseries.h"
 #include <QtCharts/QScatterSeries>
 
-Q_DECLARE_METATYPE(QVector<QPointF>)
+Q_DECLARE_METATYPE(QList<QPointF>)
 
 class tst_QScatterSeries : public tst_QXYSeries
 {
@@ -86,7 +86,7 @@ void tst_QScatterSeries::qscatterseries()
     QCOMPARE(series.count(),0);
     QCOMPARE(series.brush(), QBrush());
     QCOMPARE(series.points(), QList<QPointF>());
-    QCOMPARE(series.pointsVector(), QVector<QPointF>());
+    QCOMPARE(series.pointsVector(), QList<QPointF>());
     QCOMPARE(series.pen(), QPen());
     QCOMPARE(series.pointsVisible(), false);
 

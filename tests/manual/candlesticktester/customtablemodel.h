@@ -66,7 +66,7 @@ public:
 
 private:
     QStringList m_categories;
-    QList<QVector<qreal> *> m_data;
+    QList<QList<qreal> *> m_data;
     QHash<QString, QRect> m_mapping;
 };
 
