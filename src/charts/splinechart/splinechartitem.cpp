@@ -86,19 +86,20 @@ ChartAnimation *SplineChartItem::animation() const
     return m_animation;
 }
 
-void SplineChartItem::setControlGeometryPoints(QVector<QPointF>& points)
+void SplineChartItem::setControlGeometryPoints(const QList<QPointF> &points)
 {
     m_controlPoints = points;
 }
 
-QVector<QPointF> SplineChartItem::controlGeometryPoints() const
+QList<QPointF> SplineChartItem::controlGeometryPoints() const
 {
     return m_controlPoints;
 }
 
-void SplineChartItem::updateChart(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints, int index)
+void SplineChartItem::updateChart(const QList<QPointF> &oldPoints, const QList<QPointF> &newPoints,
+                                  int index)
 {
-    QVector<QPointF> controlPoints;
+    QList<QPointF> controlPoints;
     if (newPoints.count() >= 2)
         controlPoints = calculateControlPoints(newPoints);
 
@@ -117,8 +118,8 @@ void SplineChartItem::updateChart(QVector<QPointF> &oldPoints, QVector<QPointF> 
 
 void SplineChartItem::updateGeometry()
 {
-    const QVector<QPointF> &points = m_points;
-    const QVector<QPointF> &controlPoints = m_controlPoints;
+    const QList<QPointF> &points = m_points;
+    const QList<QPointF> &controlPoints = m_controlPoints;
 
     if ((points.size() < 2) || (controlPoints.size() < 2)) {
         prepareGeometryChange();
@@ -319,9 +320,9 @@ void SplineChartItem::updateGeometry()
 /*!
   Calculates control points which are needed by QPainterPath.cubicTo function to draw the cubic Bezier cureve between two points.
   */
-QVector<QPointF> SplineChartItem::calculateControlPoints(const QVector<QPointF> &points)
+QList<QPointF> SplineChartItem::calculateControlPoints(const QList<QPointF> &points)
 {
-    QVector<QPointF> controlPoints;
+    QList<QPointF> controlPoints;
     controlPoints.resize(points.count() * 2 - 2);
 
     int n = points.count() - 1;
@@ -347,27 +348,26 @@ QVector<QPointF> SplineChartItem::calculateControlPoints(const QVector<QPointF> 
     //  |   0   0   0   0   0   0   0   0   ... 1   4   1   |   |   P1_(n-1)|   |   4 * P(n-2) + 2 * P(n-1) |
     //  |   0   0   0   0   0   0   0   0   ... 0   2   7   |   |   P1_n    |   |   8 * P(n-1) + Pn         |
     //
-    QVector<qreal> vector;
-    vector.resize(n);
+    QList<qreal> list;
+    list.resize(n);
 
-    vector[0] = points[0].x() + 2 * points[1].x();
-
-
-    for (int i = 1; i < n - 1; ++i)
-        vector[i] = 4 * points[i].x() + 2 * points[i + 1].x();
-
-    vector[n - 1] = (8 * points[n - 1].x() + points[n].x()) / 2.0;
-
-    QVector<qreal> xControl = firstControlPoints(vector);
-
-    vector[0] = points[0].y() + 2 * points[1].y();
+    list[0] = points[0].x() + 2 * points[1].x();
 
     for (int i = 1; i < n - 1; ++i)
-        vector[i] = 4 * points[i].y() + 2 * points[i + 1].y();
+        list[i] = 4 * points[i].x() + 2 * points[i + 1].x();
 
-    vector[n - 1] = (8 * points[n - 1].y() + points[n].y()) / 2.0;
+    list[n - 1] = (8 * points[n - 1].x() + points[n].x()) / 2.0;
 
-    QVector<qreal> yControl = firstControlPoints(vector);
+    const QList<qreal> xControl = firstControlPoints(list);
+
+    list[0] = points[0].y() + 2 * points[1].y();
+
+    for (int i = 1; i < n - 1; ++i)
+        list[i] = 4 * points[i].y() + 2 * points[i + 1].y();
+
+    list[n - 1] = (8 * points[n - 1].y() + points[n].y()) / 2.0;
+
+    const QList<qreal> yControl = firstControlPoints(list);
 
     for (int i = 0, j = 0; i < n; ++i, ++j) {
 
@@ -387,15 +387,15 @@ QVector<QPointF> SplineChartItem::calculateControlPoints(const QVector<QPointF> 
     return controlPoints;
 }
 
-QVector<qreal> SplineChartItem::firstControlPoints(const QVector<qreal>& vector)
+QList<qreal> SplineChartItem::firstControlPoints(const QList<qreal> &list)
 {
-    QVector<qreal> result;
+    QList<qreal> result;
 
-    int count = vector.count();
+    int count = list.count();
     result.resize(count);
-    result[0] = vector[0] / 2.0;
+    result[0] = list[0] / 2.0;
 
-    QVector<qreal> temp;
+    QList<qreal> temp;
     temp.resize(count);
     temp[0] = 0;
 
@@ -404,7 +404,7 @@ QVector<qreal> SplineChartItem::firstControlPoints(const QVector<qreal>& vector)
     for (int i = 1; i < count; i++) {
         temp[i] = 1 / b;
         b = (i < count - 1 ? 4.0 : 3.5) - temp[i];
-        result[i] = (vector[i] - result[i - 1]) / b;
+        result[i] = (list[i] - result[i - 1]) / b;
     }
 
     for (int i = 1; i < count; i++)

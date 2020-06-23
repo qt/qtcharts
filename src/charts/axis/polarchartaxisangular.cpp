@@ -50,7 +50,7 @@ void PolarChartAxisAngular::updateGeometry()
 {
     QGraphicsLayoutItem::updateGeometry();
 
-    const QVector<qreal> &layout = this->layout();
+    const QList<qreal> &layout = this->layout();
     if (layout.isEmpty() && axis()->type() != QAbstractAxis::AxisTypeLogValue)
         return;
 
@@ -371,7 +371,7 @@ qreal PolarChartAxisAngular::preferredAxisRadius(const QSizeF &maxSize)
         radius = maxSize.width() / 2.0;
 
     if (axis()->labelsVisible()) {
-        QVector<qreal> layout = calculateLayout();
+        QList<qreal> layout = calculateLayout();
         if (layout.isEmpty())
             return radius;
 
@@ -489,10 +489,10 @@ void PolarChartAxisAngular::updateMinorTickGeometry()
     if (!axis())
         return;
 
-    QVector<qreal> layout = ChartAxisElement::layout();
+    QList<qreal> layout = ChartAxisElement::layout();
     int minorTickCount = 0;
     qreal tickAngle = 0.0;
-    QVector<qreal> minorTickAngles;
+    QList<qreal> minorTickAngles;
     switch (axis()->type()) {
     case QAbstractAxis::AxisTypeValue: {
         const QValueAxis *valueAxis = qobject_cast<QValueAxis *>(axis());

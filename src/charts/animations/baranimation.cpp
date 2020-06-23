@@ -30,7 +30,7 @@
 #include <private/baranimation_p.h>
 #include <private/abstractbarchartitem_p.h>
 
-Q_DECLARE_METATYPE(QVector<QRectF>)
+Q_DECLARE_METATYPE(QList<QRectF>)
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -48,19 +48,19 @@ BarAnimation::~BarAnimation()
 
 QVariant BarAnimation::interpolated(const QVariant &from, const QVariant &to, qreal progress) const
 {
-    QVector<QRectF> startVector = qvariant_cast<QVector<QRectF> >(from);
-    QVector<QRectF> endVector = qvariant_cast<QVector<QRectF> >(to);
-    QVector<QRectF> result;
+    const QList<QRectF> startList = qvariant_cast<QList<QRectF>>(from);
+    const QList<QRectF> endList = qvariant_cast<QList<QRectF>>(to);
+    QList<QRectF> result;
 
-    Q_ASSERT(startVector.count() == endVector.count());
+    Q_ASSERT(startList.count() == endList.count());
 
-    for (int i = 0; i < startVector.count(); i++) {
-        QRectF start = startVector[i].normalized();
-        QRectF end = endVector[i].normalized();
-        qreal x1 = start.left() + progress * (end.left() - start.left());
-        qreal x2 = start.right() + progress * (end.right() - start.right());
-        qreal y1 = start.top() + progress * (end.top() - start.top());
-        qreal y2 = start.bottom() + progress * (end.bottom() - start.bottom());
+    for (int i = 0; i < startList.count(); i++) {
+        const QRectF start = startList[i].normalized();
+        const QRectF end = endList[i].normalized();
+        const qreal x1 = start.left() + progress * (end.left() - start.left());
+        const qreal x2 = start.right() + progress * (end.right() - start.right());
+        const qreal y1 = start.top() + progress * (end.top() - start.top());
+        const qreal y2 = start.bottom() + progress * (end.bottom() - start.bottom());
 
         QRectF value(QPointF(x1, y1), QPointF(x2, y2));
         result << value.normalized();
@@ -72,12 +72,12 @@ void BarAnimation::updateCurrentValue(const QVariant &value)
 {
     if (state() != QAbstractAnimation::Stopped) { //workaround
 
-        QVector<QRectF> layout = qvariant_cast<QVector<QRectF> >(value);
+        const QList<QRectF> layout = qvariant_cast<QList<QRectF>>(value);
         m_item->setLayout(layout);
     }
 }
 
-void BarAnimation::setup(const QVector<QRectF> &oldLayout, const QVector<QRectF> &newLayout)
+void BarAnimation::setup(const QList<QRectF> &oldLayout, const QList<QRectF> &newLayout)
 {
     QVariantAnimation::KeyValues value;
     setKeyValues(value); //workaround for wrong interpolation call

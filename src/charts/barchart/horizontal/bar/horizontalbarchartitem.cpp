@@ -93,9 +93,9 @@ QPointF HorizontalBarChartItem::bottomRightPoint(int set, int setCount, int cate
                 m_validData);
 }
 
-QVector<QRectF> HorizontalBarChartItem::calculateLayout()
+QList<QRectF> HorizontalBarChartItem::calculateLayout()
 {
-    QVector<QRectF> layout;
+    QList<QRectF> layout;
     layout.resize(m_layout.size());
 
     const int setCount = m_series->count();

@@ -771,7 +771,7 @@ QSGNode *DeclarativeChart::updatePaintNode(QSGNode *oldNode, QQuickItem::UpdateP
     return node;
 }
 
-void DeclarativeChart::sceneChanged(QList<QRectF> region)
+void DeclarativeChart::sceneChanged(const QList<QRectF> &region)
 {
     const int count = region.size();
     const qreal limitSize = 0.01;

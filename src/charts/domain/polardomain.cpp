@@ -64,23 +64,23 @@ QPointF PolarDomain::calculateGeometryPoint(const QPointF &point, bool &ok) cons
     }
 }
 
-QVector<QPointF> PolarDomain::calculateGeometryPoints(const QVector<QPointF> &vector) const
+QList<QPointF> PolarDomain::calculateGeometryPoints(const QList<QPointF> &list) const
 {
-    QVector<QPointF> result;
-    result.resize(vector.count());
+    QList<QPointF> result;
+    result.resize(list.count());
     bool ok;
     qreal r = 0.0;
     qreal a = 0.0;
 
-    for (int i = 0; i < vector.count(); ++i) {
-        a = toAngularCoordinate(vector[i].x(), ok);
+    for (int i = 0; i < list.count(); ++i) {
+        a = toAngularCoordinate(list[i].x(), ok);
         if (ok)
-            r = toRadialCoordinate(vector[i].y(), ok);
+            r = toRadialCoordinate(list[i].y(), ok);
         if (ok) {
             result[i] = m_center + polarCoordinateToPoint(a, r);
         } else {
             qWarning() << "Logarithm of negative value is undefined. Empty layout returned.";
-            return QVector<QPointF>();
+            return QList<QPointF>();
         }
     }
 

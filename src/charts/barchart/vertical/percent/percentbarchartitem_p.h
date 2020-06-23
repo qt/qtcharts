@@ -60,7 +60,7 @@ private Q_SLOTS:
     void positionLabels() override;
 
 private:
-    QVector<QRectF> calculateLayout() override;
+    QList<QRectF> calculateLayout() override;
     void initializeLayout(int set, int category, int layoutIndex, bool resetAnimation) override;
     void markLabelsDirty(QBarSet *barset, int index, int count) override;
     QPointF topLeftPoint(int category, qreal barWidth, qreal value);

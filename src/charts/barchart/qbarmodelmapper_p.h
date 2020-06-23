@@ -68,8 +68,8 @@ public Q_SLOTS:
     void handleModelDestroyed();
 
     // for the series
-    void barSetsAdded(QList<QBarSet *> sets);
-    void barSetsRemoved(QList<QBarSet *> sets);
+    void barSetsAdded(const QList<QBarSet *> &sets);
+    void barSetsRemoved(const QList<QBarSet *> &sets);
     void valuesAdded(int index, int count);
     void valuesRemoved(int index, int count);
     void barLabelChanged();

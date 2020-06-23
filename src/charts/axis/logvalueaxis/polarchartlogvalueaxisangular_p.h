@@ -54,8 +54,8 @@ public:
     ~PolarChartLogValueAxisAngular();
 
 protected:
-    QVector<qreal> calculateLayout() const override;
-    void createAxisLabels(const QVector<qreal> &layout) override;
+    QList<qreal> calculateLayout() const override;
+    void createAxisLabels(const QList<qreal> &layout) override;
 
 private Q_SLOTS:
     void handleBaseChanged(qreal base);

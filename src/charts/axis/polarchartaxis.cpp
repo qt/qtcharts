@@ -54,7 +54,7 @@ void PolarChartAxis::setGeometry(const QRectF &axis, const QRectF &grid)
         return;
     }
 
-    QVector<qreal> layout = calculateLayout();
+    const QList<qreal> layout = calculateLayout();
     updateLayout(layout);
 }
 
@@ -63,7 +63,7 @@ QRectF PolarChartAxis::gridGeometry() const
     return QRectF();
 }
 
-void PolarChartAxis::updateLayout(QVector<qreal> &layout)
+void PolarChartAxis::updateLayout(const QList<qreal> &layout)
 {
     int diff = ChartAxisElement::layout().size() - layout.size();
 

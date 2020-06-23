@@ -59,8 +59,8 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
     QPainterPath shape() const override;
 
-    void setControlGeometryPoints(QVector<QPointF>& points);
-    QVector<QPointF> controlGeometryPoints() const;
+    void setControlGeometryPoints(const QList<QPointF> &points);
+    QList<QPointF> controlGeometryPoints() const;
 
     void setAnimation(SplineAnimation *animation);
     ChartAnimation *animation() const override;
@@ -70,9 +70,9 @@ public Q_SLOTS:
 
 protected:
     void updateGeometry() override;
-    QVector<QPointF> calculateControlPoints(const QVector<QPointF> &points);
-    QVector<qreal> firstControlPoints(const QVector<qreal>& vector);
-    void updateChart(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints, int index) override;
+    QList<QPointF> calculateControlPoints(const QList<QPointF> &points);
+    QList<qreal> firstControlPoints(const QList<qreal> &list);
+    void updateChart(const QList<QPointF> &oldPoints, const QList<QPointF> &newPoints, int index) override;
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event) override;
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override;
@@ -89,8 +89,8 @@ private:
     QPen m_linePen;
     QPen m_pointPen;
     bool m_pointsVisible;
-    QVector<QPointF> m_controlPoints;
-    QVector<QPointF> m_visiblePoints;
+    QList<QPointF> m_controlPoints;
+    QList<QPointF> m_visiblePoints;
     SplineAnimation *m_animation;
 
     bool m_pointLabelsVisible;

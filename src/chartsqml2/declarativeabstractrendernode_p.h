@@ -81,8 +81,8 @@ public:
     virtual void setRect(const QRectF &rect) = 0;
     virtual void setSeriesData(bool mapDirty, const GLXYDataMap &dataMap) = 0;
     virtual void setAntialiasing(bool enable) = 0;
-    virtual void addMouseEvents(const QVector<QMouseEvent *> &events) = 0;
-    virtual void takeMouseEventResponses(QVector<MouseEventResponse> &responses) = 0;
+    virtual void addMouseEvents(const QList<QMouseEvent *> &events) = 0;
+    virtual void takeMouseEventResponses(QList<MouseEventResponse> &responses) = 0;
 };
 
 QT_CHARTS_END_NAMESPACE

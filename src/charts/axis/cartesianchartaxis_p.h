@@ -67,7 +67,7 @@ public:
 protected:
     void setGeometry(const QRectF &size) override { Q_UNUSED(size);}
     void updateGeometry() override = 0;
-    void updateLayout(QVector<qreal> &layout) override;
+    void updateLayout(const QList<qreal> &layout) override;
 
 public Q_SLOTS:
     void handleArrowPenChanged(const QPen &pen) override;

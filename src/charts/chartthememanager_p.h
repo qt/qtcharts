@@ -74,7 +74,7 @@ public:
     static QColor colorAt(const QGradient &gradient, qreal pos);
 
 private:
-    int createIndexKey(QList<int> keys) const;
+    int createIndexKey(const QList<int> &keys) const;
     int seriesCount(QAbstractSeries::SeriesType type) const;
 
 public Q_SLOTS:

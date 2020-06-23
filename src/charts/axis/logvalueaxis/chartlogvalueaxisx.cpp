@@ -48,9 +48,9 @@ ChartLogValueAxisX::~ChartLogValueAxisX()
 {
 }
 
-QVector<qreal> ChartLogValueAxisX::calculateLayout() const
+QList<qreal> ChartLogValueAxisX::calculateLayout() const
 {
-    QVector<qreal> points;
+    QList<qreal> points;
     points.resize(m_axis->tickCount());
 
     const qreal logMax = std::log10(m_axis->max()) / std::log10(m_axis->base());
@@ -68,7 +68,7 @@ QVector<qreal> ChartLogValueAxisX::calculateLayout() const
 
 void ChartLogValueAxisX::updateGeometry()
 {
-    const QVector<qreal>& layout = ChartAxisElement::layout();
+    const QList<qreal> &layout = ChartAxisElement::layout();
     setLabels(createLogValueLabels(m_axis->min(), m_axis->max(), m_axis->base(), layout.size(), m_axis->labelFormat()));
     HorizontalAxis::updateGeometry();
 }

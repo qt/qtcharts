@@ -49,7 +49,7 @@ PolarChartAxisRadial::~PolarChartAxisRadial()
 
 void PolarChartAxisRadial::updateGeometry()
 {
-    const QVector<qreal> &layout = this->layout();
+    const QList<qreal> &layout = this->layout();
     if (layout.isEmpty() && axis()->type() != QAbstractAxis::AxisTypeLogValue)
         return;
 
@@ -355,10 +355,10 @@ void PolarChartAxisRadial::updateMinorTickGeometry()
     if (!axis())
         return;
 
-    QVector<qreal> layout = ChartAxisElement::layout();
+    QList<qreal> layout = ChartAxisElement::layout();
     int minorTickCount = 0;
     qreal tickRadius = 0.0;
-    QVector<qreal> minorTickRadiuses;
+    QList<qreal> minorTickRadiuses;
     switch (axis()->type()) {
     case QAbstractAxis::AxisTypeValue: {
         const QValueAxis *valueAxis = qobject_cast<QValueAxis *>(axis());

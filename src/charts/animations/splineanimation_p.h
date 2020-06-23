@@ -43,7 +43,7 @@
 #include <QtCharts/private/qchartglobal_p.h>
 #include <QtCore/QPointF>
 
-typedef  QPair<QVector<QPointF >, QVector<QPointF > >  SplineVector;
+typedef QPair<QList<QPointF>, QList<QPointF>> SplineVector;
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -54,7 +54,9 @@ class Q_CHARTS_PRIVATE_EXPORT SplineAnimation : public XYAnimation
 public:
     SplineAnimation(SplineChartItem *item, int duration, QEasingCurve &curve);
     ~SplineAnimation();
-    void setup(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints, QVector<QPointF> &oldContorlPoints, QVector<QPointF> &newControlPoints, int index = -1);
+    void setup(const QList<QPointF> &oldPoints, const QList<QPointF> &newPoints,
+               const QList<QPointF> &oldContorlPoints, const QList<QPointF> &newControlPoints,
+               int index = -1);
 
 protected:
     QVariant interpolated(const QVariant &start, const QVariant &end, qreal progress) const override;

@@ -307,7 +307,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QPieSeries::added(QList<QPieSlice*> slices)
+    \fn void QPieSeries::added(const QList<QPieSlice*> &slices)
 
     This signal is emitted when the slices specified by \a slices are added to the series.
 
@@ -321,7 +321,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QPieSeries::removed(QList<QPieSlice*> slices)
+    \fn void QPieSeries::removed(const QList<QPieSlice*> &slices)
     This signal is emitted when the slices specified by \a slices are removed from the series.
     \sa remove()
 */
@@ -488,14 +488,14 @@ bool QPieSeries::append(QPieSlice *slice)
 
     Returns \c true if appending succeeds.
 */
-bool QPieSeries::append(QList<QPieSlice *> slices)
+bool QPieSeries::append(const QList<QPieSlice *> &slices)
 {
     Q_D(QPieSeries);
 
     if (slices.count() == 0)
         return false;
 
-    foreach (QPieSlice *s, slices) {
+    for (auto *s : slices) {
         if (!s || d->m_slices.contains(s))
             return false;
         if (s->series()) // already added to some series
@@ -504,7 +504,7 @@ bool QPieSeries::append(QList<QPieSlice *> slices)
             return false;
     }
 
-    foreach (QPieSlice *s, slices) {
+    for (auto *s : slices) {
         s->setParent(this);
         QPieSlicePrivate::fromSlice(s)->m_series = this;
         d->m_slices << s;
@@ -512,7 +512,7 @@ bool QPieSeries::append(QList<QPieSlice *> slices)
 
     d->updateDerivativeData();
 
-    foreach(QPieSlice * s, slices) {
+    for (auto *s : slices) {
         connect(s, SIGNAL(valueChanged()), d, SLOT(sliceValueChanged()));
         connect(s, SIGNAL(clicked()), d, SLOT(sliceClicked()));
         connect(s, SIGNAL(hovered(bool)), d, SLOT(sliceHovered(bool)));
@@ -544,7 +544,7 @@ QPieSeries &QPieSeries::operator << (QPieSlice *slice)
     Returns null if \a value is \c NaN, \c Inf, or \c -Inf and adds nothing to the
     series.
 */
-QPieSlice *QPieSeries::append(QString label, qreal value)
+QPieSlice *QPieSeries::append(const QString &label, qreal value)
 {
     if (isValidValue(value)) {
         QPieSlice *slice = new QPieSlice(label, value);
@@ -896,7 +896,7 @@ void QPieSeriesPrivate::updateDerivativeData()
     // update slice attributes
     qreal sliceAngle = m_pieStartAngle;
     qreal pieSpan = m_pieEndAngle - m_pieStartAngle;
-    QVector<QPieSlice *> changed;
+    QList<QPieSlice *> changed;
     foreach (QPieSlice *s, m_slices) {
         QPieSlicePrivate *d = QPieSlicePrivate::fromSlice(s);
         d->setPercentage(s->value() / m_sum);

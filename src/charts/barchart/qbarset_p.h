@@ -57,8 +57,8 @@ public:
     ~QBarSetPrivate();
 
     void append(QPointF value);
-    void append(QList<QPointF> values);
-    void append(QList<qreal> values);
+    void append(const QList<QPointF> &values);
+    void append(const QList<qreal> &values);
 
     void insert(const int index, const qreal value);
     void insert(const int index, const QPointF value);

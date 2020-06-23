@@ -398,7 +398,8 @@ void ChartDataSet::createAxes(QAbstractAxis::AxisTypes type, Qt::Orientation ori
     }
 }
 
-void ChartDataSet::findMinMaxForSeries(QList<QAbstractSeries *> series,Qt::Orientations orientation, qreal &min, qreal &max)
+void ChartDataSet::findMinMaxForSeries(const QList<QAbstractSeries *> &series,
+                                       Qt::Orientations orientation, qreal &min, qreal &max)
 {
     Q_ASSERT(!series.isEmpty());
 
@@ -407,7 +408,7 @@ void ChartDataSet::findMinMaxForSeries(QList<QAbstractSeries *> series,Qt::Orien
     max = (orientation == Qt::Vertical) ? domain->maxY() : domain->maxX();
 
     for (int i = 1; i< series.size(); i++) {
-        AbstractDomain *domain = series[i]->d_ptr->domain();
+        AbstractDomain *domain = series.at(i)->d_ptr->domain();
         min = qMin((orientation == Qt::Vertical) ? domain->minY() : domain->minX(), min);
         max = qMax((orientation == Qt::Vertical) ? domain->maxY() : domain->maxX(), max);
     }
@@ -547,7 +548,7 @@ QList<QAbstractSeries *> ChartDataSet::series() const
     return m_seriesList;
 }
 
-AbstractDomain::DomainType ChartDataSet::selectDomain(QList<QAbstractAxis *> axes)
+AbstractDomain::DomainType ChartDataSet::selectDomain(const QList<QAbstractAxis *> &axes)
 {
     enum Type {
         Undefined = 0,
@@ -563,8 +564,7 @@ AbstractDomain::DomainType ChartDataSet::selectDomain(QList<QAbstractAxis *> axe
     if (m_chart)
         chartType = m_chart->chartType();
 
-    foreach (QAbstractAxis *axis, axes)
-    {
+    for (auto *axis : axes) {
         switch (axis->type()) {
         case QAbstractAxis::AxisTypeLogValue:
             if (axis->orientation() == Qt::Horizontal)

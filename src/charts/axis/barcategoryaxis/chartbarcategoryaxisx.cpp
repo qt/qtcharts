@@ -48,9 +48,9 @@ ChartBarCategoryAxisX::~ChartBarCategoryAxisX()
 {
 }
 
-QVector<qreal> ChartBarCategoryAxisX::calculateLayout() const
+QList<qreal> ChartBarCategoryAxisX::calculateLayout() const
 {
-    QVector<qreal> points;
+    QList<qreal> points;
     const QRectF& gridRect = gridGeometry();
     qreal range = max() - min();
     const qreal delta = gridRect.width() / range;
@@ -73,11 +73,11 @@ QVector<qreal> ChartBarCategoryAxisX::calculateLayout() const
     return points;
 }
 
-QStringList ChartBarCategoryAxisX::createCategoryLabels(const QVector<qreal>& layout) const
+QStringList ChartBarCategoryAxisX::createCategoryLabels(const QList<qreal> &layout) const
 {
     QStringList result ;
     const QRectF &gridRect = gridGeometry();
-    qreal d = (max() - min()) / gridRect.width();
+    const qreal d = (max() - min()) / gridRect.width();
 
     for (int i = 0; i < layout.count() - 1; ++i) {
         int x = qFloor((((layout[i] + layout[i + 1]) / 2 - gridRect.left()) * d + min() + 0.5));
@@ -95,7 +95,7 @@ QStringList ChartBarCategoryAxisX::createCategoryLabels(const QVector<qreal>& la
 
 void ChartBarCategoryAxisX::updateGeometry()
 {
-    const QVector<qreal>& layout = ChartAxisElement::layout();
+    const QList<qreal> &layout = ChartAxisElement::layout();
     if (layout.isEmpty())
         return;
     setLabels(createCategoryLabels(layout));

@@ -57,14 +57,14 @@ ChartValueAxisY::~ChartValueAxisY()
 {
 }
 
-QVector<qreal> ChartValueAxisY::calculateLayout() const
+QList<qreal> ChartValueAxisY::calculateLayout() const
 {
     if (m_axis->tickType() == QValueAxis::TicksFixed) {
         int tickCount = m_axis->tickCount();
 
         Q_ASSERT(tickCount >= 2);
 
-        QVector<qreal> points;
+        QList<qreal> points;
         points.resize(tickCount);
 
         const QRectF &gridRect = gridGeometry();
@@ -89,7 +89,7 @@ QVector<qreal> ChartValueAxisY::calculateLayout() const
         const QRectF &gridRect = gridGeometry();
         const qreal deltaY = gridRect.height() / (maxValue - minValue);
 
-        QVector<qreal> points;
+        QList<qreal> points;
         const qreal bottomPos = gridRect.bottom();
         while (value <= maxValue || qFuzzyCompare(value, maxValue)) {
             points << (value - minValue) * -deltaY + bottomPos;
@@ -102,8 +102,8 @@ QVector<qreal> ChartValueAxisY::calculateLayout() const
 
 void ChartValueAxisY::updateGeometry()
 {
-    const QVector<qreal> &layout = ChartAxisElement::layout();
-    const QVector<qreal>& dynamicMinorTicklayout = ChartAxisElement::dynamicMinorTicklayout();
+    const QList<qreal> &layout = ChartAxisElement::layout();
+    const QList<qreal> &dynamicMinorTicklayout = ChartAxisElement::dynamicMinorTicklayout();
     if (layout.isEmpty() && dynamicMinorTicklayout.isEmpty())
         return;
     setLabels(createValueLabels(min(), max(), layout.size(), m_axis->tickInterval(),

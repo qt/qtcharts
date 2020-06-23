@@ -86,7 +86,7 @@ private:
     QPainterPath m_fullPath;
     QPainterPath m_shapePath;
 
-    QVector<QPointF> m_linePoints;
+    QList<QPointF> m_linePoints;
     QRectF m_rect;
     QPen m_linePen;
     bool m_pointsVisible;

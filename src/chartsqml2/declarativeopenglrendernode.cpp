@@ -276,7 +276,7 @@ void DeclarativeOpenGLRenderNode::setAntialiasing(bool enable)
     }
 }
 
-void DeclarativeOpenGLRenderNode::addMouseEvents(const QVector<QMouseEvent *> &events)
+void DeclarativeOpenGLRenderNode::addMouseEvents(const QList<QMouseEvent *> &events)
 {
     if (events.size()) {
         m_mouseEvents.append(events);
@@ -284,7 +284,7 @@ void DeclarativeOpenGLRenderNode::addMouseEvents(const QVector<QMouseEvent *> &e
     }
 }
 
-void DeclarativeOpenGLRenderNode::takeMouseEventResponses(QVector<MouseEventResponse> &responses)
+void DeclarativeOpenGLRenderNode::takeMouseEventResponses(QList<MouseEventResponse> &responses)
 {
     responses.append(m_mouseEventResponses);
     m_mouseEventResponses.clear();
@@ -309,7 +309,7 @@ void DeclarativeOpenGLRenderNode::renderGL(bool selection)
 
         if (data->visible) {
             if (selection) {
-                m_selectionVector[counter] = i.key();
+                m_selectionList[counter] = i.key();
                 m_program->setUniformValue(m_colorUniformLoc, QVector3D((counter & 0xff) / 255.0f,
                                                                         ((counter & 0xff00) >> 8) / 255.0f,
                                                                         ((counter & 0xff0000) >> 16) / 255.0f));
@@ -349,7 +349,7 @@ void DeclarativeOpenGLRenderNode::renderSelection()
 {
     m_selectionFbo->bind();
 
-    m_selectionVector.resize(m_xyDataMap.size());
+    m_selectionList.resize(m_xyDataMap.size());
 
     renderGL(true);
 
@@ -520,8 +520,8 @@ const QXYSeries *DeclarativeOpenGLRenderNode::findSeriesAtEvent(QMouseEvent *eve
             index = pixel[0] + (pixel[1] << 8) + (pixel[2] << 16);
     }
 
-    if (index >= 0 && index < m_selectionVector.size())
-        series = m_selectionVector.at(index);
+    if (index >= 0 && index < m_selectionList.size())
+        series = m_selectionList.at(index);
 
     return series;
 }

@@ -32,7 +32,7 @@
 #include <private/boxplotchartitem_p.h>
 #include <private/boxwhiskersdata_p.h>
 
-Q_DECLARE_METATYPE(QVector<QRectF>)
+Q_DECLARE_METATYPE(QList<QRectF>)
 Q_DECLARE_METATYPE(QT_CHARTS_NAMESPACE::BoxWhiskersData)
 Q_DECLARE_METATYPE(qreal)
 
@@ -89,7 +89,7 @@ QVariant BoxWhiskersAnimation::interpolated(const QVariant &from, const QVariant
 
 void BoxWhiskersAnimation::updateCurrentValue(const QVariant &value)
 {
-    BoxWhiskersData data = qvariant_cast<BoxWhiskersData>(value);
+    const BoxWhiskersData data = qvariant_cast<BoxWhiskersData>(value);
     m_box->setLayout(data);
 }
 

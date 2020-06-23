@@ -66,7 +66,7 @@ public:
 
     QPointF calculateGeometryPoint(const QPointF &point, bool &ok) const override;
     QPointF calculateDomainPoint(const QPointF &point) const override;
-    QVector<QPointF> calculateGeometryPoints(const QVector<QPointF> &vector) const override;
+    QList<QPointF> calculateGeometryPoints(const QList<QPointF> &list) const override;
 
     bool attachAxis(QAbstractAxis *axis) override;
     bool detachAxis(QAbstractAxis *axis) override;

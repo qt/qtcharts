@@ -744,7 +744,7 @@ void QLegendPrivate::handleCountChanged()
     QAbstractSeriesPrivate *seriesP = qobject_cast<QAbstractSeriesPrivate *>(sender());
     QAbstractSeries *series = seriesP->q_ptr;
     QList<QLegendMarker *> createdMarkers = seriesP->createLegendMarkers(q_ptr);
-    QVector<bool> isNew(createdMarkers.size(), true);
+    QList<bool> isNew(createdMarkers.size(), true);
 
     const int pos = indexOfSeries(series, m_markers);
     // Remove markers of the series from m_markers and check against the newly
@@ -790,9 +790,9 @@ void QLegendPrivate::insertMarkerHelper(QLegendMarker *marker)
     m_markerHash.insert(item, marker);
 }
 
-void QLegendPrivate::addMarkers(QList<QLegendMarker *> markers)
+void QLegendPrivate::addMarkers(const QList<QLegendMarker *> &markers)
 {
-    foreach (QLegendMarker *marker, markers) {
+    for (auto *marker : markers) {
         insertMarkerHelper(marker);
         m_markers << marker;
     }
@@ -808,9 +808,9 @@ void QLegendPrivate::removeMarkerHelper(QLegendMarker *marker)
     delete marker;
 }
 
-void QLegendPrivate::removeMarkers(QList<QLegendMarker *> markers)
+void QLegendPrivate::removeMarkers(const QList<QLegendMarker *> &markers)
 {
-    foreach (QLegendMarker *marker, markers) {
+    for (auto *marker : markers) {
         m_markers.removeOne(marker);
         removeMarkerHelper(marker);
     }
@@ -822,9 +822,9 @@ void QLegendPrivate::decorateMarker(QLegendMarker *marker)
     marker->setLabelBrush(m_labelBrush);
 }
 
-void QLegendPrivate::decorateMarkers(QList<QLegendMarker *> markers)
+void QLegendPrivate::decorateMarkers(const QList<QLegendMarker *> &markers)
 {
-    for (QLegendMarker *marker : markers)
+    for (auto *marker : markers)
         decorateMarker(marker);
 }
 

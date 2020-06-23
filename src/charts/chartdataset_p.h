@@ -43,7 +43,7 @@
 #include <private/abstractdomain_p.h>
 #include <private/qabstractaxis_p.h>
 #include <QtCharts/private/qchartglobal_p.h>
-#include <QtCore/QVector>
+#include <QtCore/QList>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -95,10 +95,12 @@ public Q_SLOTS:
 private:
     void createAxes(QAbstractAxis::AxisTypes type, Qt::Orientation orientation);
     QAbstractAxis *createAxis(QAbstractAxis::AxisType type, Qt::Orientation orientation);
-    AbstractDomain::DomainType selectDomain(QList<QAbstractAxis* > axes);
+    AbstractDomain::DomainType selectDomain(const QList<QAbstractAxis *> &axes);
     void deleteAllAxes();
     void deleteAllSeries();
-    void findMinMaxForSeries(QList<QAbstractSeries *> series,Qt::Orientations orientation, qreal &min, qreal &max);
+    void findMinMaxForSeries(const QList<QAbstractSeries *> &series, Qt::Orientations orientation,
+                             qreal &min, qreal &max);
+
 private:
     QList<QAbstractSeries *> m_seriesList;
     QList<QAbstractAxis *> m_axisList;

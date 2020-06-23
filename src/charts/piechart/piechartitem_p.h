@@ -78,8 +78,8 @@ public Q_SLOTS:
     void handleDomainUpdated() override;
 
     void updateLayout();
-    void handleSlicesAdded(QList<QPieSlice *> slices);
-    void handleSlicesRemoved(QList<QPieSlice *> slices);
+    void handleSlicesAdded(const QList<QPieSlice *> &slices);
+    void handleSlicesRemoved(const QList<QPieSlice *> &slices);
     void handleSliceChanged();
     void handleSeriesVisibleChanged();
     void handleOpacityChanged();

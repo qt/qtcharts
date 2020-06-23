@@ -45,11 +45,11 @@ PolarChartCategoryAxisAngular::~PolarChartCategoryAxisAngular()
 {
 }
 
-QVector<qreal> PolarChartCategoryAxisAngular::calculateLayout() const
+QList<qreal> PolarChartCategoryAxisAngular::calculateLayout() const
 {
     QCategoryAxis *catAxis = static_cast<QCategoryAxis *>(axis());
     int tickCount = catAxis->categoriesLabels().count() + 1;
-    QVector<qreal> points;
+    QList<qreal> points;
 
     if (tickCount < 2)
         return points;
@@ -71,7 +71,7 @@ QVector<qreal> PolarChartCategoryAxisAngular::calculateLayout() const
     return points;
 }
 
-void PolarChartCategoryAxisAngular::createAxisLabels(const QVector<qreal> &layout)
+void PolarChartCategoryAxisAngular::createAxisLabels(const QList<qreal> &layout)
 {
     Q_UNUSED(layout);
     setLabels(static_cast<QCategoryAxis *>(axis())->categoriesLabels() << QString());

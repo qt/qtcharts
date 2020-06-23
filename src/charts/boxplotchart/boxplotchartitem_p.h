@@ -71,10 +71,10 @@ public Q_SLOTS:
     void handleDomainUpdated() override;
     void handleLayoutChanged();
     void handleUpdatedBars();
-    void handleBoxsetRemove(QList<QBoxSet *> barSets);
+    void handleBoxsetRemove(const QList<QBoxSet *> &barSets);
 
 private:
-    virtual QVector<QRectF> calculateLayout();
+    virtual QList<QRectF> calculateLayout();
     void initializeLayout();
     bool updateBoxGeometry(BoxWhiskers *box, int index);
 

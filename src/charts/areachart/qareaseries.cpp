@@ -701,7 +701,7 @@ void QAreaSeriesPrivate::initializeDomain()
     QLineSeries *lowerSeries = q->lowerSeries();
 
     if (upperSeries) {
-        const QVector<QPointF> &points = upperSeries->pointsVector();
+        const auto &points = upperSeries->points();
 
         if (!points.isEmpty()) {
             minX = points[0].x();
@@ -720,7 +720,7 @@ void QAreaSeriesPrivate::initializeDomain()
         }
     }
     if (lowerSeries) {
-        const QVector<QPointF> &points = lowerSeries->pointsVector();
+        const auto &points = lowerSeries->points();
 
         if (!points.isEmpty()) {
             if (!upperSeries) {

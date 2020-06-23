@@ -400,7 +400,7 @@ void QBarModelMapperPrivate::removeData(int start, int end)
     initializeBarFromModel();
 }
 
-void QBarModelMapperPrivate::barSetsAdded(QList<QBarSet *> sets)
+void QBarModelMapperPrivate::barSetsAdded(const QList<QBarSet *> &sets)
 {
     if (m_seriesSignalsBlock)
         return;
@@ -447,7 +447,7 @@ void QBarModelMapperPrivate::barSetsAdded(QList<QBarSet *> sets)
     initializeBarFromModel();
 }
 
-void QBarModelMapperPrivate::barSetsRemoved(QList<QBarSet *> sets)
+void QBarModelMapperPrivate::barSetsRemoved(const QList<QBarSet *> &sets)
 {
     if (m_seriesSignalsBlock)
         return;

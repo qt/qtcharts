@@ -116,22 +116,18 @@ void ChartThemeManager::decorateLegend(QLegend *legend, ChartTheme *theme) const
     legend->setLabelBrush(theme->labelBrush());
 }
 
-int ChartThemeManager::createIndexKey(QList<int> keys) const
+int ChartThemeManager::createIndexKey(const QList<int> &keys) const
 {
-    std::sort(keys.begin(), keys.end());
+    auto keysCopy = keys;
+    std::sort(keysCopy.begin(), keysCopy.end());
 
-    int key = 0;
-    QList<int>::iterator i;
-    i = keys.begin();
-
-    while (i != keys.end()) {
-        if (*i != key)
+    int i = 0;
+    for (const auto key : keysCopy) {
+        if (i != key)
             break;
-        key++;
-        i++;
+        ++i;
     }
-
-    return key;
+    return i;
 }
 
 int ChartThemeManager::seriesCount(QAbstractSeries::SeriesType type) const

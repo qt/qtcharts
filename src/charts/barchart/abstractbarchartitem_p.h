@@ -66,13 +66,13 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
     QRectF boundingRect() const override;
 
-    virtual QVector<QRectF> calculateLayout() = 0;
+    virtual QList<QRectF> calculateLayout() = 0;
     void initializeFullLayout();
     virtual void initializeLayout(int set, int category, int layoutIndex, bool resetAnimation) = 0;
-    virtual void applyLayout(const QVector<QRectF> &layout);
+    virtual void applyLayout(const QList<QRectF> &layout);
     virtual void setAnimation(BarAnimation *animation);
     ChartAnimation *animation() const override;
-    void setLayout(const QVector<QRectF> &layout);
+    void setLayout(const QList<QRectF> &layout);
     QRectF geometry() const { return m_rect;}
     void resetAnimation();
 
@@ -102,7 +102,7 @@ protected:
     void calculateSeriesPositionAdjustmentAndWidth();
 
     QRectF m_rect;
-    QVector<QRectF> m_layout;
+    QList<QRectF> m_layout;
 
     BarAnimation *m_animation;
 

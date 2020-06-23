@@ -62,12 +62,12 @@ QT_CHARTS_BEGIN_NAMESPACE
     \sa QBoxSet, QBarCategoryAxis
 */
 /*!
-    \fn QBoxPlotSeries::boxsetsAdded(QList<QBoxSet *> sets)
+    \fn QBoxPlotSeries::boxsetsAdded(const QList<QBoxSet *> &sets)
     This signal is emitted when the list of box-and-whiskers items specified by \a sets
     is added to the series.
 */
 /*!
-    \fn QBoxPlotSeries::boxsetsRemoved(QList<QBoxSet *> sets)
+    \fn QBoxPlotSeries::boxsetsRemoved(const QList<QBoxSet *> &sets)
     This signal is emitted when the list of box-and-whiskers items specified by \a sets
     is removed from the series.
 */
@@ -236,7 +236,7 @@ bool QBoxPlotSeries::take(QBoxSet *set)
     them. If the list is null or the items already belong to the series, it will not be appended.
     Returns \c true if appending succeeded.
 */
-bool QBoxPlotSeries::append(QList<QBoxSet *> sets)
+bool QBoxPlotSeries::append(const QList<QBoxSet *> &sets)
 {
     Q_D(QBoxPlotSeries);
     bool success = d->append(sets);
@@ -618,16 +618,16 @@ bool QBoxPlotSeriesPrivate::remove(QBoxSet *set)
     return true;
 }
 
-bool QBoxPlotSeriesPrivate::append(QList<QBoxSet *> sets)
+bool QBoxPlotSeriesPrivate::append(const QList<QBoxSet *> &sets)
 {
-    foreach (QBoxSet *set, sets) {
+    for (auto *set : sets) {
         if ((set == 0) || m_boxSets.contains(set) || set->d_ptr->m_series)
             return false; // Fail if any of the sets is null or is already appended.
         if (sets.count(set) != 1)
             return false; // Also fail if same set is more than once in given list.
     }
 
-    foreach (QBoxSet *set, sets) {
+    for (auto *set : sets) {
         m_boxSets.append(set);
         QObject::connect(set->d_ptr.data(), SIGNAL(updatedLayout()), this, SIGNAL(updatedLayout()));
         QObject::connect(set->d_ptr.data(), SIGNAL(updatedBox()), this, SIGNAL(updatedBoxes()));
@@ -639,19 +639,19 @@ bool QBoxPlotSeriesPrivate::append(QList<QBoxSet *> sets)
     return true;
 }
 
-bool QBoxPlotSeriesPrivate::remove(QList<QBoxSet *> sets)
+bool QBoxPlotSeriesPrivate::remove(const QList<QBoxSet *> &sets)
 {
     if (sets.count() == 0)
         return false;
 
-    foreach (QBoxSet *set, sets) {
+    for (auto *set : sets) {
         if ((set == 0) || (!m_boxSets.contains(set)))
             return false; // Fail if any of the sets is null or is not in series
         if (sets.count(set) != 1)
             return false; // Also fail if same set is more than once in given list.
     }
 
-    foreach (QBoxSet *set, sets) {
+    for (auto *set : sets) {
         set->d_ptr->m_series = 0;
         m_boxSets.removeOne(set);
         QObject::disconnect(set->d_ptr.data(), SIGNAL(updatedLayout()), this, SIGNAL(updatedLayout()));

@@ -386,7 +386,7 @@ void QBoxPlotModelMapperPrivate::removeData(int start, int end)
     initializeBoxFromModel();
 }
 
-void QBoxPlotModelMapperPrivate::boxSetsAdded(QList<QBoxSet *> sets)
+void QBoxPlotModelMapperPrivate::boxSetsAdded(const QList<QBoxSet *> &sets)
 {
     if (m_seriesSignalsBlock)
         return;
@@ -432,7 +432,7 @@ void QBoxPlotModelMapperPrivate::boxSetsAdded(QList<QBoxSet *> sets)
     initializeBoxFromModel();
 }
 
-void QBoxPlotModelMapperPrivate::boxSetsRemoved(QList<QBoxSet *> sets)
+void QBoxPlotModelMapperPrivate::boxSetsRemoved(const QList<QBoxSet *> &sets)
 {
     if (m_seriesSignalsBlock)
         return;

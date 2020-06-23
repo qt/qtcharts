@@ -312,7 +312,7 @@ void ChartAxisElement::handleRangeChanged(qreal min, qreal max)
     Q_UNUSED(max);
 
     if (!isEmpty()) {
-        QVector<qreal> layout = calculateLayout();
+        const QList<qreal> layout = calculateLayout();
         updateLayout(layout);
         QSizeF before = effectiveSizeHint(Qt::PreferredSize);
         QSizeF after = sizeHint(Qt::PreferredSize);

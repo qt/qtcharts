@@ -74,8 +74,8 @@ QSizeF VerticalAxis::sizeHint(Qt::SizeHint which, const QSizeF &constraint) cons
 
 void VerticalAxis::updateGeometry()
 {
-    const QVector<qreal> &layout = ChartAxisElement::layout();
-    const QVector<qreal> &dynamicMinorTicklayout = ChartAxisElement::dynamicMinorTicklayout();
+    const QList<qreal> &layout = ChartAxisElement::layout();
+    const QList<qreal> &dynamicMinorTicklayout = ChartAxisElement::dynamicMinorTicklayout();
 
     if (layout.isEmpty() && dynamicMinorTicklayout.isEmpty()
             && axis()->type() != QAbstractAxis::AxisTypeLogValue) {
@@ -354,10 +354,10 @@ void VerticalAxis::updateMinorTickGeometry()
     if (!axis())
         return;
 
-    QVector<qreal> layout = ChartAxisElement::layout();
+    QList<qreal> layout = ChartAxisElement::layout();
     int minorTickCount = 0;
     qreal tickSpacing = 0.0;
-    QVector<qreal> minorTickSpacings;
+    QList<qreal> minorTickSpacings;
     switch (axis()->type()) {
     case QAbstractAxis::AxisTypeValue: {
         const QValueAxis *valueAxis = qobject_cast<QValueAxis *>(axis());
@@ -427,7 +427,7 @@ void VerticalAxis::updateMinorTickGeometry()
 
     const QValueAxis *valueAxis = qobject_cast<QValueAxis *>(axis());
     if (valueAxis && valueAxis->tickType() == QValueAxis::TicksDynamic) {
-        const QVector<qreal> dynamicMinorTicklayout = ChartAxisElement::dynamicMinorTicklayout();
+        const QList<qreal> dynamicMinorTicklayout = ChartAxisElement::dynamicMinorTicklayout();
         const QRectF &gridRect = gridGeometry();
         const qreal deltaY = gridRect.height() / (valueAxis->max() - valueAxis->min());
         const qreal bottomPos = gridRect.bottom();

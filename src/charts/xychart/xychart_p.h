@@ -58,8 +58,8 @@ public:
     explicit XYChart(QXYSeries *series,QGraphicsItem *item = 0);
     ~XYChart() {}
 
-    void setGeometryPoints(const QVector<QPointF> &points);
-    QVector<QPointF> geometryPoints() const { return m_points; }
+    void setGeometryPoints(const QList<QPointF> &points);
+    QList<QPointF> geometryPoints() const { return m_points; }
 
     void setAnimation(XYAnimation *animation);
     ChartAnimation *animation() const override { return m_animation; }
@@ -69,7 +69,7 @@ public:
     void setDirty(bool dirty);
 
     void getSeriesRanges(qreal &minX, qreal &maxX, qreal &minY, qreal &maxY);
-    QVector<bool> offGridStatusVector();
+    QList<bool> offGridStatusVector();
 
 public Q_SLOTS:
     void handlePointAdded(int index);
@@ -87,7 +87,8 @@ Q_SIGNALS:
     void doubleClicked(const QPointF &point);
 
 protected:
-    virtual void updateChart(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints, int index = -1);
+    virtual void updateChart(const QList<QPointF> &oldPoints, const QList<QPointF> &newPoints,
+                             int index = -1);
     virtual void updateGlChart();
     virtual void refreshGlChart();
 
@@ -96,7 +97,7 @@ private:
 
 protected:
     QXYSeries *m_series;
-    QVector<QPointF> m_points;
+    QList<QPointF> m_points;
     XYAnimation *m_animation;
     bool m_dirty;
 

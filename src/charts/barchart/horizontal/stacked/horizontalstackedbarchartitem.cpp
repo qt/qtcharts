@@ -108,16 +108,16 @@ QPointF HorizontalStackedBarChartItem::bottomRightPoint(int category, qreal barW
                 QPointF(value, m_seriesPosAdjustment + category + (barWidth / 2)), m_validData);
 }
 
-QVector<QRectF> HorizontalStackedBarChartItem::calculateLayout()
+QList<QRectF> HorizontalStackedBarChartItem::calculateLayout()
 {
-    QVector<QRectF> layout;
+    QList<QRectF> layout;
     layout.resize(m_layout.size());
 
     const int setCount = m_series->count();
     const qreal barWidth = m_series->d_func()->barWidth() * m_seriesWidth;
 
-    QVector<qreal> positiveSums(m_categoryCount, 0.0);
-    QVector<qreal> negativeSums(m_categoryCount, 0.0);
+    QList<qreal> positiveSums(m_categoryCount, 0.0);
+    QList<qreal> negativeSums(m_categoryCount, 0.0);
 
     for (int set = 0; set < setCount; set++) {
         QBarSet *barSet = m_series->barSets().at(set);

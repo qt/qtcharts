@@ -31,7 +31,7 @@
 #include <private/candlestickanimation_p.h>
 #include <private/candlestickbodywicksanimation_p.h>
 
-Q_DECLARE_METATYPE(QVector<QRectF>)
+Q_DECLARE_METATYPE(QList<QRectF>)
 Q_DECLARE_METATYPE(QT_CHARTS_NAMESPACE::CandlestickData)
 Q_DECLARE_METATYPE(qreal)
 
@@ -80,7 +80,7 @@ void CandlestickBodyWicksAnimation::setEndData(const CandlestickData &endData)
 
 void CandlestickBodyWicksAnimation::updateCurrentValue(const QVariant &value)
 {
-    CandlestickData data = qvariant_cast<CandlestickData>(value);
+    const CandlestickData data = qvariant_cast<CandlestickData>(value);
     m_candlestick->setLayout(data);
 }
 

@@ -170,23 +170,23 @@ QPointF XYDomain::calculateGeometryPoint(const QPointF &point, bool &ok) const
     return QPointF(x, y);
 }
 
-QVector<QPointF> XYDomain::calculateGeometryPoints(const QVector<QPointF> &vector) const
+QList<QPointF> XYDomain::calculateGeometryPoints(const QList<QPointF> &list) const
 {
     const qreal xd = m_maxX - m_minX;
     const qreal yd = m_maxY - m_minY;
     if (qFuzzyIsNull(xd) || qFuzzyIsNull(yd))
-        return QVector<QPointF>();
+        return QList<QPointF>();
     const qreal deltaX = m_size.width() / xd;
     const qreal deltaY = m_size.height() / yd;
 
-    QVector<QPointF> result;
-    result.resize(vector.count());
+    QList<QPointF> result;
+    result.resize(list.count());
 
-    for (int i = 0; i < vector.count(); ++i) {
-        qreal x = (vector[i].x() - m_minX) * deltaX;
+    for (int i = 0; i < list.count(); ++i) {
+        qreal x = (list[i].x() - m_minX) * deltaX;
         if (m_reverseX)
             x = m_size.width() - x;
-        qreal y = (vector[i].y() - m_minY) * deltaY;
+        qreal y = (list[i].y() - m_minY) * deltaY;
         if (!m_reverseY)
             y = m_size.height() - y;
         result[i].setX(x);

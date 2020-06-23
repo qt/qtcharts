@@ -48,11 +48,11 @@ PolarChartLogValueAxisAngular::~PolarChartLogValueAxisAngular()
 {
 }
 
-QVector<qreal> PolarChartLogValueAxisAngular::calculateLayout() const
+QList<qreal> PolarChartLogValueAxisAngular::calculateLayout() const
 {
     QLogValueAxis *logValueAxis = qobject_cast<QLogValueAxis *>(axis());
 
-    QVector<qreal> points;
+    QList<qreal> points;
     points.resize(logValueAxis->tickCount());
 
     const qreal logMax = std::log10(logValueAxis->max()) / std::log10(logValueAxis->base());
@@ -67,7 +67,7 @@ QVector<qreal> PolarChartLogValueAxisAngular::calculateLayout() const
     return points;
 }
 
-void PolarChartLogValueAxisAngular::createAxisLabels(const QVector<qreal> &layout)
+void PolarChartLogValueAxisAngular::createAxisLabels(const QList<qreal> &layout)
 {
     QLogValueAxis *logValueAxis = static_cast<QLogValueAxis *>(axis());
     setLabels(createLogValueLabels(logValueAxis->min(),

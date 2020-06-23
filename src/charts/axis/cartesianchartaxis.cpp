@@ -149,7 +149,7 @@ void CartesianChartAxis::updateMinorTickItems()
                 minorCounter++;
             }
 
-            QVector<qreal> points;
+            QList<qreal> points;
 
             // Calculate the points on axis value space. Conversion to graphical points
             // will be done on axis specific geometry update function
@@ -220,7 +220,7 @@ void CartesianChartAxis::deleteItems(int count)
     }
 }
 
-void CartesianChartAxis::updateLayout(QVector<qreal> &layout)
+void CartesianChartAxis::updateLayout(const QList<qreal> &layout)
 {
     int diff = ChartAxisElement::layout().size() - layout.size();
 
@@ -278,7 +278,7 @@ void CartesianChartAxis::setGeometry(const QRectF &axis, const QRectF &grid)
         return;
     }
 
-    QVector<qreal> layout = calculateLayout();
+    const QList<qreal> layout = calculateLayout();
     updateLayout(layout);
 }
 
@@ -359,7 +359,7 @@ void CartesianChartAxis::handleShadesPenChanged(const QPen &pen)
 
 void CartesianChartAxis::updateLabelsValues(QValueAxis *axis)
 {
-    const QVector<qreal> &layout = ChartAxisElement::layout();
+    const QList<qreal> &layout = ChartAxisElement::layout();
     if (layout.isEmpty())
         return;
 

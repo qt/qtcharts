@@ -592,7 +592,7 @@ void QCandlestickModelMapperPrivate::candlestickSetsRemoved(const QList<QCandles
     if (sets.isEmpty())
         return;
 
-    QVector<int> removedIndices;
+    QList<int> removedIndices;
     for (auto &set : sets) {
         int index = m_sets.indexOf(set);
         if (index != -1)

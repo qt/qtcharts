@@ -52,7 +52,7 @@ public:
     HorizontalBarChartItem(QAbstractBarSeries *series, QGraphicsItem* item = 0);
 
 private:
-    QVector<QRectF> calculateLayout() override;
+    QList<QRectF> calculateLayout() override;
     void initializeLayout(int set, int category, int layoutIndex, bool resetAnimation) override;
     QPointF topLeftPoint(int set, int setCount, int category, qreal barWidth, qreal value);
     QPointF bottomRightPoint(int set, int setCount, int category, qreal barWidth, qreal value);

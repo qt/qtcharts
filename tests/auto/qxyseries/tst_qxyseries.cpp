@@ -210,7 +210,6 @@ void tst_QXYSeries::append_raw()
     TRY_COMPARE(spy0.count(), 0);
     TRY_COMPARE(addedSpy.count(), points.count());
     QCOMPARE(m_series->points(), points);
-    QCOMPARE(m_series->pointsVector(), points.toVector());
 
     // Process events between appends
     foreach (const QPointF &point, otherPoints) {

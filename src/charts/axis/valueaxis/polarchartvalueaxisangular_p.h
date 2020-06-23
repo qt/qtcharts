@@ -54,8 +54,8 @@ public:
     PolarChartValueAxisAngular(QValueAxis *axis, QGraphicsItem *item);
     ~PolarChartValueAxisAngular();
 
-    QVector<qreal> calculateLayout() const override;
-    void createAxisLabels(const QVector<qreal> &layout) override;
+    QList<qreal> calculateLayout() const override;
+    void createAxisLabels(const QList<qreal> &layout) override;
 
 private Q_SLOTS:
     void handleTickCountChanged(int tick);

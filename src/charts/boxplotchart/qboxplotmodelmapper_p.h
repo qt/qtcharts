@@ -68,8 +68,8 @@ public Q_SLOTS:
     void handleModelDestroyed();
 
     // for the series
-    void boxSetsAdded(QList<QBoxSet *> sets);
-    void boxSetsRemoved(QList<QBoxSet *> sets);
+    void boxSetsAdded(const QList<QBoxSet *> &sets);
+    void boxSetsRemoved(const QList<QBoxSet *> &sets);
     void boxValueChanged(int index);
     void handleSeriesDestroyed();
 

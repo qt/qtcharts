@@ -55,7 +55,8 @@ public:
     ~AxisAnimation();
     void setAnimationType(Animation type);
     void setAnimationPoint(const QPointF &point);
-    void setValues(QVector<qreal> &oldLayout, QVector<qreal> &newLayout);
+    void setValues(QList<qreal> &oldLayout, const QList<qreal> &newLayout);
+
 protected:
     QVariant interpolated(const QVariant &from, const QVariant &to, qreal progress) const override;
     void updateCurrentValue(const QVariant &value) override;

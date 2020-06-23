@@ -64,14 +64,14 @@ public:
     QAbstractAxis::AxisType defaultAxisType(Qt::Orientation orientation) const override;
     QAbstractAxis* createDefaultAxis(Qt::Orientation orientation) const override;
 
-    void drawSeriesPointLabels(QPainter *painter, const QVector<QPointF> &points,
+    void drawSeriesPointLabels(QPainter *painter, const QList<QPointF> &points,
                                const int offset = 0);
 
 Q_SIGNALS:
     void updated();
 
 protected:
-    QVector<QPointF> m_points;
+    QList<QPointF> m_points;
     QPen m_pen;
     QBrush m_brush;
     bool m_pointsVisible;

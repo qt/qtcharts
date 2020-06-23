@@ -55,9 +55,9 @@ public:
     QAbstractSeries::SeriesType type() const override;
 
     bool append(QPieSlice *slice);
-    bool append(QList<QPieSlice *> slices);
+    bool append(const QList<QPieSlice *> &slices);
     QPieSeries &operator << (QPieSlice *slice);
-    QPieSlice *append(QString label, qreal value);
+    QPieSlice *append(const QString &label, qreal value);
 
     bool insert(int index, QPieSlice *slice);
 
@@ -94,8 +94,8 @@ public:
     void setLabelsPosition(QPieSlice::LabelPosition position);
 
 Q_SIGNALS:
-    void added(QList<QPieSlice *> slices);
-    void removed(QList<QPieSlice *> slices);
+    void added(const QList<QPieSlice *> &slices);
+    void removed(const QList<QPieSlice *> &slices);
     void clicked(QPieSlice *slice);
     void hovered(QPieSlice *slice, bool state);
     void pressed(QPieSlice *slice);

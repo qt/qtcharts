@@ -683,23 +683,23 @@ void QBarSetPrivate::append(QPointF value)
     }
 }
 
-void QBarSetPrivate::append(QList<QPointF> values)
+void QBarSetPrivate::append(const QList<QPointF> &values)
 {
     int originalIndex = m_values.count();
-    for (int i = 0; i < values.count(); i++) {
-        if (isValidValue(values.at(i)))
-            m_values.append(values.at(i));
+    for (const auto &value : values) {
+        if (isValidValue(value))
+            m_values.append(value);
     }
     emit valueAdded(originalIndex, values.size());
 }
 
-void QBarSetPrivate::append(QList<qreal> values)
+void QBarSetPrivate::append(const QList<qreal> &values)
 {
     int originalIndex = m_values.count();
     int index = originalIndex;
-    for (int i = 0; i < values.count(); i++) {
-        if (isValidValue(values.at(i))) {
-            m_values.append(QPointF(index, values.at(i)));
+    for (const auto value : values) {
+        if (isValidValue(value)) {
+            m_values.append(QPointF(index, value));
             index++;
         }
     }

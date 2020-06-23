@@ -56,10 +56,10 @@ public:
 
     QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint) const override;
 protected:
-    QVector<qreal> calculateLayout() const override;
+    QList<qreal> calculateLayout() const override;
     void updateGeometry() override;
 private:
-    QStringList createCategoryLabels(const QVector<qreal>& layout) const;
+    QStringList createCategoryLabels(const QList<qreal> &layout) const;
 public Q_SLOTS:
     void handleCategoriesChanged();
 private:

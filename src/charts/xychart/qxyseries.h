@@ -76,7 +76,10 @@ public:
 
     int count() const;
     QList<QPointF> points() const;
-    QVector<QPointF> pointsVector() const;
+#if QT_DEPRECATED_SINCE(6, 0)
+    QT_DEPRECATED_X("Use points() instead")
+    QList<QPointF> pointsVector() const;
+#endif
     const QPointF &at(int index) const;
 
     QXYSeries &operator << (const QPointF &point);
@@ -109,7 +112,7 @@ public:
     void setPointLabelsClipping(bool enabled = true);
     bool pointLabelsClipping() const;
 
-    void replace(QVector<QPointF> points);
+    void replace(const QList<QPointF> &points);
 
 Q_SIGNALS:
     void clicked(const QPointF &point);

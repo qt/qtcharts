@@ -31,7 +31,7 @@
 #include <private/splinechartitem_p.h>
 #include <QtCore/QDebug>
 
-Q_DECLARE_METATYPE(QVector<QPointF>)
+Q_DECLARE_METATYPE(QList<QPointF>)
 Q_DECLARE_METATYPE(SplineVector)
 
 QT_CHARTS_BEGIN_NAMESPACE
@@ -47,7 +47,9 @@ SplineAnimation::~SplineAnimation()
 {
 }
 
-void SplineAnimation::setup(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints, QVector<QPointF> &oldControlPoints, QVector<QPointF> &newControlPoints, int index)
+void SplineAnimation::setup(const QList<QPointF> &oldPoints, const QList<QPointF> &newPoints,
+                            const QList<QPointF> &oldControlPoints,
+                            const QList<QPointF> &newControlPoints, int index)
 {
     if (newPoints.count() * 2 - 2 != newControlPoints.count() || newControlPoints.count() < 2) {
         m_valid = false;
@@ -179,7 +181,7 @@ QVariant SplineAnimation::interpolated(const QVariant &start, const QVariant &en
 void SplineAnimation::updateCurrentValue(const QVariant &value)
 {
     if (state() != QAbstractAnimation::Stopped && m_valid) { //workaround
-        QPair<QVector<QPointF >, QVector<QPointF > > pair = qvariant_cast< QPair< QVector<QPointF>, QVector<QPointF> > >(value);
+        const auto pair = qvariant_cast<QPair<QList<QPointF>, QList<QPointF>>>(value);
         m_item->setGeometryPoints(pair.first);
         m_item->setControlGeometryPoints(pair.second);
         m_item->updateGeometry();

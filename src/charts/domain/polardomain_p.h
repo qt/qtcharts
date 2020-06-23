@@ -55,7 +55,7 @@ public:
     void setSize(const QSizeF &size) override;
 
     QPointF calculateGeometryPoint(const QPointF &point, bool &ok) const override;
-    QVector<QPointF> calculateGeometryPoints(const QVector<QPointF> &vector) const override;
+    QList<QPointF> calculateGeometryPoints(const QList<QPointF> &list) const override;
 
     virtual qreal toAngularCoordinate(qreal value, bool &ok) const = 0;
     virtual qreal toRadialCoordinate(qreal value, bool &ok) const = 0;

@@ -70,8 +70,8 @@ public:
 
     bool append(QBoxSet *set);
     bool remove(QBoxSet *set);
-    bool append(QList<QBoxSet *> sets);
-    bool remove(QList<QBoxSet *> sets);
+    bool append(const QList<QBoxSet *> &sets);
+    bool remove(const QList<QBoxSet *> &sets);
     bool insert(int index, QBoxSet *set);
     QBoxSet *boxSetAt(int index);
 

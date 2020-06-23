@@ -59,7 +59,7 @@ public Q_SLOTS:
     void handleCategoriesChanged();
 
 protected:
-    QVector<qreal> calculateLayout() const override;
+    QList<qreal> calculateLayout() const override;
     void updateGeometry() override;
 
 private:

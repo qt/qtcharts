@@ -68,8 +68,8 @@ public Q_SLOTS:
     void handleModelDestroyed();
 
     // for the series
-    void slicesAdded(QList<QPieSlice *> slices);
-    void slicesRemoved(QList<QPieSlice *> slices);
+    void slicesAdded(const QList<QPieSlice *> &slices);
+    void slicesRemoved(const QList<QPieSlice *> &slices);
     void sliceLabelChanged();
     void sliceValueChanged();
     void handleSeriesDestroyed();

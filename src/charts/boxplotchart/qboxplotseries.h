@@ -53,7 +53,7 @@ public:
     bool append(QBoxSet *box);
     bool remove(QBoxSet *box);
     bool take(QBoxSet *box);
-    bool append(QList<QBoxSet *> boxes);
+    bool append(const QList<QBoxSet *> &boxes);
     bool insert(int index, QBoxSet *box);
     int count() const;
     QList<QBoxSet *> boxSets() const;
@@ -82,8 +82,8 @@ Q_SIGNALS:
     void boxOutlineVisibilityChanged();
     void boxWidthChanged();
 
-    void boxsetsAdded(QList<QBoxSet *> sets);
-    void boxsetsRemoved(QList<QBoxSet *> sets);
+    void boxsetsAdded(const QList<QBoxSet *> &sets);
+    void boxsetsRemoved(const QList<QBoxSet *> &sets);
 
 private:
     Q_DECLARE_PRIVATE(QBoxPlotSeries)

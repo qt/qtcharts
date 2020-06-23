@@ -599,7 +599,7 @@ void QXYSeries::replace(int index, const QPointF &newPoint)
   when the points have been replaced.
   \sa pointsReplaced()
 */
-void QXYSeries::replace(QVector<QPointF> points)
+void QXYSeries::replace(const QList<QPointF> &points)
 {
     Q_D(QXYSeries);
     d->m_points = points;
@@ -681,28 +681,32 @@ void QXYSeries::clear()
 }
 
 /*!
-    Returns the points in the series as a list.
-    Use pointsVector() for better performance.
+    Returns the points in the series.
 */
 QList<QPointF> QXYSeries::points() const
-{
-    Q_D(const QXYSeries);
-    return d->m_points.toList();
-}
-
-/*!
-    Returns the points in the series as a vector.
-    This is more efficient than calling points().
-*/
-QVector<QPointF> QXYSeries::pointsVector() const
 {
     Q_D(const QXYSeries);
     return d->m_points;
 }
 
+#if QT_DEPRECATED_SINCE(6, 0)
+/*!
+    \obsolete
+
+    Use points() instead.
+    Returns the points in the series.
+
+*/
+QList<QPointF> QXYSeries::pointsVector() const
+{
+    Q_D(const QXYSeries);
+    return d->m_points;
+}
+#endif
+
 /*!
     Returns the data point at the position specified by \a index in the internal
-    points vector.
+    series of points.
 */
 const QPointF &QXYSeries::at(int index) const
 {
@@ -925,7 +929,7 @@ void QXYSeriesPrivate::initializeDomain()
 
     Q_Q(QXYSeries);
 
-    const QVector<QPointF> &points = q->pointsVector();
+    const QList<QPointF> &points = q->points();
 
     if (!points.isEmpty()) {
         minX = points[0].x();
@@ -985,7 +989,7 @@ void QXYSeriesPrivate::initializeAnimations(QtCharts::QChart::AnimationOptions o
     QAbstractSeriesPrivate::initializeAnimations(options, duration, curve);
 }
 
-void QXYSeriesPrivate::drawSeriesPointLabels(QPainter *painter, const QVector<QPointF> &points,
+void QXYSeriesPrivate::drawSeriesPointLabels(QPainter *painter, const QList<QPointF> &points,
                                              const int offset)
 {
     if (points.size() == 0)

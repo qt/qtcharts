@@ -31,7 +31,7 @@
 #include <private/chartaxiselement_p.h>
 #include <private/qabstractaxis_p.h>
 
-Q_DECLARE_METATYPE(QVector<qreal>)
+Q_DECLARE_METATYPE(QList<qreal>)
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -63,7 +63,7 @@ void AxisAnimation::setAnimationPoint(const QPointF &point)
     m_point = point;
 }
 
-void AxisAnimation::setValues(QVector<qreal> &oldLayout, QVector<qreal> &newLayout)
+void AxisAnimation::setValues(QList<qreal> &oldLayout, const QList<qreal> &newLayout)
 {
     if (state() != QAbstractAnimation::Stopped) stop();
 
@@ -119,14 +119,14 @@ void AxisAnimation::setValues(QVector<qreal> &oldLayout, QVector<qreal> &newLayo
 
 QVariant AxisAnimation::interpolated(const QVariant &start, const QVariant &end, qreal progress) const
 {
-    QVector<qreal> startVector = qvariant_cast<QVector<qreal> >(start);
-    QVector<qreal> endVecotr = qvariant_cast<QVector<qreal> >(end);
-    QVector<qreal> result;
+    const auto startList = qvariant_cast<QList<qreal>>(start);
+    const auto endList = qvariant_cast<QList<qreal>>(end);
+    QList<qreal> result;
 
-    Q_ASSERT(startVector.count() == endVecotr.count()) ;
+    Q_ASSERT(startList.count() == endList.count());
 
-    for (int i = 0; i < startVector.count(); i++) {
-        qreal value = startVector[i] + ((endVecotr[i] - startVector[i]) * progress);
+    for (int i = 0; i < startList.count(); i++) {
+        const qreal value = startList[i] + ((endList[i] - startList[i]) * progress);
         result << value;
     }
     return QVariant::fromValue(result);
@@ -135,12 +135,11 @@ QVariant AxisAnimation::interpolated(const QVariant &start, const QVariant &end,
 
 void AxisAnimation::updateCurrentValue(const QVariant &value)
 {
-    if (state() != QAbstractAnimation::Stopped) { //workaround
-        QVector<qreal> vector = qvariant_cast<QVector<qreal> >(value);
-        m_axis->setLayout(vector);
+    if (state() != QAbstractAnimation::Stopped) { // workaround
+        const QList<qreal> list = qvariant_cast<QList<qreal>>(value);
+        m_axis->setLayout(list);
         m_axis->updateGeometry();
     }
-
 }
 
 QT_CHARTS_END_NAMESPACE

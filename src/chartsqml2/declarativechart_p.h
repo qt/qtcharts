@@ -137,7 +137,7 @@ protected:
     void mouseDoubleClickEvent(QMouseEvent *event) override;
 private Q_SLOTS:
     void handleAntialiasingChanged(bool enable);
-    void sceneChanged(QList<QRectF> region);
+    void sceneChanged(const QList<QRectF> &region);
     void renderScene();
 
 public:
@@ -268,8 +268,8 @@ private:
     DeclarativeMargins *m_margins;
     GLXYSeriesDataManager *m_glXYDataManager;
     bool m_sceneImageNeedsClear;
-    QVector<QMouseEvent *> m_pendingRenderNodeMouseEvents;
-    QVector<MouseEventResponse> m_pendingRenderNodeMouseEventResponses;
+    QList<QMouseEvent *> m_pendingRenderNodeMouseEvents;
+    QList<MouseEventResponse> m_pendingRenderNodeMouseEventResponses;
     QRectF m_adjustedPlotArea;
 };
 

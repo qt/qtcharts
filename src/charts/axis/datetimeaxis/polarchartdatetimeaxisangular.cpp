@@ -45,12 +45,12 @@ PolarChartDateTimeAxisAngular::~PolarChartDateTimeAxisAngular()
 {
 }
 
-QVector<qreal> PolarChartDateTimeAxisAngular::calculateLayout() const
+QList<qreal> PolarChartDateTimeAxisAngular::calculateLayout() const
 {
     int tickCount = static_cast<QDateTimeAxis *>(axis())->tickCount();
     Q_ASSERT(tickCount >= 2);
 
-    QVector<qreal> points;
+    QList<qreal> points;
     points.resize(tickCount);
 
     const qreal d = 360.0 / qreal(tickCount - 1);
@@ -62,7 +62,7 @@ QVector<qreal> PolarChartDateTimeAxisAngular::calculateLayout() const
 
     return points;
 }
-void PolarChartDateTimeAxisAngular::createAxisLabels(const QVector<qreal> &layout)
+void PolarChartDateTimeAxisAngular::createAxisLabels(const QList<qreal> &layout)
 {
     QStringList labelList = createDateTimeLabels(min(), max(), layout.size(), static_cast<QDateTimeAxis *>(axis())->format());
     setLabels(labelList);

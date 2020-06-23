@@ -49,10 +49,10 @@ ChartCategoryAxisY::~ChartCategoryAxisY()
 {
 }
 
-QVector<qreal> ChartCategoryAxisY::calculateLayout() const
+QList<qreal> ChartCategoryAxisY::calculateLayout() const
 {
     int tickCount = m_axis->categoriesLabels().count() + 1;
-    QVector<qreal> points;
+    QList<qreal> points;
 
     if (tickCount < 2)
         return points;

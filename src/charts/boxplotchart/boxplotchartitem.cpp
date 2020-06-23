@@ -151,9 +151,9 @@ void BoxPlotChartItem::handleUpdatedBars()
     }
 }
 
-void BoxPlotChartItem::handleBoxsetRemove(QList<QBoxSet*> barSets)
+void BoxPlotChartItem::handleBoxsetRemove(const QList<QBoxSet *> &barSets)
 {
-    foreach (QBoxSet *set, barSets) {
+    for (auto *set : barSets) {
         BoxWhiskers *boxItem = m_boxTable.value(set);
         m_boxTable.remove(set);
         delete boxItem;
@@ -203,9 +203,9 @@ void BoxPlotChartItem::initializeLayout()
 {
 }
 
-QVector<QRectF> BoxPlotChartItem::calculateLayout()
+QList<QRectF> BoxPlotChartItem::calculateLayout()
 {
-    return QVector<QRectF>();
+    return QList<QRectF>();
 }
 
 bool BoxPlotChartItem::updateBoxGeometry(BoxWhiskers *box, int index)

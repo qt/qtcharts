@@ -55,7 +55,7 @@ public:
 
     QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint) const override;
 protected:
-    QVector<qreal> calculateLayout() const override;
+    QList<qreal> calculateLayout() const override;
     void updateGeometry() override;
 private Q_SLOTS:
     void handleTickCountChanged(int tick);

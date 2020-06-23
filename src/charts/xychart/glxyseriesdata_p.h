@@ -52,7 +52,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 class AbstractDomain;
 
 struct GLXYSeriesData {
-    QVector<float> array;
+    QList<float> array;
     bool dirty;
     QVector3D color;
     float width;

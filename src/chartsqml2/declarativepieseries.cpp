@@ -146,15 +146,15 @@ void DeclarativePieSeries::clear()
     QPieSeries::clear();
 }
 
-void DeclarativePieSeries::handleAdded(QList<QPieSlice *> slices)
+void DeclarativePieSeries::handleAdded(const QList<QPieSlice *> &slices)
 {
-    foreach (QPieSlice *slice, slices)
+    for (auto *slice : slices)
         emit sliceAdded(slice);
 }
 
-void DeclarativePieSeries::handleRemoved(QList<QPieSlice *> slices)
+void DeclarativePieSeries::handleRemoved(const QList<QPieSlice *> &slices)
 {
-    foreach (QPieSlice *slice, slices)
+    for (auto *slice : slices)
         emit sliceRemoved(slice);
 }
 

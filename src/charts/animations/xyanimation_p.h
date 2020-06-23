@@ -54,7 +54,7 @@ protected:
 public:
     XYAnimation(XYChart *item, int duration, QEasingCurve &curve);
     ~XYAnimation();
-    void setup(const QVector<QPointF> &oldPoints, const QVector<QPointF> &newPoints, int index = -1);
+    void setup(const QList<QPointF> &oldPoints, const QList<QPointF> &newPoints, int index = -1);
     Animation animationType() const { return m_type; };
 
 protected:
@@ -68,8 +68,8 @@ protected:
     int m_index;
 private:
     XYChart *m_item;
-    QVector<QPointF> m_oldPoints;
-    QVector<QPointF> m_newPoints;
+    QList<QPointF> m_oldPoints;
+    QList<QPointF> m_newPoints;
 };
 
 QT_CHARTS_END_NAMESPACE

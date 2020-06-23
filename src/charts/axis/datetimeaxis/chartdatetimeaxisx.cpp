@@ -49,13 +49,13 @@ ChartDateTimeAxisX::~ChartDateTimeAxisX()
 {
 }
 
-QVector<qreal> ChartDateTimeAxisX::calculateLayout() const
+QList<qreal> ChartDateTimeAxisX::calculateLayout() const
 {
     int tickCount = m_axis->tickCount();
 
     Q_ASSERT(tickCount >= 2);
 
-    QVector<qreal> points;
+    QList<qreal> points;
     points.resize(tickCount);
     const QRectF &gridRect = gridGeometry();
     const qreal deltaX = gridRect.width() / (qreal(tickCount) - 1.0);
@@ -66,7 +66,7 @@ QVector<qreal> ChartDateTimeAxisX::calculateLayout() const
 
 void ChartDateTimeAxisX::updateGeometry()
 {
-    const QVector<qreal>& layout = ChartAxisElement::layout();
+    const QList<qreal> &layout = ChartAxisElement::layout();
     if (layout.isEmpty())
         return;
     setLabels(createDateTimeLabels(min(), max(), layout.size(), m_axis->format()));

@@ -46,12 +46,12 @@ PolarChartValueAxisRadial::~PolarChartValueAxisRadial()
 {
 }
 
-QVector<qreal> PolarChartValueAxisRadial::calculateLayout() const
+QList<qreal> PolarChartValueAxisRadial::calculateLayout() const
 {
     int tickCount = static_cast<QValueAxis *>(axis())->tickCount();
     Q_ASSERT(tickCount >= 2);
 
-    QVector<qreal> points;
+    QList<qreal> points;
     points.resize(tickCount);
 
     const qreal d = (axisGeometry().width() / 2) / qreal(tickCount - 1);
@@ -64,7 +64,7 @@ QVector<qreal> PolarChartValueAxisRadial::calculateLayout() const
     return points;
 }
 
-void PolarChartValueAxisRadial::createAxisLabels(const QVector<qreal> &layout)
+void PolarChartValueAxisRadial::createAxisLabels(const QList<qreal> &layout)
 {
     setLabels(createValueLabels(min(), max(), layout.size(), 0.0, 0.0,
                                 QValueAxis::TicksFixed,

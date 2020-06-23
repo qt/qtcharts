@@ -31,7 +31,7 @@
 #include <private/xychart_p.h>
 #include <QtCore/QDebug>
 
-Q_DECLARE_METATYPE(QVector<QPointF>)
+Q_DECLARE_METATYPE(QList<QPointF>)
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -50,7 +50,7 @@ XYAnimation::~XYAnimation()
 {
 }
 
-void XYAnimation::setup(const QVector<QPointF> &oldPoints, const QVector<QPointF> &newPoints, int index)
+void XYAnimation::setup(const QList<QPointF> &oldPoints, const QList<QPointF> &newPoints, int index)
 {
     m_type = NewAnimation;
 
@@ -103,29 +103,29 @@ void XYAnimation::setup(const QVector<QPointF> &oldPoints, const QVector<QPointF
 
 QVariant XYAnimation::interpolated(const QVariant &start, const QVariant &end, qreal progress) const
 {
-    QVector<QPointF> startVector = qvariant_cast<QVector<QPointF> >(start);
-    QVector<QPointF> endVector = qvariant_cast<QVector<QPointF> >(end);
-    QVector<QPointF> result;
+    const auto startList = qvariant_cast<QList<QPointF>>(start);
+    const auto endList = qvariant_cast<QList<QPointF>>(end);
+    QList<QPointF> result;
 
     switch (m_type) {
 
     case ReplacePointAnimation:
     case AddPointAnimation:
     case RemovePointAnimation: {
-        if (startVector.count() != endVector.count())
+        if (startList.count() != endList.count())
             break;
 
-        for (int i = 0; i < startVector.count(); i++) {
-            qreal x = startVector[i].x() + ((endVector[i].x() - startVector[i].x()) * progress);
-            qreal y = startVector[i].y() + ((endVector[i].y() - startVector[i].y()) * progress);
+        for (int i = 0; i < startList.count(); i++) {
+            qreal x = startList[i].x() + ((endList[i].x() - startList[i].x()) * progress);
+            qreal y = startList[i].y() + ((endList[i].y() - startList[i].y()) * progress);
             result << QPointF(x, y);
         }
 
     }
     break;
     case NewAnimation: {
-        for (int i = 0; i < endVector.count() * qBound(qreal(0), progress, qreal(1)); i++)
-            result << endVector[i];
+        for (int i = 0; i < endList.count() * qBound(qreal(0), progress, qreal(1)); i++)
+            result << endList[i];
     }
     break;
     default:
@@ -140,8 +140,8 @@ void XYAnimation::updateCurrentValue(const QVariant &value)
 {
     if (state() != QAbstractAnimation::Stopped) { //workaround
 
-        QVector<QPointF> vector = qvariant_cast<QVector<QPointF> >(value);
-        m_item->setGeometryPoints(vector);
+        const auto list = qvariant_cast<QList<QPointF>>(value);
+        m_item->setGeometryPoints(list);
         m_item->updateGeometry();
         m_item->setDirty(true);
         m_dirty = false;

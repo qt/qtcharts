@@ -120,7 +120,7 @@ void AbstractBarChartItem::initializeFullLayout()
     }
 }
 
-void AbstractBarChartItem::applyLayout(const QVector<QRectF> &layout)
+void AbstractBarChartItem::applyLayout(const QList<QRectF> &layout)
 {
     QSizeF size = geometry().size();
     if (geometry().size().isValid()) {
@@ -152,7 +152,7 @@ void AbstractBarChartItem::setAnimation(BarAnimation *animation)
     m_resetAnimation = true;
 }
 
-void AbstractBarChartItem::setLayout(const QVector<QRectF> &layout)
+void AbstractBarChartItem::setLayout(const QList<QRectF> &layout)
 {
     int setCount = m_series->count();
     if (layout.size() != m_layout.size() || m_barMap.size() != setCount)
@@ -199,7 +199,7 @@ void AbstractBarChartItem::handleLayoutChanged()
     if ((m_rect.width() <= 0) || (m_rect.height() <= 0))
         return; // rect size zero.
     updateBarItems();
-    QVector<QRectF> layout = calculateLayout();
+    QList<QRectF> layout = calculateLayout();
     handleUpdatedBars();
     applyLayout(layout);
 }
@@ -597,7 +597,7 @@ void AbstractBarChartItem::updateBarItems()
 
     int layoutSize = m_categoryCount * newSets.size();
 
-    QVector<QRectF> oldLayout = m_layout;
+    QList<QRectF> oldLayout = m_layout;
     if (layoutSize != m_layout.size())
         m_layout.resize(layoutSize);
 
@@ -628,7 +628,7 @@ void AbstractBarChartItem::updateBarItems()
         }
         // Update bar indexes
         QHash<int, Bar*> indexMap;
-        QVector<Bar *> unassignedBars(m_categoryCount, nullptr);
+        QList<Bar *> unassignedBars(m_categoryCount, nullptr);
         int unassignedIndex(0);
         QList<Bar *> newBars;
         newBars.reserve(m_categoryCount);

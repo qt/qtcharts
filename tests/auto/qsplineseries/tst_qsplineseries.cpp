@@ -84,7 +84,6 @@ void tst_QSplineSeries::qsplineseries()
     QCOMPARE(series.count(),0);
     QCOMPARE(series.brush(), QBrush());
     QCOMPARE(series.points(), QList<QPointF>());
-    QCOMPARE(series.pointsVector(), QList<QPointF>());
     QCOMPARE(series.pen(), QPen());
     QCOMPARE(series.pointsVisible(), false);
 

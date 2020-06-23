@@ -61,11 +61,11 @@ public: // from ChartAxisElement
     bool isEmpty() override;
 
 protected:
-    void updateLayout(QVector<qreal> &layout) override;
+    void updateLayout(const QList<qreal> &layout) override;
 
 protected: // virtual functions
     virtual void createItems(int count) = 0;
-    virtual void createAxisLabels(const QVector<qreal> &layout) = 0;
+    virtual void createAxisLabels(const QList<qreal> &layout) = 0;
     virtual void updateMinorTickItems() = 0;
 
 public Q_SLOTS:

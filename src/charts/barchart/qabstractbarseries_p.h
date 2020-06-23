@@ -76,8 +76,8 @@ public:
 
     bool append(QBarSet *set);
     bool remove(QBarSet *set);
-    bool append(QList<QBarSet *> sets);
-    bool remove(QList<QBarSet *> sets);
+    bool append(const QList<QBarSet *> &sets);
+    bool remove(const QList<QBarSet *> &sets);
     bool insert(int index, QBarSet *set);
 
     QBarSet *barsetAt(int index);

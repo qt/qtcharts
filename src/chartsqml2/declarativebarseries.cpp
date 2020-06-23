@@ -87,7 +87,7 @@ void DeclarativeBarSet::setValues(QVariantList values)
             }
         }
 
-        QVector<qreal> indexValueList;
+        QList<qreal> indexValueList;
         indexValueList.resize(maxValue + 1);
 
         for (int i = 0; i < values.count(); i++) {

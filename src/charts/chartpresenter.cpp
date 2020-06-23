@@ -513,7 +513,7 @@ QString ChartPresenter::truncatedText(const QFont &font, const QString &text, qr
         // to try.
         static QRegularExpression truncateMatcher(QStringLiteral("&#?[0-9a-zA-Z]*;$"));
 
-        QVector<QString> testStrings(text.length());
+        QList<QString> testStrings(text.length());
         int count(0);
         static QLatin1Char closeTag('>');
         static QLatin1Char openTag('<');

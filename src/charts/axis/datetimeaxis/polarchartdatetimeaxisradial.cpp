@@ -45,12 +45,12 @@ PolarChartDateTimeAxisRadial::~PolarChartDateTimeAxisRadial()
 {
 }
 
-QVector<qreal> PolarChartDateTimeAxisRadial::calculateLayout() const
+QList<qreal> PolarChartDateTimeAxisRadial::calculateLayout() const
 {
     int tickCount = static_cast<QDateTimeAxis *>(axis())->tickCount();
     Q_ASSERT(tickCount >= 2);
 
-    QVector<qreal> points;
+    QList<qreal> points;
     points.resize(tickCount);
 
     const qreal d = (axisGeometry().width() / 2) / qreal(tickCount - 1);
@@ -62,7 +62,7 @@ QVector<qreal> PolarChartDateTimeAxisRadial::calculateLayout() const
 
     return points;
 }
-void PolarChartDateTimeAxisRadial::createAxisLabels(const QVector<qreal> &layout)
+void PolarChartDateTimeAxisRadial::createAxisLabels(const QList<qreal> &layout)
 {
     setLabels(createDateTimeLabels(min(), max(), layout.size(), static_cast<QDateTimeAxis *>(axis())->format()));
 }

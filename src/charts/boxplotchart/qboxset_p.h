@@ -59,7 +59,7 @@ public:
     ~QBoxSetPrivate();
 
     bool append(qreal value);
-    bool append(QList<qreal> values);
+    bool append(const QList<qreal> &values);
 
     int remove(const int index, const int count);
     void clear();

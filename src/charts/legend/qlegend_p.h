@@ -77,11 +77,11 @@ public Q_SLOTS:
 private:
     // Internal helpers
     void insertMarkerHelper(QLegendMarker *marker);
-    void addMarkers(QList<QLegendMarker *> markers);
+    void addMarkers(const QList<QLegendMarker *> &markers);
     void removeMarkerHelper(QLegendMarker *marker);
-    void removeMarkers(QList<QLegendMarker *> markers);
+    void removeMarkers(const QList<QLegendMarker *> &markers);
     void decorateMarker(QLegendMarker *marker);
-    void decorateMarkers(QList<QLegendMarker *> markers);
+    void decorateMarkers(const QList<QLegendMarker *> &markers);
     void updateToolTips();
 
 private:

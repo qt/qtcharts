@@ -291,7 +291,7 @@ bool QPieModelMapperPrivate::isValueIndex(QModelIndex index) const
     return false;
 }
 
-void QPieModelMapperPrivate::slicesAdded(QList<QPieSlice *> slices)
+void QPieModelMapperPrivate::slicesAdded(const QList<QPieSlice *> &slices)
 {
     if (m_seriesSignalsBlock)
         return;
@@ -325,7 +325,7 @@ void QPieModelMapperPrivate::slicesAdded(QList<QPieSlice *> slices)
     blockModelSignals(false);
 }
 
-void QPieModelMapperPrivate::slicesRemoved(QList<QPieSlice *> slices)
+void QPieModelMapperPrivate::slicesRemoved(const QList<QPieSlice *> &slices)
 {
     if (m_seriesSignalsBlock)
         return;

@@ -156,7 +156,7 @@ void PieChartItem::updateLayout()
     foreach (QPieSlice *slice, m_series->slices()) {
         PieSliceItem *sliceItem = m_sliceItems.value(slice);
         if (sliceItem) {
-            PieSliceData sliceData = updateSliceGeometry(slice);
+            const PieSliceData sliceData = updateSliceGeometry(slice);
             if (m_animation)
                 presenter()->startAnimation(m_animation->updateValue(sliceItem, sliceData));
             else
@@ -167,7 +167,7 @@ void PieChartItem::updateLayout()
     update();
 }
 
-void PieChartItem::handleSlicesAdded(QList<QPieSlice *> slices)
+void PieChartItem::handleSlicesAdded(const QList<QPieSlice *> &slices)
 {
     // delay creating slice items until there is a proper rectangle
     if (!m_rect.isValid() && m_sliceItems.isEmpty())
@@ -177,7 +177,7 @@ void PieChartItem::handleSlicesAdded(QList<QPieSlice *> slices)
 
     bool startupAnimation = m_sliceItems.isEmpty();
 
-    foreach(QPieSlice * slice, slices) {
+    for (auto *slice : slices) {
         PieSliceItem *sliceItem = new PieSliceItem(this);
         m_sliceItems.insert(slice, sliceItem);
 
@@ -210,11 +210,11 @@ void PieChartItem::handleSlicesAdded(QList<QPieSlice *> slices)
     }
 }
 
-void PieChartItem::handleSlicesRemoved(QList<QPieSlice *> slices)
+void PieChartItem::handleSlicesRemoved(const QList<QPieSlice *> &slices)
 {
     themeManager()->updateSeries(m_series);
 
-    foreach (QPieSlice *slice, slices) {
+    for (auto *slice : slices) {
 
         PieSliceItem *sliceItem = m_sliceItems.value(slice);
 

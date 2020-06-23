@@ -102,7 +102,7 @@ private:
     QGraphicsView *m_view;
     QOpenGLFramebufferObject *m_selectionFbo;
     QSize m_fboSize;
-    QVector<const QXYSeries *> m_selectionVector;
+    QList<const QXYSeries *> m_selectionList;
     QChart *m_chart;
     bool m_recreateSelectionFbo;
     bool m_selectionRenderNeeded;
