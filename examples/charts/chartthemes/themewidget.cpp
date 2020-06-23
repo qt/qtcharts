@@ -184,7 +184,7 @@ QChart *ThemeWidget::createAreaChart() const
         for (int j(0); j < m_dataTable[i].count(); j++) {
             Data data = m_dataTable[i].at(j);
             if (lowerSeries) {
-                const QVector<QPointF>& points = lowerSeries->pointsVector();
+                const auto &points = lowerSeries->pointsVector();
                 upperSeries->append(QPointF(j, points[i].y() + data.first.y()));
             } else {
                 upperSeries->append(QPointF(j, data.first.y()));

@@ -53,7 +53,7 @@ public slots:
     void updateAllSeries();
 
 private:
-    QVector<QVector<QVector<QPointF> > > m_data;
+    QList<QList<QList<QPointF>>> m_data;
     int m_index;
     QList<QXYSeries *> m_seriesList;
     QLabel *m_fpsLabel;

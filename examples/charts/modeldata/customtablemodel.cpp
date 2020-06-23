@@ -28,7 +28,7 @@
 ****************************************************************************/
 
 #include "customtablemodel.h"
-#include <QtCore/QVector>
+#include <QtCore/QList>
 #include <QtCore/QRandomGenerator>
 #include <QtCore/QRect>
 #include <QtGui/QColor>
@@ -41,14 +41,14 @@ CustomTableModel::CustomTableModel(QObject *parent) :
 
     // m_data
     for (int i = 0; i < m_rowCount; i++) {
-        QVector<qreal>* dataVec = new QVector<qreal>(m_columnCount);
-        for (int k = 0; k < dataVec->size(); k++) {
+        QList<qreal> *dataList = new QList<qreal>(m_columnCount);
+        for (int k = 0; k < dataList->size(); k++) {
             if (k % 2 == 0)
-                dataVec->replace(k, i * 50 + QRandomGenerator::global()->bounded(20));
+                dataList->replace(k, i * 50 + QRandomGenerator::global()->bounded(20));
             else
-                dataVec->replace(k, QRandomGenerator::global()->bounded(100));
+                dataList->replace(k, QRandomGenerator::global()->bounded(100));
         }
-        m_data.append(dataVec);
+        m_data.append(dataList);
     }
 }
 

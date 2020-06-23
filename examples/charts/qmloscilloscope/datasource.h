@@ -53,7 +53,7 @@ public slots:
 
 private:
     QQuickView *m_appViewer;
-    QList<QVector<QPointF> > m_data;
+    QList<QList<QPointF>> m_data;
     int m_index;
 };
 

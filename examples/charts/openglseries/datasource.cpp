@@ -44,13 +44,13 @@ void DataSource::update(QAbstractSeries *series, int seriesIndex)
 {
     if (series) {
         QXYSeries *xySeries = static_cast<QXYSeries *>(series);
-        const QVector<QVector<QPointF> > &seriesData = m_data.at(seriesIndex);
+        const QList<QList<QPointF>> &seriesData = m_data.at(seriesIndex);
         if (seriesIndex == 0)
             m_index++;
         if (m_index > seriesData.count() - 1)
             m_index = 0;
 
-        QVector<QPointF> points = seriesData.at(m_index);
+        const auto points = seriesData.at(m_index);
         // Use replace instead of clear + append, it's optimized for performance
         xySeries->replace(points);
     }
@@ -103,10 +103,10 @@ void DataSource::generateData(int seriesCount, int rowCount, int colCount)
 
     // Append the new data depending on the type
     for (int k(0); k < seriesCount; k++) {
-        QVector<QVector<QPointF> > seriesData;
+        QList<QList<QPointF>> seriesData;
         qreal height = qreal(k) * (10.0 / qreal(seriesCount)) + 0.3;
         for (int i(0); i < rowCount; i++) {
-            QVector<QPointF> points;
+            QList<QPointF> points;
             points.reserve(colCount);
             for (int j(0); j < colCount; j++) {
                 qreal x(0);

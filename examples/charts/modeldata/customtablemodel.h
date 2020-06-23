@@ -51,7 +51,7 @@ public:
     void clearMapping() { m_mapping.clear(); }
 
 private:
-    QList<QVector<qreal> * > m_data;
+    QList<QList<qreal> *> m_data;
     QHash<QString, QRect> m_mapping;
     int m_columnCount;
     int m_rowCount;
