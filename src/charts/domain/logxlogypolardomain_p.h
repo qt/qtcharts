@@ -52,30 +52,30 @@ public:
     explicit LogXLogYPolarDomain(QObject *object = 0);
     virtual ~LogXLogYPolarDomain();
 
-    DomainType type() { return AbstractDomain::LogXLogYPolarDomain; }
+    DomainType type() override { return AbstractDomain::LogXLogYPolarDomain; }
 
-    void setRange(qreal minX, qreal maxX, qreal minY, qreal maxY);
+    void setRange(qreal minX, qreal maxX, qreal minY, qreal maxY) override;
 
     friend bool Q_AUTOTEST_EXPORT operator== (const LogXLogYPolarDomain &domain1, const LogXLogYPolarDomain &domain2);
     friend bool Q_AUTOTEST_EXPORT operator!= (const LogXLogYPolarDomain &domain1, const LogXLogYPolarDomain &domain2);
     friend QDebug Q_AUTOTEST_EXPORT operator<<(QDebug dbg, const LogXLogYPolarDomain &domain);
 
-    void zoomIn(const QRectF &rect);
-    void zoomOut(const QRectF &rect);
-    void move(qreal dx, qreal dy);
+    void zoomIn(const QRectF &rect) override;
+    void zoomOut(const QRectF &rect) override;
+    void move(qreal dx, qreal dy) override;
 
-    QPointF calculateDomainPoint(const QPointF &point) const;
+    QPointF calculateDomainPoint(const QPointF &point) const override;
 
-    bool attachAxis(QAbstractAxis *axis);
-    bool detachAxis(QAbstractAxis *axis);
+    bool attachAxis(QAbstractAxis *axis) override;
+    bool detachAxis(QAbstractAxis *axis) override;
 
 public Q_SLOTS:
     void handleVerticalAxisBaseChanged(qreal baseY);
     void handleHorizontalAxisBaseChanged(qreal baseX);
 
 protected:
-    qreal toAngularCoordinate(qreal value, bool &ok) const;
-    qreal toRadialCoordinate(qreal value, bool &ok) const;
+    qreal toAngularCoordinate(qreal value, bool &ok) const override;
+    qreal toRadialCoordinate(qreal value, bool &ok) const override;
 
 private:
     qreal m_logLeftX;

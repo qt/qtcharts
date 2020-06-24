@@ -55,11 +55,11 @@ public:
 
 private Q_SLOTS:
     void handleLabelsPositionChanged();
-    void positionLabels();
+    void positionLabels() override;
 
 private:
-    virtual QVector<QRectF> calculateLayout();
-    void initializeLayout(int set, int category, int layoutIndex, bool resetAnimation);
+    QVector<QRectF> calculateLayout() override;
+    void initializeLayout(int set, int category, int layoutIndex, bool resetAnimation) override;
     QPointF topLeftPoint(int category, qreal barWidth, qreal value);
     QPointF bottomRightPoint(int category, qreal barWidth, qreal value);
 };

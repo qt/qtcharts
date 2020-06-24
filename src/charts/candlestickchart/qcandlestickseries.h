@@ -67,7 +67,7 @@ public:
     QList<QCandlestickSet *> sets() const;
     int count() const;
 
-    QAbstractSeries::SeriesType type() const;
+    QAbstractSeries::SeriesType type() const override;
 
     void setMaximumColumnWidth(qreal maximumColumnWidth);
     qreal maximumColumnWidth() const;

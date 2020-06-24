@@ -43,7 +43,7 @@ class Q_CHARTS_EXPORT QPercentBarSeries : public QAbstractBarSeries
 public:
     explicit QPercentBarSeries(QObject *parent = nullptr);
     ~QPercentBarSeries();
-    QAbstractSeries::SeriesType type() const;
+    QAbstractSeries::SeriesType type() const override;
 
 private:
     Q_DECLARE_PRIVATE(QPercentBarSeries)

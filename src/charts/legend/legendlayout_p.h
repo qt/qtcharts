@@ -54,17 +54,17 @@ public:
     LegendLayout(QLegend *legend);
     virtual ~LegendLayout();
 
-    void setGeometry(const QRectF &rect);
+    void setGeometry(const QRectF &rect) override;
 
     void setOffset(qreal x, qreal y);
     QPointF offset() const;
 
-    void invalidate();
+    void invalidate() override;
 protected:
-    QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const;
-    int count() const { return 0; }
-    QGraphicsLayoutItem *itemAt(int) const { return 0; };
-    void removeAt(int) {};
+    QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const override;
+    int count() const override { return 0; }
+    QGraphicsLayoutItem *itemAt(int) const override { return 0; };
+    void removeAt(int) override {};
 
 private:
     void setAttachedGeometry(const QRectF &rect);

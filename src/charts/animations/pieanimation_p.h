@@ -60,7 +60,7 @@ public:
     ChartAnimation *removeSlice(PieSliceItem *sliceItem);
 
 public: // from QVariantAnimation
-    void updateCurrentValue(const QVariant &value);
+    void updateCurrentValue(const QVariant &value) override;
 
 private:
     PieChartItem *m_item;

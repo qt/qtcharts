@@ -56,12 +56,12 @@ public:
 public:
     explicit QScatterSeries(QObject *parent = nullptr);
     ~QScatterSeries();
-    QAbstractSeries::SeriesType type() const;
-    void setPen(const QPen &pen);
-    void setBrush(const QBrush &brush);
+    QAbstractSeries::SeriesType type() const override;
+    void setPen(const QPen &pen) override;
+    void setBrush(const QBrush &brush) override;
     QBrush brush() const;
-    void setColor(const QColor &color);
-    QColor color() const;
+    void setColor(const QColor &color) override;
+    QColor color() const override;
     void setBorderColor(const QColor &color);
     QColor borderColor() const;
     MarkerShape markerShape() const;

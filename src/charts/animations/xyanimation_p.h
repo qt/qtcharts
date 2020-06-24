@@ -58,9 +58,9 @@ public:
     Animation animationType() const { return m_type; };
 
 protected:
-    QVariant interpolated(const QVariant &start, const QVariant &end, qreal progress) const;
-    void updateCurrentValue(const QVariant &value);
-    void updateState(QAbstractAnimation::State newState, QAbstractAnimation::State oldState);
+    QVariant interpolated(const QVariant &start, const QVariant &end, qreal progress) const override;
+    void updateCurrentValue(const QVariant &value) override;
+    void updateState(QAbstractAnimation::State newState, QAbstractAnimation::State oldState) override;
     XYChart *chartItem() { return m_item; }
 protected:
     Animation m_type;

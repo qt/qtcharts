@@ -46,10 +46,10 @@ public:
                                       QObject *parent = nullptr);
     virtual ~QCandlestickLegendMarker();
 
-    virtual LegendMarkerType type();
+    LegendMarkerType type() override;
 
     // Related series
-    virtual QCandlestickSeries* series();
+    QCandlestickSeries* series() override;
 
 private:
     Q_DECLARE_PRIVATE(QCandlestickLegendMarker)

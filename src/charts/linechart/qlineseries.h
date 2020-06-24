@@ -45,7 +45,7 @@ class Q_CHARTS_EXPORT QLineSeries : public QXYSeries
 public:
     explicit QLineSeries(QObject *parent = nullptr);
     ~QLineSeries();
-    QAbstractSeries::SeriesType type() const;
+    QAbstractSeries::SeriesType type() const override;
 
 protected:
     QLineSeries(QLineSeriesPrivate &d, QObject *parent = nullptr);

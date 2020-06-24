@@ -63,7 +63,7 @@ protected:
     QValueAxis(QValueAxisPrivate &d, QObject *parent = nullptr);
 
 public:
-    AxisType type() const;
+    AxisType type() const override;
 
     //range handling
     void setMin(qreal min);

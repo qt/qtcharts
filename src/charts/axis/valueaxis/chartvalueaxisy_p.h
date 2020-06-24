@@ -53,10 +53,10 @@ public:
     ChartValueAxisY(QValueAxis *axis, QGraphicsItem *item = 0);
     ~ChartValueAxisY();
 
-    QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint) const;
+    QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint) const override;
 protected:
-    QVector<qreal> calculateLayout() const;
-    void updateGeometry();
+    QVector<qreal> calculateLayout() const override;
+    void updateGeometry() override;
 private Q_SLOTS:
     void handleTickCountChanged(int tick);
     void handleMinorTickCountChanged(int tick);

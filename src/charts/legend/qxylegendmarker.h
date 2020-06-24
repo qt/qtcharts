@@ -45,10 +45,10 @@ public:
     explicit QXYLegendMarker(QXYSeries *series, QLegend *legend, QObject *parent = nullptr);
     virtual ~QXYLegendMarker();
 
-    virtual LegendMarkerType type() { return LegendMarkerTypeXY; }
+    LegendMarkerType type() override { return LegendMarkerTypeXY; }
 
     // Related series
-    virtual QXYSeries* series();
+    QXYSeries* series() override;
 
 protected:
     QXYLegendMarker(QXYLegendMarkerPrivate &d, QObject *parent = nullptr);

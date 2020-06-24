@@ -53,13 +53,13 @@ class Q_CHARTS_PRIVATE_EXPORT EditableAxisLabel : public QGraphicsTextItem
 public:
     EditableAxisLabel(QGraphicsItem *parent = nullptr);
 
-    void focusInEvent(QFocusEvent *event);
-    void focusOutEvent(QFocusEvent *event);
-    bool sceneEvent(QEvent *event);
+    void focusInEvent(QFocusEvent *event) override;
+    void focusOutEvent(QFocusEvent *event) override;
+    bool sceneEvent(QEvent *event) override;
     void setEditable(bool editable);
     void reloadBeforeEditContent();
 
-    QRectF boundingRect() const;
+    QRectF boundingRect() const override;
 
 protected:
     QString m_htmlBeforeEdit;

@@ -46,10 +46,10 @@ public:
     explicit QBoxPlotLegendMarker(QBoxPlotSeries *series, QLegend *legend, QObject *parent = nullptr);
     virtual ~QBoxPlotLegendMarker();
 
-    virtual LegendMarkerType type() { return LegendMarkerTypeBoxPlot; }
+    LegendMarkerType type() override { return LegendMarkerTypeBoxPlot; }
 
     // Related series
-    virtual QBoxPlotSeries* series();
+    QBoxPlotSeries* series() override;
 
 protected:
     QBoxPlotLegendMarker(QBoxPlotLegendMarkerPrivate &d, QObject *parent = nullptr);

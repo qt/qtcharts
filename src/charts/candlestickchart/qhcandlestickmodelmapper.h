@@ -48,7 +48,7 @@ class Q_CHARTS_EXPORT QHCandlestickModelMapper : public QCandlestickModelMapper
 public:
     explicit QHCandlestickModelMapper(QObject *parent = nullptr);
 
-    Qt::Orientation orientation() const;
+    Qt::Orientation orientation() const override;
 
     void setTimestampColumn(int timestampColumn);
     int timestampColumn() const;

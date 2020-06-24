@@ -54,12 +54,13 @@ class Q_CHARTS_PRIVATE_EXPORT LegendScroller: public QLegend, public Scroller
 public:
     LegendScroller(QChart *chart);
 
-    void setOffset(const QPointF &point);
-    QPointF offset() const;
 
-    void mousePressEvent(QGraphicsSceneMouseEvent *event);
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+    void setOffset(const QPointF &point) override;
+    QPointF offset() const override;
+
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
 };
 
 QT_CHARTS_END_NAMESPACE

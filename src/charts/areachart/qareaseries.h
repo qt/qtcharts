@@ -60,7 +60,7 @@ public:
     ~QAreaSeries();
 
 public:
-    QAbstractSeries::SeriesType type() const;
+    QAbstractSeries::SeriesType type() const override;
 
     void setUpperSeries(QLineSeries *series);
     QLineSeries *upperSeries() const;

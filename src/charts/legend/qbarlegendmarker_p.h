@@ -57,11 +57,11 @@ public:
     explicit QBarLegendMarkerPrivate(QBarLegendMarker *q, QAbstractBarSeries *series, QBarSet *barset, QLegend *legend);
     virtual ~QBarLegendMarkerPrivate();
 
-    virtual QAbstractBarSeries* series();
-    virtual QObject* relatedObject();
+    QAbstractBarSeries* series() override;
+    QObject* relatedObject() override;
 
 public Q_SLOTS:
-    virtual void updated();
+    void updated() override;
 
 private:
     QBarLegendMarker *q_ptr;

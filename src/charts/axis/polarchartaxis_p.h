@@ -52,16 +52,16 @@ public:
     PolarChartAxis(QAbstractAxis *axis, QGraphicsItem *item, bool intervalAxis = false);
     ~PolarChartAxis();
 
-    void setGeometry(const QRectF &axis, const QRectF &grid);
+    void setGeometry(const QRectF &axis, const QRectF &grid) override;
     virtual qreal preferredAxisRadius(const QSizeF &maxSize) = 0;
     int tickWidth() { return 3; }
 
 public: // from ChartAxisElement
-    QRectF gridGeometry() const;
-    bool isEmpty();
+    QRectF gridGeometry() const override;
+    bool isEmpty() override;
 
 protected:
-    void updateLayout(QVector<qreal> &layout);
+    void updateLayout(QVector<qreal> &layout) override;
 
 protected: // virtual functions
     virtual void createItems(int count) = 0;
@@ -69,8 +69,8 @@ protected: // virtual functions
     virtual void updateMinorTickItems() = 0;
 
 public Q_SLOTS:
-    virtual void handleShadesBrushChanged(const QBrush &brush);
-    virtual void handleShadesPenChanged(const QPen &pen);
+    void handleShadesBrushChanged(const QBrush &brush) override;
+    void handleShadesPenChanged(const QPen &pen) override;
 
 private:
     void deleteItems(int count);

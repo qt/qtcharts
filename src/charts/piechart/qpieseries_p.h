@@ -54,17 +54,17 @@ public:
     QPieSeriesPrivate(QPieSeries *parent);
     ~QPieSeriesPrivate();
 
-    void initializeDomain();
-    void initializeAxes();
-    void initializeGraphics(QGraphicsItem* parent);
+    void initializeDomain() override;
+    void initializeAxes() override;
+    void initializeGraphics(QGraphicsItem* parent) override;
     void initializeAnimations(QtCharts::QChart::AnimationOptions options, int duration,
-                              QEasingCurve &curve);
-    void initializeTheme(int index, ChartTheme* theme, bool forced = false);
+                              QEasingCurve &curve) override;
+    void initializeTheme(int index, ChartTheme* theme, bool forced = false) override;
 
-    QList<QLegendMarker *> createLegendMarkers(QLegend *legend);
+    QList<QLegendMarker *> createLegendMarkers(QLegend *legend) override;
 
-    QAbstractAxis::AxisType defaultAxisType(Qt::Orientation orientation) const;
-    QAbstractAxis* createDefaultAxis(Qt::Orientation orientation) const;
+    QAbstractAxis::AxisType defaultAxisType(Qt::Orientation orientation) const override;
+    QAbstractAxis* createDefaultAxis(Qt::Orientation orientation) const override;
 
     void updateDerivativeData();
     void setSizes(qreal innerSize, qreal outerSize);

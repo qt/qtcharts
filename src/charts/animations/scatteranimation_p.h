@@ -53,7 +53,8 @@ public:
     ~ScatterAnimation();
 
 protected:
-    void updateState(QAbstractAnimation::State newState, QAbstractAnimation::State oldState);
+
+    void updateState(QAbstractAnimation::State newState, QAbstractAnimation::State oldState) override;
 };
 
 QT_CHARTS_END_NAMESPACE

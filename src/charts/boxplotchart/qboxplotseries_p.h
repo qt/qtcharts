@@ -57,16 +57,16 @@ public:
     QBoxPlotSeriesPrivate(QBoxPlotSeries *q);
     ~QBoxPlotSeriesPrivate();
 
-    void initializeGraphics(QGraphicsItem *parent);
-    void initializeDomain();
-    void initializeAxes();
-    void initializeAnimations(QChart::AnimationOptions options, int duration, QEasingCurve &curve);
-    void initializeTheme(int index, ChartTheme *theme, bool forced = false);
+    void initializeGraphics(QGraphicsItem *parent) override;
+    void initializeDomain() override;
+    void initializeAxes() override;
+    void initializeAnimations(QChart::AnimationOptions options, int duration, QEasingCurve &curve) override;
+    void initializeTheme(int index, ChartTheme *theme, bool forced = false) override;
 
-    QList<QLegendMarker*> createLegendMarkers(QLegend *legend);
+    QList<QLegendMarker*> createLegendMarkers(QLegend *legend) override;
 
-    virtual QAbstractAxis::AxisType defaultAxisType(Qt::Orientation orientation) const;
-    QAbstractAxis *createDefaultAxis(Qt::Orientation orientation) const;
+    QAbstractAxis::AxisType defaultAxisType(Qt::Orientation orientation) const override;
+    QAbstractAxis *createDefaultAxis(Qt::Orientation orientation) const override;
 
     bool append(QBoxSet *set);
     bool remove(QBoxSet *set);

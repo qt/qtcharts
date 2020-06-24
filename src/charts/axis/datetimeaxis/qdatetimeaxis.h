@@ -56,7 +56,7 @@ protected:
     QDateTimeAxis(QDateTimeAxisPrivate &d, QObject *parent = nullptr);
 
 public:
-    AxisType type() const;
+    AxisType type() const override;
 
     //range handling
     void setMin(QDateTime min);

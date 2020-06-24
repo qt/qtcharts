@@ -54,17 +54,17 @@ class Q_CHARTS_PRIVATE_EXPORT QAreaSeriesPrivate: public QAbstractSeriesPrivate
 public:
     QAreaSeriesPrivate(QLineSeries *upperSeries, QLineSeries *lowerSeries, QAreaSeries *q);
 
-    void initializeDomain();
-    void initializeAxes();
-    void initializeGraphics(QGraphicsItem* parent);
-    void initializeTheme(int index, ChartTheme* theme, bool forced = false);
+    void initializeDomain() override;
+    void initializeAxes() override;
+    void initializeGraphics(QGraphicsItem* parent) override;
+    void initializeTheme(int index, ChartTheme* theme, bool forced = false) override;
     void initializeAnimations(QChart::AnimationOptions options, int duration,
-                              QEasingCurve &curve);
+                              QEasingCurve &curve) override;
 
-    QList<QLegendMarker *> createLegendMarkers(QLegend *legend);
+    QList<QLegendMarker *> createLegendMarkers(QLegend *legend) override;
 
-    QAbstractAxis::AxisType defaultAxisType(Qt::Orientation orientation) const;
-    QAbstractAxis* createDefaultAxis(Qt::Orientation) const;
+    QAbstractAxis::AxisType defaultAxisType(Qt::Orientation orientation) const override;
+    QAbstractAxis* createDefaultAxis(Qt::Orientation) const override;
 
 Q_SIGNALS:
     void updated();

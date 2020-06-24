@@ -68,7 +68,7 @@ class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeSplineSeries : public QSplineSeries,
 
 public:
     explicit DeclarativeSplineSeries(QObject *parent = 0);
-    QXYSeries *xySeries() { return this; }
+    QXYSeries *xySeries() override { return this; }
     QAbstractAxis *axisX() { return m_axes->axisX(); }
     void setAxisX(QAbstractAxis *axis) { m_axes->setAxisX(axis); }
     QAbstractAxis *axisY() { return m_axes->axisY(); }
@@ -90,8 +90,8 @@ public:
     QQmlListProperty<QObject> declarativeChildren();
 
 public: // from QDeclarativeParserStatus
-    void classBegin() { DeclarativeXySeries::classBegin(); }
-    void componentComplete() { DeclarativeXySeries::componentComplete(); }
+    void classBegin() override { DeclarativeXySeries::classBegin(); }
+    void componentComplete() override { DeclarativeXySeries::componentComplete(); }
 
 public:
     Q_INVOKABLE void append(qreal x, qreal y) { DeclarativeXySeries::append(x, y); }

@@ -54,10 +54,10 @@ public:
     ChartBarCategoryAxisY(QBarCategoryAxis *axis, QGraphicsItem* item = 0);
     ~ChartBarCategoryAxisY();
 
-    QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint) const;
+    QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint) const override;
 protected:
-    QVector<qreal> calculateLayout() const;
-    void updateGeometry();
+    QVector<qreal> calculateLayout() const override;
+    void updateGeometry() override;
 private:
     QStringList createCategoryLabels(const QVector<qreal>& layout) const;
 public Q_SLOTS:

@@ -52,24 +52,24 @@ public:
     explicit XLogYDomain(QObject *object = 0);
     virtual ~XLogYDomain();
 
-    DomainType type(){ return AbstractDomain::XLogYDomain;};
+    DomainType type() override { return AbstractDomain::XLogYDomain; }
 
-    void setRange(qreal minX, qreal maxX, qreal minY, qreal maxY);
+    void setRange(qreal minX, qreal maxX, qreal minY, qreal maxY) override;
 
     friend bool Q_AUTOTEST_EXPORT operator== (const XLogYDomain &domain1, const XLogYDomain &domain2);
     friend bool Q_AUTOTEST_EXPORT operator!= (const XLogYDomain &domain1, const XLogYDomain &domain2);
     friend QDebug Q_AUTOTEST_EXPORT operator<<(QDebug dbg, const XLogYDomain &domain);
 
-    void zoomIn(const QRectF &rect);
-    void zoomOut(const QRectF &rect);
-    void move(qreal dx, qreal dy);
+    void zoomIn(const QRectF &rect) override;
+    void zoomOut(const QRectF &rect) override;
+    void move(qreal dx, qreal dy) override;
 
-    QPointF calculateGeometryPoint(const QPointF &point, bool &ok) const;
-    QPointF calculateDomainPoint(const QPointF &point) const;
-    QVector<QPointF> calculateGeometryPoints(const QVector<QPointF> &vector) const;
+    QPointF calculateGeometryPoint(const QPointF &point, bool &ok) const override;
+    QPointF calculateDomainPoint(const QPointF &point) const override;
+    QVector<QPointF> calculateGeometryPoints(const QVector<QPointF> &vector) const override;
 
-    bool attachAxis(QAbstractAxis *axis);
-    bool detachAxis(QAbstractAxis *axis);
+    bool attachAxis(QAbstractAxis *axis) override;
+    bool detachAxis(QAbstractAxis *axis) override;
 
 public Q_SLOTS:
     void handleVerticalAxisBaseChanged(qreal baseY);

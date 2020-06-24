@@ -59,8 +59,8 @@ public:
     ~BoxWhiskersAnimation();
 
 public: // from QVariantAnimation
-    virtual QVariant interpolated(const QVariant &from, const QVariant &to, qreal progress) const;
-    virtual void updateCurrentValue(const QVariant &value);
+    QVariant interpolated(const QVariant &from, const QVariant &to, qreal progress) const override;
+    void updateCurrentValue(const QVariant &value) override;
 
     void setup(const BoxWhiskersData &startData, const BoxWhiskersData &endData);
     void setEndData(const BoxWhiskersData &endData);

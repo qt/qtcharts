@@ -49,8 +49,8 @@ class Q_CHARTS_PRIVATE_EXPORT QLineSeriesPrivate: public QXYSeriesPrivate
 {
 public:
     QLineSeriesPrivate(QLineSeries *q);
-    void initializeGraphics(QGraphicsItem* parent);
-    void initializeTheme(int index, ChartTheme* theme, bool forced = false);
+    void initializeGraphics(QGraphicsItem* parent) override;
+    void initializeTheme(int index, ChartTheme* theme, bool forced = false) override;
 
 private:
     Q_DECLARE_PUBLIC(QLineSeries);

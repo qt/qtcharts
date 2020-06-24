@@ -51,9 +51,9 @@ public:
     virtual ~CartesianChartLayout();
 
     // from AbstractChartLayout
-    QRectF calculateAxisMinimum(const QRectF &minimum, const QList<ChartAxisElement *> &axes) const;
+    QRectF calculateAxisMinimum(const QRectF &minimum, const QList<ChartAxisElement *> &axes) const override;
     QRectF calculateAxisGeometry(const QRectF &geometry, const QList<ChartAxisElement *> &axes,
-                                 bool update = true) const;
+                                 bool update = true) const override;
 };
 
 QT_CHARTS_END_NAMESPACE

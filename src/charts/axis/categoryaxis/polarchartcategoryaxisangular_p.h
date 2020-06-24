@@ -54,8 +54,8 @@ public:
     PolarChartCategoryAxisAngular(QCategoryAxis *axis, QGraphicsItem *item);
     ~PolarChartCategoryAxisAngular();
 
-    virtual QVector<qreal> calculateLayout() const;
-    virtual void createAxisLabels(const QVector<qreal> &layout);
+    QVector<qreal> calculateLayout() const override;
+    void createAxisLabels(const QVector<qreal> &layout) override;
 
 public Q_SLOTS:
     void handleCategoriesChanged();

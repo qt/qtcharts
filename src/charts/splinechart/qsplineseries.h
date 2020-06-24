@@ -47,7 +47,7 @@ class Q_CHARTS_EXPORT QSplineSeries : public QLineSeries
 public:
     explicit QSplineSeries(QObject *parent = nullptr);
     ~QSplineSeries();
-    QAbstractSeries::SeriesType type() const;
+    QAbstractSeries::SeriesType type() const override;
 
 private:
     Q_DECLARE_PRIVATE(QSplineSeries)

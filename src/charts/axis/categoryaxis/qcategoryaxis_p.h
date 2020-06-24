@@ -55,7 +55,7 @@ public:
     QCategoryAxisPrivate(QCategoryAxis *q);
     ~QCategoryAxisPrivate();
 
-    void initializeGraphics(QGraphicsItem* parent);
+    void initializeGraphics(QGraphicsItem* parent) override;
     int ticksCount() const;
 
 private:

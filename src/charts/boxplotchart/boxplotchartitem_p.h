@@ -61,14 +61,14 @@ public:
 
     void setAnimation(BoxPlotAnimation *animation);
 
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-    QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+    QRectF boundingRect() const override;
 
 public Q_SLOTS:
     void handleSeriesVisibleChanged();
     void handleOpacityChanged();
     void handleDataStructureChanged();
-    void handleDomainUpdated();
+    void handleDomainUpdated() override;
     void handleLayoutChanged();
     void handleUpdatedBars();
     void handleBoxsetRemove(QList<QBoxSet *> barSets);

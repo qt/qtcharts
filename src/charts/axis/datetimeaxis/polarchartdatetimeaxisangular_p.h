@@ -53,8 +53,8 @@ public:
     PolarChartDateTimeAxisAngular(QDateTimeAxis *axis, QGraphicsItem *item);
     ~PolarChartDateTimeAxisAngular();
 
-    virtual QVector<qreal> calculateLayout() const;
-    virtual void createAxisLabels(const QVector<qreal> &layout);
+    QVector<qreal> calculateLayout() const override;
+    void createAxisLabels(const QVector<qreal> &layout) override;
 
 private Q_SLOTS:
     void handleTickCountChanged(int tick);

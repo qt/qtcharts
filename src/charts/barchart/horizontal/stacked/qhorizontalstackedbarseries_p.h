@@ -49,8 +49,8 @@ class Q_CHARTS_PRIVATE_EXPORT QHorizontalStackedBarSeriesPrivate: public QAbstra
 {
 public:
     QHorizontalStackedBarSeriesPrivate(QHorizontalStackedBarSeries *q);
-    void initializeGraphics(QGraphicsItem* parent);
-    void initializeDomain();
+    void initializeGraphics(QGraphicsItem* parent) override;
+    void initializeDomain() override;
 private:
     Q_DECLARE_PUBLIC(QHorizontalStackedBarSeries)
 };

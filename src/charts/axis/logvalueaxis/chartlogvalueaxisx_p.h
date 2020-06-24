@@ -54,11 +54,11 @@ public:
     ChartLogValueAxisX(QLogValueAxis *axis, QGraphicsItem *item);
     ~ChartLogValueAxisX();
 
-    QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint) const;
+    QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint) const override;
 
 protected:
-    QVector<qreal> calculateLayout() const;
-    void updateGeometry();
+    QVector<qreal> calculateLayout() const override;
+    void updateGeometry() override;
 
 private Q_SLOTS:
     void handleBaseChanged(qreal base);

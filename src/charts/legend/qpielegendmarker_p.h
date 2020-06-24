@@ -58,11 +58,11 @@ public:
     virtual ~QPieLegendMarkerPrivate();
 
     // internal
-    virtual QPieSeries* series();
-    virtual QObject* relatedObject();
+    QPieSeries* series() override;
+    QObject* relatedObject() override;
 
 public Q_SLOTS:
-    virtual void updated();
+    void updated() override;
 
 private:
     QPieLegendMarker *q_ptr;

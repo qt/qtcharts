@@ -53,16 +53,16 @@ class Q_CHARTS_PRIVATE_EXPORT PercentBarChartItem : public AbstractBarChartItem
     Q_OBJECT
 public:
     PercentBarChartItem(QAbstractBarSeries *series, QGraphicsItem* item = 0);
-    QString generateLabelText(int set, int category, qreal value);
+    QString generateLabelText(int set, int category, qreal value) override;
 
 private Q_SLOTS:
     void handleLabelsPositionChanged();
-    void positionLabels();
+    void positionLabels() override;
 
 private:
-    virtual QVector<QRectF> calculateLayout();
-    void initializeLayout(int set, int category, int layoutIndex, bool resetAnimation);
-    void markLabelsDirty(QBarSet *barset, int index, int count);
+    QVector<QRectF> calculateLayout() override;
+    void initializeLayout(int set, int category, int layoutIndex, bool resetAnimation) override;
+    void markLabelsDirty(QBarSet *barset, int index, int count) override;
     QPointF topLeftPoint(int category, qreal barWidth, qreal value);
     QPointF bottomRightPoint(int category, qreal barWidth, qreal value);
 };

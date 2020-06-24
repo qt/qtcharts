@@ -124,8 +124,8 @@ public:
     Q_INVOKABLE void clear() { return QBarSeries::clear(); }
 
 public: // from QDeclarativeParserStatus
-    void classBegin();
-    void componentComplete();
+    void classBegin() override;
+    void componentComplete() override;
 
 Q_SIGNALS:
     Q_REVISION(1) void axisXChanged(QAbstractAxis *axis);
@@ -171,8 +171,8 @@ public:
     Q_INVOKABLE void clear() { return QStackedBarSeries::clear(); }
 
 public: // from QDeclarativeParserStatus
-    void classBegin();
-    void componentComplete();
+    void classBegin() override;
+    void componentComplete() override;
 
 Q_SIGNALS:
     Q_REVISION(1) void axisXChanged(QAbstractAxis *axis);
@@ -218,8 +218,8 @@ public:
     Q_INVOKABLE void clear() { return QPercentBarSeries::clear(); }
 
 public: // from QDeclarativeParserStatus
-    void classBegin();
-    void componentComplete();
+    void classBegin() override;
+    void componentComplete() override;
 
 Q_SIGNALS:
     Q_REVISION(1) void axisXChanged(QAbstractAxis *axis);
@@ -265,8 +265,8 @@ public:
     Q_INVOKABLE void clear() { return QHorizontalBarSeries::clear(); }
 
 public: // from QDeclarativeParserStatus
-    void classBegin();
-    void componentComplete();
+    void classBegin() override;
+    void componentComplete() override;
 
 Q_SIGNALS:
     Q_REVISION(1) void axisXChanged(QAbstractAxis *axis);
@@ -312,8 +312,8 @@ public:
     Q_INVOKABLE void clear() { return QHorizontalStackedBarSeries::clear(); }
 
 public: // from QDeclarativeParserStatus
-    void classBegin();
-    void componentComplete();
+    void classBegin() override;
+    void componentComplete() override;
 
 Q_SIGNALS:
     Q_REVISION(1) void axisXChanged(QAbstractAxis *axis);
@@ -359,8 +359,8 @@ public:
     Q_INVOKABLE void clear() { return QHorizontalPercentBarSeries::clear(); }
 
 public: // from QDeclarativeParserStatus
-    void classBegin();
-    void componentComplete();
+    void classBegin() override;
+    void componentComplete() override;
 
 Q_SIGNALS:
     Q_REVISION(1) void axisXChanged(QAbstractAxis *axis);

@@ -43,7 +43,7 @@ class Q_CHARTS_EXPORT QStackedBarSeries : public QAbstractBarSeries
 public:
     explicit QStackedBarSeries(QObject *parent = nullptr);
     ~QStackedBarSeries();
-    QAbstractSeries::SeriesType type() const;
+    QAbstractSeries::SeriesType type() const override;
 
 private:
     Q_DECLARE_PRIVATE(QStackedBarSeries)

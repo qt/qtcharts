@@ -46,10 +46,10 @@ public:
     explicit QAreaLegendMarker(QAreaSeries *series, QLegend *legend, QObject *parent = nullptr);
     virtual ~QAreaLegendMarker();
 
-    virtual LegendMarkerType type() { return LegendMarkerTypeArea; }
+    LegendMarkerType type() override { return LegendMarkerTypeArea; }
 
     // Related series
-    virtual QAreaSeries* series();
+    QAreaSeries* series() override;
 
 protected:
     QAreaLegendMarker(QAreaLegendMarkerPrivate &d, QObject *parent = nullptr);

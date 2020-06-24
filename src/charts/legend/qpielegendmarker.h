@@ -47,10 +47,10 @@ public:
     explicit QPieLegendMarker(QPieSeries *series, QPieSlice *slice, QLegend *legend, QObject *parent = nullptr);
     virtual ~QPieLegendMarker();
 
-    virtual LegendMarkerType type() { return LegendMarkerTypePie; }
+    LegendMarkerType type() override { return LegendMarkerTypePie; }
 
     // Related series and slice
-    virtual QPieSeries* series();
+    QPieSeries* series() override;
     QPieSlice* slice();
 
 protected:

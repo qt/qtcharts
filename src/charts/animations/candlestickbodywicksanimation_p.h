@@ -62,8 +62,8 @@ public:
     void setEndData(const CandlestickData &endData);
 
     // from QVariantAnimation
-    virtual void updateCurrentValue(const QVariant &value);
-    virtual QVariant interpolated(const QVariant &from, const QVariant &to, qreal progress) const;
+    void updateCurrentValue(const QVariant &value) override;
+    QVariant interpolated(const QVariant &from, const QVariant &to, qreal progress) const override;
 
 protected:
     Candlestick *m_candlestick;

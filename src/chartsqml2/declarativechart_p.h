@@ -126,15 +126,15 @@ public:
     ~DeclarativeChart();
 
 public: // From parent classes
-    void childEvent(QChildEvent *event);
-    void componentComplete();
-    void geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry);
-    QSGNode *updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *);
+    void childEvent(QChildEvent *event) override;
+    void componentComplete() override;
+    void geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry) override;
+    QSGNode *updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *) override;
 protected:
-    void mousePressEvent(QMouseEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
-    void hoverMoveEvent(QHoverEvent *event);
-    void mouseDoubleClickEvent(QMouseEvent *event);
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
+    void hoverMoveEvent(QHoverEvent *event) override;
+    void mouseDoubleClickEvent(QMouseEvent *event) override;
 private Q_SLOTS:
     void handleAntialiasingChanged(bool enable);
     void sceneChanged(QList<QRectF> region);

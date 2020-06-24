@@ -63,21 +63,21 @@ public:
     virtual ~AbstractBarChartItem();
 
 public:
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-    QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+    QRectF boundingRect() const override;
 
     virtual QVector<QRectF> calculateLayout() = 0;
     void initializeFullLayout();
     virtual void initializeLayout(int set, int category, int layoutIndex, bool resetAnimation) = 0;
     virtual void applyLayout(const QVector<QRectF> &layout);
     virtual void setAnimation(BarAnimation *animation);
-    virtual ChartAnimation *animation() const;
+    ChartAnimation *animation() const override;
     void setLayout(const QVector<QRectF> &layout);
     QRectF geometry() const { return m_rect;}
     void resetAnimation();
 
 public Q_SLOTS:
-    void handleDomainUpdated();
+    void handleDomainUpdated() override;
     void handleLayoutChanged();
     void handleLabelsVisibleChanged(bool visible);
     void handleDataStructureChanged();     // structure of of series has changed, recreate graphic items

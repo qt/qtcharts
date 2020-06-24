@@ -52,7 +52,7 @@ public:
     explicit QPieSeries(QObject *parent = nullptr);
     virtual ~QPieSeries();
 
-    QAbstractSeries::SeriesType type() const;
+    QAbstractSeries::SeriesType type() const override;
 
     bool append(QPieSlice *slice);
     bool append(QList<QPieSlice *> slices);

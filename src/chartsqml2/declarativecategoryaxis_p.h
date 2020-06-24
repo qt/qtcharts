@@ -86,8 +86,8 @@ public:
 
 
 public: // from QDeclarativeParserStatus
-    void classBegin();
-    void componentComplete();
+    void classBegin() override;
+    void componentComplete() override;
 
 public:
     AxisLabelsPosition labelsPosition() const;

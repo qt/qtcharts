@@ -57,27 +57,27 @@ public:
     ~AreaChartItem();
 
     //from QGraphicsItem
-    QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-    QPainterPath shape() const;
+    QRectF boundingRect() const override;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+    QPainterPath shape() const override;
 
     LineChartItem *upperLineItem() const { return m_upper; }
     LineChartItem *lowerLineItem() const { return m_lower; }
 
     void updatePath();
 
-    void setPresenter(ChartPresenter *presenter);
+    void setPresenter(ChartPresenter *presenter) override;
     QAreaSeries *series() const { return m_series; }
 
     void setUpperSeries(QLineSeries *series);
     void setLowerSeries(QLineSeries *series);
 
 protected:
-    void mousePressEvent(QGraphicsSceneMouseEvent *event);
-    void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
-    void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
-    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+    void hoverEnterEvent(QGraphicsSceneHoverEvent *event) override;
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) override;
 
 Q_SIGNALS:
     void clicked(const QPointF &point);
@@ -88,7 +88,7 @@ Q_SIGNALS:
 
 public Q_SLOTS:
     void handleUpdated();
-    void handleDomainUpdated();
+    void handleDomainUpdated() override;
 
 private:
     void fixEdgeSeriesDomain(LineChartItem *edgeSeries);
@@ -126,7 +126,7 @@ public:
     }
     ~AreaBoundItem() {}
 
-    void updateGeometry()
+    void updateGeometry() override
     {
         // Make sure the series is in a chart before trying to update
         if (m_item->series()->chart()) {

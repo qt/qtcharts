@@ -42,7 +42,7 @@ class Q_CHARTS_EXPORT QHorizontalBarSeries : public QAbstractBarSeries
 public:
     explicit QHorizontalBarSeries(QObject *parent = nullptr);
     ~QHorizontalBarSeries();
-    QAbstractSeries::SeriesType type() const;
+    QAbstractSeries::SeriesType type() const override;
 
 private:
     Q_DECLARE_PRIVATE(QHorizontalBarSeries)

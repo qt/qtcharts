@@ -55,29 +55,29 @@ public:
     SplineChartItem(QSplineSeries *series, QGraphicsItem *item = 0);
 
     //from QGraphicsItem
-    QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-    QPainterPath shape() const;
+    QRectF boundingRect() const override;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+    QPainterPath shape() const override;
 
     void setControlGeometryPoints(QVector<QPointF>& points);
     QVector<QPointF> controlGeometryPoints() const;
 
     void setAnimation(SplineAnimation *animation);
-    ChartAnimation *animation() const;
+    ChartAnimation *animation() const override;
 
 public Q_SLOTS:
     void handleUpdated();
 
 protected:
-    void updateGeometry();
+    void updateGeometry() override;
     QVector<QPointF> calculateControlPoints(const QVector<QPointF> &points);
     QVector<qreal> firstControlPoints(const QVector<qreal>& vector);
-    void updateChart(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints, int index);
-    void mousePressEvent(QGraphicsSceneMouseEvent *event);
-    void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
-    void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
-    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
+    void updateChart(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints, int index) override;
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+    void hoverEnterEvent(QGraphicsSceneHoverEvent *event) override;
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) override;
 
 private:
     QSplineSeries *m_series;

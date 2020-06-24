@@ -57,8 +57,8 @@ public:
     PieSliceData currentSliceValue();
 
 protected:
-    QVariant interpolated(const QVariant &start, const QVariant &end, qreal progress) const;
-    void updateCurrentValue(const QVariant &value);
+    QVariant interpolated(const QVariant &start, const QVariant &end, qreal progress) const override;
+    void updateCurrentValue(const QVariant &value) override;
 
 private:
     PieSliceItem *m_sliceItem;

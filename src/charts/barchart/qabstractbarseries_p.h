@@ -64,15 +64,15 @@ public:
     void setVisible(bool visible);
     void setLabelsVisible(bool visible);
 
-    void initializeDomain();
-    void initializeAxes();
-    void initializeAnimations(QChart::AnimationOptions options, int duration, QEasingCurve &curve);
-    void initializeTheme(int index, ChartTheme* theme, bool forced = false);
+    void initializeDomain() override;
+    void initializeAxes() override;
+    void initializeAnimations(QChart::AnimationOptions options, int duration, QEasingCurve &curve) override;
+    void initializeTheme(int index, ChartTheme* theme, bool forced = false) override;
 
-    QList<QLegendMarker*> createLegendMarkers(QLegend *legend);
+    QList<QLegendMarker*> createLegendMarkers(QLegend *legend) override;
 
-    virtual QAbstractAxis::AxisType defaultAxisType(Qt::Orientation orientation) const;
-    QAbstractAxis* createDefaultAxis(Qt::Orientation orientation) const;
+    virtual QAbstractAxis::AxisType defaultAxisType(Qt::Orientation orientation) const override;
+    QAbstractAxis* createDefaultAxis(Qt::Orientation orientation) const override;
 
     bool append(QBarSet *set);
     bool remove(QBarSet *set);

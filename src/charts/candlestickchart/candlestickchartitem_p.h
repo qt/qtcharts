@@ -59,11 +59,11 @@ public:
 
     void setAnimation(CandlestickAnimation *animation);
 
-    QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    QRectF boundingRect() const override;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
 public Q_SLOTS:
-    void handleDomainUpdated();
+    void handleDomainUpdated() override;
     void handleLayoutUpdated();
     void handleCandlesticksUpdated();
     void handleCandlestickSeriesChange();

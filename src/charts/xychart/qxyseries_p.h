@@ -54,15 +54,15 @@ class Q_CHARTS_PRIVATE_EXPORT QXYSeriesPrivate: public QAbstractSeriesPrivate
 public:
     QXYSeriesPrivate(QXYSeries *q);
 
-    void initializeDomain();
-    void initializeAxes();
+    void initializeDomain() override;
+    void initializeAxes() override;
     void initializeAnimations(QtCharts::QChart::AnimationOptions options, int duration,
-                              QEasingCurve &curve);
+                              QEasingCurve &curve) override;
 
-    QList<QLegendMarker*> createLegendMarkers(QLegend* legend);
+    QList<QLegendMarker*> createLegendMarkers(QLegend* legend) override;
 
-    QAbstractAxis::AxisType defaultAxisType(Qt::Orientation orientation) const;
-    QAbstractAxis* createDefaultAxis(Qt::Orientation orientation) const;
+    QAbstractAxis::AxisType defaultAxisType(Qt::Orientation orientation) const override;
+    QAbstractAxis* createDefaultAxis(Qt::Orientation orientation) const override;
 
     void drawSeriesPointLabels(QPainter *painter, const QVector<QPointF> &points,
                                const int offset = 0);

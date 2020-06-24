@@ -57,9 +57,9 @@ public:
     void setup(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints, QVector<QPointF> &oldContorlPoints, QVector<QPointF> &newControlPoints, int index = -1);
 
 protected:
-    QVariant interpolated(const QVariant &start, const QVariant &end, qreal progress) const;
-    void updateCurrentValue(const QVariant &value);
-    void updateState(QAbstractAnimation::State newState, QAbstractAnimation::State oldState);
+    QVariant interpolated(const QVariant &start, const QVariant &end, qreal progress) const override;
+    void updateCurrentValue(const QVariant &value) override;
+    void updateState(QAbstractAnimation::State newState, QAbstractAnimation::State oldState) override;
 
 private:
     SplineVector m_oldSpline;

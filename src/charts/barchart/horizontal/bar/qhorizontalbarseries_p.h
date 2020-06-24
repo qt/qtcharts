@@ -49,8 +49,8 @@ class Q_CHARTS_PRIVATE_EXPORT QHorizontalBarSeriesPrivate: public QAbstractBarSe
 {
 public:
     QHorizontalBarSeriesPrivate(QHorizontalBarSeries *q);
-    void initializeGraphics(QGraphicsItem* parent);
-    void initializeDomain();
+    void initializeGraphics(QGraphicsItem* parent) override;
+    void initializeDomain() override;
 private:
     Q_DECLARE_PUBLIC(QHorizontalBarSeries)
 };

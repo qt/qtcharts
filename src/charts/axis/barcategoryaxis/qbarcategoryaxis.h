@@ -52,7 +52,7 @@ protected:
     QBarCategoryAxis(QBarCategoryAxisPrivate &d, QObject *parent = nullptr);
 
 public:
-    AxisType type() const;
+    AxisType type() const override;
     void append(const QStringList &categories);
     void append(const QString &category);
     void remove(const QString &category);

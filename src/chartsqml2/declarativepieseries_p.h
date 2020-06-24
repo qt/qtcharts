@@ -86,8 +86,8 @@ public:
     Q_INVOKABLE void clear();
 
 public:
-    void classBegin();
-    void componentComplete();
+    void classBegin() override;
+    void componentComplete() override;
 
 Q_SIGNALS:
     void sliceAdded(QPieSlice *slice);

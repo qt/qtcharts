@@ -53,14 +53,14 @@ public:
     ChartCategoryAxisX(QCategoryAxis *axis, QGraphicsItem* item = 0);
     ~ChartCategoryAxisX();
 
-    QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint) const;
+    QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint) const override;
 
 public Q_SLOTS:
     void handleCategoriesChanged();
 
 protected:
-    QVector<qreal> calculateLayout() const;
-    void updateGeometry();
+    QVector<qreal> calculateLayout() const override;
+    void updateGeometry() override;
 
 private:
     QCategoryAxis *m_axis;

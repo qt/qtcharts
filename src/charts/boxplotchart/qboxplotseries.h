@@ -59,7 +59,7 @@ public:
     QList<QBoxSet *> boxSets() const;
     void clear();
 
-    QAbstractSeries::SeriesType type() const;
+    QAbstractSeries::SeriesType type() const override;
 
     void setBoxOutlineVisible(bool visible);
     bool boxOutlineVisible();

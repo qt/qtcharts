@@ -61,7 +61,7 @@ public:
     bool isDropShadowEnabled() { return m_dropShadow != 0; }
 
 protected:
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
 private:
     qreal m_diameter;

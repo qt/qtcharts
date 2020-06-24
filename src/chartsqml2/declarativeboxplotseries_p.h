@@ -128,8 +128,8 @@ public:
     Q_INVOKABLE void clear() { return QBoxPlotSeries::clear(); }
 
 public: // from QDeclarativeParserStatus
-    void classBegin();
-    void componentComplete();
+    void classBegin() override;
+    void componentComplete() override;
 
 Q_SIGNALS:
     void axisXChanged(QAbstractAxis *axis);

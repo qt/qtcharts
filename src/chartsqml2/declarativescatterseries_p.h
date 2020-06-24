@@ -68,7 +68,7 @@ class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeScatterSeries : public QScatterSerie
 
 public:
     explicit DeclarativeScatterSeries(QObject *parent = 0);
-    QXYSeries *xySeries() { return this; }
+    QXYSeries *xySeries() override { return this; }
     QAbstractAxis *axisX() { return m_axes->axisX(); }
     void setAxisX(QAbstractAxis *axis) { m_axes->setAxisX(axis); }
     QAbstractAxis *axisY() { return m_axes->axisY(); }
@@ -86,12 +86,12 @@ public:
     QQmlListProperty<QObject> declarativeChildren();
     QString brushFilename() const;
     void setBrushFilename(const QString &brushFilename);
-    void setBrush(const QBrush &brush);
+    void setBrush(const QBrush &brush) override;
     QBrush brush() const;
 
 public: // from QDeclarativeParserStatus
-    void classBegin() { DeclarativeXySeries::classBegin(); }
-    void componentComplete() { DeclarativeXySeries::componentComplete(); }
+    void classBegin() override { DeclarativeXySeries::classBegin(); }
+    void componentComplete() override { DeclarativeXySeries::componentComplete(); }
 
 public:
     Q_INVOKABLE void append(qreal x, qreal y) { DeclarativeXySeries::append(x, y); }

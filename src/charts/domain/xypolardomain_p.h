@@ -51,23 +51,23 @@ public:
     explicit XYPolarDomain(QObject *object = 0);
     virtual ~XYPolarDomain();
 
-    DomainType type(){ return AbstractDomain::XYPolarDomain;}
+    DomainType type() override { return AbstractDomain::XYPolarDomain; }
 
-    void setRange(qreal minX, qreal maxX, qreal minY, qreal maxY);
+    void setRange(qreal minX, qreal maxX, qreal minY, qreal maxY) override;
 
     friend bool Q_AUTOTEST_EXPORT operator== (const XYPolarDomain &Domain1, const XYPolarDomain &Domain2);
     friend bool Q_AUTOTEST_EXPORT operator!= (const XYPolarDomain &Domain1, const XYPolarDomain &Domain2);
     friend QDebug Q_AUTOTEST_EXPORT operator<<(QDebug dbg, const XYPolarDomain &AbstractDomain);
 
-    void zoomIn(const QRectF &rect);
-    void zoomOut(const QRectF &rect);
-    void move(qreal dx, qreal dy);
+    void zoomIn(const QRectF &rect) override;
+    void zoomOut(const QRectF &rect) override;
+    void move(qreal dx, qreal dy) override;
 
-    QPointF calculateDomainPoint(const QPointF &point) const;
+    QPointF calculateDomainPoint(const QPointF &point) const override;
 
 protected:
-    qreal toAngularCoordinate(qreal value, bool &ok) const;
-    qreal toRadialCoordinate(qreal value, bool &ok) const;
+    qreal toAngularCoordinate(qreal value, bool &ok) const override;
+    qreal toRadialCoordinate(qreal value, bool &ok) const override;
 };
 
 QT_CHARTS_END_NAMESPACE

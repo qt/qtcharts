@@ -85,15 +85,15 @@ public:
     void setLabelBrush(const QBrush &brush);
     QBrush labelBrush() const;
 
-    void setGeometry(const QRectF &rect);
-    QRectF boundingRect() const;
+    void setGeometry(const QRectF &rect) override;
+    QRectF boundingRect() const override;
     QRectF markerRect() const;
 
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,QWidget *widget = nullptr);
-    QSizeF sizeHint (Qt::SizeHint which, const QSizeF &constraint) const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,QWidget *widget = nullptr) override;
+    QSizeF sizeHint (Qt::SizeHint which, const QSizeF &constraint) const override;
 
-    void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
-    void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
+    void hoverEnterEvent(QGraphicsSceneHoverEvent *event) override;
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override;
 
     QString displayedLabel() const;
     void setToolTip(const QString &tooltip);

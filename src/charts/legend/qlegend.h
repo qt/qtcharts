@@ -69,7 +69,7 @@ public:
 
     ~QLegend();
 
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr);
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
 
     void setBrush(const QBrush &brush);
     QBrush brush() const;
@@ -111,8 +111,8 @@ public:
     void setMarkerShape(MarkerShape shape);
 
 protected:
-    void hideEvent(QHideEvent *event);
-    void showEvent(QShowEvent *event);
+    void hideEvent(QHideEvent *event) override;
+    void showEvent(QShowEvent *event) override;
 
 Q_SIGNALS:
     void backgroundVisibleChanged(bool visible);

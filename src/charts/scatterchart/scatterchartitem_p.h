@@ -59,8 +59,8 @@ public:
 
 public:
     //from QGraphicsItem
-    QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    QRectF boundingRect() const override;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
     void setPen(const QPen &pen);
     void setBrush(const QBrush &brush);
@@ -83,7 +83,7 @@ private:
     void deletePoints(int count);
 
 protected:
-    void updateGeometry();
+    void updateGeometry() override;
 
 private:
     QScatterSeries *m_series;
@@ -116,23 +116,23 @@ public:
     }
 
 protected:
-    void mousePressEvent(QGraphicsSceneMouseEvent *event)
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override
     {
         QGraphicsEllipseItem::mousePressEvent(event);
         m_parent->markerPressed(this);
         m_parent->setMousePressed();
     }
-    void hoverEnterEvent(QGraphicsSceneHoverEvent *event)
+    void hoverEnterEvent(QGraphicsSceneHoverEvent *event) override
     {
         QGraphicsEllipseItem::hoverEnterEvent(event);
         m_parent->markerHovered(this, true);
     }
-    void hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override
     {
         QGraphicsEllipseItem::hoverLeaveEvent(event);
         m_parent->markerHovered(this, false);
     }
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override
     {
         QGraphicsEllipseItem::mouseReleaseEvent(event);
         m_parent->markerReleased(this);
@@ -140,7 +140,7 @@ protected:
             m_parent->markerSelected(this);
         m_parent->setMousePressed(false);
     }
-    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) override
     {
         QGraphicsEllipseItem::mouseDoubleClickEvent(event);
         m_parent->markerDoubleClicked(this);
@@ -163,23 +163,23 @@ public:
     }
 
 protected:
-    void mousePressEvent(QGraphicsSceneMouseEvent *event)
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override
     {
         QGraphicsRectItem::mousePressEvent(event);
         m_parent->markerPressed(this);
         m_parent->setMousePressed();
     }
-    void hoverEnterEvent(QGraphicsSceneHoverEvent *event)
+    void hoverEnterEvent(QGraphicsSceneHoverEvent *event) override
     {
         QGraphicsRectItem::hoverEnterEvent(event);
         m_parent->markerHovered(this, true);
     }
-    void hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override
     {
         QGraphicsRectItem::hoverLeaveEvent(event);
         m_parent->markerHovered(this, false);
     }
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override
     {
         QGraphicsRectItem::mouseReleaseEvent(event);
         m_parent->markerReleased(this);
@@ -187,7 +187,7 @@ protected:
             m_parent->markerSelected(this);
         m_parent->setMousePressed(false);
     }
-    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) override
     {
         QGraphicsRectItem::mouseDoubleClickEvent(event);
         m_parent->markerDoubleClicked(this);

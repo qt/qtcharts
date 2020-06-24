@@ -56,19 +56,19 @@ public:
     ~QBarCategoryAxisPrivate();
 
 public:
-    void initializeGraphics(QGraphicsItem* parent);
-    void initializeDomain(AbstractDomain *domain);
+    void initializeGraphics(QGraphicsItem* parent) override;
+    void initializeDomain(AbstractDomain *domain) override;
     void updateCategoryDomain();
 
     //interface for manipulating range form base class
-    void setRange(const QVariant &min, const QVariant &max);
-    void setMin(const QVariant &min);
-    void setMax(const QVariant &max);
+    void setRange(const QVariant &min, const QVariant &max) override;
+    void setMin(const QVariant &min) override;
+    void setMax(const QVariant &max) override;
 
     //interface manipulating range form domain
-    qreal min() { return m_min; }
-    qreal max() { return m_max; }
-    void setRange(qreal min,qreal max);
+    qreal min() override { return m_min; }
+    qreal max() override { return m_max; }
+    void setRange(qreal min,qreal max) override;
 
 private:
     //range handling

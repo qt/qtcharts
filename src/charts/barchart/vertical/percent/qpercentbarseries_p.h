@@ -50,8 +50,8 @@ class Q_CHARTS_PRIVATE_EXPORT QPercentBarSeriesPrivate: public QAbstractBarSerie
 {
 public:
     QPercentBarSeriesPrivate(QPercentBarSeries *q);
-    void initializeDomain();
-    void initializeGraphics(QGraphicsItem* parent);
+    void initializeDomain() override;
+    void initializeGraphics(QGraphicsItem* parent) override;
 private:
     Q_DECLARE_PUBLIC(QPercentBarSeries)
 };

@@ -52,10 +52,10 @@ public:
     explicit PolarDomain(QObject *object = 0);
     virtual ~PolarDomain();
 
-    void setSize(const QSizeF &size);
+    void setSize(const QSizeF &size) override;
 
-    QPointF calculateGeometryPoint(const QPointF &point, bool &ok) const;
-    QVector<QPointF> calculateGeometryPoints(const QVector<QPointF> &vector) const;
+    QPointF calculateGeometryPoint(const QPointF &point, bool &ok) const override;
+    QVector<QPointF> calculateGeometryPoints(const QVector<QPointF> &vector) const override;
 
     virtual qreal toAngularCoordinate(qreal value, bool &ok) const = 0;
     virtual qreal toRadialCoordinate(qreal value, bool &ok) const = 0;

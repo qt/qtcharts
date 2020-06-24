@@ -58,7 +58,7 @@ protected:
     QLogValueAxis(QLogValueAxisPrivate &d, QObject *parent = nullptr);
 
 public:
-    AxisType type() const;
+    AxisType type() const override;
 
     //range handling
     void setMin(qreal min);

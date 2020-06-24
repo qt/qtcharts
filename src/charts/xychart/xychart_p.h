@@ -62,7 +62,7 @@ public:
     QVector<QPointF> geometryPoints() const { return m_points; }
 
     void setAnimation(XYAnimation *animation);
-    ChartAnimation *animation() const { return m_animation; }
+    ChartAnimation *animation() const override { return m_animation; }
     virtual void updateGeometry() = 0;
 
     bool isDirty() const { return m_dirty; }
@@ -77,7 +77,7 @@ public Q_SLOTS:
     void handlePointsRemoved(int index, int count);
     void handlePointReplaced(int index);
     void handlePointsReplaced();
-    void handleDomainUpdated();
+    void handleDomainUpdated() override;
 
 Q_SIGNALS:
     void clicked(const QPointF &point);

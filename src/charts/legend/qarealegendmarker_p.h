@@ -56,11 +56,11 @@ public:
     explicit QAreaLegendMarkerPrivate(QAreaLegendMarker *q, QAreaSeries *series, QLegend *legend);
     virtual ~QAreaLegendMarkerPrivate();
 
-    virtual QAreaSeries* series();
-    virtual QObject* relatedObject();
+    QAreaSeries* series() override;
+    QObject* relatedObject() override;
 
 public Q_SLOTS:
-    virtual void updated();
+    void updated() override;
 
 private:
     QAreaLegendMarker *q_ptr;

@@ -57,18 +57,18 @@ public:
     }
 
 protected:
-    void mousePressEvent(QGraphicsSceneMouseEvent *event)
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override
     {
         m_axis->axisSelected();
         QGraphicsLineItem::mousePressEvent(event);
     }
 
-    QRectF boundingRect() const
+    QRectF boundingRect() const override
     {
         return shape().boundingRect();
     }
 
-    QPainterPath shape() const
+    QPainterPath shape() const override
     {
         QPainterPath path = QGraphicsLineItem::shape();
         QRectF rect = path.boundingRect();

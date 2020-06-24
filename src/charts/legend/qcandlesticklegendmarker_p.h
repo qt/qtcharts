@@ -55,11 +55,11 @@ public:
                                              QCandlestickSeries *series, QLegend *legend);
     virtual ~QCandlestickLegendMarkerPrivate();
 
-    virtual QAbstractSeries *series();
-    virtual QObject *relatedObject();
+    QAbstractSeries *series() override;
+    QObject *relatedObject() override;
 
 public Q_SLOTS:
-    virtual void updated();
+    void updated() override;
 
 private:
     QCandlestickLegendMarker *q_ptr;

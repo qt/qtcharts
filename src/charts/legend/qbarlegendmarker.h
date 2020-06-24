@@ -46,10 +46,10 @@ public:
     explicit QBarLegendMarker(QAbstractBarSeries *series, QBarSet *barset, QLegend *legend, QObject *parent = nullptr);
     virtual ~QBarLegendMarker();
 
-    virtual LegendMarkerType type() { return LegendMarkerTypeBar; }
+    LegendMarkerType type() override { return LegendMarkerTypeBar; }
 
     // Related series and barset
-    virtual QAbstractBarSeries* series();
+    QAbstractBarSeries* series() override;
     QBarSet* barset();
 
 protected:

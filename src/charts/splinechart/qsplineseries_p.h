@@ -51,10 +51,10 @@ class Q_CHARTS_PRIVATE_EXPORT QSplineSeriesPrivate: public QLineSeriesPrivate
 public:
     QSplineSeriesPrivate(QSplineSeries *q);
 
-    void initializeTheme(int index, ChartTheme* theme, bool forced = false);
-    void initializeGraphics(QGraphicsItem* parent);
+    void initializeTheme(int index, ChartTheme* theme, bool forced = false) override;
+    void initializeGraphics(QGraphicsItem* parent) override;
     void initializeAnimations(QtCharts::QChart::AnimationOptions options, int duration,
-                              QEasingCurve &curve);
+                              QEasingCurve &curve) override;
 
 private:
     Q_DECLARE_PUBLIC(QSplineSeries)

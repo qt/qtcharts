@@ -60,7 +60,7 @@ protected:
     QCategoryAxis(QCategoryAxisPrivate &d, QObject *parent = nullptr);
 
 public:
-    AxisType type() const;
+    AxisType type() const override;
 
     void append(const QString &label, qreal categoryEndValue);
     void remove(const QString &label);

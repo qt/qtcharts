@@ -70,7 +70,7 @@ public:
     virtual bool isEmpty() = 0;
 
     void setAnimation(AxisAnimation *animation) { m_animation = animation; }
-    AxisAnimation *animation() const { return m_animation; }
+    AxisAnimation *animation() const override { return m_animation; }
 
     QAbstractAxis *axis() const { return m_axis; }
     void setLayout(QVector<qreal> &layout) { m_layout = layout; }
@@ -104,13 +104,13 @@ public:
     QStringList createDateTimeLabels(qreal max, qreal min, int ticks, const QString &format) const;
 
     // from QGraphicsLayoutItem
-    QRectF boundingRect() const
+    QRectF boundingRect() const override
     {
         return QRectF();
     }
 
     // from QGraphicsLayoutItem
-    void paint(QPainter*, const QStyleOptionGraphicsItem*, QWidget*)
+    void paint(QPainter*, const QStyleOptionGraphicsItem*, QWidget*) override
     {
     }
 

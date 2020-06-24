@@ -48,10 +48,10 @@ class Q_CHARTS_PRIVATE_EXPORT QScatterSeriesPrivate: public QXYSeriesPrivate
 {
 public:
     QScatterSeriesPrivate(QScatterSeries *q);
-    void initializeGraphics(QGraphicsItem* parent);
-    void initializeTheme(int index, ChartTheme* theme, bool forced = false);
+    void initializeGraphics(QGraphicsItem* parent) override;
+    void initializeTheme(int index, ChartTheme* theme, bool forced = false) override;
     void initializeAnimations(QtCharts::QChart::AnimationOptions options, int duration,
-                              QEasingCurve &curve);
+                              QEasingCurve &curve) override;
 
 private:
     QScatterSeries::MarkerShape m_shape;
