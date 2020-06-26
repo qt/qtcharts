@@ -89,7 +89,7 @@ void ChartLogValueAxisX::handleLabelFormatChanged(const QString &format)
 
 QSizeF ChartLogValueAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
 {
-    Q_UNUSED(constraint)
+    Q_UNUSED(constraint);
 
     QSizeF sh;
 

@@ -49,7 +49,7 @@ QRectF CartesianChartLayout::calculateAxisGeometry(const QRectF &geometry,
                                                    const QList<ChartAxisElement *> &axes,
                                                    bool update) const
 {
-    Q_UNUSED(update)
+    Q_UNUSED(update);
     QSizeF left(0,0);
     QSizeF minLeft(0,0);
     QSizeF right(0,0);

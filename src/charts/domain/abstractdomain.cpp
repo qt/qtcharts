@@ -267,7 +267,7 @@ bool Q_AUTOTEST_EXPORT operator!= (const AbstractDomain &domain1, const Abstract
 QDebug Q_AUTOTEST_EXPORT operator<<(QDebug dbg, const AbstractDomain &domain)
 {
 #ifdef QT_NO_TEXTSTREAM
-    Q_UNUSED(domain)
+    Q_UNUSED(domain);
 #else
     dbg.nospace() << "AbstractDomain(" << domain.m_minX << ',' << domain.m_maxX << ',' << domain.m_minY << ',' << domain.m_maxY << ')' << domain.m_size;
 #endif

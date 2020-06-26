@@ -272,8 +272,8 @@ void QBoxPlotModelMapperPrivate::handleSeriesDestroyed()
 
 void QBoxPlotModelMapperPrivate::modelUpdated(QModelIndex topLeft, QModelIndex bottomRight)
 {
-    Q_UNUSED(topLeft)
-    Q_UNUSED(bottomRight)
+    Q_UNUSED(topLeft);
+    Q_UNUSED(bottomRight);
 
     if (m_model == 0 || m_series == 0)
         return;
@@ -307,7 +307,7 @@ void QBoxPlotModelMapperPrivate::modelHeaderDataUpdated(Qt::Orientation orientat
 
 void QBoxPlotModelMapperPrivate::modelRowsAdded(QModelIndex parent, int start, int end)
 {
-    Q_UNUSED(parent)
+    Q_UNUSED(parent);
     if (m_modelSignalsBlock)
         return;
 
@@ -321,7 +321,7 @@ void QBoxPlotModelMapperPrivate::modelRowsAdded(QModelIndex parent, int start, i
 
 void QBoxPlotModelMapperPrivate::modelRowsRemoved(QModelIndex parent, int start, int end)
 {
-    Q_UNUSED(parent)
+    Q_UNUSED(parent);
     if (m_modelSignalsBlock)
         return;
 
@@ -335,7 +335,7 @@ void QBoxPlotModelMapperPrivate::modelRowsRemoved(QModelIndex parent, int start,
 
 void QBoxPlotModelMapperPrivate::modelColumnsAdded(QModelIndex parent, int start, int end)
 {
-    Q_UNUSED(parent)
+    Q_UNUSED(parent);
     if (m_modelSignalsBlock)
         return;
 
@@ -349,7 +349,7 @@ void QBoxPlotModelMapperPrivate::modelColumnsAdded(QModelIndex parent, int start
 
 void QBoxPlotModelMapperPrivate::modelColumnsRemoved(QModelIndex parent, int start, int end)
 {
-    Q_UNUSED(parent)
+    Q_UNUSED(parent);
     if (m_modelSignalsBlock)
         return;
 
@@ -368,9 +368,9 @@ void QBoxPlotModelMapperPrivate::handleModelDestroyed()
 
 void QBoxPlotModelMapperPrivate::insertData(int start, int end)
 {
-    Q_UNUSED(end)
-    Q_UNUSED(start)
-    Q_UNUSED(end)
+    Q_UNUSED(end);
+    Q_UNUSED(start);
+    Q_UNUSED(end);
     // Currently boxplotchart needs to be fully recalculated when change is made.
     // Re-initialize
     initializeBoxFromModel();
@@ -378,9 +378,9 @@ void QBoxPlotModelMapperPrivate::insertData(int start, int end)
 
 void QBoxPlotModelMapperPrivate::removeData(int start, int end)
 {
-    Q_UNUSED(end)
-    Q_UNUSED(start)
-    Q_UNUSED(end)
+    Q_UNUSED(end);
+    Q_UNUSED(start);
+    Q_UNUSED(end);
     // Currently boxplotchart needs to be fully recalculated when change is made.
     // Re-initialize
     initializeBoxFromModel();

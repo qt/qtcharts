@@ -314,7 +314,7 @@ void QAbstractSeries::setOpacity(qreal opacity)
 void QAbstractSeries::setUseOpenGL(bool enable)
 {
 #ifdef QT_NO_OPENGL
-    Q_UNUSED(enable)
+    Q_UNUSED(enable);
 #else
     bool polarChart = d_ptr->m_chart && d_ptr->m_chart->chartType() == QChart::ChartTypePolar;
     bool supportedSeries = (type() == SeriesTypeLine || type() == SeriesTypeScatter);

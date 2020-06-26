@@ -477,7 +477,7 @@ void QCandlestickModelMapperPrivate::modelHeaderDataUpdated(Qt::Orientation orie
 
 void QCandlestickModelMapperPrivate::modelRowsInserted(QModelIndex parent, int start, int end)
 {
-    Q_UNUSED(parent)
+    Q_UNUSED(parent);
 
     Q_Q(QCandlestickModelMapper);
 
@@ -494,7 +494,7 @@ void QCandlestickModelMapperPrivate::modelRowsInserted(QModelIndex parent, int s
 
 void QCandlestickModelMapperPrivate::modelRowsRemoved(QModelIndex parent, int start, int end)
 {
-    Q_UNUSED(parent)
+    Q_UNUSED(parent);
 
     Q_Q(QCandlestickModelMapper);
 
@@ -511,7 +511,7 @@ void QCandlestickModelMapperPrivate::modelRowsRemoved(QModelIndex parent, int st
 
 void QCandlestickModelMapperPrivate::modelColumnsInserted(QModelIndex parent, int start, int end)
 {
-    Q_UNUSED(parent)
+    Q_UNUSED(parent);
 
     Q_Q(QCandlestickModelMapper);
 
@@ -528,7 +528,7 @@ void QCandlestickModelMapperPrivate::modelColumnsInserted(QModelIndex parent, in
 
 void QCandlestickModelMapperPrivate::modelColumnsRemoved(QModelIndex parent, int start, int end)
 {
-    Q_UNUSED(parent)
+    Q_UNUSED(parent);
 
     Q_Q(QCandlestickModelMapper);
 
@@ -689,8 +689,8 @@ QModelIndex QCandlestickModelMapperPrivate::candlestickModelIndex(int section, i
 
 void QCandlestickModelMapperPrivate::insertData(int start, int end)
 {
-    Q_UNUSED(start)
-    Q_UNUSED(end)
+    Q_UNUSED(start);
+    Q_UNUSED(end);
 
     // Currently candlestickchart needs to be fully recalculated when change is made.
     initializeCandlestickFromModel();
@@ -698,8 +698,8 @@ void QCandlestickModelMapperPrivate::insertData(int start, int end)
 
 void QCandlestickModelMapperPrivate::removeData(int start, int end)
 {
-    Q_UNUSED(start)
-    Q_UNUSED(end)
+    Q_UNUSED(start);
+    Q_UNUSED(end);
 
     // Currently candlestickchart needs to be fully recalculated when change is made.
     initializeCandlestickFromModel();

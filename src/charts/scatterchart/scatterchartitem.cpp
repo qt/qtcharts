@@ -211,8 +211,8 @@ void ScatterChartItem::updateGeometry()
 
 void ScatterChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    Q_UNUSED(option)
-    Q_UNUSED(widget)
+    Q_UNUSED(option);
+    Q_UNUSED(widget);
 
     if (m_series->useOpenGL())
         return;

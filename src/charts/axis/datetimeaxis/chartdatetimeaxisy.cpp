@@ -77,7 +77,7 @@ void ChartDateTimeAxisY::updateGeometry()
 
 void ChartDateTimeAxisY::handleTickCountChanged(int tick)
 {
-    Q_UNUSED(tick)
+    Q_UNUSED(tick);
     QGraphicsLayoutItem::updateGeometry();
     if (presenter())
         presenter()->layout()->invalidate();
@@ -93,7 +93,7 @@ void ChartDateTimeAxisY::handleFormatChanged(const QString &format)
 
 QSizeF ChartDateTimeAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
 {
-    Q_UNUSED(constraint)
+    Q_UNUSED(constraint);
 
     QSizeF sh;
 

@@ -54,13 +54,13 @@ CustomTableModel::CustomTableModel(QObject *parent) :
 
 int CustomTableModel::rowCount(const QModelIndex &parent) const
 {
-    Q_UNUSED(parent)
+    Q_UNUSED(parent);
     return m_data.count();
 }
 
 int CustomTableModel::columnCount(const QModelIndex &parent) const
 {
-    Q_UNUSED(parent)
+    Q_UNUSED(parent);
     return m_columnCount;
 }
 

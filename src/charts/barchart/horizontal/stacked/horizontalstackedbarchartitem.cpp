@@ -42,8 +42,8 @@ HorizontalStackedBarChartItem::HorizontalStackedBarChartItem(QAbstractBarSeries 
 void HorizontalStackedBarChartItem::initializeLayout(int set, int category,
                                                      int layoutIndex, bool resetAnimation)
 {
-    Q_UNUSED(set)
-    Q_UNUSED(resetAnimation)
+    Q_UNUSED(set);
+    Q_UNUSED(resetAnimation);
 
     QRectF rect;
     if (set > 0) {

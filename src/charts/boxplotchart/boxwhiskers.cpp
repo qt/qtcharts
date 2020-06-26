@@ -51,26 +51,26 @@ BoxWhiskers::~BoxWhiskers()
 
 void BoxWhiskers::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    Q_UNUSED(event)
+    Q_UNUSED(event);
     emit pressed(m_boxSet);
     m_mousePressed = true;
 }
 
 void BoxWhiskers::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
-    Q_UNUSED(event)
+    Q_UNUSED(event);
     emit hovered(true, m_boxSet);
 }
 
 void BoxWhiskers::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
-    Q_UNUSED(event)
+    Q_UNUSED(event);
     emit hovered(false, m_boxSet);
 }
 
 void BoxWhiskers::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    Q_UNUSED(event)
+    Q_UNUSED(event);
     emit released(m_boxSet);
     if (m_mousePressed)
         emit clicked(m_boxSet);
@@ -78,7 +78,7 @@ void BoxWhiskers::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 void BoxWhiskers::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
-    Q_UNUSED(event)
+    Q_UNUSED(event);
     // For Box a press signal needs to be explicitly fired for mouseDoubleClickEvent
     emit pressed(m_boxSet);
     emit doubleClicked(m_boxSet);
@@ -121,15 +121,15 @@ void BoxWhiskers::setLayout(const BoxWhiskersData &data)
 
 QSizeF BoxWhiskers::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
 {
-    Q_UNUSED(which)
-    Q_UNUSED(constraint)
+    Q_UNUSED(which);
+    Q_UNUSED(constraint);
 
     return QSizeF();
 }
 
 void BoxWhiskers::setGeometry(const QRectF &rect)
 {
-    Q_UNUSED(rect)
+    Q_UNUSED(rect);
 }
 
 QRectF BoxWhiskers::boundingRect() const
@@ -139,8 +139,8 @@ QRectF BoxWhiskers::boundingRect() const
 
 void BoxWhiskers::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    Q_UNUSED(option)
-    Q_UNUSED(widget)
+    Q_UNUSED(option);
+    Q_UNUSED(widget);
 
     painter->save();
     painter->setBrush(m_brush);

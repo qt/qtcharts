@@ -39,8 +39,8 @@ XYSeriesIODevice::XYSeriesIODevice(QXYSeries *series, QObject *parent) :
 
 qint64 XYSeriesIODevice::readData(char *data, qint64 maxSize)
 {
-    Q_UNUSED(data)
-    Q_UNUSED(maxSize)
+    Q_UNUSED(data);
+    Q_UNUSED(maxSize);
     return -1;
 }
 

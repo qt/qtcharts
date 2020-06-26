@@ -193,14 +193,14 @@ QRectF LegendMarkerItem::markerRect() const
 
 void LegendMarkerItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    Q_UNUSED(option)
-    Q_UNUSED(widget)
-    Q_UNUSED(painter)
+    Q_UNUSED(option);
+    Q_UNUSED(widget);
+    Q_UNUSED(painter);
 }
 
 QSizeF LegendMarkerItem::sizeHint(Qt::SizeHint which, const QSizeF& constraint) const
 {
-    Q_UNUSED(constraint)
+    Q_UNUSED(constraint);
 
     QSizeF sh;
     const qreal markerWidth = effectiveMarkerWidth();
@@ -227,14 +227,14 @@ QSizeF LegendMarkerItem::sizeHint(Qt::SizeHint which, const QSizeF& constraint) 
 
 void LegendMarkerItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
-    Q_UNUSED(event)
+    Q_UNUSED(event);
     m_hovering = true;
     emit m_marker->q_ptr->hovered(true);
 }
 
 void LegendMarkerItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
-    Q_UNUSED(event)
+    Q_UNUSED(event);
     m_hovering = false;
     emit m_marker->q_ptr->hovered(false);
 }

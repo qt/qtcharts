@@ -126,8 +126,8 @@ void DeclarativeCategoryAxis::replace(const QString &oldLabel, const QString &ne
 void DeclarativeCategoryAxis::appendAxisChildren(QQmlListProperty<QObject> *list, QObject *element)
 {
     // Empty implementation; the children are parsed in componentComplete instead
-    Q_UNUSED(list)
-    Q_UNUSED(element)
+    Q_UNUSED(list);
+    Q_UNUSED(element);
 }
 
 DeclarativeCategoryAxis::AxisLabelsPosition DeclarativeCategoryAxis::labelsPosition() const

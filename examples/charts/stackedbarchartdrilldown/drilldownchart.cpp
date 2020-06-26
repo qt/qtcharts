@@ -61,7 +61,7 @@ void DrilldownChart::changeSeries(DrilldownBarSeries *series)
 
 void DrilldownChart::handleClicked(int index, QBarSet *barset)
 {
-    Q_UNUSED(barset)
+    Q_UNUSED(barset);
     DrilldownBarSeries *series = static_cast<DrilldownBarSeries *>(sender());
     changeSeries(series->drilldownSeries(index));
 }

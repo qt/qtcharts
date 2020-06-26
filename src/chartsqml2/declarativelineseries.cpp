@@ -48,7 +48,7 @@ DeclarativeLineSeries::DeclarativeLineSeries(QObject *parent) :
 
 void DeclarativeLineSeries::handleCountChanged(int index)
 {
-    Q_UNUSED(index)
+    Q_UNUSED(index);
     emit countChanged(points().count());
 }
 
@@ -104,8 +104,8 @@ QQmlListProperty<QObject> DeclarativeLineSeries::declarativeChildren()
 
 void DeclarativeLineSeries::appendDeclarativeChildren(QQmlListProperty<QObject> *list, QObject *element)
 {
-    Q_UNUSED(list)
-    Q_UNUSED(element)
+    Q_UNUSED(list);
+    Q_UNUSED(element);
     // Empty implementation, children are parsed in componentComplete
 }
 

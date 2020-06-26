@@ -146,7 +146,7 @@ void Candlestick::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void Candlestick::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
-    Q_UNUSED(event)
+    Q_UNUSED(event);
 
     m_hovering = true;
     emit hovered(m_hovering, m_set);
@@ -154,7 +154,7 @@ void Candlestick::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 
 void Candlestick::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
-    Q_UNUSED(event)
+    Q_UNUSED(event);
 
     m_hovering = false;
     emit hovered(m_hovering, m_set);
@@ -184,8 +184,8 @@ QRectF Candlestick::boundingRect() const
 
 void Candlestick::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    Q_UNUSED(option)
-    Q_UNUSED(widget)
+    Q_UNUSED(option);
+    Q_UNUSED(widget);
 
     bool increasingTrend = (m_data.m_open < m_data.m_close);
     QColor color = increasingTrend ? m_increasingColor : m_decreasingColor;

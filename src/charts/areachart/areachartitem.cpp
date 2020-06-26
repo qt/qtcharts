@@ -234,8 +234,8 @@ void AreaChartItem::fixEdgeSeriesDomain(LineChartItem *edgeSeries)
 
 void AreaChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    Q_UNUSED(widget)
-    Q_UNUSED(option)
+    Q_UNUSED(widget);
+    Q_UNUSED(option);
 
     painter->save();
     painter->setPen(m_linePen);

@@ -51,7 +51,7 @@ ChartBackground::~ChartBackground()
 void ChartBackground::setDropShadowEnabled(bool enabled)
 {
 #ifdef QT_NO_GRAPHICSEFFECT
-    Q_UNUSED(enabled)
+    Q_UNUSED(enabled);
 #else
     if (enabled) {
         if (!m_dropShadow) {

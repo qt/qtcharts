@@ -440,8 +440,8 @@ void SplineChartItem::handleUpdated()
 
 void SplineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    Q_UNUSED(widget)
-    Q_UNUSED(option)
+    Q_UNUSED(widget);
+    Q_UNUSED(option);
 
     QRectF clipRect = QRectF(QPointF(0, 0), domain()->size());
 

@@ -44,8 +44,8 @@ DeclarativeBarSet::DeclarativeBarSet(QObject *parent)
 
 void DeclarativeBarSet::handleCountChanged(int index, int count)
 {
-    Q_UNUSED(index)
-    Q_UNUSED(count)
+    Q_UNUSED(index);
+    Q_UNUSED(count);
     emit countChanged(QBarSet::count());
 }
 

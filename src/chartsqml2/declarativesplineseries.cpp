@@ -48,7 +48,7 @@ DeclarativeSplineSeries::DeclarativeSplineSeries(QObject *parent) :
 
 void DeclarativeSplineSeries::handleCountChanged(int index)
 {
-    Q_UNUSED(index)
+    Q_UNUSED(index);
     emit countChanged(points().count());
 }
 
@@ -104,8 +104,8 @@ QQmlListProperty<QObject> DeclarativeSplineSeries::declarativeChildren()
 
 void DeclarativeSplineSeries::appendDeclarativeChildren(QQmlListProperty<QObject> *list, QObject *element)
 {
-    Q_UNUSED(list)
-    Q_UNUSED(element)
+    Q_UNUSED(list);
+    Q_UNUSED(element);
     // Empty implementation, children are parsed in componentComplete
 }
 

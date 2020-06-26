@@ -382,7 +382,7 @@ void AbstractBarChartItem::handleBarValueChange(int index, QtCharts::QBarSet *ba
 
 void AbstractBarChartItem::handleBarValueAdd(int index, int count, QBarSet *barset)
 {
-    Q_UNUSED(count)
+    Q_UNUSED(count);
 
     // Value insertions into middle of barset need to dirty the rest of the labels of the set
     markLabelsDirty(barset, index, -1);
@@ -391,7 +391,7 @@ void AbstractBarChartItem::handleBarValueAdd(int index, int count, QBarSet *bars
 
 void AbstractBarChartItem::handleBarValueRemove(int index, int count, QBarSet *barset)
 {
-    Q_UNUSED(count)
+    Q_UNUSED(count);
 
     // Value removals from the middle of barset need to dirty the rest of the labels of the set.
     markLabelsDirty(barset, index, -1);
@@ -409,7 +409,7 @@ void AbstractBarChartItem::handleBarValueRemove(int index, int count, QBarSet *b
 
 void AbstractBarChartItem::handleSeriesAdded(QAbstractSeries *series)
 {
-    Q_UNUSED(series)
+    Q_UNUSED(series);
 
     // If the parent series was added, do nothing, as series pos and width calculations will
     // happen anyway.

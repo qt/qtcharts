@@ -83,7 +83,7 @@ void ChartCategoryAxisX::updateGeometry()
 
 QSizeF ChartCategoryAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
 {
-    Q_UNUSED(constraint)
+    Q_UNUSED(constraint);
 
     QSizeF sh;
     QSizeF base = HorizontalAxis::sizeHint(which, constraint);

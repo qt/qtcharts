@@ -359,8 +359,8 @@ void LineChartItem::handleUpdated()
 
 void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    Q_UNUSED(widget)
-    Q_UNUSED(option)
+    Q_UNUSED(widget);
+    Q_UNUSED(option);
 
     if (m_series->useOpenGL())
         return;

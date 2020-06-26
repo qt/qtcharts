@@ -136,28 +136,28 @@ void ChartValueAxisY::handleLabelFormatChanged(const QString &format)
 
 void ChartValueAxisY::handleTickIntervalChanged(qreal interval)
 {
-    Q_UNUSED(interval)
+    Q_UNUSED(interval);
     QGraphicsLayoutItem::updateGeometry();
     if (presenter()) presenter()->layout()->invalidate();
 }
 
 void ChartValueAxisY::handleTickAnchorChanged(qreal anchor)
 {
-    Q_UNUSED(anchor)
+    Q_UNUSED(anchor);
     QGraphicsLayoutItem::updateGeometry();
     if (presenter()) presenter()->layout()->invalidate();
 }
 
 void ChartValueAxisY::handleTickTypeChanged(QValueAxis::TickType type)
 {
-    Q_UNUSED(type)
+    Q_UNUSED(type);
     QGraphicsLayoutItem::updateGeometry();
     if (presenter()) presenter()->layout()->invalidate();
 }
 
 QSizeF ChartValueAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
 {
-    Q_UNUSED(constraint)
+    Q_UNUSED(constraint);
 
     QSizeF sh;
     QSizeF base = VerticalAxis::sizeHint(which, constraint);

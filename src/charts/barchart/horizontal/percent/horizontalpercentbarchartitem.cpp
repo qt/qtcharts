@@ -41,7 +41,7 @@ HorizontalPercentBarChartItem::HorizontalPercentBarChartItem(QAbstractBarSeries 
 
 QString HorizontalPercentBarChartItem::generateLabelText(int set, int category, qreal value)
 {
-    Q_UNUSED(value)
+    Q_UNUSED(value);
 
     static const QString valueTag(QLatin1String("@value"));
     qreal p = m_series->d_func()->percentageAt(set, category) * 100.0;
@@ -61,8 +61,8 @@ QString HorizontalPercentBarChartItem::generateLabelText(int set, int category, 
 void HorizontalPercentBarChartItem::initializeLayout(int set, int category,
                                                      int layoutIndex, bool resetAnimation)
 {
-    Q_UNUSED(set)
-    Q_UNUSED(resetAnimation)
+    Q_UNUSED(set);
+    Q_UNUSED(resetAnimation);
 
     QRectF rect;
 
@@ -93,7 +93,7 @@ void HorizontalPercentBarChartItem::initializeLayout(int set, int category,
 
 void HorizontalPercentBarChartItem::markLabelsDirty(QBarSet *barset, int index, int count)
 {
-    Q_UNUSED(barset)
+    Q_UNUSED(barset);
     // Percent series need to dirty all labels of the stack
     QList<QBarSet *> sets = m_barMap.keys();
     for (int set = 0; set < sets.size(); set++)

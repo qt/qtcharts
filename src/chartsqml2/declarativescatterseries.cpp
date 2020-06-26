@@ -49,7 +49,7 @@ DeclarativeScatterSeries::DeclarativeScatterSeries(QObject *parent) :
 
 void DeclarativeScatterSeries::handleCountChanged(int index)
 {
-    Q_UNUSED(index)
+    Q_UNUSED(index);
     emit countChanged(QScatterSeries::count());
 }
 
@@ -75,8 +75,8 @@ QQmlListProperty<QObject> DeclarativeScatterSeries::declarativeChildren()
 
 void DeclarativeScatterSeries::appendDeclarativeChildren(QQmlListProperty<QObject> *list, QObject *element)
 {
-    Q_UNUSED(list)
-    Q_UNUSED(element)
+    Q_UNUSED(list);
+    Q_UNUSED(element);
     // Empty implementation, children are parsed in componentComplete
 }
 
