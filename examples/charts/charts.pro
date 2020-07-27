@@ -80,7 +80,7 @@ qtHaveModule(multimedia) {
     message("QtMultimedia library not available. Some examples are disabled.")
 }
 
-contains(QT_CONFIG, opengl) {
+qtConfig(opengl) {
     SUBDIRS += openglseries
 } else {
     message("OpenGL not available. Some examples are disabled.")

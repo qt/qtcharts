@@ -23,7 +23,7 @@ SOURCES += \
     $$PWD/charttitle.cpp \
     $$PWD/qpolarchart.cpp
 
-contains(QT_CONFIG, opengl): SOURCES += $$PWD/glwidget.cpp
+qtConfig(opengl): SOURCES += $$PWD/glwidget.cpp
 
 PRIVATE_HEADERS += \
     $$PWD/chartdataset_p.h \
@@ -41,7 +41,7 @@ PRIVATE_HEADERS += \
     $$PWD/charthelpers_p.h \
     $$PWD/qchartglobal_p.h
 
-contains(QT_CONFIG, opengl): PRIVATE_HEADERS += $$PWD/glwidget_p.h
+qtConfig(opengl): PRIVATE_HEADERS += $$PWD/glwidget_p.h
 
 PUBLIC_HEADERS += \
     $$PWD/qchart.h \

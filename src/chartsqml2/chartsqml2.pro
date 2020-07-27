@@ -34,7 +34,7 @@ PRIVATE_HEADERS += \
     declarativechartnode_p.h \
     declarativechartglobal_p.h
 
-contains(QT_CONFIG, opengl) {
+qtConfig(opengl) {
     SOURCES += declarativeopenglrendernode.cpp
     PRIVATE_HEADERS += declarativeopenglrendernode_p.h
 }

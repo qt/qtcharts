@@ -6,7 +6,7 @@ SUBDIRS += \
     candlesticktester \
     barcharttester
 
-contains(QT_CONFIG, opengl) {
+qtConfig(opengl) {
     SUBDIRS +=  chartwidgettest \
                 wavechart \
                 chartviewer \
