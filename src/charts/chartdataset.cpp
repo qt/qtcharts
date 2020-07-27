@@ -51,7 +51,7 @@
 #include <private/logxlogypolardomain_p.h>
 #include <private/glxyseriesdata_p.h>
 
-#ifndef QT_QREAL_IS_FLOAT
+#if QT_CONFIG(charts_datetime_axis)
 #include <QtCharts/QDateTimeAxis>
 #endif
 
@@ -365,7 +365,7 @@ void ChartDataSet::createAxes(QAbstractAxis::AxisTypes type, Qt::Orientation ori
         case QAbstractAxis::AxisTypeCategory:
         axis = new QCategoryAxis(this);
         break;
-#ifndef QT_QREAL_IS_FLOAT
+#if QT_CONFIG(charts_datetime_axis)
         case QAbstractAxis::AxisTypeDateTime:
         axis = new QDateTimeAxis(this);
         break;

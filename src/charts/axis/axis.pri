@@ -79,7 +79,7 @@ PRIVATE_HEADERS += \
     $$PWD/categoryaxis/polarchartcategoryaxisangular_p.h \
     $$PWD/categoryaxis/polarchartcategoryaxisradial_p.h
 
-!contains(QT_COORD_TYPE, float): {
+qtConfig(charts-datetime-axis) {
 INCLUDEPATH += \
     $$PWD/datetimeaxis
 

@@ -71,7 +71,7 @@
 #include <QtCore/QThread>
 #include <QtQuick/QQuickWindow>
 
-#ifndef QT_QREAL_IS_FLOAT
+#if QT_CONFIG(charts_datetime_axis)
 #include <QtCharts/QDateTimeAxis>
 #endif
 
@@ -1421,7 +1421,7 @@ QAbstractAxis *DeclarativeChart::defaultAxis(Qt::Orientation orientation, QAbstr
         return new QBarCategoryAxis(this);
     case QAbstractAxis::AxisTypeCategory:
         return new QCategoryAxis(this);
-#ifndef QT_QREAL_IS_FLOAT
+#if QT_CONFIG(charts_datetime_axis)
     case QAbstractAxis::AxisTypeDateTime:
         return new QDateTimeAxis(this);
 #endif

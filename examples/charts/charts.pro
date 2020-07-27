@@ -66,13 +66,11 @@ qtConfig(charts-scatter-chart) {
 }
 qtHaveModule(quick) {
     SUBDIRS += \
-           qmlaxes \
            qmlchart \
            qmlcustomizations \
            qmlcustomlegend \
            qmlf1legends \
            qmloscilloscope \
-           qmlpolarchart \
            qmlweather
 }
 
@@ -88,8 +86,8 @@ contains(QT_CONFIG, opengl) {
     message("OpenGL not available. Some examples are disabled.")
 }
 
-!contains(QT_COORD_TYPE, float): {
-SUBDIRS += \
-    datetimeaxis
+qtConfig(charts-datetime-axis) {
+    SUBDIRS += datetimeaxis
+    qtHaveModule(quick): SUBDIRS += qmlaxes qmlpolarchart
 }
 

@@ -8,7 +8,6 @@ DEFINES += QT_BUILD_QMLCHARTS_LIB
 QT += opengl qml quick
 QT += charts charts-private
 QT_PRIVATE += core-private charts-private
-contains(QT_COORD_TYPE, float): DEFINES += QT_QREAL_IS_FLOAT
 
 include($$PWD/designer/designer.pri)
 

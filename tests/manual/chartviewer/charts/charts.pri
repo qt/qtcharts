@@ -44,8 +44,8 @@ SOURCES += \
     $$PWD/domain/scatterlogxy.cpp \
     $$PWD/domain/scatterxlogy.cpp
 
-!contains(QT_COORD_TYPE, float): {
-SOURCES += \
-    $$PWD/axis/datetimeaxisx.cpp \
-    $$PWD/axis/datetimeaxisy.cpp
+qtConfig(charts-datetime-axis) {
+    SOURCES += \
+        $$PWD/axis/datetimeaxisx.cpp \
+        $$PWD/axis/datetimeaxisy.cpp
 }

@@ -5,6 +5,12 @@
         "graphicsview",
         "quick"
     ],
+    "tests" : {
+        "charts-realfloat" : {
+            "label": "qreal float",
+            "type": "detectRealFloat"
+        }
+    },
     "features": {
         "charts-line-chart" : {
             "label": "Line Chart",
@@ -48,6 +54,12 @@
             "label": "Candlestick Chart",
             "purpose": "Support for candlestick charts",
             "output": [ "publicFeature" ]
+        },
+        "charts-datetime-axis" : {
+            "label": "DateTime Axis",
+            "purpose": "Support for datetime axis",
+            "condition": "!tests.charts-realfloat",
+            "output": [ "publicFeature" ]
         }
     },
     "summary": [
@@ -63,6 +75,12 @@
                 "charts-boxplot-chart",
                 "charts-candlestick-chart"
             ]
-        }
+         },
+         {
+            "section": "Qt Axis Types",
+            "entries" : [
+                "charts-datetime-axis"
+            ]
+         }
     ]
 }

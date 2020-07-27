@@ -1,3 +1,5 @@
+include($$OUT_PWD/../../src/charts/qtcharts-config.pri)
+QT_FOR_CONFIG += charts
 TEMPLATE = subdirs
 SUBDIRS += \
            qchartview \
@@ -29,9 +31,8 @@ SUBDIRS += \
            qcandlestickseries \
            qcandlestickset
 
-!contains(QT_COORD_TYPE, float): {
-    SUBDIRS += \
-           qdatetimeaxis
+qtConfig(charts-datetime-axis) {
+    SUBDIRS += qdatetimeaxis
 }
 
 qtHaveModule(quick) {

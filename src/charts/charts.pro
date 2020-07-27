@@ -1,7 +1,6 @@
 TARGET = QtCharts
 QT = core gui widgets opengl openglwidgets
 QT_PRIVATE += core-private
-contains(QT_COORD_TYPE, float): DEFINES += QT_QREAL_IS_FLOAT
 
 QMAKE_DOCS = $$PWD/doc/qtcharts.qdocconf
 

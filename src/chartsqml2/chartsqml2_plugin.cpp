@@ -81,7 +81,7 @@
 #include <QtCore/QAbstractItemModel>
 #include <QtQml>
 
-#ifndef QT_QREAL_IS_FLOAT
+#if QT_CONFIG(charts_datetime_axis)
 #include <QtCharts/QDateTimeAxis>
 #endif
 
@@ -158,7 +158,7 @@ QML_DECLARE_TYPE(QVPieModelMapper)
 QML_DECLARE_TYPE(QScatterSeries)
 #endif
 
-#ifndef QT_QREAL_IS_FLOAT
+#if QT_CONFIG(charts_datetime_axis)
 QML_DECLARE_TYPE(QDateTimeAxis)
 #endif
 
@@ -345,7 +345,7 @@ public:
         // QtCharts 1.1
         qmlRegisterType<DeclarativeChart, 1>(uri, 1, 1, "ChartView");
         qmlRegisterType<QValueAxis>(uri, 1, 1, "ValueAxis");
-#ifndef QT_QREAL_IS_FLOAT
+#if QT_CONFIG(charts_datetime_axis)
         qmlRegisterType<QDateTimeAxis>(uri, 1, 1, "DateTimeAxis");
 #endif
         qmlRegisterType<DeclarativeCategoryAxis>(uri, 1, 1, "CategoryAxis");
@@ -369,7 +369,7 @@ public:
         qmlRegisterType<QHXYModelMapper>(uri, 2, 0, "HXYModelMapper");
         qmlRegisterType<QVXYModelMapper>(uri, 2, 0, "VXYModelMapper");
         qmlRegisterType<QValueAxis>(uri, 2, 0, "ValueAxis");
-#ifndef QT_QREAL_IS_FLOAT
+#if QT_CONFIG(charts_datetime_axis)
         qmlRegisterType<QDateTimeAxis>(uri, 2, 0, "DateTimeAxis");
 #endif
         qmlRegisterType<DeclarativeCategoryAxis>(uri, 2, 0, "CategoryAxis");

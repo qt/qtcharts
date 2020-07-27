@@ -140,7 +140,7 @@ void tst_qml::checkPlugin_data()
     QTest::newRow("HBarModelMapper") << imports_1_1() + "HBarModelMapper{}";
     QTest::newRow("VBarModelMapper") << imports_1_1() + "VBarModelMapper{}";
     QTest::newRow("ValueAxis") << imports_1_1() + "ValueAxis{}";
-#ifndef QT_QREAL_IS_FLOAT
+#if QT_CONFIG(charts_datetime_axis)
     QTest::newRow("DateTimeAxis") << imports_1_1() + "DateTimeAxis{}";
 #endif
     QTest::newRow("CategoryAxis") << imports_1_1() + "CategoryAxis{}";
@@ -176,7 +176,7 @@ void tst_qml::checkPlugin_data()
     QTest::newRow("HBarModelMapper_2_0") << imports_2_0() + "HBarModelMapper{}";
     QTest::newRow("VBarModelMapper_2_0") << imports_2_0() + "VBarModelMapper{}";
     QTest::newRow("ValueAxis_2_0") << imports_2_0() + "ValueAxis{}";
-#ifndef QT_QREAL_IS_FLOAT
+#if QT_CONFIG(charts_datetime_axis)
     QTest::newRow("DateTimeAxis_2_0") << imports_2_0() + "DateTimeAxis{}";
 #endif
     QTest::newRow("CategoryAxis_2_0") << imports_2_0() + "CategoryAxis{}";
