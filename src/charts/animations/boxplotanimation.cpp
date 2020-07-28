@@ -32,7 +32,7 @@
 #include <private/boxwhiskersdata_p.h>
 #include <private/boxwhiskersanimation_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 BoxPlotAnimation::BoxPlotAnimation(BoxPlotChartItem *item, int duration, QEasingCurve &curve)
     : QObject(item),
@@ -104,6 +104,6 @@ void BoxPlotAnimation::removeBoxAnimation(BoxWhiskers *box)
     m_animations.remove(box);
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_boxplotanimation_p.cpp"

@@ -32,7 +32,7 @@
 #include <private/abstractdomain_p.h>
 #include <QtGui/QPainter>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 ChartItem::ChartItem(QAbstractSeriesPrivate *series,QGraphicsItem* item):
       ChartElement(item),
@@ -57,6 +57,6 @@ void ChartItem::handleDomainUpdated()
     qWarning() <<  __FUNCTION__<< "Slot not implemented";
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_chartitem_p.cpp"

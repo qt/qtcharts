@@ -32,7 +32,7 @@
 #include <QtCharts/QPieSeries>
 #include <QtCharts/QPieSlice>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 /*!
     \class QPieLegendMarker
@@ -147,7 +147,7 @@ void QPieLegendMarkerPrivate::updated()
         emit q_ptr->penChanged();
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_qpielegendmarker.cpp"
 #include "moc_qpielegendmarker_p.cpp"

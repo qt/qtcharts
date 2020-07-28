@@ -42,7 +42,7 @@
 #include <private/polarchartaxisangular_p.h>
 #include <QtCharts/private/qchartglobal_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QCategoryAxis;
 
@@ -61,6 +61,6 @@ public Q_SLOTS:
     void handleCategoriesChanged();
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // POLARCHARTCATEGORYAXISANGULAR_P_H

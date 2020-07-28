@@ -43,7 +43,7 @@
 #include <QtCore/QVariantAnimation>
 #include <QtCharts/private/qchartglobal_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 const static int ChartAnimationDuration = 1000;
 
@@ -62,6 +62,6 @@ protected:
     bool m_destructing;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif /* CHARTANIMATION_H */

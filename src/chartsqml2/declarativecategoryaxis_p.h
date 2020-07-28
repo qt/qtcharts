@@ -45,7 +45,7 @@
 #include <QtQml/QQmlListProperty>
 #include <QtQml/QQmlParserStatus>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeCategoryRange : public QObject
 {
@@ -109,6 +109,6 @@ private:
     AxisLabelsPosition m_labelsPosition;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // DECLARATIVECATEGORYAXIS_H

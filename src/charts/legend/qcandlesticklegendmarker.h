@@ -33,7 +33,7 @@
 #include <QtCharts/QCandlestickSeries>
 #include <QtCharts/QLegendMarker>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QCandlestickLegendMarkerPrivate;
 
@@ -56,6 +56,6 @@ private:
     Q_DISABLE_COPY(QCandlestickLegendMarker)
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QCANDLESTICKLEGENDMARKER_H

@@ -30,7 +30,7 @@
 #include "declarativeareaseries_p.h"
 #include "declarativelineseries_p.h"
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 DeclarativeAreaSeries::DeclarativeAreaSeries(QObject *parent) :
     QAreaSeries(parent),
@@ -119,6 +119,6 @@ QBrush DeclarativeAreaSeries::brush() const
     return QAreaSeries::brush();
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_declarativeareaseries_p.cpp"

@@ -42,7 +42,7 @@
 #include <private/chartitem_p.h>
 #include <QtCharts/private/qchartglobal_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class Candlestick;
 class CandlestickAnimation;
@@ -92,6 +92,6 @@ protected:
     CandlestickAnimation *m_animation;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // CANDLESTICKCHARTITEM_P_H

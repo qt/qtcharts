@@ -39,16 +39,16 @@ class QCheckBox;
 class Ui_ThemeWidgetForm;
 QT_END_NAMESPACE
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 class QChartView;
 class QChart;
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 typedef QPair<QPointF, QString> Data;
 typedef QList<Data> DataList;
 typedef QList<DataList> DataTable;
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 class ThemeWidget: public QWidget
 {

@@ -32,7 +32,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMainWindow>
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 int main(int argc, char *argv[])
 {

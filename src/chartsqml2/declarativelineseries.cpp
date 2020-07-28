@@ -29,7 +29,7 @@
 
 #include "declarativelineseries_p.h"
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 DeclarativeLineSeries::DeclarativeLineSeries(QObject *parent) :
     QLineSeries(parent),
@@ -109,6 +109,6 @@ void DeclarativeLineSeries::appendDeclarativeChildren(QQmlListProperty<QObject> 
     // Empty implementation, children are parsed in componentComplete
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_declarativelineseries_p.cpp"

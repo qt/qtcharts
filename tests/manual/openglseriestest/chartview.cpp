@@ -30,7 +30,7 @@
 #include "chartview.h"
 #include <QtGui/QMouseEvent>
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 ChartView::ChartView(QWidget *parent) :
     QChartView(parent)

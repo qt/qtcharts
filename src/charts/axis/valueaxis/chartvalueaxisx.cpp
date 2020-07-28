@@ -38,7 +38,7 @@
 #include <QtCore/QDebug>
 
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 ChartValueAxisX::ChartValueAxisX(QValueAxis *axis, QGraphicsItem *item )
     : HorizontalAxis(axis, item),
@@ -200,6 +200,6 @@ QSizeF ChartValueAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint) c
     return sh;
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_chartvalueaxisx_p.cpp"

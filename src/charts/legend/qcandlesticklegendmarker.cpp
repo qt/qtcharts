@@ -32,7 +32,7 @@
 #include <private/qcandlesticklegendmarker_p.h>
 #include <private/qcandlestickseries_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 /*!
     \class QCandlestickLegendMarker
@@ -140,7 +140,7 @@ void QCandlestickLegendMarkerPrivate::updated()
         emit q_ptr->brushChanged();
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_qcandlesticklegendmarker.cpp"
 #include "moc_qcandlesticklegendmarker_p.cpp"

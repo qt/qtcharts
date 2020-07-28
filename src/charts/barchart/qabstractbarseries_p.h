@@ -45,7 +45,7 @@
 #include <QtCharts/QAbstractSeries>
 #include <QtCharts/private/qchartglobal_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QBarModelMapper;
 class QBarCategoryAxis;
@@ -144,6 +144,6 @@ private:
     friend class BarChartItem;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QABSTRACTBARSERIES_P_H

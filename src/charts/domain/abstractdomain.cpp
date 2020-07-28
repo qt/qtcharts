@@ -32,7 +32,7 @@
 #include <QtCore/QtMath>
 #include <cmath>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 AbstractDomain::AbstractDomain(QObject *parent)
     : QObject(parent),
@@ -300,6 +300,6 @@ QRectF AbstractDomain::fixZoomRect(const QRectF &rect)
     return fixRect;
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_abstractdomain_p.cpp"

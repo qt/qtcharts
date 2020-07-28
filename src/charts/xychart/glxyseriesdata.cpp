@@ -33,7 +33,7 @@
 #include <QtCharts/QScatterSeries>
 #endif
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 GLXYSeriesDataManager::GLXYSeriesDataManager(QObject *parent)
     : QObject(parent),
@@ -258,5 +258,5 @@ void GLXYSeriesDataManager::handleAxisReverseChanged(const QList<QAbstractSeries
     }
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 

@@ -39,7 +39,7 @@
 #include <QtCore/QTimer>
 #include <QtCore/QElapsedTimer>
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 
 class ChartWidget : public QWidget

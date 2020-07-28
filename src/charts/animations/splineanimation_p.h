@@ -45,7 +45,7 @@
 
 typedef QPair<QList<QPointF>, QList<QPointF>> SplineVector;
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class SplineChartItem;
 
@@ -70,6 +70,6 @@ private:
     bool m_valid;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif

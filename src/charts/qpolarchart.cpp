@@ -30,7 +30,7 @@
 #include <QtCharts/QPolarChart>
 #include <QtCharts/QAbstractAxis>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 /*!
     \enum QPolarChart::PolarOrientation
@@ -145,6 +145,6 @@ QPolarChart::PolarOrientation QPolarChart::axisPolarOrientation(QAbstractAxis *a
         return PolarOrientationRadial;
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_qpolarchart.cpp"

@@ -34,7 +34,7 @@
 #include <private/chartlogvalueaxisy_p.h>
 #include <private/chartpresenter_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 ChartLogValueAxisY::ChartLogValueAxisY(QLogValueAxis *axis, QGraphicsItem *item)
     : VerticalAxis(axis, item),
@@ -146,6 +146,6 @@ QSizeF ChartLogValueAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint
     return sh;
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_chartlogvalueaxisy_p.cpp"

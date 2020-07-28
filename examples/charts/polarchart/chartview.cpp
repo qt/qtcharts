@@ -33,7 +33,7 @@
 #include <QtCharts/QAbstractAxis>
 #include <QtCharts/QValueAxis>
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 ChartView::ChartView(QWidget *parent)
     : QChartView(parent)

@@ -44,7 +44,7 @@
 #include <QtGui/QGradientStops>
 #include <QtCharts/private/qchartglobal_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class Q_CHARTS_PRIVATE_EXPORT ChartTheme
 {
@@ -100,6 +100,6 @@ protected:
 
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // CHARTTHEME_H

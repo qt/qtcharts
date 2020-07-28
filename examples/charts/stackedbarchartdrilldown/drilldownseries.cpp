@@ -29,7 +29,7 @@
 
 #include "drilldownseries.h"
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 DrilldownBarSeries::DrilldownBarSeries(QStringList categories, int maxValue, QObject *parent)
     : QStackedBarSeries(parent),

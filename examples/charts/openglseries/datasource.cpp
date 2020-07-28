@@ -31,7 +31,7 @@
 #include <QtCore/QtMath>
 #include <QtCore/QRandomGenerator>
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 DataSource::DataSource(QObject *parent) :
     QObject(parent),

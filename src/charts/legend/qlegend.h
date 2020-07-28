@@ -35,7 +35,7 @@
 #include <QtGui/QPen>
 #include <QtGui/QBrush>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QChart;
 class QLegendPrivate;
@@ -134,6 +134,6 @@ private:
     friend class QLegendMarkerPrivate;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QLEGEND_H

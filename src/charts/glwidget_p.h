@@ -54,7 +54,7 @@
 
 QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class GLXYSeriesDataManager;
 
@@ -112,6 +112,6 @@ private:
     QXYSeries *m_lastHoverSeries;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 #endif
 #endif

@@ -35,7 +35,7 @@
 #include <QtCore/QObject>
 #include <QtGui/QPen>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QAbstractSeriesPrivate;
 class QChart;
@@ -109,6 +109,6 @@ protected:
     friend class GLWidget;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QABSTRACTSERIES_H

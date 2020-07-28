@@ -41,9 +41,9 @@
 #  include <QElapsedTimer>
 #endif
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
-GLWidget::GLWidget(GLXYSeriesDataManager *xyDataManager, QtCharts::QChart *chart,
+GLWidget::GLWidget(GLXYSeriesDataManager *xyDataManager, QChart *chart,
                    QGraphicsView *parent)
     : QOpenGLWidget(parent->viewport()),
       m_program(nullptr),
@@ -408,6 +408,6 @@ bool GLWidget::needsReset() const
     return m_view->renderHints().testFlag(QPainter::Antialiasing) != m_antiAlias;
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif

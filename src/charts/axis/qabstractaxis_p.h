@@ -49,7 +49,7 @@ QT_BEGIN_NAMESPACE
 class QGraphicsItem;
 QT_END_NAMESPACE
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class ChartPresenter;
 class AbstractDomain;
@@ -141,6 +141,6 @@ private:
     friend class ChartPresenter;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif

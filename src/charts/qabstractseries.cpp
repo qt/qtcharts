@@ -38,7 +38,7 @@
 #include <private/logxydomain_p.h>
 #include <private/logxlogydomain_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 /*!
     \class QAbstractSeries
@@ -477,7 +477,7 @@ void QAbstractSeriesPrivate::setBlockOpenGL(bool enable)
         q_ptr->setUseOpenGL(false);
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_qabstractseries.cpp"
 #include "moc_qabstractseries_p.cpp"

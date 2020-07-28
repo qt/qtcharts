@@ -49,7 +49,7 @@ class QAbstractItemModel;
 class QPointF;
 QT_END_NAMESPACE
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QXYModelMapper;
 class QXYSeries;
@@ -105,6 +105,6 @@ private:
     Q_DECLARE_PUBLIC(QXYModelMapper)
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QXYMODELMAPPER_P_H

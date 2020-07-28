@@ -32,7 +32,7 @@
 
 #include <QtCharts/QCandlestickModelMapper>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 /* Comment line for syncqt to generate the fwd-include correctly, due to QTBUG-22432 */
 class Q_CHARTS_EXPORT QVCandlestickModelMapper : public QCandlestickModelMapper
 {
@@ -81,6 +81,6 @@ Q_SIGNALS:
     void lastSetColumnChanged();
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QVCANDLESTICKMODELMAPPER_H

@@ -34,7 +34,7 @@
 #include <QtCharts/QChart>
 #include <QtCore/QAbstractItemModel>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 /*!
     \class QBoxPlotModelMapper
@@ -503,7 +503,7 @@ void QBoxPlotModelMapperPrivate::initializeBoxFromModel()
     blockSeriesSignals(false);
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_qboxplotmodelmapper.cpp"
 #include "moc_qboxplotmodelmapper_p.cpp"

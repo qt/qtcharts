@@ -48,7 +48,7 @@
 #include <private/abstractdomain_p.h>
 #include <tst_definitions.h>
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 Q_DECLARE_METATYPE(AbstractDomain *)
 Q_DECLARE_METATYPE(QAbstractAxis *)

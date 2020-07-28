@@ -32,7 +32,7 @@
 
 Q_DECLARE_METATYPE(QList<QRectF>)
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 BarAnimation::BarAnimation(AbstractBarChartItem *item, int duration, QEasingCurve &curve)
     : ChartAnimation(item),
@@ -85,6 +85,6 @@ void BarAnimation::setup(const QList<QRectF> &oldLayout, const QList<QRectF> &ne
     setKeyValueAt(1.0, QVariant::fromValue(newLayout));
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_baranimation_p.cpp"

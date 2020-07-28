@@ -45,7 +45,7 @@
 #include <QtCharts/QBoxPlotSeries>
 #include <QtCharts/private/qchartglobal_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QBoxPlotLegendMarker;
 
@@ -69,6 +69,6 @@ private:
     Q_DECLARE_PUBLIC(QBoxPlotLegendMarker)
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QBOXPLOTLEGENDMARKER_P_H

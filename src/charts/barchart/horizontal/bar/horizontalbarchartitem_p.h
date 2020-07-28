@@ -43,7 +43,7 @@
 #include <QtWidgets/QGraphicsItem>
 #include <QtCharts/private/qchartglobal_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class Q_CHARTS_PRIVATE_EXPORT HorizontalBarChartItem : public AbstractBarChartItem
 {
@@ -58,6 +58,6 @@ private:
     QPointF bottomRightPoint(int set, int setCount, int category, qreal barWidth, qreal value);
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // HORIZONTALBARCHARTITEM_H

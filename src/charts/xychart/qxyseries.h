@@ -39,7 +39,7 @@ QT_BEGIN_NAMESPACE
 class QModelIndex;
 QT_END_NAMESPACE
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QXYSeriesPrivate;
 class QXYModelMapper;
@@ -141,6 +141,6 @@ private:
     friend class XYChart;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QXYSERIES_H

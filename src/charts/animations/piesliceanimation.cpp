@@ -30,9 +30,9 @@
 #include <private/piesliceanimation_p.h>
 #include <private/piechartitem_p.h>
 
-Q_DECLARE_METATYPE(QT_CHARTS_NAMESPACE::PieSliceData)
+Q_DECLARE_METATYPE(PieSliceData)
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 qreal linearPos(qreal start, qreal end, qreal pos)
 {
@@ -134,4 +134,4 @@ void PieSliceAnimation::updateCurrentValue(const QVariant &value)
     }
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE

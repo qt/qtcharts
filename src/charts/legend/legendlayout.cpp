@@ -36,7 +36,7 @@
 #include <private/legendmarkeritem_p.h>
 #include <QtCharts/QLegendMarker>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 LegendLayout::LegendLayout(QLegend *legend)
     : m_legend(legend),
@@ -516,4 +516,4 @@ bool LegendLayout::widthLongerThan(const LegendWidthStruct *item1,
     return item1->width > item2->width;
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE

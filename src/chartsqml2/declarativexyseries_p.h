@@ -42,7 +42,7 @@
 #include <QtCharts/QXYSeries>
 #include <private/declarativechartglobal_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QChart;
 
@@ -68,6 +68,6 @@ public:
     QPointF at(int index);
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // DECLARATIVE_XY_SERIES_H

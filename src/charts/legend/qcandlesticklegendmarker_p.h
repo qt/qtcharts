@@ -42,7 +42,7 @@
 #include <private/qlegendmarker_p.h>
 #include <QtCharts/private/qchartglobal_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QCandlestickLegendMarker;
 class QCandlestickSeries;
@@ -68,6 +68,6 @@ private:
     Q_DECLARE_PUBLIC(QCandlestickLegendMarker)
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QCANDLESTICKLEGENDMARKER_P_H

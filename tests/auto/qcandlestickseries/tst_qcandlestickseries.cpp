@@ -33,7 +33,7 @@
 #include <QtTest/QtTest>
 #include "tst_definitions.h"
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 Q_DECLARE_METATYPE(QCandlestickSet *)
 Q_DECLARE_METATYPE(QList<QCandlestickSet *>)
@@ -322,7 +322,7 @@ void tst_QCandlestickSeries::clear()
 void tst_QCandlestickSeries::sets()
 {
     m_series->append(m_sets);
-    QCOMPARE(m_series->sets(), (QList<QtCharts::QCandlestickSet *>)m_sets);
+    QCOMPARE(m_series->sets(), (QList<QCandlestickSet *>)m_sets);
 
     for (int i = 0; i < m_sets.count(); ++i)
         QCOMPARE(m_series->sets().at(i), m_sets.at(i));

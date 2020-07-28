@@ -34,7 +34,7 @@
 #include <QtGui/QBrush>
 #include <QtGui/QPen>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QCandlestickSetPrivate;
 
@@ -97,6 +97,6 @@ private:
     friend class QCandlestickSeriesPrivate;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QCANDLESTICKSET_H

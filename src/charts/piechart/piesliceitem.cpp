@@ -39,7 +39,7 @@
 #include <QtGui/QTextDocument>
 #include <QtCore/QDebug>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 QPointF offset(qreal angle, qreal length)
 {
@@ -339,6 +339,6 @@ QPainterPath PieSliceItem::labelArmPath(QPointF start, qreal angle, qreal length
     return path;
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_piesliceitem_p.cpp"

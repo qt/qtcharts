@@ -45,7 +45,7 @@
 #include <QtCharts/QBarSet>
 #include <QtCharts/private/qchartglobal_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class BoxPlotAnimation;
 
@@ -108,6 +108,6 @@ private:
     Q_DECLARE_PUBLIC(QBoxPlotSeries)
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif

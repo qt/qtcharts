@@ -41,7 +41,7 @@
 #include <QtWidgets/QGroupBox>
 #include <QtCharts/QLineSeries>
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 class MainWidget : public QWidget
 {

@@ -29,7 +29,7 @@
 
 #include <QtCharts/QHBarModelMapper>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 /*!
     \class QHBarModelMapper
@@ -282,6 +282,6 @@ void QHBarModelMapper::setColumnCount(int columnCount)
     }
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_qhbarmodelmapper.cpp"

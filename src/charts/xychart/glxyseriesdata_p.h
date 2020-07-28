@@ -47,7 +47,7 @@
 #include <QtGui/QVector2D>
 #include <QtGui/QMatrix4x4>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class AbstractDomain;
 
@@ -119,6 +119,6 @@ private:
     bool m_mapDirty;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif

@@ -47,7 +47,7 @@
 // to verify the series have same visible geometry.
 //#define ADD_SIMPLE_SERIES
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 int main(int argc, char *argv[])
 {

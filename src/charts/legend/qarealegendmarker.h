@@ -36,7 +36,7 @@
 #include <QtCharts/QLegendMarker>
 #include <QtCharts/QAreaSeries>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QAreaLegendMarkerPrivate;
 
@@ -62,7 +62,7 @@ private:
 
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QT_CONFIG(charts_area_chart)
 #endif // QAREALEGENDMARKER_H

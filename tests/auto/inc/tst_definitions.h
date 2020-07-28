@@ -93,12 +93,12 @@ static inline bool isPolarTest()
     return isPolar;
 }
 
-static inline QtCharts::QChart *newQChartOrQPolarChart()
+static inline QChart *newQChartOrQPolarChart()
 {
     if (isPolarTest())
-        return new QtCharts::QPolarChart();
+        return new QPolarChart();
     else
-        return new QtCharts::QChart();
+        return new QChart();
 }
 
 

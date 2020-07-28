@@ -54,7 +54,7 @@
 Q_MOC_INCLUDE(<QtCharts/qlegend.h>)
 Q_MOC_INCLUDE("declarativemargins_p.h")
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class DeclarativeMargins;
 class Domain;
@@ -70,12 +70,12 @@ class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeChart : public QQuickItem
     Q_PROPERTY(QString title READ title WRITE setTitle)
     Q_PROPERTY(QFont titleFont READ titleFont WRITE setTitleFont)
     Q_PROPERTY(QColor titleColor READ titleColor WRITE setTitleColor NOTIFY titleColorChanged)
-    Q_PROPERTY(QtCharts::QLegend *legend READ legend CONSTANT)
+    Q_PROPERTY(QLegend *legend READ legend CONSTANT)
     Q_PROPERTY(int count READ count)
     Q_PROPERTY(QColor backgroundColor READ backgroundColor WRITE setBackgroundColor NOTIFY backgroundColorChanged)
     Q_PROPERTY(bool dropShadowEnabled READ dropShadowEnabled WRITE setDropShadowEnabled NOTIFY dropShadowEnabledChanged)
     Q_PROPERTY(qreal backgroundRoundness READ backgroundRoundness WRITE setBackgroundRoundness NOTIFY backgroundRoundnessChanged REVISION 3)
-    Q_PROPERTY(QtCharts::DeclarativeMargins *margins READ margins NOTIFY marginsChanged REVISION 2)
+    Q_PROPERTY(DeclarativeMargins *margins READ margins NOTIFY marginsChanged REVISION 2)
     Q_PROPERTY(QRectF plotArea READ plotArea WRITE setPlotArea NOTIFY plotAreaChanged REVISION 1)
     Q_PROPERTY(QColor plotAreaColor READ plotAreaColor WRITE setPlotAreaColor NOTIFY plotAreaColorChanged REVISION 3)
     Q_PROPERTY(QQmlListProperty<QAbstractAxis> axes READ axes REVISION 2)
@@ -273,6 +273,6 @@ private:
     QRectF m_adjustedPlotArea;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // DECLARATIVECHART_H

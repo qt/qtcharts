@@ -42,7 +42,7 @@
 #include <private/qabstractseries_p.h>
 #include <QtCharts/private/qchartglobal_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QXYSeries;
 class QAbstractAxis;
@@ -56,7 +56,7 @@ public:
 
     void initializeDomain() override;
     void initializeAxes() override;
-    void initializeAnimations(QtCharts::QChart::AnimationOptions options, int duration,
+    void initializeAnimations(QChart::AnimationOptions options, int duration,
                               QEasingCurve &curve) override;
 
     QList<QLegendMarker*> createLegendMarkers(QLegend* legend) override;
@@ -86,6 +86,6 @@ private:
     friend class QScatterSeries;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif

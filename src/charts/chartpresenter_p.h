@@ -49,7 +49,7 @@
 #include <QtCore/QPointer>
 #include <QtCore/QEasingCurve>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class ChartItem;
 class AxisItem;
@@ -220,6 +220,6 @@ private:
     QRectF m_fixedRect;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif /* CHARTPRESENTER_H */

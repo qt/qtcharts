@@ -46,7 +46,7 @@
 #include <QtGui/QBrush>
 #include <QtGui/QFont>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class Q_CHARTS_PRIVATE_EXPORT QBarSetPrivate : public QObject
 {
@@ -94,6 +94,6 @@ public:
     friend class QBarSet;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QBARSETPRIVATE_P_H

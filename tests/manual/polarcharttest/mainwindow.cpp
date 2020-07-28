@@ -44,7 +44,7 @@
 #include <QtCore/QtMath>
 #include <QtCore/QDateTime>
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :

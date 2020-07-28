@@ -38,7 +38,7 @@
 #include <float.h>
 #include <cmath>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 /*!
     \class QDateTimeAxis
     \inmodule QtCharts
@@ -401,7 +401,7 @@ void QDateTimeAxisPrivate::initializeDomain(AbstractDomain *domain)
     }
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_qdatetimeaxis.cpp"
 #include "moc_qdatetimeaxis_p.cpp"

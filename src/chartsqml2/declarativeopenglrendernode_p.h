@@ -51,7 +51,7 @@
 #include <QtOpenGL/QOpenGLFramebufferObject>
 #include <QtOpenGL/QOpenGLBuffer>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class DeclarativeOpenGLRenderNode : public QObject, public DeclarativeAbstractRenderNode, QOpenGLFunctions
 {
@@ -114,6 +114,6 @@ private:
     const QXYSeries *m_lastHoverSeries;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // DECLARATIVEOPENGLRENDERNODE_P_H

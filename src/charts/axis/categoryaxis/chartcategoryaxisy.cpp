@@ -36,7 +36,7 @@
 #include <QtCore/QtMath>
 #include <QtCore/QDebug>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 ChartCategoryAxisY::ChartCategoryAxisY(QCategoryAxis *axis, QGraphicsItem* item)
     : VerticalAxis(axis, item, true),
@@ -123,6 +123,6 @@ void ChartCategoryAxisY::handleCategoriesChanged()
     presenter()->layout()->invalidate();
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_chartcategoryaxisy_p.cpp"

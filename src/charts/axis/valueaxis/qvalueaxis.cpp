@@ -39,7 +39,7 @@
 #include <private/charttheme_p.h>
 #include <private/charthelpers_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 /*!
     \class QValueAxis
     \inmodule QtCharts
@@ -564,7 +564,7 @@ void QValueAxisPrivate::initializeDomain(AbstractDomain *domain)
     }
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_qvalueaxis.cpp"
 #include "moc_qvalueaxis_p.cpp"

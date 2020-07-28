@@ -33,7 +33,7 @@
 #include <QtCharts/QAbstractAxis>
 #include <QtCharts/QValueAxis>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QCategoryAxisPrivate;
 
@@ -86,6 +86,6 @@ private:
     Q_DISABLE_COPY(QCategoryAxis)
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QCATEGORYAXIS_H

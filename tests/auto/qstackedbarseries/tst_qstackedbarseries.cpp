@@ -34,7 +34,7 @@
 #include <QtCharts/QChart>
 #include "tst_definitions.h"
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 Q_DECLARE_METATYPE(QBarSet*)
 Q_DECLARE_METATYPE(QAbstractBarSeries::LabelsPosition)

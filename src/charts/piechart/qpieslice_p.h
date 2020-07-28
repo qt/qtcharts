@@ -44,7 +44,7 @@
 #include <private/pieslicedata_p.h>
 #include <QtCharts/private/qchartglobal_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 class QPieSeries;
 
 class Q_CHARTS_PRIVATE_EXPORT QPieSlicePrivate : public QObject
@@ -85,6 +85,6 @@ private:
     QPieSeries *m_series;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QPIESLICE_P_H

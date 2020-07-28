@@ -34,7 +34,7 @@
 #include <QtCharts/QAbstractBarSeries>
 #include <QtCharts/QBarSet>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QLegend;
 class QBarLegendMarkerPrivate;
@@ -61,6 +61,6 @@ private:
 
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QBARLEGENDMARKER_H

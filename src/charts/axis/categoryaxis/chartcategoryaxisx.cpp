@@ -35,7 +35,7 @@
 #include <QtWidgets/QGraphicsLayout>
 #include <QtCore/QtMath>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 ChartCategoryAxisX::ChartCategoryAxisX(QCategoryAxis *axis, QGraphicsItem* item)
     : HorizontalAxis(axis, item, true),
@@ -123,6 +123,6 @@ void ChartCategoryAxisX::handleCategoriesChanged()
     presenter()->layout()->invalidate();
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_chartcategoryaxisx_p.cpp"

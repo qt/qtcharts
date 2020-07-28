@@ -38,7 +38,7 @@
 #include <QtGui/QTextDocument>
 #include <cmath>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 static const char *labelFormatMatchString = "%[\\-\\+#\\s\\d\\.\\'lhjztL]*([dicuoxfegXFEG])";
 static const char *labelFormatMatchLocalizedString = "^([^%]*)%\\.(\\d+)([defgiEG])(.*)$";
@@ -570,10 +570,10 @@ void ChartAxisElement::setLabelsEditable(bool labelsEditable)
         const QList<QGraphicsItem *> childItems = labelGroup()->childItems();
         for (auto item : childItems) {
             switch (axis()->type()) {
-            case QtCharts::QAbstractAxis::AxisTypeValue:
+            case QAbstractAxis::AxisTypeValue:
                 static_cast<ValueAxisLabel *>(item)->setEditable(labelsEditable);
                 break;
-            case QtCharts::QAbstractAxis::AxisTypeDateTime:
+            case QAbstractAxis::AxisTypeDateTime:
                 static_cast<DateTimeAxisLabel *>(item)->setEditable(labelsEditable);
                 break;
             default:
@@ -589,6 +589,6 @@ void ChartAxisElement::axisSelected()
     emit clicked();
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_chartaxiselement_p.cpp"

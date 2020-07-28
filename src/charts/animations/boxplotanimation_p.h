@@ -45,7 +45,7 @@
 #include <private/boxwhiskersanimation_p.h>
 #include <QtCharts/private/qchartglobal_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class BoxPlotChartItem;
 
@@ -71,6 +71,6 @@ protected:
     QEasingCurve m_animationCurve;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // BOXPLOTANIMATION_P_H

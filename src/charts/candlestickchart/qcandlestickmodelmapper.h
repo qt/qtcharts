@@ -40,7 +40,7 @@ QT_BEGIN_NAMESPACE
 class QAbstractItemModel;
 QT_END_NAMESPACE
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QCandlestickModelMapperPrivate;
 class QCandlestickSeries;
@@ -49,7 +49,7 @@ class Q_CHARTS_EXPORT QCandlestickModelMapper : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QAbstractItemModel *model READ model WRITE setModel NOTIFY modelReplaced)
-    Q_PROPERTY(QtCharts::QCandlestickSeries *series READ series WRITE setSeries NOTIFY seriesReplaced)
+    Q_PROPERTY(QCandlestickSeries *series READ series WRITE setSeries NOTIFY seriesReplaced)
 
 public:
     explicit QCandlestickModelMapper(QObject *parent = nullptr);
@@ -93,6 +93,6 @@ protected:
     Q_DECLARE_PRIVATE(QCandlestickModelMapper)
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QCANDLESTICKMODELMAPPER_H

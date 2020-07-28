@@ -31,7 +31,7 @@
 #include <QtCore/QDataStream>
 #include <QtCore/QDebug>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 /*!
     \qmltype Margins
@@ -123,6 +123,6 @@ void DeclarativeMargins::setRight(int right)
     }
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_declarativemargins_p.cpp"

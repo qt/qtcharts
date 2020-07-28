@@ -30,7 +30,7 @@
 
 #include <QtCore/qlocale.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 ValueAxisLabel::ValueAxisLabel(QGraphicsItem *parent) :
     EditableAxisLabel(parent)
@@ -99,6 +99,6 @@ void ValueAxisLabel::keyPressEvent(QKeyEvent *event)
     QGraphicsTextItem::keyPressEvent(event);
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_valueaxislabel_p.cpp"

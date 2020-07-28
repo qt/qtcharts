@@ -33,7 +33,7 @@
 #include <QtCharts/QBarSet>
 #include <private/qbarset_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 PercentBarChartItem::PercentBarChartItem(QAbstractBarSeries *series, QGraphicsItem* item) :
     AbstractBarChartItem(series, item)
@@ -180,6 +180,6 @@ void PercentBarChartItem::positionLabels()
     positionLabelsVertical();
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_percentbarchartitem_p.cpp"

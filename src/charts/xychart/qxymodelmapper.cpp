@@ -34,7 +34,7 @@
 #include <QtCore/QDateTime>
 #include <QtCore/QDebug>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 /*!
     Constructs a mapper object which is a child of \a parent.
@@ -573,7 +573,7 @@ void QXYModelMapperPrivate::initializeXYFromModel()
     blockSeriesSignals(false);
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_qxymodelmapper.cpp"
 #include "moc_qxymodelmapper_p.cpp"

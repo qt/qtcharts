@@ -44,7 +44,7 @@
 #include <QtWidgets/QGraphicsRectItem>
 #include <QtWidgets/QGraphicsTextItem>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QBarSet;
 
@@ -95,6 +95,6 @@ private:
     bool m_labelDirty;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // BAR_H

@@ -44,7 +44,7 @@
 #include <QtQuick/QQuickWindow>
 #include <QtQuick/QSGImageNode>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class DeclarativeAbstractRenderNode;
 class DeclarativeChartNode : public QSGRootNode
@@ -65,6 +65,6 @@ private:
     QSGImageNode *m_imageNode;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // DECLARATIVECHARTNODE_P_H

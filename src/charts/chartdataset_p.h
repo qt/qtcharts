@@ -45,7 +45,7 @@
 #include <QtCharts/private/qchartglobal_p.h>
 #include <QtCore/QList>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QAbstractAxis;
 class ChartPresenter;
@@ -108,6 +108,6 @@ private:
     GLXYSeriesDataManager *m_glXYSeriesDataManager;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif /* CHARTENGINE_P_H */

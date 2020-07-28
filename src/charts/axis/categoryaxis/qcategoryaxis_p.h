@@ -43,7 +43,7 @@
 #include <private/qvalueaxis_p.h>
 #include <QtCharts/private/qchartglobal_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 typedef QPair<qreal, qreal> Range;
 
@@ -68,6 +68,6 @@ private:
     Q_DECLARE_PUBLIC(QCategoryAxis)
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QCATEGORYAXIS_P_H

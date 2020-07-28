@@ -43,7 +43,7 @@
 #include <private/qabstractaxis_p.h>
 #include <QtCharts/private/qchartglobal_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class Q_CHARTS_PRIVATE_EXPORT QValueAxisPrivate : public QAbstractAxisPrivate
 {
@@ -81,6 +81,6 @@ private:
     Q_DECLARE_PUBLIC(QValueAxis)
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QVALUEAXIS_P_H

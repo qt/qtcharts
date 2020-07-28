@@ -43,7 +43,7 @@
 #include <private/abstractdomain_p.h>
 #include <QtCharts/private/qchartglobal_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 
 class Q_CHARTS_PRIVATE_EXPORT QBarSeriesPrivate: public QAbstractBarSeriesPrivate
@@ -57,6 +57,6 @@ private:
     Q_DECLARE_PUBLIC(QBarSeries)
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QBARSERIES_P_H

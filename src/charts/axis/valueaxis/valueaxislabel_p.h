@@ -41,7 +41,7 @@
 
 #include <private/editableaxislabel_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class Q_CHARTS_PRIVATE_EXPORT ValueAxisLabel : public EditableAxisLabel
 {
@@ -66,6 +66,6 @@ Q_SIGNALS:
     void valueChanged(qreal oldValue, qreal newValue);
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // VALUEAXISLABEL_H

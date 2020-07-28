@@ -29,7 +29,7 @@
 
 #include "declarativescatterseries_p.h"
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 DeclarativeScatterSeries::DeclarativeScatterSeries(QObject *parent) :
     QScatterSeries(parent),
@@ -119,6 +119,6 @@ void DeclarativeScatterSeries::handleBrushChanged()
     }
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_declarativescatterseries_p.cpp"

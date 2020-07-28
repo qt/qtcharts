@@ -31,7 +31,7 @@
 
 #include <QtCharts/QPieSlice>
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 class CustomSlice : public QPieSlice
 {

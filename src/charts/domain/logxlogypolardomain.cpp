@@ -33,7 +33,7 @@
 #include <QtCore/QtMath>
 #include <cmath>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 LogXLogYPolarDomain::LogXLogYPolarDomain(QObject *parent)
     : PolarDomain(parent),
@@ -278,6 +278,6 @@ QDebug Q_AUTOTEST_EXPORT operator<<(QDebug dbg, const LogXLogYPolarDomain &domai
     return dbg.maybeSpace();
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_logxlogypolardomain_p.cpp"

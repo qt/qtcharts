@@ -33,7 +33,7 @@
 
 Q_DECLARE_METATYPE(QList<qreal>)
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 
 AxisAnimation::AxisAnimation(ChartAxisElement *axis, int duration, QEasingCurve &curve)
@@ -142,4 +142,4 @@ void AxisAnimation::updateCurrentValue(const QVariant &value)
     }
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE

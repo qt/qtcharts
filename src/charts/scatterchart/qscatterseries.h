@@ -33,7 +33,7 @@
 #include <QtCharts/QChartGlobal>
 #include <QtCharts/qxyseries.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QScatterSeriesPrivate;
 
@@ -81,6 +81,6 @@ private:
     friend class ScatterChartItem;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QSCATTERSERIES_H

@@ -37,7 +37,7 @@
 #include <private/qchart_p.h>
 #include <QtGui/QPainter>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 /*!
     \class QXYSeries
@@ -974,7 +974,7 @@ QAbstractAxis* QXYSeriesPrivate::createDefaultAxis(Qt::Orientation orientation) 
     return new QValueAxis;
 }
 
-void QXYSeriesPrivate::initializeAnimations(QtCharts::QChart::AnimationOptions options,
+void QXYSeriesPrivate::initializeAnimations(QChart::AnimationOptions options,
                                             int duration, QEasingCurve &curve)
 {
     XYChart *item = static_cast<XYChart *>(m_item.data());
@@ -1022,7 +1022,7 @@ void QXYSeriesPrivate::drawSeriesPointLabels(QPainter *painter, const QList<QPoi
     }
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_qxyseries.cpp"
 #include "moc_qxyseries_p.cpp"

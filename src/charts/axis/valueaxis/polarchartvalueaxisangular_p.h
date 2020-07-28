@@ -43,7 +43,7 @@
 #include <QtCharts/QValueAxis>
 #include <QtCharts/private/qchartglobal_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QValueAxis;
 
@@ -63,6 +63,6 @@ private Q_SLOTS:
     void handleLabelFormatChanged(const QString &format);
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // POLARCHARTVALUEAXISANGULAR_P_H

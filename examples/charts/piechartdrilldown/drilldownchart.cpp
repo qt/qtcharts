@@ -29,7 +29,7 @@
 #include "drilldownchart.h"
 #include "drilldownslice.h"
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 DrilldownChart::DrilldownChart(QGraphicsItem *parent, Qt::WindowFlags wFlags)
     : QChart(QChart::ChartTypeCartesian, parent, wFlags),

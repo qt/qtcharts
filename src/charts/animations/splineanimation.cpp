@@ -34,7 +34,7 @@
 Q_DECLARE_METATYPE(QList<QPointF>)
 Q_DECLARE_METATYPE(SplineVector)
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 SplineAnimation::SplineAnimation(SplineChartItem *item, int duration, QEasingCurve &curve)
     : XYAnimation(item, duration, curve),
@@ -218,4 +218,4 @@ void SplineAnimation::updateState(QAbstractAnimation::State newState, QAbstractA
     }
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE

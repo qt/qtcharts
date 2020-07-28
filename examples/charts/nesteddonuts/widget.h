@@ -36,7 +36,7 @@ QT_BEGIN_NAMESPACE
 class QTimer;
 QT_END_NAMESPACE
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 class Widget : public QWidget
 {

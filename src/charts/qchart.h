@@ -39,7 +39,7 @@ QT_BEGIN_NAMESPACE
 class QGraphicsSceneResizeEvent;
 QT_END_NAMESPACE
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QAbstractSeries;
 class QAbstractAxis;
@@ -197,10 +197,10 @@ private:
     Q_DISABLE_COPY(QChart)
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #ifndef Q_CLANG_QDOC
-Q_DECLARE_OPERATORS_FOR_FLAGS(QT_CHARTS_NAMESPACE::QChart::AnimationOptions)
+Q_DECLARE_OPERATORS_FOR_FLAGS(QChart::AnimationOptions)
 #endif
 
 #endif // QCHART_H

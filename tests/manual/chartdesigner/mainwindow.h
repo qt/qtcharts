@@ -35,10 +35,10 @@
 #include <QtCore/QMap>
 
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 class QChartView;
 class QAbstractSeries;
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 class QGraphicsScene;
 class InspectorWidget;
@@ -47,7 +47,7 @@ class PenWidget;
 class QTableView;
 class Engine;
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 class MainWindow : public QMainWindow
 {

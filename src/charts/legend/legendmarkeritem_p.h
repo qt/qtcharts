@@ -49,7 +49,7 @@
 #include <QtWidgets/QGraphicsLayoutItem>
 #include <QtCharts/private/qchartglobal_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QLegendMarkerPrivate;
 
@@ -141,6 +141,6 @@ protected:
     friend class LegendLayout;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // LEGENDMARKERITEM_P_H

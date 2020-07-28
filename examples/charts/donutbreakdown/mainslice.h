@@ -33,7 +33,7 @@
 #include <QtCharts/QPieSlice>
 #include <QtCharts/QPieSeries>
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 class MainSlice : public QPieSlice
 {

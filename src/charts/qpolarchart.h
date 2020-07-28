@@ -32,7 +32,7 @@
 
 #include <QtCharts/QChart>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QAbstractSeries;
 class QAbstractAxis;
@@ -64,6 +64,6 @@ private:
     Q_DISABLE_COPY(QPolarChart)
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QCHART_H

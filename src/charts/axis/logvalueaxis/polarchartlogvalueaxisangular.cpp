@@ -33,7 +33,7 @@
 #include <private/chartpresenter_p.h>
 #include <private/polarchartlogvalueaxisangular_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 PolarChartLogValueAxisAngular::PolarChartLogValueAxisAngular(QLogValueAxis *axis,
                                                              QGraphicsItem *item)
@@ -93,6 +93,6 @@ void PolarChartLogValueAxisAngular::handleLabelFormatChanged(const QString &form
         presenter()->layout()->invalidate();
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_polarchartlogvalueaxisangular_p.cpp"

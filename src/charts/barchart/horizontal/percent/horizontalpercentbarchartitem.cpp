@@ -32,7 +32,7 @@
 #include <private/qbarset_p.h>
 #include <private/bar_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 HorizontalPercentBarChartItem::HorizontalPercentBarChartItem(QAbstractBarSeries *series, QGraphicsItem* item)
     : AbstractBarChartItem(series, item)
@@ -163,6 +163,6 @@ QList<QRectF> HorizontalPercentBarChartItem::calculateLayout()
     return layout;
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_horizontalpercentbarchartitem_p.cpp"

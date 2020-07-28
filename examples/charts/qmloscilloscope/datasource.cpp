@@ -36,7 +36,7 @@
 #include <QtCore/QRandomGenerator>
 #include <QtCore/QtMath>
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 Q_DECLARE_METATYPE(QAbstractSeries *)
 Q_DECLARE_METATYPE(QAbstractAxis *)

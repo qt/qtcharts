@@ -41,7 +41,7 @@ class QCheckBox;
 class QGridLayout;
 QT_END_NAMESPACE
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 #define RealList QList<qreal>
 class DataSerieDialog;

@@ -44,7 +44,7 @@
 #include <private/declarativechartglobal_p.h>
 #include <private/declarativechart_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativePolarChart : public DeclarativeChart
 {
@@ -54,6 +54,6 @@ public:
     ~DeclarativePolarChart();
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // DECLARATIVEPOLARCHART_H

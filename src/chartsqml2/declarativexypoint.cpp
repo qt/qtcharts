@@ -30,7 +30,7 @@
 #include "declarativexypoint_p.h"
 #include <QtCore/QDataStream>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 /*!
     \qmltype XYPoint
@@ -62,6 +62,6 @@ DeclarativeXYPoint::DeclarativeXYPoint(QObject *parent) :
     setY(0.0);
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_declarativexypoint_p.cpp"

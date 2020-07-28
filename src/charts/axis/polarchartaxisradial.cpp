@@ -35,7 +35,7 @@
 #include <private/linearrowitem_p.h>
 #include <private/polarchartaxisradial_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 PolarChartAxisRadial::PolarChartAxisRadial(QAbstractAxis *axis, QGraphicsItem *item,
                                            bool intervalAxis)
@@ -505,6 +505,6 @@ void PolarChartAxisRadial::updateMinorTickItems()
     }
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_polarchartaxisradial_p.cpp"

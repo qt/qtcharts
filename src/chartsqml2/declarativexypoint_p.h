@@ -44,7 +44,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QPointF>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeXYPoint : public QObject, public QPointF
 {
@@ -56,6 +56,6 @@ public:
     explicit DeclarativeXYPoint(QObject *parent = 0);
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // DECLARATIVE_XY_POINT_H

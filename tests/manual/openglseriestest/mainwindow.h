@@ -44,7 +44,7 @@ class MainWindow;
 QT_END_NAMESPACE
 
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 class MainWindow : public QMainWindow
 {

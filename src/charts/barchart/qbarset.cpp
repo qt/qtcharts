@@ -32,7 +32,7 @@
 #include <private/charthelpers_p.h>
 #include <private/qchart_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 /*!
     \class QBarSet
@@ -756,7 +756,7 @@ qreal QBarSetPrivate::value(const int index)
     return m_values.at(index).y();
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_qbarset.cpp"
 #include "moc_qbarset_p.cpp"

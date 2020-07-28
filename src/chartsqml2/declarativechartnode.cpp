@@ -38,7 +38,7 @@
 # include "declarativeopenglrendernode_p.h"
 #endif
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 // This node handles displaying of the chart itself
 DeclarativeChartNode::DeclarativeChartNode(QQuickWindow *window) :
@@ -93,4 +93,4 @@ void DeclarativeChartNode::setRect(const QRectF &rect)
         m_imageNode->setRect(rect);
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE

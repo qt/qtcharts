@@ -41,7 +41,7 @@
 #include <QtCharts/QChartView>
 #include <QtCharts/QPieSeries>
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 MainWidget::MainWidget(QWidget *parent)
     : QWidget(parent),

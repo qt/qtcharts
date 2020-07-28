@@ -44,7 +44,7 @@
 #include <QtWidgets/QGraphicsItem>
 #include <QtCharts/private/qchartglobal_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QAbstractBarSeries;
 
@@ -67,6 +67,6 @@ private:
     QPointF bottomRightPoint(int category, qreal barWidth, qreal value);
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // PERCENTBARCHARTITEM_H

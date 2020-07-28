@@ -36,7 +36,7 @@
 #include <QtGui/QStandardItemModel>
 #include <tst_definitions.h>
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 Q_DECLARE_METATYPE(QPieSlice*)
 Q_DECLARE_METATYPE(QList<QPieSlice*>)

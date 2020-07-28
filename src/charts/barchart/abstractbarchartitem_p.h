@@ -46,7 +46,7 @@
 #include <QtGui/QPen>
 #include <QtGui/QBrush>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class Bar;
 class QAxisCategories;
@@ -120,6 +120,6 @@ protected:
     qreal m_seriesWidth;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // ABSTRACTBARCHARTITEM_H

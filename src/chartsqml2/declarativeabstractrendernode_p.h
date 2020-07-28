@@ -45,7 +45,7 @@
 #include <private/glxyseriesdata_p.h>
 #include <private/declarativechartglobal_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class Q_QMLCHARTS_PRIVATE_EXPORT MouseEventResponse {
 public:
@@ -85,7 +85,7 @@ public:
     virtual void takeMouseEventResponses(QList<MouseEventResponse> &responses) = 0;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 
 #endif // DECLARATIVEABSTRACTRENDERNODE_H

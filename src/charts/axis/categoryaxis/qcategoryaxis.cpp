@@ -37,7 +37,7 @@
 #include <QtCore/QtMath>
 #include <QtCore/QDebug>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 /*!
     \class QCategoryAxis
     \inmodule QtCharts
@@ -381,7 +381,7 @@ void QCategoryAxisPrivate::initializeGraphics(QGraphicsItem *parent)
     QAbstractAxisPrivate::initializeGraphics(parent);
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_qcategoryaxis.cpp"
 #include "moc_qcategoryaxis_p.cpp"

@@ -55,7 +55,7 @@
 #include <QtCharts/QBarCategoryAxis>
 #include <QtCharts/QLogValueAxis>
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 static const QString allCategories[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 static const int maxCategories = 12;

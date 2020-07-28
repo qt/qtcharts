@@ -43,7 +43,7 @@
 #include <QtGui/QPen>
 #include <QtWidgets/QGraphicsItemGroup>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 /*!
     \class QLegend
@@ -838,7 +838,7 @@ void QLegendPrivate::updateToolTips()
     }
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_qlegend.cpp"
 #include "moc_qlegend_p.cpp"

@@ -40,7 +40,7 @@
 #include <QtCore/QAbstractItemModel>
 
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 XYChart::XYChart(QXYSeries *series, QGraphicsItem *item):
       ChartItem(series->d_func(),item),
@@ -251,6 +251,6 @@ bool XYChart::isEmpty()
     return domain()->isEmpty() || m_series->points().isEmpty();
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_xychart_p.cpp"

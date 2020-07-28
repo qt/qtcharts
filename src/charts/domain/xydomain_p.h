@@ -43,7 +43,7 @@
 #include <QtCore/QRectF>
 #include <QtCore/QSizeF>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class Q_CHARTS_PRIVATE_EXPORT XYDomain: public AbstractDomain
 {
@@ -69,6 +69,6 @@ public:
     QList<QPointF> calculateGeometryPoints(const QList<QPointF> &list) const override;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // XYDOMAIN_H

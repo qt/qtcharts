@@ -46,7 +46,7 @@
 #include <QtWidgets/QGraphicsSceneMouseEvent>
 #include <QtCharts/private/qchartglobal_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QScatterSeries;
 
@@ -197,6 +197,6 @@ private:
     ScatterChartItem *m_parent;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // SCATTERPRESENTER_H

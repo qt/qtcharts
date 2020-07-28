@@ -46,7 +46,7 @@ QT_BEGIN_NAMESPACE
 class QGraphicsScene;
 QT_END_NAMESPACE
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QChart;
 class ChartPresenter;
@@ -73,5 +73,5 @@ public:
     QChartView::RubberBands m_rubberBandFlags;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 #endif

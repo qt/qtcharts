@@ -32,7 +32,7 @@
 
 #include <QtCharts/QAbstractBarSeries>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QBarSeriesPrivate;
 
@@ -49,6 +49,6 @@ private:
     Q_DISABLE_COPY(QBarSeries)
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QBARSERIES_H

@@ -29,7 +29,7 @@
 
 #include <QtCharts/QVBoxPlotModelMapper>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 /*!
     \class QVBoxPlotModelMapper
@@ -300,6 +300,6 @@ void QVBoxPlotModelMapper::setRowCount(int rowCount)
     }
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_qvboxplotmodelmapper.cpp"

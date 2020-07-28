@@ -48,7 +48,6 @@ PUBLIC_HEADERS += \
     $$PWD/qchartglobal.h \
     $$PWD/qabstractseries.h \
     $$PWD/qchartview.h \
-    $$PWD/chartsnamespace.h \
     $$PWD/qpolarchart.h
 
 include($$PWD/animations/animations.pri)

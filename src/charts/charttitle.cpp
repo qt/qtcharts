@@ -34,7 +34,7 @@
 #include <QtCore/QDebug>
 #include <QtGui/QTextDocument>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 ChartTitle::ChartTitle(QGraphicsItem *parent)
     : QGraphicsTextItem(parent)
@@ -102,4 +102,4 @@ QSizeF ChartTitle::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
     return sh;
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE

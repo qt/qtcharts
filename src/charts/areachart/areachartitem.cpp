@@ -39,7 +39,7 @@
 #include <QtCore/QDebug>
 
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 AreaChartItem::AreaChartItem(QAreaSeries *areaSeries, QGraphicsItem* item)
     : ChartItem(areaSeries->d_func(),item),
@@ -351,6 +351,6 @@ void AreaChartItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
     ChartItem::mouseDoubleClickEvent(event);
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_areachartitem_p.cpp"

@@ -39,7 +39,7 @@
 #include <private/chartthemeblueicy_p.h>
 #include <private/chartthemeqt_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 ChartThemeManager::ChartThemeManager(QChart* chart) :
     m_chart(chart)
@@ -247,6 +247,6 @@ QColor ChartThemeManager::colorAt(const QGradient &gradient, qreal pos)
     return colorAt(prev.second, next.second, relativePos);
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_chartthememanager_p.cpp"

@@ -33,7 +33,7 @@
 
 Q_DECLARE_METATYPE(QList<QPointF>)
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 XYAnimation::XYAnimation(XYChart *item, int duration, QEasingCurve &curve)
     : ChartAnimation(item),
@@ -160,6 +160,6 @@ void XYAnimation::updateState(QAbstractAnimation::State newState, QAbstractAnima
     }
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_chartanimation_p.cpp"

@@ -36,12 +36,12 @@
 Q_MOC_INCLUDE(<QtCharts/qboxplotseries.h>)
 Q_MOC_INCLUDE(<QtCore/qabstractitemmodel.h>)
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 /* Comment line for syncqt to generate the fwd-include correctly, due to QTBUG-22432 */
 class Q_CHARTS_EXPORT QHBoxPlotModelMapper : public QBoxPlotModelMapper
 {
     Q_OBJECT
-    Q_PROPERTY(QtCharts::QBoxPlotSeries *series READ series WRITE setSeries NOTIFY seriesReplaced)
+    Q_PROPERTY(QBoxPlotSeries *series READ series WRITE setSeries NOTIFY seriesReplaced)
     Q_PROPERTY(QAbstractItemModel *model READ model WRITE setModel NOTIFY modelReplaced)
     Q_PROPERTY(int firstBoxSetRow READ firstBoxSetRow WRITE setFirstBoxSetRow NOTIFY firstBoxSetRowChanged)
     Q_PROPERTY(int lastBoxSetRow READ lastBoxSetRow WRITE setLastBoxSetRow NOTIFY lastBoxSetRowChanged)
@@ -78,6 +78,6 @@ Q_SIGNALS:
     void columnCountChanged();
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QHBOXPLOTMODELMAPPER_H

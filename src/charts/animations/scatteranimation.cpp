@@ -31,7 +31,7 @@
 #include <private/scatterchartitem_p.h>
 #include <QtCore/QDebug>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 ScatterAnimation::ScatterAnimation(ScatterChartItem *item, int duration, QEasingCurve &curve)
     : XYAnimation(item, duration, curve)
@@ -56,4 +56,4 @@ void ScatterAnimation::updateState(QAbstractAnimation::State newState, QAbstract
     }
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE

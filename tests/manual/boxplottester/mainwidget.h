@@ -47,7 +47,7 @@ QT_END_NAMESPACE
 class CustomTableModel;
 class PenTool;
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 class MainWidget : public QWidget
 {

@@ -33,7 +33,7 @@
 #include <QtCore/QtMath>
 #include <cmath>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 LogXLogYDomain::LogXLogYDomain(QObject *parent)
     : AbstractDomain(parent),
@@ -304,6 +304,6 @@ QDebug Q_AUTOTEST_EXPORT operator<<(QDebug dbg, const LogXLogYDomain &domain)
     return dbg.maybeSpace();
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_logxlogydomain_p.cpp"

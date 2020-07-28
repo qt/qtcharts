@@ -43,7 +43,7 @@
 #include <private/polarchartaxis_p.h>
 #include <QtCharts/private/qchartglobal_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class Q_CHARTS_PRIVATE_EXPORT PolarChartAxisAngular : public PolarChartAxis
 {
@@ -75,6 +75,6 @@ private:
     void updateMinorTickGeometry();
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // POLARCHARTAXISANGULAR_P_H

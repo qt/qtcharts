@@ -33,7 +33,7 @@
 #include <private/chartpresenter_p.h>
 #include <private/horizontalaxis_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 HorizontalAxis::HorizontalAxis(QAbstractAxis *axis, QGraphicsItem *item, bool intervalAxis)
     : CartesianChartAxis(axis, item, intervalAxis)
@@ -513,4 +513,4 @@ void HorizontalAxis::updateMinorTickGeometry()
     }
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE

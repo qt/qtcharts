@@ -37,7 +37,7 @@
 #include <QtCharts/QVXYModelMapper>
 #include <QtWidgets/QHeaderView>
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 TableWidget::TableWidget(QWidget *parent)
     : QWidget(parent)

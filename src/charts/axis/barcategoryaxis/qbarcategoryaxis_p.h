@@ -43,7 +43,7 @@
 #include <private/qabstractaxis_p.h>
 #include <QtCharts/private/qchartglobal_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class AbstractDomain;
 
@@ -86,6 +86,6 @@ private:
     Q_DECLARE_PUBLIC(QBarCategoryAxis);
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QBARCATEGORYAXIS_P_H

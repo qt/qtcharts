@@ -32,7 +32,7 @@
 
 #include <QtCharts/QAbstractAxis>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QBarCategoryAxisPrivate;
 
@@ -85,6 +85,6 @@ private:
     friend class ChartBarCategoryAxisY;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QBARCATEGORYAXIS_H

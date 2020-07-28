@@ -33,7 +33,7 @@
 #include <private/candlestickchartitem_p.h>
 #include <private/candlestickdata_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 CandlestickAnimation::CandlestickAnimation(CandlestickChartItem *item, int duration,
                                            QEasingCurve &curve)
@@ -111,6 +111,6 @@ void CandlestickAnimation::removeCandlestickAnimation(Candlestick *candlestick)
     m_animations.remove(candlestick);
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_candlestickanimation_p.cpp"

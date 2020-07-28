@@ -75,7 +75,7 @@
 #include <QtCharts/QDateTimeAxis>
 #endif
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 /*!
     \qmltype ChartView
@@ -1101,7 +1101,7 @@ QColor DeclarativeChart::backgroundColor()
     return m_chart->backgroundBrush().color();
 }
 
-void QtCharts::DeclarativeChart::setPlotAreaColor(QColor color)
+void DeclarativeChart::setPlotAreaColor(QColor color)
 {
     QBrush b = m_chart->plotAreaBackgroundBrush();
     if (b.style() != Qt::SolidPattern || color != b.color()) {
@@ -1113,7 +1113,7 @@ void QtCharts::DeclarativeChart::setPlotAreaColor(QColor color)
     }
 }
 
-QColor QtCharts::DeclarativeChart::plotAreaColor()
+QColor DeclarativeChart::plotAreaColor()
 {
     return m_chart->plotAreaBackgroundBrush().color();
 }
@@ -1131,7 +1131,7 @@ bool DeclarativeChart::localizeNumbers() const
     return m_chart->localizeNumbers();
 }
 
-void QtCharts::DeclarativeChart::setLocale(const QLocale &locale)
+void DeclarativeChart::setLocale(const QLocale &locale)
 {
     if (m_chart->locale() != locale) {
         m_chart->setLocale(locale);
@@ -1139,7 +1139,7 @@ void QtCharts::DeclarativeChart::setLocale(const QLocale &locale)
     }
 }
 
-QLocale QtCharts::DeclarativeChart::locale() const
+QLocale DeclarativeChart::locale() const
 {
     return m_chart->locale();
 }
@@ -1553,6 +1553,6 @@ void DeclarativeChart::setPlotArea(const QRectF &rect)
     m_chart->setPlotArea(rect);
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_declarativechart_p.cpp"

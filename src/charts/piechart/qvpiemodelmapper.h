@@ -35,12 +35,12 @@
 Q_MOC_INCLUDE(<QtCharts/qpieseries.h>)
 Q_MOC_INCLUDE(<QtCore/qabstractitemmodel.h>)
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 /* Comment line for syncqt to generate the fwd-include correctly, due to QTBUG-22432 */
 class Q_CHARTS_EXPORT QVPieModelMapper : public QPieModelMapper
 {
     Q_OBJECT
-    Q_PROPERTY(QtCharts::QPieSeries *series READ series WRITE setSeries NOTIFY seriesReplaced)
+    Q_PROPERTY(QPieSeries *series READ series WRITE setSeries NOTIFY seriesReplaced)
     Q_PROPERTY(QAbstractItemModel *model READ model WRITE setModel NOTIFY modelReplaced)
     Q_PROPERTY(int valuesColumn READ valuesColumn WRITE setValuesColumn NOTIFY valuesColumnChanged)
     Q_PROPERTY(int labelsColumn READ labelsColumn WRITE setLabelsColumn NOTIFY labelsColumnChanged)
@@ -77,6 +77,6 @@ Q_SIGNALS:
     void rowCountChanged();
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QVPIEMODELMAPPER_H

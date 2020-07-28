@@ -35,7 +35,7 @@
 #include <private/chartbackground_p.h>
 #include <QtCore/QDebug>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 static const qreal golden_ratio = 0.4;
 
@@ -230,4 +230,4 @@ QMargins AbstractChartLayout::margins() const
     return m_margins;
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE

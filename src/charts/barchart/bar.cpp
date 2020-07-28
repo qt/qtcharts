@@ -33,7 +33,7 @@
 #include <QtWidgets/QStyleOptionGraphicsItem>
 #include <QtWidgets/QStyle>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 Bar::Bar(QBarSet *barset, QGraphicsItem *parent) : QGraphicsRectItem(parent),
     m_index(-255),
@@ -103,6 +103,6 @@ void Bar::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidg
     QGraphicsRectItem::paint(painter, &barOption, widget);
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_bar_p.cpp"

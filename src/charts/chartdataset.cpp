@@ -55,7 +55,7 @@
 #include <QtCharts/QDateTimeAxis>
 #endif
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 ChartDataSet::ChartDataSet(QChart *chart)
     : QObject(chart),
@@ -661,6 +661,6 @@ void ChartDataSet::reverseChanged()
         m_glXYSeriesDataManager->handleAxisReverseChanged(axis->d_ptr->m_series);
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_chartdataset_p.cpp"

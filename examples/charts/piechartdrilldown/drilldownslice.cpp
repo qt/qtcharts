@@ -29,7 +29,7 @@
 
 #include "drilldownslice.h"
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 DrilldownSlice::DrilldownSlice(qreal value, QString prefix, QAbstractSeries *drilldownSeries)
     : m_drilldownSeries(drilldownSeries),

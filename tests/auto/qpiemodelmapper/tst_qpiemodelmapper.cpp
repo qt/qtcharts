@@ -38,7 +38,7 @@
 #include <QtCharts/QHPieModelMapper>
 #include <QtGui/QStandardItemModel>
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 class tst_qpiemodelmapper : public QObject
 {

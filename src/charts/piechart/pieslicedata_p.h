@@ -44,7 +44,7 @@
 #include <QtGui/QPen>
 #include <QtGui/QBrush>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 template <class T>
 class Themed : public T
@@ -145,6 +145,6 @@ public:
     qreal m_holeRadius;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // PIESLICEDATA_P_H

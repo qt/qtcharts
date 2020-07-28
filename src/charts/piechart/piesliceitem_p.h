@@ -51,7 +51,7 @@
 
 #define PIESLICE_LABEL_GAP 5
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 class PieChartItem;
 class PieSliceLabel;
 class QPieSlice;
@@ -103,6 +103,6 @@ private:
     friend class PieSliceAnimation;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // PIESLICEITEM_H

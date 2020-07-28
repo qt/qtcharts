@@ -42,7 +42,7 @@
 #include <private/xyanimation_p.h>
 #include <QtCharts/private/qchartglobal_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class ScatterChartItem;
 
@@ -57,6 +57,6 @@ protected:
     void updateState(QAbstractAnimation::State newState, QAbstractAnimation::State oldState) override;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif

@@ -33,7 +33,7 @@
 #include <QtCharts/QAbstractSeries>
 #include <QtCore/QStringList>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QBarSet;
 class QAbstractBarSeriesPrivate;
@@ -121,6 +121,6 @@ protected:
     friend class BarSet;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QABSTRACTBARSERIES_H

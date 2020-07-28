@@ -44,7 +44,7 @@
 #include <QtCore/QSizeF>
 #include <QtCore/QDebug>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QAbstractAxis;
 
@@ -148,6 +148,6 @@ protected:
     bool m_reverseY;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // ABSTRACTDOMAIN_H

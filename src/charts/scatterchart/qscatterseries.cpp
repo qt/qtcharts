@@ -191,7 +191,7 @@
     This signal is emitted when the marker size changes to \a size.
 */
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 /*!
     Constructs a series object that is a child of \a parent.
@@ -381,6 +381,6 @@ void QScatterSeriesPrivate::initializeAnimations(QChart::AnimationOptions option
     QAbstractSeriesPrivate::initializeAnimations(options, duration, curve);
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_qscatterseries.cpp"

@@ -33,7 +33,7 @@
 #include <QtCharts/QCategoryAxis>
 #include <QtCore/QDebug>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 PolarChartCategoryAxisRadial::PolarChartCategoryAxisRadial(QCategoryAxis *axis, QGraphicsItem *item)
     : PolarChartAxisRadial(axis, item, true)
@@ -83,6 +83,6 @@ void PolarChartCategoryAxisRadial::handleCategoriesChanged()
     presenter()->layout()->invalidate();
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_polarchartcategoryaxisradial_p.cpp"

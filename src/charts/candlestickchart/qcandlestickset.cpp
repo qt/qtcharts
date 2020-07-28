@@ -30,7 +30,7 @@
 #include <QtCharts/QCandlestickSet>
 #include <private/qcandlestickset_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 /*!
     \class QCandlestickSet
@@ -447,7 +447,7 @@ bool QCandlestickSetPrivate::setTimestamp(qreal timestamp)
     return true;
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_qcandlestickset.cpp"
 #include "moc_qcandlestickset_p.cpp"

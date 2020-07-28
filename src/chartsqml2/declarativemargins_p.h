@@ -44,7 +44,7 @@
 #include <QtCore/QMargins>
 #include <private/declarativechartglobal_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeMargins : public QObject, public QMargins
 {
@@ -68,6 +68,6 @@ Q_SIGNALS:
     void rightChanged(int top, int bottom, int left, int right);
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // DECLARATIVE_MARGINS_H

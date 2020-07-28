@@ -45,7 +45,7 @@
 #include <QtGui/qevent.h>
 #include <QtGui/qtextdocument.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class Q_CHARTS_PRIVATE_EXPORT EditableAxisLabel : public QGraphicsTextItem
 {
@@ -73,6 +73,6 @@ protected:
     bool isEditEndingKeyPress(QKeyEvent *event);
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // EDITABLEAXISLABEL_P_H

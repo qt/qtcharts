@@ -37,7 +37,7 @@
 #include <QtGui/QPainter>
 #include <QtWidgets/QGraphicsSceneMouseEvent>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 LineChartItem::LineChartItem(QLineSeries *series, QGraphicsItem *item)
     : XYChart(series,item),
@@ -463,6 +463,6 @@ void LineChartItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
     QGraphicsItem::mouseDoubleClickEvent(event);
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_linechartitem_p.cpp"

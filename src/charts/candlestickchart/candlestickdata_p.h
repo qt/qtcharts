@@ -42,7 +42,7 @@
 #include <QtCharts/QCandlestickSeries>
 #include <QtCharts/private/qchartglobal_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class Q_CHARTS_PRIVATE_EXPORT CandlestickData
 {
@@ -84,6 +84,6 @@ public:
     int m_seriesCount;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // CANDLESTICKDATA_P_H

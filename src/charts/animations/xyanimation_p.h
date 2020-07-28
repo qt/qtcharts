@@ -43,7 +43,7 @@
 #include <QtCharts/private/qchartglobal_p.h>
 #include <QtCore/QPointF>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class XYChart;
 
@@ -72,6 +72,6 @@ private:
     QList<QPointF> m_newPoints;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif

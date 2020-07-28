@@ -46,7 +46,7 @@
 #include <QtCharts/QBarSet>
 #include <QtCharts/private/qchartglobal_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QBarLegendMarker;
 
@@ -71,6 +71,6 @@ private:
     Q_DECLARE_PUBLIC(QBarLegendMarker)
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QBARLEGENDMARKER_P_H

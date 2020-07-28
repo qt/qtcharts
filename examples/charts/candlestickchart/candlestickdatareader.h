@@ -33,7 +33,7 @@
 #include <QtCharts/QCandlestickSet>
 #include <QtCore/QTextStream>
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 class CandlestickDataReader : public QTextStream
 {

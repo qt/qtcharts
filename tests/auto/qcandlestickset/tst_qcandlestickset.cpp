@@ -31,7 +31,7 @@
 #include <QtCore/QDateTime>
 #include <QtTest/QtTest>
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 class tst_QCandlestickSet : public QObject
 {

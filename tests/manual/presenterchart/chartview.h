@@ -33,7 +33,7 @@
 #include <QtCharts/QChartView>
 #include <QtCore/QTimer>
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 //![1]
 class ChartView: public QChartView

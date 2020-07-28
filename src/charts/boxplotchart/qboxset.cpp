@@ -31,7 +31,7 @@
 #include <private/qboxset_p.h>
 #include <private/charthelpers_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 /*!
     \class QBoxSet
@@ -364,7 +364,7 @@ qreal QBoxSetPrivate::value(const int index)
     return m_values[index];
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_qboxset.cpp"
 #include "moc_qboxset_p.cpp"

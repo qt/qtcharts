@@ -40,7 +40,7 @@
 
 #include <QtCharts/QPieLegendMarker>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 /*!
     \class QPieSeries
@@ -993,7 +993,7 @@ void QPieSeriesPrivate::initializeGraphics(QGraphicsItem* parent)
     QAbstractSeriesPrivate::initializeGraphics(parent);
 }
 
-void QPieSeriesPrivate::initializeAnimations(QtCharts::QChart::AnimationOptions options,
+void QPieSeriesPrivate::initializeAnimations(QChart::AnimationOptions options,
                                              int duration, QEasingCurve &curve)
 {
     PieChartItem *item = static_cast<PieChartItem *>(m_item.data());
@@ -1067,7 +1067,7 @@ void QPieSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bool force
     }
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_qpieseries.cpp"
 #include "moc_qpieseries_p.cpp"

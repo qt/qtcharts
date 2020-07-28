@@ -32,7 +32,7 @@
 #include "declarativeaxes_p.h"
 #include "declarativecandlestickseries_p.h"
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 DeclarativeCandlestickSet::DeclarativeCandlestickSet(qreal timestamp, QObject *parent)
     : QCandlestickSet(timestamp, parent)
@@ -239,6 +239,6 @@ void DeclarativeCandlestickSeries::handleBrushChanged()
     }
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_declarativecandlestickseries_p.cpp"

@@ -34,7 +34,7 @@
 #include <QtCharts/QChart>
 #include <QtCore/QAbstractItemModel>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 /*!
     \class QBarModelMapper
@@ -582,7 +582,7 @@ void QBarModelMapperPrivate::initializeBarFromModel()
     blockSeriesSignals(false);
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_qbarmodelmapper.cpp"
 #include "moc_qbarmodelmapper_p.cpp"

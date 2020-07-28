@@ -30,7 +30,7 @@
 #include <QtCharts/QVCandlestickModelMapper>
 #include <private/qcandlestickmodelmapper_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 /*!
     \class QVCandlestickModelMapper
@@ -349,6 +349,6 @@ int QVCandlestickModelMapper::lastSetColumn() const
     return QCandlestickModelMapper::lastSetSection();
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_qvcandlestickmodelmapper.cpp"

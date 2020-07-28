@@ -32,7 +32,7 @@
 
 #include <QtCharts/QAbstractSeries>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QCandlestickSeriesPrivate;
 class QCandlestickSet;
@@ -126,6 +126,6 @@ private:
     friend class QCandlestickLegendMarkerPrivate;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QCANDLESTICKSERIES_H

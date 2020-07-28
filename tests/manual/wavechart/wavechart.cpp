@@ -31,7 +31,7 @@
 #include <qmath.h>
 #include <qrandom.h>
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 static const int numPoints =100;
 

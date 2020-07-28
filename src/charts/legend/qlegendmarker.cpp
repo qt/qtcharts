@@ -37,7 +37,7 @@
 #include <QtWidgets/QGraphicsSceneEvent>
 #include <QtCharts/QAbstractSeries>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 /*!
     \class QLegendMarker
@@ -352,7 +352,7 @@ void QLegendMarkerPrivate::handleShapeChange()
     m_legend->d_ptr->m_layout->invalidate();
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_qlegendmarker.cpp"
 #include "moc_qlegendmarker_p.cpp"

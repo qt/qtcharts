@@ -29,7 +29,7 @@
 
 #include <QtCharts/QHPieModelMapper>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 /*!
     \class QHPieModelMapper
@@ -277,6 +277,6 @@ void QHPieModelMapper::setColumnCount(int columnCount)
     }
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_qhpiemodelmapper.cpp"

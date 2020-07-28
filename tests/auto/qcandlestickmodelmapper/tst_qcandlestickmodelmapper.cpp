@@ -36,7 +36,7 @@
 #include <QtGui/QStandardItemModel>
 #include <QtTest/QtTest>
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 class tst_qcandlestickmodelmapper : public QObject
 {

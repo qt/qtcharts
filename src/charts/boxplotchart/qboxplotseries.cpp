@@ -41,7 +41,7 @@
 #include <QtCharts/QBoxSet>
 #include <private/qboxset_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 /*!
     \class QBoxPlotSeries
@@ -718,7 +718,7 @@ qreal QBoxPlotSeriesPrivate::max()
     return max;
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_qboxplotseries.cpp"
 #include "moc_qboxplotseries_p.cpp"

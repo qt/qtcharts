@@ -45,7 +45,7 @@
 #include <QtCharts/QAreaSeries>
 #include <QtGui/QPen>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class AreaChartItem;
 
@@ -145,6 +145,6 @@ private:
     AreaChartItem *m_item;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif

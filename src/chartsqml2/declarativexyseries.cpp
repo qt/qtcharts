@@ -33,7 +33,7 @@
 #include <QtCharts/QVXYModelMapper>
 #include <QtCharts/QHXYModelMapper>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 DeclarativeXySeries::DeclarativeXySeries()
 {
@@ -131,4 +131,4 @@ QPointF DeclarativeXySeries::at(int index)
     return QPointF(0, 0);
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE

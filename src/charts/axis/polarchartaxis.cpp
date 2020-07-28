@@ -32,7 +32,7 @@
 #include <private/chartpresenter_p.h>
 #include <QtCharts/QValueAxis>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 PolarChartAxis::PolarChartAxis(QAbstractAxis *axis, QGraphicsItem *item, bool intervalAxis)
     : ChartAxisElement(axis, item, intervalAxis)
@@ -136,6 +136,6 @@ void PolarChartAxis::handleShadesPenChanged(const QPen &pen)
         static_cast<QGraphicsPathItem *>(item)->setPen(pen);
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_polarchartaxis_p.cpp"

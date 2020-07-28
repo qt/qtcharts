@@ -30,7 +30,7 @@
 #include "declarativeaxes_p.h"
 #include <QtCharts/QAbstractAxis>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 DeclarativeAxes::DeclarativeAxes(QObject *parent) :
     QObject(parent),
@@ -65,6 +65,6 @@ void DeclarativeAxes::setAxisYRight(QAbstractAxis *axis)
     emit axisYRightChanged(axis);
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_declarativeaxes_p.cpp"

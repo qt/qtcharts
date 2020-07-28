@@ -31,7 +31,7 @@
 #include <QtCharts/private/qabstractaxis_p.h>
 #include <tst_definitions.h>
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 Q_DECLARE_METATYPE(XYDomain*)
 Q_DECLARE_METATYPE(QSizeF)

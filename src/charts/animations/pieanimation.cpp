@@ -31,7 +31,7 @@
 #include <private/piesliceanimation_p.h>
 #include <private/piechartitem_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 PieAnimation::PieAnimation(PieChartItem *item, int duration, QEasingCurve &curve)
     : ChartAnimation(item),
@@ -115,6 +115,6 @@ void PieAnimation::updateCurrentValue(const QVariant &)
     // nothing to do...
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_pieanimation_p.cpp"

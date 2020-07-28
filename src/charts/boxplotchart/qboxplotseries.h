@@ -34,7 +34,7 @@
 #include <QtCharts/QBoxSet>
 #include <QtCharts/QAbstractSeries>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QBoxPlotSeriesPrivate;
 
@@ -92,6 +92,6 @@ private:
     friend class QBoxPlotLegendMarkerPrivate;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QBOXPLOTSERIES_H

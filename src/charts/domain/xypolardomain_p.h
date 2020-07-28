@@ -42,7 +42,7 @@
 #include <QtCharts/private/qchartglobal_p.h>
 #include <QtCore/QRectF>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class Q_CHARTS_PRIVATE_EXPORT XYPolarDomain: public PolarDomain
 {
@@ -70,6 +70,6 @@ protected:
     qreal toRadialCoordinate(qreal value, bool &ok) const override;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // XYPOLARDOMAIN_H

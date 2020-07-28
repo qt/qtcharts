@@ -33,7 +33,7 @@
 #include <QtCharts/QAbstractSeries>
 #include <QtCharts/QPieSlice>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 class QPieSeriesPrivate;
 
 class Q_CHARTS_EXPORT QPieSeries : public QAbstractSeries
@@ -110,6 +110,6 @@ private:
     friend class PieChartItem;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QPIESERIES_H

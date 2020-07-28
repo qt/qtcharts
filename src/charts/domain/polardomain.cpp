@@ -31,7 +31,7 @@
 #include <private/qabstractaxis_p.h>
 #include <QtCore/QtMath>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 PolarDomain::PolarDomain(QObject *parent)
     : AbstractDomain(parent)
@@ -95,6 +95,6 @@ QPointF PolarDomain::polarCoordinateToPoint(qreal angularCoordinate, qreal radia
     return QPointF(dx, -dy);
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_polardomain_p.cpp"

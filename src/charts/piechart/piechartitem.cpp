@@ -39,7 +39,7 @@
 #include <private/chartdataset_p.h>
 #include <private/pieanimation_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 PieChartItem::PieChartItem(QPieSeries *series, QGraphicsItem* item)
     : ChartItem(series->d_func(),item),
@@ -271,6 +271,6 @@ PieSliceData PieChartItem::updateSliceGeometry(QPieSlice *slice)
     return sliceData;
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_piechartitem_p.cpp"

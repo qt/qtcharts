@@ -32,7 +32,7 @@
 #include <QtCharts/QAbstractBarSeries>
 #include <QtCharts/QBarSet>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 /*!
     \class QBarLegendMarker
@@ -148,7 +148,7 @@ void QBarLegendMarkerPrivate::updated()
         emit q_ptr->penChanged();
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_qbarlegendmarker.cpp"
 #include "moc_qbarlegendmarker_p.cpp"

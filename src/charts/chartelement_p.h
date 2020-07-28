@@ -45,7 +45,7 @@
 #include <QGraphicsObject>
 #include <QtCharts/private/qchartglobal_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class ChartAnimator;
 class ChartPresenter;
@@ -74,6 +74,6 @@ private:
     ChartDataSet *m_dataSet;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif

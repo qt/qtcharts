@@ -40,7 +40,7 @@ class QGraphicsScene;
 class QRubberBand;
 QT_END_NAMESPACE
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QChartViewPrivate;
 
@@ -86,6 +86,6 @@ private:
     Q_DISABLE_COPY(QChartView)
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QCHARTVIEW_H

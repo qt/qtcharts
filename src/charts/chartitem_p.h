@@ -44,7 +44,7 @@
 #include <QtCharts/private/qchartglobal_p.h>
 #include <QtWidgets/QGraphicsItem>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class Q_CHARTS_PRIVATE_EXPORT ChartItem : public ChartElement
 {
@@ -66,6 +66,6 @@ private:
     QAbstractSeriesPrivate* m_series;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif /* CHARTITEM_H */

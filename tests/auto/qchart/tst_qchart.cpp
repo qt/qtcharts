@@ -43,7 +43,7 @@
 #include <QtCharts/QDateTimeAxis>
 #include "tst_definitions.h"
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 Q_DECLARE_METATYPE(QAbstractAxis *)
 Q_DECLARE_METATYPE(QValueAxis *)

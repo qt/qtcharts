@@ -42,7 +42,7 @@
 #  include <QElapsedTimer>
 #endif
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 // This node draws the xy series data on a transparent background using OpenGL.
 // It is used as a child node of the chart node.
@@ -528,4 +528,4 @@ const QXYSeries *DeclarativeOpenGLRenderNode::findSeriesAtEvent(QMouseEvent *eve
     return series;
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE

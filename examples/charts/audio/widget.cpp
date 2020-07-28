@@ -40,7 +40,7 @@
 
 #include <QtWidgets/QVBoxLayout>
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 Widget::Widget(const QAudioDeviceInfo &deviceInfo, QWidget *parent) :
     QWidget(parent),

@@ -49,7 +49,7 @@ QT_BEGIN_NAMESPACE
 class QGraphicsItem;
 QT_END_NAMESPACE
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 class QPieSlice;
 class ChartPresenter;
 class PieAnimation;
@@ -103,6 +103,6 @@ private:
 
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // PIECHARTITEM_H

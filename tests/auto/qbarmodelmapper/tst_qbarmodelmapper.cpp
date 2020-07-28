@@ -38,7 +38,7 @@
 #include <QtCharts/QHBarModelMapper>
 #include <QtGui/QStandardItemModel>
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 class tst_qbarmodelmapper : public QObject
 {

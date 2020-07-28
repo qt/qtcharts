@@ -33,7 +33,7 @@
 #include <private/qabstractbarseries_p.h>
 #include <QtCharts/QBarSet>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 StackedBarChartItem::StackedBarChartItem(QAbstractBarSeries *series, QGraphicsItem* item) :
     AbstractBarChartItem(series, item)
@@ -189,6 +189,6 @@ void StackedBarChartItem::positionLabels()
     positionLabelsVertical();
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_stackedbarchartitem_p.cpp"

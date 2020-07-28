@@ -43,7 +43,7 @@
 #include <private/qabstractseries_p.h>
 #include <QtCharts/private/qchartglobal_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 class QLegendPrivate;
 
 class Q_CHARTS_PRIVATE_EXPORT QPieSeriesPrivate : public QAbstractSeriesPrivate
@@ -57,7 +57,7 @@ public:
     void initializeDomain() override;
     void initializeAxes() override;
     void initializeGraphics(QGraphicsItem* parent) override;
-    void initializeAnimations(QtCharts::QChart::AnimationOptions options, int duration,
+    void initializeAnimations(QChart::AnimationOptions options, int duration,
                               QEasingCurve &curve) override;
     void initializeTheme(int index, ChartTheme* theme, bool forced = false) override;
 
@@ -102,6 +102,6 @@ public:
     Q_DECLARE_PUBLIC(QPieSeries)
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QPIESERIES_P_H

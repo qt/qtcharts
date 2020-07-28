@@ -43,7 +43,7 @@
 #include <QtCharts/QChart>
 #include <QtCharts/private/qchartglobal_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class ChartThemeManager;
 class ChartPresenter;
@@ -76,5 +76,5 @@ public:
     void scroll(qreal dx, qreal dy);
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 #endif

@@ -36,7 +36,7 @@
 #include <QtCore/QElapsedTimer>
 #include <QtCore/QTimer>
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 class DataSource : public QObject
 {

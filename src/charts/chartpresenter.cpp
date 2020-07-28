@@ -47,7 +47,7 @@
 #include <QtWidgets/QGraphicsScene>
 #include <QtWidgets/QGraphicsView>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 ChartPresenter::ChartPresenter(QChart *chart, QChart::ChartType type)
     : QObject(chart),
@@ -611,6 +611,6 @@ void ChartPresenter::updateGLWidget()
 #endif
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_chartpresenter_p.cpp"

@@ -34,7 +34,7 @@
 #include <private/chartpresenter_p.h>
 #include <private/polarchartaxisangular_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 PolarChartAxisAngular::PolarChartAxisAngular(QAbstractAxis *axis, QGraphicsItem *item,
                                              bool intervalAxis)
@@ -643,6 +643,6 @@ void PolarChartAxisAngular::updateMinorTickItems()
     }
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_polarchartaxisangular_p.cpp"

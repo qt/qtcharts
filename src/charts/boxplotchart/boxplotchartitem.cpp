@@ -36,7 +36,7 @@
 #include <private/boxwhiskers_p.h>
 #include <QtGui/QPainter>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 BoxPlotChartItem::BoxPlotChartItem(QBoxPlotSeries *series, QGraphicsItem *item) :
     ChartItem(series->d_func(), item),
@@ -239,6 +239,6 @@ bool BoxPlotChartItem::updateBoxGeometry(BoxWhiskers *box, int index)
     return changed;
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_boxplotchartitem_p.cpp"

@@ -31,7 +31,7 @@
 #include <QtCharts/QChartView>
 #include <QtCore/QtPlugin>
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 QChartsPlugin::QChartsPlugin(QObject *parent) :
     QObject(parent)
@@ -44,22 +44,12 @@ QChartsPlugin::~QChartsPlugin()
 
 QString QChartsPlugin::name() const
 {
-    return QStringLiteral("QtCharts::QChartView");
+    return QStringLiteral("QChartView");
 }
 
 QString QChartsPlugin::includeFile() const
 {
-#ifdef linux
-    QString myNewLine = QStringLiteral("\n");
-#endif
-#ifdef WIN32
-    QString myNewLine = QStringLiteral("\n\r");
-#endif
-#ifdef __APPLE__
-    QString myNewLine = QStringLiteral("\n");
-#endif
-    return QStringLiteral("<QtCharts/QChartView>") + myNewLine
-            + QStringLiteral("#include <QtCharts/chartsnamespace.h>");
+    return QStringLiteral("<QtCharts/QChartView>");
 }
 
 QString QChartsPlugin::group() const
@@ -96,7 +86,7 @@ QString QChartsPlugin::domXml() const
 {
     return QStringLiteral("\
     <ui language=\"c++\">\
-        <widget class=\"QtCharts::QChartView\" name=\"chartview\">\
+        <widget class=\"QChartView\" name=\"chartview\">\
             <property name=\"geometry\">\
                 <rect>\
                     <x>0</x>\

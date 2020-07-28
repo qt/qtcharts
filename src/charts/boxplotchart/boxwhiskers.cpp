@@ -32,7 +32,7 @@
 #include <QtWidgets/QWidget>
 #include <QtWidgets/QGraphicsSceneMouseEvent>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 BoxWhiskers::BoxWhiskers(QBoxSet *set, AbstractDomain *domain, QGraphicsObject *parent) :
     QGraphicsObject(parent),
@@ -218,6 +218,6 @@ void BoxWhiskers::updateGeometry(AbstractDomain *domain)
     m_boundingRect.adjust(-extra, -extra, extra, extra);
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_boxwhiskers_p.cpp"

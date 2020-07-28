@@ -31,7 +31,7 @@
 #include <QtCore/QtMath>
 #include <QtCore/QDebug>
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 ChartView::ChartView(QWidget *parent)
     : QChartView(new QChart(), parent),

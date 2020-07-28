@@ -35,7 +35,7 @@
 #include <private/qcandlestickseries_p.h>
 #include <private/candlestickanimation_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 CandlestickChartItem::CandlestickChartItem(QCandlestickSeries *series, QGraphicsItem *item)
     : ChartItem(series->d_func(), item),
@@ -343,6 +343,6 @@ void CandlestickChartItem::updateTimePeriod()
     m_timePeriod = timePeriod;
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_candlestickchartitem_p.cpp"

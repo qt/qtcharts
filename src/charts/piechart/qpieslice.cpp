@@ -30,7 +30,7 @@
 #include <QtCharts/QPieSlice>
 #include <private/qpieslice_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 /*!
     \class QPieSlice
@@ -835,7 +835,7 @@ void QPieSlicePrivate::setAngleSpan(qreal span)
     }
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_qpieslice.cpp"
 #include "moc_qpieslice_p.cpp"

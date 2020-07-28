@@ -36,7 +36,7 @@
 #include <QtCharts/QLineSeries>
 #include <QtCharts/QChartView>
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 class WaveChart: public QChartView
 {

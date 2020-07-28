@@ -43,7 +43,7 @@
 #include <QtCharts/private/qchartglobal_p.h>
 #include <QtCore/QSizeF>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class Q_CHARTS_PRIVATE_EXPORT BoxWhiskersData
 {
@@ -85,6 +85,6 @@ public:
     int m_seriesCount;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // BOXWHISKERSDATA_P_H

@@ -32,7 +32,7 @@
 #include <private/polarchartaxis_p.h>
 #include <QtCore/QDebug>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 PolarChartLayout::PolarChartLayout(ChartPresenter *presenter)
     : AbstractChartLayout(presenter)
@@ -90,4 +90,4 @@ QRectF PolarChartLayout::calculateAxisMinimum(const QRectF &minimum, const QList
     return minimum;
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE

@@ -35,7 +35,7 @@
 #include <QtCharts/QScatterSeries>
 #endif
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 /*!
     \class QXYLegendMarker
@@ -160,7 +160,7 @@ void QXYLegendMarkerPrivate::updated()
         emit q_ptr->brushChanged();
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_qxylegendmarker.cpp"
 #include "moc_qxylegendmarker_p.cpp"

@@ -32,7 +32,7 @@
 #include <QtCharts/QVBarModelMapper>
 #include <QtCharts/QHBarModelMapper>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 DeclarativeBarSet::DeclarativeBarSet(QObject *parent)
     : QBarSet("", parent)
@@ -513,6 +513,6 @@ DeclarativeBarSet *DeclarativeHorizontalPercentBarSeries::insert(int index, QStr
     return 0;
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_declarativebarseries_p.cpp"

@@ -51,7 +51,7 @@
 #include <QtGui/QTextDocument>
 #include <QtCore/QtMath>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 LegendMarkerItem::LegendMarkerItem(QLegendMarkerPrivate *marker, QGraphicsObject *parent) :
     QGraphicsObject(parent),
@@ -382,6 +382,6 @@ bool LegendMarkerItem::useMaxWidth() const
             || m_marker->m_legend->alignment() == Qt::AlignRight);
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_legendmarkeritem_p.cpp"

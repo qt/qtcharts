@@ -42,7 +42,7 @@
 #include <private/qabstractseries_p.h>
 #include <QtCharts/private/qchartglobal_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class CandlestickAnimation;
 class QBarCategoryAxis;
@@ -109,6 +109,6 @@ private:
     Q_DECLARE_PUBLIC(QCandlestickSeries)
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QCANDLESTICKSERIES_P_H

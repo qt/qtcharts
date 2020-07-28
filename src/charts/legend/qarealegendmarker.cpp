@@ -32,7 +32,7 @@
 #include <private/qareaseries_p.h>
 #include <QtCharts/QAreaSeries>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 /*!
     \class QAreaLegendMarker
@@ -129,7 +129,7 @@ void QAreaLegendMarkerPrivate::updated()
         emit q_ptr->brushChanged();
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_qarealegendmarker.cpp"
 #include "moc_qarealegendmarker_p.cpp"

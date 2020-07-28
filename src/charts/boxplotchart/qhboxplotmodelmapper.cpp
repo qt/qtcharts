@@ -30,7 +30,7 @@
 
 #include <QtCharts/QHBoxPlotModelMapper>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 /*!
     \class QHBoxPlotModelMapper
@@ -298,6 +298,6 @@ void QHBoxPlotModelMapper::setColumnCount(int columnCount)
     }
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_qhboxplotmodelmapper.cpp"

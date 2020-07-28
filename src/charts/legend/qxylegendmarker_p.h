@@ -45,7 +45,7 @@
 #include <QtCharts/QXYSeries>
 #include <QtCharts/private/qchartglobal_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QXYLegendMarker;
 
@@ -69,6 +69,6 @@ private:
     Q_DECLARE_PUBLIC(QXYLegendMarker)
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QXYLEGENDMARKER_P_H

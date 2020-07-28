@@ -42,7 +42,7 @@
 #include <QtGui/QPainter>
 #include <QtGui/QTextDocument>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 AbstractBarChartItem::AbstractBarChartItem(QAbstractBarSeries *series, QGraphicsItem* item) :
     ChartItem(series->d_func(),item),
@@ -374,7 +374,7 @@ void AbstractBarChartItem::positionLabels()
     }
 }
 
-void AbstractBarChartItem::handleBarValueChange(int index, QtCharts::QBarSet *barset)
+void AbstractBarChartItem::handleBarValueChange(int index, QBarSet *barset)
 {
     markLabelsDirty(barset, index, 1);
     handleLayoutChanged();
@@ -727,6 +727,6 @@ ChartAnimation *AbstractBarChartItem::animation() const
     return m_animation;
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_abstractbarchartitem_p.cpp"

@@ -33,7 +33,7 @@
 #include <private/chartdataset_p.h>
 #include <private/charttheme_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 /*!
     \class QHorizontalStackedBarSeries
     \inmodule QtCharts
@@ -123,6 +123,6 @@ void QHorizontalStackedBarSeriesPrivate::initializeGraphics(QGraphicsItem *paren
     QAbstractSeriesPrivate::initializeGraphics(parent);
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_qhorizontalstackedbarseries.cpp"

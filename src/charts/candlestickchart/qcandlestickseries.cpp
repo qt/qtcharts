@@ -41,7 +41,7 @@
 #include <private/qcandlestickset_p.h>
 #include <private/qchart_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 /*!
     \class QCandlestickSeries
@@ -1155,7 +1155,7 @@ void QCandlestickSeriesPrivate::populateBarCategories(QBarCategoryAxis *axis)
     }
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_qcandlestickseries.cpp"
 #include "moc_qcandlestickseries_p.cpp"

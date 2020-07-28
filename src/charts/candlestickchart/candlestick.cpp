@@ -33,7 +33,7 @@
 #include <private/candlestick_p.h>
 #include <private/qchart_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 Candlestick::Candlestick(QCandlestickSet *set, AbstractDomain *domain, QGraphicsObject *parent)
     : QGraphicsObject(parent),
@@ -346,6 +346,6 @@ void Candlestick::updateGeometry(AbstractDomain *domain)
     m_boundingRect.adjust(-extra, -extra, extra, extra);
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_candlestick_p.cpp"

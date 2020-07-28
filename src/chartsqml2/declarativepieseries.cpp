@@ -32,7 +32,7 @@
 #include <QtCharts/QVPieModelMapper>
 #include <QtCharts/QHPieModelMapper>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 DeclarativePieSlice::DeclarativePieSlice(QObject *parent)
     : QPieSlice(parent)
@@ -158,6 +158,6 @@ void DeclarativePieSeries::handleRemoved(const QList<QPieSlice *> &slices)
         emit sliceRemoved(slice);
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_declarativepieseries_p.cpp"

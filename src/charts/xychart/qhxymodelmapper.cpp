@@ -29,7 +29,7 @@
 
 #include <QtCharts/QHXYModelMapper>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 /*!
     \class QHXYModelMapper
@@ -271,6 +271,6 @@ void QHXYModelMapper::setColumnCount(int columnCount)
     }
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_qhxymodelmapper.cpp"

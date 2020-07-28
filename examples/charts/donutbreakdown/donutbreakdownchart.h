@@ -32,7 +32,7 @@
 #include <QtCharts/QChart>
 #include <QtCharts/QPieSeries>
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 class DonutBreakdownChart : public QChart
 {

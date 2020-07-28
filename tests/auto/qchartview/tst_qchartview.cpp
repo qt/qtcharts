@@ -34,7 +34,7 @@
 #include <tst_definitions.h>
 #include <QtCharts/QValueAxis>
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 
 Q_DECLARE_METATYPE(QChart*)

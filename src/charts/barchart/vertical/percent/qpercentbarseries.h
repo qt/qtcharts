@@ -33,7 +33,7 @@
 #include <QtCore/QStringList>
 #include <QtCharts/QAbstractBarSeries>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QPercentBarSeriesPrivate;
 
@@ -50,6 +50,6 @@ private:
     Q_DISABLE_COPY(QPercentBarSeries)
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QPERCENTBARSERIES_H

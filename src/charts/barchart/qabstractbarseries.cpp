@@ -41,7 +41,7 @@
 #include <private/abstractbarchartitem_p.h>
 #include <private/qchart_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 /*!
     \class QAbstractBarSeries
@@ -1262,7 +1262,7 @@ void QAbstractBarSeriesPrivate::initializeAnimations(QChart::AnimationOptions op
     QAbstractSeriesPrivate::initializeAnimations(options, duration, curve);
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_qabstractbarseries.cpp"
 #include "moc_qabstractbarseries_p.cpp"

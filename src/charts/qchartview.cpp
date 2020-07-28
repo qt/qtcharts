@@ -64,7 +64,7 @@
     \sa QChart, QPolarChart
 */
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 /*!
     Constructs a chart view object with the parent \a parent.
@@ -347,6 +347,6 @@ void QChartViewPrivate::resize()
     q_ptr->setSceneRect(m_chart->geometry());
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_qchartview.cpp"

@@ -32,7 +32,7 @@
 
 #include <algorithm>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 /*!
     \qmltype CategoryRange
@@ -143,6 +143,6 @@ void DeclarativeCategoryAxis::setLabelsPosition(AxisLabelsPosition position)
     }
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_declarativecategoryaxis_p.cpp"

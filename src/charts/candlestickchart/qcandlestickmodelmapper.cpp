@@ -35,7 +35,7 @@
 
 #include <algorithm>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 /*!
     \class QCandlestickModelMapper
@@ -715,7 +715,7 @@ void QCandlestickModelMapperPrivate::blockSeriesSignals(bool block)
     m_seriesSignalsBlock = block;
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_qcandlestickmodelmapper.cpp"
 #include "moc_qcandlestickmodelmapper_p.cpp"

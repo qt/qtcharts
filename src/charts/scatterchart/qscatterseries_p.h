@@ -42,7 +42,7 @@
 #include <private/qxyseries_p.h>
 #include <QtCharts/private/qchartglobal_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class Q_CHARTS_PRIVATE_EXPORT QScatterSeriesPrivate: public QXYSeriesPrivate
 {
@@ -50,7 +50,7 @@ public:
     QScatterSeriesPrivate(QScatterSeries *q);
     void initializeGraphics(QGraphicsItem* parent) override;
     void initializeTheme(int index, ChartTheme* theme, bool forced = false) override;
-    void initializeAnimations(QtCharts::QChart::AnimationOptions options, int duration,
+    void initializeAnimations(QChart::AnimationOptions options, int duration,
                               QEasingCurve &curve) override;
 
 private:
@@ -59,6 +59,6 @@ private:
     Q_DECLARE_PUBLIC(QScatterSeries)
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif

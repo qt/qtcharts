@@ -31,7 +31,7 @@
 #include <private/chartpresenter_p.h>
 #include <private/abstractchartlayout_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 PolarChartValueAxisRadial::PolarChartValueAxisRadial(QValueAxis *axis, QGraphicsItem *item)
     : PolarChartAxisRadial(axis, item)
@@ -95,6 +95,6 @@ void PolarChartValueAxisRadial::handleLabelFormatChanged(const QString &format)
         presenter()->layout()->invalidate();
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_polarchartvalueaxisradial_p.cpp"

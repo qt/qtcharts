@@ -29,7 +29,7 @@
 
 #include "customslice.h"
 
-QT_CHARTS_USE_NAMESPACE
+QT_USE_NAMESPACE
 
 CustomSlice::CustomSlice(QString label, qreal value)
     : QPieSlice(label, value)

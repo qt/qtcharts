@@ -46,7 +46,7 @@
 #include <QtCharts/private/qchartglobal_p.h>
 #include <QtGui/QPen>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class ChartPresenter;
 class QXYSeries;
@@ -104,6 +104,6 @@ protected:
     friend class AreaChartItem;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif

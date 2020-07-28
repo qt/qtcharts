@@ -37,7 +37,7 @@
 #include <QtGui/QBrush>
 #include <QtGui/QFont>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QLegendMarkerPrivate;
 class QAbstractSeries;
@@ -63,7 +63,7 @@ public:
     Q_PROPERTY(QPen pen READ pen WRITE setPen NOTIFY penChanged)
     Q_PROPERTY(QBrush brush READ brush WRITE setBrush NOTIFY brushChanged)
     Q_PROPERTY(bool visible READ isVisible WRITE setVisible NOTIFY visibleChanged)
-    Q_PROPERTY(QtCharts::QLegend::MarkerShape shape READ shape WRITE setShape NOTIFY shapeChanged)
+    Q_PROPERTY(QLegend::MarkerShape shape READ shape WRITE setShape NOTIFY shapeChanged)
     Q_ENUMS(LegendMarkerType)
 
 public:
@@ -118,6 +118,6 @@ private:
     Q_DISABLE_COPY(QLegendMarker)
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QLEGENDMARKER_H

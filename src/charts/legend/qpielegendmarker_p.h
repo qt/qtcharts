@@ -46,7 +46,7 @@
 #include <QtCharts/QPieSlice>
 #include <QtCharts/private/qchartglobal_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QPieLegendMarker;
 
@@ -73,6 +73,6 @@ private:
     Q_DECLARE_PUBLIC(QPieLegendMarker)
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QPIELEGENDMARKER_P_H

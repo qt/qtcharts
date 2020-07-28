@@ -32,10 +32,10 @@
 #include <private/candlestickbodywicksanimation_p.h>
 
 Q_DECLARE_METATYPE(QList<QRectF>)
-Q_DECLARE_METATYPE(QT_CHARTS_NAMESPACE::CandlestickData)
+Q_DECLARE_METATYPE(CandlestickData)
 Q_DECLARE_METATYPE(qreal)
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 CandlestickBodyWicksAnimation::CandlestickBodyWicksAnimation(Candlestick *candlestick,
                                                              CandlestickAnimation *animation,
@@ -107,6 +107,6 @@ QVariant CandlestickBodyWicksAnimation::interpolated(const QVariant &from, const
     return QVariant::fromValue(result);
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_candlestickbodywicksanimation_p.cpp"

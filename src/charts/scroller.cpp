@@ -32,7 +32,7 @@
 #include <QtWidgets/QGraphicsSceneMouseEvent>
 #include <QtCore/QDebug>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 Scroller::Scroller()
     : m_ticker(this),
@@ -220,6 +220,6 @@ void ScrollTicker::timerEvent(QTimerEvent *event)
     m_scroller->scrollTick();
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_scroller_p.cpp"

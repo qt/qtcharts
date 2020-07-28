@@ -37,15 +37,15 @@
 
 Q_MOC_INCLUDE(<QtCharts/qlineseries.h>)
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 class QLineSeries;
 class QAreaSeriesPrivate;
 
 class Q_CHARTS_EXPORT QAreaSeries : public QAbstractSeries
 {
     Q_OBJECT
-    Q_PROPERTY(QtCharts::QLineSeries *upperSeries READ upperSeries)
-    Q_PROPERTY(QtCharts::QLineSeries *lowerSeries READ lowerSeries)
+    Q_PROPERTY(QLineSeries *upperSeries READ upperSeries)
+    Q_PROPERTY(QLineSeries *lowerSeries READ lowerSeries)
     Q_PROPERTY(QColor color READ color WRITE setColor NOTIFY colorChanged)
     Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor NOTIFY borderColorChanged)
     Q_PROPERTY(QString pointLabelsFormat READ pointLabelsFormat WRITE setPointLabelsFormat NOTIFY pointLabelsFormatChanged)
@@ -120,6 +120,6 @@ private:
     friend class QAreaLegendMarkerPrivate;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QAREASERIES_H

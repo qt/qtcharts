@@ -106,7 +106,7 @@
     The number of data points in the series.
 */
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 /*!
     Constructs an empty series object that is a child of \a parent.
@@ -170,7 +170,7 @@ void QSplineSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bool fo
     }
 }
 
-void QSplineSeriesPrivate::initializeAnimations(QtCharts::QChart::AnimationOptions options,
+void QSplineSeriesPrivate::initializeAnimations(QChart::AnimationOptions options,
                                                 int duration, QEasingCurve &curve)
 {
     SplineChartItem *item = static_cast<SplineChartItem *>(m_item.data());
@@ -185,7 +185,7 @@ void QSplineSeriesPrivate::initializeAnimations(QtCharts::QChart::AnimationOptio
     QAbstractSeriesPrivate::initializeAnimations(options, duration, curve);
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_qsplineseries.cpp"
 #include "moc_qsplineseries_p.cpp"

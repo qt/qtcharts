@@ -38,7 +38,7 @@
 #include <QtCore/QDebug>
 #include <QtWidgets/QGraphicsSceneMouseEvent>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 ScatterChartItem::ScatterChartItem(QScatterSeries *series, QGraphicsItem *item)
     : XYChart(series,item),
@@ -293,6 +293,6 @@ void ScatterChartItem::handleUpdated()
         update();
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_scatterchartitem_p.cpp"

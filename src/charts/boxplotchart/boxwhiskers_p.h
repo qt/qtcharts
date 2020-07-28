@@ -49,7 +49,7 @@
 #include <QtWidgets/QGraphicsLayoutItem>
 #include <QtGui/QPainterPath>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QBarSet;
 
@@ -114,6 +114,6 @@ private:
     bool m_mousePressed;
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // BOXWHISKERS_H

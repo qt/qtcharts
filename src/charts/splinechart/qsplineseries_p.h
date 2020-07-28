@@ -42,7 +42,7 @@
 #include <private/qlineseries_p.h>
 #include <QtCharts/private/qchartglobal_p.h>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 
 class Q_CHARTS_PRIVATE_EXPORT QSplineSeriesPrivate: public QLineSeriesPrivate
@@ -53,13 +53,13 @@ public:
 
     void initializeTheme(int index, ChartTheme* theme, bool forced = false) override;
     void initializeGraphics(QGraphicsItem* parent) override;
-    void initializeAnimations(QtCharts::QChart::AnimationOptions options, int duration,
+    void initializeAnimations(QChart::AnimationOptions options, int duration,
                               QEasingCurve &curve) override;
 
 private:
     Q_DECLARE_PUBLIC(QSplineSeries)
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif

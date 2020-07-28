@@ -33,7 +33,7 @@
 #include <QtCharts/QPieSlice>
 #include <QtCore/QAbstractItemModel>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 QPieModelMapper::QPieModelMapper(QObject *parent)
     : QObject(parent),
@@ -572,7 +572,7 @@ void QPieModelMapperPrivate::initializePieFromModel()
     blockSeriesSignals(false);
 }
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #include "moc_qpiemodelmapper_p.cpp"
 #include "moc_qpiemodelmapper.cpp"

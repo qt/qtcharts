@@ -35,7 +35,7 @@
 #include <QtGui/QFont>
 #include <QtCore/QVariant>
 
-QT_CHARTS_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 class QAbstractAxisPrivate;
 
@@ -218,6 +218,6 @@ private:
     Q_DISABLE_COPY(QAbstractAxis)
 };
 
-QT_CHARTS_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif // QABSTRACTAXIS_H
