@@ -693,14 +693,14 @@ void DeclarativeChart::handleAxisYRightSet(QAbstractAxis *axis)
     }
 }
 
-void DeclarativeChart::geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry)
+void DeclarativeChart::geometryChange(const QRectF &newGeometry, const QRectF &oldGeometry)
 {
     if (newGeometry.isValid()) {
         if (newGeometry.width() > 0 && newGeometry.height() > 0) {
             m_chart->resize(newGeometry.width(), newGeometry.height());
         }
     }
-    QQuickItem::geometryChanged(newGeometry, oldGeometry);
+    QQuickItem::geometryChange(newGeometry, oldGeometry);
 }
 
 QSGNode *DeclarativeChart::updatePaintNode(QSGNode *oldNode, QQuickItem::UpdatePaintNodeData *)

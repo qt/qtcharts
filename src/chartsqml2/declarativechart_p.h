@@ -128,7 +128,7 @@ public:
 public: // From parent classes
     void childEvent(QChildEvent *event) override;
     void componentComplete() override;
-    void geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry) override;
+    void geometryChange(const QRectF &newGeometry, const QRectF &oldGeometry) override;
     QSGNode *updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *) override;
 protected:
     void mousePressEvent(QMouseEvent *event) override;
