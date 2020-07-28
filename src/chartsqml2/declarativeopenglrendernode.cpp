@@ -35,6 +35,7 @@
 #include <QtOpenGL/QOpenGLFramebufferObject>
 #include <QOpenGLShaderProgram>
 #include <QtOpenGL/QOpenGLBuffer>
+#include <QQuickOpenGLUtils>
 
 //#define QDEBUG_TRACE_GL_FPS
 #ifdef QDEBUG_TRACE_GL_FPS
@@ -192,7 +193,7 @@ void DeclarativeOpenGLRenderNode::recreateFBO()
 
     delete m_texture;
     uint textureId = m_resolvedFbo ? m_resolvedFbo->texture() : m_fbo->texture();
-    m_texture = m_window->createTextureFromId(textureId, m_textureSize, m_textureOptions);
+    m_texture = m_window->createTextureFromNativeObject(QQuickWindow::NativeObjectTexture, 0, qint64(textureId), m_textureSize, m_textureOptions);
     if (!m_imageNode) {
         m_imageNode = m_window->createImageNode();
         m_imageNode->setFiltering(QSGTexture::Linear);
@@ -410,7 +411,7 @@ void DeclarativeOpenGLRenderNode::render()
         m_renderNeeded = false;
     }
     handleMouseEvents();
-    m_window->resetOpenGLState();
+    QQuickOpenGLUtils::resetOpenGLState();
 }
 
 void DeclarativeOpenGLRenderNode::cleanXYSeriesResources(const QXYSeries *series)
