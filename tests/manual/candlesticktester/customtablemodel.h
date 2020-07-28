@@ -67,7 +67,7 @@ public:
 private:
     QStringList m_categories;
     QList<QList<qreal> *> m_data;
-    QHash<QString, QRect> m_mapping;
+    QMultiHash<QString, QRect> m_mapping;
 };
 
 #endif // CUSTOMTABLEMODEL_H

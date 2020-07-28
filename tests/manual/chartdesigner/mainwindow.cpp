@@ -241,10 +241,10 @@ void MainWindow::updateUI()
     QItemSelectionModel* selection = m_table->selectionModel();
     const QModelIndexList& list = selection->selectedIndexes();
 
-    QMap<int, QModelIndex> columns;
+    QMultiMap<int, QModelIndex> columns;
 
     foreach (const QModelIndex& index, list) {
-        columns.insertMulti(index.column(), index);
+        columns.insert(index.column(), index);
     }
 
     QList<int> keys = columns.uniqueKeys();
