@@ -828,8 +828,8 @@ void DeclarativeChart::renderScene()
 
 void DeclarativeChart::mousePressEvent(QMouseEvent *event)
 {
-    m_mousePressScenePoint = event->pos();
-    m_mousePressScreenPoint = event->globalPos();
+    m_mousePressScenePoint = event->position();
+    m_mousePressScreenPoint = event->globalPosition().toPoint();
     m_lastMouseMoveScenePoint = m_mousePressScenePoint;
     m_lastMouseMoveScreenPoint = m_mousePressScreenPoint;
     m_mousePressButton = event->button();
@@ -859,8 +859,8 @@ void DeclarativeChart::mouseReleaseEvent(QMouseEvent *event)
     mouseEvent.setWidget(0);
     mouseEvent.setButtonDownScenePos(m_mousePressButton, m_mousePressScenePoint);
     mouseEvent.setButtonDownScreenPos(m_mousePressButton, m_mousePressScreenPoint);
-    mouseEvent.setScenePos(event->pos());
-    mouseEvent.setScreenPos(event->globalPos());
+    mouseEvent.setScenePos(event->position());
+    mouseEvent.setScreenPos(event->globalPosition().toPoint());
     mouseEvent.setLastScenePos(m_lastMouseMoveScenePoint);
     mouseEvent.setLastScreenPos(m_lastMouseMoveScreenPoint);
     mouseEvent.setButtons(event->buttons());
@@ -887,11 +887,11 @@ void DeclarativeChart::hoverMoveEvent(QHoverEvent *event)
     mouseEvent.setWidget(0);
     mouseEvent.setButtonDownScenePos(m_mousePressButton, m_mousePressScenePoint);
     mouseEvent.setButtonDownScreenPos(m_mousePressButton, m_mousePressScreenPoint);
-    mouseEvent.setScenePos(event->pos());
+    mouseEvent.setScenePos(event->position());
     // Hover events do not have global pos in them, and the screen position doesn't seem to
     // matter anyway in this use case, so just pass event pos instead of trying to
     // calculate the real screen position.
-    mouseEvent.setScreenPos(event->pos());
+    mouseEvent.setScreenPos(event->position().toPoint());
     mouseEvent.setLastScenePos(m_lastMouseMoveScenePoint);
     mouseEvent.setLastScreenPos(m_lastMouseMoveScreenPoint);
     mouseEvent.setButtons(m_mousePressButtons);
@@ -907,7 +907,7 @@ void DeclarativeChart::hoverMoveEvent(QHoverEvent *event)
     // position to avoid infinite loop.
     if (m_glXYDataManager->dataMap().size() && previousLastScenePoint != m_lastMouseMoveScenePoint) {
         QMouseEvent *newEvent = new QMouseEvent(QEvent::MouseMove,
-                                                event->pos() - m_adjustedPlotArea.topLeft(),
+                                                event->position() - m_adjustedPlotArea.topLeft(),
                                                 m_mousePressButton,
                                                 m_mousePressButtons,
                                                 event->modifiers());
@@ -918,8 +918,8 @@ void DeclarativeChart::hoverMoveEvent(QHoverEvent *event)
 
 void DeclarativeChart::mouseDoubleClickEvent(QMouseEvent *event)
 {
-    m_mousePressScenePoint = event->pos();
-    m_mousePressScreenPoint = event->globalPos();
+    m_mousePressScenePoint = event->position();
+    m_mousePressScreenPoint = event->globalPosition().toPoint();
     m_lastMouseMoveScenePoint = m_mousePressScenePoint;
     m_lastMouseMoveScreenPoint = m_mousePressScreenPoint;
     m_mousePressButton = event->button();
@@ -1471,7 +1471,7 @@ void DeclarativeChart::queueRendererMouseEvent(QMouseEvent *event)
 {
     if (m_glXYDataManager->dataMap().size()) {
         QMouseEvent *newEvent = new QMouseEvent(event->type(),
-                                                event->pos() - m_adjustedPlotArea.topLeft(),
+                                                event->position() - m_adjustedPlotArea.topLeft(),
                                                 event->button(),
                                                 event->buttons(),
                                                 event->modifiers());
