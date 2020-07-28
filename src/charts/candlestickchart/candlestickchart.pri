@@ -10,7 +10,7 @@ SOURCES += \
     $$PWD/qhcandlestickmodelmapper.cpp \
     $$PWD/qvcandlestickmodelmapper.cpp
 
-PRIVATE_HEADERS += \
+HEADERS += \
     $$PWD/candlestick_p.h \
     $$PWD/candlestickchartitem_p.h \
     $$PWD/candlestickdata_p.h \
@@ -18,7 +18,7 @@ PRIVATE_HEADERS += \
     $$PWD/qcandlestickset_p.h \
     $$PWD/qcandlestickmodelmapper_p.h
 
-PUBLIC_HEADERS += \
+HEADERS += \
     $$PWD/qcandlestickseries.h \
     $$PWD/qcandlestickset.h \
     $$PWD/qcandlestickmodelmapper.h \

@@ -4,9 +4,9 @@ SOURCES += \
     $$PWD/qsplineseries.cpp \
     $$PWD/splinechartitem.cpp
 
-PRIVATE_HEADERS += \
+HEADERS += \
     $$PWD/splinechartitem_p.h \
     $$PWD/qsplineseries_p.h
 
-PUBLIC_HEADERS += \
+HEADERS += \
     $$PWD/qsplineseries.h

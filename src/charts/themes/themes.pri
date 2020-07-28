@@ -1,6 +1,6 @@
 INCLUDEPATH += $$PWD
 
-THEMES += \ 
+HEADERS += \
     $$PWD/charttheme_p.h \
     $$PWD/chartthemesystem_p.h \
     $$PWD/chartthemelight_p.h \

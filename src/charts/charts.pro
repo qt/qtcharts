@@ -25,7 +25,7 @@ SOURCES += \
 
 qtConfig(opengl): SOURCES += $$PWD/glwidget.cpp
 
-PRIVATE_HEADERS += \
+HEADERS += \
     $$PWD/chartdataset_p.h \
     $$PWD/chartitem_p.h \
     $$PWD/chartpresenter_p.h \
@@ -41,9 +41,9 @@ PRIVATE_HEADERS += \
     $$PWD/charthelpers_p.h \
     $$PWD/qchartglobal_p.h
 
-qtConfig(opengl): PRIVATE_HEADERS += $$PWD/glwidget_p.h
+qtConfig(opengl): HEADERS += $$PWD/glwidget_p.h
 
-PUBLIC_HEADERS += \
+HEADERS += \
     $$PWD/qchart.h \
     $$PWD/qchartglobal.h \
     $$PWD/qabstractseries.h \
@@ -66,10 +66,6 @@ qtConfig(charts-scatter-chart): include($$PWD/scatterchart/scatter.pri)
 qtConfig(charts-spline-chart): include($$PWD/splinechart/splinechart.pri)
 qtConfig(charts-boxplot-chart): include($$PWD/boxplotchart/boxplotchart.pri)
 qtConfig(charts-candlestick-chart): include($$PWD/candlestickchart/candlestickchart.pri)
-
-HEADERS += $$PUBLIC_HEADERS
-HEADERS += $$PRIVATE_HEADERS
-HEADERS += $$THEMES
 
 OTHER_FILES += doc/qtcharts.qdocconf \
                doc/src/* \

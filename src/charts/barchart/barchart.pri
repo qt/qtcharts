@@ -29,7 +29,7 @@ SOURCES += \
     $$PWD/horizontal/percent/qhorizontalpercentbarseries.cpp \
     $$PWD/horizontal/percent/horizontalpercentbarchartitem.cpp
 
-PRIVATE_HEADERS += \
+HEADERS += \
     $$PWD/bar_p.h \
     $$PWD/qbarset_p.h \
     $$PWD/abstractbarchartitem_p.h \
@@ -48,7 +48,7 @@ PRIVATE_HEADERS += \
     $$PWD/horizontal/percent/qhorizontalpercentbarseries_p.h \
     $$PWD/horizontal/percent/horizontalpercentbarchartitem_p.h
 
-PUBLIC_HEADERS += \
+HEADERS += \
     $$PWD/qabstractbarseries.h \
     $$PWD/qbarset.h \
     $$PWD/qbarmodelmapper.h \

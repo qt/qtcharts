@@ -4,9 +4,9 @@ SOURCES += \
     $$PWD/linechartitem.cpp \
     $$PWD/qlineseries.cpp 
     
-PRIVATE_HEADERS += \
+HEADERS += \
     $$PWD/linechartitem_p.h \
     $$PWD/qlineseries_p.h
     
-PUBLIC_HEADERS += \    
+HEADERS += \
     $$PWD/qlineseries.h  

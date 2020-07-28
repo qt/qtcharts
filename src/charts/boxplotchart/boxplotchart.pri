@@ -9,7 +9,7 @@ SOURCES += \
     $$PWD/qhboxplotmodelmapper.cpp \
     $$PWD/qvboxplotmodelmapper.cpp
 
-PRIVATE_HEADERS += \
+HEADERS += \
     $$PWD/boxplotchartitem_p.h \
     $$PWD/qboxplotseries_p.h \
     $$PWD/boxwhiskers_p.h \
@@ -17,7 +17,7 @@ PRIVATE_HEADERS += \
     $$PWD/qboxset_p.h \
     $$PWD/qboxplotmodelmapper_p.h
 
-PUBLIC_HEADERS += \
+HEADERS += \
     $$PWD/qboxplotseries.h \
     $$PWD/qboxset.h \
     $$PWD/qboxplotmodelmapper.h \

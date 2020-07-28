@@ -14,7 +14,7 @@ SOURCES += \
     $$PWD/logxlogydomain.cpp \
     $$PWD/logxlogypolardomain.cpp
 
-PRIVATE_HEADERS += \
+HEADERS += \
     $$PWD/abstractdomain_p.h \
     $$PWD/polardomain_p.h \
     $$PWD/xydomain_p.h \

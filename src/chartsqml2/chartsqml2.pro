@@ -22,7 +22,7 @@ SOURCES += \
     declarativepolarchart.cpp \
     declarativechartnode.cpp
 
-PRIVATE_HEADERS += \
+HEADERS += \
     declarativechart_p.h \
     declarativexypoint_p.h \
     declarativexyseries_p.h \
@@ -36,42 +36,41 @@ PRIVATE_HEADERS += \
 
 qtConfig(opengl) {
     SOURCES += declarativeopenglrendernode.cpp
-    PRIVATE_HEADERS += declarativeopenglrendernode_p.h
+    HEADERS += declarativeopenglrendernode_p.h
 }
 qtConfig(charts-line-chart) {
     SOURCES += declarativelineseries.cpp
-    PRIVATE_HEADERS += declarativelineseries_p.h
+    HEADERS += declarativelineseries_p.h
 }
 qtConfig(charts-spline-chart) {
     SOURCES += declarativesplineseries.cpp
-    PRIVATE_HEADERS += declarativesplineseries_p.h
+    HEADERS += declarativesplineseries_p.h
 }
 qtConfig(charts-area-chart) {
     SOURCES += declarativeareaseries.cpp
-    PRIVATE_HEADERS += declarativeareaseries_p.h
+    HEADERS += declarativeareaseries_p.h
 }
 qtConfig(charts-scatter-chart) {
     SOURCES += declarativescatterseries.cpp
-    PRIVATE_HEADERS += declarativescatterseries_p.h
+    HEADERS += declarativescatterseries_p.h
 }
 qtConfig(charts-pie-chart) {
     SOURCES += declarativepieseries.cpp
-    PRIVATE_HEADERS += declarativepieseries_p.h
+    HEADERS += declarativepieseries_p.h
 }
 qtConfig(charts-bar-chart) {
     SOURCES += declarativebarseries.cpp
-    PRIVATE_HEADERS += declarativebarseries_p.h
+    HEADERS += declarativebarseries_p.h
 }
 qtConfig(charts-boxplot-chart) {
     SOURCES += declarativeboxplotseries.cpp
-    PRIVATE_HEADERS += declarativeboxplotseries_p.h
+    HEADERS += declarativeboxplotseries_p.h
 }
 qtConfig(charts-candlestick-chart) {
     SOURCES += declarativecandlestickseries.cpp
-    PRIVATE_HEADERS += declarativecandlestickseries_p.h
+    HEADERS += declarativecandlestickseries_p.h
 }
 
-HEADERS += $$PRIVATE_HEADERS
 INCLUDEPATH += $$PWD
 
 IMPORT_VERSION = 2.$$QT_MINOR_VERSION

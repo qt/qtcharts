@@ -27,7 +27,7 @@ SOURCES += \
     $$PWD/logvalueaxis/qlogvalueaxis.cpp \
     $$PWD/editableaxislabel.cpp
 
-PRIVATE_HEADERS += \
+HEADERS += \
     $$PWD/chartaxiselement_p.h \
     $$PWD/cartesianchartaxis_p.h \
     $$PWD/qabstractaxis_p.h \
@@ -49,7 +49,7 @@ PRIVATE_HEADERS += \
     $$PWD/logvalueaxis/qlogvalueaxis_p.h \
     $$PWD/editableaxislabel_p.h
 
-PUBLIC_HEADERS += \
+HEADERS += \
     $$PWD/qabstractaxis.h \
     $$PWD/valueaxis/qvalueaxis.h \
     $$PWD/barcategoryaxis/qbarcategoryaxis.h \
@@ -68,7 +68,7 @@ SOURCES += \
     $$PWD/categoryaxis/polarchartcategoryaxisangular.cpp \
     $$PWD/categoryaxis/polarchartcategoryaxisradial.cpp
 
-PRIVATE_HEADERS += \
+HEADERS += \
     $$PWD/polarchartaxis_p.h \
     $$PWD/polarchartaxisangular_p.h \
     $$PWD/polarchartaxisradial_p.h \
@@ -91,7 +91,7 @@ SOURCES += \
     $$PWD/datetimeaxis/polarchartdatetimeaxisangular.cpp \
     $$PWD/datetimeaxis/polarchartdatetimeaxisradial.cpp
 
-PRIVATE_HEADERS += \
+HEADERS += \
     $$PWD/datetimeaxis/chartdatetimeaxisx_p.h \
     $$PWD/datetimeaxis/chartdatetimeaxisy_p.h \
     $$PWD/datetimeaxis/qdatetimeaxis_p.h \
@@ -99,7 +99,7 @@ PRIVATE_HEADERS += \
     $$PWD/datetimeaxis/polarchartdatetimeaxisangular_p.h \
     $$PWD/datetimeaxis/polarchartdatetimeaxisradial_p.h
 
-PUBLIC_HEADERS += \
+HEADERS += \
     $$PWD/datetimeaxis/qdatetimeaxis.h
 }
 
