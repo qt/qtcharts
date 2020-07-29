@@ -1,0 +1,29 @@
+# Generated from qlineseries.pro.
+
+#####################################################################
+## qlineseries Test:
+#####################################################################
+
+qt_internal_add_test(qlineseries
+    SOURCES
+        ../inc/tst_definitions.h
+        ../qxyseries/tst_qxyseries.cpp ../qxyseries/tst_qxyseries.h
+        tst_qlineseries.cpp
+    INCLUDE_DIRECTORIES
+        ../inc
+    PUBLIC_LIBRARIES
+        Qt::Charts
+        Qt::Gui
+        Qt::OpenGL
+        Qt::OpenGLWidgets
+        Qt::Widgets
+)
+
+## Scopes:
+#####################################################################
+
+qt_internal_extend_target(qlineseries CONDITION TARGET___contains___qml._x_
+    PUBLIC_LIBRARIES
+        Qt::Qml
+        Qt::Quick
+)

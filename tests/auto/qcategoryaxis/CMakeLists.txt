@@ -1,0 +1,20 @@
+# Generated from qcategoryaxis.pro.
+
+#####################################################################
+## qcategoryaxis Test:
+#####################################################################
+
+qt_internal_add_test(qcategoryaxis
+    SOURCES
+        ../inc/tst_definitions.h
+        ../qabstractaxis/tst_qabstractaxis.cpp ../qabstractaxis/tst_qabstractaxis.h
+        tst_qcategoryaxis.cpp
+    INCLUDE_DIRECTORIES
+        ../inc
+    PUBLIC_LIBRARIES
+        Qt::Charts
+        Qt::Gui
+        Qt::OpenGL
+        Qt::OpenGLWidgets
+        Qt::Widgets
+)

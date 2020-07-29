@@ -1,0 +1,304 @@
+# Generated from chartsqml2.pro.
+
+#####################################################################
+## qtchartsqml2 Plugin:
+#####################################################################
+
+qt_internal_add_qml_module(qtchartsqml2
+    VERSION "2.${CMAKE_PROJECT_VERSION_MINOR}"
+    CLASSNAME QtChartsQml2Plugin
+    SKIP_TYPE_REGISTRATION
+    SOURCES
+        chartsqml2_plugin.cpp
+        declarativeabstractrendernode_p.h
+        declarativeaxes.cpp declarativeaxes_p.h
+        declarativecategoryaxis.cpp declarativecategoryaxis_p.h
+        declarativechart.cpp declarativechart_p.h
+        declarativechartglobal_p.h
+        declarativechartnode.cpp declarativechartnode_p.h
+        declarativemargins.cpp declarativemargins_p.h
+        declarativepolarchart.cpp declarativepolarchart_p.h
+        declarativexypoint.cpp declarativexypoint_p.h
+        declarativexyseries.cpp declarativexyseries_p.h
+    DEFINES
+        QT_BUILD_QMLCHARTS_LIB
+    INCLUDE_DIRECTORIES
+        ${CMAKE_CURRENT_SOURCE_DIR}
+    LIBRARIES
+        Qt::ChartsPrivate
+        Qt::CorePrivate
+    PUBLIC_LIBRARIES
+        Qt::Charts
+        Qt::ChartsPrivate
+        Qt::Core
+        Qt::Gui
+        Qt::OpenGL
+        Qt::Qml
+        Qt::Quick
+)
+
+#### Keys ignored in scope 1:.:.:chartsqml2.pro:<TRUE>:
+# CXX_MODULE = "charts"
+# IMPORT_VERSION = "2.$$QT_MINOR_VERSION"
+# QMAKE_QMLPLUGINDUMP_FLAGS = "-qapp"
+# QT_FOR_CONFIG = "charts"
+
+## Scopes:
+#####################################################################
+
+qt_internal_extend_target(qtchartsqml2 CONDITION QT_FEATURE_opengl
+    SOURCES
+        declarativeopenglrendernode.cpp declarativeopenglrendernode_p.h
+)
+
+qt_internal_extend_target(qtchartsqml2 CONDITION QT_FEATURE_charts_line_chart
+    SOURCES
+        declarativelineseries.cpp declarativelineseries_p.h
+)
+
+qt_internal_extend_target(qtchartsqml2 CONDITION QT_FEATURE_charts_spline_chart
+    SOURCES
+        declarativesplineseries.cpp declarativesplineseries_p.h
+)
+
+qt_internal_extend_target(qtchartsqml2 CONDITION QT_FEATURE_charts_area_chart
+    SOURCES
+        declarativeareaseries.cpp declarativeareaseries_p.h
+)
+
+qt_internal_extend_target(qtchartsqml2 CONDITION QT_FEATURE_charts_scatter_chart
+    SOURCES
+        declarativescatterseries.cpp declarativescatterseries_p.h
+)
+
+qt_internal_extend_target(qtchartsqml2 CONDITION QT_FEATURE_charts_pie_chart
+    SOURCES
+        declarativepieseries.cpp declarativepieseries_p.h
+)
+
+qt_internal_extend_target(qtchartsqml2 CONDITION QT_FEATURE_charts_bar_chart
+    SOURCES
+        declarativebarseries.cpp declarativebarseries_p.h
+)
+
+qt_internal_extend_target(qtchartsqml2 CONDITION QT_FEATURE_charts_boxplot_chart
+    SOURCES
+        declarativeboxplotseries.cpp declarativeboxplotseries_p.h
+)
+
+qt_internal_extend_target(qtchartsqml2 CONDITION QT_FEATURE_charts_candlestick_chart
+    SOURCES
+        declarativecandlestickseries.cpp declarativecandlestickseries_p.h
+)
+
+#### Keys ignored in scope 11:.:.:chartsqml2.pro:WIN32:
+# QMAKE_TARGET_DESCRIPTION = "Charts QML plugin for Qt."
+# QMAKE_TARGET_PRODUCT = "Qt Charts (Qt $$QT_VERSION)"
+
+set(qml_files
+    "designer/ChartViewSpecifics.qml"
+    "designer/default/AreaSeries.qml"
+    "designer/default/BarSeries.qml"
+    "designer/default/BoxPlotSeries.qml"
+    "designer/default/HorizontalBarSeries.qml"
+    "designer/default/HorizontalPercentBarSeries.qml"
+    "designer/default/HorizontalStackedBarSeries.qml"
+    "designer/default/LineSeries.qml"
+    "designer/default/PercentBarSeries.qml"
+    "designer/default/PieSeries.qml"
+    "designer/default/ScatterSeries.qml"
+    "designer/default/SplineSeries.qml"
+    "designer/default/StackedBarSeries.qml"
+    "designer/default/PolarAreaSeries.qml"
+    "designer/default/PolarLineSeries.qml"
+    "designer/default/PolarScatterSeries.qml"
+    "designer/default/PolarSplineSeries.qml"
+    "designer/qtcharts.metainfo"
+    "designer/images/areaseries-chart-icon.png"
+    "designer/images/areaseries-chart-icon16.png"
+    "designer/images/barseries-icon.png"
+    "designer/images/barseries-icon16.png"
+    "designer/images/boxplotseries-chart-icon.png"
+    "designer/images/boxplotseries-chart-icon16.png"
+    "designer/images/horizontalbarseries-icon.png"
+    "designer/images/horizontalbarseries-icon16.png"
+    "designer/images/horizontalpercentbarseries-icon.png"
+    "designer/images/horizontalpercentbarseries-icon16.png"
+    "designer/images/horizontalstackedbarseries-icon.png"
+    "designer/images/horizontalstackedbarseries-icon16.png"
+    "designer/images/lineseries-chart-icon.png"
+    "designer/images/lineseries-chart-icon16.png"
+    "designer/images/percentbarseries-icon.png"
+    "designer/images/percentbarseries-icon16.png"
+    "designer/images/pieseries-chart-icon.png"
+    "designer/images/pieseries-chart-icon16.png"
+    "designer/images/scatterseries-chart-icon.png"
+    "designer/images/scatterseries-chart-icon16.png"
+    "designer/images/splineseries-chart-icon.png"
+    "designer/images/splineseries-chart-icon16.png"
+    "designer/images/stackedbarseries-icon.png"
+    "designer/images/stackedbarseries-icon16.png"
+    "designer/images/areaseries-polar-icon.png"
+    "designer/images/areaseries-polar-icon16.png"
+    "designer/images/lineseries-polar-icon.png"
+    "designer/images/lineseries-polar-icon16.png"
+    "designer/images/scatterseries-polar-icon.png"
+    "designer/images/scatterseries-polar-icon16.png"
+    "designer/images/splineseries-polar-icon.png"
+    "designer/images/splineseries-polar-icon16.png"
+)
+set_source_files_properties(designer/ChartViewSpecifics.qml PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/default/AreaSeries.qml PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/default/BarSeries.qml PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/default/BoxPlotSeries.qml PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/default/HorizontalBarSeries.qml PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/default/HorizontalPercentBarSeries.qml PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/default/HorizontalStackedBarSeries.qml PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/default/LineSeries.qml PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/default/PercentBarSeries.qml PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/default/PieSeries.qml PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/default/ScatterSeries.qml PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/default/SplineSeries.qml PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/default/StackedBarSeries.qml PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/default/PolarAreaSeries.qml PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/default/PolarLineSeries.qml PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/default/PolarScatterSeries.qml PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/default/PolarSplineSeries.qml PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/qtcharts.metainfo PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/images/areaseries-chart-icon.png PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/images/areaseries-chart-icon16.png PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/images/barseries-icon.png PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/images/barseries-icon16.png PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/images/boxplotseries-chart-icon.png PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/images/boxplotseries-chart-icon16.png PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/images/horizontalbarseries-icon.png PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/images/horizontalbarseries-icon16.png PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/images/horizontalpercentbarseries-icon.png PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/images/horizontalpercentbarseries-icon16.png PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/images/horizontalstackedbarseries-icon.png PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/images/horizontalstackedbarseries-icon16.png PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/images/lineseries-chart-icon.png PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/images/lineseries-chart-icon16.png PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/images/percentbarseries-icon.png PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/images/percentbarseries-icon16.png PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/images/pieseries-chart-icon.png PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/images/pieseries-chart-icon16.png PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/images/scatterseries-chart-icon.png PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/images/scatterseries-chart-icon16.png PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/images/splineseries-chart-icon.png PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/images/splineseries-chart-icon16.png PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/images/stackedbarseries-icon.png PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/images/stackedbarseries-icon16.png PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/images/areaseries-polar-icon.png PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/images/areaseries-polar-icon16.png PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/images/lineseries-polar-icon.png PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/images/lineseries-polar-icon16.png PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/images/scatterseries-polar-icon.png PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/images/scatterseries-polar-icon16.png PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/images/splineseries-polar-icon.png PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+set_source_files_properties(designer/images/splineseries-polar-icon16.png PROPERTIES
+    QT_QML_SKIP_QMLDIR_ENTRY TRUE
+)
+
+qt6_target_qml_files(qtchartsqml2
+    FILES
+        ${qml_files}
+)

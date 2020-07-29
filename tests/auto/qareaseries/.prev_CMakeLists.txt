@@ -1,0 +1,28 @@
+# Generated from qareaseries.pro.
+
+#####################################################################
+## qareaseries Test:
+#####################################################################
+
+qt_internal_add_test(qareaseries
+    SOURCES
+        ../inc/tst_definitions.h
+        tst_qareaseries.cpp
+    INCLUDE_DIRECTORIES
+        ../inc
+    PUBLIC_LIBRARIES
+        Qt::Charts
+        Qt::Gui
+        Qt::OpenGL
+        Qt::OpenGLWidgets
+        Qt::Widgets
+)
+
+## Scopes:
+#####################################################################
+
+qt_internal_extend_target(qareaseries CONDITION TARGET___contains___qml._x_
+    PUBLIC_LIBRARIES
+        Qt::Qml
+        Qt::Quick
+)

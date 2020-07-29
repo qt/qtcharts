@@ -49,11 +49,11 @@ qt_feature("charts-candlestick-chart" PUBLIC
     LABEL "Candlestick Chart"
     PURPOSE "Support for candlestick charts"
 )
-get_property(coordType TARGET Qt6::Core PROPERTY INTERFACE_QT_COORD_TYPE) #special case
+get_property(coordType TARGET Qt6::Core PROPERTY INTERFACE_QT_COORD_TYPE) # special case
 qt_feature("charts-datetime-axis" PUBLIC
     LABEL "DateTime Axis"
     PURPOSE "Support for datetime axis"
-    CONDITION coordType STREQUAL 'double' #special case
+    CONDITION coordType STREQUAL 'double' # special case
 )
 qt_configure_add_summary_section(NAME "Qt Charts Types")
 qt_configure_add_summary_entry(ARGS "charts-area-chart")
