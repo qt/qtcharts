@@ -156,7 +156,7 @@ void DeclarativeOpenGLRenderNode::initGL()
     m_vao.create();
     QOpenGLVertexArrayObject::Binder vaoBinder(&m_vao);
 
-#if !defined(QT_OPENGL_ES_2)
+#if !QT_CONFIG(opengles2)
     if (!QOpenGLContext::currentContext()->isOpenGLES()) {
         // Make it possible to change point primitive size and use textures with them in
         // the shaders. These are implicitly enabled in ES2.

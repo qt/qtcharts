@@ -167,7 +167,7 @@ void GLWidget::initializeGL()
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_STENCIL_TEST);
 
-#if !defined(QT_OPENGL_ES_2)
+#if !QT_CONFIG(opengles2)
     if (!QOpenGLContext::currentContext()->isOpenGLES()) {
         // Make it possible to change point primitive size and use textures with them in
         // the shaders. These are implicitly enabled in ES2.
