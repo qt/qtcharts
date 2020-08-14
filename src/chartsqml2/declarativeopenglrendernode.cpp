@@ -193,7 +193,8 @@ void DeclarativeOpenGLRenderNode::recreateFBO()
 
     delete m_texture;
     uint textureId = m_resolvedFbo ? m_resolvedFbo->texture() : m_fbo->texture();
-    m_texture = m_window->createTextureFromNativeObject(QQuickWindow::NativeObjectTexture, 0, qint64(textureId), m_textureSize, m_textureOptions);
+    m_texture = QPlatformInterface::QSGOpenGLTexture::fromNative(textureId, m_window, m_textureSize, m_textureOptions);
+
     if (!m_imageNode) {
         m_imageNode = m_window->createImageNode();
         m_imageNode->setFiltering(QSGTexture::Linear);
