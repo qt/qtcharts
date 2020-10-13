@@ -115,9 +115,9 @@ void LogXLogYDomain::zoomOut(const QRectF &rect)
     const qreal factorY = m_size.height() / fixedRect.height();
 
     qreal logLeftX = m_logLeftX + (m_logRightX - m_logLeftX) / 2 * (1 - factorX);
-    qreal logRIghtX = m_logLeftX + (m_logRightX - m_logLeftX) / 2 * (1 + factorX);
+    qreal logRightX = m_logLeftX + (m_logRightX - m_logLeftX) / 2 * (1 + factorX);
     qreal leftX = qPow(m_logBaseX, logLeftX);
-    qreal rightX = qPow(m_logBaseX, logRIghtX);
+    qreal rightX = qPow(m_logBaseX, logRightX);
     qreal minX = leftX < rightX ? leftX : rightX;
     qreal maxX = leftX > rightX ? leftX : rightX;
 
@@ -127,6 +127,12 @@ void LogXLogYDomain::zoomOut(const QRectF &rect)
     qreal rightY = qPow(m_logBaseY, newLogMaxY);
     qreal minY = leftY < rightY ? leftY : rightY;
     qreal maxY = leftY > rightY ? leftY : rightY;
+
+    if (logRightX > m_size.width() || newLogMaxY > m_size.height())
+        return;
+
+    if (qIsInf(maxX) || qIsInf(maxY))
+        return;
 
     setRange(minX, maxX, minY, maxY);
 }

@@ -414,6 +414,7 @@ void QChart::zoomIn(const QRectF &rect)
 
 /*!
  Zooms out of the view by a factor of two.
+ \note This will do nothing if the result would contain an invalid logarithmic axis range.
  */
 void QChart::zoomOut()
 {
