@@ -366,6 +366,7 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
   \qmlmethod ChartView::zoomOut()
   Zooms out of the view by a factor of two.
+  \note This will do nothing if the result would contain an invalid logarithmic axis range.
 */
 
 /*!

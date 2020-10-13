@@ -118,6 +118,12 @@ void XLogYDomain::zoomOut(const QRectF &rect)
     qreal minY = leftY < rightY ? leftY : rightY;
     qreal maxY = leftY > rightY ? leftY : rightY;
 
+    if (newLogMaxY > m_size.height())
+        return;
+
+    if (qIsInf(maxY))
+        return;
+
     setRange(minX, maxX, minY, maxY);
 }
 
