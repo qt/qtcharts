@@ -1,6 +1,6 @@
 dependencies:
   ../qtdeclarative:
-    ref: fb96109bbc2ec5d83171a70d6c164d79695d2ddd
+    ref: aba1bf6fca24ec6ee21ffc4417ef05d5d2cfdfeb
     required: true
 #  ../qtmultimedia:
 #    ref: e2c2b21e530276c216cddf641cf9c0f8098b16ce
