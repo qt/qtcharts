@@ -322,7 +322,7 @@ void tst_QCandlestickSeries::clear()
 void tst_QCandlestickSeries::sets()
 {
     m_series->append(m_sets);
-    QCOMPARE(m_series->sets(), m_sets);
+    QCOMPARE(m_series->sets(), (QList<QtCharts::QCandlestickSet *>)m_sets);
 
     for (int i = 0; i < m_sets.count(); ++i)
         QCOMPARE(m_series->sets().at(i), m_sets.at(i));
