@@ -702,12 +702,12 @@ void tst_QCandlestickSeries::mouseHovered()
 
     QList<QVariant> seriesSpyArgs = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QCandlestickSet *>(seriesSpyArgs.at(1)), set1);
-    QCOMPARE(seriesSpyArgs.at(0).type(), QVariant::Bool);
+    QCOMPARE(seriesSpyArgs.at(0).metaType().id(), QMetaType::Bool);
     QCOMPARE(seriesSpyArgs.at(0).toBool(), true);
     seriesSpyArgs.clear();
 
     QList<QVariant> setSpyArgs = setSpy1.takeFirst();
-    QCOMPARE(setSpyArgs.at(0).type(), QVariant::Bool);
+    QCOMPARE(setSpyArgs.at(0).metaType().id(), QMetaType::Bool);
     QCOMPARE(setSpyArgs.at(0).toBool(), true);
     setSpyArgs.clear();
 
@@ -722,24 +722,24 @@ void tst_QCandlestickSeries::mouseHovered()
     // Should leave set 1
     seriesSpyArgs = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QCandlestickSet *>(seriesSpyArgs.at(1)), set1);
-    QCOMPARE(seriesSpyArgs.at(0).type(), QVariant::Bool);
+    QCOMPARE(seriesSpyArgs.at(0).metaType().id(), QMetaType::Bool);
     QCOMPARE(seriesSpyArgs.at(0).toBool(), false);
     // Don't call seriesSpyArgs.clear() here
 
     setSpyArgs = setSpy1.takeFirst();
-    QCOMPARE(setSpyArgs.at(0).type(), QVariant::Bool);
+    QCOMPARE(setSpyArgs.at(0).metaType().id(), QMetaType::Bool);
     QCOMPARE(setSpyArgs.at(0).toBool(), false);
     // Don't call setSpyArgs.clear() here
 
     // Should enter set 2
     seriesSpyArgs = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QCandlestickSet *>(seriesSpyArgs.at(1)), set2);
-    QCOMPARE(seriesSpyArgs.at(0).type(), QVariant::Bool);
+    QCOMPARE(seriesSpyArgs.at(0).metaType().id(), QMetaType::Bool);
     QCOMPARE(seriesSpyArgs.at(0).toBool(), true);
     seriesSpyArgs.clear();
 
     setSpyArgs = setSpy2.takeFirst();
-    QCOMPARE(setSpyArgs.at(0).type(), QVariant::Bool);
+    QCOMPARE(setSpyArgs.at(0).metaType().id(), QMetaType::Bool);
     QCOMPARE(setSpyArgs.at(0).toBool(), true);
     setSpyArgs.clear();
 
@@ -754,12 +754,12 @@ void tst_QCandlestickSeries::mouseHovered()
     // Should leave set 2
     seriesSpyArgs = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QCandlestickSet *>(seriesSpyArgs.at(1)), set2);
-    QCOMPARE(seriesSpyArgs.at(0).type(), QVariant::Bool);
+    QCOMPARE(seriesSpyArgs.at(0).metaType().id(), QMetaType::Bool);
     QCOMPARE(seriesSpyArgs.at(0).toBool(), false);
     seriesSpyArgs.clear();
 
     setSpyArgs = setSpy2.takeFirst();
-    QCOMPARE(setSpyArgs.at(0).type(), QVariant::Bool);
+    QCOMPARE(setSpyArgs.at(0).metaType().id(), QMetaType::Bool);
     QCOMPARE(setSpyArgs.at(0).toBool(), false);
     setSpyArgs.clear();
 }

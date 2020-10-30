@@ -249,7 +249,7 @@ void tst_QHorizontalPercentBarSeries::mouseclicked()
 
     QList<QVariant> seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set1);
-    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(0).metaType().id() == QMetaType::Int);
     QVERIFY(seriesSpyArg.at(0).toInt() == 0);
 
 //====================================================================================
@@ -261,7 +261,7 @@ void tst_QHorizontalPercentBarSeries::mouseclicked()
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set1);
-    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(0).metaType().id() == QMetaType::Int);
     QVERIFY(seriesSpyArg.at(0).toInt() == 1);
 
 //====================================================================================
@@ -273,7 +273,7 @@ void tst_QHorizontalPercentBarSeries::mouseclicked()
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set1);
-    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(0).metaType().id() == QMetaType::Int);
     QVERIFY(seriesSpyArg.at(0).toInt() == 2);
 
 //====================================================================================
@@ -285,7 +285,7 @@ void tst_QHorizontalPercentBarSeries::mouseclicked()
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set2);
-    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(0).metaType().id() == QMetaType::Int);
     QVERIFY(seriesSpyArg.at(0).toInt() == 0);
 
 //====================================================================================
@@ -297,7 +297,7 @@ void tst_QHorizontalPercentBarSeries::mouseclicked()
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set2);
-    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(0).metaType().id() == QMetaType::Int);
     QVERIFY(seriesSpyArg.at(0).toInt() == 1);
 
 //====================================================================================
@@ -309,7 +309,7 @@ void tst_QHorizontalPercentBarSeries::mouseclicked()
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set2);
-    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(0).metaType().id() == QMetaType::Int);
     QVERIFY(seriesSpyArg.at(0).toInt() == 2);
 }
 
@@ -394,11 +394,11 @@ void tst_QHorizontalPercentBarSeries::mousehovered()
 
     QList<QVariant> seriesIndexSpyArg = seriesIndexSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesIndexSpyArg.at(2)), set1);
-    QVERIFY(seriesIndexSpyArg.at(0).type() == QVariant::Bool);
+    QVERIFY(seriesIndexSpyArg.at(0).metaType().id() == QMetaType::Bool);
     QVERIFY(seriesIndexSpyArg.at(0).toBool() == true);
 
     QList<QVariant> setIndexSpyArg = setIndexSpy1.takeFirst();
-    QVERIFY(setIndexSpyArg.at(0).type() == QVariant::Bool);
+    QVERIFY(setIndexSpyArg.at(0).metaType().id() == QMetaType::Bool);
     QVERIFY(setIndexSpyArg.at(0).toBool() == true);
 
 //=======================================================================
@@ -411,21 +411,21 @@ void tst_QHorizontalPercentBarSeries::mousehovered()
     // should leave set1
     seriesIndexSpyArg = seriesIndexSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesIndexSpyArg.at(2)), set1);
-    QVERIFY(seriesIndexSpyArg.at(0).type() == QVariant::Bool);
+    QVERIFY(seriesIndexSpyArg.at(0).metaType().id() == QMetaType::Bool);
     QVERIFY(seriesIndexSpyArg.at(0).toBool() == false);
 
     setIndexSpyArg = setIndexSpy1.takeFirst();
-    QVERIFY(setIndexSpyArg.at(0).type() == QVariant::Bool);
+    QVERIFY(setIndexSpyArg.at(0).metaType().id() == QMetaType::Bool);
     QVERIFY(setIndexSpyArg.at(0).toBool() == false);
 
     // should enter set2
     seriesIndexSpyArg = seriesIndexSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesIndexSpyArg.at(2)), set2);
-    QVERIFY(seriesIndexSpyArg.at(0).type() == QVariant::Bool);
+    QVERIFY(seriesIndexSpyArg.at(0).metaType().id() == QMetaType::Bool);
     QVERIFY(seriesIndexSpyArg.at(0).toBool() == true);
 
     setIndexSpyArg = setIndexSpy2.takeFirst();
-    QVERIFY(setIndexSpyArg.at(0).type() == QVariant::Bool);
+    QVERIFY(setIndexSpyArg.at(0).metaType().id() == QMetaType::Bool);
     QVERIFY(setIndexSpyArg.at(0).toBool() == true);
 
 //=======================================================================
@@ -438,11 +438,11 @@ void tst_QHorizontalPercentBarSeries::mousehovered()
     // should leave set2
     seriesIndexSpyArg = seriesIndexSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesIndexSpyArg.at(2)), set2);
-    QVERIFY(seriesIndexSpyArg.at(0).type() == QVariant::Bool);
+    QVERIFY(seriesIndexSpyArg.at(0).metaType().id() == QMetaType::Bool);
     QVERIFY(seriesIndexSpyArg.at(0).toBool() == false);
 
     setIndexSpyArg = setIndexSpy2.takeFirst();
-    QVERIFY(setIndexSpyArg.at(0).type() == QVariant::Bool);
+    QVERIFY(setIndexSpyArg.at(0).metaType().id() == QMetaType::Bool);
     QVERIFY(setIndexSpyArg.at(0).toBool() == false);
 
 //=======================================================================
@@ -456,15 +456,15 @@ void tst_QHorizontalPercentBarSeries::mousehovered()
     //should enter set1, bar0
     seriesIndexSpyArg = seriesIndexSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesIndexSpyArg.at(2)), set1);
-    QVERIFY(seriesIndexSpyArg.at(0).type() == QVariant::Bool);
+    QVERIFY(seriesIndexSpyArg.at(0).metaType().id() == QMetaType::Bool);
     QVERIFY(seriesIndexSpyArg.at(0).toBool() == true);
-    QVERIFY(seriesIndexSpyArg.at(1).type() == QVariant::Int);
+    QVERIFY(seriesIndexSpyArg.at(1).metaType().id() == QMetaType::Int);
     QVERIFY(seriesIndexSpyArg.at(1).toInt() == 0);
 
     setIndexSpyArg = setIndexSpy1.takeFirst();
-    QVERIFY(setIndexSpyArg.at(0).type() == QVariant::Bool);
+    QVERIFY(setIndexSpyArg.at(0).metaType().id() == QMetaType::Bool);
     QVERIFY(setIndexSpyArg.at(0).toBool() == true);
-    QVERIFY(setIndexSpyArg.at(1).type() == QVariant::Int);
+    QVERIFY(setIndexSpyArg.at(1).metaType().id() == QMetaType::Int);
     QVERIFY(setIndexSpyArg.at(1).toInt() == 0);
 
 //=======================================================================
@@ -480,29 +480,29 @@ void tst_QHorizontalPercentBarSeries::mousehovered()
     //should leave set1, bar0
     seriesIndexSpyArg = seriesIndexSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesIndexSpyArg.at(2)), set1);
-    QVERIFY(seriesIndexSpyArg.at(0).type() == QVariant::Bool);
+    QVERIFY(seriesIndexSpyArg.at(0).metaType().id() == QMetaType::Bool);
     QVERIFY(seriesIndexSpyArg.at(0).toBool() == false);
-    QVERIFY(seriesIndexSpyArg.at(1).type() == QVariant::Int);
+    QVERIFY(seriesIndexSpyArg.at(1).metaType().id() == QMetaType::Int);
     QVERIFY(seriesIndexSpyArg.at(1).toInt() == 0);
 
     setIndexSpyArg = setIndexSpy1.takeFirst();
-    QVERIFY(setIndexSpyArg.at(0).type() == QVariant::Bool);
+    QVERIFY(setIndexSpyArg.at(0).metaType().id() == QMetaType::Bool);
     QVERIFY(setIndexSpyArg.at(0).toBool() == false);
-    QVERIFY(setIndexSpyArg.at(1).type() == QVariant::Int);
+    QVERIFY(setIndexSpyArg.at(1).metaType().id() == QMetaType::Int);
     QVERIFY(setIndexSpyArg.at(1).toInt() == 0);
 
     //should enter set2, bar0
     seriesIndexSpyArg = seriesIndexSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesIndexSpyArg.at(2)), set2);
-    QVERIFY(seriesIndexSpyArg.at(0).type() == QVariant::Bool);
+    QVERIFY(seriesIndexSpyArg.at(0).metaType().id() == QMetaType::Bool);
     QVERIFY(seriesIndexSpyArg.at(0).toBool() == true);
-    QVERIFY(seriesIndexSpyArg.at(1).type() == QVariant::Int);
+    QVERIFY(seriesIndexSpyArg.at(1).metaType().id() == QMetaType::Int);
     QVERIFY(seriesIndexSpyArg.at(1).toInt() == 0);
 
     setIndexSpyArg = setIndexSpy2.takeFirst();
-    QVERIFY(setIndexSpyArg.at(0).type() == QVariant::Bool);
+    QVERIFY(setIndexSpyArg.at(0).metaType().id() == QMetaType::Bool);
     QVERIFY(setIndexSpyArg.at(0).toBool() == true);
-    QVERIFY(setIndexSpyArg.at(1).type() == QVariant::Int);
+    QVERIFY(setIndexSpyArg.at(1).metaType().id() == QMetaType::Int);
     QVERIFY(setIndexSpyArg.at(1).toInt() == 0);
 
 //=======================================================================
@@ -517,29 +517,29 @@ void tst_QHorizontalPercentBarSeries::mousehovered()
     //should leave set2, bar0
     seriesIndexSpyArg = seriesIndexSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesIndexSpyArg.at(2)), set2);
-    QVERIFY(seriesIndexSpyArg.at(0).type() == QVariant::Bool);
+    QVERIFY(seriesIndexSpyArg.at(0).metaType().id() == QMetaType::Bool);
     QVERIFY(seriesIndexSpyArg.at(0).toBool() == false);
-    QVERIFY(seriesIndexSpyArg.at(1).type() == QVariant::Int);
+    QVERIFY(seriesIndexSpyArg.at(1).metaType().id() == QMetaType::Int);
     QVERIFY(seriesIndexSpyArg.at(1).toInt() == 0);
 
     setIndexSpyArg = setIndexSpy2.takeFirst();
-    QVERIFY(setIndexSpyArg.at(0).type() == QVariant::Bool);
+    QVERIFY(setIndexSpyArg.at(0).metaType().id() == QMetaType::Bool);
     QVERIFY(setIndexSpyArg.at(0).toBool() == false);
-    QVERIFY(setIndexSpyArg.at(1).type() == QVariant::Int);
+    QVERIFY(setIndexSpyArg.at(1).metaType().id() == QMetaType::Int);
     QVERIFY(setIndexSpyArg.at(1).toInt() == 0);
 
     //should enter set1, bar1
     seriesIndexSpyArg = seriesIndexSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesIndexSpyArg.at(2)), set1);
-    QVERIFY(seriesIndexSpyArg.at(0).type() == QVariant::Bool);
+    QVERIFY(seriesIndexSpyArg.at(0).metaType().id() == QMetaType::Bool);
     QVERIFY(seriesIndexSpyArg.at(0).toBool() == true);
-    QVERIFY(seriesIndexSpyArg.at(1).type() == QVariant::Int);
+    QVERIFY(seriesIndexSpyArg.at(1).metaType().id() == QMetaType::Int);
     QVERIFY(seriesIndexSpyArg.at(1).toInt() == 1);
 
     setIndexSpyArg = setIndexSpy1.takeFirst();
-    QVERIFY(setIndexSpyArg.at(0).type() == QVariant::Bool);
+    QVERIFY(setIndexSpyArg.at(0).metaType().id() == QMetaType::Bool);
     QVERIFY(setIndexSpyArg.at(0).toBool() == true);
-    QVERIFY(setIndexSpyArg.at(1).type() == QVariant::Int);
+    QVERIFY(setIndexSpyArg.at(1).metaType().id() == QMetaType::Int);
     QVERIFY(setIndexSpyArg.at(1).toInt() == 1);
 
 //=======================================================================
@@ -554,15 +554,15 @@ void tst_QHorizontalPercentBarSeries::mousehovered()
     //should leave set1, bar1
     seriesIndexSpyArg = seriesIndexSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesIndexSpyArg.at(2)), set1);
-    QVERIFY(seriesIndexSpyArg.at(0).type() == QVariant::Bool);
+    QVERIFY(seriesIndexSpyArg.at(0).metaType().id() == QMetaType::Bool);
     QVERIFY(seriesIndexSpyArg.at(0).toBool() == false);
-    QVERIFY(seriesIndexSpyArg.at(1).type() == QVariant::Int);
+    QVERIFY(seriesIndexSpyArg.at(1).metaType().id() == QMetaType::Int);
     QVERIFY(seriesIndexSpyArg.at(1).toInt() == 1);
 
     setIndexSpyArg = setIndexSpy1.takeFirst();
-    QVERIFY(setIndexSpyArg.at(0).type() == QVariant::Bool);
+    QVERIFY(setIndexSpyArg.at(0).metaType().id() == QMetaType::Bool);
     QVERIFY(setIndexSpyArg.at(0).toBool() == false);
-    QVERIFY(setIndexSpyArg.at(1).type() == QVariant::Int);
+    QVERIFY(setIndexSpyArg.at(1).metaType().id() == QMetaType::Int);
     QVERIFY(setIndexSpyArg.at(1).toInt() == 1);
 
 //=======================================================================
@@ -576,15 +576,15 @@ void tst_QHorizontalPercentBarSeries::mousehovered()
     //should enter set2, bar1
     seriesIndexSpyArg = seriesIndexSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesIndexSpyArg.at(2)), set2);
-    QVERIFY(seriesIndexSpyArg.at(0).type() == QVariant::Bool);
+    QVERIFY(seriesIndexSpyArg.at(0).metaType().id() == QMetaType::Bool);
     QVERIFY(seriesIndexSpyArg.at(0).toBool() == true);
-    QVERIFY(seriesIndexSpyArg.at(1).type() == QVariant::Int);
+    QVERIFY(seriesIndexSpyArg.at(1).metaType().id() == QMetaType::Int);
     QVERIFY(seriesIndexSpyArg.at(1).toInt() == 1);
 
     setIndexSpyArg = setIndexSpy2.takeFirst();
-    QVERIFY(setIndexSpyArg.at(0).type() == QVariant::Bool);
+    QVERIFY(setIndexSpyArg.at(0).metaType().id() == QMetaType::Bool);
     QVERIFY(setIndexSpyArg.at(0).toBool() == true);
-    QVERIFY(setIndexSpyArg.at(1).type() == QVariant::Int);
+    QVERIFY(setIndexSpyArg.at(1).metaType().id() == QMetaType::Int);
     QVERIFY(setIndexSpyArg.at(1).toInt() == 1);
 
 //=======================================================================
@@ -600,15 +600,15 @@ void tst_QHorizontalPercentBarSeries::mousehovered()
     //should leave set1, bar1
     seriesIndexSpyArg = seriesIndexSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesIndexSpyArg.at(2)), set2);
-    QVERIFY(seriesIndexSpyArg.at(0).type() == QVariant::Bool);
+    QVERIFY(seriesIndexSpyArg.at(0).metaType().id() == QMetaType::Bool);
     QVERIFY(seriesIndexSpyArg.at(0).toBool() == false);
-    QVERIFY(seriesIndexSpyArg.at(1).type() == QVariant::Int);
+    QVERIFY(seriesIndexSpyArg.at(1).metaType().id() == QMetaType::Int);
     QVERIFY(seriesIndexSpyArg.at(1).toInt() == 1);
 
     setIndexSpyArg = setIndexSpy2.takeFirst();
-    QVERIFY(setIndexSpyArg.at(0).type() == QVariant::Bool);
+    QVERIFY(setIndexSpyArg.at(0).metaType().id() == QMetaType::Bool);
     QVERIFY(setIndexSpyArg.at(0).toBool() == false);
-    QVERIFY(setIndexSpyArg.at(1).type() == QVariant::Int);
+    QVERIFY(setIndexSpyArg.at(1).metaType().id() == QMetaType::Int);
     QVERIFY(setIndexSpyArg.at(1).toInt() == 1);
 }
 
@@ -700,11 +700,11 @@ void tst_QHorizontalPercentBarSeries::mousePressed()
 
     QList<QVariant> seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set1);
-    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(0).metaType().id() == QMetaType::Int);
     QVERIFY(seriesSpyArg.at(0).toInt() == 0);
 
     QList<QVariant> setSpyArg = setSpy1.takeFirst();
-    QVERIFY(setSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(setSpyArg.at(0).metaType().id() == QMetaType::Int);
     QVERIFY(setSpyArg.at(0).toInt() == 0);
 
 //====================================================================================
@@ -718,11 +718,11 @@ void tst_QHorizontalPercentBarSeries::mousePressed()
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set1);
-    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(0).metaType().id() == QMetaType::Int);
     QVERIFY(seriesSpyArg.at(0).toInt() == 1);
 
     setSpyArg = setSpy1.takeFirst();
-    QVERIFY(setSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(setSpyArg.at(0).metaType().id() == QMetaType::Int);
     QVERIFY(setSpyArg.at(0).toInt() == 1);
 
 //====================================================================================
@@ -736,11 +736,11 @@ void tst_QHorizontalPercentBarSeries::mousePressed()
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set1);
-    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(0).metaType().id() == QMetaType::Int);
     QVERIFY(seriesSpyArg.at(0).toInt() == 2);
 
     setSpyArg = setSpy1.takeFirst();
-    QVERIFY(setSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(setSpyArg.at(0).metaType().id() == QMetaType::Int);
     QVERIFY(setSpyArg.at(0).toInt() == 2);
 
 //====================================================================================
@@ -754,11 +754,11 @@ void tst_QHorizontalPercentBarSeries::mousePressed()
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set2);
-    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(0).metaType().id() == QMetaType::Int);
     QVERIFY(seriesSpyArg.at(0).toInt() == 0);
 
     setSpyArg = setSpy2.takeFirst();
-    QVERIFY(setSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(setSpyArg.at(0).metaType().id() == QMetaType::Int);
     QVERIFY(setSpyArg.at(0).toInt() == 0);
 
 //====================================================================================
@@ -772,11 +772,11 @@ void tst_QHorizontalPercentBarSeries::mousePressed()
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set2);
-    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(0).metaType().id() == QMetaType::Int);
     QVERIFY(seriesSpyArg.at(0).toInt() == 1);
 
     setSpyArg = setSpy2.takeFirst();
-    QVERIFY(setSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(setSpyArg.at(0).metaType().id() == QMetaType::Int);
     QVERIFY(setSpyArg.at(0).toInt() == 1);
 
 //====================================================================================
@@ -790,11 +790,11 @@ void tst_QHorizontalPercentBarSeries::mousePressed()
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set2);
-    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(0).metaType().id() == QMetaType::Int);
     QVERIFY(seriesSpyArg.at(0).toInt() == 2);
 
     setSpyArg = setSpy2.takeFirst();
-    QVERIFY(setSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(setSpyArg.at(0).metaType().id() == QMetaType::Int);
     QVERIFY(setSpyArg.at(0).toInt() == 2);
 }
 
@@ -865,11 +865,11 @@ void tst_QHorizontalPercentBarSeries::mouseReleased()
 
     QList<QVariant> seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set1);
-    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(0).metaType().id() == QMetaType::Int);
     QVERIFY(seriesSpyArg.at(0).toInt() == 0);
 
     QList<QVariant> setSpyArg = setSpy1.takeFirst();
-    QVERIFY(setSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(setSpyArg.at(0).metaType().id() == QMetaType::Int);
     QVERIFY(setSpyArg.at(0).toInt() == 0);
 
 //====================================================================================
@@ -883,11 +883,11 @@ void tst_QHorizontalPercentBarSeries::mouseReleased()
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set1);
-    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(0).metaType().id() == QMetaType::Int);
     QVERIFY(seriesSpyArg.at(0).toInt() == 1);
 
     setSpyArg = setSpy1.takeFirst();
-    QVERIFY(setSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(setSpyArg.at(0).metaType().id() == QMetaType::Int);
     QVERIFY(setSpyArg.at(0).toInt() == 1);
 
 //====================================================================================
@@ -901,11 +901,11 @@ void tst_QHorizontalPercentBarSeries::mouseReleased()
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set1);
-    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(0).metaType().id() == QMetaType::Int);
     QVERIFY(seriesSpyArg.at(0).toInt() == 2);
 
     setSpyArg = setSpy1.takeFirst();
-    QVERIFY(setSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(setSpyArg.at(0).metaType().id() == QMetaType::Int);
     QVERIFY(setSpyArg.at(0).toInt() == 2);
 
 //====================================================================================
@@ -919,11 +919,11 @@ void tst_QHorizontalPercentBarSeries::mouseReleased()
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set2);
-    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(0).metaType().id() == QMetaType::Int);
     QVERIFY(seriesSpyArg.at(0).toInt() == 0);
 
     setSpyArg = setSpy2.takeFirst();
-    QVERIFY(setSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(setSpyArg.at(0).metaType().id() == QMetaType::Int);
     QVERIFY(setSpyArg.at(0).toInt() == 0);
 
 //====================================================================================
@@ -937,11 +937,11 @@ void tst_QHorizontalPercentBarSeries::mouseReleased()
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set2);
-    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(0).metaType().id() == QMetaType::Int);
     QVERIFY(seriesSpyArg.at(0).toInt() == 1);
 
     setSpyArg = setSpy2.takeFirst();
-    QVERIFY(setSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(setSpyArg.at(0).metaType().id() == QMetaType::Int);
     QVERIFY(setSpyArg.at(0).toInt() == 1);
 
 //====================================================================================
@@ -955,11 +955,11 @@ void tst_QHorizontalPercentBarSeries::mouseReleased()
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set2);
-    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(0).metaType().id() == QMetaType::Int);
     QVERIFY(seriesSpyArg.at(0).toInt() == 2);
 
     setSpyArg = setSpy2.takeFirst();
-    QVERIFY(setSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(setSpyArg.at(0).metaType().id() == QMetaType::Int);
     QVERIFY(setSpyArg.at(0).toInt() == 2);
 }
 
@@ -1029,11 +1029,11 @@ void tst_QHorizontalPercentBarSeries::mouseDoubleClicked()
 
     QList<QVariant> seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set1);
-    QVERIFY(seriesSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(0).metaType().id() == QMetaType::Int);
     QVERIFY(seriesSpyArg.at(0).toInt() == 0);
 
     QList<QVariant> setSpyArg = setSpy1.takeFirst();
-    QVERIFY(setSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(setSpyArg.at(0).metaType().id() == QMetaType::Int);
     QVERIFY(setSpyArg.at(0).toInt() == 0);
 }
 

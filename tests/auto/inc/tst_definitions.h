@@ -54,7 +54,7 @@
             QPushButton b; \
             b.resize(120, 100); \
             b.show(); \
-            QTest::qWaitForWindowExposed(&b); \
+            QVERIFY(QTest::qWaitForWindowExposed(&b)); \
             QSignalSpy spy(&b, SIGNAL(clicked())); \
             QTest::mouseClick(&b, Qt::LeftButton, {}, b.rect().center()); \
             QApplication::processEvents(); \

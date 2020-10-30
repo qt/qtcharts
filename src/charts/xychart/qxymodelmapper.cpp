@@ -263,10 +263,10 @@ QModelIndex QXYModelMapperPrivate::yModelIndex(int yPos)
 qreal QXYModelMapperPrivate::valueFromModel(QModelIndex index)
 {
     QVariant value = m_model->data(index, Qt::DisplayRole);
-    switch (value.type()) {
-    case QVariant::DateTime:
+    switch (value.metaType().id()) {
+    case QMetaType::QDateTime:
         return value.toDateTime().toMSecsSinceEpoch();
-    case QVariant::Date:
+    case QMetaType::QDate:
         return value.toDate().startOfDay().toMSecsSinceEpoch();
     default:
         return value.toReal();
@@ -276,11 +276,11 @@ qreal QXYModelMapperPrivate::valueFromModel(QModelIndex index)
 void QXYModelMapperPrivate::setValueToModel(QModelIndex index, qreal value)
 {
     QVariant oldValue = m_model->data(index, Qt::DisplayRole);
-    switch (oldValue.type()) {
-    case QVariant::DateTime:
+    switch (oldValue.metaType().id()) {
+    case QMetaType::QDateTime:
         m_model->setData(index, QDateTime::fromMSecsSinceEpoch(value));
         break;
-    case QVariant::Date:
+    case QMetaType::QDate:
         m_model->setData(index, QDateTime::fromMSecsSinceEpoch(value).date());
         break;
     default:

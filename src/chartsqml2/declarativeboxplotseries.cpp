@@ -343,7 +343,7 @@ QVariantList DeclarativeBoxSet::values()
 void DeclarativeBoxSet::setValues(QVariantList values)
 {
     for (int i(0); i < values.count(); i++) {
-        if (values.at(i).canConvert(QVariant::Double))
+        if (values.at(i).canConvert<double>())
             QBoxSet::append(values[i].toDouble());
     }
 }

@@ -248,10 +248,10 @@ void tst_QBarSet::remove()
 
     QList<QVariant> valueSpyArg = valueSpy.takeFirst();
     // Verify index of removed signal
-    QVERIFY(valueSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(valueSpyArg.at(0).metaType().id() == QMetaType::Int);
     QVERIFY(valueSpyArg.at(0).toInt() == 2);
     // Verify count of removed signal
-    QVERIFY(valueSpyArg.at(1).type() == QVariant::Int);
+    QVERIFY(valueSpyArg.at(1).metaType().id() == QMetaType::Int);
     QVERIFY(valueSpyArg.at(1).toInt() == 1);
 
     // Remove first
@@ -264,10 +264,10 @@ void tst_QBarSet::remove()
     QCOMPARE(valueSpy.count(), 1);
     valueSpyArg = valueSpy.takeFirst();
     // Verify index of removed signal
-    QVERIFY(valueSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(valueSpyArg.at(0).metaType().id() == QMetaType::Int);
     QVERIFY(valueSpyArg.at(0).toInt() == 0);
     // Verify count of removed signal
-    QVERIFY(valueSpyArg.at(1).type() == QVariant::Int);
+    QVERIFY(valueSpyArg.at(1).metaType().id() == QMetaType::Int);
     QVERIFY(valueSpyArg.at(1).toInt() == 1);
 
 
@@ -291,10 +291,10 @@ void tst_QBarSet::remove()
     valueSpyArg = valueSpy.takeFirst();
 
     // Verify index of removed signal
-    QVERIFY(valueSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(valueSpyArg.at(0).metaType().id() == QMetaType::Int);
     QVERIFY(valueSpyArg.at(0).toInt() == 0);
     // Verify count of removed signal (expect 2 values removed, because list had only 2 items)
-    QVERIFY(valueSpyArg.at(1).type() == QVariant::Int);
+    QVERIFY(valueSpyArg.at(1).metaType().id() == QMetaType::Int);
     QVERIFY(valueSpyArg.at(1).toInt() == 2);
 }
 
