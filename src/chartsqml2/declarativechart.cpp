@@ -1243,7 +1243,7 @@ void DeclarativeChart::axesAppendFunc(QQmlListProperty<QAbstractAxis> *list, QAb
     Q_UNUSED(element);
 }
 
-int DeclarativeChart::axesCountFunc(QQmlListProperty<QAbstractAxis> *list)
+qsizetype DeclarativeChart::axesCountFunc(QQmlListProperty<QAbstractAxis> *list)
 {
     if (qobject_cast<DeclarativeChart *>(list->object)) {
         DeclarativeChart *chart = qobject_cast<DeclarativeChart *>(list->object);
@@ -1252,7 +1252,7 @@ int DeclarativeChart::axesCountFunc(QQmlListProperty<QAbstractAxis> *list)
     return 0;
 }
 
-QAbstractAxis *DeclarativeChart::axesAtFunc(QQmlListProperty<QAbstractAxis> *list, int index)
+QAbstractAxis *DeclarativeChart::axesAtFunc(QQmlListProperty<QAbstractAxis> *list, qsizetype index)
 {
     if (qobject_cast<DeclarativeChart *>(list->object)) {
         DeclarativeChart *chart = qobject_cast<DeclarativeChart *>(list->object);

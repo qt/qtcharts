@@ -182,8 +182,8 @@ public:
     void doInitializeAxes(QAbstractSeries *series, DeclarativeAxes *axes);
     QQmlListProperty<QAbstractAxis> axes();
     static void axesAppendFunc(QQmlListProperty<QAbstractAxis> *list, QAbstractAxis *element);
-    static int axesCountFunc(QQmlListProperty<QAbstractAxis> *list);
-    static QAbstractAxis *axesAtFunc(QQmlListProperty<QAbstractAxis> *list, int index);
+    static qsizetype axesCountFunc(QQmlListProperty<QAbstractAxis> *list);
+    static QAbstractAxis *axesAtFunc(QQmlListProperty<QAbstractAxis> *list, qsizetype index);
     static void axesClearFunc(QQmlListProperty<QAbstractAxis> *list);
 
 public:
