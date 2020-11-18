@@ -85,8 +85,6 @@
 #include <QtCharts/QDateTimeAxis>
 #endif
 
-QT_USE_NAMESPACE
-
 #if QT_CONFIG(charts_boxplot_chart)
 QML_DECLARE_TYPE(DeclarativeBoxPlotSeries)
 QML_DECLARE_TYPE(DeclarativeBoxSet)
@@ -413,5 +411,3 @@ public:
 QT_END_NAMESPACE
 
 #include "chartsqml2_plugin.moc"
-
-QT_USE_NAMESPACE

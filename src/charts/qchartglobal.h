@@ -68,4 +68,3 @@ QT_END_NAMESPACE
 #endif
 
 #endif // QCHARTGLOBAL_H
-#  define QT_USE_NAMESPACE
