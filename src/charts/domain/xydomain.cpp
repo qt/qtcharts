@@ -156,7 +156,7 @@ QPointF XYDomain::calculateGeometryPoint(const QPointF &point, bool &ok) const
 {
     const qreal xd = m_maxX - m_minX;
     const qreal yd = m_maxY - m_minY;
-    if (qFuzzyIsNull(xd) || qFuzzyIsNull(yd))
+    if (xd == 0.0 || yd == 0.0)
         return QPointF();
     const qreal deltaX = m_size.width() / xd;
     const qreal deltaY = m_size.height() / yd;
@@ -174,7 +174,7 @@ QList<QPointF> XYDomain::calculateGeometryPoints(const QList<QPointF> &list) con
 {
     const qreal xd = m_maxX - m_minX;
     const qreal yd = m_maxY - m_minY;
-    if (qFuzzyIsNull(xd) || qFuzzyIsNull(yd))
+    if (xd == 0.0 || yd == 0.0)
         return QList<QPointF>();
     const qreal deltaX = m_size.width() / xd;
     const qreal deltaY = m_size.height() / yd;
@@ -199,7 +199,7 @@ QPointF XYDomain::calculateDomainPoint(const QPointF &point) const
 {
     const qreal xd = m_maxX - m_minX;
     const qreal yd = m_maxY - m_minY;
-    if (qFuzzyIsNull(xd) || qFuzzyIsNull(yd))
+    if (xd == 0.0 || yd == 0.0)
         return QPointF();
     const qreal deltaX = m_size.width() / xd;
     const qreal deltaY = m_size.height() / yd;
