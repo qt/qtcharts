@@ -79,7 +79,7 @@
 #include <QtCharts/QVXYModelMapper>
 #include <QtCharts/QHXYModelMapper>
 #include <QtCore/QAbstractItemModel>
-#include <QtQml>
+#include <QtQml/QQmlEngineExtensionPlugin>
 
 #if QT_CONFIG(charts_datetime_axis)
 #include <QtCharts/QDateTimeAxis>
