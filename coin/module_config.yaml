@@ -1,0 +1,19 @@
+version: 2
+accept_configuration:
+  condition: property
+  property: features
+  not_contains_value: Disable
+
+instructions:
+  Build:
+    - !include "{{qt/qtbase}}/coin_module_build_template_v2.yaml"
+
+  Test:
+    - type: Group
+      instructions:
+        - !include "{{qt/qtbase}}/coin_module_test_template_v3.yaml"
+      disable_if:
+        condition: property
+        property: configureArgs
+        contains_value: "-DFEATURE_widgets=OFF"
+
