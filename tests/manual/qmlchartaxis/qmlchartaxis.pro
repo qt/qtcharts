@@ -1,6 +1,4 @@
-!include( ../../tests.pri ) {
-    error( "Couldn't find the test.pri file!" )
-}
+include( ../../tests.pri )
 
 RESOURCES += resources.qrc
 SOURCES += main.cpp

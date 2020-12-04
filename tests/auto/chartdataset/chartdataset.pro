@@ -1,6 +1,4 @@
-!include( ../auto.pri ) {
-    error( "Couldn't find the auto.pri file!" )
-}
+include( ../auto.pri )
 
 QT += charts-private core-private
 

@@ -1,6 +1,4 @@
-!include( ../tests.pri ) {
-    error( "Couldn't find the tests.pri file!" )
-}
+include( ../tests.pri )
 
 CONFIG += testcase
 QT += testlib widgets

@@ -1,6 +1,4 @@
-!include( ../../tests.pri ) {
-    error( "Couldn't find the test.pri file!" )
-}
+include( ../../tests.pri )
 
 TARGET = presenterchart
 HEADERS += chartview.h

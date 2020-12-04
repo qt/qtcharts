@@ -1,12 +1,8 @@
-!include( ../../tests.pri ) {
-    error( "Couldn't find the test.pri file!" )
-}
-
-TEMPLATE = app
+include( ../../tests.pri )
 QT += core gui
 
 SOURCES += \
-    brushwidget.cpp \ 
+    brushwidget.cpp \
     main.cpp \
     mainwindow.cpp \
     objectinspectorwidget.cpp \

@@ -1,7 +1,4 @@
-!include( ../../tests.pri ) {
-    error( "Couldn't find the test.pri file!" )
-}
-
+include( ../../tests.pri )
 TARGET = wavechart
 SOURCES += main.cpp wavechart.cpp
 HEADERS += wavechart.h

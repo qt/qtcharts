@@ -1,6 +1,3 @@
-!include( ../auto.pri ) {
-    error( "Couldn't find the auto.pri file!" )
-}
-
+include( ../auto.pri )
 SOURCES += \
     tst_qpiemodelmapper.cpp

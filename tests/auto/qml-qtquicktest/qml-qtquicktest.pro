@@ -1,7 +1,4 @@
-!include( ../auto.pri ) {
-    error( "Couldn't find the auto.pri file!" )
-}
-
+include( ../auto.pri )
 TEMPLATE = app
 CONFIG += warn_on qmltestcase
 CONFIG -= testcase
