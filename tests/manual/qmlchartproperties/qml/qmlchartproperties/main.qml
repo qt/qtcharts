@@ -55,9 +55,10 @@ Rectangle {
             width: main.width - editorLoader.width
             height: parent.height
             source: "Chart.qml"
+            asynchronous: true
             onStatusChanged: {
                 if (status == Loader.Ready && editorLoader.status == Loader.Ready && chartLoader.item) {
-                    if (source.toString().search("/Chart.qml") > 0)
+                    if (source.toString() === "Chart.qml")
                         editorLoader.item.chart = chartLoader.item.chart;
                     else
                         editorLoader.item.series = chartLoader.item.series;
@@ -70,9 +71,10 @@ Rectangle {
             width: 280
             height: parent.height
             source: "ChartEditor.qml"
+            asynchronous: true
             onStatusChanged: {
                 if (status == Loader.Ready && chartLoader.status == Loader.Ready && chartLoader.item) {
-                    if (source.toString().search("/ChartEditor.qml") > 0)
+                    if (source.toString() === "ChartEditor.qml")
                         editorLoader.item.chart = chartLoader.item.chart;
                     else
                         editorLoader.item.series = chartLoader.item.series;

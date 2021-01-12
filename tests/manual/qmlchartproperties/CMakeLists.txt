@@ -13,6 +13,7 @@ qt_internal_add_manual_test(qmlchartproperties
         Qt::Gui
         Qt::OpenGL
         Qt::OpenGLWidgets
+        Qt::Quick
 )
 
 # Resources:

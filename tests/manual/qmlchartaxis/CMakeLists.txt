@@ -13,6 +13,7 @@ qt_internal_add_manual_test(qmlchartaxis
         Qt::Gui
         Qt::OpenGL
         Qt::OpenGLWidgets
+        Qt::Quick
 )
 
 # Resources:
