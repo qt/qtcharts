@@ -39,6 +39,14 @@ int main(int argc, char *argv[])
     // Qt Charts uses Qt Graphics View Framework for drawing, therefore QApplication must be used.
     QApplication app(argc, argv);
 
+    // OpenGL backend is required to make AbstractSeries.useOpenGL work.
+    // We don't force it programmatically, as OpenGL is not guaranteed to be available everywhere.
+    bool openGLSupported = QQuickWindow::graphicsApi() == QSGRendererInterface::OpenGLRhi;
+    if (!openGLSupported) {
+        qWarning() << "OpenGL is not set as the graphics backend, so AbstractSeries.useOpenGL will not work.";
+        qWarning() << "Set QSG_RHI_BACKEND=opengl environment variable to force the OpenGL backend to be used.";
+    }
+
     QQuickView viewer;
 
     // The following are needed to make examples run without having to install the module
@@ -56,6 +64,7 @@ int main(int argc, char *argv[])
 
     DataSource dataSource(&viewer);
     viewer.rootContext()->setContextProperty("dataSource", &dataSource);
+    viewer.rootContext()->setContextProperty("openGLSupported", openGLSupported);
 
     viewer.setSource(QUrl("qrc:/qml/qmloscilloscope/main.qml"));
     viewer.setResizeMode(QQuickView::SizeRootObjectToView);

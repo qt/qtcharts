@@ -27,9 +27,7 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.0
-import QtQuick.Controls 1.0
-import QtQuick.Controls.Styles 1.0
+import QtQuick
 
 Item {
     id: button
@@ -44,26 +42,39 @@ Item {
     implicitWidth: buttonText.implicitWidth + 5
     implicitHeight: buttonText.implicitHeight + 10
 
-    Button {
-        id: buttonText
-        width: parent.width
-        height: parent.height
+    Rectangle {
+        anchors.fill: parent
+        radius: 3
+        gradient: button.enabled ? enabledGradient : disabledGradient
 
-        style: ButtonStyle {
-            label: Component {
-                Text {
-                    text: button.text + button.items[currentSelection]
-                    clip: true
-                    wrapMode: Text.WordWrap
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    anchors.fill: parent
-                }
-            }
+        Gradient {
+            id: enabledGradient
+            GradientStop { position: 0.0; color: "#eeeeee" }
+            GradientStop { position: 1.0; color: "#cccccc" }
         }
-        onClicked: {
-            currentSelection = (currentSelection + 1) % items.length;
-            selectionChanged(button.items[currentSelection]);
+        Gradient {
+            id: disabledGradient
+            GradientStop { position: 0.0; color: "#444444" }
+            GradientStop { position: 1.0; color: "#666666" }
+        }
+
+        Text {
+            id: buttonText
+            text: button.text + button.items[currentSelection]
+            clip: true
+            wrapMode: Text.WordWrap
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            anchors.fill: parent
+            font.pointSize: 14
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                currentSelection = (currentSelection + 1) % items.length;
+                selectionChanged(button.items[currentSelection]);
+            }
         }
     }
 }

@@ -27,8 +27,8 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
-import QtQuick.Layouts 1.0
+import QtQuick
+import QtQuick.Layouts
 
 ColumnLayout {
     property alias openGLButton: openGLButton
@@ -52,8 +52,9 @@ ColumnLayout {
         id: openGLButton
         text: "OpenGL: "
         items: ["false", "true"]
-        currentSelection: 1
+        currentSelection: openGLSupported ? 1 : 0
         onSelectionChanged: openGlChanged(currentSelection == 1);
+        enabled: openGLSupported
     }
 
     MultiButton {
