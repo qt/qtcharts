@@ -32,7 +32,7 @@
 
     \image examples_qmlf1legends.png
 
-    \brief This application demonstrates how to use XmlListModel as a datasource for a Chart.
+    \brief This application demonstrates how to use ListModel as a datasource for a Chart.
 
     \include examples-run.qdocinc
 
@@ -41,11 +41,10 @@
     Let's define an empty ChartView first:
     \snippet qmlf1legends/qml/qmlf1legends/main.qml 1
 
-    Our XmlListModel uses hard-coded test data. In a real application the data source would be a
+    Our ListModel uses hard-coded test data. In a real application the data source would be a
     timing system.
-    \snippet qmlf1legends/qml/qmlf1legends/SpeedsXml.qml 1
+    \snippet qmlf1legends/qml/qmlf1legends/SpeedsList.qml 1
     \dots
-    \snippet qmlf1legends/qml/qmlf1legends/SpeedsXml.qml 2
     \snippet qmlf1legends/qml/qmlf1legends/main.qml 2
 
     The data is parsed with a timer. The line series representing each driver are created on the

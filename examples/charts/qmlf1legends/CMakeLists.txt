@@ -39,7 +39,7 @@ target_link_libraries(qmlf1legends PUBLIC
 
 # Resources:
 set(resources_resource_files
-    "qml/qmlf1legends/SpeedsXml.qml"
+    "qml/qmlf1legends/SpeedsList.qml"
     "qml/qmlf1legends/main.qml"
 )
 
