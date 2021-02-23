@@ -229,7 +229,8 @@ void DeclarativeOpenGLRenderNode::setSeriesData(bool mapDirty, const GLXYDataMap
             GLXYSeriesData *data = oldMap.take(i.key());
             const GLXYSeriesData *newData = i.value();
             if (!data || newData->dirty) {
-                data = new GLXYSeriesData;
+                if (!data)
+                    data = new GLXYSeriesData;
                 *data = *newData;
             }
             m_xyDataMap.insert(i.key(), data);
