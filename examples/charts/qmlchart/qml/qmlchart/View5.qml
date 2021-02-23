@@ -53,7 +53,6 @@ Item {
 
         ScatterSeries {
             name: "Scatter2"
-            //![1]
             XYPoint { x: 2.0; y: 2.0 }
             XYPoint { x: 2.0; y: 2.1 }
             XYPoint { x: 2.07; y: 2.05 }
@@ -62,4 +61,5 @@ Item {
             XYPoint { x: 2.67; y: 2.65 }
         }
     }
+    //![1]
 }
