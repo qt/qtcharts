@@ -40,12 +40,14 @@ QT_CHARTS_BEGIN_NAMESPACE
     Model mappers enable using a data model derived from the QAbstractItemModel
     class as a data source for a chart. A horizontal model mapper is used to
     create a connection between a line, spline, or scatter series and the data
-    model that holds the consecutive data point coordinates on rows.
+    model that has \e X and \e Y rows for the coordinates and holds the data
+    points for the XYSeries as columns. A \e TableModel is a natural choice
+    for the model.
 
     Both model and series properties can be used to manipulate the data. The
     model mapper keeps the series and the data model in sync.
 
-    \sa QVXYModelMapper, QXYSeries
+    \sa QVXYModelMapper, QXYSeries, {Model Data Example}
 */
 /*!
     \qmltype HXYModelMapper
@@ -57,12 +59,14 @@ QT_CHARTS_BEGIN_NAMESPACE
     Model mappers enable using a data model derived from the QAbstractItemModel
     class as a data source for a chart. A horizontal model mapper is used to
     create a connection between a line, spline, or scatter series and the data
-    model that holds the consecutive data point coordinates on rows.
+    model that has \e X and \e Y rows for the coordinates and holds the data
+    points for the XYSeries as columns. A \e TableModel is a natural choice
+    for the model.
 
     Both model and series properties can be used to manipulate the data. The
     model mapper keeps the series and the data model in sync.
 
-    \sa VXYModelMapper, XYSeries
+    \sa VXYModelMapper, XYSeries, {Model Data Example}
 */
 
 /*!
