@@ -41,6 +41,7 @@ ChartBackground::ChartBackground(QGraphicsItem *parent)
       m_diameter(5),
       m_dropShadow(0)
 {
+    setAcceptedMouseButtons({});
 }
 
 ChartBackground::~ChartBackground()

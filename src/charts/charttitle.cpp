@@ -40,6 +40,7 @@ ChartTitle::ChartTitle(QGraphicsItem *parent)
     : QGraphicsTextItem(parent)
 {
     document()->setDocumentMargin(ChartPresenter::textMargin());
+    setAcceptedMouseButtons({});
 }
 
 ChartTitle::~ChartTitle()

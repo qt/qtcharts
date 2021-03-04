@@ -32,6 +32,7 @@
 #include <private/qchart_p.h>
 #include <QtWidgets/QGraphicsScene>
 #include <QtWidgets/QRubberBand>
+#include <QtWidgets/QGraphicsItem>
 
 /*!
     \enum QChartView::RubberBand
@@ -50,6 +51,11 @@
     \value RectangleRubberBand
            The rubber band is fixed to the point that was clicked and can be
            pulled both vertically and horizontally.
+    \value ClickThroughRubberBand
+           An option on the above rubber band choices that allows left clicks
+           to be passed on to chart items if those chart items accept clicks.
+           To select this, OR it with one of the rubber band selection modes.
+           \since 6.2
 */
 
 /*!
@@ -128,7 +134,7 @@ void QChartView::setRubberBand(const RubberBands &rubberBand)
 #ifndef QT_NO_RUBBERBAND
     d_ptr->m_rubberBandFlags = rubberBand;
 
-    if (!d_ptr->m_rubberBandFlags) {
+    if (!(d_ptr->m_rubberBandFlags & ~RubberBands(ClickThroughRubberBand))) {
         delete d_ptr->m_rubberBand;
         d_ptr->m_rubberBand = nullptr;
         return;
@@ -163,9 +169,14 @@ QChartView::RubberBands QChartView::rubberBand() const
 void QChartView::mousePressEvent(QMouseEvent *event)
 {
 #ifndef QT_NO_RUBBERBAND
+    QGraphicsItem *itemUnderCursor = itemAt(event->pos());
+    bool itemUnderCursorAcceptsLMB = (itemUnderCursor->acceptedMouseButtons() & Qt::LeftButton);
+    bool clickThrough = d_ptr->m_rubberBandFlags.testFlag(ClickThroughRubberBand);
     QRectF plotArea = d_ptr->m_chart->plotArea();
     if (d_ptr->m_rubberBand && d_ptr->m_rubberBand->isEnabled()
-            && event->button() == Qt::LeftButton && plotArea.contains(event->pos())) {
+            && event->button() == Qt::LeftButton
+            && plotArea.contains(event->pos())
+            && !(clickThrough && itemUnderCursorAcceptsLMB)) {
         d_ptr->m_rubberBandOrigin = event->pos();
         d_ptr->m_rubberBand->setGeometry(QRect(d_ptr->m_rubberBandOrigin, QSize()));
         d_ptr->m_rubberBand->show();
@@ -223,10 +234,10 @@ void QChartView::mouseReleaseEvent(QMouseEvent *event)
             // Since plotArea uses QRectF and rubberband uses QRect, we can't just blindly use
             // rubberband's dimensions for vertical and horizontal rubberbands, where one
             // dimension must match the corresponding plotArea dimension exactly.
-            if (d_ptr->m_rubberBandFlags == VerticalRubberBand) {
+            if (d_ptr->m_rubberBandFlags.testFlag(VerticalRubberBand)) {
                 rect.setX(d_ptr->m_chart->plotArea().x());
                 rect.setWidth(d_ptr->m_chart->plotArea().width());
-            } else if (d_ptr->m_rubberBandFlags == HorizontalRubberBand) {
+            } else if (d_ptr->m_rubberBandFlags.testFlag(HorizontalRubberBand)) {
                 rect.setY(d_ptr->m_chart->plotArea().y());
                 rect.setHeight(d_ptr->m_chart->plotArea().height());
             }
@@ -238,13 +249,13 @@ void QChartView::mouseReleaseEvent(QMouseEvent *event)
             // If vertical or horizontal rubberband mode, restrict zoom out to specified axis.
             // Since there is no suitable API for that, use zoomIn with rect bigger than the
             // plot area.
-            if (d_ptr->m_rubberBandFlags == VerticalRubberBand
-                || d_ptr->m_rubberBandFlags == HorizontalRubberBand) {
+            if (d_ptr->m_rubberBandFlags.testFlag(VerticalRubberBand)
+                || d_ptr->m_rubberBandFlags.testFlag(HorizontalRubberBand)) {
                 QRectF rect = d_ptr->m_chart->plotArea();
-                if (d_ptr->m_rubberBandFlags == VerticalRubberBand) {
+                if (d_ptr->m_rubberBandFlags.testFlag(VerticalRubberBand)) {
                     qreal adjustment = rect.height() / 2;
                     rect.adjust(0, -adjustment, 0, adjustment);
-                } else if (d_ptr->m_rubberBandFlags == HorizontalRubberBand) {
+                } else if (d_ptr->m_rubberBandFlags.testFlag(HorizontalRubberBand)) {
                     qreal adjustment = rect.width() / 2;
                     rect.adjust(-adjustment, 0, adjustment, 0);
                 }

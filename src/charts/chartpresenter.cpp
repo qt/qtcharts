@@ -253,6 +253,7 @@ void ChartPresenter::createPlotAreaBackgroundItem()
             m_plotAreaBackground = new QGraphicsEllipseItem(rootItem());
         // Use transparent pen instead of Qt::NoPen, as Qt::NoPen causes
         // antialising artifacts with axis lines for some reason.
+        m_plotAreaBackground->setAcceptedMouseButtons({});
         m_plotAreaBackground->setPen(QPen(Qt::transparent));
         m_plotAreaBackground->setBrush(Qt::NoBrush);
         m_plotAreaBackground->setZValue(ChartPresenter::PlotAreaZValue);

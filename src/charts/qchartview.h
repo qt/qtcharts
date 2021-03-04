@@ -54,7 +54,8 @@ public:
         NoRubberBand = 0x0,
         VerticalRubberBand = 0x1,
         HorizontalRubberBand = 0x2,
-        RectangleRubberBand = 0x3
+        RectangleRubberBand = 0x3,
+        ClickThroughRubberBand = 0x80
     };
 
     Q_DECLARE_FLAGS(RubberBands, RubberBand)

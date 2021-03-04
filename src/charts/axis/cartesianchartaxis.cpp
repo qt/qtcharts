@@ -57,6 +57,7 @@ void CartesianChartAxis::createItems(int count)
 {
     if (arrowItems().size() == 0) {
         QGraphicsLineItem *arrow = new LineArrowItem(this, this);
+        arrow->setAcceptedMouseButtons({});
         arrow->setPen(axis()->linePen());
         arrowGroup()->addToGroup(arrow);
     }
@@ -64,9 +65,11 @@ void CartesianChartAxis::createItems(int count)
     if (intervalAxis() && gridItems().size() == 0) {
         for (int i = 0 ; i < 2 ; i  ++){
             QGraphicsLineItem *item = new QGraphicsLineItem(this);
+            item->setAcceptedMouseButtons({});
             item->setPen(axis()->gridLinePen());
             gridGroup()->addToGroup(item);
             QGraphicsRectItem *shades = new QGraphicsRectItem(this);
+            shades->setAcceptedMouseButtons({});
             shades->setPen(axis()->shadesPen());
             shades->setBrush(axis()->shadesBrush());
             shadeGroup()->addToGroup(shades);
@@ -80,7 +83,9 @@ void CartesianChartAxis::createItems(int count)
 
     for (int i = 0; i < count; ++i) {
         QGraphicsLineItem *arrow = new QGraphicsLineItem(this);
+        arrow->setAcceptedMouseButtons({});
         QGraphicsLineItem *grid = new QGraphicsLineItem(this);
+        grid->setAcceptedMouseButtons({});
         QGraphicsTextItem *label;
         if (axis()->type() == QAbstractAxis::AxisTypeValue) {
             label = new ValueAxisLabel(this);
@@ -102,6 +107,7 @@ void CartesianChartAxis::createItems(int count)
             label = new QGraphicsTextItem(this);
         }
 
+        label->setAcceptedMouseButtons({});
         label->document()->setDocumentMargin(ChartPresenter::textMargin());
         arrow->setPen(axis()->linePen());
         grid->setPen(axis()->gridLinePen());
