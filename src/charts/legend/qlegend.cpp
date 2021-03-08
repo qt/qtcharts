@@ -235,6 +235,12 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QLegend::attachedToChartChanged(bool)
+    This signal is emitted when the legend is attached to or detached from the legend.
+    \since 6.2
+*/
+
+/*!
     \fn void QLegend::backgroundVisibleChanged(bool)
     This signal is emitted when the visibility of the legend background changes to \a visible.
 */
@@ -465,11 +471,13 @@ Qt::Alignment QLegend::alignment() const
  */
 void QLegend::detachFromChart()
 {
+    bool changed = d_ptr->m_attachedToChart == true;
     d_ptr->m_attachedToChart = false;
-//    layout()->invalidate();
     d_ptr->m_chart->layout()->invalidate();
     setParent(0);
 
+    if (changed)
+        emit attachedToChartChanged(false);
 }
 
 /*!
@@ -477,10 +485,13 @@ void QLegend::detachFromChart()
  */
 void QLegend::attachToChart()
 {
+    bool changed = d_ptr->m_attachedToChart == false;
     d_ptr->m_attachedToChart = true;
-//    layout()->invalidate();
     d_ptr->m_chart->layout()->invalidate();
     setParent(d_ptr->m_chart);
+
+    if (changed)
+        emit attachedToChartChanged(true);
 }
 
 /*!
