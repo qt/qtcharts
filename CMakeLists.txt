@@ -23,7 +23,7 @@ macro(assertTargets)
     endforeach()
 endmacro()
 
-assertTargets(Gui Widgets OpenGL OpenGLWidgets Quick Qml QuickTest Test)
+assertTargets(Gui Widgets)
 #special case end
 
 if(NOT QT_FEATURE_graphicsview) # special case

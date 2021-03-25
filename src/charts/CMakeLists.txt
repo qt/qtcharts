@@ -107,22 +107,15 @@ qt_internal_add_module(Charts
     PUBLIC_LIBRARIES
         Qt::Core
         Qt::Gui
-        Qt::OpenGL
-        Qt::OpenGLWidgets
         Qt::Widgets
 )
-
-#### Keys ignored in scope 1:.:.:charts.pro:<TRUE>:
-# OTHER_FILES = "doc/qtcharts.qdocconf" "doc/src/*" "doc/images/*"
-# QMAKE_TARGET_DESCRIPTION = "Charts component for Qt."
-# QMAKE_TARGET_PRODUCT = "Qt Charts (Qt $$QT_VERSION)"
-
-## Scopes:
-#####################################################################
 
 qt_internal_extend_target(Charts CONDITION QT_FEATURE_opengl
     SOURCES
         glwidget.cpp glwidget_p.h
+    PUBLIC_LIBRARIES
+        Qt::OpenGL
+        Qt::OpenGLWidgets
 )
 
 qt_internal_extend_target(Charts CONDITION QT_FEATURE_charts_area_chart

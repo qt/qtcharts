@@ -30,26 +30,17 @@ qt_internal_add_qml_module(qtchartsqml2
         Qt::CorePrivate
     PUBLIC_LIBRARIES
         Qt::Charts
-        Qt::ChartsPrivate
         Qt::Core
         Qt::Gui
-        Qt::OpenGL
         Qt::Qml
         Qt::Quick
 )
 
-#### Keys ignored in scope 1:.:.:chartsqml2.pro:<TRUE>:
-# CXX_MODULE = "charts"
-# IMPORT_VERSION = "2.$$QT_MINOR_VERSION"
-# QMAKE_QMLPLUGINDUMP_FLAGS = "-qapp"
-# QT_FOR_CONFIG = "charts"
-
-## Scopes:
-#####################################################################
-
 qt_internal_extend_target(qtchartsqml2 CONDITION QT_FEATURE_opengl
     SOURCES
         declarativeopenglrendernode.cpp declarativeopenglrendernode_p.h
+    PUBLIC_LIBRARIES
+        Qt::OpenGL
 )
 
 qt_internal_extend_target(qtchartsqml2 CONDITION QT_FEATURE_charts_line_chart
