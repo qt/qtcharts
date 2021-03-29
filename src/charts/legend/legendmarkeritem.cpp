@@ -176,12 +176,15 @@ void LegendMarkerItem::setGeometry(const QRectF &rect)
     QRectF truncatedRect;
     const QString html = ChartPresenter::truncatedText(m_font, m_label, qreal(0.0),
                                                        width - x, rect.height(), truncatedRect);
-    m_textItem->setHtml(html);
+    m_textItem->setHtml(html.compare(QLatin1String("...")) ? html : QString());
 #if QT_CONFIG(tooltip)
-    if (m_marker->m_legend->showToolTips() && html != m_label)
+    if (m_marker->m_legend->showToolTips() && html != m_label) {
         m_textItem->setToolTip(m_label);
-    else
+        m_markerItem->setToolTip(m_label);
+    } else {
         m_textItem->setToolTip(QString());
+        m_markerItem->setToolTip(QString());
+    }
 #endif
     m_textItem->setFont(m_font);
     m_textItem->setTextWidth(truncatedRect.width());
@@ -279,6 +282,7 @@ void LegendMarkerItem::setToolTip(const QString &tip)
 {
 #if QT_CONFIG(tooltip)
     m_textItem->setToolTip(tip);
+    m_markerItem->setToolTip(tip);
 #endif
 }
 
