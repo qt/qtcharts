@@ -248,7 +248,7 @@ QSizeF LegendMarkerItem::sizeHint(Qt::SizeHint which, const QSizeF& constraint) 
     }
     case Qt::PreferredSize: {
         const QRectF labelRect = ChartPresenter::textBoundingRect(m_font, m_label);
-        sh = QSizeF(labelRect.width() + (2.0 * m_margin) + m_space + markerWidth,
+        sh = QSizeF(labelRect.width() + (2.0 * m_margin) + m_space + markerWidth + 1,
                     qMax(m_markerRect.height(), labelRect.height()) + (2.0 * m_margin));
         break;
     }

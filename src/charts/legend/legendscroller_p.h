@@ -74,6 +74,9 @@ private:
     bool m_forwardMouseEvents{false};
     bool m_forwardHoverEvents{false};
     bool m_cachedShouldShowMoveEvents{false};
+
+private slots:
+    void handleDetached(bool attached);
 };
 
 QT_END_NAMESPACE

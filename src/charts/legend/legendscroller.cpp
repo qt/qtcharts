@@ -39,12 +39,14 @@
 #include <private/legendmarkeritem_p.h>
 #include <private/legendscroller_p.h>
 #include <private/legendmoveresizehandler_p.h>
+#include <private/legendlayout_p.h>
 
 QT_BEGIN_NAMESPACE
 
 LegendScroller::LegendScroller(QChart *chart) : QLegend(chart)
 {
     connect(this, &QLegend::interactiveChanged, this, &LegendScroller::handleInteractiveChanged);
+    connect(this, &QLegend::attachedToChartChanged, this, &LegendScroller::handleDetached);
 }
 
 void LegendScroller::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -219,6 +221,44 @@ void LegendScroller::updateForResizerChange()
         m_cachedShouldShowMoveEvents = resizer->shouldShowMoveHint();
         update();
     }
+}
+
+void LegendScroller::handleDetached(bool attached)
+{
+    if (attached)
+        return;
+
+    qreal left, top, right, bottom;
+    d_ptr->m_layout->getContentsMargins(&left, &top, &right, &bottom);
+    QSizeF newSize = QSizeF(left + right, top + bottom);
+    qreal width = 0;
+    qreal height = 0;
+
+    for (auto marker : d_ptr->markers()) {
+        LegendMarkerItem *item = marker->d_ptr->item();
+        QSizeF itemESizeHint = item->effectiveSizeHint(Qt::PreferredSize);
+
+        switch (alignment()) {
+        case Qt::AlignTop:
+        case Qt::AlignBottom:
+            // + 3 accounts for the margin which is not an accessible member.
+            width += itemESizeHint.width() + 3;
+            height = qMax(height, itemESizeHint.height());
+            break;
+        case Qt::AlignLeft:
+        case Qt::AlignRight:
+            width = qMax(width, itemESizeHint.width());
+            height += itemESizeHint.height();
+            break;
+        default:
+            break;
+        }
+    }
+
+    newSize += QSizeF(width, height);
+
+    QRectF newGeom = QRectF(geometry().topLeft(), newSize);
+    setGeometry(newGeom.intersected(QRectF(QPoint(0,0), d_ptr->m_chart->size())));
 }
 
 QT_END_NAMESPACE
