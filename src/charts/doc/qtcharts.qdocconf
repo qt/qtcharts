@@ -56,5 +56,4 @@ navigation.landingpage = Qt Charts
 navigation.cppclassespage = Qt Charts C++ Classes
 navigation.qmltypespage = Qt Charts QML Types
 
-manifestmeta.highlighted.names = "QtCharts/Chart Themes Example" \
-                                 "QtCharts/Qml Charts Example"
+manifestmeta.highlighted.names = "QtCharts/Chart Themes Example"
