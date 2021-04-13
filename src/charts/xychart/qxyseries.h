@@ -49,6 +49,7 @@ class Q_CHARTS_EXPORT QXYSeries : public QAbstractSeries
     Q_OBJECT
     Q_PROPERTY(bool pointsVisible READ pointsVisible WRITE setPointsVisible)
     Q_PROPERTY(QColor color READ color WRITE setColor NOTIFY colorChanged)
+    Q_PROPERTY(QColor selectedColor READ color WRITE setSelectedColor NOTIFY selectedColorChanged REVISION 1)
     Q_PROPERTY(QString pointLabelsFormat READ pointLabelsFormat WRITE setPointLabelsFormat NOTIFY pointLabelsFormatChanged)
     Q_PROPERTY(bool pointLabelsVisible READ pointLabelsVisible WRITE setPointLabelsVisible NOTIFY pointLabelsVisibilityChanged)
     Q_PROPERTY(QFont pointLabelsFont READ pointLabelsFont WRITE setPointLabelsFont NOTIFY pointLabelsFontChanged)
@@ -94,6 +95,9 @@ public:
     virtual void setColor(const QColor &color);
     virtual QColor color() const;
 
+    void setSelectedColor(const QColor &color);
+    QColor selectedColor() const;
+
     void setPointsVisible(bool visible = true);
     bool pointsVisible() const;
 
@@ -114,6 +118,17 @@ public:
 
     void replace(const QList<QPointF> &points);
 
+    bool isPointSelected(int index);
+    void selectPoint(int index);
+    void deselectPoint(int index);
+    void setPointSelected(int index, bool selected);
+    void selectAllPoints();
+    void deselectAllPoints();
+    void selectPoints(const QList<int> &indexes);
+    void deselectPoints(const QList<int> &indexes);
+    void toggleSelection(const QList<int> &indexes);
+    QList<int> selectedPoints() const;
+
 Q_SIGNALS:
     void clicked(const QPointF &point);
     void hovered(const QPointF &point, bool state);
@@ -124,6 +139,7 @@ Q_SIGNALS:
     void pointRemoved(int index);
     void pointAdded(int index);
     void colorChanged(QColor color);
+    void selectedColorChanged(const QColor &color);
     void pointsReplaced();
     void pointLabelsFormatChanged(const QString &format);
     void pointLabelsVisibilityChanged(bool visible);
@@ -132,6 +148,7 @@ Q_SIGNALS:
     void pointLabelsClippingChanged(bool clipping);
     void pointsRemoved(int index, int count);
     void penChanged(const QPen &pen);
+    void selectedPointsChanged();
 
 private:
     Q_DECLARE_PRIVATE(QXYSeries)

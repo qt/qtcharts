@@ -68,6 +68,8 @@ ScatterChartItem::ScatterChartItem(QScatterSeries *series, QGraphicsItem *item)
     QObject::connect(series, SIGNAL(pointLabelsFontChanged(QFont)), this, SLOT(handleUpdated()));
     QObject::connect(series, SIGNAL(pointLabelsColorChanged(QColor)), this, SLOT(handleUpdated()));
     QObject::connect(series, SIGNAL(pointLabelsClippingChanged(bool)), this, SLOT(handleUpdated()));
+    connect(series, &QXYSeries::selectedColorChanged, this, &ScatterChartItem::handleUpdated);
+    connect(series, &QXYSeries::selectedPointsChanged, this, &ScatterChartItem::handleUpdated);
 
     setZValue(ChartPresenter::ScatterSeriesZValue);
     setFlags(QGraphicsItem::ItemClipsChildrenToShape);
@@ -262,8 +264,18 @@ void ScatterChartItem::setPen(const QPen &pen)
 
 void ScatterChartItem::setBrush(const QBrush &brush)
 {
-    foreach (QGraphicsItem *item , m_items.childItems())
-        static_cast<QAbstractGraphicsShapeItem*>(item)->setBrush(brush);
+    const auto &items = m_items.childItems();
+    for (auto item : items) {
+        if (m_markerMap.contains(item)) {
+            auto index = m_series->points().indexOf(m_markerMap[item]);
+            if (m_selectedPoints.contains(index))
+                static_cast<QAbstractGraphicsShapeItem *>(item)->setBrush(m_selectedColor);
+            else
+                static_cast<QAbstractGraphicsShapeItem *>(item)->setBrush(brush);
+        } else {
+            static_cast<QAbstractGraphicsShapeItem *>(item)->setBrush(brush);
+        }
+    }
 }
 
 void ScatterChartItem::handleUpdated()
@@ -282,7 +294,9 @@ void ScatterChartItem::handleUpdated()
 
     bool recreate = m_visible != m_series->isVisible()
                     || m_size != m_series->markerSize()
-                    || m_shape != m_series->markerShape();
+                    || m_shape != m_series->markerShape()
+                    || m_selectedColor != m_series->selectedColor()
+                    || m_selectedPoints != m_series->selectedPoints();
     m_visible = m_series->isVisible();
     m_size = m_series->markerSize();
     m_shape = m_series->markerShape();
@@ -292,6 +306,8 @@ void ScatterChartItem::handleUpdated()
     m_pointLabelsVisible = m_series->pointLabelsVisible();
     m_pointLabelsFont = m_series->pointLabelsFont();
     m_pointLabelsColor = m_series->pointLabelsColor();
+    m_selectedColor = m_series->selectedColor();
+    m_selectedPoints = m_series->selectedPoints();
     bool labelClippingChanged = m_pointLabelsClipping != m_series->pointLabelsClipping();
     m_pointLabelsClipping = m_series->pointLabelsClipping();
 

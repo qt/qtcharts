@@ -98,6 +98,8 @@ private:
 protected:
     QXYSeries *m_series;
     QList<QPointF> m_points;
+    QList<int> m_selectedPoints;
+    QColor m_selectedColor;
     XYAnimation *m_animation;
     bool m_dirty;
 

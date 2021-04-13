@@ -246,6 +246,22 @@ QT_BEGIN_NAMESPACE
     \sa pointLabelsVisible
 */
 /*!
+    \property QXYSeries::selectedColor
+    \brief The color of the selected points.
+
+    This is the fill (brush) color of points marked as selected. If not specified,
+    value of QXYSeries::color is used as default.
+    \sa color
+    \since 6.2
+*/
+/*!
+    \qmlproperty color XYSeries::selectedColor
+    The color of the selected points. This is the fill (brush) color of points marked
+    as selected.
+    If not specified, value of QXYSeries::color is used as default.
+    \sa color
+*/
+/*!
     \fn void QXYSeries::pointLabelsClippingChanged(bool clipping)
     This signal is emitted when the clipping of the data point labels changes to
     \a clipping.
@@ -607,6 +623,159 @@ void QXYSeries::replace(const QList<QPointF> &points)
 }
 
 /*!
+   Returns true if point at given \a index is among selected points and false otherwise.
+   \note Selected points are drawn using the selected color if it was specified.
+   \sa selectedPoints(), setPointSelected(), setSelectedColor()
+   \since 6.2
+ */
+bool QXYSeries::isPointSelected(int index)
+{
+    Q_D(QXYSeries);
+    return d->isPointSelected(index);
+}
+
+/*!
+  Marks point at \a index as selected.
+  \note Emits QXYSeries::selectedPointsChanged
+  \sa setPointSelected()
+  \since 6.2
+ */
+void QXYSeries::selectPoint(int index)
+{
+    setPointSelected(index, true);
+}
+
+/*!
+  Deselects point at given \a index.
+  \note Emits QXYSeries::selectedPointsChanged
+  \sa setPointSelected()
+  \since 6.2
+ */
+void QXYSeries::deselectPoint(int index)
+{
+    setPointSelected(index, false);
+}
+
+/*!
+  Marks point at given \a index as either selected or deselected.
+  \note Selected points are drawn using the selected color if it was specified. Emits QXYSeries::selectedPointsChanged
+  \sa setPointSelected(), setSelectedColor()
+  \since 6.2
+ */
+void QXYSeries::setPointSelected(int index, bool selected)
+{
+    Q_D(QXYSeries);
+
+    bool callSignal = false;
+    d->setPointSelected(index, selected, callSignal);
+
+    if (callSignal)
+        emit selectedPointsChanged();
+}
+
+/*!
+  Marks all points in the series as selected,
+  \note Emits QXYSeries::selectedPointsChanged
+  \sa setPointSelected()
+  \since 6.2
+ */
+void QXYSeries::selectAllPoints()
+{
+    Q_D(QXYSeries);
+
+    bool callSignal = false;
+    for (int i = 0; i < d->m_points.count(); ++i)
+        d->setPointSelected(i, true, callSignal);
+
+    if (callSignal)
+        emit selectedPointsChanged();
+}
+
+/*!
+  Deselects all points in the series.
+  \note Emits QXYSeries::selectedPointsChanged
+  \sa setPointSelected()
+  \since 6.2
+ */
+void QXYSeries::deselectAllPoints()
+{
+    Q_D(QXYSeries);
+
+    bool callSignal = false;
+    for (int i = 0; i < d->m_points.count(); ++i)
+        d->setPointSelected(i, false, callSignal);
+
+    if (callSignal)
+        emit selectedPointsChanged();
+}
+
+/*!
+  Marks multiple points passed in a \a indexes list as selected.
+  \note Emits QXYSeries::selectedPointsChanged
+  \sa setPointSelected()
+  \since 6.2
+ */
+void QXYSeries::selectPoints(const QList<int> &indexes)
+{
+    Q_D(QXYSeries);
+
+    bool callSignal = false;
+    for (const int &index : indexes)
+        d->setPointSelected(index, true, callSignal);
+
+    if (callSignal)
+        emit selectedPointsChanged();
+}
+
+/*!
+  Marks multiple points passed in a \a indexes list as deselected.
+  \note Emits QXYSeries::selectedPointsChanged
+  \sa setPointSelected()
+  \since 6.2
+ */
+void QXYSeries::deselectPoints(const QList<int> &indexes)
+{
+    Q_D(QXYSeries);
+
+    bool callSignal = false;
+    for (const int &index : indexes)
+        d->setPointSelected(index, false, callSignal);
+
+    if (callSignal)
+        emit selectedPointsChanged();
+}
+
+/*!
+  Changes selection state of points at given \a indexes to the opposite one. Makes
+  \note Emits QXYSeries::selectedPointsChanged
+  \sa setPointSelected()
+  \since 6.2
+ */
+void QXYSeries::toggleSelection(const QList<int> &indexes)
+{
+    Q_D(QXYSeries);
+
+    bool callSignal = false;
+    for (const int &index : indexes)
+        d->setPointSelected(index, !isPointSelected(index), callSignal);
+
+    if (callSignal)
+        emit selectedPointsChanged();
+}
+
+/*!
+  Returns a list of points indexes marked as selected.
+  Selected points are visible regardless of points visibility.
+  \sa setPointSelected(), pointsVisible()
+  \since 6.2
+ */
+QList<int> QXYSeries::selectedPoints() const
+{
+    Q_D(const QXYSeries);
+    return QList<int>(d->m_selectedPoints.begin(), d->m_selectedPoints.end());
+}
+
+/*!
   Removes the point that has the coordinates \a x and \a y from the series.
   \sa pointRemoved()
 */
@@ -635,6 +804,7 @@ void QXYSeries::remove(const QPointF &point)
 void QXYSeries::remove(int index)
 {
     Q_D(QXYSeries);
+    deselectPoint(index);
     d->m_points.remove(index);
     emit pointRemoved(index);
 }
@@ -650,6 +820,13 @@ void QXYSeries::removePoints(int index, int count)
     // remove(qreal, qreal) overload in some implicit casting cases.
     Q_D(QXYSeries);
     if (count > 0) {
+        if (!d->m_selectedPoints.empty()) {
+            QList<int> indexes;
+            for (int i = index; i < index + count; ++i)
+                indexes << i;
+            deselectPoints(indexes);
+        }
+
         d->m_points.remove(index, count);
         emit pointsRemoved(index, count);
     }
@@ -665,6 +842,24 @@ void QXYSeries::insert(int index, const QPointF &point)
     Q_D(QXYSeries);
     if (isValidValue(point)) {
         index = qMax(0, qMin(index, d->m_points.size()));
+
+        if (!d->m_selectedPoints.isEmpty()) {
+            // if point was inserted we need to move already selected points by 1
+            QSet<int> selectedAfterInsert;
+            bool callSignal = false;
+            for (const auto &value : d->m_selectedPoints) {
+                if (value >= index) {
+                    selectedAfterInsert << value + 1;
+                    callSignal = true;
+                } else {
+                    selectedAfterInsert << value;
+                }
+            }
+            d->m_selectedPoints = selectedAfterInsert;
+            if (callSignal)
+                emit selectedPointsChanged();
+        }
+
         d->m_points.insert(index, point);
         emit pointAdded(index);
     }
@@ -786,6 +981,21 @@ void QXYSeries::setColor(const QColor &color)
 QColor QXYSeries::color() const
 {
     return pen().color();
+}
+
+void QXYSeries::setSelectedColor(const QColor &color)
+{
+    Q_D(QXYSeries);
+    if (selectedColor() != color) {
+        d->m_selectedColor = color;
+        emit selectedColorChanged(color);
+    }
+}
+
+QColor QXYSeries::selectedColor() const
+{
+    Q_D(const QXYSeries);
+    return d->m_selectedColor;
 }
 
 void QXYSeries::setPointsVisible(bool visible)
@@ -1020,6 +1230,29 @@ void QXYSeriesPrivate::drawSeriesPointLabels(QPainter *painter, const QList<QPoi
 
         painter->drawText(position, pointLabel);
     }
+}
+
+void QXYSeriesPrivate::setPointSelected(int index, bool selected, bool &callSignal)
+{
+    if (index < 0 || index > m_points.count() - 1)
+        return;
+
+    if (selected) {
+        if (!isPointSelected(index)) {
+            m_selectedPoints << index;
+            callSignal = true;
+        }
+    } else {
+        if (isPointSelected(index)) {
+            m_selectedPoints.remove(index);
+            callSignal = true;
+        }
+    }
+}
+
+bool QXYSeriesPrivate::isPointSelected(int index)
+{
+    return m_selectedPoints.contains(index);
 }
 
 QT_END_NAMESPACE

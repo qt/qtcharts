@@ -64,6 +64,8 @@ LineChartItem::LineChartItem(QLineSeries *series, QGraphicsItem *item)
     QObject::connect(series, SIGNAL(pointLabelsFontChanged(QFont)), this, SLOT(handleUpdated()));
     QObject::connect(series, SIGNAL(pointLabelsColorChanged(QColor)), this, SLOT(handleUpdated()));
     QObject::connect(series, SIGNAL(pointLabelsClippingChanged(bool)), this, SLOT(handleUpdated()));
+    connect(series, &QLineSeries::selectedColorChanged, this, &LineChartItem::handleUpdated);
+    connect(series, &QLineSeries::selectedPointsChanged, this, &LineChartItem::handleUpdated);
     handleUpdated();
 }
 
@@ -329,11 +331,12 @@ void LineChartItem::updateGeometry()
 
 void LineChartItem::handleUpdated()
 {
-    // If points visibility has changed, a geometry update is needed.
-    // Also, if pen changes when points are visible, geometry update is needed.
     bool doGeometryUpdate =
         (m_pointsVisible != m_series->pointsVisible())
-        || (m_series->pointsVisible() && (m_linePen != m_series->pen()));
+        || (m_series->pointsVisible()
+            && (m_linePen != m_series->pen()
+            || m_selectedColor != m_series->selectedColor()
+            || m_selectedPoints != m_series->selectedPoints()));
     bool visibleChanged = m_series->isVisible() != isVisible();
     setVisible(m_series->isVisible());
     setOpacity(m_series->opacity());
@@ -343,6 +346,8 @@ void LineChartItem::handleUpdated()
     m_pointLabelsVisible = m_series->pointLabelsVisible();
     m_pointLabelsFont = m_series->pointLabelsFont();
     m_pointLabelsColor = m_series->pointLabelsColor();
+    m_selectedColor = m_series->selectedColor();
+    m_selectedPoints = m_series->selectedPoints();
     bool labelClippingChanged = m_pointLabelsClipping != m_series->pointLabelsClipping();
     m_pointLabelsClipping = m_series->pointLabelsClipping();
     if (doGeometryUpdate)
@@ -414,14 +419,24 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 
     painter->restore();
 
-    if (m_pointsVisible) {
+    if (m_pointsVisible || !m_selectedPoints.isEmpty()) {
         // draw points that lie inside clipRect only
         qreal ptSize = m_linePen.width() * 1.5;
         painter->setPen(Qt::NoPen);
         painter->setBrush(m_linePen.color());
         for (int i = 0; i < m_linePoints.size(); ++i) {
-            if (clipRect.contains(m_linePoints.at(i)))
-                painter->drawEllipse(m_linePoints.at(i), ptSize, ptSize);
+            if (clipRect.contains(m_linePoints.at(i))) {
+                if (m_series->isPointSelected(i)) {
+                    painter->save();
+                    if (m_selectedColor.isValid())
+                        painter->setBrush(m_selectedColor);
+
+                    painter->drawEllipse(m_linePoints.at(i), ptSize * 1.5, ptSize * 1.5);
+                    painter->restore();
+                } else if (m_pointsVisible) {
+                    painter->drawEllipse(m_linePoints.at(i), ptSize, ptSize);
+                }
+            }
         }
     }
 }

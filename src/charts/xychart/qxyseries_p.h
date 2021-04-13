@@ -67,12 +67,17 @@ public:
     void drawSeriesPointLabels(QPainter *painter, const QList<QPointF> &points,
                                const int offset = 0);
 
+    void setPointSelected(int index, bool selected, bool &callSignal);
+    bool isPointSelected(int index);
+
 Q_SIGNALS:
     void updated();
 
 protected:
     QList<QPointF> m_points;
+    QSet<int> m_selectedPoints;
     QPen m_pen;
+    QColor m_selectedColor;
     QBrush m_brush;
     bool m_pointsVisible;
     QString m_pointLabelsFormat;
