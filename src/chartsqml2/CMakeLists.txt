@@ -6,7 +6,7 @@
 
 qt_internal_add_qml_module(qtchartsqml2
     URI "QtCharts" # special case
-    VERSION "2.${CMAKE_PROJECT_VERSION_MINOR}"
+    VERSION "2.${PROJECT_VERSION_MINOR}"
     CLASSNAME QtChartsQml2Plugin
     SKIP_TYPE_REGISTRATION
     SOURCES
