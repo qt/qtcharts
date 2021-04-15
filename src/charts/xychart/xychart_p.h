@@ -92,6 +92,8 @@ protected:
     virtual void updateGlChart();
     virtual void refreshGlChart();
 
+    QPointF matchForLightMarker(const QPointF &eventPos);
+
 private:
     inline bool isEmpty();
 

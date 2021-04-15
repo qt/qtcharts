@@ -34,6 +34,7 @@
 #include <QtCharts/QAbstractSeries>
 #include <QtGui/QPen>
 #include <QtGui/QBrush>
+#include <QtGui/QImage>
 
 QT_BEGIN_NAMESPACE
 class QModelIndex;
@@ -129,6 +130,9 @@ public:
     void toggleSelection(const QList<int> &indexes);
     QList<int> selectedPoints() const;
 
+    void setLightMarker(const QImage &lightMarker);
+    const QImage &lightMarker() const;
+
 Q_SIGNALS:
     void clicked(const QPointF &point);
     void hovered(const QPointF &point, bool state);
@@ -149,6 +153,7 @@ Q_SIGNALS:
     void pointsRemoved(int index, int count);
     void penChanged(const QPen &pen);
     void selectedPointsChanged();
+    void lightMarkerChanged(const QImage &lightMarker);
 
 private:
     Q_DECLARE_PRIVATE(QXYSeries)

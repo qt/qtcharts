@@ -181,7 +181,7 @@ QT_BEGIN_NAMESPACE
     \list
     \li Series animations are not supported for accelerated series.
     \li Point labels are not supported for accelerated series.
-    \li Pen styles and marker shapes are ignored for accelerated series.
+    \li Pen styles, marker shapes and light markers are ignored for accelerated series.
         Only solid lines and plain scatter dots are supported.
         The scatter dots may be circular or rectangular, depending on the underlying graphics
         hardware and drivers.
@@ -234,7 +234,7 @@ QT_BEGIN_NAMESPACE
     \list
     \li Series animations are not supported for accelerated series.
     \li Point labels are not supported for accelerated series.
-    \li Pen styles and marker shapes are ignored for accelerated series.
+    \li Pen styles, marker shapes and light markers are ignored for accelerated series.
         Only solid lines and plain scatter dots are supported.
         The scatter dots may be circular or rectangular, depending on the underlying graphics
         hardware and drivers.

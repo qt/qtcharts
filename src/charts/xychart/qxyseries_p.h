@@ -85,6 +85,7 @@ protected:
     QFont m_pointLabelsFont;
     QColor m_pointLabelsColor;
     bool m_pointLabelsClipping;
+    QImage m_lightMarker;
 
 private:
     Q_DECLARE_PUBLIC(QXYSeries)

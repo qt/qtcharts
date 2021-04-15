@@ -304,6 +304,23 @@ void SplineChartItem::updateGeometry()
     // Only zoom in if the bounding rects of the path fit inside int limits. QWidget::update() uses
     // a region that has to be compatible with QRect.
     QPainterPath checkShapePath = stroker.createStroke(fullPath);
+
+    // For mouse interactivity, we have to add the rects *after* the 'createStroke',
+    // as we don't need the outline - we need it filled up.
+    if (!m_series->lightMarker().isNull()) {
+        const QImage &marker = m_series->lightMarker();
+        // '+1': a margin to guarantee we cover all of the pixmap
+        int markerHalfWidth = (marker.width() / 2) + 1;
+        int markerHalfHeight = (marker.height() / 2) + 1;
+
+        // '+2': see above comment about margin
+        for (const auto &point : qAsConst(points)) {
+            checkShapePath.addRect(point.x() - markerHalfWidth,
+                                   point.y() - markerHalfHeight,
+                                   marker.width() + 2, marker.height() + 2);
+        }
+    }
+
     if (checkShapePath.boundingRect().height() <= INT_MAX
             && checkShapePath.boundingRect().width() <= INT_MAX
             && splinePath.boundingRect().height() <= INT_MAX
@@ -475,6 +492,19 @@ void SplineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
             painter->drawPoints(geometryPoints());
     }
 
+    // Draw markers if a marker has been set (set to QImage() to disable)
+    if (!m_series->lightMarker().isNull()) {
+        const QImage &marker = m_series->lightMarker();
+        int markerHalfWidth = marker.width() / 2;
+        int markerHalfHeight = marker.height() / 2;
+
+        for (const auto &point : qAsConst(m_points)) {
+            painter->drawImage(point.x() - markerHalfWidth,
+                               point.y() - markerHalfHeight,
+                               marker);
+        }
+    }
+
     if (m_pointLabelsVisible) {
         if (m_pointLabelsClipping)
             painter->setClipping(true);
@@ -488,7 +518,12 @@ void SplineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
 
 void SplineChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    emit XYChart::pressed(domain()->calculateDomainPoint(event->pos()));
+    QPointF matchedP = matchForLightMarker(event->pos());
+    if (!qIsNaN(matchedP.x()))
+        emit XYChart::pressed(matchedP);
+    else
+        emit XYChart::pressed(domain()->calculateDomainPoint(event->pos()));
+
     m_lastMousePos = event->pos();
     m_mousePressed = true;
     QGraphicsItem::mousePressEvent(event);
@@ -496,28 +531,50 @@ void SplineChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void SplineChartItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
-    emit XYChart::hovered(domain()->calculateDomainPoint(event->pos()), true);
+    QPointF matchedP = matchForLightMarker(event->pos());
+    if (!qIsNaN(matchedP.x()))
+        emit XYChart::hovered(matchedP, true);
+    else
+        emit XYChart::hovered(domain()->calculateDomainPoint(event->pos()), true);
+
     QGraphicsItem::hoverEnterEvent(event);
 }
 
 void SplineChartItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
-    emit XYChart::hovered(domain()->calculateDomainPoint(event->pos()), false);
+    QPointF matchedP = matchForLightMarker(event->pos());
+    if (!qIsNaN(matchedP.x()))
+        emit XYChart::hovered(matchedP, false);
+    else
+        emit XYChart::hovered(domain()->calculateDomainPoint(event->pos()), false);
+
     QGraphicsItem::hoverLeaveEvent(event);
 }
 
 void SplineChartItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    emit XYChart::released(domain()->calculateDomainPoint(m_lastMousePos));
+    QPointF result;
+    QPointF matchedP = matchForLightMarker(m_lastMousePos);
+    if (!qIsNaN(matchedP.x()))
+        result = matchedP;
+    else
+        result = domain()->calculateDomainPoint(m_lastMousePos);
+
+    emit XYChart::released(result);
     if (m_mousePressed)
-        emit XYChart::clicked(domain()->calculateDomainPoint(m_lastMousePos));
+        emit XYChart::clicked(result);
     m_mousePressed = false;
     QGraphicsItem::mouseReleaseEvent(event);
 }
 
 void SplineChartItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
-    emit XYChart::doubleClicked(domain()->calculateDomainPoint(m_lastMousePos));
+    QPointF matchedP = matchForLightMarker(event->pos());
+    if (!qIsNaN(matchedP.x()))
+        emit XYChart::doubleClicked(matchedP);
+    else
+        emit XYChart::doubleClicked(domain()->calculateDomainPoint(m_lastMousePos));
+
     QGraphicsItem::mouseDoubleClickEvent(event);
 }
 

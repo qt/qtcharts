@@ -251,6 +251,35 @@ bool XYChart::isEmpty()
     return domain()->isEmpty() || m_series->points().isEmpty();
 }
 
+QPointF XYChart::matchForLightMarker(const QPointF &eventPos)
+{
+    if (m_series->lightMarker().isNull())
+        return QPointF(qQNaN(), qQNaN()); // 0,0 could actually be in points()
+
+    int markerWidth =  m_series->lightMarker().width();
+    int markerHeight =  m_series->lightMarker().height();
+
+    for (const QPointF &dp : m_series->points()) {
+        bool ok;
+        const QPointF gp = domain()->calculateGeometryPoint(dp, ok);
+        if (ok) {
+            // '+2' and '+4': There is an addRect for the (mouse-)shape
+            // in LineChartItem::updateGeometry()
+            // This has a margin of 1 to make sure a press in the icon will always be detected,
+            // but as there is a bunch of 'translations' and therefore inaccuracies,
+            // so it is necessary to increase that margin to 2
+            // (otherwise you can click next to an icon, get a click event but not match it)
+            QRectF r(gp.x() - (markerWidth / 2 + 2),
+                     gp.y() - (markerHeight / 2 + 2),
+                     markerWidth + 4, markerHeight + 4);
+
+            if (r.contains(eventPos))
+                return dp;
+        }
+    }
+    return QPointF(qQNaN(), qQNaN()); // 0,0 could actually be in points()
+}
+
 QT_END_NAMESPACE
 
 #include "moc_xychart_p.cpp"

@@ -459,6 +459,13 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QXYSeries::lightMarkerChanged(const QImage &lightMarker)
+    This signal is emitted when the light marker image changes to \a lightMarker.
+    \sa QXYSeries::setLightMarker();
+    \since 6.2
+*/
+
+/*!
     \fn void QXYSeriesPrivate::updated()
     \internal
 */
@@ -1090,6 +1097,62 @@ bool QXYSeries::pointLabelsClipping() const
     Q_D(const QXYSeries);
     return d->m_pointLabelsClipping;
 }
+
+/*!
+    Sets the image used for drawing markers on each point of the series.
+
+    The default value is a default-QImage() (QImage::isNull() == true), meaning no light marker
+    will be painted.
+    You can reset back to default (disabled) by calling this function with a null QImage (QImage()).
+
+    The light markers visualize the data points of this series and as such are an alternative
+    to setPointsVisible(true).
+    Both features can be enabled independently from each other.
+
+    Unlike the elements of \l {QScatterSeries}{QScatterSeries} the light markers
+    are not represented by QGraphicsItem, but are just painted (no objects created).
+    However, the mouse-event-signals of QXYSeries behave the same way,
+    meaning that you'll get the exact domain value of the point if you click/press/hover
+    the light marker. You'll still get the in between domain value if you click on the line.
+    The light markers are above the line in terms of painting as well as events.
+
+    \sa QXYSeries::lightMarker()
+    \since 6.2
+*/
+void QXYSeries::setLightMarker(const QImage &lightMarker)
+{
+    Q_D(QXYSeries);
+    if (d->m_lightMarker == lightMarker)
+        return;
+
+    d->m_lightMarker = lightMarker;
+    emit lightMarkerChanged(d->m_lightMarker);
+}
+
+/*!
+    Gets the image used for drawing markers on each point of the series.
+
+    The default value is QImage(), meaning no light marker will be painted.
+
+    The light markers visualize the data points of this series and as such are an alternative
+    to setPointsVisible(true).
+    Both features can be enabled independently from each other.
+
+    Unlike the elements of \l {QScatterSeries}{QScatterSeries} the light markers
+    are not represented by QGraphicsItem, but are just painted (no objects created).
+    However, the mouse-event-signals of QXYSeries behave the same way,
+    meaning that you'll get the exact domain value of the point if you click/press/hover
+    the light marker. You'll still get the in between domain value if you click on the line.
+    The light markers are above the line in terms of painting as well as events.
+    \sa QXYSeries::setLightMarker()
+    \since 6.2
+*/
+const QImage &QXYSeries::lightMarker() const
+{
+    Q_D(const QXYSeries);
+    return d->m_lightMarker;
+}
+
 
 /*!
     Stream operator for adding the data point \a point to the series.

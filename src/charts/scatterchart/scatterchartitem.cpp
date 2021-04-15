@@ -238,6 +238,19 @@ void ScatterChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
     if (m_series->useOpenGL())
         return;
 
+    // Draw markers if a marker has been set (set to QImage() to disable)
+    if (!m_series->lightMarker().isNull()) {
+        const QImage &marker = m_series->lightMarker();
+        int markerHalfWidth = marker.width() / 2;
+        int markerHalfHeight = marker.height() / 2;
+
+        for (const auto &point : qAsConst(m_points)) {
+            painter->drawImage(point.x() - markerHalfWidth,
+                               point.y() - markerHalfHeight,
+                               marker);
+        }
+    }
+
     QRectF clipRect = QRectF(QPointF(0, 0), domain()->size());
 
     painter->save();
