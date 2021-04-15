@@ -35,6 +35,7 @@
 #include "qlegendmarker.h"
 #if QT_CONFIG(charts_scatter_chart)
 #include "qscatterseries.h"
+#include "scatterchartitem_p.h"
 #endif
 #if QT_CONFIG(charts_line_chart)
 #include "qlineseries.h"
@@ -277,8 +278,31 @@ void LegendMarkerItem::updateMarkerShapeAndSize()
         QScatterSeries *scatter = qobject_cast<QScatterSeries *>(m_marker->series());
         if (scatter) {
             newRect.setSize(QSizeF(scatter->markerSize(), scatter->markerSize()));
-            if (scatter->markerShape() == QScatterSeries::MarkerShapeCircle)
+            switch (scatter->markerShape()) {
+            case QScatterSeries::MarkerShapeCircle: {
                 itemType = TypeCircle;
+                break;
+            }
+            case QScatterSeries::MarkerShapeRotatedRectangle: {
+                itemType = TypeRotatedRect;
+                break;
+            }
+            case QScatterSeries::MarkerShapeTriangle: {
+                itemType = TypeTriangle;
+                break;
+            }
+            case QScatterSeries::MarkerShapeStar: {
+                itemType = TypeStar;
+                break;
+            }
+            case QScatterSeries::MarkerShapePentagon: {
+                itemType = TypePentagon;
+                break;
+            }
+            default:
+                qWarning() << "Unsupported marker type, TypeRect used";
+                break;
+            }
         } else
 #endif
 #if QT_CONFIG(charts_spline_chart)
@@ -302,12 +326,48 @@ void LegendMarkerItem::updateMarkerShapeAndSize()
             oldPos = m_markerItem->pos();
             delete m_markerItem;
         }
-        if (itemType == TypeRect)
+
+        switch (itemType) {
+        case LegendMarkerItem::TypeRect: {
             m_markerItem = new QGraphicsRectItem(this);
-        else if (itemType == TypeCircle)
+            break;
+        }
+        case LegendMarkerItem::TypeCircle: {
             m_markerItem = new QGraphicsEllipseItem(this);
-        else
+            break;
+        }
+#if QT_CONFIG(charts_scatter_chart)
+        case LegendMarkerItem::TypeRotatedRect: {
+            QGraphicsPolygonItem *item = new QGraphicsPolygonItem(this);
+            item->setPolygon(RotatedRectangleMarker::polygon());
+            m_markerItem = item;
+            break;
+        }
+        case LegendMarkerItem::TypeTriangle: {
+            QGraphicsPolygonItem *item = new QGraphicsPolygonItem(this);
+            item->setPolygon(TriangleMarker::polygon());
+            m_markerItem = item;
+            break;
+        }
+        case LegendMarkerItem::TypeStar: {
+            QGraphicsPolygonItem *item = new QGraphicsPolygonItem(this);
+            item->setPolygon(StarMarker::polygon());
+            m_markerItem = item;
+            break;
+        }
+        case LegendMarkerItem::TypePentagon: {
+            QGraphicsPolygonItem *item = new QGraphicsPolygonItem(this);
+            item->setPolygon(PentagonMarker::polygon());
+            m_markerItem = item;
+            break;
+        }
+#endif
+        default: {
             m_markerItem =  new QGraphicsLineItem(this);
+            break;
+        }
+        }
+
         // Immediately update the position to the approximate correct position to avoid marker
         // jumping around when changing markers
         m_markerItem->setPos(oldPos);
@@ -345,6 +405,10 @@ void LegendMarkerItem::setItemBrushAndPen()
                 qgraphicsitem_cast<QGraphicsRectItem *>(m_markerItem);
         if (!shapeItem)
             shapeItem = qgraphicsitem_cast<QGraphicsEllipseItem *>(m_markerItem);
+
+        if (!shapeItem)
+            shapeItem = qgraphicsitem_cast<QGraphicsPolygonItem *>(m_markerItem);
+
         if (shapeItem) {
             if (effectiveMarkerShape() == QLegend::MarkerShapeFromSeries) {
                 shapeItem->setPen(m_seriesPen);
@@ -365,14 +429,48 @@ void LegendMarkerItem::setItemBrushAndPen()
 
 void LegendMarkerItem::setItemRect()
 {
-    if (m_itemType == TypeRect) {
+    switch (m_itemType) {
+    case LegendMarkerItem::TypeRect: {
         static_cast<QGraphicsRectItem *>(m_markerItem)->setRect(m_markerRect);
-    } else if (m_itemType == TypeCircle) {
+        break;
+    }
+    case LegendMarkerItem::TypeCircle: {
         static_cast<QGraphicsEllipseItem *>(m_markerItem)->setRect(m_markerRect);
-    } else {
+        break;
+    }
+#if QT_CONFIG(charts_scatter_chart)
+    case LegendMarkerItem::TypeRotatedRect: {
+        static_cast<QGraphicsPolygonItem *>(m_markerItem)
+                ->setPolygon(RotatedRectangleMarker::polygon(m_markerRect.x(), m_markerRect.y(),
+                                                             m_markerRect.width(),
+                                                             m_markerRect.height()));
+        break;
+    }
+    case LegendMarkerItem::TypeTriangle: {
+        static_cast<QGraphicsPolygonItem *>(m_markerItem)
+                ->setPolygon(TriangleMarker::polygon(m_markerRect.x(), m_markerRect.y(),
+                                                     m_markerRect.width(), m_markerRect.height()));
+        break;
+    }
+    case LegendMarkerItem::TypeStar: {
+        static_cast<QGraphicsPolygonItem *>(m_markerItem)
+                ->setPolygon(StarMarker::polygon(m_markerRect.x(), m_markerRect.y(),
+                                                 m_markerRect.width(), m_markerRect.height()));
+        break;
+    }
+    case LegendMarkerItem::TypePentagon: {
+        static_cast<QGraphicsPolygonItem *>(m_markerItem)
+                ->setPolygon(PentagonMarker::polygon(m_markerRect.x(), m_markerRect.y(),
+                                                     m_markerRect.width(), m_markerRect.height()));
+        break;
+    }
+#endif
+    default: {
         qreal y = m_markerRect.height() / 2.0;
         QLineF line(0.0, y, m_markerRect.width(), y);
         static_cast<QGraphicsLineItem *>(m_markerItem)->setLine(line);
+        break;
+    }
     }
 }
 

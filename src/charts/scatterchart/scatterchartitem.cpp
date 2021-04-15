@@ -40,6 +40,10 @@
 
 QT_BEGIN_NAMESPACE
 
+namespace {
+constexpr short STAR_SPIKES = 5;
+}
+
 ScatterChartItem::ScatterChartItem(QScatterSeries *series, QGraphicsItem *item)
     : XYChart(series,item),
       m_series(series),
@@ -86,19 +90,34 @@ void ScatterChartItem::createPoints(int count)
 
         switch (m_shape) {
         case QScatterSeries::MarkerShapeCircle: {
-            item = new CircleMarker(0, 0, m_size, m_size, this);
-            const QRectF &rect = item->boundingRect();
-            item->setPos(-rect.width() / 2, -rect.height() / 2);
+            item = new ChartMarker<QGraphicsEllipseItem>(0, 0, m_size, m_size, this);
             break;
         }
-        case QScatterSeries::MarkerShapeRectangle:
-            item = new RectangleMarker(0, 0, m_size, m_size, this);
-            item->setPos(-m_size / 2, -m_size / 2);
+        case QScatterSeries::MarkerShapeRectangle: {
+            item = new ChartMarker<QGraphicsRectItem>(0, 0, m_size, m_size, this);
             break;
+        }
+        case QScatterSeries::MarkerShapeRotatedRectangle: {
+            item = new RotatedRectangleMarker(0, 0, m_size, m_size, this);
+            break;
+        }
+        case QScatterSeries::MarkerShapeTriangle: {
+            item = new TriangleMarker(0, 0, m_size, m_size, this);
+            break;
+        }
+        case QScatterSeries::MarkerShapeStar: {
+            item = new StarMarker(0, 0, m_size, m_size, this);
+            break;
+        }
+        case QScatterSeries::MarkerShapePentagon: {
+            item = new PentagonMarker(0, 0, m_size, m_size, this);
+            break;
+        }
         default:
             qWarning() << "Unsupported marker type";
             break;
         }
+
         m_items.addToGroup(item);
     }
 }
@@ -291,6 +310,150 @@ void ScatterChartItem::handleUpdated()
         m_series->chart()->update();
     else
         update();
+}
+
+template<class T>
+ChartMarker<T>::ChartMarker(qreal x, qreal y, qreal w, qreal h, ScatterChartItem *parent)
+    : T(x, y, w, h, parent)
+    , m_parent(parent)
+{
+    T::setAcceptHoverEvents(true);
+    T::setFlag(QGraphicsItem::ItemIsSelectable);
+}
+
+template<class T>
+ChartMarker<T>::ChartMarker(ScatterChartItem *parent)
+    : T(parent)
+    , m_parent(parent)
+{
+    T::setAcceptHoverEvents(true);
+    T::setFlag(QGraphicsItem::ItemIsSelectable);
+}
+
+template<class T>
+void ChartMarker<T>::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    T::mousePressEvent(event);
+    m_parent->markerPressed(this);
+    m_parent->setMousePressed();
+}
+
+template<class T>
+void ChartMarker<T>::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
+{
+    T::hoverEnterEvent(event);
+    m_parent->markerHovered(this, true);
+}
+
+template<class T>
+void ChartMarker<T>::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
+{
+    T::hoverLeaveEvent(event);
+    m_parent->markerHovered(this, false);
+}
+
+template<class T>
+void ChartMarker<T>::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+    T::mouseReleaseEvent(event);
+    m_parent->markerReleased(this);
+    if (m_parent->mousePressed())
+        m_parent->markerSelected(this);
+    m_parent->setMousePressed(false);
+}
+
+template<class T>
+void ChartMarker<T>::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
+{
+    T::mouseDoubleClickEvent(event);
+    m_parent->markerDoubleClicked(this);
+}
+
+RotatedRectangleMarker::RotatedRectangleMarker(qreal x, qreal y, qreal w, qreal h,
+                                               ScatterChartItem *parent)
+    : ChartMarker<QGraphicsPolygonItem>(parent)
+{
+    setPolygon(RotatedRectangleMarker::polygon(x, y, w, h));
+}
+
+QPolygonF RotatedRectangleMarker::polygon(qreal x, qreal y, qreal w, qreal h)
+{
+    QPolygonF rotatedRectPoly;
+    rotatedRectPoly << QPointF(x, y + h / 2.0);
+    rotatedRectPoly << QPointF(x + w / 2.0, y + h);
+    rotatedRectPoly << QPointF(x + w, y + h / 2.0);
+    rotatedRectPoly << QPointF(x + w / 2.0, y);
+
+    return rotatedRectPoly;
+}
+
+TriangleMarker::TriangleMarker(qreal x, qreal y, qreal w, qreal h, ScatterChartItem *parent)
+    : ChartMarker<QGraphicsPolygonItem>(parent)
+{
+    setPolygon(TriangleMarker::polygon(x, y, w, h));
+}
+
+QPolygonF TriangleMarker::polygon(qreal x, qreal y, qreal w, qreal h)
+{
+    QPolygonF trianglePoly;
+    trianglePoly << QPointF(x, y + h);
+    trianglePoly << QPointF(x + w, y + h);
+    trianglePoly << QPointF(x + w / 2.0, y);
+
+    return trianglePoly;
+}
+
+StarMarker::StarMarker(qreal x, qreal y, qreal w, qreal h, ScatterChartItem *parent)
+    : ChartMarker<QGraphicsPolygonItem>(parent)
+{
+    setPolygon(StarMarker::polygon(x, y, w, h));
+}
+
+QPolygonF StarMarker::polygon(qreal x, qreal y, qreal w, qreal h)
+{
+    QPolygonF starPoly;
+
+    constexpr qreal step = M_PI / STAR_SPIKES;
+    const qreal radius = w / 2.0;
+    const qreal innerRadius = radius * 0.5;
+    const QPointF &center = QPointF(x + w / 2.0, y + h / 2.0);
+    qreal rot = M_PI / 2 * 3;
+
+    for (int i = 0; i < STAR_SPIKES; ++i) {
+        starPoly << QPointF(center.x() + std::cos(rot) * radius,
+                            center.y() + std::sin(rot) * radius);
+        rot += step;
+
+        starPoly << QPointF(center.x() + std::cos(rot) * innerRadius,
+                            center.y() + std::sin(rot) * innerRadius);
+        rot += step;
+    }
+
+    return starPoly;
+}
+
+PentagonMarker::PentagonMarker(qreal x, qreal y, qreal w, qreal h, ScatterChartItem *parent)
+    : ChartMarker<QGraphicsPolygonItem>(parent)
+{
+    setPolygon(PentagonMarker::polygon(x, y, w, h));
+}
+
+QPolygonF PentagonMarker::polygon(qreal x, qreal y, qreal w, qreal h)
+{
+    QPolygonF pentagonPoly;
+
+    constexpr qreal step = 2 * M_PI / 5;
+    const qreal radius = w / 2.0;
+    const QPointF &center = QPointF(x + w / 2.0, y + h / 2.0);
+    qreal rot = M_PI / 2 * 3;
+
+    for (int i = 0; i < 5; ++i) {
+        pentagonPoly << QPointF(center.x() + std::cos(rot) * radius,
+                                center.y() + std::sin(rot) * radius);
+        rot += step;
+    }
+
+    return pentagonPoly;
 }
 
 QT_END_NAMESPACE

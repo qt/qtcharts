@@ -89,6 +89,14 @@
            The marker is a circle. This is the default value.
     \value MarkerShapeRectangle
            The marker is a rectangle.
+    \value MarkerShapeRotatedRectangle
+           The marker is a rotated rectangle.
+    \value MarkerShapeTriangle
+           The marker is a triangle.
+    \value MarkerShapeStar
+           The marker is a star.
+    \value MarkerShapePentagon
+           The marker is a pentagon.
 */
 
 /*!

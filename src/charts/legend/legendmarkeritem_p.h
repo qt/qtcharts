@@ -61,7 +61,11 @@ public:
     enum ItemType {
         TypeRect,
         TypeLine,
-        TypeCircle
+        TypeCircle,
+        TypeRotatedRect,
+        TypeTriangle,
+        TypeStar,
+        TypePentagon
     };
 
     explicit LegendMarkerItem(QLegendMarkerPrivate *marker, QGraphicsObject *parent = nullptr);

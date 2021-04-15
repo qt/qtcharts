@@ -50,7 +50,11 @@ class Q_CHARTS_EXPORT QScatterSeries : public QXYSeries
 public:
     enum MarkerShape {
         MarkerShapeCircle,
-        MarkerShapeRectangle
+        MarkerShapeRectangle,
+        MarkerShapeRotatedRectangle,
+        MarkerShapeTriangle,
+        MarkerShapeStar,
+        MarkerShapePentagon
     };
 
 public:

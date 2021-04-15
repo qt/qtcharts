@@ -103,99 +103,56 @@ private:
     bool m_mousePressed;
 };
 
-class Q_CHARTS_PRIVATE_EXPORT CircleMarker: public QGraphicsEllipseItem
+template <class T>
+class Q_CHARTS_PRIVATE_EXPORT ChartMarker : public T
 {
-
 public:
-    CircleMarker(qreal x, qreal y, qreal w, qreal h, ScatterChartItem *parent)
-        : QGraphicsEllipseItem(x, y, w, h, parent),
-          m_parent(parent)
-    {
-        setAcceptHoverEvents(true);
-        setFlag(QGraphicsItem::ItemIsSelectable);
-    }
+    explicit ChartMarker(qreal x, qreal y, qreal w, qreal h, ScatterChartItem *parent);
+    explicit ChartMarker(ScatterChartItem *parent);
 
 protected:
-    void mousePressEvent(QGraphicsSceneMouseEvent *event) override
-    {
-        QGraphicsEllipseItem::mousePressEvent(event);
-        m_parent->markerPressed(this);
-        m_parent->setMousePressed();
-    }
-    void hoverEnterEvent(QGraphicsSceneHoverEvent *event) override
-    {
-        QGraphicsEllipseItem::hoverEnterEvent(event);
-        m_parent->markerHovered(this, true);
-    }
-    void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override
-    {
-        QGraphicsEllipseItem::hoverLeaveEvent(event);
-        m_parent->markerHovered(this, false);
-    }
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override
-    {
-        QGraphicsEllipseItem::mouseReleaseEvent(event);
-        m_parent->markerReleased(this);
-        if (m_parent->mousePressed())
-            m_parent->markerSelected(this);
-        m_parent->setMousePressed(false);
-    }
-    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) override
-    {
-        QGraphicsEllipseItem::mouseDoubleClickEvent(event);
-        m_parent->markerDoubleClicked(this);
-    }
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+    void hoverEnterEvent(QGraphicsSceneHoverEvent *event) override;
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) override;
 
 private:
     ScatterChartItem *m_parent;
 };
 
-class Q_CHARTS_PRIVATE_EXPORT RectangleMarker: public QGraphicsRectItem
+class Q_CHARTS_PRIVATE_EXPORT RotatedRectangleMarker : public ChartMarker<QGraphicsPolygonItem>
 {
-
 public:
-    RectangleMarker(qreal x, qreal y, qreal w, qreal h, ScatterChartItem *parent)
-        : QGraphicsRectItem(x, y, w, h, parent),
-          m_parent(parent)
-    {
-        setAcceptHoverEvents(true);
-        setFlag(QGraphicsItem::ItemIsSelectable);
-    }
+    explicit RotatedRectangleMarker(qreal x, qreal y, qreal w, qreal h, ScatterChartItem *parent);
 
-protected:
-    void mousePressEvent(QGraphicsSceneMouseEvent *event) override
-    {
-        QGraphicsRectItem::mousePressEvent(event);
-        m_parent->markerPressed(this);
-        m_parent->setMousePressed();
-    }
-    void hoverEnterEvent(QGraphicsSceneHoverEvent *event) override
-    {
-        QGraphicsRectItem::hoverEnterEvent(event);
-        m_parent->markerHovered(this, true);
-    }
-    void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override
-    {
-        QGraphicsRectItem::hoverLeaveEvent(event);
-        m_parent->markerHovered(this, false);
-    }
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override
-    {
-        QGraphicsRectItem::mouseReleaseEvent(event);
-        m_parent->markerReleased(this);
-        if (m_parent->mousePressed())
-            m_parent->markerSelected(this);
-        m_parent->setMousePressed(false);
-    }
-    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) override
-    {
-        QGraphicsRectItem::mouseDoubleClickEvent(event);
-        m_parent->markerDoubleClicked(this);
-    }
-
-private:
-    ScatterChartItem *m_parent;
+    static QPolygonF polygon(qreal x = 0.0, qreal y = 0.0, qreal w = 10.0, qreal h = 10.0);
 };
+
+class Q_CHARTS_PRIVATE_EXPORT TriangleMarker : public ChartMarker<QGraphicsPolygonItem>
+{
+public:
+    explicit TriangleMarker(qreal x, qreal y, qreal w, qreal h, ScatterChartItem *parent);
+
+    static QPolygonF polygon(qreal x = 0.0, qreal y = 0.0, qreal w = 10.0, qreal h = 10.0);
+};
+
+class Q_CHARTS_PRIVATE_EXPORT StarMarker : public ChartMarker<QGraphicsPolygonItem>
+{
+public:
+    explicit StarMarker(qreal x, qreal y, qreal w, qreal h, ScatterChartItem *parent);
+
+    static QPolygonF polygon(qreal x = 0.0, qreal y = 0.0, qreal w = 10.0, qreal h = 10.0);
+};
+
+class Q_CHARTS_PRIVATE_EXPORT PentagonMarker : public ChartMarker<QGraphicsPolygonItem>
+{
+public:
+    explicit PentagonMarker(qreal x, qreal y, qreal w, qreal h, ScatterChartItem *parent);
+
+    static QPolygonF polygon(qreal x = 0.0, qreal y = 0.0, qreal w = 10.0, qreal h = 10.0);
+};
+
 
 QT_END_NAMESPACE
 
