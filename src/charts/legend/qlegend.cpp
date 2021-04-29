@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -38,6 +38,7 @@
 #include <QtCharts/QLegendMarker>
 #include <private/qlegendmarker_p.h>
 #include <private/legendmarkeritem_p.h>
+#include <private/legendmoveresizehandler_p.h>
 #include <private/chartdataset_p.h>
 #include <QtGui/QPainter>
 #include <QtGui/QPen>
@@ -309,8 +310,20 @@ void QLegend::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     painter->setOpacity(opacity());
     painter->setPen(d_ptr->m_pen);
     painter->setBrush(d_ptr->m_brush);
-    painter->drawRoundedRect(rect(), d_ptr->roundness(rect().width()), d_ptr->roundness(rect().height()),
-                             Qt::RelativeSize);
+    painter->drawRoundedRect(rect(), d_ptr->roundness(rect().width()),
+                             d_ptr->roundness(rect().height()), Qt::RelativeSize);
+
+    // Draw a border slightly larger than the contents rectangle
+    // of the layout so we don't incur overlap. The border gives the
+    // impression of a move/resize frame around the legend to the user
+    // and demarcates its boundaries.
+    if (!isAttachedToChart()) {
+        QRectF frameRect = d_ptr->m_layout->contentsRect();
+        frameRect.adjust(-1., -1., 1., 1.);
+        painter->setBrush(Qt::NoBrush);
+        painter->drawRoundedRect(frameRect, d_ptr->roundness(rect().width()),
+                                 d_ptr->roundness(rect().height()), Qt::RelativeSize);
+    }
 }
 
 
@@ -570,6 +583,39 @@ void QLegend::setShowToolTips(bool show)
     }
 }
 
+/*!
+    Returns whether the legend can be dragged or resized using a mouse when it is detached.
+
+    \sa QLegend::setInteractive()
+    \since 6.2
+*/
+
+bool QLegend::isInteractive() const
+{
+    return d_ptr->m_interactive;
+}
+
+/*!
+    When \a interactive is \c true and the legend is detached, the legend is able to be moved and
+    resized with a mouse in a similar way to a window.
+
+    The legend will automatically attach to an edge of the chart by dragging it off of that edge.
+    Double clicking an attached legend will detach it.
+    This is \c false by default.
+
+    \sa QLegend::isInteractive()
+    \since 6.2
+*/
+
+void QLegend::setInteractive(bool interactive)
+{
+    if (d_ptr->m_interactive != interactive) {
+        d_ptr->m_interactive = interactive;
+        update();
+        emit interactiveChanged(interactive);
+    }
+}
+
 QLegend::MarkerShape QLegend::markerShape() const
 {
     return d_ptr->m_markerShape;
@@ -615,6 +661,7 @@ QLegendPrivate::QLegendPrivate(ChartPresenter *presenter, QChart *chart, QLegend
     : q_ptr(q),
       m_presenter(presenter),
       m_layout(new LegendLayout(q)),
+      m_resizer(new LegendMoveResizeHandler(q)),
       m_chart(chart),
       m_items(new QGraphicsItemGroup(q)),
       m_alignment(Qt::AlignTop),
@@ -626,6 +673,7 @@ QLegendPrivate::QLegendPrivate(ChartPresenter *presenter, QChart *chart, QLegend
       m_backgroundVisible(false),
       m_reverseMarkers(false),
       m_showToolTips(false),
+      m_interactive(false),
       m_markerShape(QLegend::MarkerShapeRectangle)
 {
     m_items->setHandlesChildEvents(false);
@@ -633,7 +681,7 @@ QLegendPrivate::QLegendPrivate(ChartPresenter *presenter, QChart *chart, QLegend
 
 QLegendPrivate::~QLegendPrivate()
 {
-
+    delete m_resizer;
 }
 
 void QLegendPrivate::setOffset(const QPointF &offset)

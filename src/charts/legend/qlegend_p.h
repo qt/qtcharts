@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -48,6 +48,7 @@ class QChart;
 class ChartPresenter;
 class QAbstractSeries;
 class LegendLayout;
+class LegendMoveResizeHandler;
 class QLegendMarker;
 
 class Q_CHARTS_PRIVATE_EXPORT QLegendPrivate : public QObject
@@ -88,6 +89,7 @@ private:
     QLegend *q_ptr;
     ChartPresenter *m_presenter;
     LegendLayout *m_layout;
+    LegendMoveResizeHandler *m_resizer;
     QChart *m_chart;
     QGraphicsItemGroup *m_items;
     Qt::Alignment m_alignment;
@@ -101,6 +103,7 @@ private:
     bool m_backgroundVisible;
     bool m_reverseMarkers;
     bool m_showToolTips;
+    bool m_interactive;
     QLegend::MarkerShape m_markerShape;
 
     QList<QLegendMarker *> m_markers;
@@ -113,6 +116,7 @@ private:
     friend class LegendLayout;
     friend class QLegendMarkerPrivate;
     friend class LegendScroller;
+    friend class LegendMoveResizeHandler;
 };
 
 QT_END_NAMESPACE

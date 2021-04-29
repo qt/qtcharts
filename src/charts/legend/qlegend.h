@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -111,6 +111,9 @@ public:
     bool showToolTips() const;
     void setShowToolTips(bool show);
 
+    bool isInteractive() const;
+    void setInteractive(bool interactive);
+
     MarkerShape markerShape() const;
     void setMarkerShape(MarkerShape shape);
 
@@ -128,12 +131,14 @@ Q_SIGNALS:
     void showToolTipsChanged(bool showToolTips);
     void markerShapeChanged(MarkerShape shape);
     Q_REVISION(6, 2) void attachedToChartChanged(bool attachedToChart);
+    void interactiveChanged(bool interactive);
 
 private:
     QScopedPointer<QLegendPrivate> d_ptr;
     Q_DISABLE_COPY(QLegend)
     friend class LegendScroller;
     friend class LegendLayout;
+    friend class LegendMoveResizeHandler;
     friend class ChartLayout;
     friend class LegendMarkerItem;
     friend class QLegendMarkerPrivate;

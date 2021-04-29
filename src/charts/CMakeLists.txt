@@ -65,6 +65,7 @@ qt_internal_add_module(Charts
         legend/legendlayout.cpp legend/legendlayout_p.h
         legend/legendmarkeritem.cpp legend/legendmarkeritem_p.h
         legend/legendscroller.cpp legend/legendscroller_p.h
+        legend/legendmoveresizehandler.cpp legend/legendmoveresizehandler_p.h
         legend/qlegend.cpp legend/qlegend.h legend/qlegend_p.h
         legend/qlegendmarker.cpp legend/qlegendmarker.h legend/qlegendmarker_p.h
         legend/qxylegendmarker.cpp legend/qxylegendmarker.h legend/qxylegendmarker_p.h

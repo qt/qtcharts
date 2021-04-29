@@ -261,16 +261,20 @@ QSizeF LegendMarkerItem::sizeHint(Qt::SizeHint which, const QSizeF& constraint) 
 
 void LegendMarkerItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
-    Q_UNUSED(event);
+    event->setAccepted(false);
     m_hovering = true;
     emit m_marker->q_ptr->hovered(true);
+
+    QGraphicsObject::hoverEnterEvent(event);
 }
 
 void LegendMarkerItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
-    Q_UNUSED(event);
+    event->setAccepted(false);
     m_hovering = false;
     emit m_marker->q_ptr->hovered(false);
+
+    QGraphicsObject::hoverLeaveEvent(event);
 }
 
 QString LegendMarkerItem::displayedLabel() const
