@@ -478,18 +478,59 @@ ChartTitle *ChartPresenter::titleElement()
     return m_title;
 }
 
+template <int TSize>
+struct TextBoundCache
+{
+    struct element
+    {
+        quint32 lastUsed;
+        QRectF bounds;
+    };
+    QHash<QString, element> elements;
+    quint32 usedCounter = 0;
+    QGraphicsTextItem dummyText;
+
+    QRectF bounds(const QFont &font, const QString &text)
+    {
+        const QString key = font.key() + text;
+        auto elem = elements.find(key);
+        if (elem != elements.end()) {
+            usedCounter++;
+            elem->lastUsed = usedCounter;
+            return elem->bounds;
+        }
+        dummyText.setFont(font);
+        dummyText.setHtml(text);
+        const QRectF bounds = dummyText.boundingRect();
+        if (elements.size() >= TSize) {
+            auto elem = std::min_element(elements.begin(), elements.end(),
+                                         [](const element &a, const element &b) {
+                return a.lastUsed < b.lastUsed;
+            });
+            if (elem != elements.end()) {
+                const QString key = elem.key();
+                elements.remove(key);
+            }
+        }
+        elements.insert(key, {usedCounter++, bounds});
+        return bounds;
+    }
+    QTextDocument *document()
+    {
+        return dummyText.document();
+    }
+};
+
 QRectF ChartPresenter::textBoundingRect(const QFont &font, const QString &text, qreal angle)
 {
-    static QGraphicsTextItem dummyTextItem;
+    static TextBoundCache<32> textBoundCache;
     static bool initMargin = true;
     if (initMargin) {
-        dummyTextItem.document()->setDocumentMargin(textMargin());
+        textBoundCache.document()->setDocumentMargin(textMargin());
         initMargin = false;
     }
 
-    dummyTextItem.setFont(font);
-    dummyTextItem.setHtml(text);
-    QRectF boundingRect = dummyTextItem.boundingRect();
+    QRectF boundingRect = textBoundCache.bounds(font, text);
 
     // Take rotation into account
     if (angle) {
