@@ -66,6 +66,9 @@ LineChartItem::LineChartItem(QLineSeries *series, QGraphicsItem *item)
     QObject::connect(series, SIGNAL(pointLabelsClippingChanged(bool)), this, SLOT(handleUpdated()));
     connect(series, &QLineSeries::selectedColorChanged, this, &LineChartItem::handleUpdated);
     connect(series, &QLineSeries::selectedPointsChanged, this, &LineChartItem::handleUpdated);
+    QObject::connect(series, &QLineSeries::pointsConfigurationChanged, this,
+                     &LineChartItem::handleUpdated);
+
     handleUpdated();
 }
 
@@ -352,7 +355,8 @@ void LineChartItem::handleUpdated()
         || (m_series->pointsVisible()
             && (m_linePen != m_series->pen()
             || m_selectedColor != m_series->selectedColor()
-            || m_selectedPoints != m_series->selectedPoints()));
+            || m_selectedPoints != m_series->selectedPoints()))
+            || m_series->pointsConfiguration() != m_pointsConfiguration;
     bool visibleChanged = m_series->isVisible() != isVisible();
     setVisible(m_series->isVisible());
     setOpacity(m_series->opacity());
@@ -364,6 +368,7 @@ void LineChartItem::handleUpdated()
     m_pointLabelsColor = m_series->pointLabelsColor();
     m_selectedColor = m_series->selectedColor();
     m_selectedPoints = m_series->selectedPoints();
+    m_pointsConfiguration = m_series->pointsConfiguration();
     bool labelClippingChanged = m_pointLabelsClipping != m_series->pointLabelsClipping();
     m_pointLabelsClipping = m_series->pointLabelsClipping();
     if (doGeometryUpdate)
@@ -437,40 +442,83 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
         int markerHalfHeight = marker.height() / 2;
         pointLabelsOffset = markerHalfHeight;
 
-        for (const auto &point : qAsConst(m_linePoints)) {
-            painter->drawImage(point.x() - markerHalfWidth,
-                               point.y() - markerHalfHeight,
-                               marker);
+        for (int i = 0; i < m_linePoints.size(); ++i) {
+            // Documentation of light markers says that points visibility and
+            // light markers are independent features. Therefore m_pointsVisible
+            // is not used here as light markers are drawn if lightMarker is not null.
+            // However points visibility configuration can be still used here.
+            bool drawPoint = true;
+            if (m_pointsConfiguration.contains(i)) {
+                const auto &conf = m_pointsConfiguration[i];
+
+                if (conf.contains(QXYSeries::PointConfiguration::Visibility)) {
+                    drawPoint = m_pointsConfiguration[i][QXYSeries::PointConfiguration::Visibility]
+                                        .toBool();
+                }
+            }
+
+            if (drawPoint) {
+                painter->drawImage(m_linePoints[i].x() - markerHalfWidth,
+                                   m_linePoints[i].y() - markerHalfHeight,
+                                   marker);
+            }
         }
     }
 
-    if (m_pointLabelsVisible) {
-        if (m_pointLabelsClipping)
-            painter->setClipping(true);
-        else
-            painter->setClipping(false);
-        m_series->d_func()->drawSeriesPointLabels(painter, m_linePoints, pointLabelsOffset);
-    }
+    m_series->d_func()->drawPointLabels(painter, m_linePoints, pointLabelsOffset);
 
     painter->restore();
 
-    if (m_pointsVisible || !m_selectedPoints.isEmpty()) {
-        // draw points that lie inside clipRect only
+    const bool simpleDraw = m_selectedPoints.isEmpty() && m_pointsConfiguration.isEmpty();
+
+    if (m_pointsVisible && simpleDraw) {
         qreal ptSize = m_linePen.width() * 1.5;
         painter->setPen(Qt::NoPen);
         painter->setBrush(m_linePen.color());
+        for (int i = 0; i < m_linePoints.size(); ++i)
+            painter->drawEllipse(m_linePoints.at(i), ptSize, ptSize);
+    } else if (!simpleDraw) {
+        qreal ptSize = m_linePen.width() * 1.5;
+        painter->setPen(Qt::NoPen);
+        painter->setBrush(m_linePen.color());
+        const qreal defaultPointSize = m_linePen.width() * 1.5;
         for (int i = 0; i < m_linePoints.size(); ++i) {
             if (clipRect.contains(m_linePoints.at(i))) {
+                painter->save();
+                ptSize = defaultPointSize;
+                bool drawPoint = m_pointsVisible;
+                if (m_pointsConfiguration.contains(i)) {
+                    const auto &conf = m_pointsConfiguration[i];
+                    if (conf.contains(QXYSeries::PointConfiguration::Visibility)) {
+                        drawPoint =
+                                m_pointsConfiguration[i][QXYSeries::PointConfiguration::Visibility]
+                                        .toBool();
+                    }
+
+                    if (drawPoint) {
+                        if (conf.contains(QXYSeries::PointConfiguration::Size)) {
+                            ptSize = m_pointsConfiguration[i][QXYSeries::PointConfiguration::Size]
+                                             .toReal();
+                        }
+
+                        if (conf.contains(QXYSeries::PointConfiguration::Color)) {
+                            painter->setBrush(
+                                    m_pointsConfiguration[i][QXYSeries::PointConfiguration::Color]
+                                            .value<QColor>());
+                        }
+                    }
+                }
+
                 if (m_series->isPointSelected(i)) {
-                    painter->save();
+                    ptSize = ptSize * 1.5;
                     if (m_selectedColor.isValid())
                         painter->setBrush(m_selectedColor);
-
-                    painter->drawEllipse(m_linePoints.at(i), ptSize * 1.5, ptSize * 1.5);
-                    painter->restore();
-                } else if (m_pointsVisible) {
-                    painter->drawEllipse(m_linePoints.at(i), ptSize, ptSize);
                 }
+
+                if (drawPoint)
+                    painter->drawEllipse(m_linePoints.at(i), ptSize, ptSize);
+
+                painter->restore();
             }
         }
     }

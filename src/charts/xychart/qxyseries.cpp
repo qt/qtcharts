@@ -62,6 +62,31 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
+    \enum QXYSeries::PointConfiguration
+
+    This enum value describes the particular configuration of a point.
+
+    \value Color
+           This enum value can be used to change a point's color. If used together
+           with QXYSeries::setPointConfiguration, the configuration's value should
+           be a valid QColor.
+    \value Size
+           This enum value can be used to change a point's size. If used together
+           with QXYSeries::setPointConfiguration, the configuration's value should
+           be a number, such as \c qreal or \c int.
+    \value Visibility
+           This enum value can be used to hide or show the point. If used
+           together with QXYSeries::setPointConfiguration, the configuration's value
+           should be boolean.
+    \value LabelVisibility
+           This enum value can be used to hide or show the label of the point. If used
+           together with QXYSeries::setPointConfiguration, the configuration's value
+           should be boolean.
+
+    \sa setPointConfiguration()
+*/
+
+/*!
     \qmlproperty AbstractAxis XYSeries::axisX
     The x-axis used for the series. If you leave both axisX and axisXTop
     undefined, a value axis is created for the series.
@@ -672,6 +697,221 @@ void QXYSeries::replace(const QList<QPointF> &points)
 }
 
 /*!
+    Removes the configuration of a point located at \a index
+    and restores the default look derived from the series' settings.
+
+    \note It doesn't affect the configuration of other points.
+    \sa clearPointsConfiguration(), setPointConfiguration()
+    \since 6.2
+*/
+void QXYSeries::clearPointConfiguration(const int index)
+{
+    Q_D(QXYSeries);
+    if (d->m_pointsConfiguration.contains(index)) {
+        d->m_pointsConfiguration.remove(index);
+        emit pointsConfigurationChanged(d->m_pointsConfiguration);
+    }
+}
+
+/*!
+    Removes the configuration property identified by \a key from the point at \a index
+    and restores the default look derived from the series' settings.
+
+    Removes the configuration type, such as color or size,
+    specified by \a key from the point at \a index with configuration customizations,
+    allowing that configuration property to be rendered as the default
+    specified in the series' properties.
+
+    \note It doesn't affect the configuration of other points.
+    \sa clearPointsConfiguration(), setPointConfiguration()
+    \since 6.2
+*/
+void QXYSeries::clearPointConfiguration(const int index, const QXYSeries::PointConfiguration key)
+{
+    Q_D(QXYSeries);
+    if (d->m_pointsConfiguration.contains(index)) {
+        auto &conf = d->m_pointsConfiguration[index];
+        if (conf.contains(key)) {
+            conf.remove(key);
+            d->m_pointsConfiguration[index] = conf;
+            emit pointsConfigurationChanged(d->m_pointsConfiguration);
+        }
+    }
+}
+
+/*!
+    Removes the configuration of all points in the series and restores
+    the default look derived from the series' settings.
+
+    \sa setPointConfiguration()
+    \since 6.2
+*/
+void QXYSeries::clearPointsConfiguration()
+{
+    Q_D(QXYSeries);
+    d->m_pointsConfiguration.clear();
+    emit pointsConfigurationChanged(d->m_pointsConfiguration);
+}
+
+/*!
+    Removes the configuration property identified by \a key from all
+    points and restores the default look derived from the series' settings.
+
+    Removes the configuration type, such as color or size,
+    specified by \a key from all points with configuration customizations,
+    allowing that configuration property to be rendered as the default
+    specified in the series properties.
+
+    \sa clearPointsConfiguration(), setPointConfiguration()
+    \since 6.2
+*/
+void QXYSeries::clearPointsConfiguration(const QXYSeries::PointConfiguration key)
+{
+    Q_D(QXYSeries);
+    bool needsUpdate = false;
+    for (const int &index : d->m_pointsConfiguration.keys()) {
+        auto &conf = d->m_pointsConfiguration[index];
+        if (conf.contains(key)) {
+            conf.remove(key);
+            d->m_pointsConfiguration[index] = conf;
+            needsUpdate = true;
+        }
+    }
+
+    if (needsUpdate)
+        emit pointsConfigurationChanged(d->m_pointsConfiguration);
+}
+
+/*!
+    Enables customizing the appearance of a point located at \a index with
+    desired \a configuration.
+
+    With points configuration you can change various aspects of every point's appearance.
+
+    A point's configuration is represented as a hash map with QXYSeries::pointConfiguration
+    keys and QVariant values. For example:
+    \code
+    QLineSeries *series = new QLineSeries();
+    series->setName("Customized serie");
+    series->setPointsVisible(true);
+
+    *series << QPointF(0, 6) << QPointF(2, 4) << QPointF(3, 6) << QPointF(7, 4) << QPointF(10, 5)
+            << QPointF(11, 1) << QPointF(13, 3) << QPointF(17, 6) << QPointF(18, 3)
+            << QPointF(20, 2);
+
+    QChart *chart = new QChart();
+    chart->addSeries(series);
+    chart->createDefaultAxes();
+
+    QHash<QXYSeries::PointConfiguration, QVariant> conf;
+    conf[QXYSeries::PointConfiguration::Color] = QColor(Qt::red);
+    conf[QXYSeries::PointConfiguration::Size] = 8;
+    conf[QXYSeries::PointConfiguration::LabelVisibility] = true;
+
+    series->setPointConfiguration(4, conf);
+
+    conf.remove(QXYSeries::PointConfiguration::LabelVisibility);
+    series->setPointConfiguration(6, conf);
+    \endcode
+
+    In this example, you can see a default QLineSeries with 10 points
+    and with changed configuration of two points. Both changed points are
+    red and visibly bigger than the others with a look derived from series.
+    By default, points don't have labels, but the point at index 4 has
+    the label thanks to the QXYSeries::PointConfiguration::LabelVisibility
+    configuration value.
+    Below is an example of a chart created in this way:
+    \image xyseries_point_configuration.png
+
+    \sa pointsConfiguration(), clearPointsConfiguration()
+    \since 6.2
+*/
+void QXYSeries::setPointConfiguration(
+        const int index, const QHash<QXYSeries::PointConfiguration, QVariant> &configuration)
+{
+    Q_D(QXYSeries);
+    if (d->m_pointsConfiguration[index] != configuration) {
+        d->m_pointsConfiguration[index] = configuration;
+        emit pointsConfigurationChanged(d->m_pointsConfiguration);
+    }
+}
+
+/*!
+    Enables customizing a particular aspect of a point's configuration.
+
+    \note Points configuration concept provides a flexible way to configure various aspects
+    of a point's appearance. Thus, values need to have an elastic type such as QVariant.
+    See QXYSeries::PointConfiguration to see what \a value should be passed
+    for certain \a key.
+    \sa pointsConfiguration()
+    \since 6.2
+*/
+void QXYSeries::setPointConfiguration(const int index, const QXYSeries::PointConfiguration key,
+                                      const QVariant &value)
+{
+    Q_D(QXYSeries);
+    QHash<QXYSeries::PointConfiguration, QVariant> conf;
+    if (d->m_pointsConfiguration.contains(index))
+        conf = d->m_pointsConfiguration[index];
+
+    bool callSignal = false;
+    if (conf.contains(key)) {
+        if (conf[key] != value)
+            callSignal = true;
+    }
+
+    conf[key] = value;
+    d->m_pointsConfiguration[index] = conf;
+
+    if (callSignal) {
+        emit pointsConfigurationChanged(d->m_pointsConfiguration);
+    }
+}
+
+/*!
+    Enables customizing the configuration of multiple points as specified
+    by \a pointsConfiguration.
+
+    \sa pointsConfiguration()
+    \since 6.2
+*/
+void QXYSeries::setPointsConfiguration(
+        const QHash<int, QHash<QXYSeries::PointConfiguration, QVariant>> &pointsConfiguration)
+{
+    Q_D(QXYSeries);
+    if (d->m_pointsConfiguration != pointsConfiguration) {
+        d->m_pointsConfiguration = pointsConfiguration;
+        emit pointsConfigurationChanged(d->m_pointsConfiguration);
+    }
+}
+
+/*!
+    Returns a map representing the configuration of a point at \a index.
+
+    With points configuration you can change various aspects of each point's look.
+
+    \sa setPointConfiguration()
+    \since 6.2
+*/
+QHash<QXYSeries::PointConfiguration, QVariant> QXYSeries::pointConfiguration(const int index) const
+{
+    Q_D(const QXYSeries);
+    return d->m_pointsConfiguration[index];
+}
+
+/*!
+    Returns a map with points' indexes as keys and points' configuration as values.
+
+    \sa setPointConfiguration(), pointConfiguration()
+    \since 6.2
+*/
+QHash<int, QHash<QXYSeries::PointConfiguration, QVariant>> QXYSeries::pointsConfiguration() const
+{
+    Q_D(const QXYSeries);
+    return d->m_pointsConfiguration;
+}
+
+/*!
    Returns true if point at given \a index is among selected points and false otherwise.
    \note Selected points are drawn using the selected color if it was specified.
    \sa selectedPoints(), setPointSelected(), setSelectedColor()
@@ -706,7 +946,7 @@ void QXYSeries::deselectPoint(int index)
 }
 
 /*!
-  Marks point at given \a index as either selected or deselected.
+  Marks point at given \a index as either selected or deselected as specified by \a selected.
   \note Selected points are drawn using the selected color if it was specified. Emits QXYSeries::selectedPointsChanged
   \sa setPointSelected(), setSelectedColor()
   \since 6.2
@@ -1141,7 +1381,8 @@ bool QXYSeries::pointLabelsClipping() const
 }
 
 /*!
-    Sets the image used for drawing markers on each point of the series.
+    Sets the image used for drawing markers on each point of the series as
+    the value of \a lightMarker.
 
     The default value is a default-QImage() (QImage::isNull() == true), meaning no light marker
     will be painted.
@@ -1361,15 +1602,51 @@ void QXYSeriesPrivate::initializeAnimations(QChart::AnimationOptions options,
     QAbstractSeriesPrivate::initializeAnimations(options, duration, curve);
 }
 
+void QXYSeriesPrivate::drawPointLabels(QPainter *painter, const QList<QPointF> &allPoints,
+                                       const int offset)
+{
+    if (m_pointLabelsVisible || !m_pointsConfiguration.isEmpty()) {
+        if (m_pointLabelsClipping)
+            painter->setClipping(true);
+        else
+            painter->setClipping(false);
+
+        QList<int> pointsToSkip;
+        QHash<int, int> offsets;
+
+        if (!m_pointsConfiguration.isEmpty()) {
+            for (int i = 0; i < allPoints.size(); ++i) {
+                bool drawLabel = m_pointLabelsVisible;
+                if (m_pointsConfiguration.contains(i)) {
+                    const auto &conf = m_pointsConfiguration[i];
+                    if (conf.contains(QXYSeries::PointConfiguration::LabelVisibility)) {
+                        drawLabel = m_pointsConfiguration
+                                            [i][QXYSeries::PointConfiguration::LabelVisibility]
+                                                    .toBool();
+
+                        if (drawLabel && conf.contains(QXYSeries::PointConfiguration::Size))
+                            offsets[i] = conf[QXYSeries::PointConfiguration::Size].toReal();
+                    }
+                }
+
+                if (!drawLabel)
+                    pointsToSkip << i;
+            }
+        }
+
+        drawSeriesPointLabels(painter, allPoints, offset, offsets, pointsToSkip);
+    }
+}
+
 void QXYSeriesPrivate::drawSeriesPointLabels(QPainter *painter, const QList<QPointF> &points,
-                                             const int offset)
+                                             const int offset, const QHash<int, int> &offsets,
+                                             const QList<int> &indexesToSkip)
 {
     if (points.size() == 0)
         return;
 
     static const QString xPointTag(QLatin1String("@xPoint"));
     static const QString yPointTag(QLatin1String("@yPoint"));
-    const int labelOffset = offset + 2;
 
     QFont f(m_pointLabelsFont);
     f.setPixelSize(QFontInfo(m_pointLabelsFont).pixelSize());
@@ -1380,9 +1657,18 @@ void QXYSeriesPrivate::drawSeriesPointLabels(QPainter *painter, const QList<QPoi
     // points variable passed is used for positioning because it has the coordinates
     const int pointCount = qMin(points.size(), m_points.size());
     for (int i(0); i < pointCount; i++) {
+        if (indexesToSkip.contains(i))
+            continue;
+
         QString pointLabel = m_pointLabelsFormat;
         pointLabel.replace(xPointTag, presenter()->numberToString(m_points.at(i).x()));
         pointLabel.replace(yPointTag, presenter()->numberToString(m_points.at(i).y()));
+
+        int currOffset = offset;
+        if (offsets.contains(i))
+            currOffset = offsets[i];
+
+        const int labelOffset = currOffset + 2;
 
         // Position text in relation to the point
         int pointLabelWidth = fm.horizontalAdvance(pointLabel);

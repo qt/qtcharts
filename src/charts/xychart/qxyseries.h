@@ -63,6 +63,15 @@ protected:
     explicit QXYSeries(QXYSeriesPrivate &d, QObject *parent = nullptr);
 
 public:
+    enum class PointConfiguration {
+        Color = 0,
+        Size,
+        Visibility,
+        LabelVisibility
+    };
+    Q_ENUM(PointConfiguration)
+
+public:
     ~QXYSeries();
     void append(qreal x, qreal y);
     void append(const QPointF &point);
@@ -144,6 +153,19 @@ public:
     void setBestFitLineColor(const QColor &color);
     QColor bestFitLineColor() const;
 
+    void clearPointConfiguration(const int index);
+    void clearPointConfiguration(const int index, const PointConfiguration key);
+    void clearPointsConfiguration();
+    void clearPointsConfiguration(const PointConfiguration key);
+    void setPointConfiguration(const int index,
+                               const QHash<PointConfiguration, QVariant> &configuration);
+    void setPointConfiguration(const int index, const PointConfiguration key,
+                               const QVariant &value);
+    void setPointsConfiguration(
+            const QHash<int, QHash<QXYSeries::PointConfiguration, QVariant>> &pointsConfiguration);
+    QHash<PointConfiguration, QVariant> pointConfiguration(const int index) const;
+    QHash<int, QHash<PointConfiguration, QVariant>> pointsConfiguration() const;
+
 Q_SIGNALS:
     void clicked(const QPointF &point);
     void hovered(const QPointF &point, bool state);
@@ -168,6 +190,8 @@ Q_SIGNALS:
     Q_REVISION(6, 2) void bestFitLineVisibilityChanged(bool visible);
     Q_REVISION(6, 2) void bestFitLinePenChanged(const QPen &pen);
     Q_REVISION(6, 2) void bestFitLineColorChanged(const QColor &color);
+    Q_REVISION(6, 2) void pointsConfigurationChanged(
+            const QHash<int, QHash<PointConfiguration, QVariant>> &configuration);
 
 private:
     Q_DECLARE_PRIVATE(QXYSeries)

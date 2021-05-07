@@ -43,13 +43,13 @@
 #include <private/chartitem_p.h>
 #include <private/xyanimation_p.h>
 #include <QtCharts/QValueAxis>
+#include <QtCharts/QXYSeries>
 #include <QtCharts/private/qchartglobal_p.h>
 #include <QtGui/QPen>
 
 QT_BEGIN_NAMESPACE
 
 class ChartPresenter;
-class QXYSeries;
 
 class Q_CHARTS_PRIVATE_EXPORT XYChart :  public ChartItem
 {
@@ -104,6 +104,9 @@ protected:
     QColor m_selectedColor;
     XYAnimation *m_animation;
     bool m_dirty;
+
+    QHash<int, QHash<QXYSeries::PointConfiguration, QVariant>> m_pointsConfiguration;
+    bool m_pointsConfigurationDirty;
 
     friend class AreaChartItem;
 };

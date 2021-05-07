@@ -64,8 +64,10 @@ public:
     QAbstractAxis::AxisType defaultAxisType(Qt::Orientation orientation) const override;
     QAbstractAxis* createDefaultAxis(Qt::Orientation orientation) const override;
 
+    void drawPointLabels(QPainter *painter, const QList<QPointF> &allPoints, const int offset = 0);
     void drawSeriesPointLabels(QPainter *painter, const QList<QPointF> &points,
-                               const int offset = 0);
+                               const int offset = 0, const QHash<int, int> &offsets = {},
+                               const QList<int> &indexesToSkip = {});
 
     void drawBestFitLine(QPainter *painter, const QRectF &clipRect);
     QPair<qreal, qreal> bestFitLineEquation(bool &ok) const;
@@ -91,6 +93,8 @@ protected:
     QImage m_lightMarker;
     QPen m_bestFitLinePen;
     bool m_bestFitLineVisible;
+
+    QHash<int, QHash<QXYSeries::PointConfiguration, QVariant>> m_pointsConfiguration;
 
 private:
     Q_DECLARE_PUBLIC(QXYSeries)

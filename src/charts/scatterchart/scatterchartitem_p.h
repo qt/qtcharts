@@ -81,6 +81,7 @@ public Q_SLOTS:
 private:
     void createPoints(int count);
     void deletePoints(int count);
+    void resizeMarker(QGraphicsItem *marker, const int size);
 
 protected:
     void updateGeometry() override;
