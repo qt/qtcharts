@@ -5,7 +5,7 @@
 #####################################################################
 
 qt_internal_add_module(Charts
-    TARGET_PRODUCT "Qt Charts (Qt $$QT_VERSION)"
+    TARGET_PRODUCT "Qt Charts (Qt ${PROJECT_VERSION})"
     TARGET_DESCRIPTION "Charts component for Qt."
     SOURCES
         animations/axisanimation.cpp animations/axisanimation_p.h
