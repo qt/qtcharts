@@ -419,7 +419,11 @@ QStringList ChartAxisElement::createValueLabels(qreal min, qreal max, int ticks,
         return labels;
 
     if (format.isEmpty()) {
-        int n = qMax(int(-qFloor(std::log10((max - min) / (ticks - 1)))), 0) + 1;
+        // Calculate how many decimal digits are needed to show difference between ticks,
+        // for example tick marks 1.002 and 1.003 have a difference of 0.001 and need 3 decimals.
+        // For differences >= 1 (positive log10) use always 1 decimal.
+        double l10 = std::log10((max - min) / (ticks - 1));
+        int n = qMax(int(-qFloor(l10)), 0) + 1;
         if (tickType == QValueAxis::TicksFixed) {
             for (int i = 0; i < ticks; i++) {
                 qreal value = min + (i * (max - min) / (ticks - 1));
