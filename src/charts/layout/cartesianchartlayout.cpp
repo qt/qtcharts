@@ -193,14 +193,18 @@ QRectF CartesianChartLayout::calculateAxisGeometry(const QRectF &geometry,
             if (leftSqueezeRatio < 1.0)
                 width *= leftSqueezeRatio;
             leftOffset+=width;
-            axis->setGeometry(QRect(chartRect.left()-leftOffset, geometry.top(),width, geometry.bottom()),chartRect);
+            axis->setGeometry(QRect(chartRect.left() - leftOffset, chartRect.top(),
+                                    width, chartRect.bottom()),
+                              chartRect);
             break;
         }
         case Qt::AlignRight:{
             qreal width = size.width();
             if (rightSqueezeRatio < 1.0)
                 width *= rightSqueezeRatio;
-            axis->setGeometry(QRect(chartRect.right()+rightOffset,geometry.top(),width,geometry.bottom()),chartRect);
+            axis->setGeometry(QRect(chartRect.right() + rightOffset, chartRect.top(),
+                                    width, chartRect.bottom()),
+                              chartRect);
             rightOffset+=width;
             break;
         }
@@ -208,7 +212,9 @@ QRectF CartesianChartLayout::calculateAxisGeometry(const QRectF &geometry,
             qreal height = size.height();
             if (topSqueezeRatio < 1.0)
                 height *= topSqueezeRatio;
-            axis->setGeometry(QRect(geometry.left(), chartRect.top() - topOffset - height, geometry.width(), height), chartRect);
+            axis->setGeometry(QRect(chartRect.left(), chartRect.top() - topOffset - height,
+                                    chartRect.width(), height),
+                              chartRect);
             topOffset += height;
             break;
         }
@@ -216,7 +222,9 @@ QRectF CartesianChartLayout::calculateAxisGeometry(const QRectF &geometry,
             qreal height = size.height();
             if (bottomSqueezeRatio < 1.0)
                 height *= bottomSqueezeRatio;
-            axis->setGeometry(QRect(geometry.left(), chartRect.bottom() + bottomOffset, geometry.width(), height), chartRect);
+            axis->setGeometry(QRect(chartRect.left(), chartRect.bottom() + bottomOffset,
+                                    chartRect.width(), height),
+                              chartRect);
             bottomOffset += height;
             break;
         }
