@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -66,7 +66,7 @@ public:
     QPainterPath path() const { return m_fullPath; }
 
 public Q_SLOTS:
-    void handleUpdated();
+    void handleSeriesUpdated() override;
 
 protected:
     void updateGeometry() override;
@@ -93,6 +93,7 @@ private:
     QChart::ChartType m_chartType;
 
     bool m_pointLabelsVisible;
+    qreal m_markerSize;
     QString m_pointLabelsFormat;
     QFont m_pointLabelsFont;
     QColor m_pointLabelsColor;

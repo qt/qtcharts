@@ -184,10 +184,20 @@ QT_BEGIN_NAMESPACE
            Marker size is determined by font size.
     \value MarkerShapeCircle Circular markers are used.
            Marker size is determined by font size.
+    \value MarkerShapeRotatedRectangle Rotated rectangle shaped markers are used.
+           Marker size is determined by font size.
+    \value MarkerShapeTriangle Triangular markers are used.
+           Marker size is determined by font size.
+    \value MarkerShapeStar Star shaped markers are used.
+           Marker size is determined by font size.
+    \value MarkerShapePentagon Pentagon shaped markers are used.
+           Marker size is determined by font size.
     \value MarkerShapeFromSeries The marker shape is determined by the series.
            In case of a scatter series, the legend marker looks like a scatter dot and is the same
-           size as the dot. In case of a line or spline series, the legend marker looks like a small
-           segment of the line. For other series types, rectangular markers are shown.
+           size as the dot. In case of a line or spline series, the legend marker looks like a
+           small segment of the line. For other series types, rectangular markers are shown.
+           If a \c lightMarker is specified for a series, the \c lightMarker will be shown and
+           its size will be determined by the series marker size.
 
     \sa markerShape
 */
@@ -201,6 +211,10 @@ QT_BEGIN_NAMESPACE
 
     \value Legend.MarkerShapeRectangle Legend markers are rectangular
     \value Legend.MarkerShapeCircle Legend markers are circular
+    \value MarkerShapeRotatedRectangle Legend markers are rotated rectangle shaped.
+    \value MarkerShapeTriangle Legend markers are triangular.
+    \value MarkerShapeStar Legend markers are star shaped.
+    \value MarkerShapePentagon Legend markers are pentagon shaped.
     \value Legend.MarkerShapeFromSeries Legend marker shape is determined by the series
 
     \sa QLegend::MarkerShape

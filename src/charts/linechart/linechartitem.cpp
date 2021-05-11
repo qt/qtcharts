@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -45,6 +45,7 @@ LineChartItem::LineChartItem(QLineSeries *series, QGraphicsItem *item)
       m_pointsVisible(false),
       m_chartType(QChart::ChartTypeUndefined),
       m_pointLabelsVisible(false),
+      m_markerSize(series->markerSize()),
       m_pointLabelsFormat(series->pointLabelsFormat()),
       m_pointLabelsFont(series->pointLabelsFont()),
       m_pointLabelsColor(series->pointLabelsColor()),
@@ -54,22 +55,30 @@ LineChartItem::LineChartItem(QLineSeries *series, QGraphicsItem *item)
     setAcceptHoverEvents(true);
     setFlag(QGraphicsItem::ItemIsSelectable);
     setZValue(ChartPresenter::LineChartZValue);
-    QObject::connect(series->d_func(), SIGNAL(updated()), this, SLOT(handleUpdated()));
-    QObject::connect(series, SIGNAL(visibleChanged()), this, SLOT(handleUpdated()));
-    QObject::connect(series, SIGNAL(opacityChanged()), this, SLOT(handleUpdated()));
-    QObject::connect(series, SIGNAL(pointLabelsFormatChanged(QString)),
-                     this, SLOT(handleUpdated()));
-    QObject::connect(series, SIGNAL(pointLabelsVisibilityChanged(bool)),
-                     this, SLOT(handleUpdated()));
-    QObject::connect(series, SIGNAL(pointLabelsFontChanged(QFont)), this, SLOT(handleUpdated()));
-    QObject::connect(series, SIGNAL(pointLabelsColorChanged(QColor)), this, SLOT(handleUpdated()));
-    QObject::connect(series, SIGNAL(pointLabelsClippingChanged(bool)), this, SLOT(handleUpdated()));
-    connect(series, &QLineSeries::selectedColorChanged, this, &LineChartItem::handleUpdated);
-    connect(series, &QLineSeries::selectedPointsChanged, this, &LineChartItem::handleUpdated);
-    QObject::connect(series, &QLineSeries::pointsConfigurationChanged, this,
-                     &LineChartItem::handleUpdated);
+    connect(series->d_func(), &QXYSeriesPrivate::seriesUpdated,
+            this, &LineChartItem::handleSeriesUpdated);
+    connect(series, &QXYSeries::lightMarkerChanged, this, &LineChartItem::handleSeriesUpdated);
+    connect(series, &QXYSeries::markerSizeChanged, this, &LineChartItem::handleSeriesUpdated);
+    connect(series, &QXYSeries::visibleChanged, this, &LineChartItem::handleSeriesUpdated);
+    connect(series, &QXYSeries::opacityChanged, this, &LineChartItem::handleSeriesUpdated);
+    connect(series, &QXYSeries::pointLabelsFormatChanged,
+            this, &LineChartItem::handleSeriesUpdated);
+    connect(series, &QXYSeries::pointLabelsVisibilityChanged,
+            this, &LineChartItem::handleSeriesUpdated);
+    connect(series, &QXYSeries::pointLabelsFontChanged,
+            this, &LineChartItem::handleSeriesUpdated);
+    connect(series, &QXYSeries::pointLabelsColorChanged,
+            this, &LineChartItem::handleSeriesUpdated);
+    connect(series, &QXYSeries::pointLabelsClippingChanged,
+            this, &LineChartItem::handleSeriesUpdated);
+    connect(series, &QLineSeries::selectedColorChanged,
+            this, &LineChartItem::handleSeriesUpdated);
+    connect(series, &QLineSeries::selectedPointsChanged,
+            this, &LineChartItem::handleSeriesUpdated);
+    connect(series, &QLineSeries::pointsConfigurationChanged,
+            this, &LineChartItem::handleSeriesUpdated);
 
-    handleUpdated();
+    handleSeriesUpdated();
 }
 
 QRectF LineChartItem::boundingRect() const
@@ -131,7 +140,6 @@ void LineChartItem::updateGeometry()
         QPointF currentSeriesPoint = m_series->at(0);
         QPointF currentGeometryPoint = points.at(0);
         QPointF previousGeometryPoint = points.at(0);
-        int size = m_linePen.width();
         bool pointOffGrid = false;
         bool previousPointWasOffGrid = (currentSeriesPoint.x() < minX || currentSeriesPoint.x() > maxX);
 
@@ -142,8 +150,8 @@ void LineChartItem::updateGeometry()
             fullPath.moveTo(points.at(0));
             if (m_pointsVisible && currentSeriesPoint.y() >= minY) {
                 // Do not draw ellipses for points below minimum Y.
-                linePath.addEllipse(points.at(0), size, size);
-                fullPath.addEllipse(points.at(0), size, size);
+                linePath.addEllipse(points.at(0), m_markerSize, m_markerSize);
+                fullPath.addEllipse(points.at(0), m_markerSize, m_markerSize);
                 linePath.moveTo(points.at(0));
                 fullPath.moveTo(points.at(0));
             }
@@ -281,8 +289,8 @@ void LineChartItem::updateGeometry()
 
             previousPointWasOffGrid = pointOffGrid;
             if (m_pointsVisible && !pointOffGrid && currentSeriesPoint.y() >= minY) {
-                linePath.addEllipse(points.at(i), size, size);
-                fullPath.addEllipse(points.at(i), size, size);
+                linePath.addEllipse(points.at(i), m_markerSize, m_markerSize);
+                fullPath.addEllipse(points.at(i), m_markerSize, m_markerSize);
                 linePath.moveTo(points.at(i));
                 fullPath.moveTo(points.at(i));
             }
@@ -315,16 +323,14 @@ void LineChartItem::updateGeometry()
     // For mouse interactivity, we have to add the rects *after* the 'createStroke',
     // as we don't need the outline - we need it filled up.
     if (!m_series->lightMarker().isNull()) {
-        const QImage &marker = m_series->lightMarker();
-        // '+1': a margin to guarantee we cover all of the pixmap
-        int markerHalfWidth = (marker.width() / 2) + 1;
-        int markerHalfHeight = (marker.height() / 2) + 1;
+        // +1, +2: a margin to guarantee we cover all of the pixmap
+        qreal markerHalfSize = (m_markerSize / 2.0) + 1;
+        qreal markerSize = m_markerSize + 2;
 
-        // '+2': see above comment about margin
         for (const auto &point : qAsConst(m_linePoints)) {
-            checkShapePath.addRect(point.x() - markerHalfWidth,
-                                   point.y() - markerHalfHeight,
-                                   marker.width() + 2, marker.height() + 2);
+            checkShapePath.addRect(point.x() - markerHalfSize,
+                                   point.y() - markerHalfSize,
+                                   markerSize, markerSize);
         }
     }
 
@@ -348,7 +354,7 @@ void LineChartItem::updateGeometry()
     }
 }
 
-void LineChartItem::handleUpdated()
+void LineChartItem::handleSeriesUpdated()
 {
     bool doGeometryUpdate =
         (m_pointsVisible != m_series->pointsVisible())
@@ -356,12 +362,20 @@ void LineChartItem::handleUpdated()
             && (m_linePen != m_series->pen()
             || m_selectedColor != m_series->selectedColor()
             || m_selectedPoints != m_series->selectedPoints()))
-            || m_series->pointsConfiguration() != m_pointsConfiguration;
+        || m_series->pointsConfiguration() != m_pointsConfiguration
+        || (m_markerSize != m_series->markerSize());
     bool visibleChanged = m_series->isVisible() != isVisible();
     setVisible(m_series->isVisible());
     setOpacity(m_series->opacity());
     m_pointsVisible = m_series->pointsVisible();
+
+    qreal seriesPenWidth = m_series->pen().widthF();
+    if (m_series->d_func()->isMarkerSizeDefault()
+        && (!qFuzzyCompare(seriesPenWidth, m_linePen.widthF()))) {
+        m_series->d_func()->setMarkerSize(seriesPenWidth * 1.5);
+    }
     m_linePen = m_series->pen();
+    m_markerSize = m_series->markerSize();
     m_pointLabelsFormat = m_series->pointLabelsFormat();
     m_pointLabelsVisible = m_series->pointLabelsVisible();
     m_pointLabelsFont = m_series->pointLabelsFont();
@@ -438,9 +452,8 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     // Draw markers if a marker has been set (set to QImage() to disable)
     if (!m_series->lightMarker().isNull()) {
         const QImage &marker = m_series->lightMarker();
-        int markerHalfWidth = marker.width() / 2;
-        int markerHalfHeight = marker.height() / 2;
-        pointLabelsOffset = markerHalfHeight;
+        qreal markerHalfSize = m_markerSize / 2.0;
+        pointLabelsOffset = markerHalfSize;
 
         for (int i = 0; i < m_linePoints.size(); ++i) {
             // Documentation of light markers says that points visibility and
@@ -458,35 +471,30 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
             }
 
             if (drawPoint) {
-                painter->drawImage(m_linePoints[i].x() - markerHalfWidth,
-                                   m_linePoints[i].y() - markerHalfHeight,
-                                   marker);
+                const QRectF rect(m_linePoints[i].x() - markerHalfSize,
+                                  m_linePoints[i].y() - markerHalfSize,
+                                  m_markerSize, m_markerSize);
+                painter->drawImage(rect, marker);
             }
         }
     }
 
     m_series->d_func()->drawPointLabels(painter, m_linePoints, pointLabelsOffset);
 
-    painter->restore();
-
     const bool simpleDraw = m_selectedPoints.isEmpty() && m_pointsConfiguration.isEmpty();
 
-    if (m_pointsVisible && simpleDraw) {
-        qreal ptSize = m_linePen.width() * 1.5;
-        painter->setPen(Qt::NoPen);
-        painter->setBrush(m_linePen.color());
+    painter->setPen(Qt::NoPen);
+    painter->setBrush(m_linePen.color());
+    painter->setClipping(true);
+    if (m_pointsVisible && simpleDraw && m_series->lightMarker().isNull()) {
         for (int i = 0; i < m_linePoints.size(); ++i)
-            painter->drawEllipse(m_linePoints.at(i), ptSize, ptSize);
+            painter->drawEllipse(m_linePoints.at(i), m_markerSize, m_markerSize);
     } else if (!simpleDraw) {
-        qreal ptSize = m_linePen.width() * 1.5;
-        painter->setPen(Qt::NoPen);
-        painter->setBrush(m_linePen.color());
-        const qreal defaultPointSize = m_linePen.width() * 1.5;
+        qreal ptSize = m_markerSize;
         for (int i = 0; i < m_linePoints.size(); ++i) {
             if (clipRect.contains(m_linePoints.at(i))) {
-                painter->save();
-                ptSize = defaultPointSize;
-                bool drawPoint = m_pointsVisible;
+                ptSize = m_markerSize;
+                bool drawPoint = m_pointsVisible && m_series->lightMarker().isNull();
                 if (m_pointsConfiguration.contains(i)) {
                     const auto &conf = m_pointsConfiguration[i];
                     if (conf.contains(QXYSeries::PointConfiguration::Visibility)) {
@@ -517,11 +525,10 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 
                 if (drawPoint)
                     painter->drawEllipse(m_linePoints.at(i), ptSize, ptSize);
-
-                painter->restore();
             }
         }
     }
+    painter->restore();
 }
 
 void LineChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)

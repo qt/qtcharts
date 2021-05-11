@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -66,7 +66,7 @@ public:
     ChartAnimation *animation() const override;
 
 public Q_SLOTS:
-    void handleUpdated();
+    void handleSeriesUpdated() override;
 
 protected:
     void updateGeometry() override;

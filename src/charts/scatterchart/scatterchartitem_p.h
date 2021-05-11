@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -76,7 +76,7 @@ public:
 
 
 public Q_SLOTS:
-    void handleUpdated();
+    void handleSeriesUpdated() override;
 
 private:
     void createPoints(int count);
@@ -90,12 +90,12 @@ private:
     QScatterSeries *m_series;
     QGraphicsItemGroup m_items;
     bool m_visible;
-    int m_shape;
-    int m_size;
+    int m_markerShape;
     QRectF m_rect;
     QMap<QGraphicsItem *, QPointF> m_markerMap;
 
     bool m_pointLabelsVisible;
+    qreal m_markerSize;
     QString m_pointLabelsFormat;
     QFont m_pointLabelsFont;
     QColor m_pointLabelsColor;

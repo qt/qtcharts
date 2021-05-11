@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -75,8 +75,11 @@ public:
     void setPointSelected(int index, bool selected, bool &callSignal);
     bool isPointSelected(int index);
 
+    bool isMarkerSizeDefault();
+    void setMarkerSize(qreal markerSize);
+
 Q_SIGNALS:
-    void updated();
+    void seriesUpdated();
 
 protected:
     QList<QPointF> m_points;
@@ -93,6 +96,8 @@ protected:
     QImage m_lightMarker;
     QPen m_bestFitLinePen;
     bool m_bestFitLineVisible;
+    qreal m_markerSize;
+    bool m_markerSizeDefault = true;
 
     QHash<int, QHash<QXYSeries::PointConfiguration, QVariant>> m_pointsConfiguration;
 

@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -52,17 +52,23 @@ SplineChartItem::SplineChartItem(QSplineSeries *series, QGraphicsItem *item)
     setAcceptHoverEvents(true);
     setFlag(QGraphicsItem::ItemIsSelectable);
     setZValue(ChartPresenter::SplineChartZValue);
-    QObject::connect(m_series->d_func(), SIGNAL(updated()), this, SLOT(handleUpdated()));
-    QObject::connect(series, SIGNAL(visibleChanged()), this, SLOT(handleUpdated()));
-    QObject::connect(series, SIGNAL(opacityChanged()), this, SLOT(handleUpdated()));
-    QObject::connect(series, SIGNAL(pointLabelsFormatChanged(QString)),
-                     this, SLOT(handleUpdated()));
-    QObject::connect(series, SIGNAL(pointLabelsVisibilityChanged(bool)),
-                     this, SLOT(handleUpdated()));
-    QObject::connect(series, SIGNAL(pointLabelsFontChanged(QFont)), this, SLOT(handleUpdated()));
-    QObject::connect(series, SIGNAL(pointLabelsColorChanged(QColor)), this, SLOT(handleUpdated()));
-    QObject::connect(series, SIGNAL(pointLabelsClippingChanged(bool)), this, SLOT(handleUpdated()));
-    handleUpdated();
+    connect(m_series->d_func(), &QXYSeriesPrivate::seriesUpdated,
+            this, &SplineChartItem::handleSeriesUpdated);
+    connect(series, &QXYSeries::lightMarkerChanged, this, &SplineChartItem::handleSeriesUpdated);
+    connect(series, &QXYSeries::markerSizeChanged, this, &SplineChartItem::handleSeriesUpdated);
+    connect(series, &QXYSeries::visibleChanged, this, &SplineChartItem::handleSeriesUpdated);
+    connect(series, &QXYSeries::opacityChanged, this, &SplineChartItem::handleSeriesUpdated);
+    connect(series, &QXYSeries::pointLabelsFormatChanged,
+            this, &SplineChartItem::handleSeriesUpdated);
+    connect(series, &QXYSeries::pointLabelsVisibilityChanged,
+            this, &SplineChartItem::handleSeriesUpdated);
+    connect(series, &QXYSeries::pointLabelsFontChanged,
+            this, &SplineChartItem::handleSeriesUpdated);
+    connect(series, &QXYSeries::pointLabelsColorChanged,
+            this, &SplineChartItem::handleSeriesUpdated);
+    connect(series, &QXYSeries::pointLabelsClippingChanged,
+            this, &SplineChartItem::handleSeriesUpdated);
+    handleSeriesUpdated();
 }
 
 QRectF SplineChartItem::boundingRect() const
@@ -308,16 +314,14 @@ void SplineChartItem::updateGeometry()
     // For mouse interactivity, we have to add the rects *after* the 'createStroke',
     // as we don't need the outline - we need it filled up.
     if (!m_series->lightMarker().isNull()) {
-        const QImage &marker = m_series->lightMarker();
-        // '+1': a margin to guarantee we cover all of the pixmap
-        int markerHalfWidth = (marker.width() / 2) + 1;
-        int markerHalfHeight = (marker.height() / 2) + 1;
+        // +1, +2: a margin to guarantee we cover all of the pixmap
+        qreal markerHalfSize = (m_series->markerSize() / 2.0) + 1;
+        qreal markerSize = m_series->markerSize() + 2;
 
-        // '+2': see above comment about margin
         for (const auto &point : qAsConst(points)) {
-            checkShapePath.addRect(point.x() - markerHalfWidth,
-                                   point.y() - markerHalfHeight,
-                                   marker.width() + 2, marker.height() + 2);
+            checkShapePath.addRect(point.x() - markerHalfSize,
+                                   point.y() - markerHalfSize,
+                                   markerSize, markerSize);
         }
     }
 
@@ -432,7 +436,7 @@ QList<qreal> SplineChartItem::firstControlPoints(const QList<qreal> &list)
 
 //handlers
 
-void SplineChartItem::handleUpdated()
+void SplineChartItem::handleSeriesUpdated()
 {
     setVisible(m_series->isVisible());
     setOpacity(m_series->opacity());
@@ -467,7 +471,7 @@ void SplineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
     painter->setBrush(Qt::NoBrush);
 
     if (m_series->chart()->chartType() == QChart::ChartTypePolar) {
-        qreal halfWidth = domain()->size().width() / 2.0;
+        qreal halfWidth = domain()->size().width() / 2.;
         QRectF clipRectLeft = QRectF(0, 0, halfWidth, domain()->size().height());
         QRectF clipRectRight = QRectF(halfWidth, 0, halfWidth, domain()->size().height());
         QRegion fullPolarClipRegion(clipRect.toRect(), QRegion::Ellipse);
@@ -495,16 +499,20 @@ void SplineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
             painter->drawPoints(geometryPoints());
     }
 
+    int pointLabelsOffset = m_linePen.width() / 2;
+
     // Draw markers if a marker has been set (set to QImage() to disable)
     if (!m_series->lightMarker().isNull()) {
         const QImage &marker = m_series->lightMarker();
-        int markerHalfWidth = marker.width() / 2;
-        int markerHalfHeight = marker.height() / 2;
+        qreal markerSize = m_series->markerSize();
+        qreal markerHalfSize = m_series->markerSize() / 2.0;
+        pointLabelsOffset = markerHalfSize;
 
         for (const auto &point : qAsConst(m_points)) {
-            painter->drawImage(point.x() - markerHalfWidth,
-                               point.y() - markerHalfHeight,
-                               marker);
+            const QRectF rect(point.x() - markerHalfSize,
+                              point.y() - markerHalfSize,
+                              markerSize, markerSize);
+            painter->drawImage(rect, marker);
         }
     }
 
@@ -513,7 +521,7 @@ void SplineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
             painter->setClipping(true);
         else
             painter->setClipping(false);
-        m_series->d_func()->drawSeriesPointLabels(painter, m_points, m_linePen.width() / 2);
+        m_series->d_func()->drawSeriesPointLabels(painter, m_points, pointLabelsOffset);
     }
 
     painter->restore();

@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2017 The Qt Company Ltd.
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -166,12 +166,11 @@
     \property QScatterSeries::markerSize
     \brief The size of the marker used to render the points in the series.
 
-    The default size is 15.0.
+    \sa QXYSeries::setMarkerSize
 */
 /*!
     \qmlproperty real ScatterSeries::markerSize
     The size of the marker used to render the points in the series.
-    The default size is 15.0.
 */
 
 /*!
@@ -207,6 +206,9 @@ QT_BEGIN_NAMESPACE
 QScatterSeries::QScatterSeries(QObject *parent)
     : QXYSeries(*new QScatterSeriesPrivate(this), parent)
 {
+    // Emit QScatterSeries' markerSizeChanged signal as it's not the same as
+    // QXYSeries' markerSizeChanged
+    connect(this, &QXYSeries::markerSizeChanged, this, &QScatterSeries::markerSizeChanged);
 }
 
 /*!
@@ -238,7 +240,7 @@ void QScatterSeries::setPen(const QPen &pen)
     if (d->m_pen != pen) {
         bool emitColorChanged = d->m_pen.color() != pen.color();
         d->m_pen = pen;
-        emit d->updated();
+        emit d->seriesUpdated();
         if (emitColorChanged)
             emit borderColorChanged(pen.color());
     }
@@ -253,7 +255,7 @@ void QScatterSeries::setBrush(const QBrush &brush)
     if (d->m_brush != brush) {
         bool emitColorChanged = d->m_brush.color() != brush.color();
         d->m_brush = brush;
-        emit d->updated();
+        emit d->seriesUpdated();
         if (emitColorChanged)
             emit colorChanged(brush.color());
     }
@@ -309,34 +311,27 @@ void QScatterSeries::setMarkerShape(MarkerShape shape)
     Q_D(QScatterSeries);
     if (d->m_shape != shape) {
         d->m_shape = shape;
-        emit d->updated();
+        emit d->seriesUpdated();
         emit markerShapeChanged(shape);
     }
 }
 
 qreal QScatterSeries::markerSize() const
 {
-    Q_D(const QScatterSeries);
-    return d->m_size;
+    // markerSize has moved to QXYSeries, but this method needs to remain for API compatibility.
+    return QXYSeries::markerSize();
 }
-
 void QScatterSeries::setMarkerSize(qreal size)
 {
-    Q_D(QScatterSeries);
-
-    if (!qFuzzyCompare(d->m_size, size)) {
-        d->m_size = size;
-        emit d->updated();
-        emit markerSizeChanged(size);
-    }
+    // markerSize has moved to QXYSeries, but this method needs to remain for API compatibility.
+    QXYSeries::setMarkerSize(size);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QScatterSeriesPrivate::QScatterSeriesPrivate(QScatterSeries *q)
     : QXYSeriesPrivate(q),
-      m_shape(QScatterSeries::MarkerShapeCircle),
-      m_size(15.0)
+      m_shape(QScatterSeries::MarkerShapeCircle)
 {
 }
 

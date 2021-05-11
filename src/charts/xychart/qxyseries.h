@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -144,6 +144,9 @@ public:
     void setLightMarker(const QImage &lightMarker);
     const QImage &lightMarker() const;
 
+    void setMarkerSize(qreal size);
+    qreal markerSize() const;
+
     void setBestFitLineVisible(bool visible = true);
     bool bestFitLineVisible() const;
     QPair<qreal, qreal> bestFitLineEquation(bool &ok) const;
@@ -192,6 +195,7 @@ Q_SIGNALS:
     Q_REVISION(6, 2) void bestFitLineColorChanged(const QColor &color);
     Q_REVISION(6, 2) void pointsConfigurationChanged(
             const QHash<int, QHash<PointConfiguration, QVariant>> &configuration);
+    void markerSizeChanged(qreal size);
 
 private:
     Q_DECLARE_PRIVATE(QXYSeries)

@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -55,7 +55,6 @@ public:
 
 private:
     QScatterSeries::MarkerShape m_shape;
-    qreal m_size;
     Q_DECLARE_PUBLIC(QScatterSeries)
 };
 

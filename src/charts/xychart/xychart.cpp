@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -48,18 +48,19 @@ XYChart::XYChart(QXYSeries *series, QGraphicsItem *item):
       m_animation(0),
       m_dirty(true)
 {
-    QObject::connect(series, SIGNAL(pointReplaced(int)), this, SLOT(handlePointReplaced(int)));
-    QObject::connect(series, SIGNAL(pointsReplaced()), this, SLOT(handlePointsReplaced()));
-    QObject::connect(series, SIGNAL(pointAdded(int)), this, SLOT(handlePointAdded(int)));
-    QObject::connect(series, SIGNAL(pointRemoved(int)), this, SLOT(handlePointRemoved(int)));
-    QObject::connect(series, SIGNAL(pointsRemoved(int, int)), this, SLOT(handlePointsRemoved(int, int)));
-    QObject::connect(this, SIGNAL(clicked(QPointF)), series, SIGNAL(clicked(QPointF)));
-    QObject::connect(this, SIGNAL(hovered(QPointF,bool)), series, SIGNAL(hovered(QPointF,bool)));
-    QObject::connect(this, SIGNAL(pressed(QPointF)), series, SIGNAL(pressed(QPointF)));
-    QObject::connect(this, SIGNAL(released(QPointF)), series, SIGNAL(released(QPointF)));
-    QObject::connect(this, SIGNAL(doubleClicked(QPointF)), series, SIGNAL(doubleClicked(QPointF)));
-    QObject::connect(series, &QAbstractSeries::useOpenGLChanged,
-                     this, &XYChart::handleDomainUpdated);
+    connect(series->d_func(), &QXYSeriesPrivate::seriesUpdated,
+            this, &XYChart::handleSeriesUpdated);
+    connect(series, &QXYSeries::pointReplaced, this, &XYChart::handlePointReplaced);
+    connect(series, &QXYSeries::pointsReplaced, this, &XYChart::handlePointsReplaced);
+    connect(series, &QXYSeries::pointAdded, this, &XYChart::handlePointAdded);
+    connect(series, &QXYSeries::pointRemoved, this, &XYChart::handlePointRemoved);
+    connect(series, &QXYSeries::pointsRemoved, this, &XYChart::handlePointsRemoved);
+    connect(this, &XYChart::clicked, series, &QXYSeries::clicked);
+    connect(this, &XYChart::hovered, series, &QXYSeries::hovered);
+    connect(this, &XYChart::pressed, series, &QXYSeries::pressed);
+    connect(this, &XYChart::released, series, &QXYSeries::released);
+    connect(this, &XYChart::doubleClicked, series, &QXYSeries::doubleClicked);
+    connect(series, &QAbstractSeries::useOpenGLChanged, this, &XYChart::handleDomainUpdated);
 }
 
 void XYChart::setGeometryPoints(const QList<QPointF> &points)
@@ -244,6 +245,10 @@ void XYChart::handleDomainUpdated()
         QList<QPointF> points = domain()->calculateGeometryPoints(m_series->points());
         updateChart(m_points, points);
     }
+}
+
+void XYChart::handleSeriesUpdated()
+{
 }
 
 bool XYChart::isEmpty()

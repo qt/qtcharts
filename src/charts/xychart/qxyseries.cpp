@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2017 The Qt Company Ltd.
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -276,6 +276,7 @@ QT_BEGIN_NAMESPACE
 
     \sa pointLabelsVisible
 */
+
 /*!
     \property QXYSeries::selectedColor
     \brief The color of the selected points.
@@ -292,6 +293,12 @@ QT_BEGIN_NAMESPACE
     If not specified, value of QXYSeries::color is used as default.
     \sa color
 */
+
+/*!
+    \fn void QXYSeries::markerSizeChanged(qreal size)
+    This signal is emitted when the marker size changes to \a size.
+*/
+
 /*!
     \fn void QXYSeries::pointLabelsClippingChanged(bool clipping)
     This signal is emitted when the clipping of the data point labels changes to
@@ -533,7 +540,7 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QXYSeriesPrivate::updated()
+    \fn void QXYSeriesPrivate::seriesUpdated()
     \internal
 */
 
@@ -1219,7 +1226,7 @@ void QXYSeries::setPen(const QPen &pen)
     if (d->m_pen != pen) {
         bool emitColorChanged = d->m_pen.color() != pen.color();
         d->m_pen = pen;
-        emit d->updated();
+        emit d->seriesUpdated();
         if (emitColorChanged)
             emit colorChanged(pen.color());
         emit penChanged(pen);
@@ -1245,7 +1252,7 @@ void QXYSeries::setBrush(const QBrush &brush)
     Q_D(QXYSeries);
     if (d->m_brush != brush) {
         d->m_brush = brush;
-        emit d->updated();
+        emit d->seriesUpdated();
     }
 }
 
@@ -1292,7 +1299,7 @@ void QXYSeries::setPointsVisible(bool visible)
     Q_D(QXYSeries);
     if (d->m_pointsVisible != visible) {
         d->m_pointsVisible = visible;
-        emit d->updated();
+        emit d->seriesUpdated();
     }
 }
 
@@ -1389,8 +1396,9 @@ bool QXYSeries::pointLabelsClipping() const
     You can reset back to default (disabled) by calling this function with a null QImage (QImage()).
 
     The light markers visualize the data points of this series and as such are an alternative
-    to setPointsVisible(true).
-    Both features can be enabled independently from each other.
+    to \c setPointsVisible(true).
+    If a light marker is set with this method, visible points as set with \c setPointsVisible(true)
+    are not displayed.
 
     Unlike the elements of \l {QScatterSeries}{QScatterSeries} the light markers
     are not represented by QGraphicsItem, but are just painted (no objects created).
@@ -1409,6 +1417,7 @@ void QXYSeries::setLightMarker(const QImage &lightMarker)
         return;
 
     d->m_lightMarker = lightMarker;
+    emit d->seriesUpdated();
     emit lightMarkerChanged(d->m_lightMarker);
 }
 
@@ -1436,13 +1445,47 @@ const QImage &QXYSeries::lightMarker() const
     return d->m_lightMarker;
 }
 
+/*!
+    Sets the size of the marker used to render points in the series.
+
+    The default size is 15.0.
+    \sa QScatterSeries::markerSize
+    \since 6.2
+*/
+void QXYSeries::setMarkerSize(qreal size)
+{
+    Q_D(QXYSeries);
+
+    if (!qFuzzyCompare(d->m_markerSize, size)) {
+        d->m_markerSizeDefault = false;
+        d->setMarkerSize(size);
+        emit d->seriesUpdated();
+        emit markerSizeChanged(size);
+    }
+}
+
+/*!
+    Gets the size of the marker used to render points in the series.
+
+    The default size depends on the specific QXYSeries type.
+    QScatterSeries has a default of 15.0
+    QLineSeries has a default of the series pen size * 1.5
+    \sa QScatterSeries::markerSize
+    \since 6.2
+*/
+qreal QXYSeries::markerSize() const
+{
+    Q_D(const QXYSeries);
+    return d->m_markerSize;
+}
+
 void QXYSeries::setBestFitLineVisible(bool visible)
 {
     Q_D(QXYSeries);
     if (d->m_bestFitLineVisible != visible) {
         d->m_bestFitLineVisible = visible;
         emit bestFitLineVisibilityChanged(visible);
-        emit d->updated();
+        emit d->seriesUpdated();
     }
 }
 
@@ -1477,7 +1520,7 @@ void QXYSeries::setBestFitLinePen(const QPen &pen)
     if (d->m_bestFitLinePen != pen) {
         bool emitColorChanged = d->m_bestFitLinePen.color() != pen.color();
         d->m_bestFitLinePen = pen;
-        emit d->updated();
+        emit d->seriesUpdated();
         if (emitColorChanged)
             bestFitLineColorChanged(pen.color());
         emit bestFitLinePenChanged(pen);
@@ -1502,7 +1545,6 @@ QXYSeries &QXYSeries::operator<< (const QPointF &point)
     append(point);
     return *this;
 }
-
 
 /*!
     Stream operator for adding the list of data points specified by \a points
@@ -1529,7 +1571,8 @@ QXYSeriesPrivate::QXYSeriesPrivate(QXYSeries *q)
       m_pointLabelsColor(QChartPrivate::defaultPen().color()),
       m_pointLabelsClipping(true),
       m_bestFitLinePen(QChartPrivate::defaultPen()),
-      m_bestFitLineVisible(false)
+      m_bestFitLineVisible(false),
+      m_markerSize(15.0)
 {
 }
 
@@ -1773,6 +1816,16 @@ void QXYSeriesPrivate::setPointSelected(int index, bool selected, bool &callSign
 bool QXYSeriesPrivate::isPointSelected(int index)
 {
     return m_selectedPoints.contains(index);
+}
+
+bool QXYSeriesPrivate::isMarkerSizeDefault()
+{
+    return m_markerSizeDefault;
+}
+
+void QXYSeriesPrivate::setMarkerSize(qreal markerSize)
+{
+    m_markerSize = markerSize;
 }
 
 QT_END_NAMESPACE

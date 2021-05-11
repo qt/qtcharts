@@ -63,7 +63,11 @@ public:
         MarkerShapeDefault,
         MarkerShapeRectangle,
         MarkerShapeCircle,
-        MarkerShapeFromSeries
+        MarkerShapeFromSeries,
+        MarkerShapeRotatedRectangle,
+        MarkerShapeTriangle,
+        MarkerShapeStar,
+        MarkerShapePentagon
     };
     Q_ENUMS(MarkerShape)
 

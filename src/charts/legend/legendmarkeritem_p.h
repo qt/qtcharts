@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -79,6 +79,7 @@ public:
 
     void setSeriesPen(const QPen &pen);
     void setSeriesBrush(const QBrush &brush);
+    void setSeriesLightMarker(const QImage &image);
 
     void setFont(const QFont &font);
     QFont font() const;
@@ -129,6 +130,7 @@ protected:
     qreal m_space;
     QString m_label;
     QLegend::MarkerShape m_markerShape;
+    QImage m_seriesLightMarker;
 
     QBrush m_labelBrush;
     QPen m_pen;

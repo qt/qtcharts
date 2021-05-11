@@ -159,7 +159,7 @@ QDebug operator<< (QDebug debug, const QLineSeries series)
 QLineSeriesPrivate::QLineSeriesPrivate(QLineSeries *q)
     : QXYSeriesPrivate(q)
 {
-
+    m_markerSize = m_pen.widthF() * 1.5;
 }
 
 void QLineSeriesPrivate::initializeGraphics(QGraphicsItem *parent)
