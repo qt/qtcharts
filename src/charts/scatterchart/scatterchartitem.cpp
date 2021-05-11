@@ -256,6 +256,9 @@ void ScatterChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
     painter->save();
     painter->setClipRect(clipRect);
 
+    if (m_series->bestFitLineVisible())
+        m_series->d_func()->drawBestFitLine(painter, clipRect);
+
     if (m_pointLabelsVisible) {
         if (m_pointLabelsClipping)
             painter->setClipping(true);

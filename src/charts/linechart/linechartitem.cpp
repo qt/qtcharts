@@ -417,6 +417,9 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
         painter->setClipRect(clipRect);
     }
 
+    if (m_series->bestFitLineVisible())
+        m_series->d_func()->drawBestFitLine(painter, clipRect);
+
     if (m_linePen.style() != Qt::SolidLine || alwaysUsePath) {
         // If pen style is not solid line, use path painting to ensure proper pattern continuity
         painter->drawPath(m_linePath);

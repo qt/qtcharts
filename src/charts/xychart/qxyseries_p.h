@@ -67,6 +67,9 @@ public:
     void drawSeriesPointLabels(QPainter *painter, const QList<QPointF> &points,
                                const int offset = 0);
 
+    void drawBestFitLine(QPainter *painter, const QRectF &clipRect);
+    QPair<qreal, qreal> bestFitLineEquation(bool &ok) const;
+
     void setPointSelected(int index, bool selected, bool &callSignal);
     bool isPointSelected(int index);
 
@@ -86,6 +89,8 @@ protected:
     QColor m_pointLabelsColor;
     bool m_pointLabelsClipping;
     QImage m_lightMarker;
+    QPen m_bestFitLinePen;
+    bool m_bestFitLineVisible;
 
 private:
     Q_DECLARE_PUBLIC(QXYSeries)

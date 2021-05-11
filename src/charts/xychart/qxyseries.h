@@ -56,6 +56,8 @@ class Q_CHARTS_EXPORT QXYSeries : public QAbstractSeries
     Q_PROPERTY(QFont pointLabelsFont READ pointLabelsFont WRITE setPointLabelsFont NOTIFY pointLabelsFontChanged)
     Q_PROPERTY(QColor pointLabelsColor READ pointLabelsColor WRITE setPointLabelsColor NOTIFY pointLabelsColorChanged)
     Q_PROPERTY(bool pointLabelsClipping READ pointLabelsClipping WRITE setPointLabelsClipping NOTIFY pointLabelsClippingChanged)
+    Q_PROPERTY(bool bestFitLineVisible READ bestFitLineVisible WRITE setBestFitLineVisible NOTIFY bestFitLineVisibilityChanged REVISION(6, 2))
+    Q_PROPERTY(QColor bestFitLineColor READ bestFitLineColor WRITE setBestFitLineColor NOTIFY bestFitLineColorChanged REVISION(6, 2))
 
 protected:
     explicit QXYSeries(QXYSeriesPrivate &d, QObject *parent = nullptr);
@@ -133,6 +135,15 @@ public:
     void setLightMarker(const QImage &lightMarker);
     const QImage &lightMarker() const;
 
+    void setBestFitLineVisible(bool visible = true);
+    bool bestFitLineVisible() const;
+    QPair<qreal, qreal> bestFitLineEquation(bool &ok) const;
+
+    void setBestFitLinePen(const QPen &pen);
+    QPen bestFitLinePen() const;
+    void setBestFitLineColor(const QColor &color);
+    QColor bestFitLineColor() const;
+
 Q_SIGNALS:
     void clicked(const QPointF &point);
     void hovered(const QPointF &point, bool state);
@@ -154,6 +165,9 @@ Q_SIGNALS:
     void penChanged(const QPen &pen);
     void selectedPointsChanged();
     void lightMarkerChanged(const QImage &lightMarker);
+    Q_REVISION(6, 2) void bestFitLineVisibilityChanged(bool visible);
+    Q_REVISION(6, 2) void bestFitLinePenChanged(const QPen &pen);
+    Q_REVISION(6, 2) void bestFitLineColorChanged(const QColor &color);
 
 private:
     Q_DECLARE_PRIVATE(QXYSeries)

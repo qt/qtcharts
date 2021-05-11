@@ -482,6 +482,9 @@ void SplineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
         painter->setClipRect(clipRect);
     }
 
+    if (m_series->bestFitLineVisible())
+        m_series->d_func()->drawBestFitLine(painter, clipRect);
+
     painter->drawPath(m_path);
 
     if (m_pointsVisible) {

@@ -44,6 +44,9 @@ QT_BEGIN_NAMESPACE
     \inmodule QtCharts
     \brief The QXYSeries class is a base class for line, spline, and scatter
     series.
+
+    QXYSeries supports displaying best fit line on a chart. Best fit line is a line
+    through a chart that expresses the relationship between points.
 */
 /*!
     \qmltype XYSeries
@@ -53,6 +56,9 @@ QT_BEGIN_NAMESPACE
     \inherits AbstractSeries
 
     \brief A base type for line, spline, and scatter series.
+
+    XYSeries supports displaying best fit line on a chart. Best fit line is a line
+    through a chart that expresses the relationship between points.
 */
 
 /*!
@@ -265,6 +271,42 @@ QT_BEGIN_NAMESPACE
     \fn void QXYSeries::pointLabelsClippingChanged(bool clipping)
     This signal is emitted when the clipping of the data point labels changes to
     \a clipping.
+*/
+/*!
+    \property QXYSeries::bestFitLineVisible
+    \brief The visibility of the best fit line.
+
+    This property is \c false by default.
+
+    \sa bestFitLineEquation
+    \since 6.2
+*/
+/*!
+    \qmlproperty bool XYSeries::bestFitLineVisible
+    The visibility of the best fit line.
+    This property is \c false by default.
+*/
+/*!
+    \fn void QXYSeries::bestFitLineVisibilityChanged(bool visible)
+    This signal is emitted when the visibility of the best fit line changes to
+    \a visible.
+*/
+/*!
+    \property QXYSeries::bestFitLineColor
+    \brief The color of best fit line.
+
+    \sa bestFitLineEquation, bestFitLineVisible
+    \since 6.2
+*/
+/*!
+    \qmlproperty bool XYSeries::bestFitLineColor
+    The color of best fit line.
+    \sa bestFitLineVisible
+*/
+/*!
+    \fn void QXYSeries::bestFitLineColorChanged(const QColor &color)
+    This signal is emitted when the color used for the best fit line changes to
+    \a color.
 */
 
 /*!
@@ -1153,6 +1195,62 @@ const QImage &QXYSeries::lightMarker() const
     return d->m_lightMarker;
 }
 
+void QXYSeries::setBestFitLineVisible(bool visible)
+{
+    Q_D(QXYSeries);
+    if (d->m_bestFitLineVisible != visible) {
+        d->m_bestFitLineVisible = visible;
+        emit bestFitLineVisibilityChanged(visible);
+        emit d->updated();
+    }
+}
+
+bool QXYSeries::bestFitLineVisible() const
+{
+    Q_D(const QXYSeries);
+    return d->m_bestFitLineVisible;
+}
+
+/*!
+    Returns a pair of numbers where the first number is a slope factor
+    and the second number is intercept of a linear function for a best fit line.
+
+    Those factors are calculated using Least Squares Method based
+    on points passed to the series.
+
+    Parameter \a ok is used to report a failure by setting its value to \c false
+    and to report a success by setting its value to \c true.
+
+    \sa QXYSeries::bestFitLineVisible()
+    \since 6.2
+*/
+QPair<qreal, qreal> QXYSeries::bestFitLineEquation(bool &ok) const
+{
+    Q_D(const QXYSeries);
+    return d->bestFitLineEquation(ok);
+}
+
+void QXYSeries::setBestFitLinePen(const QPen &pen)
+{
+    Q_D(QXYSeries);
+    if (d->m_bestFitLinePen != pen) {
+        bool emitColorChanged = d->m_bestFitLinePen.color() != pen.color();
+        d->m_bestFitLinePen = pen;
+        emit d->updated();
+        if (emitColorChanged)
+            bestFitLineColorChanged(pen.color());
+        emit bestFitLinePenChanged(pen);
+    }
+}
+
+QPen QXYSeries::bestFitLinePen() const
+{
+    Q_D(const QXYSeries);
+    if (d->m_bestFitLinePen == QChartPrivate::defaultPen())
+        return QPen();
+    else
+        return d->m_bestFitLinePen;
+}
 
 /*!
     Stream operator for adding the data point \a point to the series.
@@ -1179,7 +1277,6 @@ QXYSeries &QXYSeries::operator<< (const QList<QPointF>& points)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
 QXYSeriesPrivate::QXYSeriesPrivate(QXYSeries *q)
     : QAbstractSeriesPrivate(q),
       m_pen(QChartPrivate::defaultPen()),
@@ -1189,7 +1286,9 @@ QXYSeriesPrivate::QXYSeriesPrivate(QXYSeries *q)
       m_pointLabelsVisible(false),
       m_pointLabelsFont(QChartPrivate::defaultFont()),
       m_pointLabelsColor(QChartPrivate::defaultPen().color()),
-      m_pointLabelsClipping(true)
+      m_pointLabelsClipping(true),
+      m_bestFitLinePen(QChartPrivate::defaultPen()),
+      m_bestFitLineVisible(false)
 {
 }
 
@@ -1293,6 +1392,78 @@ void QXYSeriesPrivate::drawSeriesPointLabels(QPainter *painter, const QList<QPoi
 
         painter->drawText(position, pointLabel);
     }
+}
+
+void QXYSeriesPrivate::drawBestFitLine(QPainter *painter, const QRectF &clipRect)
+{
+    bool ok = false;
+    const auto &bestFitLineParams = bestFitLineEquation(ok);
+
+    if (!ok)
+        return;
+
+    const qreal x1 = clipRect.x();
+    const qreal y1 = bestFitLineParams.first * x1 + bestFitLineParams.second;
+    QPointF p1 = domain()->calculateGeometryPoint(QPointF(x1, y1), ok);
+
+    const qreal x2 = clipRect.x() + 1;
+    const qreal y2 = bestFitLineParams.first * x2 + bestFitLineParams.second;
+    QPointF p2 = domain()->calculateGeometryPoint(QPointF(x2, y2), ok);
+
+    if (ok) {
+        QLineF bestFitLine { p1, p2 };
+        // maxLength is length of the diagonal, no line can be longer
+        const qreal maxLength = qSqrt(qPow(clipRect.width(), 2) * qPow(clipRect.height(), 2));
+        bestFitLine.setLength(maxLength);
+
+        painter->save();
+        painter->setPen(m_bestFitLinePen);
+        painter->drawLine(bestFitLine);
+        painter->restore();
+    }
+}
+
+void QXYSeries::setBestFitLineColor(const QColor &color)
+{
+    QPen p = bestFitLinePen();
+    if (p.color() != color) {
+        p.setColor(color);
+        setBestFitLinePen(p);
+    }
+}
+
+QColor QXYSeries::bestFitLineColor() const
+{
+    return bestFitLinePen().color();
+}
+
+QPair<qreal, qreal> QXYSeriesPrivate::bestFitLineEquation(bool &ok) const
+{
+    if (m_points.count() <= 1) {
+        ok = false;
+        return { 0, 0 };
+    }
+
+    ok = true;
+    qreal xSum = 0.0, x2Sum = 0.0, ySum = 0.0, xySum = 0.0;
+    for (const auto &point : m_points) {
+        xSum += point.x();
+        ySum += point.y();
+        x2Sum += qPow(point.x(), 2);
+        xySum += point.x() * point.y();
+    }
+
+    const qreal divisor = m_points.count() * x2Sum - xSum * xSum;
+    // To prevent crashes in unusual cases
+    if (divisor == 0.0) {
+        ok = false;
+        return { 0, 0 };
+    }
+
+    qreal a = (m_points.count() * xySum - xSum * ySum) / divisor;
+    qreal b = (x2Sum * ySum - xSum * xySum) / divisor;
+
+    return { a, b };
 }
 
 void QXYSeriesPrivate::setPointSelected(int index, bool selected, bool &callSignal)
