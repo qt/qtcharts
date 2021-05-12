@@ -138,9 +138,9 @@ void CartesianChartAxis::updateMinorTickItems()
             const int _minorTickCount = valueAxis->minorTickCount();
 
             if (min < firstMajorTick)
-                firstMajorTick = firstMajorTick - qCeil((firstMajorTick - min) / interval) * interval;
+                firstMajorTick = firstMajorTick - std::ceil((firstMajorTick - min) / interval) * interval;
             else
-                firstMajorTick = firstMajorTick + int((min - firstMajorTick) / interval) * interval;
+                firstMajorTick = firstMajorTick + std::floor((min - firstMajorTick) / interval) * interval;
 
             const qreal deltaMinor = interval / qreal(_minorTickCount + 1);
             qreal minorTick = firstMajorTick + deltaMinor;
@@ -376,9 +376,9 @@ void CartesianChartAxis::updateLabelsValues(QValueAxis *axis)
     } else {
         qreal value = axis->tickAnchor();
         if (value > min())
-            value = value - int((value - min()) / axis->tickInterval()) * axis->tickInterval();
+            value = value - std::floor((value - min()) / axis->tickInterval()) * axis->tickInterval();
         else
-            value = value + qCeil((min() - value) / axis->tickInterval()) * axis->tickInterval();
+            value = value + std::ceil((min() - value) / axis->tickInterval()) * axis->tickInterval();
 
         int i = axis->isReverse() ? labelItems().count()-1 : 0;
         while (value <= max() || qFuzzyCompare(value, max())) {

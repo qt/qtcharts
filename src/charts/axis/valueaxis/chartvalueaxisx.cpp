@@ -75,15 +75,16 @@ QList<qreal> ChartValueAxisX::calculateLayout() const
         return points;
     } else { // QValueAxis::TicksDynamic
         const qreal interval = m_axis->tickInterval();
-        qreal value = m_axis->tickAnchor();
+        const qreal anchor = m_axis->tickAnchor();
         const qreal maxValue = max();
         const qreal minValue = min();
+        qreal value;
 
         // Find the first major tick right after the min of range
-        if (value > minValue)
-            value = value - int((value - minValue) / interval) * interval;
+        if (anchor > minValue)
+            value = anchor - std::floor((anchor - minValue) / interval) * interval;
         else
-            value = value + qCeil((minValue - value) / interval) * interval;
+            value = anchor + std::ceil((minValue - anchor) / interval) * interval;
 
         const QRectF &gridRect = gridGeometry();
         const qreal deltaX = gridRect.width() / (maxValue - minValue);
