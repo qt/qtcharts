@@ -16,8 +16,6 @@ qt_internal_add_manual_test(chartdesigner
     PUBLIC_LIBRARIES
         Qt::Charts
         Qt::Gui
-        Qt::OpenGL
-        Qt::OpenGLWidgets
 )
 
 ## Scopes:

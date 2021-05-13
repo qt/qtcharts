@@ -13,7 +13,5 @@ qt_internal_add_test(qbarseries
     PUBLIC_LIBRARIES
         Qt::Charts
         Qt::Gui
-        Qt::OpenGL
-        Qt::OpenGLWidgets
         Qt::Widgets
 )

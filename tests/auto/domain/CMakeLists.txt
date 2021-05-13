@@ -15,7 +15,5 @@ qt_internal_add_test(domain
         Qt::ChartsPrivate
         Qt::CorePrivate
         Qt::Gui
-        Qt::OpenGL
-        Qt::OpenGLWidgets
         Qt::Widgets
 )

@@ -12,7 +12,5 @@ qt_internal_add_manual_test(presenterchart
     PUBLIC_LIBRARIES
         Qt::Charts
         Qt::Gui
-        Qt::OpenGL
-        Qt::OpenGLWidgets
         Qt::Widgets
 )

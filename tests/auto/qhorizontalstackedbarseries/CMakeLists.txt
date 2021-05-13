@@ -13,7 +13,5 @@ qt_internal_add_test(qhorizontalstackedbarseries
     PUBLIC_LIBRARIES
         Qt::Charts
         Qt::Gui
-        Qt::OpenGL
-        Qt::OpenGLWidgets
         Qt::Widgets
 )

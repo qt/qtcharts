@@ -13,8 +13,6 @@ qt_internal_add_test(qbarmodelmapper
     PUBLIC_LIBRARIES
         Qt::Charts
         Qt::Gui
-        Qt::OpenGL
-        Qt::OpenGLWidgets
         Qt::Widgets
         Qt::Charts # special case
         Qt::Test # special case

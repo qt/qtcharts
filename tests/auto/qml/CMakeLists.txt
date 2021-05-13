@@ -13,8 +13,6 @@ qt_internal_add_test(charts_qml
     PUBLIC_LIBRARIES
         Qt::Charts
         Qt::Gui
-        Qt::OpenGL
-        Qt::OpenGLWidgets
         Qt::Qml
         Qt::Quick
         Qt::Widgets

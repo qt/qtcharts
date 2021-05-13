@@ -11,8 +11,6 @@ qt_internal_add_manual_test(qmlchartaxis
     PUBLIC_LIBRARIES
         Qt::Charts
         Qt::Gui
-        Qt::OpenGL
-        Qt::OpenGLWidgets
         Qt::Quick
 )
 

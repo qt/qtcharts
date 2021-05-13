@@ -15,8 +15,6 @@ qt_internal_add_manual_test(polarcharttest
     PUBLIC_LIBRARIES
         Qt::Charts
         Qt::Gui
-        Qt::OpenGL
-        Qt::OpenGLWidgets
         Qt::Widgets
     ENABLE_AUTOGEN_TOOLS
         uic

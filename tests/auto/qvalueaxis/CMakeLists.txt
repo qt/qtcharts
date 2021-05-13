@@ -14,7 +14,5 @@ qt_internal_add_test(qvalueaxis
     PUBLIC_LIBRARIES
         Qt::Charts
         Qt::Gui
-        Qt::OpenGL
-        Qt::OpenGLWidgets
         Qt::Widgets
 )

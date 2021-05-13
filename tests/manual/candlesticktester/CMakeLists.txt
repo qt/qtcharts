@@ -13,7 +13,5 @@ qt_internal_add_manual_test(candlesticktester
     PUBLIC_LIBRARIES
         Qt::Charts
         Qt::Gui
-        Qt::OpenGL
-        Qt::OpenGLWidgets
         Qt::Widgets
 )
