@@ -170,6 +170,7 @@ public:
     QHash<int, QHash<PointConfiguration, QVariant>> pointsConfiguration() const;
 
     void sizeBy(const QList<qreal> &sourceData, const qreal minSize, const qreal maxSize);
+    void colorBy(const QList<qreal> &sourceData, const QLinearGradient &gradient = QLinearGradient());
 
 Q_SIGNALS:
     void clicked(const QPointF &point);
@@ -205,6 +206,7 @@ private:
     friend class QXYLegendMarkerPrivate;
     friend class XYLegendMarker;
     friend class XYChart;
+    friend class QColorAxisPrivate;
 };
 
 QT_END_NAMESPACE

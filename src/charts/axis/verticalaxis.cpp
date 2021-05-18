@@ -28,6 +28,7 @@
 ****************************************************************************/
 
 #include <QtCharts/qcategoryaxis.h>
+#include <QtCharts/QColorAxis>
 #include <QtCharts/qlogvalueaxis.h>
 #include <QtCore/qmath.h>
 #include <private/chartpresenter_p.h>
@@ -69,7 +70,6 @@ QSizeF VerticalAxis::sizeHint(Qt::SizeHint which, const QSizeF &constraint) cons
     default:
         break;
     }
-
     return sh;
 }
 
@@ -101,10 +101,12 @@ void VerticalAxis::updateGeometry()
     QGraphicsLineItem *arrowItem = static_cast<QGraphicsLineItem*>(arrow.at(0));
 
     //arrow position
-    if (axis()->alignment() == Qt::AlignLeft)
-        arrowItem->setLine(axisRect.right(), gridRect.top(), axisRect.right(), gridRect.bottom());
-    else if (axis()->alignment() == Qt::AlignRight)
-        arrowItem->setLine(axisRect.left(), gridRect.top(), axisRect.left(), gridRect.bottom());
+    if (axis()->type() != QAbstractAxis::AxisTypeColor) {
+        if (axis()->alignment() == Qt::AlignLeft)
+            arrowItem->setLine(axisRect.right(), gridRect.top(), axisRect.right(), gridRect.bottom());
+        else if (axis()->alignment() == Qt::AlignRight)
+            arrowItem->setLine(axisRect.left(), gridRect.top(), axisRect.left(), gridRect.bottom());
+    }
 
     //title
     QRectF titleBoundingRect;
@@ -112,13 +114,20 @@ void VerticalAxis::updateGeometry()
     qreal labelAvailableSpace = axisRect.width();
     if (!titleText.isEmpty() && titleItem()->isVisible()) {
         const qreal titleAvailableSpace =
-                axisRect.height() - labelPadding() - (titlePadding() * 2.0);
+                axisRect.width() - labelPadding() - (titlePadding() * 2.0);
         qreal minimumLabelWidth = ChartPresenter::textBoundingRect(axis()->labelsFont(),
                                                                    QStringLiteral("...")).width();
         qreal titleSpace = titleAvailableSpace - minimumLabelWidth;
+
+        if (axis()->type() == QAbstractAxis::AxisTypeColor) {
+            QColorAxis *colorAxis = static_cast<QColorAxis *>(axis());
+            titleSpace -= colorAxis->size() + colorScalePadding();
+        }
+
         title->setHtml(ChartPresenter::truncatedText(axis()->titleFont(), titleText, qreal(90.0),
                                                      titleSpace, gridRect.height(),
                                                      titleBoundingRect));
+
         title->setTextWidth(titleBoundingRect.height());
 
         titleBoundingRect = title->boundingRect();
@@ -135,6 +144,11 @@ void VerticalAxis::updateGeometry()
         title->setTransformOriginPoint(titleBoundingRect.center());
         title->setRotation(270);
         labelAvailableSpace -= titleBoundingRect.height();
+
+        if (axis()->type() == QAbstractAxis::AxisTypeColor) {
+            QColorAxis *colorAxis = static_cast<QColorAxis *>(axis());
+            labelAvailableSpace -= colorAxis->size() + colorScalePadding();
+        }
     }
 
     QList<QGraphicsItem *> lines = gridItems();
@@ -198,43 +212,70 @@ void VerticalAxis::updateGeometry()
         //ticks and label position
         QPointF labelPos;
         if (axis()->alignment() == Qt::AlignLeft) {
+
+            qreal tickStopX = axisRect.right();
+
+            if (axis()->type() == QAbstractAxis::AxisTypeColor) {
+                QColorAxis *colorAxis = static_cast<QColorAxis *>(axis());
+                QGraphicsPixmapItem *colorScale = colorScaleItem();
+
+                const qreal penWidth = axis()->linePen().widthF();
+                // penWidth / 2 is half of tick width
+                colorScale->setOffset(axisRect.right() - colorAxis->size() - colorScalePadding(),
+                                      layout[i] - penWidth / 2);
+                prepareColorScale(colorAxis->size(), gridRect.height() + penWidth);
+
+                tickStopX = axisRect.right() - colorAxis->size() - colorScalePadding();
+            }
+
             if (axis()->isReverse()) {
-                labelPos = QPointF(axisRect.right() - rect.width() + (widthDiff / 2.0)
-                                  - labelPadding(),
-                                  gridRect.top() + gridRect.bottom()
-                                  - layout[layout.size() - i - 1] - center.y());
-                tickItem->setLine(axisRect.right() - labelPadding(),
-                                  gridRect.top() + gridRect.bottom() - layout[i],
-                                  axisRect.right(),
+                labelPos = QPointF(tickStopX - rect.width() + (widthDiff / 2.0) - labelPadding(),
+                                   gridRect.top() + gridRect.bottom()
+                                           - layout[layout.size() - i - 1] - center.y());
+                tickItem->setLine(tickStopX - labelPadding(),
+                                  gridRect.top() + gridRect.bottom() - layout[i], tickStopX,
                                   gridRect.top() + gridRect.bottom() - layout[i]);
             } else {
-                labelPos = QPointF(axisRect.right() - rect.width() + (widthDiff / 2.0)
-                                  - labelPadding(),
-                                  layout[i] - center.y());
-                tickItem->setLine(axisRect.right() - labelPadding(), layout[i],
-                                  axisRect.right(), layout[i]);
+                labelPos = QPointF(tickStopX - rect.width() + (widthDiff / 2.0) - labelPadding(),
+                                   layout[i] - center.y());
+                tickItem->setLine(tickStopX - labelPadding(), layout[i], tickStopX, layout[i]);
             }
         } else if (axis()->alignment() == Qt::AlignRight) {
+            qreal tickStartX = axisRect.left();
+
+            if (axis()->type() == QAbstractAxis::AxisTypeColor) {
+                QColorAxis *colorAxis = static_cast<QColorAxis *>(axis());
+                QGraphicsPixmapItem *colorScale = colorScaleItem();
+
+                const qreal penWidth = axis()->linePen().widthF();
+                // penWidth / 2 is half of tick width
+                colorScale->setOffset(axisRect.x() + colorScalePadding(), layout[i] - penWidth / 2);
+                prepareColorScale(colorAxis->size(), gridRect.height() + penWidth);
+
+                tickStartX = axisRect.x() + colorScalePadding() + colorAxis->size();
+            }
+
+
             if (axis()->isReverse()) {
-                tickItem->setLine(axisRect.left(),
-                                  gridRect.top() + gridRect.bottom() - layout[i],
-                                  axisRect.left() + labelPadding(),
+                tickItem->setLine(tickStartX, gridRect.top() + gridRect.bottom() - layout[i],
+                                  tickStartX + labelPadding(),
                                   gridRect.top() + gridRect.bottom() - layout[i]);
-                labelPos = QPointF(axisRect.left() + labelPadding() - (widthDiff / 2.0),
-                                  gridRect.top() + gridRect.bottom()
-                                  - layout[layout.size() - i - 1] - center.y());
+                labelPos = QPointF(tickStartX + labelPadding() - (widthDiff / 2.0),
+                                   gridRect.top() + gridRect.bottom()
+                                           - layout[layout.size() - i - 1] - center.y());
             } else {
-                labelPos = QPointF(axisRect.left() + labelPadding() - (widthDiff / 2.0),
-                                  layout[i] - center.y());
-                tickItem->setLine(axisRect.left(), layout[i],
-                                  axisRect.left() + labelPadding(), layout[i]);
+
+                labelPos = QPointF(tickStartX + labelPadding() - (widthDiff / 2.0),
+                                   layout[i] - center.y());
+                tickItem->setLine(tickStartX, layout[i], tickStartX + labelPadding(), layout[i]);
             }
         }
 
         //label in between
         bool forceHide = false;
         bool labelOnValue = false;
-        if (intervalAxis() && (i + 1) != layout.size()) {
+        if (intervalAxis() && (i + 1) != layout.size()
+            && axis()->type() != QAbstractAxis::AxisTypeColor) {
             qreal lowerBound;
             qreal upperBound;
             if (axis()->isReverse()) {

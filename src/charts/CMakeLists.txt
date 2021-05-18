@@ -20,6 +20,9 @@ qt_internal_add_module(Charts
         axis/categoryaxis/polarchartcategoryaxisangular.cpp axis/categoryaxis/polarchartcategoryaxisangular_p.h
         axis/categoryaxis/polarchartcategoryaxisradial.cpp axis/categoryaxis/polarchartcategoryaxisradial_p.h
         axis/categoryaxis/qcategoryaxis.cpp axis/categoryaxis/qcategoryaxis.h axis/categoryaxis/qcategoryaxis_p.h
+        axis/coloraxis/qcoloraxis.cpp axis/coloraxis/qcoloraxis.h axis/coloraxis/qcoloraxis_p.h
+        axis/coloraxis/chartcoloraxisy.cpp axis/coloraxis/chartcoloraxisy_p.h
+        axis/coloraxis/chartcoloraxisx.cpp axis/coloraxis/chartcoloraxisx_p.h
         axis/chartaxiselement.cpp axis/chartaxiselement_p.h
         axis/editableaxislabel.cpp axis/editableaxislabel_p.h
         axis/horizontalaxis.cpp axis/horizontalaxis_p.h
@@ -96,6 +99,7 @@ qt_internal_add_module(Charts
         axis
         axis/barcategoryaxis
         axis/categoryaxis
+        axis/coloraxis
         axis/logvalueaxis
         axis/valueaxis
         domain

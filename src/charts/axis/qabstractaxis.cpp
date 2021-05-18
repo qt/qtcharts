@@ -71,6 +71,7 @@ QT_BEGIN_NAMESPACE
     \value AxisTypeCategory
     \value AxisTypeDateTime
     \value AxisTypeLogValue
+    \value AxisTypeColor
 */
 
 /*!

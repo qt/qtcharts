@@ -32,10 +32,12 @@
 #include <private/chartpresenter_p.h>
 #include <private/abstractchartlayout_p.h>
 #include <QtCharts/QCategoryAxis>
+#include <QtCharts/QColorAxis>
 #include <QtCore/QtMath>
 #include <QtCore/QDateTime>
 #include <QtCore/QRegularExpression>
 #include <QtGui/QTextDocument>
+#include <QPainter>
 #include <cmath>
 
 QT_BEGIN_NAMESPACE
@@ -66,6 +68,7 @@ ChartAxisElement::ChartAxisElement(QAbstractAxis *axis, QGraphicsItem *item, boo
       m_shades(new QGraphicsItemGroup(item)),
       m_labels(new QGraphicsItemGroup(item)),
       m_title(new QGraphicsTextItem(item)),
+      m_colorScale(nullptr),
       m_intervalAxis(intervalAxis)
 
 {
@@ -80,6 +83,12 @@ ChartAxisElement::ChartAxisElement(QAbstractAxis *axis, QGraphicsItem *item, boo
     m_minorGrid->setZValue(ChartPresenter::GridZValue);
     m_title->setZValue(ChartPresenter::GridZValue);
     m_title->document()->setDocumentMargin(ChartPresenter::textMargin());
+    if (m_axis->type() == QAbstractAxis::AxisTypeColor) {
+        m_colorScale = std::make_unique<QGraphicsPixmapItem>(new QGraphicsPixmapItem(item));
+        m_colorScale->setZValue(ChartPresenter::GridZValue);
+        m_colorScale->setVisible(false);
+    }
+
     handleVisibleChanged(axis->isVisible());
     connectSlots();
 
@@ -131,6 +140,12 @@ void ChartAxisElement::connectSlots()
                          SIGNAL(labelsPositionChanged(QCategoryAxis::AxisLabelsPosition)),
                          this, SLOT(handleLabelsPositionChanged()));
     }
+
+    if (axis()->type() == QAbstractAxis::AxisTypeColor) {
+        QColorAxis *colorAxis = static_cast<QColorAxis *>(axis());
+        QObject::connect(colorAxis, &QColorAxis::sizeChanged, this, &ChartAxisElement::handleColorScaleSizeChanged);
+        QObject::connect(colorAxis, &QColorAxis::gradientChanged, this, &ChartAxisElement::handleColorScaleGradientChanged);
+    }
 }
 
 void ChartAxisElement::handleArrowVisibleChanged(bool visible)
@@ -163,6 +178,17 @@ void ChartAxisElement::handleTruncateLabelsChanged()
 {
     QGraphicsLayoutItem::updateGeometry();
     presenter()->layout()->invalidate();
+}
+
+void ChartAxisElement::handleColorScaleSizeChanged()
+{
+    QGraphicsLayoutItem::updateGeometry();
+}
+
+void ChartAxisElement::handleColorScaleGradientChanged()
+{
+    const QPixmap &pixmap = m_colorScale->pixmap();
+    prepareColorScale(pixmap.width(), pixmap.height());
 }
 
 void ChartAxisElement::valueLabelEdited(qreal oldValue, qreal newValue)
@@ -416,6 +442,42 @@ QString ChartAxisElement::formatLabel(const QString &formatSpec, const QByteArra
     return retVal;
 }
 
+void ChartAxisElement::prepareColorScale(const qreal width, const qreal height)
+{
+    if (axis()->type() == QAbstractAxis::AxisTypeColor) {
+        QColorAxis *colorAxis = static_cast<QColorAxis *>(axis());
+
+        if (colorAxis->gradient() != QLinearGradient() && width != 0 && height != 0) {
+            m_colorScale->setVisible(true);
+
+            QImage image(width, height, QImage::Format_ARGB32);
+            QPainter painter(&image);
+
+            QLinearGradient gradient;
+            if (colorAxis->orientation() == Qt::Horizontal) {
+                gradient = QLinearGradient(QPointF(0, 0), QPointF(width, 0));
+                const auto &stops = colorAxis->gradient().stops();
+                for (const auto &stop : stops)
+                    gradient.setColorAt(stop.first, stop.second);
+            } else {
+                gradient = QLinearGradient(QPointF(0, 0), QPointF(0, height));
+                for (int i = colorAxis->gradient().stops().length() - 1; i >= 0; --i) {
+                    const auto &stop = colorAxis->gradient().stops()[i];
+                    gradient.setColorAt(1 - stop.first, stop.second);
+                }
+            }
+
+            painter.fillRect(image.rect(), gradient);
+
+            painter.setPen(axis()->linePen());
+            painter.drawRect(image.rect());
+
+            const QPixmap &pixmap = QPixmap::fromImage(image);
+            m_colorScale->setPixmap(pixmap);
+        }
+    }
+}
+
 QStringList ChartAxisElement::createValueLabels(qreal min, qreal max, int ticks,
                                                 qreal tickInterval, qreal tickAnchor,
                                                 QValueAxis::TickType tickType,
@@ -564,6 +626,21 @@ QStringList ChartAxisElement::createDateTimeLabels(qreal min, qreal max,int tick
     return labels;
 }
 
+QStringList ChartAxisElement::createColorLabels(qreal min, qreal max, int ticks) const
+{
+    QStringList labels;
+
+    if (max <= min || ticks < 1)
+        return labels;
+
+    int n = qMax(int(-qFloor(std::log10((max - min) / (ticks - 1)))), 0) + 1;
+    for (int i = 0; i < ticks; ++i) {
+        qreal value = min + (i * (max - min) / (ticks - 1));
+        labels << presenter()->numberToString(value, 'f', n);
+    }
+
+    return labels;
+}
 
 bool ChartAxisElement::labelsEditable() const
 {

@@ -78,6 +78,8 @@ public:
     bool isMarkerSizeDefault();
     void setMarkerSize(qreal markerSize);
 
+    QList<qreal> colorByData() const;
+
 Q_SIGNALS:
     void seriesUpdated();
 
@@ -100,6 +102,7 @@ protected:
     bool m_markerSizeDefault = true;
 
     QHash<int, QHash<QXYSeries::PointConfiguration, QVariant>> m_pointsConfiguration;
+    QList<qreal> m_colorByData;
 
 private:
     Q_DECLARE_PUBLIC(QXYSeries)

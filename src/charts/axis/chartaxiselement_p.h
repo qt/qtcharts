@@ -85,6 +85,7 @@ public:
     } // Modifiable reference
     inline qreal labelPadding() const { return qreal(4.0); }
     inline qreal titlePadding() const { return qreal(2.0); }
+    inline qreal colorScalePadding() const { return qreal { 8.0 }; }
     void setLabels(const QStringList &labels) { m_labelsList = labels; }
     QStringList labels() const { return m_labelsList; }
 
@@ -108,6 +109,7 @@ public:
     QStringList createLogValueLabels(qreal min, qreal max, qreal base, int ticks,
                                      const QString &format) const;
     QStringList createDateTimeLabels(qreal max, qreal min, int ticks, const QString &format) const;
+    QStringList createColorLabels(qreal min, qreal max, int ticks) const;
 
     // from QGraphicsLayoutItem
     QRectF boundingRect() const override
@@ -134,12 +136,15 @@ protected:
     QList<QGraphicsItem *> arrowItems() { return m_arrow->childItems(); }
     QList<QGraphicsItem *> minorArrowItems() { return m_minorArrow->childItems(); }
     QGraphicsTextItem *titleItem() const { return m_title.data(); }
+    QGraphicsPixmapItem *colorScaleItem() const { return m_colorScale.get(); }
     QGraphicsItemGroup *gridGroup() { return m_grid.data(); }
     QGraphicsItemGroup *minorGridGroup() { return m_minorGrid.data(); }
     QGraphicsItemGroup *labelGroup() { return m_labels.data(); }
     QGraphicsItemGroup *shadeGroup() { return m_shades.data(); }
     QGraphicsItemGroup *arrowGroup() { return m_arrow.data(); }
     QGraphicsItemGroup *minorArrowGroup() { return m_minorArrow.data(); }
+
+    void prepareColorScale(const qreal width, const qreal height);
 
 public Q_SLOTS:
     void handleVisibleChanged(bool visible);
@@ -168,6 +173,8 @@ public Q_SLOTS:
     void handleMinorGridVisibleChanged(bool visible);
     void handleLabelsPositionChanged();
     void handleTruncateLabelsChanged();
+    void handleColorScaleSizeChanged();
+    void handleColorScaleGradientChanged();
     void valueLabelEdited(qreal oldValue, qreal newValue);
     void dateTimeLabelEdited(const QDateTime &oldTime, const QDateTime &newTime);
 
@@ -193,6 +200,7 @@ private:
     QScopedPointer<QGraphicsItemGroup> m_shades;
     QScopedPointer<QGraphicsItemGroup> m_labels;
     QScopedPointer<QGraphicsTextItem> m_title;
+    std::unique_ptr<QGraphicsPixmapItem> m_colorScale;
     bool m_intervalAxis;
     bool m_labelsEditable = false;
 };

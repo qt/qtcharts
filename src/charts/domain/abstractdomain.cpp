@@ -210,16 +210,26 @@ qreal AbstractDomain::niceNumber(qreal x, bool ceiling)
 bool AbstractDomain::attachAxis(QAbstractAxis *axis)
 {
     if (axis->orientation() == Qt::Vertical) {
-        QObject::connect(axis->d_ptr.data(), SIGNAL(rangeChanged(qreal,qreal)), this, SLOT(handleVerticalAxisRangeChanged(qreal,qreal)));
-        QObject::connect(this, SIGNAL(rangeVerticalChanged(qreal,qreal)), axis->d_ptr.data(), SLOT(handleRangeChanged(qreal,qreal)));
+        // Color axis isn't connected to range-related slots/signals as it doesn't need
+        // geometry domain and it doesn't need to handle zooming or scrolling.
+        if (axis->type() != QAbstractAxis::AxisTypeColor) {
+            QObject::connect(axis->d_ptr.data(), SIGNAL(rangeChanged(qreal, qreal)), this,
+                             SLOT(handleVerticalAxisRangeChanged(qreal, qreal)));
+            QObject::connect(this, SIGNAL(rangeVerticalChanged(qreal, qreal)), axis->d_ptr.data(),
+                             SLOT(handleRangeChanged(qreal, qreal)));
+        }
         QObject::connect(axis, &QAbstractAxis::reverseChanged,
                          this, &AbstractDomain::handleReverseYChanged);
         m_reverseY = axis->isReverse();
     }
 
     if (axis->orientation() == Qt::Horizontal) {
-        QObject::connect(axis->d_ptr.data(), SIGNAL(rangeChanged(qreal,qreal)), this, SLOT(handleHorizontalAxisRangeChanged(qreal,qreal)));
-        QObject::connect(this, SIGNAL(rangeHorizontalChanged(qreal,qreal)), axis->d_ptr.data(), SLOT(handleRangeChanged(qreal,qreal)));
+        if (axis->type() != QAbstractAxis::AxisTypeColor) {
+            QObject::connect(axis->d_ptr.data(), SIGNAL(rangeChanged(qreal, qreal)), this,
+                             SLOT(handleHorizontalAxisRangeChanged(qreal, qreal)));
+            QObject::connect(this, SIGNAL(rangeHorizontalChanged(qreal, qreal)), axis->d_ptr.data(),
+                             SLOT(handleRangeChanged(qreal, qreal)));
+        }
         QObject::connect(axis, &QAbstractAxis::reverseChanged,
                          this, &AbstractDomain::handleReverseXChanged);
         m_reverseX = axis->isReverse();

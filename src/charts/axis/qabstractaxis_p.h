@@ -141,6 +141,8 @@ private:
     bool m_reverse = false;
 
     Q_DECLARE_PUBLIC(QAbstractAxis);
+    friend class QAbstractAxis;
+    friend class QColorAxisPrivate;
     friend class ChartDataSet;
     friend class ChartPresenter;
 };

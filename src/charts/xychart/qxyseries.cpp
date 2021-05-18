@@ -28,6 +28,7 @@
 ****************************************************************************/
 
 #include <QtCharts/QXYSeries>
+#include <QtCharts/QColorAxis>
 #include <private/qxyseries_p.h>
 #include <private/abstractdomain_p.h>
 #include <QtCharts/QValueAxis>
@@ -36,6 +37,7 @@
 #include <private/charthelpers_p.h>
 #include <private/qchart_p.h>
 #include <QtGui/QPainter>
+#include <QtMath>
 
 QT_BEGIN_NAMESPACE
 
@@ -954,6 +956,82 @@ void QXYSeries::sizeBy(const QList<qreal> &sourceData, const qreal minSize, cons
             pointSize = qMax(minSize, percentage * maxSize);
         }
         setPointConfiguration(i, QXYSeries::PointConfiguration::Size, pointSize);
+    }
+}
+
+/*!
+    Sets the points' color according to a passed list of values. Values from
+    \a sourceData are sorted and mapped to the \a gradient.
+
+    If the series has a QColorAxis attached, then a gradient from the axis
+    is going to be used.
+
+    \sa setPointConfiguration(), pointConfiguration(), QColorAxis
+    \since 6.2
+*/
+void QXYSeries::colorBy(const QList<qreal> &sourceData, const QLinearGradient &gradient)
+{
+    Q_D(QXYSeries);
+
+    d->m_colorByData = sourceData;
+    if (d->m_colorByData.isEmpty())
+        return;
+
+    const qreal imgSize = 100.0;
+
+    qreal min = std::numeric_limits<qreal>::max();
+    qreal max = std::numeric_limits<qreal>::min();
+    for (const auto &p : sourceData) {
+        min = qMin(min, p);
+        max = qMax(max, p);
+    }
+
+    qreal range = max - min;
+
+    QLinearGradient usedGradient = gradient;
+
+    // Gradient will be taked from the first attached color axis.
+    // If there are more color axis, they will have just changed range.
+    bool axisFound = false;
+    const auto axes = attachedAxes();
+    for (const auto &axis : axes) {
+        if (axis->type() == QAbstractAxis::AxisTypeColor) {
+            QColorAxis *colorAxis = static_cast<QColorAxis *>(axis);
+            if (!axisFound) {
+                usedGradient = QLinearGradient(QPointF(0,0), QPointF(0, imgSize));
+                const auto stops = colorAxis->gradient().stops();
+                for (const auto &stop : stops)
+                    usedGradient.setColorAt(stop.first, stop.second);
+
+                if (!colorAxis->autoRange()) {
+                    min = colorAxis->min();
+                    max = colorAxis->max();
+                    range = max - min;
+                }
+
+                axisFound = true;
+            }
+
+            if (colorAxis->autoRange())
+                colorAxis->setRange(min, max);
+        }
+    }
+
+    QImage image(imgSize, imgSize, QImage::Format_ARGB32);
+    QPainter painter(&image);
+    painter.fillRect(image.rect(), usedGradient);
+
+    // To ensure that negative values will be well handled, distance from min to 0
+    // will be added to min and every single value. This will move entire values
+    // list to positive only values.
+    const qreal diff = min < 0 ? qAbs(min) : 0;
+    min += diff;
+
+    for (int i = 0; i < sourceData.size() && i < d->m_points.size(); ++i) {
+        const qreal startValue = qMax(0.0, sourceData.at(i) + diff - min);
+        const qreal percentage = startValue / range;
+        QColor color = image.pixelColor(0, qMin(percentage * imgSize, imgSize - 1));
+        setPointConfiguration(i, QXYSeries::PointConfiguration::Color, color);
     }
 }
 
@@ -1885,6 +1963,11 @@ bool QXYSeriesPrivate::isMarkerSizeDefault()
 void QXYSeriesPrivate::setMarkerSize(qreal markerSize)
 {
     m_markerSize = markerSize;
+}
+
+QList<qreal> QXYSeriesPrivate::colorByData() const
+{
+    return m_colorByData;
 }
 
 QT_END_NAMESPACE

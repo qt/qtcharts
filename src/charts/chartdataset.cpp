@@ -35,6 +35,7 @@
 #include <QtCharts/QBarCategoryAxis>
 #include <private/qvalueaxis_p.h>
 #include <QtCharts/QCategoryAxis>
+#include <QtCharts/QColorAxis>
 #include <private/qabstractseries_p.h>
 #include <QtCharts/QAbstractBarSeries>
 #include <QtCharts/QStackedBarSeries>
@@ -365,6 +366,9 @@ void ChartDataSet::createAxes(QAbstractAxis::AxisTypes type, Qt::Orientation ori
         case QAbstractAxis::AxisTypeCategory:
         axis = new QCategoryAxis(this);
         break;
+        case QAbstractAxis::AxisTypeColor:
+        axis = new QColorAxis(this);
+        break;
 #if QT_CONFIG(charts_datetime_axis)
         case QAbstractAxis::AxisTypeDateTime:
         axis = new QDateTimeAxis(this);
@@ -575,6 +579,7 @@ AbstractDomain::DomainType ChartDataSet::selectDomain(const QList<QAbstractAxis 
         case QAbstractAxis::AxisTypeValue:
         case QAbstractAxis::AxisTypeBarCategory:
         case QAbstractAxis::AxisTypeCategory:
+        case QAbstractAxis::AxisTypeColor:
         case QAbstractAxis::AxisTypeDateTime:
             if (axis->orientation() == Qt::Horizontal)
                 horizontal |= ValueType;
