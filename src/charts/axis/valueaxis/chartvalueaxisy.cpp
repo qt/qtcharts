@@ -89,7 +89,7 @@ QList<qreal> ChartValueAxisY::calculateLayout() const
 
         QList<qreal> points;
         const qreal bottomPos = gridRect.bottom();
-        while (value <= maxValue || qFuzzyCompare(value, maxValue)) {
+        while (value <= maxValue) {
             points << (value - minValue) * -deltaY + bottomPos;
             value += interval;
         }

@@ -91,7 +91,7 @@ QList<qreal> ChartValueAxisX::calculateLayout() const
 
         QList<qreal> points;
         const qreal leftPos = gridRect.left();
-        while (value <= maxValue || qFuzzyCompare(value, maxValue)) {
+        while (value <= maxValue) {
             points << (value - minValue) * deltaX + leftPos;
             value += interval;
         }

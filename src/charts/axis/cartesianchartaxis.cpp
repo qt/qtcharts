@@ -155,7 +155,7 @@ void CartesianChartAxis::updateMinorTickItems()
 
             // Calculate the points on axis value space. Conversion to graphical points
             // will be done on axis specific geometry update function
-            while (minorTick <= max || qFuzzyCompare(minorTick, max)) {
+            while (minorTick <= max) {
                 if (minorCounter < _minorTickCount) {
                     expectedCount++;
                     minorCounter++;
@@ -381,7 +381,7 @@ void CartesianChartAxis::updateLabelsValues(QValueAxis *axis)
             value = value + std::ceil((min() - value) / axis->tickInterval()) * axis->tickInterval();
 
         int i = axis->isReverse() ? labelItems().count()-1 : 0;
-        while (value <= max() || qFuzzyCompare(value, max())) {
+        while (value <= max()) {
             static_cast<ValueAxisLabel *>(labelItems().at(i))->setValue(value);
             value += axis->tickInterval();
             i += axis->isReverse() ? -1 : 1;

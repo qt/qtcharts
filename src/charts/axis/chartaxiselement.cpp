@@ -436,7 +436,7 @@ QStringList ChartAxisElement::createValueLabels(qreal min, qreal max, int ticks,
             else
                 value = value + std::ceil((min - value) / tickInterval) * tickInterval;
 
-            while (value <= max || qFuzzyCompare(value, max)) {
+            while (value <= max) {
                 labels << presenter()->numberToString(value, 'f', n);
                 value += tickInterval;
             }
@@ -478,7 +478,7 @@ QStringList ChartAxisElement::createValueLabels(qreal min, qreal max, int ticks,
             else
                 value = value + std::ceil((min - value) / tickInterval) * tickInterval;
 
-            while (value <= max || qFuzzyCompare(value, max)) {
+            while (value <= max) {
                 labels << formatLabel(formatSpec, array, value, precision, preStr, postStr);
                 value += tickInterval;
             }
