@@ -381,7 +381,7 @@ void PolarChartAxisRadial::updateMinorTickGeometry()
 
         minorTickCount = logValueAxis->minorTickCount();
         if (minorTickCount < 0)
-            minorTickCount = qMax(int(qFloor(base) - 2.0), 0);
+            minorTickCount = qMax(qFloor(base) - 2, 0);
 
         // Two "virtual" ticks are required to make sure that all minor ticks
         // are displayed properly (even for the partially visible segments of
@@ -472,7 +472,7 @@ void PolarChartAxisRadial::updateMinorTickItems()
 
         int minorTickCount = logValueAxis->minorTickCount();
         if (minorTickCount < 0)
-            minorTickCount = qMax(int(qFloor(logValueAxis->base()) - 2.0), 0);
+            minorTickCount = qMax(qFloor(logValueAxis->base()) - 2, 0);
 
         expectedCount = minorTickCount * (logValueAxis->tickCount() + 1);
         expectedCount = qMax(expectedCount, logValueAxis->minorTickCount());

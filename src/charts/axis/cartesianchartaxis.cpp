@@ -174,7 +174,7 @@ void CartesianChartAxis::updateMinorTickItems()
 
         int minorTickCount = logValueAxis->minorTickCount();
         if (minorTickCount < 0)
-            minorTickCount = qMax(int(qFloor(logValueAxis->base()) - 2.0), 0);
+            minorTickCount = qMax(qFloor(logValueAxis->base()) - 2, 0);
 
         expectedCount = minorTickCount * (logValueAxis->tickCount() + 1);
         expectedCount = qMax(expectedCount, logValueAxis->minorTickCount());

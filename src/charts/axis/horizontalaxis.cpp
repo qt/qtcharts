@@ -367,7 +367,7 @@ void HorizontalAxis::updateMinorTickGeometry()
 
         minorTickCount = logValueAxis->minorTickCount();
         if (minorTickCount < 0)
-            minorTickCount = qMax(int(qFloor(base) - 2.0), 0);
+            minorTickCount = qMax(qFloor(base) - 2, 0);
 
         // Two "virtual" ticks are required to make sure that all minor ticks
         // are displayed properly (even for the partially visible segments of
