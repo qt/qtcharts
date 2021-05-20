@@ -132,15 +132,16 @@ void CartesianChartAxis::updateMinorTickItems()
             expectedCount = qMax(expectedCount, 0);
         } else {
             const qreal interval = valueAxis->tickInterval();
-            qreal firstMajorTick = valueAxis->tickAnchor();
+            const qreal anchor = valueAxis->tickAnchor();
             const qreal max = valueAxis->max();
             const qreal min = valueAxis->min();
             const int _minorTickCount = valueAxis->minorTickCount();
 
-            if (min < firstMajorTick)
-                firstMajorTick = firstMajorTick - std::ceil((firstMajorTick - min) / interval) * interval;
-            else
-                firstMajorTick = firstMajorTick + std::floor((min - firstMajorTick) / interval) * interval;
+            // Find the closest major tick <= the min of the range, even if it's not drawn!
+            // This is where we'll start counting minor ticks from, because minor ticks
+            // might need to be drawn even before the first major tick.
+            const qreal ticksFromAnchor = (anchor - min) / interval;
+            const qreal firstMajorTick = anchor - std::ceil(ticksFromAnchor) * interval;
 
             const qreal deltaMinor = interval / qreal(_minorTickCount + 1);
             qreal minorTick = firstMajorTick + deltaMinor;
@@ -374,16 +375,16 @@ void CartesianChartAxis::updateLabelsValues(QValueAxis *axis)
             static_cast<ValueAxisLabel *>(labelItems().at(i))->setValue(value);
         }
     } else {
-        qreal value = axis->tickAnchor();
-        if (value > min())
-            value = value - std::floor((value - min()) / axis->tickInterval()) * axis->tickInterval();
-        else
-            value = value + std::ceil((min() - value) / axis->tickInterval()) * axis->tickInterval();
+        const qreal anchor = axis->tickAnchor();
+        const qreal interval = axis->tickInterval();
+        const qreal ticksFromAnchor = (anchor - min()) / interval;
+        const qreal firstMajorTick = anchor - std::floor(ticksFromAnchor) * interval;
 
         int i = axis->isReverse() ? labelItems().count()-1 : 0;
+        qreal value = firstMajorTick;
         while (value <= max()) {
             static_cast<ValueAxisLabel *>(labelItems().at(i))->setValue(value);
-            value += axis->tickInterval();
+            value += interval;
             i += axis->isReverse() ? -1 : 1;
         }
     }

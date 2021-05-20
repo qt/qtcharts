@@ -430,12 +430,10 @@ QStringList ChartAxisElement::createValueLabels(qreal min, qreal max, int ticks,
                 labels << presenter()->numberToString(value, 'f', n);
             }
         } else {
-            qreal value = tickAnchor;
-            if (value > min)
-                value = value - std::floor((value - min) / tickInterval) * tickInterval;
-            else
-                value = value + std::ceil((min - value) / tickInterval) * tickInterval;
+            const qreal ticksFromAnchor = (tickAnchor - min) / tickInterval;
+            const qreal firstMajorTick = tickAnchor - std::floor(ticksFromAnchor) * tickInterval;
 
+            qreal value = firstMajorTick;
             while (value <= max) {
                 labels << presenter()->numberToString(value, 'f', n);
                 value += tickInterval;
@@ -472,12 +470,10 @@ QStringList ChartAxisElement::createValueLabels(qreal min, qreal max, int ticks,
                 labels << formatLabel(formatSpec, array, value, precision, preStr, postStr);
             }
         } else {
-            qreal value = tickAnchor;
-            if (value > min)
-                value = value - std::floor((value - min) / tickInterval) * tickInterval;
-            else
-                value = value + std::ceil((min - value) / tickInterval) * tickInterval;
+            const qreal ticksFromAnchor = (tickAnchor - min) / tickInterval;
+            const qreal firstMajorTick = tickAnchor - std::floor(ticksFromAnchor) * tickInterval;
 
+            qreal value = firstMajorTick;
             while (value <= max) {
                 labels << formatLabel(formatSpec, array, value, precision, preStr, postStr);
                 value += tickInterval;

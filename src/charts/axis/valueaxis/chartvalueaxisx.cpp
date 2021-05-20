@@ -78,19 +78,17 @@ QList<qreal> ChartValueAxisX::calculateLayout() const
         const qreal anchor = m_axis->tickAnchor();
         const qreal maxValue = max();
         const qreal minValue = min();
-        qreal value;
 
-        // Find the first major tick right after the min of range
-        if (anchor > minValue)
-            value = anchor - std::floor((anchor - minValue) / interval) * interval;
-        else
-            value = anchor + std::ceil((minValue - anchor) / interval) * interval;
+        // Find the first major tick right after the min of the range
+        const qreal ticksFromAnchor = (anchor - minValue) / interval;
+        const qreal firstMajorTick = anchor - std::floor(ticksFromAnchor) * interval;
 
         const QRectF &gridRect = gridGeometry();
         const qreal deltaX = gridRect.width() / (maxValue - minValue);
 
         QList<qreal> points;
         const qreal leftPos = gridRect.left();
+        qreal value = firstMajorTick;
         while (value <= maxValue) {
             points << (value - minValue) * deltaX + leftPos;
             value += interval;
