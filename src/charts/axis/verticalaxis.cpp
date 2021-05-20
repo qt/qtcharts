@@ -493,10 +493,10 @@ void VerticalAxis::updateMinorTickGeometry()
 
                 qreal minorGridLineItemY = 0.0;
                 if (axis()->isReverse()) {
-                    minorGridLineItemY = qFloor(gridGeometry().top() + gridGeometry().bottom()
-                                                - layout.at(i) + minorTickSpacing);
+                    minorGridLineItemY = std::floor(gridGeometry().top() + gridGeometry().bottom()
+                                                    - layout.at(i) + minorTickSpacing);
                 } else {
-                    minorGridLineItemY = qCeil(layout.at(i) - minorTickSpacing);
+                    minorGridLineItemY = std::ceil(layout.at(i) - minorTickSpacing);
                 }
 
                 qreal minorArrowLineItemX1;

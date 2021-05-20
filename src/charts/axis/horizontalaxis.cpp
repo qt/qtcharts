@@ -478,10 +478,10 @@ void HorizontalAxis::updateMinorTickGeometry()
 
                 qreal minorGridLineItemX = 0.0;
                 if (axis()->isReverse()) {
-                    minorGridLineItemX = qFloor(gridGeometry().left() + gridGeometry().right()
-                                                - layout.at(i) + minorTickSpacing);
+                    minorGridLineItemX = std::floor(gridGeometry().left() + gridGeometry().right()
+                                                    - layout.at(i) + minorTickSpacing);
                 } else {
-                    minorGridLineItemX = qCeil(layout.at(i) - minorTickSpacing);
+                    minorGridLineItemX = std::ceil(layout.at(i) - minorTickSpacing);
                 }
 
                 qreal minorArrowLineItemY1;

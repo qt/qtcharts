@@ -58,7 +58,7 @@ QList<qreal> PolarChartLogValueAxisRadial::calculateLayout() const
     const qreal logMin = std::log10(logValueAxis->min()) / std::log10(logValueAxis->base());
     const qreal innerEdge = logMin < logMax ? logMin : logMax;
     const qreal delta = (axisGeometry().width() / 2.0) / qAbs(logMax - logMin);
-    const qreal initialSpan = (qCeil(innerEdge) - innerEdge) * delta;
+    const qreal initialSpan = (std::ceil(innerEdge) - innerEdge) * delta;
 
     for (int i = 0; i < logValueAxis->tickCount(); ++i)
         points[i] = initialSpan + (delta * qreal(i));

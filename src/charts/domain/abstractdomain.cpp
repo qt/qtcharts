@@ -179,8 +179,8 @@ void AbstractDomain::looseNiceNumbers(qreal &min, qreal &max, int &ticksCount)
 {
     qreal range = niceNumber(max - min, true); //range with ceiling
     qreal step = niceNumber(range / (ticksCount - 1), false);
-    min = qFloor(min / step);
-    max = qCeil(max / step);
+    min = std::floor(min / step);
+    max = std::ceil(max / step);
     ticksCount = int(max - min) + 1;
     min *= step;
     max *= step;

@@ -56,7 +56,7 @@ QList<qreal> ChartLogValueAxisX::calculateLayout() const
     const qreal logMax = std::log10(m_axis->max()) / std::log10(m_axis->base());
     const qreal logMin = std::log10(m_axis->min()) / std::log10(m_axis->base());
     const qreal leftEdge = qMin(logMin, logMax);
-    const qreal ceilEdge = qCeil(leftEdge);
+    const qreal ceilEdge = std::ceil(leftEdge);
 
     const QRectF &gridRect = gridGeometry();
     const qreal deltaX = gridRect.width() / qAbs(logMax - logMin);
@@ -101,7 +101,7 @@ QSizeF ChartLogValueAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint
 
     // If the high edge sits exactly on the tick value, add a tick
     qreal highValue = logMin < logMax ? logMax : logMin;
-    if (qFuzzyCompare(highValue, qreal(qCeil(highValue))))
+    if (qFuzzyCompare(highValue, std::ceil(highValue)))
         tickCount++;
 
     if (m_axis->max() > m_axis->min() && tickCount > 0)
