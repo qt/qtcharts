@@ -214,6 +214,35 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
+  \property QAbstractAxis::labelsTruncated
+  \brief Returns \c true if at least one label on the axis is truncated.
+
+  Returned value will not be accurate before the axis is shown.
+*/
+/*!
+  \qmlproperty int AbstractAxis::labelsTruncated
+  Returns \c true if at least one label on the axis is truncated.
+
+  Returned value will not be accurate before the axis is shown.
+  \readonly
+*/
+
+/*!
+  \property QAbstractAxis::truncateLabels
+  \brief The truncation state of labels.
+
+  Indicates whether labels should be truncated if there is no enough space for full text.
+  It is equal to \c true by default.
+*/
+/*!
+  \qmlproperty int AbstractAxis::truncateLabels
+  The truncation state of labels.
+
+  Indicates whether labels should be truncated if there is no enough space for full text.
+  It is equal to \c true by default.
+*/
+
+/*!
   \property QAbstractAxis::shadesVisible
   \brief The visibility of the axis shades.
 */
@@ -371,6 +400,20 @@ QT_BEGIN_NAMESPACE
   \fn void QAbstractAxis::labelsEditableChanged(bool editable)
   \since 5.13
   This signal is emitted when the \a editable state of the label changes.
+*/
+
+/*!
+  \fn void QAbstractAxis::labelsTruncatedChanged(bool labelsTruncated)
+  \since 6.2
+  This signal is emitted in two cases; when the axis changes from having one or more truncated
+  labels to having no truncated labels, and when the axis changes from having no truncated
+  labels to having one or more truncated labels. Current state is identified by \a labelsTruncated.
+*/
+
+/*!
+  \fn void QAbstractAxis::truncateLabelsChanged(bool truncateLabels)
+  \since 6.2
+  This signal is emitted when the truncation of the labels changes to \a truncateLabels.
 */
 
 /*!
@@ -987,6 +1030,24 @@ bool QAbstractAxis::labelsEditable() const
     return d_ptr->m_labelsEditable;
 }
 
+bool QAbstractAxis::labelsTruncated() const
+{
+    return d_ptr->m_labelsTruncated;
+}
+
+void QAbstractAxis::setTruncateLabels(bool truncateLabels)
+{
+    if (d_ptr->m_truncateLabels != truncateLabels) {
+        d_ptr->m_truncateLabels = truncateLabels;
+        emit truncateLabelsChanged(d_ptr->m_truncateLabels);
+    }
+}
+
+bool QAbstractAxis::truncateLabels() const
+{
+    return d_ptr->m_truncateLabels;
+}
+
 void QAbstractAxis::setReverse(bool reverse)
 {
     if (d_ptr->m_reverse != reverse && type() != QAbstractAxis::AxisTypeBarCategory) {
@@ -1032,6 +1093,15 @@ void QAbstractAxisPrivate::setAlignment( Qt::Alignment alignment)
         break;
     };
     m_alignment=alignment;
+}
+
+void QAbstractAxisPrivate::setLabelsTruncated(bool labelsTruncated)
+{
+    Q_Q(QAbstractAxis);
+    if (m_labelsTruncated != labelsTruncated) {
+        m_labelsTruncated = labelsTruncated;
+        emit q->labelsTruncatedChanged(m_labelsTruncated);
+    }
 }
 
 void QAbstractAxisPrivate::initializeTheme(ChartTheme* theme, bool forced)

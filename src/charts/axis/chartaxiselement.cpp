@@ -122,6 +122,8 @@ void ChartAxisElement::connectSlots()
                      this, SLOT(handleGridLineColorChanged(const QColor&)));
     QObject::connect(axis(), SIGNAL(minorGridLineColorChanged(const QColor&)),
                      this, SLOT(handleMinorGridLineColorChanged(const QColor&)));
+    QObject::connect(axis(), &QAbstractAxis::truncateLabelsChanged,
+                     this, &ChartAxisElement::handleTruncateLabelsChanged);
 
     if (axis()->type() == QAbstractAxis::AxisTypeCategory) {
         QCategoryAxis *categoryAxis = static_cast<QCategoryAxis *>(axis());
@@ -152,6 +154,12 @@ void ChartAxisElement::handleMinorGridVisibleChanged(bool visible)
 }
 
 void ChartAxisElement::handleLabelsPositionChanged()
+{
+    QGraphicsLayoutItem::updateGeometry();
+    presenter()->layout()->invalidate();
+}
+
+void ChartAxisElement::handleTruncateLabelsChanged()
 {
     QGraphicsLayoutItem::updateGeometry();
     presenter()->layout()->invalidate();

@@ -167,6 +167,7 @@ public Q_SLOTS:
     void handleMinorArrowVisibleChanged(bool visible);
     void handleMinorGridVisibleChanged(bool visible);
     void handleLabelsPositionChanged();
+    void handleTruncateLabelsChanged();
     void valueLabelEdited(qreal oldValue, qreal newValue);
     void dateTimeLabelEdited(const QDateTime &oldTime, const QDateTime &newTime);
 

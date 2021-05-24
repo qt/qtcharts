@@ -54,6 +54,8 @@ class Q_CHARTS_EXPORT QAbstractAxis : public QObject
     Q_PROPERTY(int labelsAngle READ labelsAngle WRITE setLabelsAngle NOTIFY labelsAngleChanged)
     Q_PROPERTY(QFont labelsFont READ labelsFont WRITE setLabelsFont NOTIFY labelsFontChanged)
     Q_PROPERTY(QColor labelsColor READ labelsColor WRITE setLabelsColor NOTIFY labelsColorChanged)
+    Q_PROPERTY(bool labelsTruncated READ labelsTruncated NOTIFY labelsTruncatedChanged REVISION(6, 2))
+    Q_PROPERTY(bool truncateLabels READ truncateLabels WRITE setTruncateLabels NOTIFY truncateLabelsChanged REVISION(6, 2))
     //grid
     Q_PROPERTY(bool gridVisible READ isGridLineVisible WRITE setGridLineVisible NOTIFY gridVisibleChanged)
     Q_PROPERTY(QPen gridLinePen READ gridLinePen WRITE setGridLinePen NOTIFY gridLinePenChanged)
@@ -177,6 +179,11 @@ public:
     void setLabelsEditable(bool editable = true);
     bool labelsEditable() const;
 
+    bool labelsTruncated() const;
+
+    void setTruncateLabels(bool truncateLabels = true);
+    bool truncateLabels() const;
+
 Q_SIGNALS:
     void visibleChanged(bool visible);
     void linePenChanged(const QPen &pen);
@@ -204,6 +211,8 @@ Q_SIGNALS:
     void shadesBrushChanged(const QBrush &brush);
     void reverseChanged(bool reverse);
     void labelsEditableChanged(bool editable);
+    Q_REVISION(6, 2) void labelsTruncatedChanged(bool labelsTruncated);
+    Q_REVISION(6, 2) void truncateLabelsChanged(bool truncateLabels);
 
 protected:
     QScopedPointer<QAbstractAxisPrivate> d_ptr;
@@ -212,6 +221,8 @@ protected:
     friend class ChartThemeManager;
     friend class AbstractDomain;
     friend class ChartAxisElement;
+    friend class HorizontalAxis;
+    friend class VerticalAxis;
     friend class XYChart;
 
 private:

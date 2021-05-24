@@ -32,6 +32,7 @@
 #include <QtCore/qmath.h>
 #include <private/chartpresenter_p.h>
 #include <private/verticalaxis_p.h>
+#include <private/qabstractaxis_p.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -139,6 +140,8 @@ void VerticalAxis::updateGeometry()
     QList<QGraphicsItem *> lines = gridItems();
     QList<QGraphicsItem *> shades = shadeItems();
 
+    bool labelsTruncated = false;
+
     for (int i = 0; i < layout.size(); ++i) {
         //items
         QGraphicsLineItem *gridItem = static_cast<QGraphicsLineItem *>(lines.at(i));
@@ -165,13 +168,24 @@ void VerticalAxis::updateGeometry()
         if (text.isEmpty()) {
             labelItem->setHtml(text);
         } else {
-            qreal labelHeight = (axisRect.height() / layout.count()) - (2 * labelPadding());
-            QString truncatedText =
-                    ChartPresenter::truncatedText(axis()->labelsFont(), text, axis()->labelsAngle(),
-                                                  labelAvailableSpace, labelHeight, boundingRect);
+            QString displayText = text;
+            if (axis()->truncateLabels()) {
+                qreal labelHeight = (axisRect.height() / layout.count()) - (2 * labelPadding());
+                // Replace digits with ellipsis "..." if number does not fit
+                displayText =
+                        ChartPresenter::truncatedText(axis()->labelsFont(), text, axis()->labelsAngle(),
+                                                      labelAvailableSpace, labelHeight, boundingRect);
+            } else {
+                boundingRect = ChartPresenter::textBoundingRect(axis()->labelsFont(),
+                                                                displayText, axis()->labelsAngle());
+            }
+
             labelItem->setTextWidth(ChartPresenter::textBoundingRect(axis()->labelsFont(),
-                                                                     truncatedText).width());
-            labelItem->setHtml(truncatedText);
+                                                                     displayText).width());
+
+            labelItem->setHtml(displayText);
+
+            labelsTruncated |= displayText != text;
         }
 
         //label transformation origin point
@@ -334,6 +348,8 @@ void VerticalAxis::updateGeometry()
         gridItem->setVisible(gridLineVisible);
         tickItem->setVisible(gridLineVisible);
     }
+
+    axis()->d_ptr->setLabelsTruncated(labelsTruncated);
 
     updateMinorTickGeometry();
 
