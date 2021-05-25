@@ -1182,7 +1182,7 @@ QList<QPointF> QXYSeries::points() const
 
 #if QT_DEPRECATED_SINCE(6, 0)
 /*!
-    \obsolete
+    \deprecated
 
     Use points() instead.
     Returns the points in the series.
