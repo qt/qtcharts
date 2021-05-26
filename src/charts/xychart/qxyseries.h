@@ -169,6 +169,8 @@ public:
     QHash<PointConfiguration, QVariant> pointConfiguration(const int index) const;
     QHash<int, QHash<PointConfiguration, QVariant>> pointsConfiguration() const;
 
+    void sizeBy(const QList<qreal> &sourceData, const qreal minSize, const qreal maxSize);
+
 Q_SIGNALS:
     void clicked(const QPointF &point);
     void hovered(const QPointF &point, bool state);

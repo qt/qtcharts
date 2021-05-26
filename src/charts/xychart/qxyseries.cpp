@@ -865,6 +865,8 @@ void QXYSeries::setPointConfiguration(const int index, const QXYSeries::PointCon
     if (conf.contains(key)) {
         if (conf[key] != value)
             callSignal = true;
+    } else {
+        callSignal = true;
     }
 
     conf[key] = value;
@@ -916,6 +918,43 @@ QHash<int, QHash<QXYSeries::PointConfiguration, QVariant>> QXYSeries::pointsConf
 {
     Q_D(const QXYSeries);
     return d->m_pointsConfiguration;
+}
+
+/*!
+    Sets the points' sizes according to a passed list of values. Values from
+    \a sourceData are sorted and mapped to a point size which is between \a minSize
+    and \a maxSize.
+
+    \note If \a sourceData length is smaller than number of points in the series, then
+    size of the points at the end of the series will stay the same.
+    \sa setPointConfiguration(), pointConfiguration()
+    \since 6.2
+*/
+void QXYSeries::sizeBy(const QList<qreal> &sourceData, const qreal minSize, const qreal maxSize)
+{
+    Q_D(QXYSeries);
+
+    Q_ASSERT(minSize <= maxSize);
+    Q_ASSERT(minSize >= 0);
+
+    qreal min = std::numeric_limits<qreal>::max();
+    qreal max = -std::numeric_limits<qreal>::max();
+    for (const auto &p : sourceData) {
+        min = qMin(min, p);
+        max = qMax(max, p);
+    }
+
+    const qreal range = max - min;
+
+    for (int i = 0; i < sourceData.size() && i < d->m_points.size(); ++i) {
+        qreal pointSize = minSize;
+        if (range != 0) {
+            const qreal startValue = sourceData.at(i) - min;
+            const qreal percentage = startValue / range;
+            pointSize = qMax(minSize, percentage * maxSize);
+        }
+        setPointConfiguration(i, QXYSeries::PointConfiguration::Size, pointSize);
+    }
 }
 
 /*!
