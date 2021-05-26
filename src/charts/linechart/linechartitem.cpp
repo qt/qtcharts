@@ -493,6 +493,7 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
         qreal ptSize = m_markerSize;
         for (int i = 0; i < m_linePoints.size(); ++i) {
             if (clipRect.contains(m_linePoints.at(i))) {
+                painter->save();
                 ptSize = m_markerSize;
                 bool drawPoint = m_pointsVisible && m_series->lightMarker().isNull();
                 if (m_pointsConfiguration.contains(i)) {
@@ -525,6 +526,8 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 
                 if (drawPoint)
                     painter->drawEllipse(m_linePoints.at(i), ptSize, ptSize);
+
+                painter->restore();
             }
         }
     }
