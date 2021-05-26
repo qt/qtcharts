@@ -91,6 +91,20 @@ public:
     QColor labelColor();
     void setLabelColor(QColor color);
 
+    QColor selectedColor() const;
+    void setSelectedColor(const QColor &color);
+
+    bool isBarSelected(int index) const;
+    void selectBar(int index);
+    void deselectBar(int index);
+    void setBarSelected(int index, bool selected);
+    void selectAllBars();
+    void deselectAllBars();
+    void selectBars(const QList<int> &indexes);
+    void deselectBars(const QList<int> &indexes);
+    void toggleSelection(const QList<int> &indexes);
+    QList<int> selectedBars() const;
+
 Q_SIGNALS:
     void clicked(int index);
     void hovered(bool status, int index);
@@ -105,10 +119,13 @@ Q_SIGNALS:
     void colorChanged(QColor color);
     void borderColorChanged(QColor color);
     void labelColorChanged(QColor color);
+    Q_REVISION(6, 2) void selectedColorChanged(const QColor &color);
 
     void valuesAdded(int index, int count);
     void valuesRemoved(int index, int count);
     void valueChanged(int index);
+
+    Q_REVISION(6, 2) void selectedBarsChanged(const QList<int> &indexes);
 
 private:
     QScopedPointer<QBarSetPrivate> d_ptr;

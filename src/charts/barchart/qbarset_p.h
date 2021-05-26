@@ -45,6 +45,7 @@
 #include <QtGui/QPen>
 #include <QtGui/QBrush>
 #include <QtGui/QFont>
+#include <QSet>
 
 QT_BEGIN_NAMESPACE
 
@@ -74,6 +75,9 @@ public:
     void setLabelsDirty(bool dirty) { m_labelsDirty = dirty; }
     bool labelsDirty() const { return m_labelsDirty; }
 
+    void setBarSelected(int index, bool selected, bool &callSignal);
+    bool isBarSelected(int index) const;
+
 Q_SIGNALS:
     void updatedBars();
     void valueChanged(int index);
@@ -84,10 +88,12 @@ public:
     QBarSet * const q_ptr;
     QString m_label;
     QList<QPointF> m_values;
+    QSet<int> m_selectedBars;
     QPen m_pen;
     QBrush m_brush;
     QBrush m_labelBrush;
     QFont m_labelFont;
+    QColor m_selectedColor;
     bool m_visualsDirty;
     bool m_labelsDirty;
 

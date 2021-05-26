@@ -1100,9 +1100,14 @@ void QXYSeries::remove(const QPointF &point)
 void QXYSeries::remove(int index)
 {
     Q_D(QXYSeries);
-    deselectPoint(index);
     d->m_points.remove(index);
+
+    bool callSignal = false;
+    d->setPointSelected(index, false, callSignal);
+
     emit pointRemoved(index);
+    if (callSignal)
+        emit selectedPointsChanged();
 }
 
 /*!
@@ -1116,15 +1121,29 @@ void QXYSeries::removePoints(int index, int count)
     // remove(qreal, qreal) overload in some implicit casting cases.
     Q_D(QXYSeries);
     if (count > 0) {
+        d->m_points.remove(index, count);
+
+        bool callSignal = false;
         if (!d->m_selectedPoints.empty()) {
-            QList<int> indexes;
-            for (int i = index; i < index + count; ++i)
-                indexes << i;
-            deselectPoints(indexes);
+            QSet<int> selectedAfterRemoving;
+
+            for (const int &selectedPointIndex : qAsConst(d->m_selectedPoints)) {
+                if (selectedPointIndex < index) {
+                    selectedAfterRemoving << selectedPointIndex;
+                } else if (selectedPointIndex >= index + count) {
+                    selectedAfterRemoving << selectedPointIndex - count;
+                    callSignal = true;
+                } else {
+                    callSignal = true;
+                }
+            }
+
+            d->m_selectedPoints = selectedAfterRemoving;
         }
 
-        d->m_points.remove(index, count);
         emit pointsRemoved(index, count);
+        if (callSignal)
+            emit selectedPointsChanged();
     }
 }
 
@@ -1139,11 +1158,13 @@ void QXYSeries::insert(int index, const QPointF &point)
     if (isValidValue(point)) {
         index = qMax(0, qMin(index, d->m_points.size()));
 
+        d->m_points.insert(index, point);
+
+        bool callSignal = false;
         if (!d->m_selectedPoints.isEmpty()) {
             // if point was inserted we need to move already selected points by 1
             QSet<int> selectedAfterInsert;
-            bool callSignal = false;
-            for (const auto &value : d->m_selectedPoints) {
+            for (const auto &value : qAsConst(d->m_selectedPoints)) {
                 if (value >= index) {
                     selectedAfterInsert << value + 1;
                     callSignal = true;
@@ -1152,12 +1173,11 @@ void QXYSeries::insert(int index, const QPointF &point)
                 }
             }
             d->m_selectedPoints = selectedAfterInsert;
-            if (callSignal)
-                emit selectedPointsChanged();
         }
 
-        d->m_points.insert(index, point);
         emit pointAdded(index);
+        if (callSignal)
+            emit selectedPointsChanged();
     }
 }
 

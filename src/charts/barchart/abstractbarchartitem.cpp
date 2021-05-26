@@ -265,6 +265,7 @@ void AbstractBarChartItem::handleUpdatedBars()
 
         for (int set = 0; set < setCount; set++) {
             QBarSet *barSet = m_series->d_func()->barsetAt(set);
+
             QBarSetPrivate *barSetP = barSet->d_ptr.data();
             const bool setVisualsDirty = barSetP->visualsDirty();
             const bool setLabelsDirty = barSetP->labelsDirty();
@@ -277,7 +278,11 @@ void AbstractBarChartItem::handleUpdatedBars()
                 Bar *bar = bars.at(i);
                 if (seriesVisualsDirty || setVisualsDirty || bar->visualsDirty()) {
                     bar->setPen(barSetP->m_pen);
-                    bar->setBrush(barSetP->m_brush);
+                    if (barSet->isBarSelected(i) && barSetP->m_selectedColor.isValid())
+                        bar->setBrush(barSetP->m_selectedColor);
+                    else
+                        bar->setBrush(barSetP->m_brush);
+
                     bar->setVisualsDirty(false);
                     bar->update();
                 }

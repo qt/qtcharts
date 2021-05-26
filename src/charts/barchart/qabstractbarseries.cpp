@@ -971,6 +971,8 @@ bool QAbstractBarSeriesPrivate::append(QBarSet *set)
                      this, &QAbstractBarSeriesPrivate::handleSetValueAdd);
     QObject::connect(set->d_ptr.data(), &QBarSetPrivate::valueRemoved,
                      this, &QAbstractBarSeriesPrivate::handleSetValueRemove);
+    connect(set, &QBarSet::selectedBarsChanged,
+            this, &QAbstractBarSeriesPrivate::updatedBars);
 
     emit restructuredBars(); // this notifies barchartitem
     return true;
@@ -990,6 +992,8 @@ bool QAbstractBarSeriesPrivate::remove(QBarSet *set)
                         this, &QAbstractBarSeriesPrivate::handleSetValueAdd);
     QObject::disconnect(set->d_ptr.data(), &QBarSetPrivate::valueRemoved,
                         this, &QAbstractBarSeriesPrivate::handleSetValueRemove);
+    disconnect(set, &QBarSet::selectedBarsChanged,
+               this, &QAbstractBarSeriesPrivate::updatedBars);
 
     emit restructuredBars(); // this notifies barchartitem
     return true;
@@ -1014,6 +1018,8 @@ bool QAbstractBarSeriesPrivate::append(const QList<QBarSet *> &sets)
                          this, &QAbstractBarSeriesPrivate::handleSetValueAdd);
         QObject::connect(set->d_ptr.data(), &QBarSetPrivate::valueRemoved,
                          this, &QAbstractBarSeriesPrivate::handleSetValueRemove);
+        connect(set, &QBarSet::selectedBarsChanged,
+                this, &QAbstractBarSeriesPrivate::updatedBars);
     }
 
     emit restructuredBars(); // this notifies barchartitem
@@ -1042,6 +1048,8 @@ bool QAbstractBarSeriesPrivate::remove(const QList<QBarSet *> &sets)
                             this, &QAbstractBarSeriesPrivate::handleSetValueAdd);
         QObject::disconnect(set->d_ptr.data(), &QBarSetPrivate::valueRemoved,
                             this, &QAbstractBarSeriesPrivate::handleSetValueRemove);
+        disconnect(set, &QBarSet::selectedBarsChanged,
+                   this, &QAbstractBarSeriesPrivate::updatedBars);
     }
 
     emit restructuredBars();        // this notifies barchartitem
@@ -1063,6 +1071,8 @@ bool QAbstractBarSeriesPrivate::insert(int index, QBarSet *set)
                      this, &QAbstractBarSeriesPrivate::handleSetValueAdd);
     QObject::connect(set->d_ptr.data(), &QBarSetPrivate::valueRemoved,
                      this, &QAbstractBarSeriesPrivate::handleSetValueRemove);
+    disconnect(set, &QBarSet::selectedBarsChanged,
+               this, &QAbstractBarSeriesPrivate::updatedBars);
 
     emit restructuredBars();      // this notifies barchartitem
     return true;
