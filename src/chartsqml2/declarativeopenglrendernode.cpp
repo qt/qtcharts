@@ -331,7 +331,7 @@ void DeclarativeOpenGLRenderNode::renderGL(bool selection)
             }
             vbo->bind();
             if (data->dirty) {
-                vbo->allocate(data->array.constData(), data->array.count() * sizeof(GLfloat));
+                vbo->allocate(data->array.constData(), int(data->array.count() * sizeof(GLfloat)));
                 data->dirty = false;
             }
 
