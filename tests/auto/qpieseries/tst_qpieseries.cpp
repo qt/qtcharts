@@ -350,7 +350,7 @@ void tst_qpieseries::remove()
     QCOMPARE(removedSpy.count(), 1);
     QList<QPieSlice*> removed = qvariant_cast<QList<QPieSlice*> >(removedSpy.at(0).at(0));
     QCOMPARE(removed.count(), 1);
-    QCOMPARE(removed.first(), slice1);
+    QCOMPARE(static_cast<const void *>(removed.first()), static_cast<const void *>(slice1));
 
     // remove all
     m_series->clear();
@@ -360,8 +360,8 @@ void tst_qpieseries::remove()
     QCOMPARE(removedSpy.count(), 2);
     removed = qvariant_cast<QList<QPieSlice*> >(removedSpy.at(1).at(0));
     QCOMPARE(removed.count(), 2);
-    QCOMPARE(removed.first(), slice2);
-    QCOMPARE(removed.last(), slice3);
+    QCOMPARE(static_cast<const void *>(removed.first()), static_cast<const void *>(slice2));
+    QCOMPARE(static_cast<const void *>(removed.last()), static_cast<const void *>(slice3));
 
     // check that slices were actually destroyed
     TRY_COMPARE(spy1.count(), 1);
