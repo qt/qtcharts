@@ -67,7 +67,7 @@ public:
 
     virtual QRectF gridGeometry() const = 0;
     virtual void setGeometry(const QRectF &axis, const QRectF &grid) = 0;
-    virtual bool isEmpty() = 0;
+    virtual bool emptyAxis() const = 0;
 
     void setAnimation(AxisAnimation *animation) { m_animation = animation; }
     AxisAnimation *animation() const override { return m_animation; }

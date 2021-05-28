@@ -49,7 +49,7 @@ void PolarChartAxis::setGeometry(const QRectF &axis, const QRectF &grid)
     Q_UNUSED(grid);
     setAxisGeometry(axis);
 
-    if (isEmpty()) {
+    if (emptyAxis()) {
         prepareGeometryChange();
         return;
     }
@@ -103,7 +103,7 @@ void PolarChartAxis::updateLayout(const QList<qreal> &layout)
     }
 }
 
-bool PolarChartAxis::isEmpty()
+bool PolarChartAxis::emptyAxis() const
 {
     return !axisGeometry().isValid() || qFuzzyIsNull(min() - max());
 }

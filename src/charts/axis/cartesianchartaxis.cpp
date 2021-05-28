@@ -270,7 +270,7 @@ void CartesianChartAxis::updateLayout(const QList<qreal> &layout)
     }
 }
 
-bool CartesianChartAxis::isEmpty()
+bool CartesianChartAxis::emptyAxis() const
 {
     return axisGeometry().isEmpty()
            || gridGeometry().isEmpty()
@@ -282,7 +282,7 @@ void CartesianChartAxis::setGeometry(const QRectF &axis, const QRectF &grid)
     m_gridRect = grid;
     setAxisGeometry(axis);
 
-    if (isEmpty()) {
+    if (emptyAxis()) {
         prepareGeometryChange();
         return;
     }

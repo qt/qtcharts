@@ -58,7 +58,7 @@ public:
 
     void setGeometry(const QRectF &axis, const QRectF &grid) override;
     QRectF gridGeometry() const override { return m_gridRect; }
-    bool isEmpty() override;
+    bool emptyAxis() const override;
 
     QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const override;
 

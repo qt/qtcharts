@@ -311,7 +311,7 @@ void ChartAxisElement::handleRangeChanged(qreal min, qreal max)
     Q_UNUSED(min);
     Q_UNUSED(max);
 
-    if (!isEmpty()) {
+    if (!emptyAxis()) {
         const QList<qreal> layout = calculateLayout();
         updateLayout(layout);
         QSizeF before = effectiveSizeHint(Qt::PreferredSize);
@@ -335,7 +335,7 @@ void ChartAxisElement::handleReverseChanged(bool reverse)
     presenter()->layout()->invalidate();
 }
 
-bool ChartAxisElement::isEmpty()
+bool ChartAxisElement::emptyAxis() const
 {
     return axisGeometry().isEmpty()
            || gridGeometry().isEmpty()

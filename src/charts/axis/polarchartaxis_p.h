@@ -58,7 +58,7 @@ public:
 
 public: // from ChartAxisElement
     QRectF gridGeometry() const override;
-    bool isEmpty() override;
+    bool emptyAxis() const override;
 
 protected:
     void updateLayout(const QList<qreal> &layout) override;
