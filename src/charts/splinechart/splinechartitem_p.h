@@ -94,6 +94,7 @@ private:
     SplineAnimation *m_animation;
 
     bool m_pointLabelsVisible;
+    qreal m_markerSize;
     QString m_pointLabelsFormat;
     QFont m_pointLabelsFont;
     QColor m_pointLabelsColor;

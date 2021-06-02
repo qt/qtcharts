@@ -1583,6 +1583,45 @@ const QImage &QXYSeries::lightMarker() const
 }
 
 /*!
+    Sets the image used for drawing markers on selected series's points to \a selectedLightMarker.
+
+    The default value is QImage(), meaning usual QXYSeries::lightMarker() will be painted.
+
+    This is an equivalent for QXYSeries::setSelectedColor() if you prefer light markers over
+    normal points, but you still want to distinguish selected points.
+
+    \sa QXYSeries::lightMarker(), QXYSeries::selectedColor(), QXYSeries::setPointSelected()
+    \since 6.2
+*/
+void QXYSeries::setSelectedLightMarker(const QImage &selectedLightMarker)
+{
+    Q_D(QXYSeries);
+    if (d->m_selectedLightMarker == selectedLightMarker)
+        return;
+
+    d->m_selectedLightMarker = selectedLightMarker;
+    emit d->seriesUpdated();
+    emit selectedLightMarkerChanged(d->m_selectedLightMarker);
+}
+
+/*!
+    Returns the image used for drawing markers on selected series's points.
+
+    The default value is QImage(), meaning usual QXYSeries::lightMarker() will be painted.
+
+    This is an equivalent for QXYSeries::selectedColor() if you prefer light markers over
+    normal points, but you still want to distinguish selected points.
+
+    \sa QXYSeries::lightMarker(), QXYSeries::selectedColor(), QXYSeries::setPointSelected()
+    \since 6.2
+*/
+const QImage &QXYSeries::selectedLightMarker() const
+{
+    Q_D(const QXYSeries);
+    return d->m_selectedLightMarker;
+}
+
+/*!
     Sets the size of the marker used to render points in the series.
 
     The default size is 15.0.

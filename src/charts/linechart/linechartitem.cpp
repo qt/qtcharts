@@ -452,6 +452,7 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     // Draw markers if a marker has been set (set to QImage() to disable)
     if (!m_series->lightMarker().isNull()) {
         const QImage &marker = m_series->lightMarker();
+        const QImage &selectedMarker = m_series->selectedLightMarker();
         qreal markerHalfSize = m_markerSize / 2.0;
         pointLabelsOffset = markerHalfSize;
 
@@ -470,11 +471,16 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
                 }
             }
 
+            bool drawSelectedPoint = false;
+            if (m_series->isPointSelected(i)) {
+                drawPoint = true;
+                drawSelectedPoint = !selectedMarker.isNull();
+            }
             if (drawPoint) {
                 const QRectF rect(m_linePoints[i].x() - markerHalfSize,
                                   m_linePoints[i].y() - markerHalfSize,
                                   m_markerSize, m_markerSize);
-                painter->drawImage(rect, marker);
+                painter->drawImage(rect, drawSelectedPoint ? selectedMarker : marker);
             }
         }
     }
@@ -519,6 +525,11 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
                 }
 
                 if (m_series->isPointSelected(i)) {
+                    // Selected points are drawn regardless of m_pointsVisible settings and
+                    // custom point configuration. However, they are not drawn if light markers
+                    // are used. The reason of this is to avoid displaying selected point
+                    // over selected light marker.
+                    drawPoint = m_series->selectedLightMarker().isNull();
                     ptSize = ptSize * 1.5;
                     if (m_selectedColor.isValid())
                         painter->setBrush(m_selectedColor);

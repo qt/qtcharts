@@ -43,6 +43,7 @@ SplineChartItem::SplineChartItem(QSplineSeries *series, QGraphicsItem *item)
       m_pointsVisible(false),
       m_animation(0),
       m_pointLabelsVisible(false),
+      m_markerSize(series->markerSize()),
       m_pointLabelsFormat(series->pointLabelsFormat()),
       m_pointLabelsFont(series->pointLabelsFont()),
       m_pointLabelsColor(series->pointLabelsColor()),
@@ -67,6 +68,8 @@ SplineChartItem::SplineChartItem(QSplineSeries *series, QGraphicsItem *item)
     connect(series, &QXYSeries::pointLabelsColorChanged,
             this, &SplineChartItem::handleSeriesUpdated);
     connect(series, &QXYSeries::pointLabelsClippingChanged,
+            this, &SplineChartItem::handleSeriesUpdated);
+    connect(series, &QLineSeries::selectedPointsChanged,
             this, &SplineChartItem::handleSeriesUpdated);
     handleSeriesUpdated();
 }
@@ -446,6 +449,7 @@ void SplineChartItem::handleSeriesUpdated()
     m_pointPen.setWidthF(2 * m_pointPen.width());
     m_pointLabelsFormat = m_series->pointLabelsFormat();
     m_pointLabelsVisible = m_series->pointLabelsVisible();
+    m_markerSize = m_series->markerSize();
     m_pointLabelsFont = m_series->pointLabelsFont();
     m_pointLabelsColor = m_series->pointLabelsColor();
     bool labelClippingChanged = m_pointLabelsClipping != m_series->pointLabelsClipping();
@@ -504,15 +508,36 @@ void SplineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
     // Draw markers if a marker has been set (set to QImage() to disable)
     if (!m_series->lightMarker().isNull()) {
         const QImage &marker = m_series->lightMarker();
-        qreal markerSize = m_series->markerSize();
-        qreal markerHalfSize = m_series->markerSize() / 2.0;
+        const QImage &selectedMarker = m_series->selectedLightMarker();
+        qreal markerHalfSize = m_markerSize / 2.0;
         pointLabelsOffset = markerHalfSize;
 
-        for (const auto &point : qAsConst(m_points)) {
-            const QRectF rect(point.x() - markerHalfSize,
-                              point.y() - markerHalfSize,
-                              markerSize, markerSize);
-            painter->drawImage(rect, marker);
+        for (int i = 0; i < m_points.size(); ++i) {
+            // Documentation of light markers says that points visibility and
+            // light markers are independent features. Therefore m_pointsVisible
+            // is not used here as light markers are drawn if lightMarker is not null.
+            // However points visibility configuration can be still used here.
+            bool drawPoint = true;
+            if (m_pointsConfiguration.contains(i)) {
+                const auto &conf = m_pointsConfiguration[i];
+
+                if (conf.contains(QXYSeries::PointConfiguration::Visibility)) {
+                    drawPoint = m_pointsConfiguration[i][QXYSeries::PointConfiguration::Visibility]
+                                        .toBool();
+                }
+            }
+
+            bool drawSelectedPoint = false;
+            if (m_series->isPointSelected(i)) {
+                drawPoint = true;
+                drawSelectedPoint = !selectedMarker.isNull();
+            }
+            if (drawPoint) {
+                const QRectF rect(m_points[i].x() - markerHalfSize,
+                                  m_points[i].y() - markerHalfSize,
+                                  m_markerSize, m_markerSize);
+                painter->drawImage(rect, drawSelectedPoint ? selectedMarker : marker);
+            }
         }
     }
 

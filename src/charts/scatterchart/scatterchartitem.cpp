@@ -318,13 +318,35 @@ void ScatterChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
     // Draw markers if a marker has been set (set to QImage() to disable)
     if (!m_series->lightMarker().isNull()) {
         const QImage &marker = m_series->lightMarker();
-        qreal markerHalfSize = m_markerSize / 2.;
+        const QImage &selectedMarker = m_series->selectedLightMarker();
+        qreal markerHalfSize = m_markerSize / 2.0;
 
-        for (const auto &point : qAsConst(m_points)) {
-            const QRectF rect(point.x() - markerHalfSize,
-                              point.y() - markerHalfSize,
-                              m_markerSize, m_markerSize);
-            painter->drawImage(rect, marker);
+        for (int i = 0; i < m_points.size(); ++i) {
+            // Documentation of light markers says that points visibility and
+            // light markers are independent features. Therefore m_pointsVisible
+            // is not used here as light markers are drawn if lightMarker is not null.
+            // However points visibility configuration can be still used here.
+            bool drawPoint = true;
+            if (m_pointsConfiguration.contains(i)) {
+                const auto &conf = m_pointsConfiguration[i];
+
+                if (conf.contains(QXYSeries::PointConfiguration::Visibility)) {
+                    drawPoint = m_pointsConfiguration[i][QXYSeries::PointConfiguration::Visibility]
+                                        .toBool();
+                }
+            }
+
+            bool drawSelectedPoint = false;
+            if (m_series->isPointSelected(i)) {
+                drawPoint = true;
+                drawSelectedPoint = !selectedMarker.isNull();
+            }
+            if (drawPoint) {
+                const QRectF rect(m_points[i].x() - markerHalfSize,
+                                  m_points[i].y() - markerHalfSize,
+                                  m_markerSize, m_markerSize);
+                painter->drawImage(rect, drawSelectedPoint ? selectedMarker : marker);
+            }
         }
     }
 
