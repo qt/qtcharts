@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -30,49 +30,39 @@
 #include "mainwidget.h"
 #include <QtCharts/QChart>
 #include <QtCharts/QChartView>
-#include <QtWidgets/QPushButton>
-#include <QtWidgets/QLabel>
-#include <QtCore/QDebug>
 #include <QtCharts/QBarSet>
 #include <QtCharts/QBarSeries>
 #include <QtCharts/QLegend>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QFormLayout>
+#include <QtWidgets/QGroupBox>
+#include <QtWidgets/QCheckBox>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QDoubleSpinBox>
 
 QT_USE_NAMESPACE
 
 MainWidget::MainWidget(QWidget *parent) :
     QWidget(parent)
 {
-    // Create buttons for ui
-    m_buttonLayout = new QGridLayout();
-    QPushButton *detachLegendButton = new QPushButton("Toggle attached");
-    connect(detachLegendButton, &QPushButton::clicked, this, &MainWidget::toggleAttached);
-    m_buttonLayout->addWidget(detachLegendButton, 0, 0);
+    // Create chart view with the chart
+    m_chart = new QChart();
+    m_chartView = new QChartView(m_chart, this);
 
-    QPushButton *addSetButton = new QPushButton("add barset");
-    connect(addSetButton, &QPushButton::clicked, this, &MainWidget::addBarset);
-    m_buttonLayout->addWidget(addSetButton, 2, 0);
-    QPushButton *removeBarsetButton = new QPushButton("remove barset");
-    connect(removeBarsetButton, &QPushButton::clicked, this, &MainWidget::removeBarset);
-    m_buttonLayout->addWidget(removeBarsetButton, 3, 0);
+    m_chart->setTitle("Legend detach example");
 
-    QPushButton *alignButton = new QPushButton("Align (Bottom)");
-    connect(alignButton, &QPushButton::clicked, this, &MainWidget::setLegendAlignment);
-    m_buttonLayout->addWidget(alignButton, 4, 0);
+    createUi();
 
-    QPushButton *boldButton = new QPushButton("Toggle bold");
-    connect(boldButton, &QPushButton::clicked, this, &MainWidget::toggleBold);
-    m_buttonLayout->addWidget(boldButton, 8, 0);
-
-    QPushButton *italicButton = new QPushButton("Toggle italic");
-    connect(italicButton, &QPushButton::clicked, this, &MainWidget::toggleItalic);
-    m_buttonLayout->addWidget(italicButton, 9, 0);
-
-    m_legendPosX = new QDoubleSpinBox();
-    m_legendPosY = new QDoubleSpinBox();
-    m_legendWidth = new QDoubleSpinBox();
-    m_legendHeight = new QDoubleSpinBox();
-
+    connect(m_toggleAttachedButton, &QPushButton::clicked, this, &MainWidget::toggleAttached);
+    connect(m_interactiveButton, &QPushButton::clicked, this, &MainWidget::toggleInteractive);
+    connect(m_boldButton, &QPushButton::clicked, this, &MainWidget::toggleBold);
+    connect(m_italicButton, &QPushButton::clicked, this, &MainWidget::toggleItalic);
+    connect(m_addSetButton, &QPushButton::clicked, this, &MainWidget::addBarset);
+    connect(m_removeSetButton, &QPushButton::clicked, this, &MainWidget::removeBarset);
+    connect(m_alignmentButton, &QPushButton::clicked, this, &MainWidget::setLegendAlignment);
+    connect(m_fontSize,
+            static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+            this, &MainWidget::fontSizeChanged);
     connect(m_legendPosX,
             static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
             this, &MainWidget::updateLegendLayout);
@@ -86,38 +76,95 @@ MainWidget::MainWidget(QWidget *parent) :
             static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
             this, &MainWidget::updateLegendLayout);
 
+    QLegend *legend = m_chart->legend();
+    legend->setShowToolTips(true);
+    legend->setBrush(QBrush(QColor(128, 128, 128, 128)));
+    legend->setPen(QPen(QColor(192, 192, 192, 192)));
+//![5]
+    legend->setInteractive(true);
+//![5]
+
+//![4]
+    connect(legend, &QLegend::attachedToChartChanged, [legend, this](bool attachedToChart) {
+        m_toggleAttachedButton->setChecked(attachedToChart);
+        legend->setBackgroundVisible(!attachedToChart);
+        m_geometrySettings->setDisabled(attachedToChart);
+    });
+//![4]
+    connect(legend, &QGraphicsWidget::geometryChanged, this, &MainWidget::updateLegendSpinbox);
+
+    createSeries();
+    m_chart->createDefaultAxes();
+
+//![1]
+    m_chart->legend()->setVisible(true);
+    m_chart->legend()->setAlignment(Qt::AlignBottom);
+//![1]
+
+    m_chartView->setRenderHint(QPainter::Antialiasing);
+}
+
+void MainWidget::createUi()
+{
+    QLegend *legend = m_chart->legend();
+    // Create buttons for ui
+    QGridLayout *buttonLayout = new QGridLayout();
+    m_toggleAttachedButton = new QCheckBox("Attached");
+    m_toggleAttachedButton->setChecked(true);
+    buttonLayout->addWidget(m_toggleAttachedButton, 0, 0);
+
+    m_interactiveButton = new QCheckBox("Interactive");
+    m_interactiveButton->setChecked(true);
+    buttonLayout->addWidget(m_interactiveButton, 1, 0);
+
+    m_boldButton = new QCheckBox("Bold");
+    buttonLayout->addWidget(m_boldButton, 2, 0);
+
+    m_italicButton = new QCheckBox("Italic");
+    buttonLayout->addWidget(m_italicButton, 3, 0);
+
+    m_addSetButton = new QPushButton("Add Barset");
+    buttonLayout->addWidget(m_addSetButton, 4, 0);
+
+    m_removeSetButton = new QPushButton("Remove Barset");
+    buttonLayout->addWidget(m_removeSetButton, 5, 0);
+
+    m_alignmentButton = new QPushButton("Align (Bottom)");
+    buttonLayout->addWidget(m_alignmentButton, 6, 0);
+
+    buttonLayout->setRowStretch(7, 1);
+
+    m_legendPosX = new QDoubleSpinBox();
+    m_legendPosY = new QDoubleSpinBox();
+    m_legendWidth = new QDoubleSpinBox();
+    m_legendHeight = new QDoubleSpinBox();
+
     QFormLayout *legendLayout = new QFormLayout();
     legendLayout->addRow("HPos", m_legendPosX);
     legendLayout->addRow("VPos", m_legendPosY);
     legendLayout->addRow("Width", m_legendWidth);
     legendLayout->addRow("Height", m_legendHeight);
-    m_legendSettings = new QGroupBox("Detached legend");
-    m_legendSettings->setLayout(legendLayout);
-    m_buttonLayout->addWidget(m_legendSettings);
-    m_legendSettings->setVisible(false);
-
-    // Create chart view with the chart
-    m_chart = new QChart();
-    m_chartView = new QChartView(m_chart, this);
+    m_geometrySettings = new QGroupBox("Detached legend");
+    m_geometrySettings->setLayout(legendLayout);
+    buttonLayout->addWidget(m_geometrySettings, 8, 0);
+    m_geometrySettings->setDisabled(true);
 
     // Create spinbox to modify font size
     m_fontSize = new QDoubleSpinBox();
-    m_fontSize->setValue(m_chart->legend()->font().pointSizeF());
-    connect(m_fontSize,
-            static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
-            this, &MainWidget::fontSizeChanged);
+    QFont lfont = legend->font();
+    lfont.setPointSizeF(12.0);
+    legend->setFont(lfont);
+    m_fontSize->setValue(legend->font().pointSizeF());
 
     QFormLayout *fontLayout = new QFormLayout();
     fontLayout->addRow("Legend font size", m_fontSize);
 
     // Create layout for grid and detached legend
-    m_mainLayout = new QGridLayout();
-    m_mainLayout->addLayout(m_buttonLayout, 0, 0);
-    m_mainLayout->addLayout(fontLayout, 1, 0);
-    m_mainLayout->addWidget(m_chartView, 0, 1, 3, 1);
-    setLayout(m_mainLayout);
-
-    createSeries();
+    QGridLayout *mainLayout = new QGridLayout();
+    mainLayout->addLayout(buttonLayout, 0, 0);
+    mainLayout->addLayout(fontLayout, 1, 0);
+    mainLayout->addWidget(m_chartView, 0, 1, 3, 1);
+    setLayout(mainLayout);
 }
 
 void MainWidget::createSeries()
@@ -129,41 +176,22 @@ void MainWidget::createSeries()
     addBarset();
 
     m_chart->addSeries(m_series);
-    m_chart->setTitle("Legend detach example");
-    m_chart->createDefaultAxes();
-//![1]
-    m_chart->legend()->setVisible(true);
-    m_chart->legend()->setAlignment(Qt::AlignBottom);
-//![1]
-
-    m_chartView->setRenderHint(QPainter::Antialiasing);
 }
 
-void MainWidget::showLegendSpinbox()
+void MainWidget::updateLegendSpinbox()
 {
-    m_legendSettings->setVisible(true);
-    QRectF chartViewRect = m_chartView->rect();
-
-    m_legendPosX->setMinimum(0);
-    m_legendPosX->setMaximum(chartViewRect.width());
-    m_legendPosX->setValue(150);
-
-    m_legendPosY->setMinimum(0);
-    m_legendPosY->setMaximum(chartViewRect.height());
-    m_legendPosY->setValue(150);
-
-    m_legendWidth->setMinimum(0);
-    m_legendWidth->setMaximum(chartViewRect.width());
-    m_legendWidth->setValue(150);
-
-    m_legendHeight->setMinimum(0);
-    m_legendHeight->setMaximum(chartViewRect.height());
-    m_legendHeight->setValue(75);
-}
-
-void MainWidget::hideLegendSpinbox()
-{
-    m_legendSettings->setVisible(false);
+    QLegend *legend = m_chart->legend();
+    double newPosX = legend->x();
+    double newPosY = legend->y();
+    QSizeF newSize = legend->size();
+    if (!qFuzzyCompare(m_legendPosX->value(), newPosX))
+        m_legendPosX->setValue(newPosX);
+    if (!qFuzzyCompare(m_legendPosY->value(), newPosY))
+        m_legendPosY->setValue(newPosY);
+     if (!qFuzzyCompare(m_legendWidth->value(), newSize.width()))
+        m_legendWidth->setValue(newSize.width());
+    if (!qFuzzyCompare(m_legendHeight->value(), newSize.height()))
+        m_legendHeight->setValue(newSize.height());
 }
 
 
@@ -173,20 +201,32 @@ void MainWidget::toggleAttached()
     if (legend->isAttachedToChart()) {
         //![2]
         legend->detachFromChart();
-        m_chart->legend()->setBackgroundVisible(true);
-        m_chart->legend()->setBrush(QBrush(QColor(128, 128, 128, 128)));
-        m_chart->legend()->setPen(QPen(QColor(192, 192, 192, 192)));
         //![2]
-        showLegendSpinbox();
-        updateLegendLayout();
     } else {
         //![3]
         legend->attachToChart();
-        legend->setBackgroundVisible(false);
         //![3]
-        hideLegendSpinbox();
     }
     update();
+}
+
+void MainWidget::toggleInteractive()
+{
+    m_chart->legend()->setInteractive(!m_chart->legend()->isInteractive());
+}
+
+void MainWidget::toggleBold()
+{
+    QFont font = m_chart->legend()->font();
+    font.setBold(!font.bold());
+    m_chart->legend()->setFont(font);
+}
+
+void MainWidget::toggleItalic()
+{
+    QFont font = m_chart->legend()->font();
+    font.setItalic(!font.italic());
+    m_chart->legend()->setFont(font);
 }
 
 void MainWidget::addBarset()
@@ -233,20 +273,6 @@ void MainWidget::setLegendAlignment()
     }
 }
 
-void MainWidget::toggleBold()
-{
-    QFont font = m_chart->legend()->font();
-    font.setBold(!font.bold());
-    m_chart->legend()->setFont(font);
-}
-
-void MainWidget::toggleItalic()
-{
-    QFont font = m_chart->legend()->font();
-    font.setItalic(!font.italic());
-    m_chart->legend()->setFont(font);
-}
-
 void MainWidget::fontSizeChanged()
 {
     QFont font = m_chart->legend()->font();
@@ -256,11 +282,27 @@ void MainWidget::fontSizeChanged()
 
 void MainWidget::updateLegendLayout()
 {
-//![4]
+//![6]
+    QRectF geom = m_chart->legend()->geometry();
+    if (qFuzzyCompare(geom.x(), m_legendPosX->value())
+            && qFuzzyCompare(geom.y(), m_legendPosY->value())
+            && qFuzzyCompare(geom.width(), m_legendWidth->value())
+            && qFuzzyCompare(geom.height(), m_legendHeight->value()))
+        return;
+
     m_chart->legend()->setGeometry(QRectF(m_legendPosX->value(),
                                           m_legendPosY->value(),
                                           m_legendWidth->value(),
                                           m_legendHeight->value()));
     m_chart->legend()->update();
-//![4]
+//![6]
+}
+
+void MainWidget::resizeEvent(QResizeEvent *)
+{
+    QRectF chartViewRect = m_chartView->rect();
+    m_legendPosX->setMaximum(chartViewRect.width());
+    m_legendPosY->setMaximum(chartViewRect.height());
+    m_legendWidth->setMaximum(chartViewRect.width());
+    m_legendHeight->setMaximum(chartViewRect.height());
 }

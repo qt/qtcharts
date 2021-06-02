@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -30,16 +30,14 @@
 #ifndef MAINWIDGET_H
 #define MAINWIDGET_H
 
-#include <QtCharts/QChartGlobal>
+#include <QtWidgets/QWidget>
 #include <QtCharts/QChart>
 #include <QtCharts/QChartView>
-#include <QtWidgets/QWidget>
-#include <QtWidgets/QGraphicsWidget>
-#include <QtWidgets/QGridLayout>
-#include <QtWidgets/QGraphicsGridLayout>
+#include <QtCharts/QBarSeries>
+#include <QtWidgets/QCheckBox>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QDoubleSpinBox>
 #include <QtWidgets/QGroupBox>
-#include <QtCharts/QBarSeries>
 
 QT_USE_NAMESPACE
 
@@ -47,37 +45,40 @@ class MainWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit MainWidget(QWidget *parent = 0);
+    explicit MainWidget(QWidget *parent = nullptr);
+    void createUi();
     void createSeries();
-    void showLegendSpinbox();
-    void hideLegendSpinbox();
+    void updateLegendSpinbox();
 
 public Q_SLOTS:
     void toggleAttached();
-    void addBarset();
-    void removeBarset();
-
-    void setLegendAlignment();
-
+    void toggleInteractive();
     void toggleBold();
     void toggleItalic();
+    void addBarset();
+    void removeBarset();
+    void setLegendAlignment();
     void fontSizeChanged();
-
     void updateLegendLayout();
+
+protected:
+    void resizeEvent(QResizeEvent *) override;
 
 private:
     QChart *m_chart;
+    QChartView *m_chartView;
     QBarSeries *m_series;
 
-    QChartView *m_chartView;
-    QGridLayout *m_mainLayout;
-    QGridLayout *m_buttonLayout;
-    QGridLayout *m_fontLayout;
-
+    QCheckBox *m_toggleAttachedButton;
+    QCheckBox *m_interactiveButton;
+    QCheckBox *m_boldButton;
+    QCheckBox *m_italicButton;
+    QPushButton *m_addSetButton;
+    QPushButton *m_removeSetButton;
+    QPushButton *m_alignmentButton;
     QDoubleSpinBox *m_fontSize;
 
-    // For detached layout
-    QGroupBox *m_legendSettings;
+    QGroupBox *m_geometrySettings;
     QDoubleSpinBox *m_legendPosX;
     QDoubleSpinBox *m_legendPosY;
     QDoubleSpinBox *m_legendWidth;
