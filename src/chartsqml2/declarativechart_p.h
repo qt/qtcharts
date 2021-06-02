@@ -39,6 +39,7 @@
 #ifndef DECLARATIVECHART_H
 #define DECLARATIVECHART_H
 
+#include <QtQml/qqmlregistration.h>
 #include <private/glxyseriesdata_p.h>
 #include <private/declarativechartglobal_p.h>
 #include <private/declarativeabstractrendernode_p.h>
@@ -65,8 +66,8 @@ class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeChart : public QQuickItem
     Q_OBJECT
     Q_PROPERTY(Theme theme READ theme WRITE setTheme)
     Q_PROPERTY(Animation animationOptions READ animationOptions WRITE setAnimationOptions)
-    Q_PROPERTY(int animationDuration READ animationDuration WRITE setAnimationDuration NOTIFY animationDurationChanged REVISION 5)
-    Q_PROPERTY(QEasingCurve animationEasingCurve READ animationEasingCurve WRITE setAnimationEasingCurve NOTIFY animationEasingCurveChanged REVISION 5)
+    Q_PROPERTY(int animationDuration READ animationDuration WRITE setAnimationDuration NOTIFY animationDurationChanged REVISION(2, 1))
+    Q_PROPERTY(QEasingCurve animationEasingCurve READ animationEasingCurve WRITE setAnimationEasingCurve NOTIFY animationEasingCurveChanged REVISION(2, 1))
     Q_PROPERTY(QString title READ title WRITE setTitle)
     Q_PROPERTY(QFont titleFont READ titleFont WRITE setTitleFont)
     Q_PROPERTY(QColor titleColor READ titleColor WRITE setTitleColor NOTIFY titleColorChanged)
@@ -74,16 +75,19 @@ class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeChart : public QQuickItem
     Q_PROPERTY(int count READ count)
     Q_PROPERTY(QColor backgroundColor READ backgroundColor WRITE setBackgroundColor NOTIFY backgroundColorChanged)
     Q_PROPERTY(bool dropShadowEnabled READ dropShadowEnabled WRITE setDropShadowEnabled NOTIFY dropShadowEnabledChanged)
-    Q_PROPERTY(qreal backgroundRoundness READ backgroundRoundness WRITE setBackgroundRoundness NOTIFY backgroundRoundnessChanged REVISION 3)
-    Q_PROPERTY(DeclarativeMargins *margins READ margins NOTIFY marginsChanged REVISION 2)
-    Q_PROPERTY(QRectF plotArea READ plotArea WRITE setPlotArea NOTIFY plotAreaChanged REVISION 1)
-    Q_PROPERTY(QColor plotAreaColor READ plotAreaColor WRITE setPlotAreaColor NOTIFY plotAreaColorChanged REVISION 3)
-    Q_PROPERTY(QQmlListProperty<QAbstractAxis> axes READ axes REVISION 2)
-    Q_PROPERTY(bool localizeNumbers READ localizeNumbers WRITE setLocalizeNumbers NOTIFY localizeNumbersChanged REVISION 4)
-    Q_PROPERTY(QLocale locale READ locale WRITE setLocale NOTIFY localeChanged REVISION 4)
+    Q_PROPERTY(qreal backgroundRoundness READ backgroundRoundness WRITE setBackgroundRoundness NOTIFY backgroundRoundnessChanged REVISION(1, 3))
+    Q_PROPERTY(DeclarativeMargins *margins READ margins NOTIFY marginsChanged REVISION(1, 2))
+    Q_PROPERTY(QRectF plotArea READ plotArea WRITE setPlotArea NOTIFY plotAreaChanged REVISION(1, 1))
+    Q_PROPERTY(QColor plotAreaColor READ plotAreaColor WRITE setPlotAreaColor NOTIFY plotAreaColorChanged REVISION(1, 3))
+    Q_PROPERTY(QQmlListProperty<QAbstractAxis> axes READ axes REVISION(1, 2))
+    Q_PROPERTY(bool localizeNumbers READ localizeNumbers WRITE setLocalizeNumbers NOTIFY localizeNumbersChanged REVISION(2, 0))
+    Q_PROPERTY(QLocale locale READ locale WRITE setLocale NOTIFY localeChanged REVISION(2, 0))
     Q_ENUMS(Animation)
     Q_ENUMS(Theme)
     Q_ENUMS(SeriesType)
+    QML_NAMED_ELEMENT(ChartView)
+    QML_ADDED_IN_VERSION(1, 0)
+    QML_EXTRA_VERSION(2, 0)
 
 public:
     // duplicating enums from QChart to make the QML api namings 1-to-1 with the C++ api
@@ -197,18 +201,18 @@ public:
     Q_INVOKABLE QAbstractAxis *axisX(QAbstractSeries *series = 0);
     Q_INVOKABLE QAbstractAxis *axisY(QAbstractSeries *series = 0);
     Q_INVOKABLE void zoom(qreal factor);
-    Q_REVISION(5) Q_INVOKABLE void zoomIn();
-    Q_REVISION(5) Q_INVOKABLE void zoomIn(const QRectF &rectangle);
-    Q_REVISION(5) Q_INVOKABLE void zoomOut();
-    Q_REVISION(5) Q_INVOKABLE void zoomReset();
-    Q_REVISION(5) Q_INVOKABLE bool isZoomed();
+    Q_REVISION(2, 1) Q_INVOKABLE void zoomIn();
+    Q_REVISION(2, 1) Q_INVOKABLE void zoomIn(const QRectF &rectangle);
+    Q_REVISION(2, 1) Q_INVOKABLE void zoomOut();
+    Q_REVISION(2, 1) Q_INVOKABLE void zoomReset();
+    Q_REVISION(2, 1) Q_INVOKABLE bool isZoomed();
     Q_INVOKABLE void scrollLeft(qreal pixels);
     Q_INVOKABLE void scrollRight(qreal pixels);
     Q_INVOKABLE void scrollUp(qreal pixels);
     Q_INVOKABLE void scrollDown(qreal pixels);
-    Q_REVISION(5) Q_INVOKABLE QPointF mapToValue(const QPointF &position,
+    Q_REVISION(2, 1) Q_INVOKABLE QPointF mapToValue(const QPointF &position,
                                                  QAbstractSeries *series = 0);
-    Q_REVISION(5) Q_INVOKABLE QPointF mapToPosition(const QPointF &value,
+    Q_REVISION(2, 1) Q_INVOKABLE QPointF mapToPosition(const QPointF &value,
                                                     QAbstractSeries *series = 0);
 
 
@@ -217,16 +221,16 @@ Q_SIGNALS:
     void titleColorChanged(QColor color);
     void backgroundColorChanged();
     void dropShadowEnabledChanged(bool enabled);
-    Q_REVISION(2) void marginsChanged();
+    Q_REVISION(1, 2) void marginsChanged();
     void plotAreaChanged(QRectF plotArea);
     void seriesAdded(QAbstractSeries *series);
     void seriesRemoved(QAbstractSeries *series);
-    Q_REVISION(3) void plotAreaColorChanged();
-    Q_REVISION(3) void backgroundRoundnessChanged(qreal diameter);
-    Q_REVISION(4) void localizeNumbersChanged();
-    Q_REVISION(4) void localeChanged();
-    Q_REVISION(5) void animationDurationChanged(int msecs);
-    Q_REVISION(5) void animationEasingCurveChanged(QEasingCurve curve);
+    Q_REVISION(1, 3) void plotAreaColorChanged();
+    Q_REVISION(1, 3) void backgroundRoundnessChanged(qreal diameter);
+    Q_REVISION(2, 0) void localizeNumbersChanged();
+    Q_REVISION(2, 0) void localeChanged();
+    Q_REVISION(2, 1) void animationDurationChanged(int msecs);
+    Q_REVISION(2, 1) void animationEasingCurveChanged(QEasingCurve curve);
     void needRender();
     void pendingRenderNodeMouseEventResponses();
 

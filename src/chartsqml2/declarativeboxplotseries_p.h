@@ -39,6 +39,7 @@
 #ifndef DECLARATIVEBOXPLOT_H
 #define DECLARATIVEBOXPLOT_H
 
+#include <QtQml/qqmlregistration.h>
 #include <QtCharts/QBoxSet>
 #include <private/declarativeaxes_p.h>
 #include <QtCharts/QBoxPlotSeries>
@@ -55,8 +56,11 @@ class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeBoxSet : public QBoxSet
     Q_PROPERTY(QVariantList values READ values WRITE setValues)
     Q_PROPERTY(QString label READ label WRITE setLabel)
     Q_PROPERTY(int count READ count)
-    Q_PROPERTY(QString brushFilename READ brushFilename WRITE setBrushFilename NOTIFY brushFilenameChanged REVISION 1)
+    Q_PROPERTY(QString brushFilename READ brushFilename WRITE setBrushFilename NOTIFY brushFilenameChanged REVISION(1, 4))
     Q_ENUMS(ValuePositions)
+    QML_NAMED_ELEMENT(BoxSet)
+    QML_ADDED_IN_VERSION(1, 3)
+    QML_EXTRA_VERSION(2, 0)
 
 public: // duplicate from QBoxSet
     enum ValuePositions {
@@ -83,7 +87,7 @@ public: // From QBoxSet
 Q_SIGNALS:
     void changedValues();
     void changedValue(int index);
-    Q_REVISION(1) void brushFilenameChanged(const QString &brushFilename);
+    Q_REVISION(1, 4) void brushFilenameChanged(const QString &brushFilename);
 
 private Q_SLOTS:
     void handleBrushChanged();
@@ -102,8 +106,11 @@ class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeBoxPlotSeries : public QBoxPlotSerie
     Q_PROPERTY(QAbstractAxis *axisXTop READ axisXTop WRITE setAxisXTop NOTIFY axisXTopChanged)
     Q_PROPERTY(QAbstractAxis *axisYRight READ axisYRight WRITE setAxisYRight NOTIFY axisYRightChanged)
     Q_PROPERTY(QQmlListProperty<QObject> seriesChildren READ seriesChildren)
-    Q_PROPERTY(QString brushFilename READ brushFilename WRITE setBrushFilename NOTIFY brushFilenameChanged REVISION 1)
+    Q_PROPERTY(QString brushFilename READ brushFilename WRITE setBrushFilename NOTIFY brushFilenameChanged REVISION(1, 4))
     Q_CLASSINFO("DefaultProperty", "seriesChildren")
+    QML_NAMED_ELEMENT(BoxPlotSeries)
+    QML_ADDED_IN_VERSION(1, 3)
+    QML_EXTRA_VERSION(2, 0)
 
 public:
     explicit DeclarativeBoxPlotSeries(QQuickItem *parent = 0);
@@ -141,7 +148,7 @@ Q_SIGNALS:
     void pressed(DeclarativeBoxSet *boxset);
     void released(DeclarativeBoxSet *boxset);
     void doubleClicked(DeclarativeBoxSet *boxset);
-    Q_REVISION(1) void brushFilenameChanged(const QString &brushFilename);
+    Q_REVISION(1, 4) void brushFilenameChanged(const QString &brushFilename);
 
 public Q_SLOTS:
     static void appendSeriesChildren(QQmlListProperty<QObject> *list, QObject *element);

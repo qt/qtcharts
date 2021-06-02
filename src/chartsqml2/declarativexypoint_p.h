@@ -39,6 +39,7 @@
 #ifndef DECLARATIVE_XY_POINT_H
 #define DECLARATIVE_XY_POINT_H
 
+#include <QtQml/qqmlregistration.h>
 #include <QtCharts/QChartGlobal>
 #include <private/declarativechartglobal_p.h>
 #include <QtCore/QObject>
@@ -51,6 +52,9 @@ class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeXYPoint : public QObject, public QPo
     Q_OBJECT
     Q_PROPERTY(qreal x READ x WRITE setX)
     Q_PROPERTY(qreal y READ y WRITE setY)
+    QML_NAMED_ELEMENT(XYPoint)
+    QML_ADDED_IN_VERSION(1, 0)
+    QML_EXTRA_VERSION(2, 0)
 
 public:
     explicit DeclarativeXYPoint(QObject *parent = 0);

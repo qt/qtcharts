@@ -6,9 +6,13 @@
 
 qt_internal_add_qml_module(qtchartsqml2
     URI "QtCharts" # special case
-    VERSION "2.${PROJECT_VERSION_MINOR}"
+    VERSION "${PROJECT_VERSION}"
     CLASSNAME QtChartsQml2Plugin
+    PLUGIN_OPTIONAL
     SKIP_TYPE_REGISTRATION
+    PAST_MAJOR_VERSIONS 1 2
+    DEPENDENCIES
+        QtQuick
     SOURCES
         chartsqml2_plugin.cpp
         declarativeabstractrendernode_p.h
@@ -17,6 +21,7 @@ qt_internal_add_qml_module(qtchartsqml2
         declarativechart.cpp declarativechart_p.h
         declarativechartglobal_p.h
         declarativechartnode.cpp declarativechartnode_p.h
+        declarativeforeigntypes_p.h
         declarativemargins.cpp declarativemargins_p.h
         declarativepolarchart.cpp declarativepolarchart_p.h
         declarativexypoint.cpp declarativexypoint_p.h
@@ -294,3 +299,11 @@ qt6_target_qml_files(qtchartsqml2
     FILES
         ${qml_files}
 )
+
+set_target_properties(qtchartsqml2 PROPERTIES
+    QT_QML_MODULE_INSTALL_QMLTYPES TRUE
+    QT_QML_MODULE_VERSION "${PROJECT_VERSION}"
+    QT_QML_MODULE_URI QtCharts
+)
+
+qt6_qml_type_registration(qtchartsqml2)

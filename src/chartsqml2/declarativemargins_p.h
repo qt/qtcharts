@@ -39,6 +39,7 @@
 #ifndef DECLARATIVE_MARGINS_H
 #define DECLARATIVE_MARGINS_H
 
+#include <QtQml/qqmlregistration.h>
 #include <QtCharts/QChartGlobal>
 #include <QtCore/QObject>
 #include <QtCore/QMargins>
@@ -53,6 +54,10 @@ class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeMargins : public QObject, public QMa
     Q_PROPERTY(int bottom READ bottom WRITE setBottom NOTIFY bottomChanged)
     Q_PROPERTY(int left READ left WRITE setLeft NOTIFY leftChanged)
     Q_PROPERTY(int right READ right WRITE setRight NOTIFY rightChanged)
+    QML_NAMED_ELEMENT(Margins)
+    QML_ADDED_IN_VERSION(1, 1)
+    QML_EXTRA_VERSION(2, 0)
+    QML_UNCREATABLE("Abstract base type")
 
 public:
     explicit DeclarativeMargins(QObject *parent = 0);

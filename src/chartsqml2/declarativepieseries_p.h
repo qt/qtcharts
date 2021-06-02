@@ -39,6 +39,7 @@
 #ifndef DECLARATIVEPIESERIES_H
 #define DECLARATIVEPIESERIES_H
 
+#include <QtQml/qqmlregistration.h>
 #include <QtCharts/QPieSeries>
 #include <QtCharts/QPieSlice>
 #include <private/declarativechartglobal_p.h>
@@ -52,6 +53,9 @@ class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativePieSlice : public QPieSlice
 {
     Q_OBJECT
     Q_PROPERTY(QString brushFilename READ brushFilename WRITE setBrushFilename NOTIFY brushFilenameChanged)
+    QML_NAMED_ELEMENT(PieSlice)
+    QML_ADDED_IN_VERSION(1, 0)
+    QML_EXTRA_VERSION(2, 0)
 
 public:
     explicit DeclarativePieSlice(QObject *parent = 0);
@@ -75,6 +79,9 @@ class DeclarativePieSeries : public QPieSeries, public QQmlParserStatus
     Q_INTERFACES(QQmlParserStatus)
     Q_PROPERTY(QQmlListProperty<QObject> seriesChildren READ seriesChildren)
     Q_CLASSINFO("DefaultProperty", "seriesChildren")
+    QML_NAMED_ELEMENT(PieSeries)
+    QML_ADDED_IN_VERSION(1, 0)
+    QML_EXTRA_VERSION(2, 0)
 
 public:
     explicit DeclarativePieSeries(QQuickItem *parent = 0);

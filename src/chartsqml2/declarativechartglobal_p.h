@@ -40,6 +40,7 @@
 #define DECLARATIVECHARTGLOBAL_H
 
 #include <QtCore/QtGlobal>
+#include <qtcharts-config.h>
 
 #ifndef QT_STATIC
 #  if defined(QT_BUILD_QMLCHARTS_LIB)
@@ -50,5 +51,7 @@
 #else
 #  define Q_QMLCHARTS_PRIVATE_EXPORT
 #endif
+
+void Q_QMLCHARTS_PRIVATE_EXPORT qml_register_types_QtCharts();
 
 #endif // DECLARATIVECHARTGLOBAL_H

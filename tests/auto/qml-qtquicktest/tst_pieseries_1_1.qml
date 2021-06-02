@@ -41,7 +41,6 @@ Rectangle {
         when: windowShown
 
         function test_properties() {
-            skip("QAbstractSeries type registration broken in Qt 6") // Qt 6 fixme
             compare(pieSeries.endAngle, 360);
             compare(pieSeries.holeSize, 0);
             compare(pieSeries.horizontalPosition, 0.5);
@@ -52,7 +51,6 @@ Rectangle {
         }
 
         function test_sliceproperties() {
-            skip("QPieSlice type registration broken in Qt 6") // Qt 6 fixme
             var slice = pieSeries.append("slice", 10);
             compare(slice.angleSpan, 360.0);
             verify(slice.borderColor != undefined);
@@ -85,7 +83,6 @@ Rectangle {
         }
 
         function test_remove() {
-            skip("QPieSlice type registration broken in Qt 6") // Qt 6 fixme
             removedSpy.clear();
             countChangedSpy.clear();
             sumChangedSpy.clear();
@@ -101,7 +98,6 @@ Rectangle {
         }
 
         function test_find() {
-            skip("QAbstractSeries type registration broken in Qt 6") // Qt 6 fixme
             var count = 50;
             for (var i = 0; i < count; i++)
                 pieSeries.append("slice" + i, Math.random() + 0.01); // Add 0.01 to avoid zero

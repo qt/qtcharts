@@ -66,7 +66,6 @@ Rectangle {
 
         function test_axes() {
             // Axis initialization
-            skip("QAbstractAxis type registration broken in Qt 6") // Qt 6 fixme
             compare(chartView.axisX(), lineSeries.axisX);
             compare(chartView.axisY(), lineSeries.axisY);
             compare(lineSeries.axisX, splineSeries.axisX);
@@ -76,7 +75,6 @@ Rectangle {
         }
 
         function test_append() {
-            skip("QAbstractAxis type registration broken in Qt 6") // Qt 6 fixme
             lineSeriesPointAddedSpy.clear();
             splineSeriesPointAddedSpy.clear();
             scatterSeriesPointAddedSpy.clear();
@@ -94,7 +92,6 @@ Rectangle {
         }
 
         function test_replace() {
-            skip("QAbstractAxis type registration broken in Qt 6") // Qt 6 fixme
             var count = append();
             for (var i = 0; i < count; i++) {
                 lineSeries.replace(lineSeries.at(i).x, lineSeries.at(i).y, i, Math.random());
@@ -111,7 +108,6 @@ Rectangle {
         }
 
         function test_insert() {
-            skip("QAbstractAxis type registration broken in Qt 6") // Qt 6 fixme
             var count = append();
             lineSeriesPointAddedSpy.clear();
             splineSeriesPointAddedSpy.clear();
@@ -131,7 +127,6 @@ Rectangle {
         }
 
         function test_remove() {
-            skip("QAbstractAxis type registration broken in Qt 6") // Qt 6 fixme
             lineSeriesPointRemovedSpy.clear();
             splineSeriesPointRemovedSpy.clear();
             scatterSeriesPointRemovedSpy.clear();

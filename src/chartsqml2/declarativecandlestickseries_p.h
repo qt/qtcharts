@@ -39,6 +39,7 @@
 #ifndef DECLARATIVECANDLESTICKSERIES_H
 #define DECLARATIVECANDLESTICKSERIES_H
 
+#include <QtQml/qqmlregistration.h>
 #include <QtCharts/QCandlestickSeries>
 #include <QtCharts/qabstractaxis.h>
 #include <QtCharts/QCandlestickSet>
@@ -54,6 +55,8 @@ class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeCandlestickSet : public QCandlestick
 {
     Q_OBJECT
     Q_PROPERTY(QString brushFilename READ brushFilename WRITE setBrushFilename NOTIFY brushFilenameChanged)
+    QML_NAMED_ELEMENT(CandlestickSet)
+    QML_ADDED_IN_VERSION(2, 2)
 
 public:
     explicit DeclarativeCandlestickSet(qreal timestamp = 0.0, QObject *parent = nullptr);
@@ -82,6 +85,8 @@ class DeclarativeCandlestickSeries : public QCandlestickSeries, public QQmlParse
     Q_PROPERTY(QQmlListProperty<QObject> seriesChildren READ seriesChildren)
     Q_PROPERTY(QString brushFilename READ brushFilename WRITE setBrushFilename NOTIFY brushFilenameChanged)
     Q_CLASSINFO("DefaultProperty", "seriesChildren")
+    QML_NAMED_ELEMENT(CandlestickSeries)
+    QML_ADDED_IN_VERSION(2, 2)
 
 public:
     explicit DeclarativeCandlestickSeries(QQuickItem *parent = nullptr);

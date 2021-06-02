@@ -39,6 +39,7 @@
 #ifndef DECLARATIVEAXES_H
 #define DECLARATIVEAXES_H
 
+#include <QtQml/qqmlregistration.h>
 #include <QtCharts/qabstractaxis.h>
 #include <QtCore/QObject>
 #include <private/declarativechartglobal_p.h>
@@ -52,6 +53,10 @@ class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeAxes : public QObject
     Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY NOTIFY axisYChanged)
     Q_PROPERTY(QAbstractAxis *axisXTop READ axisXTop WRITE setAxisXTop NOTIFY axisXTopChanged)
     Q_PROPERTY(QAbstractAxis *axisYRight READ axisYRight WRITE setAxisYRight NOTIFY axisYRightChanged)
+    QML_NAMED_ELEMENT(DeclarativeAxes)
+    QML_ADDED_IN_VERSION(1, 0)
+    QML_EXTRA_VERSION(2, 0)
+    QML_UNCREATABLE("Abstract base type")
 
 public:
     explicit DeclarativeAxes(QObject *parent = 0);

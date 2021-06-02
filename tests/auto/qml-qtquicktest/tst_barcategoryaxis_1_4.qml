@@ -48,7 +48,6 @@ Rectangle {
         }
 
         function test_categories() {
-            skip("QAbstractAxis registration broken in Qt 6") // Qt 6 fixme
             compare(barSeries1.axisX.count, 6, "AxisX count");
             categoriesCountChangedSpy.clear();
             categoriesChangedSpy.clear();

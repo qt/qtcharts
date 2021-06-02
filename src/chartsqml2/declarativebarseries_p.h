@@ -39,6 +39,7 @@
 #ifndef DECLARATIVEBARSERIES_H
 #define DECLARATIVEBARSERIES_H
 
+#include <QtQml/qqmlregistration.h>
 #include <QtCharts/QBarSeries>
 #include <QtCharts/QStackedBarSeries>
 #include <QtCharts/QPercentBarSeries>
@@ -60,9 +61,12 @@ class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeBarSet : public QBarSet
 {
     Q_OBJECT
     Q_PROPERTY(QVariantList values READ values WRITE setValues)
-    Q_PROPERTY(qreal borderWidth READ borderWidth WRITE setBorderWidth NOTIFY borderWidthChanged REVISION 1)
+    Q_PROPERTY(qreal borderWidth READ borderWidth WRITE setBorderWidth NOTIFY borderWidthChanged REVISION(1, 1))
     Q_PROPERTY(int count READ count NOTIFY countChanged)
-    Q_PROPERTY(QString brushFilename READ brushFilename WRITE setBrushFilename NOTIFY brushFilenameChanged REVISION 2)
+    Q_PROPERTY(QString brushFilename READ brushFilename WRITE setBrushFilename NOTIFY brushFilenameChanged REVISION(1, 4))
+    QML_NAMED_ELEMENT(BarSet)
+    QML_ADDED_IN_VERSION(1, 0)
+    QML_EXTRA_VERSION(2, 0)
 
 public:
     explicit DeclarativeBarSet(QObject *parent = 0);
@@ -81,8 +85,8 @@ public: // From QBarSet
 
 Q_SIGNALS:
     void countChanged(int count);
-    Q_REVISION(1) void borderWidthChanged(qreal width);
-    Q_REVISION(2) void brushFilenameChanged(const QString &brushFilename);
+    Q_REVISION(1, 1) void borderWidthChanged(qreal width);
+    Q_REVISION(1, 4) void brushFilenameChanged(const QString &brushFilename);
 
 private Q_SLOTS:
     void handleCountChanged(int index, int count);
@@ -97,12 +101,15 @@ class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeBarSeries : public QBarSeries, publi
 {
     Q_OBJECT
     Q_INTERFACES(QQmlParserStatus)
-    Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX NOTIFY axisXChanged REVISION 1)
-    Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY NOTIFY axisYChanged REVISION 1)
-    Q_PROPERTY(QAbstractAxis *axisXTop READ axisXTop WRITE setAxisXTop NOTIFY axisXTopChanged REVISION 2)
-    Q_PROPERTY(QAbstractAxis *axisYRight READ axisYRight WRITE setAxisYRight NOTIFY axisYRightChanged REVISION 2)
+    Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX NOTIFY axisXChanged REVISION(1, 1))
+    Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY NOTIFY axisYChanged REVISION(1, 1))
+    Q_PROPERTY(QAbstractAxis *axisXTop READ axisXTop WRITE setAxisXTop NOTIFY axisXTopChanged REVISION(1, 2))
+    Q_PROPERTY(QAbstractAxis *axisYRight READ axisYRight WRITE setAxisYRight NOTIFY axisYRightChanged REVISION(1, 2))
     Q_PROPERTY(QQmlListProperty<QObject> seriesChildren READ seriesChildren)
     Q_CLASSINFO("DefaultProperty", "seriesChildren")
+    QML_NAMED_ELEMENT(BarSeries)
+    QML_ADDED_IN_VERSION(1, 0)
+    QML_EXTRA_VERSION(2, 0)
 
 public:
     explicit DeclarativeBarSeries(QQuickItem *parent = 0);
@@ -128,10 +135,10 @@ public: // from QDeclarativeParserStatus
     void componentComplete() override;
 
 Q_SIGNALS:
-    Q_REVISION(1) void axisXChanged(QAbstractAxis *axis);
-    Q_REVISION(1) void axisYChanged(QAbstractAxis *axis);
-    Q_REVISION(2) void axisXTopChanged(QAbstractAxis *axis);
-    Q_REVISION(2) void axisYRightChanged(QAbstractAxis *axis);
+    Q_REVISION(1, 1) void axisXChanged(QAbstractAxis *axis);
+    Q_REVISION(1, 1) void axisYChanged(QAbstractAxis *axis);
+    Q_REVISION(1, 2) void axisXTopChanged(QAbstractAxis *axis);
+    Q_REVISION(1, 2) void axisYRightChanged(QAbstractAxis *axis);
 
 public Q_SLOTS:
     static void appendSeriesChildren(QQmlListProperty<QObject> *list, QObject *element);
@@ -144,12 +151,15 @@ class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeStackedBarSeries : public QStackedBa
 {
     Q_OBJECT
     Q_INTERFACES(QQmlParserStatus)
-    Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX NOTIFY axisXChanged REVISION 1)
-    Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY NOTIFY axisYChanged REVISION 1)
-    Q_PROPERTY(QAbstractAxis *axisXTop READ axisXTop WRITE setAxisXTop NOTIFY axisXTopChanged REVISION 2)
-    Q_PROPERTY(QAbstractAxis *axisYRight READ axisYRight WRITE setAxisYRight NOTIFY axisYRightChanged REVISION 2)
+    Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX NOTIFY axisXChanged REVISION(1, 1))
+    Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY NOTIFY axisYChanged REVISION(1, 1))
+    Q_PROPERTY(QAbstractAxis *axisXTop READ axisXTop WRITE setAxisXTop NOTIFY axisXTopChanged REVISION(1, 2))
+    Q_PROPERTY(QAbstractAxis *axisYRight READ axisYRight WRITE setAxisYRight NOTIFY axisYRightChanged REVISION(1, 2))
     Q_PROPERTY(QQmlListProperty<QObject> seriesChildren READ seriesChildren)
     Q_CLASSINFO("DefaultProperty", "seriesChildren")
+    QML_NAMED_ELEMENT(StackedBarSeries)
+    QML_ADDED_IN_VERSION(1, 0)
+    QML_EXTRA_VERSION(2, 0)
 
 public:
     explicit DeclarativeStackedBarSeries(QQuickItem *parent = 0);
@@ -175,10 +185,10 @@ public: // from QDeclarativeParserStatus
     void componentComplete() override;
 
 Q_SIGNALS:
-    Q_REVISION(1) void axisXChanged(QAbstractAxis *axis);
-    Q_REVISION(1) void axisYChanged(QAbstractAxis *axis);
-    Q_REVISION(2) void axisXTopChanged(QAbstractAxis *axis);
-    Q_REVISION(2) void axisYRightChanged(QAbstractAxis *axis);
+    Q_REVISION(1, 1) void axisXChanged(QAbstractAxis *axis);
+    Q_REVISION(1, 1) void axisYChanged(QAbstractAxis *axis);
+    Q_REVISION(1, 2) void axisXTopChanged(QAbstractAxis *axis);
+    Q_REVISION(1, 2) void axisYRightChanged(QAbstractAxis *axis);
 
 public Q_SLOTS:
     static void appendSeriesChildren(QQmlListProperty<QObject> *list, QObject *element);
@@ -191,12 +201,15 @@ class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativePercentBarSeries : public QPercentBa
 {
     Q_OBJECT
     Q_INTERFACES(QQmlParserStatus)
-    Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX NOTIFY axisXChanged REVISION 1)
-    Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY NOTIFY axisYChanged REVISION 1)
-    Q_PROPERTY(QAbstractAxis *axisXTop READ axisXTop WRITE setAxisXTop NOTIFY axisXTopChanged REVISION 2)
-    Q_PROPERTY(QAbstractAxis *axisYRight READ axisYRight WRITE setAxisYRight NOTIFY axisYRightChanged REVISION 2)
+    Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX NOTIFY axisXChanged REVISION(1, 1))
+    Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY NOTIFY axisYChanged REVISION(1, 1))
+    Q_PROPERTY(QAbstractAxis *axisXTop READ axisXTop WRITE setAxisXTop NOTIFY axisXTopChanged REVISION(1, 2))
+    Q_PROPERTY(QAbstractAxis *axisYRight READ axisYRight WRITE setAxisYRight NOTIFY axisYRightChanged REVISION(1, 2))
     Q_PROPERTY(QQmlListProperty<QObject> seriesChildren READ seriesChildren)
     Q_CLASSINFO("DefaultProperty", "seriesChildren")
+    QML_NAMED_ELEMENT(PercentBarSeries)
+    QML_ADDED_IN_VERSION(1, 0)
+    QML_EXTRA_VERSION(2, 0)
 
 public:
     explicit DeclarativePercentBarSeries(QQuickItem *parent = 0);
@@ -222,10 +235,10 @@ public: // from QDeclarativeParserStatus
     void componentComplete() override;
 
 Q_SIGNALS:
-    Q_REVISION(1) void axisXChanged(QAbstractAxis *axis);
-    Q_REVISION(1) void axisYChanged(QAbstractAxis *axis);
-    Q_REVISION(2) void axisXTopChanged(QAbstractAxis *axis);
-    Q_REVISION(2) void axisYRightChanged(QAbstractAxis *axis);
+    Q_REVISION(1, 1) void axisXChanged(QAbstractAxis *axis);
+    Q_REVISION(1, 1) void axisYChanged(QAbstractAxis *axis);
+    Q_REVISION(1, 2) void axisXTopChanged(QAbstractAxis *axis);
+    Q_REVISION(1, 2) void axisYRightChanged(QAbstractAxis *axis);
 
 public Q_SLOTS:
     static void appendSeriesChildren(QQmlListProperty<QObject> *list, QObject *element);
@@ -238,12 +251,15 @@ class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeHorizontalBarSeries : public QHorizo
 {
     Q_OBJECT
     Q_INTERFACES(QQmlParserStatus)
-    Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX NOTIFY axisXChanged REVISION 1)
-    Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY NOTIFY axisYChanged REVISION 1)
-    Q_PROPERTY(QAbstractAxis *axisXTop READ axisXTop WRITE setAxisXTop NOTIFY axisXTopChanged REVISION 2)
-    Q_PROPERTY(QAbstractAxis *axisYRight READ axisYRight WRITE setAxisYRight NOTIFY axisYRightChanged REVISION 2)
+    Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX NOTIFY axisXChanged REVISION(1, 1))
+    Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY NOTIFY axisYChanged REVISION(1, 1))
+    Q_PROPERTY(QAbstractAxis *axisXTop READ axisXTop WRITE setAxisXTop NOTIFY axisXTopChanged REVISION(1, 2))
+    Q_PROPERTY(QAbstractAxis *axisYRight READ axisYRight WRITE setAxisYRight NOTIFY axisYRightChanged REVISION(1, 2))
     Q_PROPERTY(QQmlListProperty<QObject> seriesChildren READ seriesChildren)
     Q_CLASSINFO("DefaultProperty", "seriesChildren")
+    QML_NAMED_ELEMENT(HorizontalBarSeries)
+    QML_ADDED_IN_VERSION(1, 0)
+    QML_EXTRA_VERSION(2, 0)
 
 public:
     explicit DeclarativeHorizontalBarSeries(QQuickItem *parent = 0);
@@ -269,10 +285,10 @@ public: // from QDeclarativeParserStatus
     void componentComplete() override;
 
 Q_SIGNALS:
-    Q_REVISION(1) void axisXChanged(QAbstractAxis *axis);
-    Q_REVISION(1) void axisYChanged(QAbstractAxis *axis);
-    Q_REVISION(2) void axisXTopChanged(QAbstractAxis *axis);
-    Q_REVISION(2) void axisYRightChanged(QAbstractAxis *axis);
+    Q_REVISION(1, 1) void axisXChanged(QAbstractAxis *axis);
+    Q_REVISION(1, 1) void axisYChanged(QAbstractAxis *axis);
+    Q_REVISION(1, 2) void axisXTopChanged(QAbstractAxis *axis);
+    Q_REVISION(1, 2) void axisYRightChanged(QAbstractAxis *axis);
 
 public Q_SLOTS:
     static void appendSeriesChildren(QQmlListProperty<QObject> *list, QObject *element);
@@ -285,12 +301,15 @@ class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeHorizontalStackedBarSeries : public 
 {
     Q_OBJECT
     Q_INTERFACES(QQmlParserStatus)
-    Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX NOTIFY axisXChanged REVISION 1)
-    Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY NOTIFY axisYChanged REVISION 1)
-    Q_PROPERTY(QAbstractAxis *axisXTop READ axisXTop WRITE setAxisXTop NOTIFY axisXTopChanged REVISION 2)
-    Q_PROPERTY(QAbstractAxis *axisYRight READ axisYRight WRITE setAxisYRight NOTIFY axisYRightChanged REVISION 2)
+    Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX NOTIFY axisXChanged REVISION(1, 1))
+    Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY NOTIFY axisYChanged REVISION(1, 1))
+    Q_PROPERTY(QAbstractAxis *axisXTop READ axisXTop WRITE setAxisXTop NOTIFY axisXTopChanged REVISION(1, 2))
+    Q_PROPERTY(QAbstractAxis *axisYRight READ axisYRight WRITE setAxisYRight NOTIFY axisYRightChanged REVISION(1, 2))
     Q_PROPERTY(QQmlListProperty<QObject> seriesChildren READ seriesChildren)
     Q_CLASSINFO("DefaultProperty", "seriesChildren")
+    QML_NAMED_ELEMENT(HorizontalStackedBarSeries)
+    QML_ADDED_IN_VERSION(1, 0)
+    QML_EXTRA_VERSION(2, 0)
 
 public:
     explicit DeclarativeHorizontalStackedBarSeries(QQuickItem *parent = 0);
@@ -316,10 +335,10 @@ public: // from QDeclarativeParserStatus
     void componentComplete() override;
 
 Q_SIGNALS:
-    Q_REVISION(1) void axisXChanged(QAbstractAxis *axis);
-    Q_REVISION(1) void axisYChanged(QAbstractAxis *axis);
-    Q_REVISION(2) void axisXTopChanged(QAbstractAxis *axis);
-    Q_REVISION(2) void axisYRightChanged(QAbstractAxis *axis);
+    Q_REVISION(1, 1) void axisXChanged(QAbstractAxis *axis);
+    Q_REVISION(1, 1) void axisYChanged(QAbstractAxis *axis);
+    Q_REVISION(1, 2) void axisXTopChanged(QAbstractAxis *axis);
+    Q_REVISION(1, 2) void axisYRightChanged(QAbstractAxis *axis);
 
 public Q_SLOTS:
     static void appendSeriesChildren(QQmlListProperty<QObject> *list, QObject *element);
@@ -332,12 +351,15 @@ class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeHorizontalPercentBarSeries : public 
 {
     Q_OBJECT
     Q_INTERFACES(QQmlParserStatus)
-    Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX NOTIFY axisXChanged REVISION 1)
-    Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY NOTIFY axisYChanged REVISION 1)
-    Q_PROPERTY(QAbstractAxis *axisXTop READ axisXTop WRITE setAxisXTop NOTIFY axisXTopChanged REVISION 2)
-    Q_PROPERTY(QAbstractAxis *axisYRight READ axisYRight WRITE setAxisYRight NOTIFY axisYRightChanged REVISION 2)
+    Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX NOTIFY axisXChanged REVISION(1, 1))
+    Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY NOTIFY axisYChanged REVISION(1, 1))
+    Q_PROPERTY(QAbstractAxis *axisXTop READ axisXTop WRITE setAxisXTop NOTIFY axisXTopChanged REVISION(1, 2))
+    Q_PROPERTY(QAbstractAxis *axisYRight READ axisYRight WRITE setAxisYRight NOTIFY axisYRightChanged REVISION(1, 2))
     Q_PROPERTY(QQmlListProperty<QObject> seriesChildren READ seriesChildren)
     Q_CLASSINFO("DefaultProperty", "seriesChildren")
+    QML_NAMED_ELEMENT(HorizontalPercentBarSeries)
+    QML_ADDED_IN_VERSION(1, 0)
+    QML_EXTRA_VERSION(2, 0)
 
 public:
     explicit DeclarativeHorizontalPercentBarSeries(QQuickItem *parent = 0);
@@ -363,10 +385,10 @@ public: // from QDeclarativeParserStatus
     void componentComplete() override;
 
 Q_SIGNALS:
-    Q_REVISION(1) void axisXChanged(QAbstractAxis *axis);
-    Q_REVISION(1) void axisYChanged(QAbstractAxis *axis);
-    Q_REVISION(2) void axisXTopChanged(QAbstractAxis *axis);
-    Q_REVISION(2) void axisYRightChanged(QAbstractAxis *axis);
+    Q_REVISION(1, 1) void axisXChanged(QAbstractAxis *axis);
+    Q_REVISION(1, 1) void axisYChanged(QAbstractAxis *axis);
+    Q_REVISION(1, 2) void axisXTopChanged(QAbstractAxis *axis);
+    Q_REVISION(1, 2) void axisYRightChanged(QAbstractAxis *axis);
 
 public Q_SLOTS:
     static void appendSeriesChildren(QQmlListProperty<QObject> *list, QObject *element);
