@@ -1,97 +1,3 @@
-# Generated from chartsqml2.pro.
-
-#####################################################################
-## qtchartsqml2 Plugin:
-#####################################################################
-
-qt_internal_add_qml_module(qtchartsqml2
-    URI "QtCharts" # special case
-    VERSION "${PROJECT_VERSION}"
-    CLASSNAME QtChartsQml2Plugin
-    PLUGIN_OPTIONAL
-    SKIP_TYPE_REGISTRATION
-    PAST_MAJOR_VERSIONS 1 2
-    DEPENDENCIES
-        QtQuick
-    SOURCES
-        chartsqml2_plugin.cpp
-        declarativeabstractrendernode_p.h
-        declarativeaxes.cpp declarativeaxes_p.h
-        declarativecategoryaxis.cpp declarativecategoryaxis_p.h
-        declarativechart.cpp declarativechart_p.h
-        declarativechartglobal_p.h
-        declarativechartnode.cpp declarativechartnode_p.h
-        declarativeforeigntypes_p.h
-        declarativemargins.cpp declarativemargins_p.h
-        declarativepolarchart.cpp declarativepolarchart_p.h
-        declarativexypoint.cpp declarativexypoint_p.h
-        declarativexyseries.cpp declarativexyseries_p.h
-    DEFINES
-        QT_BUILD_QMLCHARTS_LIB
-    INCLUDE_DIRECTORIES
-        ${CMAKE_CURRENT_SOURCE_DIR}
-    LIBRARIES
-        Qt::ChartsPrivate
-        Qt::CorePrivate
-    PUBLIC_LIBRARIES
-        Qt::Charts
-        Qt::Core
-        Qt::Gui
-        Qt::Qml
-        Qt::Quick
-)
-
-qt_internal_extend_target(qtchartsqml2 CONDITION QT_FEATURE_opengl
-    SOURCES
-        declarativeopenglrendernode.cpp declarativeopenglrendernode_p.h
-    PUBLIC_LIBRARIES
-        Qt::OpenGL
-)
-
-qt_internal_extend_target(qtchartsqml2 CONDITION QT_FEATURE_charts_line_chart
-    SOURCES
-        declarativelineseries.cpp declarativelineseries_p.h
-)
-
-qt_internal_extend_target(qtchartsqml2 CONDITION QT_FEATURE_charts_spline_chart
-    SOURCES
-        declarativesplineseries.cpp declarativesplineseries_p.h
-)
-
-qt_internal_extend_target(qtchartsqml2 CONDITION QT_FEATURE_charts_area_chart
-    SOURCES
-        declarativeareaseries.cpp declarativeareaseries_p.h
-)
-
-qt_internal_extend_target(qtchartsqml2 CONDITION QT_FEATURE_charts_scatter_chart
-    SOURCES
-        declarativescatterseries.cpp declarativescatterseries_p.h
-)
-
-qt_internal_extend_target(qtchartsqml2 CONDITION QT_FEATURE_charts_pie_chart
-    SOURCES
-        declarativepieseries.cpp declarativepieseries_p.h
-)
-
-qt_internal_extend_target(qtchartsqml2 CONDITION QT_FEATURE_charts_bar_chart
-    SOURCES
-        declarativebarseries.cpp declarativebarseries_p.h
-)
-
-qt_internal_extend_target(qtchartsqml2 CONDITION QT_FEATURE_charts_boxplot_chart
-    SOURCES
-        declarativeboxplotseries.cpp declarativeboxplotseries_p.h
-)
-
-qt_internal_extend_target(qtchartsqml2 CONDITION QT_FEATURE_charts_candlestick_chart
-    SOURCES
-        declarativecandlestickseries.cpp declarativecandlestickseries_p.h
-)
-
-#### Keys ignored in scope 11:.:.:chartsqml2.pro:WIN32:
-# QMAKE_TARGET_DESCRIPTION = "Charts QML plugin for Qt."
-# QMAKE_TARGET_PRODUCT = "Qt Charts (Qt $$QT_VERSION)"
-
 set(qml_files
     "designer/ChartViewSpecifics.qml"
     "designer/default/AreaSeries.qml"
@@ -144,6 +50,7 @@ set(qml_files
     "designer/images/splineseries-polar-icon.png"
     "designer/images/splineseries-polar-icon16.png"
 )
+
 set_source_files_properties(designer/ChartViewSpecifics.qml PROPERTIES
     QT_QML_SKIP_QMLDIR_ENTRY TRUE
 )
@@ -295,15 +202,86 @@ set_source_files_properties(designer/images/splineseries-polar-icon16.png PROPER
     QT_QML_SKIP_QMLDIR_ENTRY TRUE
 )
 
-qt6_target_qml_files(qtchartsqml2
-    FILES
-        ${qml_files}
+qt_internal_add_qml_module(ChartsQml
+    URI "QtCharts" # special case
+    VERSION "${PROJECT_VERSION}"
+    CLASS_NAME QtChartsQml2Plugin
+    PLUGIN_TARGET qtchartsqml2
+    QML_FILES ${qml_files}
+    PAST_MAJOR_VERSIONS 1 2
+    DEPENDENCIES
+        QtQuick
+        QtCharts
+    SOURCES
+        declarativeabstractrendernode_p.h
+        declarativeaxes.cpp declarativeaxes_p.h
+        declarativecategoryaxis.cpp declarativecategoryaxis_p.h
+        declarativechart.cpp declarativechart_p.h
+        declarativechartglobal_p.h
+        declarativechartnode.cpp declarativechartnode_p.h
+        declarativeforeigntypes_p.h
+        declarativemargins.cpp declarativemargins_p.h
+        declarativepolarchart.cpp declarativepolarchart_p.h
+        declarativexypoint.cpp declarativexypoint_p.h
+        declarativexyseries.cpp declarativexyseries_p.h
+    DEFINES
+        QT_BUILD_QMLCHARTS_LIB
+    INCLUDE_DIRECTORIES
+        ${CMAKE_CURRENT_SOURCE_DIR}
+    LIBRARIES
+        Qt::ChartsPrivate
+        Qt::CorePrivate
+    PUBLIC_LIBRARIES
+        Qt::Charts
+        Qt::Core
+        Qt::Gui
+        Qt::Qml
+        Qt::Quick
 )
 
-set_target_properties(qtchartsqml2 PROPERTIES
-    QT_QML_MODULE_INSTALL_QMLTYPES TRUE
-    QT_QML_MODULE_VERSION "${PROJECT_VERSION}"
-    QT_QML_MODULE_URI QtCharts
+qt_internal_extend_target(ChartsQml CONDITION QT_FEATURE_opengl
+    SOURCES
+        declarativeopenglrendernode.cpp declarativeopenglrendernode_p.h
+    PUBLIC_LIBRARIES
+        Qt::OpenGL
 )
 
-qt6_qml_type_registration(qtchartsqml2)
+qt_internal_extend_target(ChartsQml CONDITION QT_FEATURE_charts_line_chart
+    SOURCES
+        declarativelineseries.cpp declarativelineseries_p.h
+)
+
+qt_internal_extend_target(ChartsQml CONDITION QT_FEATURE_charts_spline_chart
+    SOURCES
+        declarativesplineseries.cpp declarativesplineseries_p.h
+)
+
+qt_internal_extend_target(ChartsQml CONDITION QT_FEATURE_charts_area_chart
+    SOURCES
+        declarativeareaseries.cpp declarativeareaseries_p.h
+)
+
+qt_internal_extend_target(ChartsQml CONDITION QT_FEATURE_charts_scatter_chart
+    SOURCES
+        declarativescatterseries.cpp declarativescatterseries_p.h
+)
+
+qt_internal_extend_target(ChartsQml CONDITION QT_FEATURE_charts_pie_chart
+    SOURCES
+        declarativepieseries.cpp declarativepieseries_p.h
+)
+
+qt_internal_extend_target(ChartsQml CONDITION QT_FEATURE_charts_bar_chart
+    SOURCES
+        declarativebarseries.cpp declarativebarseries_p.h
+)
+
+qt_internal_extend_target(ChartsQml CONDITION QT_FEATURE_charts_boxplot_chart
+    SOURCES
+        declarativeboxplotseries.cpp declarativeboxplotseries_p.h
+)
+
+qt_internal_extend_target(ChartsQml CONDITION QT_FEATURE_charts_candlestick_chart
+    SOURCES
+        declarativecandlestickseries.cpp declarativecandlestickseries_p.h
+)
