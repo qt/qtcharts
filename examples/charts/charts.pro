@@ -75,7 +75,7 @@ qtHaveModule(quick) {
 }
 
 qtHaveModule(multimedia) {
-    SUBDIRS += audio
+    # SUBDIRS += audio // QTBUG-94181
 } else {
     message("QtMultimedia library not available. Some examples are disabled.")
 }

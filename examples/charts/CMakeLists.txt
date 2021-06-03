@@ -71,7 +71,8 @@ if(TARGET Qt::Quick)
     add_subdirectory(qmlweather)
 endif()
 if(TARGET Qt::Multimedia)
-    add_subdirectory(audio)
+    # TODO: this never gets compiled : missing find_pacakge
+    # add_subdirectory(audio) // QTBUG-94181
 endif()
 if(QT_FEATURE_opengl)
     add_subdirectory(openglseries)
