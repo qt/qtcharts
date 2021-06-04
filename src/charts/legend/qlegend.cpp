@@ -312,18 +312,6 @@ void QLegend::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     painter->setBrush(d_ptr->m_brush);
     painter->drawRoundedRect(rect(), d_ptr->roundness(rect().width()),
                              d_ptr->roundness(rect().height()), Qt::RelativeSize);
-
-    // Draw a border slightly larger than the contents rectangle
-    // of the layout so we don't incur overlap. The border gives the
-    // impression of a move/resize frame around the legend to the user
-    // and demarcates its boundaries.
-    if (!isAttachedToChart()) {
-        QRectF frameRect = d_ptr->m_layout->contentsRect();
-        frameRect.adjust(-1., -1., 1., 1.);
-        painter->setBrush(Qt::NoBrush);
-        painter->drawRoundedRect(frameRect, d_ptr->roundness(rect().width()),
-                                 d_ptr->roundness(rect().height()), Qt::RelativeSize);
-    }
 }
 
 
