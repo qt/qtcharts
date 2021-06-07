@@ -50,7 +50,7 @@ class Q_CHARTS_EXPORT QXYSeries : public QAbstractSeries
     Q_OBJECT
     Q_PROPERTY(bool pointsVisible READ pointsVisible WRITE setPointsVisible)
     Q_PROPERTY(QColor color READ color WRITE setColor NOTIFY colorChanged)
-    Q_PROPERTY(QColor selectedColor READ color WRITE setSelectedColor NOTIFY selectedColorChanged REVISION 1)
+    Q_PROPERTY(QColor selectedColor READ color WRITE setSelectedColor NOTIFY selectedColorChanged REVISION(6, 2))
     Q_PROPERTY(QString pointLabelsFormat READ pointLabelsFormat WRITE setPointLabelsFormat NOTIFY pointLabelsFormatChanged)
     Q_PROPERTY(bool pointLabelsVisible READ pointLabelsVisible WRITE setPointLabelsVisible NOTIFY pointLabelsVisibilityChanged)
     Q_PROPERTY(QFont pointLabelsFont READ pointLabelsFont WRITE setPointLabelsFont NOTIFY pointLabelsFontChanged)
@@ -185,7 +185,7 @@ Q_SIGNALS:
     void pointRemoved(int index);
     void pointAdded(int index);
     void colorChanged(QColor color);
-    void selectedColorChanged(const QColor &color);
+    Q_REVISION(6, 2) void selectedColorChanged(const QColor &color);
     void pointsReplaced();
     void pointLabelsFormatChanged(const QString &format);
     void pointLabelsVisibilityChanged(bool visible);
