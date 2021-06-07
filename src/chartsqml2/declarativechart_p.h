@@ -193,7 +193,8 @@ public:
 public:
     Q_INVOKABLE QAbstractSeries *series(int index);
     Q_INVOKABLE QAbstractSeries *series(QString seriesName);
-    Q_INVOKABLE QAbstractSeries *createSeries(int type, QString name = "", QAbstractAxis *axisX = 0, QAbstractAxis *axisY = 0);
+    Q_INVOKABLE QAbstractSeries *createSeries(int type, QString name = QString(),
+                                              QAbstractAxis *axisX = 0, QAbstractAxis *axisY = 0);
     Q_INVOKABLE void removeSeries(QAbstractSeries *series);
     Q_INVOKABLE void removeAllSeries() { m_chart->removeAllSeries(); }
     Q_INVOKABLE void setAxisX(QAbstractAxis *axis, QAbstractSeries *series = 0);

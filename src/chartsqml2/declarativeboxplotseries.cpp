@@ -372,7 +372,7 @@ void DeclarativeBoxSet::handleBrushChanged()
     // the brush file name needs to be cleared.
     if (!m_brushFilename.isEmpty() && QBoxSet::brush().textureImage() != m_brushImage) {
         m_brushFilename.clear();
-        emit brushFilenameChanged(QString(""));
+        emit brushFilenameChanged(QString());
     }
 }
 
@@ -492,7 +492,7 @@ void DeclarativeBoxPlotSeries::handleBrushChanged()
     // the brush file name needs to be cleared.
     if (!m_brushFilename.isEmpty() && QBoxPlotSeries::brush().textureImage() != m_brushImage) {
         m_brushFilename.clear();
-        emit brushFilenameChanged(QString(""));
+        emit brushFilenameChanged(QString());
     }
 }
 

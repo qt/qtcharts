@@ -34,8 +34,7 @@
 
 QT_BEGIN_NAMESPACE
 
-DeclarativeBarSet::DeclarativeBarSet(QObject *parent)
-    : QBarSet("", parent)
+DeclarativeBarSet::DeclarativeBarSet(QObject *parent) : QBarSet(QString(), parent)
 {
     connect(this, SIGNAL(valuesAdded(int,int)), this, SLOT(handleCountChanged(int,int)));
     connect(this, SIGNAL(valuesRemoved(int,int)), this, SLOT(handleCountChanged(int,int)));
@@ -131,7 +130,7 @@ void DeclarativeBarSet::handleBrushChanged()
     // the brush file name needs to be cleared.
     if (!m_brushFilename.isEmpty() && QBarSet::brush().textureImage() != m_brushImage) {
         m_brushFilename.clear();
-        emit brushFilenameChanged(QString(""));
+        emit brushFilenameChanged(QString());
     }
 }
 

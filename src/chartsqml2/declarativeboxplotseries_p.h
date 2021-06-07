@@ -72,7 +72,7 @@ public: // duplicate from QBoxSet
     };
 
 public:
-    explicit DeclarativeBoxSet(const QString label = "", QObject *parent = 0);
+    explicit DeclarativeBoxSet(const QString label = QString(), QObject *parent = 0);
     QVariantList values();
     void setValues(QVariantList values);
     QString brushFilename() const;
