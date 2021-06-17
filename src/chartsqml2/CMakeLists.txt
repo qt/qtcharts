@@ -82,4 +82,8 @@ qt_internal_extend_target(ChartsQml CONDITION QT_FEATURE_charts_candlestick_char
         declarativecandlestickseries.cpp declarativecandlestickseries_p.h
 )
 
+# Warning: The files in the "designer" directory are _not_ part of this QML module.
+#          That is the sole reason why we install them manually.
+#          All files that do belong to the QML module _must_ be passed using the
+#          QML_FILES option. You should _never_ install them manually.
 add_subdirectory(designer)
