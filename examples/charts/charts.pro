@@ -39,7 +39,8 @@ qtConfig(charts-bar-chart) {
         stackedbarchartdrilldown \
         percentbarchart \
         legend \
-        temperaturerecords
+        temperaturerecords \
+        selectedbar
 }
 qtConfig(charts-pie-chart) {
     SUBDIRS += \
