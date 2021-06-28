@@ -32,6 +32,9 @@
 
 #include <QtCore/qglobal.h>
 #include <QtCharts/qtcharts-config.h>
+#include <QtCharts/qtchartsexports.h>
+
+#define Q_CHARTS_AUTOTEST_EXPORT Q_AUTOTEST_EXPORT
 
 #define QT_CHARTS_VERSION_STR QT_VERSION_STR
 /*
@@ -43,21 +46,6 @@
 */
 #define QT_CHARTS_VERSION_CHECK(major, minor, patch) ((major<<16)|(minor<<8)|(patch))
 
-QT_BEGIN_NAMESPACE
-
-#ifndef QT_STATIC
-#  if defined(QT_BUILD_CHARTS_LIB)
-#    define Q_CHARTS_EXPORT Q_DECL_EXPORT
-#  else
-#    define Q_CHARTS_EXPORT Q_DECL_IMPORT
-#  endif
-#else
-#  define Q_CHARTS_EXPORT
-#endif
-
-#define Q_CHARTS_AUTOTEST_EXPORT Q_AUTOTEST_EXPORT
-
-QT_END_NAMESPACE
 /*
     On Windows min and max conflict with standard macros
 */

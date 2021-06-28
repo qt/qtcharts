@@ -113,6 +113,8 @@ qt_internal_add_module(Charts
         Qt::Core
         Qt::Gui
         Qt::Widgets
+    GENERATE_CPP_EXPORTS
+    GENERATE_PRIVATE_CPP_EXPORTS
 )
 
 qt_internal_extend_target(Charts CONDITION QT_FEATURE_opengl

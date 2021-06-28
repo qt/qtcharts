@@ -44,7 +44,6 @@
 #include <QtCharts/qchartglobal.h>
 #include <QtCore/private/qglobal_p.h>
 #include <QtCharts/private/qtcharts-config_p.h>
-
-#define Q_CHARTS_PRIVATE_EXPORT Q_CHARTS_EXPORT
+#include <QtCharts/private/qtchartsexports_p.h>
 
 #endif // QCHARTGLOBAL_P_H
