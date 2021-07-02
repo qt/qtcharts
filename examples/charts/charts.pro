@@ -21,7 +21,8 @@ qtConfig(charts-spline-chart) {
     SUBDIRS += \
         dynamicspline \
         multiaxis \
-        splinechart
+        splinechart \
+        pointsselectionandmarkers
     qtConfig(charts-area-chart) {
         SUBDIRS += \
             chartthemes \
