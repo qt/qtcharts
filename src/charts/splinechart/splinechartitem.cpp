@@ -56,6 +56,7 @@ SplineChartItem::SplineChartItem(QSplineSeries *series, QGraphicsItem *item)
     connect(m_series->d_func(), &QXYSeriesPrivate::seriesUpdated,
             this, &SplineChartItem::handleSeriesUpdated);
     connect(series, &QXYSeries::lightMarkerChanged, this, &SplineChartItem::handleSeriesUpdated);
+    connect(series, &QXYSeries::selectedLightMarkerChanged, this, &SplineChartItem::handleSeriesUpdated);
     connect(series, &QXYSeries::markerSizeChanged, this, &SplineChartItem::handleSeriesUpdated);
     connect(series, &QXYSeries::visibleChanged, this, &SplineChartItem::handleSeriesUpdated);
     connect(series, &QXYSeries::opacityChanged, this, &SplineChartItem::handleSeriesUpdated);
@@ -316,7 +317,8 @@ void SplineChartItem::updateGeometry()
 
     // For mouse interactivity, we have to add the rects *after* the 'createStroke',
     // as we don't need the outline - we need it filled up.
-    if (!m_series->lightMarker().isNull()) {
+    if (!m_series->lightMarker().isNull() || (!m_series->selectedLightMarker().isNull()
+                                                 && !m_series->selectedPoints().isEmpty())) {
         // +1, +2: a margin to guarantee we cover all of the pixmap
         qreal markerHalfSize = (m_series->markerSize() / 2.0) + 1;
         qreal markerSize = m_series->markerSize() + 2;
@@ -505,8 +507,10 @@ void SplineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
 
     int pointLabelsOffset = m_linePen.width() / 2;
 
-    // Draw markers if a marker has been set (set to QImage() to disable)
-    if (!m_series->lightMarker().isNull()) {
+    // Draw markers if a marker or marker for selected points only has been
+    // set (set to QImage() to disable)
+    if (!m_series->lightMarker().isNull() || (!m_series->selectedLightMarker().isNull()
+                                           && !m_series->selectedPoints().isEmpty())) {
         const QImage &marker = m_series->lightMarker();
         const QImage &selectedMarker = m_series->selectedLightMarker();
         qreal markerHalfSize = m_markerSize / 2.0;
@@ -517,7 +521,7 @@ void SplineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
             // light markers are independent features. Therefore m_pointsVisible
             // is not used here as light markers are drawn if lightMarker is not null.
             // However points visibility configuration can be still used here.
-            bool drawPoint = true;
+            bool drawPoint = !m_series->lightMarker().isNull();
             if (m_pointsConfiguration.contains(i)) {
                 const auto &conf = m_pointsConfiguration[i];
 

@@ -85,6 +85,10 @@ private:
 
 protected:
     void updateGeometry() override;
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+    void hoverMoveEvent(QGraphicsSceneHoverEvent *event) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) override;
 
 private:
     QScatterSeries *m_series;
@@ -94,6 +98,7 @@ private:
     QRectF m_rect;
     QMap<QGraphicsItem *, QPointF> m_markerMap;
 
+    bool m_pointsVisible;
     bool m_pointLabelsVisible;
     qreal m_markerSize;
     QString m_pointLabelsFormat;
@@ -101,6 +106,8 @@ private:
     QColor m_pointLabelsColor;
     bool m_pointLabelsClipping;
 
+    QPointF m_lastHoveredPoint;
+    QPointF m_lastMousePos;
     bool m_mousePressed;
 };
 

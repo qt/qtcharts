@@ -258,13 +258,23 @@ bool XYChart::isEmpty()
 
 QPointF XYChart::matchForLightMarker(const QPointF &eventPos)
 {
-    if (m_series->lightMarker().isNull())
+    if (m_series->lightMarker().isNull()
+            && (m_series->selectedLightMarker().isNull()
+                || m_series->selectedPoints().isEmpty()))
         return QPointF(qQNaN(), qQNaN()); // 0,0 could actually be in points()
 
-    int markerWidth =  m_series->lightMarker().width();
-    int markerHeight =  m_series->lightMarker().height();
+    const bool useSelectedMarker = m_series->lightMarker().isNull();
 
-    for (const QPointF &dp : m_series->points()) {
+    QList<QPointF> points;
+    if (useSelectedMarker) {
+        const auto selectedPoints = m_series->selectedPoints();
+        for (const int &selectedPointIndex : selectedPoints)
+            points << m_series->at(selectedPointIndex);
+    } else {
+        points = m_series->points();
+    }
+
+    for (const QPointF &dp : points) {
         bool ok;
         const QPointF gp = domain()->calculateGeometryPoint(dp, ok);
         if (ok) {
@@ -274,9 +284,9 @@ QPointF XYChart::matchForLightMarker(const QPointF &eventPos)
             // but as there is a bunch of 'translations' and therefore inaccuracies,
             // so it is necessary to increase that margin to 2
             // (otherwise you can click next to an icon, get a click event but not match it)
-            QRectF r(gp.x() - (markerWidth / 2 + 2),
-                     gp.y() - (markerHeight / 2 + 2),
-                     markerWidth + 4, markerHeight + 4);
+            QRectF r(gp.x() - (m_series->markerSize() / 2 + 2),
+                     gp.y() - (m_series->markerSize() / 2 + 2),
+                     m_series->markerSize() + 4, m_series->markerSize() + 4);
 
             if (r.contains(eventPos))
                 return dp;
