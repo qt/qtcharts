@@ -50,17 +50,20 @@ ScatterChartItem::ScatterChartItem(QScatterSeries *series, QGraphicsItem *item)
       m_items(this),
       m_visible(true),
       m_markerShape(QScatterSeries::MarkerShapeRectangle),
+      m_pointsVisible(true),
       m_pointLabelsVisible(false),
       m_markerSize(series->markerSize()),
       m_pointLabelsFormat(series->pointLabelsFormat()),
       m_pointLabelsFont(series->pointLabelsFont()),
       m_pointLabelsColor(series->pointLabelsColor()),
       m_pointLabelsClipping(true),
+      m_lastHoveredPoint(QPointF(qQNaN(), qQNaN())),
       m_mousePressed(false)
 {
     connect(series->d_func(), &QXYSeriesPrivate::seriesUpdated,
             this, &ScatterChartItem::handleSeriesUpdated);
     connect(series, &QXYSeries::lightMarkerChanged, this, &ScatterChartItem::handleSeriesUpdated);
+    connect(series, &QXYSeries::selectedLightMarkerChanged, this, &ScatterChartItem::handleSeriesUpdated);
     connect(series, &QXYSeries::markerSizeChanged, this, &ScatterChartItem::handleSeriesUpdated);
     connect(series, &QXYSeries::visibleChanged, this, &ScatterChartItem::handleSeriesUpdated);
     connect(series, &QXYSeries::opacityChanged, this, &ScatterChartItem::handleSeriesUpdated);
@@ -81,8 +84,9 @@ ScatterChartItem::ScatterChartItem(QScatterSeries *series, QGraphicsItem *item)
     connect(series, &QScatterSeries::pointsConfigurationChanged,
             this, &ScatterChartItem::handleSeriesUpdated);
 
+    setAcceptHoverEvents(true);
     setZValue(ChartPresenter::ScatterSeriesZValue);
-    setFlags(QGraphicsItem::ItemClipsChildrenToShape);
+    setFlags(QGraphicsItem::ItemClipsChildrenToShape | QGraphicsItem::ItemIsSelectable);
 
     handleSeriesUpdated();
 
@@ -281,7 +285,7 @@ void ScatterChartItem::updateGeometry()
             if (!m_visible || offGridStatus.at(i)) {
                 item->setVisible(false);
             } else {
-                bool drawPoint = true;
+                bool drawPoint = m_pointsVisible;
                 if (m_pointsConfiguration.contains(i)) {
                     const auto &conf = m_pointsConfiguration[i];
 
@@ -298,6 +302,9 @@ void ScatterChartItem::updateGeometry()
                     }
                 }
 
+                if (m_series->isPointSelected(i))
+                    drawPoint = m_series->selectedLightMarker().isNull();
+
                 item->setVisible(drawPoint);
             }
         }
@@ -305,6 +312,62 @@ void ScatterChartItem::updateGeometry()
         prepareGeometryChange();
         m_rect = clipRect;
     }
+}
+
+void ScatterChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    QPointF matchedP = matchForLightMarker(event->pos());
+    if (!qIsNaN(matchedP.x())) {
+        emit XYChart::pressed(matchedP);
+        m_lastMousePos = event->pos();
+        m_mousePressed = true;
+    }
+
+    QGraphicsItem::mousePressEvent(event);
+}
+
+void ScatterChartItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
+{
+    QPointF matchedP = matchForLightMarker(event->pos());
+    if (!qIsNaN(matchedP.x())) {
+        if (matchedP != m_lastHoveredPoint) {
+            if (!qIsNaN(m_lastHoveredPoint.x()))
+                emit XYChart::hovered(m_lastHoveredPoint, false);
+
+            m_lastHoveredPoint = matchedP;
+            emit XYChart::hovered(matchedP, true);
+        }
+    } else if (!qIsNaN(m_lastHoveredPoint.x())) {
+        emit XYChart::hovered(m_lastHoveredPoint, false);
+        m_lastHoveredPoint = QPointF(qQNaN(), qQNaN());
+    }
+
+    QGraphicsItem::hoverMoveEvent(event);
+}
+
+void ScatterChartItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+    QPointF result;
+    QPointF matchedP = matchForLightMarker(m_lastMousePos);
+    if (!qIsNaN(matchedP.x()) && m_mousePressed) {
+        result = matchedP;
+        emit XYChart::released(result);
+        emit XYChart::clicked(result);
+    }
+
+    m_mousePressed = false;
+    QGraphicsItem::mouseReleaseEvent(event);
+}
+
+void ScatterChartItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
+{
+    QPointF matchedP = matchForLightMarker(event->pos());
+    if (!qIsNaN(matchedP.x()))
+        emit XYChart::doubleClicked(matchedP);
+    else
+        emit XYChart::doubleClicked(domain()->calculateDomainPoint(m_lastMousePos));
+
+    QGraphicsItem::mouseDoubleClickEvent(event);
 }
 
 void ScatterChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -315,8 +378,14 @@ void ScatterChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
     if (m_series->useOpenGL())
         return;
 
-    // Draw markers if a marker has been set (set to QImage() to disable)
-    if (!m_series->lightMarker().isNull()) {
+    QRectF clipRect = QRectF(QPointF(0, 0), domain()->size());
+
+    painter->save();
+    painter->setClipRect(clipRect);
+
+    // Draw markers if a marker or marker for selected points only has been
+    // set (set to QImage() to disable)
+    if (!m_series->lightMarker().isNull() || !m_series->selectedLightMarker().isNull()) {
         const QImage &marker = m_series->lightMarker();
         const QImage &selectedMarker = m_series->selectedLightMarker();
         qreal markerHalfSize = m_markerSize / 2.0;
@@ -326,7 +395,7 @@ void ScatterChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
             // light markers are independent features. Therefore m_pointsVisible
             // is not used here as light markers are drawn if lightMarker is not null.
             // However points visibility configuration can be still used here.
-            bool drawPoint = true;
+            bool drawPoint = !m_series->lightMarker().isNull();
             if (m_pointsConfiguration.contains(i)) {
                 const auto &conf = m_pointsConfiguration[i];
 
@@ -349,11 +418,6 @@ void ScatterChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
             }
         }
     }
-
-    QRectF clipRect = QRectF(QPointF(0, 0), domain()->size());
-
-    painter->save();
-    painter->setClipRect(clipRect);
 
     if (m_series->bestFitLineVisible())
         m_series->d_func()->drawBestFitLine(painter, clipRect);
@@ -422,6 +486,7 @@ void ScatterChartItem::handleSeriesUpdated()
     m_pointsConfigurationDirty = m_series->pointsConfiguration() != m_pointsConfiguration;
 
     bool recreate = m_visible != m_series->isVisible()
+                    || m_pointsVisible != m_series->pointsVisible()
                     || m_markerSize != m_series->markerSize()
                     || m_markerShape != m_series->markerShape()
                     || m_selectedColor != m_series->selectedColor()
@@ -432,6 +497,7 @@ void ScatterChartItem::handleSeriesUpdated()
     m_markerShape = m_series->markerShape();
     setVisible(m_visible);
     setOpacity(m_series->opacity());
+    m_pointsVisible = m_series->pointsVisible();
     m_pointLabelsFormat = m_series->pointLabelsFormat();
     m_pointLabelsVisible = m_series->pointLabelsVisible();
     m_pointLabelsFont = m_series->pointLabelsFont();

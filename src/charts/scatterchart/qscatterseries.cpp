@@ -206,6 +206,8 @@ QT_BEGIN_NAMESPACE
 QScatterSeries::QScatterSeries(QObject *parent)
     : QXYSeries(*new QScatterSeriesPrivate(this), parent)
 {
+    setPointsVisible(true);
+
     // Emit QScatterSeries' markerSizeChanged signal as it's not the same as
     // QXYSeries' markerSizeChanged
     connect(this, &QXYSeries::markerSizeChanged, this, &QScatterSeries::markerSizeChanged);
