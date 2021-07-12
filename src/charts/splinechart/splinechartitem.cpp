@@ -70,8 +70,13 @@ SplineChartItem::SplineChartItem(QSplineSeries *series, QGraphicsItem *item)
             this, &SplineChartItem::handleSeriesUpdated);
     connect(series, &QXYSeries::pointLabelsClippingChanged,
             this, &SplineChartItem::handleSeriesUpdated);
+    connect(series, &QSplineSeries::selectedColorChanged,
+            this, &SplineChartItem::handleSeriesUpdated);
     connect(series, &QLineSeries::selectedPointsChanged,
             this, &SplineChartItem::handleSeriesUpdated);
+    connect(series, &QSplineSeries::pointsConfigurationChanged,
+            this, &SplineChartItem::handleSeriesUpdated);
+
     handleSeriesUpdated();
 }
 
@@ -454,6 +459,8 @@ void SplineChartItem::handleSeriesUpdated()
     m_markerSize = m_series->markerSize();
     m_pointLabelsFont = m_series->pointLabelsFont();
     m_pointLabelsColor = m_series->pointLabelsColor();
+    m_selectedPoints = m_series->selectedPoints();
+    m_selectedColor = m_series->selectedColor();
     bool labelClippingChanged = m_pointLabelsClipping != m_series->pointLabelsClipping();
     m_pointLabelsClipping = m_series->pointLabelsClipping();
     // Update whole chart in case label clipping changed as labels can be outside series area
@@ -496,14 +503,6 @@ void SplineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
         m_series->d_func()->drawBestFitLine(painter, clipRect);
 
     painter->drawPath(m_path);
-
-    if (m_pointsVisible) {
-        painter->setPen(m_pointPen);
-        if (m_series->chart()->chartType() == QChart::ChartTypePolar)
-            painter->drawPoints(m_visiblePoints);
-        else
-            painter->drawPoints(geometryPoints());
-    }
 
     int pointLabelsOffset = m_linePen.width() / 2;
 
@@ -553,6 +552,65 @@ void SplineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
         m_series->d_func()->drawSeriesPointLabels(painter, m_points, pointLabelsOffset);
     }
 
+    painter->setPen(m_pointPen);
+    if (m_series->chart()->chartType() == QChart::ChartTypePolar && m_pointsVisible) {
+        painter->drawPoints(m_visiblePoints);
+    } else {
+        const bool simpleDraw = m_selectedPoints.isEmpty() && m_pointsConfiguration.isEmpty();
+        painter->setPen(Qt::NoPen);
+        painter->setBrush(m_linePen.color());
+        painter->setClipping(true);
+
+        if (m_pointsVisible && simpleDraw && m_series->lightMarker().isNull()) {
+            for (int i = 0; i < m_points.size(); ++i)
+                painter->drawEllipse(m_points.at(i), m_markerSize, m_markerSize);
+        } else if (!simpleDraw) {
+            qreal ptSize = m_markerSize;
+            for (int i = 0; i < m_points.size(); ++i) {
+                if (clipRect.contains(m_points.at(i))) {
+                    painter->save();
+                    ptSize = m_markerSize;
+                    bool drawPoint = m_pointsVisible && m_series->lightMarker().isNull();
+                    if (m_pointsConfiguration.contains(i)) {
+                        const auto &conf = m_pointsConfiguration[i];
+                        if (conf.contains(QXYSeries::PointConfiguration::Visibility)) {
+                            drawPoint =
+                                    m_pointsConfiguration[i][QXYSeries::PointConfiguration::Visibility]
+                                    .toBool();
+                        }
+
+                        if (drawPoint) {
+                            if (conf.contains(QXYSeries::PointConfiguration::Size)) {
+                                ptSize = m_pointsConfiguration[i][QXYSeries::PointConfiguration::Size]
+                                        .toReal();
+                            }
+
+                            if (conf.contains(QXYSeries::PointConfiguration::Color)) {
+                                painter->setBrush(
+                                            m_pointsConfiguration[i][QXYSeries::PointConfiguration::Color]
+                                        .value<QColor>());
+                            }
+                        }
+                    }
+
+                    if (m_series->isPointSelected(i)) {
+                        // Selected points are drawn regardless of m_pointsVisible settings and
+                        // custom point configuration. However, they are not drawn if light markers
+                        // are used. The reason of this is to avoid displaying selected point
+                        // over selected light marker.
+                        drawPoint = m_series->selectedLightMarker().isNull();
+                        ptSize = ptSize * 1.5;
+                        if (m_selectedColor.isValid())
+                            painter->setBrush(m_selectedColor);
+                    }
+
+                    if (drawPoint)
+                        painter->drawEllipse(m_points.at(i), ptSize, ptSize);
+                    painter->restore();
+                }
+            }
+        }
+    }
     painter->restore();
 }
 
