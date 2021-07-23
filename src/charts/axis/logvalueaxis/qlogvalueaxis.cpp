@@ -154,7 +154,7 @@ QT_BEGIN_NAMESPACE
   \sa QString::asprintf()
 */
 /*!
-  \qmlproperty real LogValueAxis::labelFormat
+  \qmlproperty string LogValueAxis::labelFormat
   The label format of the axis.
 
   The format string supports the following conversion specifiers, length modifiers, and flags
