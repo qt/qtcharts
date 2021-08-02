@@ -59,6 +59,10 @@
     \snippet doc_src_qtcharts.pro 0
     \endif
 
+    \section1 Module Evolution
+    \l{Changes to Qt Charts} lists important changes in the module API
+    and functionality that were done for the Qt 6 series of Qt.
+
     \section1 Licenses
 
     Qt Charts is available under commercial licenses from \l{The Qt Company}.
