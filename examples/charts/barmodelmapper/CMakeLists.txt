@@ -1,6 +1,6 @@
 # Generated from barmodelmapper.pro.
 
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.16)
 project(barmodelmapper LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
