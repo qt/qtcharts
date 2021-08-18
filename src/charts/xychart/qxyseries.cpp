@@ -1585,12 +1585,12 @@ const QImage &QXYSeries::lightMarker() const
 /*!
     Sets the image used for drawing markers on selected series's points to \a selectedLightMarker.
 
-    The default value is QImage(), meaning usual QXYSeries::lightMarker() will be painted.
+    The default value is QImage(), meaning usual lightMarker() will be painted.
 
-    This is an equivalent for QXYSeries::setSelectedColor() if you prefer light markers over
-    normal points, but you still want to distinguish selected points.
+    This is an equivalent for \l{selectedColor} if you prefer light markers over
+    normal points, but still want to distinguish selected points.
 
-    \sa QXYSeries::lightMarker(), QXYSeries::selectedColor(), QXYSeries::setPointSelected()
+    \sa lightMarker(), selectedColor, setPointSelected()
     \since 6.2
 */
 void QXYSeries::setSelectedLightMarker(const QImage &selectedLightMarker)
@@ -1605,14 +1605,14 @@ void QXYSeries::setSelectedLightMarker(const QImage &selectedLightMarker)
 }
 
 /*!
-    Returns the image used for drawing markers on selected series's points.
+    Returns the image used for drawing markers on selected series' points.
 
-    The default value is QImage(), meaning usual QXYSeries::lightMarker() will be painted.
+    The default value is QImage(), meaning usual lightMarker() will be painted.
 
-    This is an equivalent for QXYSeries::selectedColor() if you prefer light markers over
-    normal points, but you still want to distinguish selected points.
+    This is equivalent to \l{selectedColor} if you prefer light markers over
+    normal points, but still want to distinguish selected points.
 
-    \sa QXYSeries::lightMarker(), QXYSeries::selectedColor(), QXYSeries::setPointSelected()
+    \sa lightMarker(), selectedColor, setPointSelected()
     \since 6.2
 */
 const QImage &QXYSeries::selectedLightMarker() const
@@ -1622,7 +1622,7 @@ const QImage &QXYSeries::selectedLightMarker() const
 }
 
 /*!
-    Sets the size of the marker used to render points in the series.
+    Sets the \a size of the marker used to render points in the series.
 
     The default size is 15.0.
     \sa QScatterSeries::markerSize

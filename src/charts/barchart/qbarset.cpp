@@ -691,7 +691,7 @@ QColor QBarSet::selectedColor() const
 }
 
 /*!
-    Sets the color of the selected bars.
+    Sets the \a color of the selected bars.
     \sa selectedColor
     \since 6.2
 */
