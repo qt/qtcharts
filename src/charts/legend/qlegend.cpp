@@ -236,8 +236,8 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QLegend::attachedToChartChanged(bool)
-    This signal is emitted when the legend is attached to or detached from the legend.
+    \fn void QLegend::attachedToChartChanged(bool attached)
+    This signal is emitted when the legend is \a attached to or detached from the chart.
     \since 6.2
 */
 
