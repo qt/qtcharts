@@ -79,7 +79,6 @@ QT_BEGIN_NAMESPACE
 
 /*!
     \qmltype ChartView
-    \instantiates DeclarativeChart
     \inqmlmodule QtCharts
 
     \brief Manages the graphical representation of the chart's series, legends,

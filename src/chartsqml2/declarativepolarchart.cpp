@@ -35,7 +35,6 @@ QT_BEGIN_NAMESPACE
 /*!
     \qmltype PolarChartView
     \inherits ChartView
-    \instantiates DeclarativePolarChart
     \inqmlmodule QtCharts
 
     \brief Presents data in polar charts.
