@@ -31,10 +31,6 @@ qhp.QtCharts.virtualFolder    = qtcharts
 qhp.QtCharts.indexTitle       = Qt Charts
 qhp.QtCharts.indexRoot        =
 
-qhp.QtCharts.filterAttributes                  = qtcharts $QT_VERSION qtrefdoc
-qhp.QtCharts.customFilters.Qt.name             = QtCharts $QT_VERSION
-qhp.QtCharts.customFilters.Qt.filterAttributes = qtcharts $QT_VERSION
-
 qhp.QtCharts.subprojects = classes types examples
 
 qhp.QtCharts.subprojects.classes.title      = C++ Classes
