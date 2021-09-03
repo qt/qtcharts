@@ -1,3 +1,4 @@
+qt_path_join(destination ${QT_INSTALL_DIR} "${INSTALL_QMLDIR}/QtCharts/designer/default")
 qt_copy_or_install(
     FILES
         AreaSeries.qml
@@ -16,5 +17,5 @@ qt_copy_or_install(
         PolarLineSeries.qml
         PolarScatterSeries.qml
         PolarSplineSeries.qml
-    DESTINATION "${INSTALL_QMLDIR}/QtCharts/designer/default"
+    DESTINATION "${destination}"
 )
