@@ -1,3 +1,4 @@
+qt_path_join(destination ${QT_INSTALL_DIR} "${INSTALL_QMLDIR}/QtCharts/designer/images")
 qt_copy_or_install(
     FILES
         areaseries-chart-icon.png
@@ -32,5 +33,5 @@ qt_copy_or_install(
         scatterseries-polar-icon16.png
         splineseries-polar-icon.png
         splineseries-polar-icon16.png
-    DESTINATION "${INSTALL_QMLDIR}/QtCharts/designer/images"
+    DESTINATION "${destination}"
 )
