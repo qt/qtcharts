@@ -219,7 +219,7 @@ bool ChartDataSet::attachAxis(QAbstractSeries *series,QAbstractAxis *axis)
         return false;
     }
 
-    if (axis && !m_axisList.contains(axis)) {
+    if (!m_axisList.contains(axis)) {
         qWarning() << QObject::tr("Can not find axis on the chart.");
         return false;
     }
