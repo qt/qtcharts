@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -62,8 +62,8 @@ void LogXLogYDomain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY)
         m_minX = minX;
         m_maxX = maxX;
         axisXChanged = true;
-        qreal logMinX = std::log10(m_minX) / std::log10(m_logBaseX);
-        qreal logMaxX = std::log10(m_maxX) / std::log10(m_logBaseX);
+        qreal logMinX = qLn(m_minX) / qLn(m_logBaseX);
+        qreal logMaxX = qLn(m_maxX) / qLn(m_logBaseX);
         m_logLeftX = logMinX < logMaxX ? logMinX : logMaxX;
         m_logRightX = logMinX > logMaxX ? logMinX : logMaxX;
         if(!m_signalsBlocked)
@@ -74,8 +74,8 @@ void LogXLogYDomain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY)
         m_minY = minY;
         m_maxY = maxY;
         axisYChanged = true;
-        qreal logMinY = std::log10(m_minY) / std::log10(m_logBaseY);
-        qreal logMaxY = std::log10(m_maxY) / std::log10(m_logBaseY);
+        qreal logMinY = qLn(m_minY) / qLn(m_logBaseY);
+        qreal logMaxY = qLn(m_maxY) / qLn(m_logBaseY);
         m_logLeftY = logMinY < logMaxY ? logMinY : logMaxY;
         m_logRightY = logMinY > logMaxY ? logMinY : logMaxY;
         if (!m_signalsBlocked)
@@ -166,18 +166,18 @@ QPointF LogXLogYDomain::calculateGeometryPoint(const QPointF &point, bool &ok) c
     qreal x(0);
     qreal y(0);
     if (point.x() > 0 && point.y() > 0) {
-        x = ((std::log10(point.x()) / std::log10(m_logBaseX)) - m_logLeftX) * deltaX;
-        y = ((std::log10(point.y()) / std::log10(m_logBaseY)) - m_logLeftY) * deltaY;
+        x = ((qLn(point.x()) / qLn(m_logBaseX)) - m_logLeftX) * deltaX;
+        y = ((qLn(point.y()) / qLn(m_logBaseY)) - m_logLeftY) * deltaY;
         ok = true;
     } else {
         qWarning() << "Logarithms of zero and negative values are undefined.";
         ok = false;
         if (point.x() > 0)
-            x = ((std::log10(point.x()) / std::log10(m_logBaseX)) - m_logLeftX) * deltaX;
+            x = ((qLn(point.x()) / qLn(m_logBaseX)) - m_logLeftX) * deltaX;
         else
             x = 0;
         if (point.y() > 0)
-            y = ((std::log10(point.y()) / std::log10(m_logBaseY)) - m_logLeftY) * deltaY;
+            y = ((qLn(point.y()) / qLn(m_logBaseY)) - m_logLeftY) * deltaY;
         else
             y = 0;
     }
@@ -198,10 +198,10 @@ QList<QPointF> LogXLogYDomain::calculateGeometryPoints(const QList<QPointF> &lis
 
     for (int i = 0; i < list.count(); ++i) {
         if (list[i].x() > 0 && list[i].y() > 0) {
-            qreal x = ((std::log10(list[i].x()) / std::log10(m_logBaseX)) - m_logLeftX) * deltaX;
+            qreal x = ((qLn(list[i].x()) / qLn(m_logBaseX)) - m_logLeftX) * deltaX;
             if (m_reverseX)
                 x = m_size.width() - x;
-            qreal y = ((std::log10(list[i].y()) / std::log10(m_logBaseY)) - m_logLeftY) * deltaY;
+            qreal y = ((qLn(list[i].y()) / qLn(m_logBaseY)) - m_logLeftY) * deltaY;
             if (!m_reverseY)
                 y = m_size.height() - y;
             result[i].setX(x);
@@ -260,8 +260,8 @@ bool LogXLogYDomain::detachAxis(QAbstractAxis *axis)
 void LogXLogYDomain::handleVerticalAxisBaseChanged(qreal baseY)
 {
     m_logBaseY = baseY;
-    qreal logMinY = std::log10(m_minY) / std::log10(m_logBaseY);
-    qreal logMaxY = std::log10(m_maxY) / std::log10(m_logBaseY);
+    qreal logMinY = qLn(m_minY) / qLn(m_logBaseY);
+    qreal logMaxY = qLn(m_maxY) / qLn(m_logBaseY);
     m_logLeftY = logMinY < logMaxY ? logMinY : logMaxY;
     m_logRightY = logMinY > logMaxY ? logMinY : logMaxY;
     emit updated();
@@ -270,8 +270,8 @@ void LogXLogYDomain::handleVerticalAxisBaseChanged(qreal baseY)
 void LogXLogYDomain::handleHorizontalAxisBaseChanged(qreal baseX)
 {
     m_logBaseX = baseX;
-    qreal logMinX = std::log10(m_minX) / std::log10(m_logBaseX);
-    qreal logMaxX = std::log10(m_maxX) / std::log10(m_logBaseX);
+    qreal logMinX = qLn(m_minX) / qLn(m_logBaseX);
+    qreal logMaxX = qLn(m_maxX) / qLn(m_logBaseX);
     m_logLeftX = logMinX < logMaxX ? logMinX : logMaxX;
     m_logRightX = logMinX > logMaxX ? logMinX : logMaxX;
     emit updated();

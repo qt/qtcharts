@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -62,8 +62,8 @@ void LogXLogYPolarDomain::setRange(qreal minX, qreal maxX, qreal minY, qreal max
         m_minX = minX;
         m_maxX = maxX;
         axisXChanged = true;
-        qreal logMinX = std::log10(m_minX) / std::log10(m_logBaseX);
-        qreal logMaxX = std::log10(m_maxX) / std::log10(m_logBaseX);
+        qreal logMinX = qLn(m_minX) / qLn(m_logBaseX);
+        qreal logMaxX = qLn(m_maxX) / qLn(m_logBaseX);
         m_logLeftX = logMinX < logMaxX ? logMinX : logMaxX;
         m_logRightX = logMinX > logMaxX ? logMinX : logMaxX;
         if (!m_signalsBlocked)
@@ -74,8 +74,8 @@ void LogXLogYPolarDomain::setRange(qreal minX, qreal maxX, qreal minY, qreal max
         m_minY = minY;
         m_maxY = maxY;
         axisYChanged = true;
-        qreal logMinY = std::log10(m_minY) / std::log10(m_logBaseY);
-        qreal logMaxY = std::log10(m_maxY) / std::log10(m_logBaseY);
+        qreal logMinY = qLn(m_minY) / qLn(m_logBaseY);
+        qreal logMaxY = qLn(m_maxY) / qLn(m_logBaseY);
         m_logInnerY = logMinY < logMaxY ? logMinY : logMaxY;
         m_logOuterY = logMinY > logMaxY ? logMinY : logMaxY;
         if (!m_signalsBlocked)
@@ -155,7 +155,7 @@ qreal LogXLogYPolarDomain::toAngularCoordinate(qreal value, bool &ok) const
     } else {
         ok =  true;
         const qreal tickSpan = 360.0 / qAbs(m_logRightX - m_logLeftX);
-        const qreal logValue = std::log10(value) / std::log10(m_logBaseX);
+        const qreal logValue = qLn(value) / qLn(m_logBaseX);
         const qreal valueDelta = logValue - m_logLeftX;
 
         retVal = valueDelta * tickSpan;
@@ -172,7 +172,7 @@ qreal LogXLogYPolarDomain::toRadialCoordinate(qreal value, bool &ok) const
     } else {
         ok =  true;
         const qreal tickSpan = m_radius / qAbs(m_logOuterY - m_logInnerY);
-        const qreal logValue = std::log10(value) / std::log10(m_logBaseY);
+        const qreal logValue = qLn(value) / qLn(m_logBaseY);
         const qreal valueDelta = logValue - m_logInnerY;
 
         retVal = valueDelta * tickSpan;
@@ -234,8 +234,8 @@ bool LogXLogYPolarDomain::detachAxis(QAbstractAxis *axis)
 void LogXLogYPolarDomain::handleHorizontalAxisBaseChanged(qreal baseX)
 {
     m_logBaseX = baseX;
-    qreal logMinX = std::log10(m_minX) / std::log10(m_logBaseX);
-    qreal logMaxX = std::log10(m_maxX) / std::log10(m_logBaseX);
+    qreal logMinX = qLn(m_minX) / qLn(m_logBaseX);
+    qreal logMaxX = qLn(m_maxX) / qLn(m_logBaseX);
     m_logLeftX = logMinX < logMaxX ? logMinX : logMaxX;
     m_logRightX = logMinX > logMaxX ? logMinX : logMaxX;
     emit updated();
@@ -244,8 +244,8 @@ void LogXLogYPolarDomain::handleHorizontalAxisBaseChanged(qreal baseX)
 void LogXLogYPolarDomain::handleVerticalAxisBaseChanged(qreal baseY)
 {
     m_logBaseY = baseY;
-    qreal logMinY = std::log10(m_minY) / std::log10(m_logBaseY);
-    qreal logMaxY = std::log10(m_maxY) / std::log10(m_logBaseY);
+    qreal logMinY = qLn(m_minY) / qLn(m_logBaseY);
+    qreal logMaxY = qLn(m_maxY) / qLn(m_logBaseY);
     m_logInnerY = logMinY < logMaxY ? logMinY : logMaxY;
     m_logOuterY = logMinY > logMaxY ? logMinY : logMaxY;
     emit updated();

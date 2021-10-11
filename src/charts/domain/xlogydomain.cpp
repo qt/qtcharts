@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -66,8 +66,8 @@ void XLogYDomain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY)
         m_minY = minY;
         m_maxY = maxY;
         axisYChanged = true;
-        qreal logMinY = std::log10(m_minY) / std::log10(m_logBaseY);
-        qreal logMaxY = std::log10(m_maxY) / std::log10(m_logBaseY);
+        qreal logMinY = qLn(m_minY) / qLn(m_logBaseY);
+        qreal logMaxY = qLn(m_maxY) / qLn(m_logBaseY);
         m_logLeftY = logMinY < logMaxY ? logMinY : logMaxY;
         m_logRightY = logMinY > logMaxY ? logMinY : logMaxY;
         if (!m_signalsBlocked)
@@ -162,7 +162,7 @@ QPointF XLogYDomain::calculateGeometryPoint(const QPointF &point, bool &ok) cons
         x = m_size.width() - x;
     qreal y(0);
     if (point.y() > 0) {
-        y = ((std::log10(point.y()) / std::log10(m_logBaseY)) - m_logLeftY) * deltaY;
+        y = ((qLn(point.y()) / qLn(m_logBaseY)) - m_logLeftY) * deltaY;
         if (!m_reverseY)
             y = m_size.height() - y;
         ok = true;
@@ -187,7 +187,7 @@ QList<QPointF> XLogYDomain::calculateGeometryPoints(const QList<QPointF> &list) 
             qreal x = (list[i].x() - m_minX) * deltaX;
             if (m_reverseX)
                 x = m_size.width() - x;
-            qreal y = ((std::log10(list[i].y()) / std::log10(m_logBaseY)) - m_logLeftY) * deltaY;
+            qreal y = ((qLn(list[i].y()) / qLn(m_logBaseY)) - m_logLeftY) * deltaY;
             if (!m_reverseY)
                 y = m_size.height() - y;
             result[i].setX(x);
@@ -236,8 +236,8 @@ bool XLogYDomain::detachAxis(QAbstractAxis *axis)
 void XLogYDomain::handleVerticalAxisBaseChanged(qreal baseY)
 {
     m_logBaseY = baseY;
-    qreal logMinY = std::log10(m_minY) / std::log10(m_logBaseY);
-    qreal logMaxY = std::log10(m_maxY) / std::log10(m_logBaseY);
+    qreal logMinY = qLn(m_minY) / qLn(m_logBaseY);
+    qreal logMaxY = qLn(m_maxY) / qLn(m_logBaseY);
     m_logLeftY = logMinY < logMaxY ? logMinY : logMaxY;
     m_logRightY = logMinY > logMaxY ? logMinY : logMaxY;
     emit updated();

@@ -53,8 +53,8 @@ QList<qreal> ChartLogValueAxisX::calculateLayout() const
     QList<qreal> points;
     points.resize(m_axis->tickCount());
 
-    const qreal logMax = std::log10(m_axis->max()) / std::log10(m_axis->base());
-    const qreal logMin = std::log10(m_axis->min()) / std::log10(m_axis->base());
+    const qreal logMax = qLn(m_axis->max()) / qLn(m_axis->base());
+    const qreal logMin = qLn(m_axis->min()) / qLn(m_axis->base());
     const qreal leftEdge = qMin(logMin, logMax);
     const qreal ceilEdge = std::ceil(leftEdge);
 

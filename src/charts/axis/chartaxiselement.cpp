@@ -555,12 +555,7 @@ QStringList ChartAxisElement::createLogValueLabels(qreal min, qreal max, qreal b
     if (max <= min || ticks < 1)
         return labels;
 
-    int firstTick;
-    if (base > 1)
-        firstTick = qCeil(std::log10(min) / std::log10(base));
-    else
-        firstTick = qCeil(std::log10(max) / std::log10(base));
-
+    const int firstTick = qCeil(qLn(base > 1 ? min : max) / qLn(base));
     if (format.isEmpty()) {
         int n = 0;
         if (ticks > 1)

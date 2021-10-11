@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -55,8 +55,8 @@ QList<qreal> PolarChartLogValueAxisAngular::calculateLayout() const
     QList<qreal> points;
     points.resize(logValueAxis->tickCount());
 
-    const qreal logMax = std::log10(logValueAxis->max()) / std::log10(logValueAxis->base());
-    const qreal logMin = std::log10(logValueAxis->min()) / std::log10(logValueAxis->base());
+    const qreal logMax = qLn(logValueAxis->max()) / qLn(logValueAxis->base());
+    const qreal logMin = qLn(logValueAxis->min()) / qLn(logValueAxis->base());
     const qreal startEdge = qMin(logMin, logMax);
     const qreal delta = 360.0 / qAbs(logMax - logMin);
     const qreal initialSpan = (std::ceil(startEdge) - startEdge) * delta;
