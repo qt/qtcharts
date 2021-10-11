@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -92,18 +92,10 @@ QSizeF ChartLogValueAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint
 {
     Q_UNUSED(constraint);
 
-    QSizeF sh;
-
-    QSizeF base = VerticalAxis::sizeHint(which, constraint);
+    const QSizeF base = VerticalAxis::sizeHint(which, constraint);
+    const int tickCount = m_axis->tickCount();
     QStringList ticksList;
-    qreal logMax = std::log10(m_axis->max()) / std::log10(m_axis->base());
-    qreal logMin = std::log10(m_axis->min()) / std::log10(m_axis->base());
-    int tickCount = qAbs(qCeil(logMax) - qCeil(logMin));
-
-    // If the high edge sits exactly on the tick value, add a tick
-    qreal highValue = logMin < logMax ? logMax : logMin;
-    if (qFuzzyCompare(highValue, std::ceil(highValue)))
-        tickCount++;
+    QSizeF sh;
 
     if (m_axis->max() > m_axis->min() && tickCount > 0)
         ticksList = createLogValueLabels(m_axis->min(), m_axis->max(), m_axis->base(), tickCount, m_axis->labelFormat());
