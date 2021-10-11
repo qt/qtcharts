@@ -167,7 +167,9 @@ QRectF CartesianChartLayout::calculateAxisGeometry(const QRectF &geometry,
     top.setHeight(qMax(labelExtents.height(), top.height()));
     bottom.setHeight(qMax(labelExtents.height(), bottom.height()));
 
-    QRectF chartRect = geometry.adjusted(qMax(left.width(),minWidth/2), qMax(top.height(), minHeight/2),-qMax(right.width(),minWidth/2),-qMax(bottom.height(),minHeight/2));
+    QRectF chartRect = geometry.adjusted(
+            qMax(left.width(), minWidth / 2), qMax(top.height(), minHeight / 2),
+            -qMax(right.width(), minWidth / 2), -qMax(bottom.height(), minHeight / 2));
 
     qreal leftOffset = 0;
     qreal rightOffset = 0;
@@ -192,14 +194,18 @@ QRectF CartesianChartLayout::calculateAxisGeometry(const QRectF &geometry,
             if (leftSqueezeRatio < 1.0)
                 width *= leftSqueezeRatio;
             leftOffset+=width;
-            axis->setGeometry(QRect(chartRect.left()-leftOffset, geometry.top(),width, geometry.bottom()),chartRect);
+            axis->setGeometry(
+                    QRect(chartRect.left() - leftOffset, geometry.top(), width, geometry.bottom()),
+                    chartRect);
             break;
         }
         case Qt::AlignRight:{
             qreal width = size.width();
             if (rightSqueezeRatio < 1.0)
                 width *= rightSqueezeRatio;
-            axis->setGeometry(QRect(chartRect.right()+rightOffset,geometry.top(),width,geometry.bottom()),chartRect);
+            axis->setGeometry(QRect(chartRect.right() + rightOffset, geometry.top(),
+                                    width, geometry.bottom()),
+                              chartRect);
             rightOffset+=width;
             break;
         }
@@ -207,7 +213,9 @@ QRectF CartesianChartLayout::calculateAxisGeometry(const QRectF &geometry,
             qreal height = size.height();
             if (topSqueezeRatio < 1.0)
                 height *= topSqueezeRatio;
-            axis->setGeometry(QRect(geometry.left(), chartRect.top() - topOffset - height, geometry.width(), height), chartRect);
+            axis->setGeometry(QRect(geometry.left(), chartRect.top() - topOffset - height,
+                                    geometry.width(), height),
+                              chartRect);
             topOffset += height;
             break;
         }
@@ -215,7 +223,9 @@ QRectF CartesianChartLayout::calculateAxisGeometry(const QRectF &geometry,
             qreal height = size.height();
             if (bottomSqueezeRatio < 1.0)
                 height *= bottomSqueezeRatio;
-            axis->setGeometry(QRect(geometry.left(), chartRect.bottom() + bottomOffset, geometry.width(), height), chartRect);
+            axis->setGeometry(QRect(geometry.left(), chartRect.bottom() + bottomOffset,
+                                    geometry.width(), height),
+                              chartRect);
             bottomOffset += height;
             break;
         }
@@ -256,7 +266,8 @@ QRectF CartesianChartLayout::calculateAxisMinimum(const QRectF &minimum, const Q
             break;
         }
     }
-    return minimum.adjusted(0, 0, left.width() + right.width() + qMax(top.width(), bottom.width()), top.height() + bottom.height() + qMax(left.height(), right.height()));
+    return minimum.adjusted(0, 0, left.width() + right.width() + qMax(top.width(), bottom.width()),
+                            top.height() + bottom.height() + qMax(left.height(), right.height()));
 }
 
 QT_END_NAMESPACE

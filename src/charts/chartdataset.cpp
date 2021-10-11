@@ -237,7 +237,8 @@ bool ChartDataSet::attachAxis(QAbstractSeries *series,QAbstractAxis *axis)
     AbstractDomain *domain = series->d_ptr->domain();
     AbstractDomain::DomainType type = selectDomain(attachedAxisList << axis);
 
-    if (type == AbstractDomain::UndefinedDomain) return false;
+    if (type == AbstractDomain::UndefinedDomain)
+        return false;
 
     if (domain->type() != type) {
         AbstractDomain *old = domain;
