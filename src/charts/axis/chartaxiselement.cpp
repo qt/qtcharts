@@ -476,6 +476,21 @@ void ChartAxisElement::prepareColorScale(const qreal width, const qreal height)
     }
 }
 
+static int precisionDigits(qreal min, qreal max, int ticks)
+{
+    // How many digits of each tick value should we display after the decimal point ?
+    // For example tick marks 1.002 and 1.003 have a difference of 0.001 and need 3 decimals.
+    if (ticks > 1) {
+        // Number of digits after decimal that *don't* change between ticks:
+        const int gap = -qFloor(std::log10((max - min) / (ticks - 1)));
+        if (gap > 0)
+            return gap + 1;
+    }
+    // We want at least one digit after the decimal point even when digits
+    // before are changing, or when we only have a single tick-mark:
+    return 1;
+}
+
 QStringList ChartAxisElement::createValueLabels(qreal min, qreal max, int ticks,
                                                 qreal tickInterval, qreal tickAnchor,
                                                 QValueAxis::TickType tickType,
@@ -487,11 +502,7 @@ QStringList ChartAxisElement::createValueLabels(qreal min, qreal max, int ticks,
         return labels;
 
     if (format.isEmpty()) {
-        // Calculate how many decimal digits are needed to show difference between ticks,
-        // for example tick marks 1.002 and 1.003 have a difference of 0.001 and need 3 decimals.
-        // For differences >= 1 (positive log10) use always 1 decimal.
-        double l10 = std::log10((max - min) / (ticks - 1));
-        int n = qMax(-qFloor(l10), 0) + 1;
+        const int n = precisionDigits(min, max, ticks);
         if (tickType == QValueAxis::TicksFixed) {
             for (int i = 0; i < ticks; i++) {
                 qreal value = min + (i * (max - min) / (ticks - 1));
@@ -557,10 +568,7 @@ QStringList ChartAxisElement::createLogValueLabels(qreal min, qreal max, qreal b
 
     const int firstTick = qCeil(qLn(base > 1 ? min : max) / qLn(base));
     if (format.isEmpty()) {
-        int n = 0;
-        if (ticks > 1)
-            n = qMax(-qFloor(std::log10((max - min) / (ticks - 1))), 0);
-        n++;
+        const int n = precisionDigits(min, max, ticks);
         for (int i = firstTick; i < ticks + firstTick; i++) {
             qreal value = qPow(base, i);
             labels << presenter()->numberToString(value, 'f', n);
@@ -616,7 +624,7 @@ QStringList ChartAxisElement::createColorLabels(qreal min, qreal max, int ticks)
     if (max <= min || ticks < 1)
         return labels;
 
-    int n = qMax(int(-qFloor(std::log10((max - min) / (ticks - 1)))), 0) + 1;
+    const int n = precisionDigits(min, max, ticks);
     for (int i = 0; i < ticks; ++i) {
         qreal value = min + (i * (max - min) / (ticks - 1));
         labels << presenter()->numberToString(value, 'f', n);
