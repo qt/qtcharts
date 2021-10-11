@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -62,7 +62,7 @@ public:
     void removeSeries(QAbstractSeries *series);
     QList<QAbstractSeries *> series() const;
 
-    void addAxis(QAbstractAxis *axis,Qt::Alignment aligment);
+    void addAxis(QAbstractAxis *axis,Qt::Alignment alignment);
     void removeAxis(QAbstractAxis *axis);
     QList<QAbstractAxis*> axes() const;
 

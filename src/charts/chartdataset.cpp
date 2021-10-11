@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -119,14 +119,14 @@ void ChartDataSet::addSeries(QAbstractSeries *series)
 /*
  * This method adds axis to chartdataset, axis ownership is taken from caller.
  */
-void ChartDataSet::addAxis(QAbstractAxis *axis, Qt::Alignment aligment)
+void ChartDataSet::addAxis(QAbstractAxis *axis, Qt::Alignment alignment)
 {
     if (m_axisList.contains(axis)) {
         qWarning() << QObject::tr("Can not add axis. Axis already on the chart.");
         return;
     }
 
-    axis->d_ptr->setAlignment(aligment);
+    axis->d_ptr->setAlignment(alignment);
 
     if (!axis->alignment()) {
         qWarning() << QObject::tr("No alignment specified !");

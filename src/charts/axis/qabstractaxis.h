@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -76,7 +76,7 @@ class Q_CHARTS_EXPORT QAbstractAxis : public QObject
     Q_PROPERTY(QFont titleFont READ titleFont WRITE setTitleFont NOTIFY titleFontChanged)
     //orientation
     Q_PROPERTY(Qt::Orientation orientation READ orientation)
-    //aligment
+    //alignment
     Q_PROPERTY(Qt::Alignment alignment READ alignment)
     Q_PROPERTY(bool reverse READ isReverse WRITE setReverse NOTIFY reverseChanged)
 
