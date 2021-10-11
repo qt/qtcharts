@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -42,20 +42,18 @@
 
 QT_BEGIN_NAMESPACE
 
-static const char *labelFormatMatchString = "%[\\-\\+#\\s\\d\\.\\'lhjztL]*([dicuoxfegXFEG])";
-static const char *labelFormatMatchLocalizedString = "^([^%]*)%\\.(\\d+)([defgiEG])(.*)$";
-static QRegularExpression *labelFormatMatcher = 0;
-static QRegularExpression *labelFormatMatcherLocalized = 0;
-class StaticLabelFormatMatcherDeleter
+static const QRegularExpression &labelFormatMatcher()
 {
-public:
-    StaticLabelFormatMatcherDeleter() {}
-    ~StaticLabelFormatMatcherDeleter() {
-        delete labelFormatMatcher;
-        delete labelFormatMatcherLocalized;
-    }
-};
-static StaticLabelFormatMatcherDeleter staticLabelFormatMatcherDeleter;
+    static const QRegularExpression re(
+            QLatin1String("%[\\-\\+#\\s\\d\\.\\'lhjztL]*([dicuoxfegXFEG])"));
+    return re;
+}
+
+static const QRegularExpression &labelFormatMatcherLocalized()
+{
+    static const QRegularExpression re(QLatin1String("^([^%]*)%\\.(\\d+)([defgiEG])(.*)$"));
+    return re;
+}
 
 ChartAxisElement::ChartAxisElement(QAbstractAxis *axis, QGraphicsItem *item, bool intervalAxis)
     : ChartElement(item),
@@ -516,11 +514,8 @@ QStringList ChartAxisElement::createValueLabels(qreal min, qreal max, int ticks,
         QString postStr;
         int precision = 6; // Six is the default precision in Qt API
         if (presenter()->localizeNumbers()) {
-            if (!labelFormatMatcherLocalized)
-                labelFormatMatcherLocalized
-                        = new QRegularExpression(QString::fromLatin1(labelFormatMatchLocalizedString));
             QRegularExpressionMatch rmatch;
-            if (format.indexOf(*labelFormatMatcherLocalized, 0, &rmatch) != -1) {
+            if (format.indexOf(labelFormatMatcherLocalized(), 0, &rmatch) != -1) {
                 preStr = rmatch.captured(1);
                 if (!rmatch.captured(2).isEmpty())
                     precision = rmatch.captured(2).toInt();
@@ -528,10 +523,8 @@ QStringList ChartAxisElement::createValueLabels(qreal min, qreal max, int ticks,
                 postStr = rmatch.captured(4);
             }
         } else {
-            if (!labelFormatMatcher)
-                labelFormatMatcher = new QRegularExpression(QString::fromLatin1(labelFormatMatchString));
             QRegularExpressionMatch rmatch;
-            if (format.indexOf(*labelFormatMatcher, 0, &rmatch) != -1)
+            if (format.indexOf(labelFormatMatcher(), 0, &rmatch) != -1)
                 formatSpec = rmatch.captured(1);
         }
         if (tickType == QValueAxis::TicksFixed) {
@@ -584,11 +577,8 @@ QStringList ChartAxisElement::createLogValueLabels(qreal min, qreal max, qreal b
         QString postStr;
         int precision = 6; // Six is the default precision in Qt API
         if (presenter()->localizeNumbers()) {
-            if (!labelFormatMatcherLocalized)
-                labelFormatMatcherLocalized =
-                        new QRegularExpression(QString::fromLatin1(labelFormatMatchLocalizedString));
             QRegularExpressionMatch rmatch;
-            if (format.indexOf(*labelFormatMatcherLocalized, 0, &rmatch) != -1) {
+            if (format.indexOf(labelFormatMatcherLocalized(), 0, &rmatch) != -1) {
                 preStr = rmatch.captured(1);
                 if (!rmatch.captured(2).isEmpty())
                     precision = rmatch.captured(2).toInt();
@@ -596,10 +586,8 @@ QStringList ChartAxisElement::createLogValueLabels(qreal min, qreal max, qreal b
                 postStr = rmatch.captured(4);
             }
         } else {
-            if (!labelFormatMatcher)
-                labelFormatMatcher = new QRegularExpression(QString::fromLatin1(labelFormatMatchString));
             QRegularExpressionMatch rmatch;
-            if (format.indexOf(*labelFormatMatcher, 0, &rmatch) != -1)
+            if (format.indexOf(labelFormatMatcher(), 0, &rmatch) != -1)
                 formatSpec = rmatch.captured(1);
         }
         for (int i = firstTick; i < ticks + firstTick; i++) {
