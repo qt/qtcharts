@@ -254,9 +254,8 @@ bool ChartDataSet::attachAxis(QAbstractSeries *series,QAbstractAxis *axis)
     if (!domain->attachAxis(axis))
         return false;
 
-    QList<AbstractDomain *> blockedDomains;
     domain->blockRangeSignals(true);
-    blockedDomains << domain;
+    QList<AbstractDomain *> blockedDomains { domain };
 
     if (domain != series->d_ptr->domain()) {
         foreach (QAbstractAxis *axis, series->d_ptr->m_axes) {

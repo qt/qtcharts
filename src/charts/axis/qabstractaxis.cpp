@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -1090,9 +1090,9 @@ void QAbstractAxisPrivate::setAlignment(Qt::Alignment alignment)
         m_orientation = Qt::Vertical;
         break;
     default:
-        qWarning()<<"No alignment specified !";
+        qWarning("No alignment specified !");
         break;
-    };
+    }
     m_alignment = alignment;
 }
 

@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -64,8 +64,7 @@ QRectF CartesianChartLayout::calculateAxisGeometry(const QRectF &geometry,
     int topCount = 0;
     int bottomCount = 0;
 
-    foreach (ChartAxisElement *axis , axes) {
-
+    for (ChartAxisElement *axis : axes) {
         if (!axis->isVisible())
             continue;
 
@@ -108,7 +107,7 @@ QRectF CartesianChartLayout::calculateAxisGeometry(const QRectF &geometry,
             bottomCount++;
             break;
         default:
-            qWarning()<<"Axis is without alignment !";
+            qWarning("Axis is without alignment !");
             break;
         }
     }
@@ -180,7 +179,7 @@ QRectF CartesianChartLayout::calculateAxisGeometry(const QRectF &geometry,
     if (m_presenter->isFixedGeometry())
         chartRect = m_presenter->geometry();
 
-    foreach (ChartAxisElement *axis , axes) {
+    for (ChartAxisElement *axis : axes) {
 
         if (!axis->isVisible())
             continue;
@@ -232,7 +231,7 @@ QRectF CartesianChartLayout::calculateAxisMinimum(const QRectF &minimum, const Q
     QSizeF bottom;
     QSizeF top;
 
-    foreach (ChartAxisElement *axis, axes) {
+    for (ChartAxisElement *axis : axes) {
         QSizeF size = axis->effectiveSizeHint(Qt::MinimumSize);
 
         if (!axis->isVisible())

@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -376,12 +376,11 @@ void QAbstractSeries::hide()
  */
 bool QAbstractSeries::attachAxis(QAbstractAxis* axis)
 {
-    if(d_ptr->m_chart) {
+    if (d_ptr->m_chart)
         return d_ptr->m_chart->d_ptr->m_dataset->attachAxis(this, axis);
-    } else {
-        qWarning()<<"Series not in the chart. Please addSeries to chart first.";
-        return false;
-    }
+
+    qWarning("Series not in the chart. Please addSeries to chart first.");
+    return false;
 }
 
 /*!
@@ -393,13 +392,11 @@ bool QAbstractSeries::attachAxis(QAbstractAxis* axis)
  */
 bool QAbstractSeries::detachAxis(QAbstractAxis* axis)
 {
-    if(d_ptr->m_chart) {
+    if (d_ptr->m_chart)
         return d_ptr->m_chart->d_ptr->m_dataset->detachAxis(this, axis);
-    }
-    else {
-        qWarning()<<"Series not in the chart. Please addSeries to chart first.";
-        return false;
-    }
+
+    qWarning("Series not in the chart. Please addSeries to chart first.");
+    return false;
 }
 
 /*!

@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the Qt Charts module of the Qt Toolkit.
@@ -157,12 +157,12 @@ ChartWidget::ChartWidget(QWidget *parent) :
     m_horizontalLayout->setContentsMargins(11, 11, 11, 11);
     m_horizontalLayout->addWidget(m_chartView);
 
-    qDebug() << "UI setup time:"<< m_elapsedTimer.restart();
+    qDebug("UI setup time: %lld", m_elapsedTimer.restart());
 
     m_chartView->setRenderHint(QPainter::Antialiasing);
 
     createChart();
-    qDebug() << "Chart creation time:"<< m_elapsedTimer.restart();
+    qDebug("Chart creation time: %lld", m_elapsedTimer.restart());
 
     QObject::connect(&m_timer, SIGNAL(timeout()), this, SLOT(handleTimeout()));
 
