@@ -235,7 +235,7 @@ bool ChartDataSet::attachAxis(QAbstractSeries *series,QAbstractAxis *axis)
     }
 
     AbstractDomain *domain = series->d_ptr->domain();
-    AbstractDomain::DomainType type = selectDomain(attachedAxisList<<axis);
+    AbstractDomain::DomainType type = selectDomain(attachedAxisList << axis);
 
     if (type == AbstractDomain::UndefinedDomain) return false;
 
@@ -280,8 +280,8 @@ bool ChartDataSet::attachAxis(QAbstractSeries *series,QAbstractAxis *axis)
             oldAxis->d_ptr->initializeDomain(domain);
     }
 
-    series->d_ptr->m_axes<<axis;
-    axis->d_ptr->m_series<<series;
+    series->d_ptr->m_axes << axis;
+    axis->d_ptr->m_series << series;
 
     series->d_ptr->initializeAxes();
     axis->d_ptr->initializeDomain(domain);
@@ -357,24 +357,24 @@ void ChartDataSet::createAxes(QAbstractAxis::AxisTypes type, Qt::Orientation ori
     //decide what axis should be created
 
     switch (type) {
-        case QAbstractAxis::AxisTypeValue:
+    case QAbstractAxis::AxisTypeValue:
         axis = new QValueAxis(this);
         break;
-        case QAbstractAxis::AxisTypeBarCategory:
+    case QAbstractAxis::AxisTypeBarCategory:
         axis = new QBarCategoryAxis(this);
         break;
-        case QAbstractAxis::AxisTypeCategory:
+    case QAbstractAxis::AxisTypeCategory:
         axis = new QCategoryAxis(this);
         break;
-        case QAbstractAxis::AxisTypeColor:
+    case QAbstractAxis::AxisTypeColor:
         axis = new QColorAxis(this);
         break;
 #if QT_CONFIG(charts_datetime_axis)
-        case QAbstractAxis::AxisTypeDateTime:
+    case QAbstractAxis::AxisTypeDateTime:
         axis = new QDateTimeAxis(this);
         break;
 #endif
-        default:
+    default:
         axis = 0;
         break;
     }

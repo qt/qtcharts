@@ -120,26 +120,26 @@ QSizeF ChartBarCategoryAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constra
     qreal height = 0;
 
     switch (which) {
-        case Qt::MinimumSize: {
-            QRectF boundingRect = ChartPresenter::textBoundingRect(axis()->labelsFont(),
-                                                                   QStringLiteral("..."),
-                                                                   axis()->labelsAngle());
-            height = boundingRect.height() + labelPadding() + base.height() + 1.0;
-            sh = QSizeF(width, height);
-            break;
+    case Qt::MinimumSize: {
+        QRectF boundingRect = ChartPresenter::textBoundingRect(axis()->labelsFont(),
+                                                               QStringLiteral("..."),
+                                                               axis()->labelsAngle());
+        height = boundingRect.height() + labelPadding() + base.height() + 1.0;
+        sh = QSizeF(width, height);
+        break;
+    }
+    case Qt::PreferredSize:{
+        qreal labelHeight = 0.0;
+        foreach (const QString& s, ticksList) {
+            QRectF rect = ChartPresenter::textBoundingRect(axis()->labelsFont(), s, axis()->labelsAngle());
+            labelHeight = qMax(rect.height(), labelHeight);
         }
-        case Qt::PreferredSize:{
-            qreal labelHeight = 0.0;
-            foreach (const QString& s, ticksList) {
-                QRectF rect = ChartPresenter::textBoundingRect(axis()->labelsFont(), s, axis()->labelsAngle());
-                labelHeight = qMax(rect.height(), labelHeight);
-            }
-            height = labelHeight + labelPadding() + base.height() + 1.0;
-            sh = QSizeF(width, height);
-            break;
-        }
-        default:
-          break;
+        height = labelHeight + labelPadding() + base.height() + 1.0;
+        sh = QSizeF(width, height);
+        break;
+    }
+    default:
+        break;
     }
     return sh;
 }

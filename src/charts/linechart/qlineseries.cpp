@@ -148,7 +148,7 @@ QDebug operator<< (QDebug debug, const QLineSeries series)
     Q_ASSERT(series.d_func()->m_x.size() == series.d_func()->m_y.size());
     int size = series.d_func()->m_x.size();
     for (int i=0; i<size; i++) {
-        debug.nospace() << "(" << series.d_func()->m_x.at(i) << ','<< series.d_func()->m_y.at(i) << ") ";
+        debug.nospace() << "(" << series.d_func()->m_x.at(i) << ',' << series.d_func()->m_y.at(i) << ") ";
     }
     return debug.space();
 }

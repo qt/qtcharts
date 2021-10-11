@@ -201,10 +201,10 @@ void tst_QChartView::rubberBand()
     //this is hack since view does not get events otherwise
     m_view->setMouseTracking(false);
 
-    QVERIFY(vaxisX->min() >= minX );
-    QVERIFY(vaxisX->max() <= maxX );
-    QVERIFY(vaxisY->min() >= minY );
-    QVERIFY(vaxisY->max() <= maxY );
+    QVERIFY(vaxisX->min() >= minX);
+    QVERIFY(vaxisX->max() <= maxX);
+    QVERIFY(vaxisY->min() >= minY);
+    QVERIFY(vaxisY->max() <= maxY);
 
 }
 

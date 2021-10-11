@@ -66,7 +66,7 @@ QVariantHash parseArgs(QStringList args)
 
 void printHelp()
 {
-    std::cout << "chartviewer <options> "<< std::endl;
+    std::cout << "chartviewer <options> " << std::endl;
     std::cout << "  --view <1/2/3/4>  - set size of charts' grid" << std::endl;
     std::cout << "  --chart <categoryName::subCategory::chartName>  - set template to be show " << std::endl;
     std::cout << "  --opengl <enabled/disbaled>  - set opengl mode" << std::endl;

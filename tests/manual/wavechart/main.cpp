@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
     QChart *chart = new QChart();
     WaveChart *waveChart = new WaveChart(chart,&window);
 
-    waveChart->setViewport( new QOpenGLWidget() );
+    waveChart->setViewport(new QOpenGLWidget());
     waveChart->setRenderHint(QPainter::Antialiasing);
     chart->setAnimationOptions(QChart::AllAnimations);
     chart->setTitle("This is wave generator.");

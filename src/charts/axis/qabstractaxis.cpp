@@ -1078,22 +1078,22 @@ QAbstractAxisPrivate::~QAbstractAxisPrivate()
 {
 }
 
-void QAbstractAxisPrivate::setAlignment( Qt::Alignment alignment)
+void QAbstractAxisPrivate::setAlignment(Qt::Alignment alignment)
 {
-    switch(alignment) {
-        case Qt::AlignTop:
-        case Qt::AlignBottom:
+    switch (alignment) {
+    case Qt::AlignTop:
+    case Qt::AlignBottom:
         m_orientation = Qt::Horizontal;
         break;
-        case Qt::AlignLeft:
-        case Qt::AlignRight:
+    case Qt::AlignLeft:
+    case Qt::AlignRight:
         m_orientation = Qt::Vertical;
         break;
-        default:
+    default:
         qWarning()<<"No alignment specified !";
         break;
     };
-    m_alignment=alignment;
+    m_alignment = alignment;
 }
 
 void QAbstractAxisPrivate::setLabelsTruncated(bool labelsTruncated)

@@ -212,7 +212,7 @@ QSizeF AbstractChartLayout::sizeHint(Qt::SizeHint which, const QSizeF &constrain
         minimumRect = calculateTitleMinimum(minimumRect, title);
         minimumRect = calculateLegendMinimum(minimumRect, legend);
         minimumRect = calculateAxisMinimum(minimumRect, axes);
-        return  minimumRect.size().toSize();
+        return minimumRect.size().toSize();
     }
     return QSize(-1, -1);
 }

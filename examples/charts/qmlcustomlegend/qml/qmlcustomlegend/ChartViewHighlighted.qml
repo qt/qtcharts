@@ -72,7 +72,7 @@ ChartView {
         lineSeries.clear();
         lineSeries.color = selectedSeries.color;
         var maxVal = 0.0;
-        for (var i = 0; i < selectedSeries.upperSeries.count; i++ ) {
+        for (var i = 0; i < selectedSeries.upperSeries.count; i++) {
             var y = selectedSeries.upperSeries.at(i).y - selectedSeries.lowerSeries.at(i).y;
             lineSeries.append(selectedSeries.upperSeries.at(i).x, y);
             if (maxVal < y)

@@ -156,7 +156,7 @@ QList<QAbstractSeries*> Engine::addSeries(QAbstractSeries::SeriesType type)
     }
     case QAbstractSeries::SeriesTypeArea:
     {
-         QAreaSeries *area = new QAreaSeries( new QLineSeries(), new QLineSeries());
+         QAreaSeries *area = new QAreaSeries(new QLineSeries(), new QLineSeries());
          setupAreaSeries(area,keys,minRow,maxRow);
          result << area;
          break;

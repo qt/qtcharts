@@ -201,7 +201,7 @@ void tst_QBarSeries::remove()
     QVERIFY(m_barseries_with_sets->count() == count);
 
     // Try to remove invalid pointer (should not remove, should not crash)
-    ret = m_barseries_with_sets->remove((QBarSet*) (m_testSets.at(0) + 1) );
+    ret = m_barseries_with_sets->remove((QBarSet*) (m_testSets.at(0) + 1));
     QVERIFY(ret == false);
     QVERIFY(m_barseries_with_sets->count() == count);
 

@@ -139,7 +139,7 @@ void MainWidget::handleMarkerClicked()
     switch (marker->type())
 //![4]
     {
-        case QLegendMarker::LegendMarkerTypeXY:
+    case QLegendMarker::LegendMarkerTypeXY:
         {
 //![5]
         // Toggle visibility of series

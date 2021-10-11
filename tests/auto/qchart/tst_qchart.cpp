@@ -611,30 +611,30 @@ void tst_QChart::scroll_right()
 
     switch(axis->type())
     {
-        case QAbstractAxis::AxisTypeValue:{
-            QValueAxis* vaxis = qobject_cast<QValueAxis*>(axis);
-            QVERIFY(vaxis!=0);
-            qreal min = vaxis->min();
-            qreal max = vaxis->max();
-            QVERIFY(max>min);
-            m_chart->scroll(50, 0);
-            QVERIFY(min<vaxis->min());
-            QVERIFY(max<vaxis->max());
-            break;
-        }
-        case QAbstractAxis::AxisTypeBarCategory:{
-            QBarCategoryAxis* caxis = qobject_cast<QBarCategoryAxis*>(axis);
-            QVERIFY(caxis!=0);
-            qreal min = caxis->min().toDouble();
-            qreal max = caxis->max().toDouble();
-            m_chart->scroll(50, 0);
-            QVERIFY(min<caxis->min().toDouble());
-            QVERIFY(max<caxis->max().toDouble());
-            break;
-        }
-        default:
-            qFatal("Unsupported type");
-            break;
+    case QAbstractAxis::AxisTypeValue:{
+        QValueAxis* vaxis = qobject_cast<QValueAxis*>(axis);
+        QVERIFY(vaxis!=0);
+        qreal min = vaxis->min();
+        qreal max = vaxis->max();
+        QVERIFY(max>min);
+        m_chart->scroll(50, 0);
+        QVERIFY(min<vaxis->min());
+        QVERIFY(max<vaxis->max());
+        break;
+    }
+    case QAbstractAxis::AxisTypeBarCategory:{
+        QBarCategoryAxis* caxis = qobject_cast<QBarCategoryAxis*>(axis);
+        QVERIFY(caxis!=0);
+        qreal min = caxis->min().toDouble();
+        qreal max = caxis->max().toDouble();
+        m_chart->scroll(50, 0);
+        QVERIFY(min<caxis->min().toDouble());
+        QVERIFY(max<caxis->max().toDouble());
+        break;
+    }
+    default:
+        qFatal("Unsupported type");
+        break;
     }
 }
 
@@ -654,31 +654,31 @@ void tst_QChart::scroll_left()
      QVERIFY(axis);
 
      switch(axis->type())
-        {
-            case QAbstractAxis::AxisTypeValue:{
-                QValueAxis* vaxis = qobject_cast<QValueAxis*>(axis);
-                QVERIFY(vaxis!=0);
-                qreal min = vaxis->min();
-                qreal max = vaxis->max();
-                m_chart->scroll(-50, 0);
-                QVERIFY(min>vaxis->min());
-                QVERIFY(max>vaxis->max());
-                break;
-            }
-            case QAbstractAxis::AxisTypeBarCategory:{
-                QBarCategoryAxis* caxis = qobject_cast<QBarCategoryAxis*>(axis);
-                QVERIFY(caxis!=0);
-                qreal min = caxis->min().toDouble();
-                qreal max = caxis->max().toDouble();
-                m_chart->scroll(-50, 0);
-                QVERIFY(min>caxis->min().toDouble());
-                QVERIFY(max>caxis->max().toDouble());
-                break;
-            }
-            default:
-                qFatal("Unsupported type");
-                break;
-        }
+     {
+     case QAbstractAxis::AxisTypeValue:{
+         QValueAxis* vaxis = qobject_cast<QValueAxis*>(axis);
+         QVERIFY(vaxis!=0);
+         qreal min = vaxis->min();
+         qreal max = vaxis->max();
+         m_chart->scroll(-50, 0);
+         QVERIFY(min>vaxis->min());
+         QVERIFY(max>vaxis->max());
+         break;
+     }
+     case QAbstractAxis::AxisTypeBarCategory:{
+         QBarCategoryAxis* caxis = qobject_cast<QBarCategoryAxis*>(axis);
+         QVERIFY(caxis!=0);
+         qreal min = caxis->min().toDouble();
+         qreal max = caxis->max().toDouble();
+         m_chart->scroll(-50, 0);
+         QVERIFY(min>caxis->min().toDouble());
+         QVERIFY(max>caxis->max().toDouble());
+         break;
+     }
+     default:
+         qFatal("Unsupported type");
+         break;
+     }
 }
 
 void tst_QChart::scroll_up_data()
@@ -698,29 +698,29 @@ void tst_QChart::scroll_up()
 
     switch(axis->type())
     {
-        case QAbstractAxis::AxisTypeValue:{
-            QValueAxis* vaxis = qobject_cast<QValueAxis*>(axis);
-            QVERIFY(vaxis!=0);
-            qreal min = vaxis->min();
-            qreal max = vaxis->max();
-            m_chart->scroll(0, 50);
-            QVERIFY(min<vaxis->min());
-            QVERIFY(max<vaxis->max());
-            break;
-        }
-        case QAbstractAxis::AxisTypeBarCategory:{
-            QBarCategoryAxis* caxis = qobject_cast<QBarCategoryAxis*>(axis);
-            QVERIFY(caxis!=0);
-            qreal min = caxis->min().toDouble();
-            qreal max = caxis->max().toDouble();
-            m_chart->scroll(0, 50);
-            QVERIFY(min<caxis->min().toDouble());
-            QVERIFY(max<caxis->max().toDouble());
-            break;
-        }
-        default:
-            qFatal("Unsupported type");
-            break;
+    case QAbstractAxis::AxisTypeValue:{
+        QValueAxis* vaxis = qobject_cast<QValueAxis*>(axis);
+        QVERIFY(vaxis!=0);
+        qreal min = vaxis->min();
+        qreal max = vaxis->max();
+        m_chart->scroll(0, 50);
+        QVERIFY(min<vaxis->min());
+        QVERIFY(max<vaxis->max());
+        break;
+    }
+    case QAbstractAxis::AxisTypeBarCategory:{
+        QBarCategoryAxis* caxis = qobject_cast<QBarCategoryAxis*>(axis);
+        QVERIFY(caxis!=0);
+        qreal min = caxis->min().toDouble();
+        qreal max = caxis->max().toDouble();
+        m_chart->scroll(0, 50);
+        QVERIFY(min<caxis->min().toDouble());
+        QVERIFY(max<caxis->max().toDouble());
+        break;
+    }
+    default:
+        qFatal("Unsupported type");
+        break;
     }
 }
 
@@ -740,31 +740,31 @@ void tst_QChart::scroll_down()
      QVERIFY(axis);
 
      switch(axis->type())
-        {
-            case QAbstractAxis::AxisTypeValue:{
-                QValueAxis* vaxis = qobject_cast<QValueAxis*>(axis);
-                QVERIFY(vaxis!=0);
-                qreal min = vaxis->min();
-                qreal max = vaxis->max();
-                m_chart->scroll(0, -50);
-                QVERIFY(min>vaxis->min());
-                QVERIFY(max>vaxis->max());
-                break;
-            }
-            case QAbstractAxis::AxisTypeBarCategory:{
-                QBarCategoryAxis* caxis = qobject_cast<QBarCategoryAxis*>(axis);
-                QVERIFY(caxis!=0);
-                qreal min = caxis->min().toDouble();
-                qreal max = caxis->max().toDouble();
-                m_chart->scroll(0, -50);
-                QVERIFY(min>caxis->min().toDouble());
-                QVERIFY(max>caxis->max().toDouble());
-                break;
-            }
-            default:
-                qFatal("Unsupported type");
-                break;
-        }
+     {
+     case QAbstractAxis::AxisTypeValue:{
+         QValueAxis* vaxis = qobject_cast<QValueAxis*>(axis);
+         QVERIFY(vaxis!=0);
+         qreal min = vaxis->min();
+         qreal max = vaxis->max();
+         m_chart->scroll(0, -50);
+         QVERIFY(min>vaxis->min());
+         QVERIFY(max>vaxis->max());
+         break;
+     }
+     case QAbstractAxis::AxisTypeBarCategory:{
+         QBarCategoryAxis* caxis = qobject_cast<QBarCategoryAxis*>(axis);
+         QVERIFY(caxis!=0);
+         qreal min = caxis->min().toDouble();
+         qreal max = caxis->max().toDouble();
+         m_chart->scroll(0, -50);
+         QVERIFY(min>caxis->min().toDouble());
+         QVERIFY(max>caxis->max().toDouble());
+         break;
+     }
+     default:
+         qFatal("Unsupported type");
+         break;
+     }
 }
 
 void tst_QChart::theme_data()

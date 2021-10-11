@@ -108,31 +108,31 @@ QSizeF ChartDateTimeAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint
         return sh;
 
     switch (which) {
-        case Qt::MinimumSize: {
-            QRectF boundingRect = ChartPresenter::textBoundingRect(axis()->labelsFont(),
-                                                                   QStringLiteral("..."),
-                                                                   axis()->labelsAngle());
-            width = boundingRect.width() + labelPadding() + base.width() + 1.0;
-            height = boundingRect.height() / 2.0;
-            sh = QSizeF(width, height);
-            break;
+    case Qt::MinimumSize: {
+        QRectF boundingRect = ChartPresenter::textBoundingRect(axis()->labelsFont(),
+                                                               QStringLiteral("..."),
+                                                               axis()->labelsAngle());
+        width = boundingRect.width() + labelPadding() + base.width() + 1.0;
+        height = boundingRect.height() / 2.0;
+        sh = QSizeF(width, height);
+        break;
+    }
+    case Qt::PreferredSize: {
+        qreal labelWidth = 0.0;
+        qreal firstHeight = -1.0;
+        foreach (const QString& s, ticksList) {
+            QRectF rect = ChartPresenter::textBoundingRect(axis()->labelsFont(), s, axis()->labelsAngle());
+            labelWidth = qMax(rect.width(), labelWidth);
+            height = rect.height();
+            if (firstHeight < 0.0)
+                firstHeight = height;
         }
-        case Qt::PreferredSize: {
-            qreal labelWidth = 0.0;
-            qreal firstHeight = -1.0;
-            foreach (const QString& s, ticksList) {
-                QRectF rect = ChartPresenter::textBoundingRect(axis()->labelsFont(), s, axis()->labelsAngle());
-                labelWidth = qMax(rect.width(), labelWidth);
-                height = rect.height();
-                if (firstHeight < 0.0)
-                    firstHeight = height;
-            }
-            width = labelWidth + labelPadding() + base.width() + 2.0; //two pixels of tolerance
-            height = qMax(height, firstHeight) / 2.0;
-            sh = QSizeF(width, height);
-            break;
-        }
-        default:
+        width = labelWidth + labelPadding() + base.width() + 2.0; //two pixels of tolerance
+        height = qMax(height, firstHeight) / 2.0;
+        sh = QSizeF(width, height);
+        break;
+    }
+    default:
         break;
     }
 

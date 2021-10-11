@@ -497,7 +497,7 @@ void QLogValueAxisPrivate::initializeDomain(AbstractDomain *domain)
     if (orientation() == Qt::Vertical) {
         if (!qFuzzyCompare(m_max, m_min)) {
             domain->setRangeY(m_min, m_max);
-        } else if ( domain->minY() > 0) {
+        } else if (domain->minY() > 0) {
             setRange(domain->minY(), domain->maxY());
         } else if (domain->maxY() > 0) {
             domain->setRangeY(m_min, domain->maxY());

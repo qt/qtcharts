@@ -69,7 +69,7 @@ ChartView {
     legend.onLabelColorChanged:        console.log("legend.onLabelColorChanged: " + color);
     legend.onReverseMarkersChanged:    console.log("legend.onReverseMarkersChanged: "
                                                    + chart.legend.reverseMarkers)
-    margins.onTopChanged:       console.log("chart.margins.onTopChanged: " + top );
+    margins.onTopChanged:       console.log("chart.margins.onTopChanged: " + top);
     margins.onBottomChanged:    console.log("chart.margins.onBottomChanged: " + bottom);
     margins.onLeftChanged:      console.log("chart.margins.onLeftChanged: " + left);
     margins.onRightChanged:     console.log("chart.margins.onRightChanged: " + right);

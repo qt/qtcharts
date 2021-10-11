@@ -68,7 +68,7 @@ public:
 public:
     Qt::Alignment alignment() const { return m_alignment; }
     Qt::Orientation orientation() const { return m_orientation; }
-    void setAlignment( Qt::Alignment alignment);
+    void setAlignment(Qt::Alignment alignment);
     void setLabelsTruncated(bool labelsTruncated);
 
     virtual void initializeDomain(AbstractDomain *domain) = 0;
