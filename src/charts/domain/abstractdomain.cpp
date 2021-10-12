@@ -58,6 +58,9 @@ AbstractDomain::~AbstractDomain()
 
 void AbstractDomain::setSize(const QSizeF &size)
 {
+    if (!size.isValid())
+        return;
+
     if (m_size != size) {
         m_size=size;
         emit updated();
