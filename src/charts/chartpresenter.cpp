@@ -98,7 +98,7 @@ void ChartPresenter::setFixedGeometry(const QRectF &rect)
 
 void ChartPresenter::setGeometry(const QRectF rect)
 {
-    if (m_rect != rect) {
+    if (rect.isValid() && m_rect != rect) {
         m_rect = rect;
         if (!m_fixedRect.isNull())
             return;
