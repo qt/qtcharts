@@ -61,6 +61,7 @@
 #include <QtCore/QTimer>
 #include <QtCore/QThread>
 #include <QtQuick/QQuickWindow>
+#include <QtWidgets/QGraphicsLayout>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -1496,6 +1497,10 @@ QPointF DeclarativeChart::mapToPosition(const QPointF &value, QAbstractSeries *s
 void DeclarativeChart::setPlotArea(const QRectF &rect)
 {
     m_chart->setPlotArea(rect);
+
+    // If plotArea is set inside ChartView, contentGeometry is updated too early and we end up
+    // with incorrect plotArea. Invalidate the layout to correct the geometry.
+    m_chart->layout()->invalidate();
 }
 
 QT_CHARTS_END_NAMESPACE
