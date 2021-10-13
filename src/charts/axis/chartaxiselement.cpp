@@ -660,6 +660,11 @@ void ChartAxisElement::setLabelsEditable(bool labelsEditable)
     }
 }
 
+bool ChartAxisElement::labelsVisible() const
+{
+    return m_labels->isVisible();
+}
+
 void ChartAxisElement::axisSelected()
 {
     emit clicked();

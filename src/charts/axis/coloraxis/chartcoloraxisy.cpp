@@ -84,36 +84,46 @@ QSizeF ChartColorAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint) c
 
     switch (which) {
     case Qt::MinimumSize: {
-        QRectF boundingRect = ChartPresenter::textBoundingRect(axis()->labelsFont(),
-                                                               QStringLiteral("..."),
-                                                               axis()->labelsAngle());
-        width = boundingRect.width() + labelPadding() + base.width() + m_axis->size()
-                + colorScalePadding() + 1.0;
-        height = boundingRect.height() / 2.0;
+        if (labelsVisible()) {
+            QRectF boundingRect = ChartPresenter::textBoundingRect(axis()->labelsFont(),
+                                                                   QStringLiteral("..."),
+                                                                   axis()->labelsAngle());
+            width = boundingRect.width() + labelPadding() + base.width() + m_axis->size()
+                    + colorScalePadding() + 1.0;
+            height = boundingRect.height() / 2.0;
+        } else {
+            width = base.width() + m_axis->size() + colorScalePadding() + 1.0;
+            height = 0;
+        }
         sh = QSizeF(width, height);
         break;
     }
     case Qt::PreferredSize: {
-        qreal labelWidth = 0.0;
-        qreal firstHeight = -1.0;
-        for (const QString &s : ticksList) {
-            QRectF rect = ChartPresenter::textBoundingRect(axis()->labelsFont(), s,
-                                                           axis()->labelsAngle());
-            labelWidth = qMax(rect.width(), labelWidth);
-            height = rect.height();
-            if (firstHeight < 0.0)
-                firstHeight = height;
+        if (labelsVisible()) {
+            qreal labelWidth = 0.0;
+            qreal firstHeight = -1.0;
+            for (const QString &s : ticksList) {
+                QRectF rect = ChartPresenter::textBoundingRect(axis()->labelsFont(), s,
+                                                               axis()->labelsAngle());
+                labelWidth = qMax(rect.width(), labelWidth);
+                height = rect.height();
+                if (firstHeight < 0.0)
+                    firstHeight = height;
+            }
+            width = labelWidth + labelPadding() + base.width() + m_axis->size() + colorScalePadding()
+                    + 2.0; // two pixels of tolerance
+            height = qMax(height, firstHeight) / 2.0;
+        } else {
+            width = base.width() + m_axis->size() + colorScalePadding()
+                    + 2.0; // two pixels of tolerance
+            height = 0;
         }
-        width = labelWidth + labelPadding() + base.width() + m_axis->size() + colorScalePadding()
-                + 2.0; // two pixels of tolerance
-        height = qMax(height, firstHeight) / 2.0;
         sh = QSizeF(width, height);
         break;
     }
     default:
         break;
     }
-
     return sh;
 }
 

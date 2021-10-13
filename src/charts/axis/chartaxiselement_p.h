@@ -124,6 +124,7 @@ public:
 
     bool labelsEditable() const;
     void setLabelsEditable(bool labelsEditable);
+    bool labelsVisible() const;
 
 protected:
     virtual QList<qreal> calculateLayout() const = 0;
