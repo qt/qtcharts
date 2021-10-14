@@ -30,8 +30,9 @@
 #include "widget.h"
 #include "xyseriesiodevice.h"
 
-#include <QtMultimedia/QAudioDeviceInfo>
+#include <QtMultimedia/QAudioDevice>
 #include <QtMultimedia/QAudioInput>
+#include <QtMultimedia/QAudioSource>
 
 #include <QtCharts/QChartView>
 #include <QtCharts/QLineSeries>
@@ -42,7 +43,7 @@
 
 QT_USE_NAMESPACE
 
-Widget::Widget(const QAudioDeviceInfo &deviceInfo, QWidget *parent) :
+Widget::Widget(const QAudioDevice &deviceInfo, QWidget *parent) :
     QWidget(parent),
     m_chart(new QChart),
     m_series(new QLineSeries)
@@ -62,29 +63,31 @@ Widget::Widget(const QAudioDeviceInfo &deviceInfo, QWidget *parent) :
     m_chart->addAxis(axisY, Qt::AlignLeft);
     m_series->attachAxis(axisY);
     m_chart->legend()->hide();
-    m_chart->setTitle("Data from the microphone (" + deviceInfo.deviceName() + ')');
+    m_chart->setTitle("Data from the microphone (" + deviceInfo.description() + ')');
 
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
     mainLayout->addWidget(chartView);
 
+    m_audioInput = new QAudioInput(deviceInfo, this);
+
     QAudioFormat formatAudio;
     formatAudio.setSampleRate(8000);
     formatAudio.setChannelCount(1);
-    formatAudio.setSampleSize(8);
-    formatAudio.setCodec("audio/pcm");
-    formatAudio.setByteOrder(QAudioFormat::LittleEndian);
-    formatAudio.setSampleType(QAudioFormat::UnSignedInt);
+    formatAudio.setSampleFormat(QAudioFormat::UInt8);
 
-    m_audioInput = new QAudioInput(deviceInfo, formatAudio, this);
+    m_audioSource = new QAudioSource(deviceInfo, formatAudio);
+    m_audioSource->setBufferSize(200);
 
     m_device = new XYSeriesIODevice(m_series, this);
     m_device->open(QIODevice::WriteOnly);
 
-    m_audioInput->start(m_device);
+    m_audioSource->start(m_device);
 }
 
 Widget::~Widget()
 {
-    m_audioInput->stop();
+    m_audioSource->stop();
     m_device->close();
+    delete m_audioInput;
+    delete m_device;
 }
