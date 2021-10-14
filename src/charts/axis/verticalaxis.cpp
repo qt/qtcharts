@@ -452,10 +452,10 @@ void VerticalAxis::updateMinorTickGeometry()
             layout.prepend(layout.at(0) + tickSpacing);
             layout.append(layout.at(layout.size() - 1) - tickSpacing);
         } else {
-            const qreal logMax = qLn(logValueAxis->max());
-            const qreal logMin = qLn(logValueAxis->min());
-            const qreal logExtraMaxTick = qLn(qPow(base, qFloor(logMax / logBase) + 1.0));
-            const qreal logExtraMinTick = qLn(qPow(base, qCeil(logMin / logBase) - 1.0));
+            const qreal logMax = qLn(logValueAxis->max()) / logBase;
+            const qreal logMin = qLn(logValueAxis->min()) / logBase;
+            const qreal logExtraMaxTick = qFloor(logMax) + 1.0;
+            const qreal logExtraMinTick = qCeil(logMin) - 1.0;
             const qreal edge = gridGeometry().bottom();
             const qreal delta = gridGeometry().height() / qAbs(logMax - logMin);
             const qreal extraMaxTick = edge - (logExtraMaxTick - qMin(logMin, logMax)) * delta;
