@@ -29,7 +29,8 @@
 
 #include "widget.h"
 
-#include <QtMultimedia/QAudioDeviceInfo>
+#include <QtMultimedia/QAudioDevice>
+#include <QtMultimedia/QMediaDevices>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMessageBox>
 
@@ -37,7 +38,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    const QAudioDeviceInfo inputDevice = QAudioDeviceInfo::defaultInputDevice();
+    const QAudioDevice inputDevice = QMediaDevices::defaultAudioInput();
     if (inputDevice.isNull()) {
         QMessageBox::warning(nullptr, "audio",
                              "There is no audio input device available.");

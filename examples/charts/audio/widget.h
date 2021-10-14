@@ -44,7 +44,8 @@ class XYSeriesIODevice;
 
 QT_BEGIN_NAMESPACE
 class QAudioInput;
-class QAudioDeviceInfo;
+class QAudioDevice;
+class QAudioSource;
 QT_END_NAMESPACE
 
 class Widget : public QWidget
@@ -52,7 +53,7 @@ class Widget : public QWidget
     Q_OBJECT
 
 public:
-    explicit Widget(const QAudioDeviceInfo &deviceInfo, QWidget *parent = nullptr);
+    explicit Widget(const QAudioDevice &deviceInfo, QWidget *parent = nullptr);
     ~Widget();
 
 private:
@@ -60,6 +61,7 @@ private:
     QChart *m_chart;
     QLineSeries *m_series ;
     QAudioInput *m_audioInput = nullptr;
+    QAudioSource *m_audioSource = nullptr;
 };
 
 #endif // WIDGET_H
