@@ -633,9 +633,12 @@ void DeclarativeChart::seriesAxisAttachHelper(QAbstractSeries *series, QAbstract
 {
     if (!series->attachedAxes().contains(axis)) {
         // Remove & delete old axes that are not attached to any other series
+        // Detach old axis from series so that if it is shared with other series
+        // It can be deleted.
         foreach (QAbstractAxis* oldAxis, m_chart->axes(orientation, series)) {
             bool otherAttachments = false;
             if (oldAxis != axis) {
+                series->detachAxis(oldAxis);
                 foreach (QAbstractSeries *oldSeries, m_chart->series()) {
                     if (oldSeries != series && oldSeries->attachedAxes().contains(oldAxis)) {
                         otherAttachments = true;
