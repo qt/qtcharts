@@ -49,7 +49,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativePieSlice : public QPieSlice
+class Q_CHARTSQML_PRIVATE_EXPORT DeclarativePieSlice : public QPieSlice
 {
     Q_OBJECT
     Q_PROPERTY(QString brushFilename READ brushFilename WRITE setBrushFilename NOTIFY brushFilenameChanged)

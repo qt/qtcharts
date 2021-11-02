@@ -50,7 +50,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeSplineSeries : public QSplineSeries, public DeclarativeXySeries, public QQmlParserStatus
+class Q_CHARTSQML_PRIVATE_EXPORT DeclarativeSplineSeries : public QSplineSeries, public DeclarativeXySeries, public QQmlParserStatus
 {
     Q_OBJECT
     Q_INTERFACES(QQmlParserStatus)

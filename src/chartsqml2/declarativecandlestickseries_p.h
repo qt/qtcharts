@@ -51,7 +51,7 @@ QT_BEGIN_NAMESPACE
 
 class DeclarativeAxes;
 
-class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeCandlestickSet : public QCandlestickSet
+class Q_CHARTSQML_PRIVATE_EXPORT DeclarativeCandlestickSet : public QCandlestickSet
 {
     Q_OBJECT
     Q_PROPERTY(QString brushFilename READ brushFilename WRITE setBrushFilename NOTIFY brushFilenameChanged)

@@ -46,7 +46,7 @@ QT_BEGIN_NAMESPACE
 
 class QChart;
 
-class Q_QMLCHARTS_PRIVATE_EXPORT DeclarativeXySeries
+class Q_CHARTSQML_PRIVATE_EXPORT DeclarativeXySeries
 {
 public:
     explicit DeclarativeXySeries();
