@@ -84,7 +84,6 @@ ScatterChartItem::ScatterChartItem(QScatterSeries *series, QGraphicsItem *item)
     connect(series, &QScatterSeries::pointsConfigurationChanged,
             this, &ScatterChartItem::handleSeriesUpdated);
 
-    setAcceptHoverEvents(true);
     setZValue(ChartPresenter::ScatterSeriesZValue);
     setFlags(QGraphicsItem::ItemClipsChildrenToShape | QGraphicsItem::ItemIsSelectable);
 
@@ -321,6 +320,8 @@ void ScatterChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
         emit XYChart::pressed(matchedP);
         m_lastMousePos = event->pos();
         m_mousePressed = true;
+    } else {
+        event->ignore();
     }
 
     QGraphicsItem::mousePressEvent(event);
@@ -516,6 +517,12 @@ void ScatterChartItem::handleSeriesUpdated()
         // creates/deletes points
         updateGeometry();
     }
+
+    // Only accept hover events when light/selection markers are in use so we don't unnecessarily
+    // eat the events in the regular case
+    setAcceptHoverEvents(!(m_series->lightMarker().isNull()
+                           && (m_series->selectedLightMarker().isNull()
+                               || m_series->selectedPoints().isEmpty())));
 
     setPen(m_series->pen());
     setBrush(m_series->brush());
