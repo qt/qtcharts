@@ -23,7 +23,7 @@ add_subdirectory(qcategoryaxis)
 add_subdirectory(qbarcategoryaxis)
 add_subdirectory(qlegend)
 add_subdirectory(qareaseries)
-# add_subdirectory(cmake) # special case
+add_subdirectory(cmake)
 add_subdirectory(qcandlestickmodelmapper)
 add_subdirectory(qcandlestickseries)
 add_subdirectory(qcandlestickset)
