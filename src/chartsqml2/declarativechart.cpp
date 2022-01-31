@@ -932,6 +932,7 @@ void DeclarativeChart::hoverMoveEvent(QHoverEvent *event)
     if (m_glXYDataManager->dataMap().size() && previousLastScenePoint != m_lastMouseMoveScenePoint) {
         QMouseEvent *newEvent = new QMouseEvent(QEvent::MouseMove,
                                                 event->position() - m_adjustedPlotArea.topLeft(),
+                                                event->globalPosition() - m_adjustedPlotArea.topLeft(),
                                                 m_mousePressButton,
                                                 m_mousePressButtons,
                                                 event->modifiers());
@@ -1531,6 +1532,7 @@ void DeclarativeChart::queueRendererMouseEvent(QMouseEvent *event)
     if (m_glXYDataManager->dataMap().size()) {
         QMouseEvent *newEvent = new QMouseEvent(event->type(),
                                                 event->position() - m_adjustedPlotArea.topLeft(),
+                                                event->globalPosition() - m_adjustedPlotArea.topLeft(),
                                                 event->button(),
                                                 event->buttons(),
                                                 event->modifiers());
