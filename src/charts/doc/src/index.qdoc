@@ -29,10 +29,11 @@
     \title Qt Charts
     \page qtcharts-index.html
 
-    Qt Charts module provides a set of easy to use chart components. It uses the Qt Graphics View
-    Framework, therefore charts can be easily integrated to modern user interfaces. Qt Charts can
-    be used as QWidgets, QGraphicsWidget, or QML types. Users can easily create impressive
-    graphs by selecting one of the charts themes.
+    The Qt Charts module provides a set of easy-to-use chart components. It uses
+    the Qt Graphics View Framework to integrate charts with modern user
+    interfaces. Qt Charts can be used as QWidgets, QGraphicsWidget, or QML
+    types. Users can easily create impressive charts by selecting one of the
+    themes.
 
     \section1 Getting Started
 
