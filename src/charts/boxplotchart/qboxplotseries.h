@@ -45,7 +45,7 @@ class Q_CHARTS_EXPORT QBoxPlotSeries : public QAbstractSeries
     Q_PROPERTY(qreal boxWidth READ boxWidth WRITE setBoxWidth NOTIFY boxWidthChanged)
     Q_PROPERTY(QPen pen READ pen WRITE setPen NOTIFY penChanged)
     Q_PROPERTY(QBrush brush READ brush WRITE setBrush NOTIFY brushChanged)
-    Q_PROPERTY(int count READ count NOTIFY countChanged REVISION 1)
+    Q_PROPERTY(int count READ count NOTIFY countChanged REVISION(2, 0))
 public:
     explicit QBoxPlotSeries(QObject *parent = nullptr);
     ~QBoxPlotSeries();
