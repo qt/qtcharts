@@ -1,23 +1,15 @@
-# Generated from pointsselectionandmarkers.pro.
-
 cmake_minimum_required(VERSION 3.14)
 project(pointsselectionandmarkers LANGUAGES CXX)
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
 set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-set(CMAKE_AUTOUIC ON)
 
 if(NOT DEFINED INSTALL_EXAMPLESDIR)
-  set(INSTALL_EXAMPLESDIR "examples")
+    set(INSTALL_EXAMPLESDIR "examples")
 endif()
 
 set(INSTALL_EXAMPLEDIR "${INSTALL_EXAMPLESDIR}/charts/pointsselectionandmarkers")
 
-find_package(Qt6 COMPONENTS Core)
-find_package(Qt6 COMPONENTS Gui)
-find_package(Qt6 COMPONENTS Charts)
+find_package(Qt6 REQUIRED COMPONENTS Charts Core Gui)
 
 qt_add_executable(pointsselectionandmarkers
     utilities.h utilities.cpp
