@@ -1,5 +1,3 @@
-# Generated from charts.pro.
-
 if(QT_FEATURE_charts_area_chart)
     qt_internal_add_example(areachart)
 endif()

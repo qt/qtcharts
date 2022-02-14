@@ -1,23 +1,15 @@
-# Generated from piechartcustomization.pro.
-
 cmake_minimum_required(VERSION 3.16)
 project(piechartcustomization LANGUAGES CXX)
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
 set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-set(CMAKE_AUTOUIC ON)
 
 if(NOT DEFINED INSTALL_EXAMPLESDIR)
-  set(INSTALL_EXAMPLESDIR "examples")
+    set(INSTALL_EXAMPLESDIR "examples")
 endif()
 
 set(INSTALL_EXAMPLEDIR "${INSTALL_EXAMPLESDIR}/charts/piechartcustomization")
 
-find_package(Qt6 COMPONENTS Core)
-find_package(Qt6 COMPONENTS Gui)
-find_package(Qt6 COMPONENTS Charts)
+find_package(Qt6 REQUIRED COMPONENTS Charts Core Gui)
 
 qt_add_executable(piechartcustomization
     brushtool.cpp brushtool.h
@@ -26,10 +18,12 @@ qt_add_executable(piechartcustomization
     mainwidget.cpp mainwidget.h
     pentool.cpp pentool.h
 )
+
 set_target_properties(piechartcustomization PROPERTIES
     WIN32_EXECUTABLE TRUE
     MACOSX_BUNDLE TRUE
 )
+
 target_link_libraries(piechartcustomization PUBLIC
     Qt::Charts
     Qt::Core

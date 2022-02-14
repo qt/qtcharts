@@ -1,42 +1,36 @@
-# Generated from datetimeaxis.pro.
-
 cmake_minimum_required(VERSION 3.16)
 project(datetimeaxis LANGUAGES CXX)
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
 set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-set(CMAKE_AUTOUIC ON)
 
 if(NOT DEFINED INSTALL_EXAMPLESDIR)
-  set(INSTALL_EXAMPLESDIR "examples")
+    set(INSTALL_EXAMPLESDIR "examples")
 endif()
 
 set(INSTALL_EXAMPLEDIR "${INSTALL_EXAMPLESDIR}/charts/datetimeaxis")
 
-find_package(Qt6 COMPONENTS Core)
-find_package(Qt6 COMPONENTS Gui)
-find_package(Qt6 COMPONENTS Charts)
+find_package(Qt6 REQUIRED COMPONENTS Charts Core Gui)
 
 qt_add_executable(datetimeaxis
     main.cpp
 )
+
 set_target_properties(datetimeaxis PROPERTIES
     WIN32_EXECUTABLE TRUE
     MACOSX_BUNDLE TRUE
 )
+
 target_link_libraries(datetimeaxis PUBLIC
     Qt::Charts
     Qt::Core
     Qt::Gui
 )
 
-
 # Resources:
 set_source_files_properties("sun_spots.txt"
     PROPERTIES QT_RESOURCE_ALIAS "sun"
 )
+
 set(sundata_resource_files
     "sun_spots.txt"
 )
