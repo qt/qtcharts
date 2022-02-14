@@ -393,6 +393,8 @@ void DeclarativeOpenGLRenderNode::renderVisual()
 // Must be called on render thread as response to beforeRendering signal
 void DeclarativeOpenGLRenderNode::render()
 {
+    // Reset blend function, etc. derived from the previous frame.
+    QQuickOpenGLUtils::resetOpenGLState();
     if (m_renderNeeded) {
         if (m_xyDataMap.size()) {
             if (!m_program)
