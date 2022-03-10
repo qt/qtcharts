@@ -44,6 +44,7 @@
 #include <QtGui/QColor>
 #include <QtGui/QGradientStops>
 #include <QtCharts/private/qchartglobal_p.h>
+#include <QtCore/qmap.h>
 
 QT_BEGIN_NAMESPACE
 class ChartTheme;

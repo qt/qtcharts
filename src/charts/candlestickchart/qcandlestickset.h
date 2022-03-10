@@ -30,9 +30,10 @@
 #ifndef QCANDLESTICKSET_H
 #define QCANDLESTICKSET_H
 
-#include <QtCharts/QChartGlobal>
-#include <QtGui/QBrush>
-#include <QtGui/QPen>
+#include <QtCharts/qchartglobal.h>
+#include <QtGui/qbrush.h>
+#include <QtGui/qpen.h>
+#include <QtCore/qobject.h>
 
 QT_BEGIN_NAMESPACE
 

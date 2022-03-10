@@ -41,6 +41,12 @@
 
 #include <private/qabstractseries_p.h>
 #include <QtCharts/private/qchartglobal_p.h>
+#include <QtCore/qvariant.h>
+#include <QtCore/qhash.h>
+#include <QtCore/qset.h>
+#include <QtGui/qcolor.h>
+#include <QtGui/qpen.h>
+#include <QtCore/qlist.h>
 
 QT_BEGIN_NAMESPACE
 

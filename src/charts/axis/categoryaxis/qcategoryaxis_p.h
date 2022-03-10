@@ -42,6 +42,9 @@
 #include <QtCharts/QCategoryAxis>
 #include <private/qvalueaxis_p.h>
 #include <QtCharts/private/qchartglobal_p.h>
+#include <QtCore/qmap.h>
+#include <QtCore/qstring.h>
+#include <QtCore/qlist.h>
 
 QT_BEGIN_NAMESPACE
 

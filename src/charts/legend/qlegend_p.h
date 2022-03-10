@@ -41,6 +41,8 @@
 
 #include <QtCharts/QLegend>
 #include <QtCharts/private/qchartglobal_p.h>
+#include <QtCore/qlist.h>
+#include <QtCore/qhash.h>
 
 QT_BEGIN_NAMESPACE
 

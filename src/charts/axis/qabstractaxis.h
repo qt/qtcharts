@@ -34,6 +34,7 @@
 #include <QtGui/QPen>
 #include <QtGui/QFont>
 #include <QtCore/QVariant>
+#include <QtCore/QObject>
 
 QT_BEGIN_NAMESPACE
 

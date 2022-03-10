@@ -41,6 +41,8 @@
 
 #include <private/chartanimation_p.h>
 #include <QtCharts/private/qchartglobal_p.h>
+#include <QtCore/qobject.h>
+#include <QtCore/qhash.h>
 
 QT_BEGIN_NAMESPACE
 

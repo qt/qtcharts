@@ -45,6 +45,8 @@
 #include <QtCharts/private/qchartglobal_p.h>
 #include <QtGui/QPen>
 #include <QtGui/QBrush>
+#include <QtCore/QMap>
+#include <QtCore/QList>
 
 QT_BEGIN_NAMESPACE
 

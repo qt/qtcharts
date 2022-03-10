@@ -44,6 +44,7 @@
 #include <private/boxwhiskersdata_p.h>
 #include <private/boxwhiskersanimation_p.h>
 #include <QtCharts/private/qchartglobal_p.h>
+#include <QtCore/qhash.h>
 
 QT_BEGIN_NAMESPACE
 

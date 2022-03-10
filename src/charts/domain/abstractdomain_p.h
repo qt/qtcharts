@@ -43,6 +43,7 @@
 #include <QtCore/QRectF>
 #include <QtCore/QSizeF>
 #include <QtCore/QDebug>
+#include <QtCore/QObject>
 
 QT_BEGIN_NAMESPACE
 
