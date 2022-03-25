@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2022 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the documentation of the Qt Toolkit.
@@ -35,18 +35,23 @@
     types. Users can easily create impressive charts by selecting one of the
     themes.
 
-    \section1 Getting Started
+    \section1 Using the Module
 
-    To import Qt Charts QML types, add the following import statement to your \c .qml file:
+    \section2 QML API
 
-    \qml \QtMinorVersion
-    import QtCharts 2.\1
-    \endqml
+    \include {module-use.qdocinc} {using the qml api} {QtCharts}
 
-    If you intend to use Qt Charts C++ classes in your application, use the
-    following include and using directives:
+    \section2 C++ API
 
-    \snippet doc_src_qtcharts.cpp 0
+    \include {module-use.qdocinc} {using the c++ api}
+
+    \section3 Building with CMake
+
+    \include {module-use.qdocinc} {building with cmake} {Charts}
+
+    \section3 Building with qmake
+
+    \include {module-use.qdocinc} {building_with_qmake} {charts}
 
     \if !defined(qtforpython)
     \note Projects created with Qt Creator's Qt Quick Application
@@ -55,20 +60,9 @@
     QApplication as the module depends on Qt's \l{Graphics View Framework}
     for rendering.
 
-    To link against the Qt Charts module, add this line to your \c qmake project file:
-
-    \snippet doc_src_qtcharts.pro 0
-    \endif
-
     \section1 Module Evolution
     \l{Changes to Qt Charts} lists important changes in the module API
     and functionality that were done for the Qt 6 series of Qt.
-
-    \section1 Licenses
-
-    Qt Charts is available under commercial licenses from \l{The Qt Company}.
-    In addition, it is available under the \l{GNU General Public License, version 3}.
-    See \l{Qt Licensing} for further details.
 
     \section1 Articles and Guides
     \list
@@ -85,4 +79,10 @@
         \li \l{Qt Charts C++ Classes}{C++ Classes}
         \li \l{Qt Charts QML Types}{QML Types}
     \endlist
+
+    \section1 Licenses
+
+    Qt Charts is available under commercial licenses from \l{The Qt Company}.
+    In addition, it is available under the \l{GNU General Public License, version 3}.
+    See \l{Qt Licensing} for further details.
 */
