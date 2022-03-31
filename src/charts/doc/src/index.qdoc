@@ -53,7 +53,6 @@
 
     \include {module-use.qdocinc} {building_with_qmake} {charts}
 
-    \if !defined(qtforpython)
     \note Projects created with Qt Creator's Qt Quick Application
     wizard are based on the Qt Quick 2 template that uses QGuiApplication by default.
     All such QGuiApplication instances in the project must be replaced with
