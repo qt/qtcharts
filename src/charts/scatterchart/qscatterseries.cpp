@@ -372,7 +372,7 @@ void QScatterSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bool f
 void QScatterSeriesPrivate::initializeAnimations(QChart::AnimationOptions options, int duration,
                                                  QEasingCurve &curve)
 {
-    ScatterChartItem *item = static_cast<ScatterChartItem *>(m_item.data());
+    ScatterChartItem *item = static_cast<ScatterChartItem *>(m_item.get());
     Q_ASSERT(item);
 
     if (item->animation())

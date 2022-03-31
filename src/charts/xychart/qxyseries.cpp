@@ -1809,7 +1809,7 @@ QAbstractAxis* QXYSeriesPrivate::createDefaultAxis(Qt::Orientation orientation) 
 void QXYSeriesPrivate::initializeAnimations(QChart::AnimationOptions options,
                                             int duration, QEasingCurve &curve)
 {
-    XYChart *item = static_cast<XYChart *>(m_item.data());
+    XYChart *item = static_cast<XYChart *>(m_item.get());
     Q_ASSERT(item);
     if (item->animation())
         item->animation()->stopAndDestroyLater();

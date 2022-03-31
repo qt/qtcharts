@@ -413,8 +413,8 @@ QList<QAbstractAxis*> QAbstractSeries::attachedAxes()
 
 QAbstractSeriesPrivate::QAbstractSeriesPrivate(QAbstractSeries *q)
     : q_ptr(q),
-      m_chart(0),
-      m_item(0),
+      m_chart(nullptr),
+      m_item(nullptr),
       m_domain(new XYDomain()),
       m_visible(true),
       m_opacity(1.0),
@@ -431,10 +431,11 @@ void QAbstractSeriesPrivate::setDomain(AbstractDomain* domain)
 {
     Q_ASSERT(domain);
     if(m_domain.data()!=domain) {
-        if(!m_item.isNull()) QObject::disconnect(m_domain.data(), SIGNAL(updated()), m_item.data(), SLOT(handleDomainUpdated()));
+        if (m_item)
+            QObject::disconnect(m_domain.data(), SIGNAL(updated()), m_item.get(), SLOT(handleDomainUpdated()));
         m_domain.reset(domain);
-        if(!m_item.isNull()) {
-            QObject::connect(m_domain.data(), SIGNAL(updated()),m_item.data(), SLOT(handleDomainUpdated()));
+        if (m_item) {
+            QObject::connect(m_domain.data(), SIGNAL(updated()), m_item.get(), SLOT(handleDomainUpdated()));
             m_item->handleDomainUpdated();
         }
     }
@@ -452,9 +453,9 @@ ChartPresenter *QAbstractSeriesPrivate::presenter() const
 
 void QAbstractSeriesPrivate::initializeGraphics(QGraphicsItem* parent)
 {
-    Q_ASSERT(!m_item.isNull());
+    Q_ASSERT(m_item);
     Q_UNUSED(parent);
-    QObject::connect(m_domain.data(), SIGNAL(updated()),m_item.data(), SLOT(handleDomainUpdated()));
+    QObject::connect(m_domain.data(), SIGNAL(updated()), m_item.get(), SLOT(handleDomainUpdated()));
 }
 
 void QAbstractSeriesPrivate::initializeAnimations(QChart::AnimationOptions options, int duration,

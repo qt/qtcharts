@@ -1011,7 +1011,7 @@ void QCandlestickSeriesPrivate::initializeGraphics(QGraphicsItem *parent)
 void QCandlestickSeriesPrivate::initializeAnimations(QChart::AnimationOptions options, int duration,
                                                      QEasingCurve &curve)
 {
-    CandlestickChartItem *item = static_cast<CandlestickChartItem *>(m_item.data());
+    CandlestickChartItem *item = static_cast<CandlestickChartItem *>(m_item.get());
     Q_ASSERT(item);
 
     if (item->animation())
@@ -1118,7 +1118,7 @@ void QCandlestickSeriesPrivate::handleSeriesChange(QAbstractSeries *series)
     Q_UNUSED(series);
 
     if (m_chart) {
-        CandlestickChartItem *item = static_cast<CandlestickChartItem *>(m_item.data());
+        CandlestickChartItem *item = static_cast<CandlestickChartItem *>(m_item.get());
         if (item)
             item->handleCandlestickSeriesChange();
     }
@@ -1136,7 +1136,7 @@ void QCandlestickSeriesPrivate::handleSeriesRemove(QAbstractSeries *series)
     }
 
     if (q != removedSeries) {
-        CandlestickChartItem *item = static_cast<CandlestickChartItem *>(m_item.data());
+        CandlestickChartItem *item = static_cast<CandlestickChartItem *>(m_item.get());
         if (item)
             item->handleCandlestickSeriesChange();
     }

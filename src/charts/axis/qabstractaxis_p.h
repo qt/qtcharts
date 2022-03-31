@@ -45,6 +45,8 @@
 #include <QtCharts/private/qchartglobal_p.h>
 #include <QtCore/QDebug>
 
+#include <memory>
+
 QT_BEGIN_NAMESPACE
 class QGraphicsItem;
 QT_END_NAMESPACE
@@ -87,7 +89,7 @@ public:
     virtual qreal min() = 0;
     virtual qreal max() = 0;
 
-    ChartAxisElement *axisItem() { return m_item.data(); }
+    ChartAxisElement *axisItem() { return m_item.get(); }
 
 public Q_SLOTS:
     void handleRangeChanged(qreal min, qreal max);
@@ -98,7 +100,7 @@ Q_SIGNALS:
 protected:
     QAbstractAxis *q_ptr;
     QChart *m_chart = nullptr;
-    QScopedPointer<ChartAxisElement> m_item;
+    std::unique_ptr<ChartAxisElement> m_item;
 
 private:
     QList<QAbstractSeries*> m_series;

@@ -465,8 +465,8 @@ void QAreaSeries::setUpperSeries(QLineSeries *series)
         if (series)
             series->d_ptr->setBlockOpenGL(true);
         d->m_upperSeries = series;
-        if (!d->m_item.isNull())
-            static_cast<AreaChartItem *>(d->m_item.data())->setUpperSeries(series);
+        if (d->m_item)
+            static_cast<AreaChartItem *>(d->m_item.get())->setUpperSeries(series);
     }
 }
 
@@ -486,8 +486,8 @@ void QAreaSeries::setLowerSeries(QLineSeries *series)
         if (series)
             series->d_ptr->setBlockOpenGL(true);
         d->m_lowerSeries = series;
-        if (!d->m_item.isNull())
-            static_cast<AreaChartItem *>(d->m_item.data())->setLowerSeries(series);
+        if (d->m_item)
+            static_cast<AreaChartItem *>(d->m_item.get())->setLowerSeries(series);
     }
 }
 
@@ -755,7 +755,7 @@ void  QAreaSeriesPrivate::initializeAnimations(QChart::AnimationOptions options,
                                                QEasingCurve &curve)
 {
     Q_Q(QAreaSeries);
-    AreaChartItem *area = static_cast<AreaChartItem *>(m_item.data());
+    AreaChartItem *area = static_cast<AreaChartItem *>(m_item.get());
 
     if (q->upperSeries() && area->upperLineItem()->animation())
         area->upperLineItem()->animation()->stopAndDestroyLater();
