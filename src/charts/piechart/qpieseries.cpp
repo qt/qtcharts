@@ -996,7 +996,7 @@ void QPieSeriesPrivate::initializeGraphics(QGraphicsItem* parent)
 void QPieSeriesPrivate::initializeAnimations(QChart::AnimationOptions options,
                                              int duration, QEasingCurve &curve)
 {
-    PieChartItem *item = static_cast<PieChartItem *>(m_item.data());
+    PieChartItem *item = static_cast<PieChartItem *>(m_item.get());
     Q_ASSERT(item);
     if (item->animation())
         item->animation()->stopAndDestroyLater();

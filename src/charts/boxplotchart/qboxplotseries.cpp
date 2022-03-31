@@ -509,7 +509,7 @@ void QBoxPlotSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bool f
 void QBoxPlotSeriesPrivate::initializeAnimations(QChart::AnimationOptions options, int duration,
                                                  QEasingCurve &curve)
 {
-    BoxPlotChartItem *item = static_cast<BoxPlotChartItem *>(m_item.data());
+    BoxPlotChartItem *item = static_cast<BoxPlotChartItem *>(m_item.get());
     Q_ASSERT(item);
     if (item->animation())
         item->animation()->stopAndDestroyLater();
@@ -547,7 +547,7 @@ void QBoxPlotSeriesPrivate::handleSeriesRemove(QAbstractSeries *series)
 
     // Test if series removed is me, then don't do anything
     if (q != removedSeries) {
-        BoxPlotChartItem *item = static_cast<BoxPlotChartItem *>(m_item.data());
+        BoxPlotChartItem *item = static_cast<BoxPlotChartItem *>(m_item.get());
         if (item) {
             item->m_seriesCount = item->m_seriesCount - 1;
             if (removedSeries->d_func()->m_index < m_index) {
@@ -566,7 +566,7 @@ void QBoxPlotSeriesPrivate::handleSeriesChange(QAbstractSeries *series)
 
     Q_Q(QBoxPlotSeries);
 
-    BoxPlotChartItem *boxPlot = static_cast<BoxPlotChartItem *>(m_item.data());
+    BoxPlotChartItem *boxPlot = static_cast<BoxPlotChartItem *>(m_item.get());
 
     if (m_chart) {
         QList<QAbstractSeries *> serieses = m_chart->series();

@@ -44,6 +44,8 @@
 #include <private/abstractdomain_p.h>
 #include <QtCharts/private/qchartglobal_p.h>
 
+#include <memory>
+
 QT_BEGIN_NAMESPACE
 class QGraphicsItem;
 QT_END_NAMESPACE
@@ -81,7 +83,7 @@ public:
     virtual QAbstractAxis::AxisType defaultAxisType(Qt::Orientation) const = 0;
     virtual QAbstractAxis* createDefaultAxis(Qt::Orientation) const = 0;
 
-    ChartItem* chartItem() { return m_item.data(); }
+    ChartItem* chartItem() { return m_item.get(); }
 
     virtual void setDomain(AbstractDomain* domain);
     AbstractDomain* domain() { return m_domain.data(); }
@@ -99,7 +101,7 @@ Q_SIGNALS:
 protected:
     QAbstractSeries *q_ptr;
     QChart *m_chart;
-    QScopedPointer<ChartItem> m_item;
+    std::unique_ptr<ChartItem> m_item;
     QList<QAbstractAxis*> m_axes;
 
 private:

@@ -1107,7 +1107,7 @@ void QAbstractBarSeriesPrivate::initializeAxes()
     }
 
     // Make sure series animations are reset when axes change
-    AbstractBarChartItem *item = qobject_cast<AbstractBarChartItem *>(m_item.data());
+    AbstractBarChartItem *item = qobject_cast<AbstractBarChartItem *>(m_item.get());
     if (item)
         item->resetAnimation();
 }
@@ -1190,7 +1190,7 @@ void QAbstractBarSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bo
     // with single bar series with a lot of sets colored as they always have been.
     int actualIndex = 0;
     int firstSeriesSetCount = m_barSets.count();
-    if (!m_item.isNull()) {
+    if (m_item) {
         auto seriesMap = m_item->themeManager()->seriesMap();
         int lowestSeries = index;
         for (auto it = seriesMap.cbegin(), end = seriesMap.cend(); it != end; ++it) {
@@ -1260,7 +1260,7 @@ void QAbstractBarSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bo
 void QAbstractBarSeriesPrivate::initializeAnimations(QChart::AnimationOptions options, int duration,
                                                      QEasingCurve &curve)
 {
-    AbstractBarChartItem *bar = static_cast<AbstractBarChartItem *>(m_item.data());
+    AbstractBarChartItem *bar = static_cast<AbstractBarChartItem *>(m_item.get());
     Q_ASSERT(bar);
     if (bar->animation())
         bar->animation()->stopAndDestroyLater();

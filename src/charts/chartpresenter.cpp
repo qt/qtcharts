@@ -138,7 +138,7 @@ void ChartPresenter::handleAxisAdded(QAbstractAxis *axis)
 
 void ChartPresenter::handleAxisRemoved(QAbstractAxis *axis)
 {
-    ChartAxisElement *item = axis->d_ptr->m_item.take();
+    ChartAxisElement *item = axis->d_ptr->m_item.release();
     if (item->animation())
         item->animation()->stopAndDestroyLater();
     item->hide();
@@ -169,7 +169,7 @@ void ChartPresenter::handleSeriesAdded(QAbstractSeries *series)
 
 void ChartPresenter::handleSeriesRemoved(QAbstractSeries *series)
 {
-    ChartItem *chart  = series->d_ptr->m_item.take();
+    ChartItem *chart = series->d_ptr->m_item.release();
     chart->hide();
     chart->cleanup();
     series->disconnect(chart);
