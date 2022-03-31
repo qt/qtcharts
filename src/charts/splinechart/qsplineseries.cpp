@@ -173,7 +173,7 @@ void QSplineSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bool fo
 void QSplineSeriesPrivate::initializeAnimations(QChart::AnimationOptions options,
                                                 int duration, QEasingCurve &curve)
 {
-    SplineChartItem *item = static_cast<SplineChartItem *>(m_item.data());
+    SplineChartItem *item = static_cast<SplineChartItem *>(m_item.get());
     Q_ASSERT(item);
     if (item->animation())
         item->animation()->stopAndDestroyLater();

@@ -1156,7 +1156,7 @@ void QAbstractAxisPrivate::initializeGraphics(QGraphicsItem* parent)
 void QAbstractAxisPrivate::initializeAnimations(QChart::AnimationOptions options, int duration,
                                                 QEasingCurve &curve)
 {
-    ChartAxisElement *axis = m_item.data();
+    ChartAxisElement *axis = m_item.get();
     Q_ASSERT(axis);
     if (axis->animation())
         axis->animation()->stopAndDestroyLater();
