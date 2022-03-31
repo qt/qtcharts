@@ -18,7 +18,7 @@ examplesinstallpath = charts
 
 sources.fileextensions  = "*.cpp *.qdoc"
 
-depends = qtcore qtgui qtwidgets qtqml qtquick qtmultimedia qtdoc
+depends = qtcore qtgui qtwidgets qtqml qtquick qtmultimedia qtdoc qtcmake
 
 Cpp.ignoretokens       += Q_CHARTS_EXPORT \
                           QT_END_NAMESPACE \
