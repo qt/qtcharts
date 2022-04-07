@@ -234,17 +234,18 @@ void QChartView::mouseReleaseEvent(QMouseEvent *event)
             // Since plotArea uses QRectF and rubberband uses QRect, we can't just blindly use
             // rubberband's dimensions for vertical and horizontal rubberbands, where one
             // dimension must match the corresponding plotArea dimension exactly.
-            if (d_ptr->m_rubberBandFlags.testFlag(VerticalRubberBand)) {
-                rect.setX(d_ptr->m_chart->plotArea().x());
-                rect.setWidth(d_ptr->m_chart->plotArea().width());
-            } else if (d_ptr->m_rubberBandFlags.testFlag(HorizontalRubberBand)) {
-                rect.setY(d_ptr->m_chart->plotArea().y());
-                rect.setHeight(d_ptr->m_chart->plotArea().height());
+            if (!d_ptr->m_rubberBandFlags.testFlag(RectangleRubberBand)) {
+                if (d_ptr->m_rubberBandFlags.testFlag(VerticalRubberBand)) {
+                    rect.setX(d_ptr->m_chart->plotArea().x());
+                    rect.setWidth(d_ptr->m_chart->plotArea().width());
+                } else if (d_ptr->m_rubberBandFlags.testFlag(HorizontalRubberBand)) {
+                    rect.setY(d_ptr->m_chart->plotArea().y());
+                    rect.setHeight(d_ptr->m_chart->plotArea().height());
+                }
             }
             d_ptr->m_chart->zoomIn(rect);
             event->accept();
         }
-
     } else if (d_ptr->m_rubberBand && event->button() == Qt::RightButton) {
             // If vertical or horizontal rubberband mode, restrict zoom out to specified axis.
             // Since there is no suitable API for that, use zoomIn with rect bigger than the
@@ -255,13 +256,12 @@ void QChartView::mouseReleaseEvent(QMouseEvent *event)
                 if (d_ptr->m_rubberBandFlags.testFlag(VerticalRubberBand)) {
                     qreal adjustment = rect.height() / 2;
                     rect.adjust(0, -adjustment, 0, adjustment);
-                } else if (d_ptr->m_rubberBandFlags.testFlag(HorizontalRubberBand)) {
+                }
+                if (d_ptr->m_rubberBandFlags.testFlag(HorizontalRubberBand)) {
                     qreal adjustment = rect.width() / 2;
                     rect.adjust(-adjustment, 0, adjustment, 0);
                 }
                 d_ptr->m_chart->zoomIn(rect);
-            } else {
-                d_ptr->m_chart->zoomOut();
             }
             event->accept();
     } else {
