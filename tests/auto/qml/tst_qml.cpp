@@ -98,6 +98,9 @@ QString tst_qml::imports_2_1()
 
 void tst_qml::initTestCase()
 {
+#ifdef Q_OS_ANDROID
+    QSKIP("The test doesn't package resources properly to Android (QTBUG-102725)");
+#endif
 }
 
 void tst_qml::cleanupTestCase()

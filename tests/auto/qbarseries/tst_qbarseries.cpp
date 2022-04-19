@@ -649,6 +649,9 @@ void tst_QBarSeries::mousehovered()
 {
     QFETCH(uint, labelsPosition);
     QFETCH(bool, labelsVisible);
+#ifdef Q_OS_ANDROID
+    QSKIP("Android emulator doesn't have a mouse enabled");
+#endif
 
     QBarSeries* series = new QBarSeries();
     series->setLabelsVisible(labelsVisible);

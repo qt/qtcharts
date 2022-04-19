@@ -1,0 +1,9 @@
+# QTBUG-102723
+[clickedSignal]
+android
+[pressedSignal]
+android
+[releasedSignal]
+android
+[doubleClickedSignal]
+android
