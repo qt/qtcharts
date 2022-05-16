@@ -102,7 +102,6 @@ void HorizontalAxis::updateGeometry()
     else if (axis()->alignment() == Qt::AlignBottom)
         arrowItem->setLine(gridRect.left(), axisRect.top(), gridRect.right(), axisRect.top());
 
-    qreal width = 0;
     const QLatin1String ellipsis("...");
 
     //title
@@ -133,6 +132,8 @@ void HorizontalAxis::updateGeometry()
     QList<QGraphicsItem *> lines = gridItems();
     QList<QGraphicsItem *> shades = shadeItems();
 
+    qreal last_label_max_x = 0;
+
     for (int i = 0; i < layout.size(); ++i) {
         //items
         QGraphicsLineItem *gridItem = static_cast<QGraphicsLineItem*>(lines.at(i));
@@ -160,6 +161,7 @@ void HorizontalAxis::updateGeometry()
             labelItem->setHtml(text);
         } else  {
             qreal labelWidth = axisRect.width() / layout.count() - (2 * labelPadding());
+            // Replace digits with ellipsis "..." if number does not fit
             QString truncatedText = ChartPresenter::truncatedText(axis()->labelsFont(), text,
                                                                   axis()->labelsAngle(),
                                                                   labelWidth,
@@ -255,13 +257,14 @@ void HorizontalAxis::updateGeometry()
         labelItem->setPos(labelPos.toPoint());
 
         //label overlap detection - compensate one pixel for rounding errors
-        if ((labelItem->pos().x() < width && labelItem->toPlainText() == ellipsis) || forceHide ||
-            (labelItem->pos().x() + (widthDiff / 2.0)) < (axisRect.left() - 1.0) ||
-            (labelItem->pos().x() + (widthDiff / 2.0) - 1.0) > axisRect.right()) {
+        if ((labelItem->pos().x() < last_label_max_x && labelItem->toPlainText() == ellipsis)
+            || forceHide
+            || (labelItem->pos().x() + (widthDiff / 2.0))       < (axisRect.left() - 1.0)
+            || (labelItem->pos().x() + (widthDiff / 2.0) - 1.0) > axisRect.right()) {
             labelItem->setVisible(false);
         } else {
             labelItem->setVisible(true);
-            width = boundingRect.width() + labelItem->pos().x();
+            last_label_max_x = boundingRect.width() + labelItem->pos().x();
         }
 
         //shades
