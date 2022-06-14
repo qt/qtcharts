@@ -266,7 +266,7 @@ bool CartesianChartAxis::isEmpty()
 {
     return axisGeometry().isEmpty()
            || gridGeometry().isEmpty()
-           || qFuzzyCompare(min(), max());
+           || qFuzzyIsNull(max() - min());
 }
 
 void CartesianChartAxis::setGeometry(const QRectF &axis, const QRectF &grid)
