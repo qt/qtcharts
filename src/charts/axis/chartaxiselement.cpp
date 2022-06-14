@@ -371,7 +371,7 @@ bool ChartAxisElement::emptyAxis() const
 {
     return axisGeometry().isEmpty()
            || gridGeometry().isEmpty()
-           || qFuzzyCompare(min(), max());
+           || qFuzzyIsNull(max() - min());
 }
 
 qreal ChartAxisElement::min() const
