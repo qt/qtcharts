@@ -13,7 +13,12 @@ instructions:
       instructions:
         - !include "{{qt/qtbase}}/coin_module_test_template_v3.yaml"
       disable_if:
-        condition: property
-        property: configureArgs
-        contains_value: "-DFEATURE_widgets=OFF"
+        condition: or
+        conditions:
+          - condition: property
+            property: configureArgs
+            contains_value: "-DFEATURE_widgets=OFF"
+          - condition: property
+            property: configureArgs
+            contains_value: "-no-widgets"
 
