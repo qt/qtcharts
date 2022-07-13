@@ -4,7 +4,7 @@
 ## qhorizontalbarseries Test:
 #####################################################################
 
-qt_internal_add_test(qhorizontalbarseries
+qt_internal_add_test(tst_qhorizontalbarseries
     SOURCES
         ../inc/tst_definitions.h
         tst_qhorizontalbarseries.cpp

@@ -4,7 +4,7 @@
 ## qsplineseries Test:
 #####################################################################
 
-qt_internal_add_test(qsplineseries
+qt_internal_add_test(tst_qsplineseries
     SOURCES
         ../inc/tst_definitions.h
         ../qxyseries/tst_qxyseries.cpp ../qxyseries/tst_qxyseries.h

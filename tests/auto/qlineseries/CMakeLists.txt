@@ -4,7 +4,7 @@
 ## qlineseries Test:
 #####################################################################
 
-qt_internal_add_test(qlineseries
+qt_internal_add_test(tst_qlineseries
     SOURCES
         ../inc/tst_definitions.h
         ../qxyseries/tst_qxyseries.cpp ../qxyseries/tst_qxyseries.h

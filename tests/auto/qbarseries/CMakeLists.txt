@@ -4,7 +4,7 @@
 ## qbarseries Test:
 #####################################################################
 
-qt_internal_add_test(qbarseries
+qt_internal_add_test(tst_qbarseries
     SOURCES
         ../inc/tst_definitions.h
         tst_qbarseries.cpp
