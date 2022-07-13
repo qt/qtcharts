@@ -4,7 +4,7 @@
 ## qdatetimeaxis Test:
 #####################################################################
 
-qt_internal_add_test(qdatetimeaxis
+qt_internal_add_test(tst_qdatetimeaxis
     SOURCES
         ../inc/tst_definitions.h
         ../qabstractaxis/tst_qabstractaxis.cpp ../qabstractaxis/tst_qabstractaxis.h

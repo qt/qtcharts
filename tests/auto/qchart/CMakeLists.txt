@@ -4,7 +4,7 @@
 ## qchart Test:
 #####################################################################
 
-qt_internal_add_test(qchart
+qt_internal_add_test(tst_qchart
     SOURCES
         ../inc/tst_definitions.h
         tst_qchart.cpp
