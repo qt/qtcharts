@@ -4,7 +4,7 @@
 ## qbarset Test:
 #####################################################################
 
-qt_internal_add_test(qbarset
+qt_internal_add_test(tst_qbarset
     SOURCES
         ../inc/tst_definitions.h
         tst_qbarset.cpp

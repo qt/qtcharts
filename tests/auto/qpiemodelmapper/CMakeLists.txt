@@ -4,7 +4,7 @@
 ## qpiemodelmapper Test:
 #####################################################################
 
-qt_internal_add_test(qpiemodelmapper
+qt_internal_add_test(tst_qpiemodelmapper
     SOURCES
         ../inc/tst_definitions.h
         tst_qpiemodelmapper.cpp

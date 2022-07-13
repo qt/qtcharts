@@ -4,7 +4,7 @@
 ## qbarmodelmapper Test:
 #####################################################################
 
-qt_internal_add_test(qbarmodelmapper
+qt_internal_add_test(tst_qbarmodelmapper
     SOURCES
         ../inc/tst_definitions.h
         tst_qbarmodelmapper.cpp
