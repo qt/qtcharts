@@ -7,7 +7,7 @@
 ## qcandlestickmodelmapper Test:
 #####################################################################
 
-qt_internal_add_test(qcandlestickmodelmapper
+qt_internal_add_test(tst_qcandlestickmodelmapper
     SOURCES
         ../inc/tst_definitions.h
         tst_qcandlestickmodelmapper.cpp

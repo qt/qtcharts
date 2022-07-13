@@ -7,7 +7,7 @@
 ## qlegend Test:
 #####################################################################
 
-qt_internal_add_test(qlegend
+qt_internal_add_test(tst_qlegend
     SOURCES
         ../inc/tst_definitions.h
         tst_qlegend.cpp

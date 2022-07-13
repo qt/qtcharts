@@ -7,7 +7,7 @@
 ## domain Test:
 #####################################################################
 
-qt_internal_add_test(domain
+qt_internal_add_test(tst_domain
     SOURCES
         ../inc/tst_definitions.h
         tst_domain.cpp

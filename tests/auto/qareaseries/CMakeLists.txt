@@ -7,7 +7,7 @@
 ## qareaseries Test:
 #####################################################################
 
-qt_internal_add_test(qareaseries
+qt_internal_add_test(tst_qareaseries
     SOURCES
         ../inc/tst_definitions.h
         tst_qareaseries.cpp

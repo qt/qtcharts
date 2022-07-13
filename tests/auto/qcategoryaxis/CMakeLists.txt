@@ -7,7 +7,7 @@
 ## qcategoryaxis Test:
 #####################################################################
 
-qt_internal_add_test(qcategoryaxis
+qt_internal_add_test(tst_qcategoryaxis
     SOURCES
         ../inc/tst_definitions.h
         ../qabstractaxis/tst_qabstractaxis.cpp ../qabstractaxis/tst_qabstractaxis.h

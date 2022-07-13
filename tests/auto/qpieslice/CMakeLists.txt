@@ -7,7 +7,7 @@
 ## qpieslice Test:
 #####################################################################
 
-qt_internal_add_test(qpieslice
+qt_internal_add_test(tst_qpieslice
     SOURCES
         ../inc/tst_definitions.h
         tst_qpieslice.cpp

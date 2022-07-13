@@ -7,7 +7,7 @@
 ## qpieseries Test:
 #####################################################################
 
-qt_internal_add_test(qpieseries
+qt_internal_add_test(tst_qpieseries
     SOURCES
         ../inc/tst_definitions.h
         tst_qpieseries.cpp

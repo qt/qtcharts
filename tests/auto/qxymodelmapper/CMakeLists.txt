@@ -7,7 +7,7 @@
 ## qxymodelmapper Test:
 #####################################################################
 
-qt_internal_add_test(qxymodelmapper
+qt_internal_add_test(tst_qxymodelmapper
     SOURCES
         ../inc/tst_definitions.h
         tst_qxymodelmapper.cpp

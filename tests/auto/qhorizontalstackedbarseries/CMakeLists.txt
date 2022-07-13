@@ -7,7 +7,7 @@
 ## qhorizontalstackedbarseries Test:
 #####################################################################
 
-qt_internal_add_test(qhorizontalstackedbarseries
+qt_internal_add_test(tst_qhorizontalstackedbarseries
     SOURCES
         ../inc/tst_definitions.h
         tst_qhorizontalstackedbarseries.cpp
