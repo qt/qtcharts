@@ -4,6 +4,10 @@
 #ifndef QCHARTGLOBAL_H
 #define QCHARTGLOBAL_H
 
+#if 0
+#pragma qt_class(QChartGlobal)
+#endif
+
 #include <QtCore/qglobal.h>
 #include <QtCharts/qtcharts-config.h>
 #include <QtCharts/qtchartsexports.h>
