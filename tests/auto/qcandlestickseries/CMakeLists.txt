@@ -13,7 +13,7 @@ qt_internal_add_test(tst_qcandlestickseries
         tst_qcandlestickseries.cpp
     INCLUDE_DIRECTORIES
         ../inc
-    PUBLIC_LIBRARIES
+    LIBRARIES
         Qt::Charts
         Qt::Gui
         Qt::Widgets

@@ -12,7 +12,7 @@ qt_internal_add_manual_test(barcharttester
     SOURCES
         chart-widget.cpp chart-widget.h
         main.cpp
-    PUBLIC_LIBRARIES
+    LIBRARIES
         Qt::Charts
         Qt::Gui
         Qt::Widgets

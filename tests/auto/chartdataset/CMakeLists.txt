@@ -13,7 +13,7 @@ qt_internal_add_test(tst_chartdataset
         tst_chartdataset.cpp
     INCLUDE_DIRECTORIES
         ../inc
-    PUBLIC_LIBRARIES
+    LIBRARIES
         Qt::Charts
         Qt::ChartsPrivate
         Qt::CorePrivate

@@ -13,7 +13,7 @@ qt_internal_add_test(tst_qlegend
         tst_qlegend.cpp
     INCLUDE_DIRECTORIES
         ../inc
-    PUBLIC_LIBRARIES
+    LIBRARIES
         Qt::Charts
         Qt::Gui
         Qt::Widgets

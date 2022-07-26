@@ -12,7 +12,7 @@ qt_internal_add_manual_test(wavechart
     SOURCES
         main.cpp
         wavechart.cpp wavechart.h
-    PUBLIC_LIBRARIES
+    LIBRARIES
         Qt::Charts
         Qt::Gui
         Qt::OpenGL

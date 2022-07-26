@@ -13,7 +13,7 @@ qt_internal_add_test(tst_qstackedbarseries
         tst_qstackedbarseries.cpp
     INCLUDE_DIRECTORIES
         ../inc
-    PUBLIC_LIBRARIES
+    LIBRARIES
         Qt::Charts
         Qt::Gui
         Qt::Widgets

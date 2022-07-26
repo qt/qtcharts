@@ -13,7 +13,7 @@ qt_internal_add_test(tst_qbarmodelmapper
         tst_qbarmodelmapper.cpp
     INCLUDE_DIRECTORIES
         ../inc
-    PUBLIC_LIBRARIES
+    LIBRARIES
         Qt::Charts
         Qt::Gui
         Qt::Widgets

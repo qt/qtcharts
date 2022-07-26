@@ -12,7 +12,7 @@ qt_internal_add_manual_test(presenterchart
     SOURCES
         chartview.cpp chartview.h
         main.cpp
-    PUBLIC_LIBRARIES
+    LIBRARIES
         Qt::Charts
         Qt::Gui
         Qt::Widgets

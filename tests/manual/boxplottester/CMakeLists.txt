@@ -14,7 +14,7 @@ qt_internal_add_manual_test(boxplottester
         main.cpp
         mainwidget.cpp mainwidget.h
         pentool.cpp pentool.h
-    PUBLIC_LIBRARIES
+    LIBRARIES
         Qt::Charts
         Qt::Gui
         Qt::Widgets

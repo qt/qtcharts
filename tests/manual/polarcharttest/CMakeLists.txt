@@ -15,7 +15,7 @@ qt_internal_add_manual_test(polarcharttest
         mainwindow.cpp mainwindow.h mainwindow.ui
     INCLUDE_DIRECTORIES
         .
-    PUBLIC_LIBRARIES
+    LIBRARIES
         Qt::Charts
         Qt::Gui
         Qt::Widgets

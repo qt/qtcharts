@@ -14,7 +14,7 @@ qt_internal_add_manual_test(openglseriestest
         datasource.cpp datasource.h
         main.cpp
         mainwindow.cpp mainwindow.h mainwindow.ui
-    PUBLIC_LIBRARIES
+    LIBRARIES
         Qt::Charts
         Qt::Gui
         Qt::OpenGL

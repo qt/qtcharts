@@ -14,7 +14,7 @@ qt_internal_add_test(tst_qsplineseries
         tst_qsplineseries.cpp
     INCLUDE_DIRECTORIES
         ../inc
-    PUBLIC_LIBRARIES
+    LIBRARIES
         Qt::Charts
         Qt::Gui
         Qt::Widgets

@@ -13,7 +13,7 @@ qt_internal_add_manual_test(chartwidgettest
         dataseriedialog.cpp dataseriedialog.h
         main.cpp
         mainwidget.cpp mainwidget.h
-    PUBLIC_LIBRARIES
+    LIBRARIES
         Qt::Charts
         Qt::Gui
         Qt::OpenGL

@@ -13,7 +13,7 @@ qt_internal_add_test(tst_charts_qml
         tst_qml.cpp
     INCLUDE_DIRECTORIES
         ../inc
-    PUBLIC_LIBRARIES
+    LIBRARIES
         Qt::Charts
         Qt::Gui
         Qt::Qml

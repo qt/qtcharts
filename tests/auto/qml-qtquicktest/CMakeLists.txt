@@ -20,7 +20,7 @@ qt_internal_add_test(tst_qml-qtquicktest
         QUICK_TEST_SOURCE_DIR=\"\\\"${CMAKE_CURRENT_SOURCE_DIR}/data\\\"\"
     INCLUDE_DIRECTORIES
         ../inc
-    PUBLIC_LIBRARIES
+    LIBRARIES
         Qt::Charts
         Qt::Gui
         Qt::Widgets

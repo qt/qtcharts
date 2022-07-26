@@ -14,7 +14,7 @@ qt_internal_add_test(tst_qlineseries
         tst_qlineseries.cpp
     INCLUDE_DIRECTORIES
         ../inc
-    PUBLIC_LIBRARIES
+    LIBRARIES
         Qt::Charts
         Qt::Gui
         Qt::Widgets
