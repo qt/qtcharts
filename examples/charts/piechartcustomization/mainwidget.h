@@ -3,6 +3,8 @@
 #ifndef MAINWIDGET_H
 #define MAINWIDGET_H
 
+#include "qgridlayout.h"
+#include "qscrollarea.h"
 #include <QtWidgets/QWidget>
 #include <QtCharts/QChartGlobal>
 
@@ -44,6 +46,8 @@ public Q_SLOTS:
     void removeSlice();
 
 private:
+    void resizeEvent(QResizeEvent *e);
+
     QComboBox *m_themeComboBox;
     QCheckBox *m_aaCheckBox;
     QCheckBox *m_animationsCheckBox;
@@ -74,6 +78,10 @@ private:
     QPushButton *m_labelBrush;
     QComboBox *m_labelPosition;
     BrushTool *m_labelBrushTool;
+    QGridLayout *baseLayout;
+    QScrollArea *settingsScrollBar;
+
+    double oldAspectRatio;
 };
 
 #endif // MAINWIDGET_H

@@ -55,7 +55,7 @@ MainWidget::MainWidget(QWidget *parent)
 
     m_legendCheckBox = new QCheckBox();
 
-    QScrollArea *settingsScrollBar = new QScrollArea();
+    settingsScrollBar = new QScrollArea();
     QWidget *settingsContentWidget = new QWidget();
 
     QFormLayout *chartSettingsLayout = new QFormLayout(settingsContentWidget);
@@ -186,6 +186,7 @@ MainWidget::MainWidget(QWidget *parent)
     sliceSettingsLayout->addRow("Explode distance", m_sliceExplodedFactor);
     QGroupBox *sliceSettings = new QGroupBox("Selected slice");
     sliceSettings->setLayout(sliceSettingsLayout);
+    sliceSettings->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Preferred);
 
     connect(m_sliceName, &QLineEdit::textChanged, this, &MainWidget::updateSliceSettings);
     connect(m_sliceValue,
@@ -218,12 +219,16 @@ MainWidget::MainWidget(QWidget *parent)
     settingsLayout->addWidget(sliceSettings);
 
     settingsContentWidget->setLayout(settingsLayout);
-    settingsScrollBar->setWidget(settingsContentWidget);
-    settingsScrollBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 
-    QGridLayout *baseLayout = new QGridLayout();
+    settingsScrollBar->setWidget(settingsContentWidget);
+    settingsScrollBar->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);    
+    settingsScrollBar->setWidgetResizable(true);
+    settingsScrollBar->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred);
+    m_chartView->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
+
+    baseLayout = new QGridLayout();
     baseLayout->addWidget(settingsScrollBar, 0, 0);
-    baseLayout->addWidget(m_chartView, 0, 1);
+    baseLayout->addWidget(m_chartView, 1, 0);
     setLayout(baseLayout);
 
     updateSerieSettings();
@@ -366,5 +371,33 @@ void MainWidget::removeSlice()
     m_series->remove(m_slice);
     m_slice = 0;
 }
+
+void MainWidget::resizeEvent(QResizeEvent *e)
+{
+    if (width() == 0 || height() == 0)
+        return;
+
+    const double aspectRatio = double(width()) / double(height());
+
+    if ((aspectRatio < 1.0) && (oldAspectRatio > 1.0)) {
+        baseLayout->removeWidget(m_chartView);
+        baseLayout->removeWidget(settingsScrollBar);
+
+        baseLayout->addWidget(m_chartView, 0, 0);
+        baseLayout->addWidget(settingsScrollBar, 1, 0);
+
+        oldAspectRatio = aspectRatio;
+    }
+    else if ((aspectRatio > 1.0) && (oldAspectRatio < 1.0)) {
+        baseLayout->removeWidget(m_chartView);
+        baseLayout->removeWidget(settingsScrollBar);
+
+        baseLayout->addWidget(m_chartView, 0, 0);
+        baseLayout->addWidget(settingsScrollBar, 0, 1);
+
+        oldAspectRatio = aspectRatio;
+    }
+}
+
 
 #include "moc_mainwidget.cpp"
