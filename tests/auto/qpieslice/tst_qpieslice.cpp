@@ -282,7 +282,8 @@ void tst_qpieslice::hoverSignal()
     QVERIFY(QTest::qWaitForWindowExposed(&view));
 
     // try to ensure focus
-    QApplication::setActiveWindow(&view);
+    view.activateWindow();
+    QVERIFY(QTest::qWaitForWindowActive(&view));
     view.setFocus();
     QApplication::processEvents();
     QVERIFY(view.isActiveWindow());

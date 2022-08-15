@@ -157,7 +157,8 @@ void tst_QChartView::rubberBand()
     int maxY = vaxisY->max();
 
     // try to ensure focus
-    QApplication::setActiveWindow(m_view);
+    m_view->activateWindow();
+    QVERIFY(QTest::qWaitForWindowActive(m_view));
     m_view->setFocus();
     QApplication::processEvents();
     QVERIFY(m_view->isActiveWindow());
