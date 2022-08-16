@@ -200,7 +200,7 @@ QT_CHARTS_BEGIN_NAMESPACE
   \sa QString::asprintf()
 */
 /*!
-  \qmlproperty real ValueAxis::labelFormat
+  \qmlproperty string ValueAxis::labelFormat
 
   The format string supports the following conversion specifiers, length modifiers, and flags
   provided by \c printf() in the standard C++ library: d, i, o, x, X, f, F, e, E, g, G, c.
