@@ -511,7 +511,7 @@ QT_BEGIN_NAMESPACE
 /*!
     \fn void QXYSeries::lightMarkerChanged(const QImage &lightMarker)
     This signal is emitted when the light marker image changes to \a lightMarker.
-    \sa QXYSeries::setLightMarker();
+    \sa QXYSeries::setLightMarker()
     \since 6.2
 */
 
