@@ -475,7 +475,7 @@ void tst_QValueAxis::dynamicTicks()
     valuesaxis->setTickInterval(50.0);
     valuesaxis->setLabelFormat("%.2f");
     m_view->show();
-    QTest::qWaitForWindowExposed(m_view);
+    QVERIFY(QTest::qWaitForWindowExposed(m_view));
 
     QStringList expectedList;
     expectedList << "" << "100.00" << "50.00" << "0.00" << "-50.00" << "-100.00" <<
