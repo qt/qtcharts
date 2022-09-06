@@ -17,32 +17,32 @@ class AxisMock: public QAbstractAxisPrivate
 Q_OBJECT
 public:
     AxisMock(Qt::Alignment alignment):QAbstractAxisPrivate(0){ setAlignment(alignment);};
-    void initializeGraphics(QGraphicsItem* item)
+    void initializeGraphics(QGraphicsItem* item) override
     {
         Q_UNUSED(item);
     };
 
-    void initializeDomain(AbstractDomain* domain)
+    void initializeDomain(AbstractDomain* domain) override
     {
         Q_UNUSED(domain);
     };
-    void setMin(const QVariant &min)
+    void setMin(const QVariant &min) override
     {
         Q_UNUSED(min);
     }
-    qreal min() { return m_min;}
-    void setMax(const QVariant &max)
+    qreal min() override { return m_min; }
+    void setMax(const QVariant &max) override
     {
         Q_UNUSED(max);
     }
-    qreal max() { return m_max; }
-    void setRange(const QVariant &min, const QVariant &max)
+    qreal max() override { return m_max; }
+    void setRange(const QVariant &min, const QVariant &max) override
     {
         Q_UNUSED(min);
         Q_UNUSED(max);
     };
 
-    void setRange(qreal min, qreal max)
+    void setRange(qreal min, qreal max) override
     {
           m_min=min;
           m_max=max;

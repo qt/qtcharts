@@ -11,10 +11,10 @@ class tst_QScatterSeries : public tst_QXYSeries
     Q_OBJECT
 
 public slots:
-    void initTestCase();
-    void cleanupTestCase();
-    void init();
-    void cleanup();
+    void initTestCase() override;
+    void cleanupTestCase() override;
+    void init() override;
+    void cleanup() override;
 private slots:
     void qscatterseries_data();
     void qscatterseries();

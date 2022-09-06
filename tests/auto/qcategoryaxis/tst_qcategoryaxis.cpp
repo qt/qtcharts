@@ -10,10 +10,10 @@ class tst_QCategoryAxis: public tst_QAbstractAxis
 Q_OBJECT
 
 public slots:
-    void initTestCase();
-    void cleanupTestCase();
+    void initTestCase() override;
+    void cleanupTestCase() override;
     void init();
-    void cleanup();
+    void cleanup() override;
 
 private slots:
     void qcategoryaxis_data();

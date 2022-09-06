@@ -11,10 +11,10 @@ class tst_QLineSeries : public tst_QXYSeries
     Q_OBJECT
 
 public slots:
-    void initTestCase();
-    void cleanupTestCase();
-    void init();
-    void cleanup();
+    void initTestCase() override;
+    void cleanupTestCase() override;
+    void init() override;
+    void cleanup() override;
 private slots:
     void qlineseries_data();
     void qlineseries();
