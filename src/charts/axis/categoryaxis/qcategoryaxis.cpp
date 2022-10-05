@@ -231,7 +231,7 @@ void QCategoryAxis::remove(const QString &categoryLabel)
         d->m_categoriesMap.remove(categoryLabel);
 
         // the range of the interval that follows (if exists) needs to be updated
-        if (labelIndex < d->m_categories.count()) {
+        if (labelIndex < d->m_categories.size()) {
             QString label = d->m_categories.at(labelIndex);
             Range range = d->m_categoriesMap.value(label);
 
@@ -287,7 +287,7 @@ QStringList QCategoryAxis::categoriesLabels()
 int QCategoryAxis::count() const
 {
     Q_D(const QCategoryAxis);
-    return d->m_categories.count();
+    return d->m_categories.size();
 }
 
 /*!
@@ -330,7 +330,7 @@ QCategoryAxisPrivate::~QCategoryAxisPrivate()
 
 int QCategoryAxisPrivate::ticksCount() const
 {
-    return m_categories.count() + 1;
+    return m_categories.size() + 1;
 }
 
 void QCategoryAxisPrivate::initializeGraphics(QGraphicsItem *parent)

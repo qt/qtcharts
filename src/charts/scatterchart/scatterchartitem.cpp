@@ -189,8 +189,8 @@ void ScatterChartItem::markerDoubleClicked(QGraphicsItem *marker)
 void ScatterChartItem::updateGeometry()
 {
     if (m_series->useOpenGL()) {
-        if (m_items.childItems().count())
-            deletePoints(m_items.childItems().count());
+        if (m_items.childItems().size())
+            deletePoints(m_items.childItems().size());
         if (!m_rect.isEmpty()) {
             prepareGeometryChange();
             // Changed signal seems to trigger even with empty region
@@ -203,7 +203,7 @@ void ScatterChartItem::updateGeometry()
     const QList<QPointF> &points = geometryPoints();
 
     if (points.size() == 0) {
-        deletePoints(m_items.childItems().count());
+        deletePoints(m_items.childItems().size());
         return;
     }
 
@@ -454,7 +454,7 @@ void ScatterChartItem::handleSeriesUpdated()
         return;
     }
 
-    int count = m_items.childItems().count();
+    int count = m_items.childItems().size();
     if (count == 0)
         return;
 

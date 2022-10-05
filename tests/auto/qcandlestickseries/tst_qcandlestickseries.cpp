@@ -59,7 +59,7 @@ private:
     struct SetList : QList<QPointer<QCandlestickSet>> {
         operator QList<QCandlestickSet *> () const {
             QList<QCandlestickSet *> list;
-            for (int i = 0; i < count(); ++i)
+            for (int i = 0; i < size(); ++i)
                 list.append(at(i));
             return list;
         }
@@ -141,15 +141,15 @@ void tst_QCandlestickSeries::append()
 void tst_QCandlestickSeries::remove()
 {
     m_series->append(m_sets);
-    QCOMPARE(m_series->count(), m_sets.count());
+    QCOMPARE(m_series->count(), m_sets.size());
 
     // Try to remove null pointer (should not remove, should not crash)
     QVERIFY(!m_series->remove(nullptr));
-    QCOMPARE(m_series->count(), m_sets.count());
+    QCOMPARE(m_series->count(), m_sets.size());
 
     // Try to remove invalid pointer (should not remove, should not crash)
     QVERIFY(!m_series->remove((QCandlestickSet *)(m_sets.at(0) + 1)));
-    QCOMPARE(m_series->count(), m_sets.count());
+    QCOMPARE(m_series->count(), m_sets.size());
 
     // Remove some sets
     const int removeCount = 3;
@@ -157,13 +157,13 @@ void tst_QCandlestickSeries::remove()
         QVERIFY(m_series->remove(m_sets.at(i)));
         QVERIFY(!m_sets.at(i));
     }
-    QCOMPARE(m_series->count(), m_sets.count() - removeCount);
+    QCOMPARE(m_series->count(), m_sets.size() - removeCount);
 
-    for (int i = removeCount; i < m_sets.count(); ++i)
+    for (int i = removeCount; i < m_sets.size(); ++i)
         QCOMPARE(m_series->sets().at(i - removeCount), m_sets.at(i));
 
     // Try removing all sets again (should be ok, even if some sets have already been removed)
-    for (int i = 0; i < m_sets.count(); ++i) {
+    for (int i = 0; i < m_sets.size(); ++i) {
         m_series->remove(m_sets.at(i));
         QVERIFY(!m_sets.at(i));
     }
@@ -185,13 +185,13 @@ void tst_QCandlestickSeries::appendList()
     // Try append empty list (should succeed, but count should remain same)
     QList<QCandlestickSet *> invalidList;
     QVERIFY(m_series->append(invalidList));
-    QCOMPARE(m_series->count(), m_sets.count());
+    QCOMPARE(m_series->count(), m_sets.size());
 
     // Try append list with one new and one existing set (should fail, count remains same)
     invalidList.append(new QCandlestickSet());
     invalidList.append(m_sets.at(0));
     QVERIFY(!m_series->append(invalidList));
-    QCOMPARE(m_series->count(), m_sets.count());
+    QCOMPARE(m_series->count(), m_sets.size());
     delete invalidList.at(0);
     invalidList.clear();
 
@@ -201,24 +201,24 @@ void tst_QCandlestickSeries::appendList()
     invalidList.append(nullptr);
     invalidList.append(nullptr);
     QVERIFY(!m_series->append(invalidList));
-    QCOMPARE(m_series->count(), m_sets.count());
+    QCOMPARE(m_series->count(), m_sets.size());
 }
 
 void tst_QCandlestickSeries::removeList()
 {
     m_series->append(m_sets);
-    QCOMPARE(m_series->count(), m_sets.count());
+    QCOMPARE(m_series->count(), m_sets.size());
 
     // Try remove empty list (should fail, but count should remain same)
     QList<QCandlestickSet *> invalidList;
     QVERIFY(!m_series->remove(invalidList));
-    QCOMPARE(m_series->count(), m_sets.count());
+    QCOMPARE(m_series->count(), m_sets.size());
 
     // Try remove list with one new and one existing set (should fail, count remains same)
     invalidList.append(new QCandlestickSet());
     invalidList.append(m_sets.at(0));
     QVERIFY(!m_series->remove(invalidList));
-    QCOMPARE(m_series->count(), m_sets.count());
+    QCOMPARE(m_series->count(), m_sets.size());
     delete invalidList.at(0);
     invalidList.clear();
 
@@ -228,7 +228,7 @@ void tst_QCandlestickSeries::removeList()
     invalidList.append(nullptr);
     invalidList.append(nullptr);
     QVERIFY(!m_series->remove(invalidList));
-    QCOMPARE(m_series->count(), m_sets.count());
+    QCOMPARE(m_series->count(), m_sets.size());
 
     // Remove all sets (should succeed, count should be zero)
     QVERIFY(m_series->remove(m_sets));
@@ -246,17 +246,17 @@ void tst_QCandlestickSeries::insert()
     QSignalSpy countSpy(m_series, SIGNAL(countChanged()));
     QSignalSpy addedSpy(m_series, SIGNAL(candlestickSetsAdded(QList<QCandlestickSet *>)));
 
-    for (int i = 0; i < m_sets.count(); ++i) {
+    for (int i = 0; i < m_sets.size(); ++i) {
         QCandlestickSet *set = m_sets.at(i);
         QVERIFY(m_series->insert(0, set));
         QCOMPARE(m_series->count(), i + 1);
-        QTRY_COMPARE(countSpy.count(), i + 1);
-        QTRY_COMPARE(addedSpy.count(), i + 1);
+        QTRY_COMPARE(countSpy.size(), i + 1);
+        QTRY_COMPARE(addedSpy.size(), i + 1);
 
         QList<QVariant> args = addedSpy.value(i);
-        QCOMPARE(args.count(), 1);
+        QCOMPARE(args.size(), 1);
         QList<QCandlestickSet *> sets = qvariant_cast<QList<QCandlestickSet *>>(args.at(0));
-        QCOMPARE(sets.count(), 1);
+        QCOMPARE(sets.size(), 1);
         QCOMPARE(sets.first(), set);
     }
 }
@@ -264,22 +264,22 @@ void tst_QCandlestickSeries::insert()
 void tst_QCandlestickSeries::take()
 {
     m_series->append(m_sets);
-    QCOMPARE(m_series->count(), m_sets.count());
+    QCOMPARE(m_series->count(), m_sets.size());
 
     QSignalSpy countSpy(m_series, SIGNAL(countChanged()));
     QSignalSpy removedSpy(m_series, SIGNAL(candlestickSetsRemoved(QList<QCandlestickSet *>)));
 
-    for (int i = 0; i < m_sets.count(); ++i) {
+    for (int i = 0; i < m_sets.size(); ++i) {
         QCandlestickSet *set = m_sets.at(i);
         QVERIFY(m_series->take(set));
-        QCOMPARE(m_series->count(), m_sets.count() - i - 1);
-        QTRY_COMPARE(countSpy.count(), i + 1);
-        QTRY_COMPARE(removedSpy.count(), i + 1);
+        QCOMPARE(m_series->count(), m_sets.size() - i - 1);
+        QTRY_COMPARE(countSpy.size(), i + 1);
+        QTRY_COMPARE(removedSpy.size(), i + 1);
 
         QList<QVariant> args = removedSpy.value(i);
-        QCOMPARE(args.count(), 1);
+        QCOMPARE(args.size(), 1);
         QList<QCandlestickSet *> sets = qvariant_cast<QList<QCandlestickSet *>>(args.at(0));
-        QCOMPARE(sets.count(), 1);
+        QCOMPARE(sets.size(), 1);
         QCOMPARE(sets.first(), set);
     }
 }
@@ -287,7 +287,7 @@ void tst_QCandlestickSeries::take()
 void tst_QCandlestickSeries::clear()
 {
     m_series->append(m_sets);
-    QCOMPARE(m_series->count(), m_sets.count());
+    QCOMPARE(m_series->count(), m_sets.size());
 
     m_series->clear();
     QCOMPARE(m_series->count(), 0);
@@ -298,7 +298,7 @@ void tst_QCandlestickSeries::sets()
     m_series->append(m_sets);
     QCOMPARE(m_series->sets(), (QList<QCandlestickSet *>)m_sets);
 
-    for (int i = 0; i < m_sets.count(); ++i)
+    for (int i = 0; i < m_sets.size(); ++i)
         QCOMPARE(m_series->sets().at(i), m_sets.at(i));
 
     m_series->clear();
@@ -308,8 +308,8 @@ void tst_QCandlestickSeries::sets()
 void tst_QCandlestickSeries::count()
 {
     m_series->append(m_sets);
-    QCOMPARE(m_series->count(), m_sets.count());
-    QCOMPARE(m_series->count(), m_series->sets().count());
+    QCOMPARE(m_series->count(), m_sets.size());
+    QCOMPARE(m_series->count(), m_series->sets().size());
 }
 
 void tst_QCandlestickSeries::type()
@@ -339,12 +339,12 @@ void tst_QCandlestickSeries::maximumColumnWidth()
 
     m_series->setMaximumColumnWidth(maximumColumnWidth);
     QCOMPARE(m_series->maximumColumnWidth(), expectedMaximumColumnWidth);
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.size(), 1);
 
     // Try set same maximum column width
     m_series->setMaximumColumnWidth(expectedMaximumColumnWidth);
     QCOMPARE(m_series->maximumColumnWidth(), expectedMaximumColumnWidth);
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.size(), 1);
 }
 
 void tst_QCandlestickSeries::minimumColumnWidth_data()
@@ -369,12 +369,12 @@ void tst_QCandlestickSeries::minimumColumnWidth()
 
     m_series->setMinimumColumnWidth(minimumColumnWidth);
     QCOMPARE(m_series->minimumColumnWidth(), expectedMinimumColumnWidth);
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.size(), 1);
 
     // Try set same minimum column width
     m_series->setMinimumColumnWidth(expectedMinimumColumnWidth);
     QCOMPARE(m_series->minimumColumnWidth(), expectedMinimumColumnWidth);
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.size(), 1);
 }
 
 void tst_QCandlestickSeries::bodyWidth_data()
@@ -398,12 +398,12 @@ void tst_QCandlestickSeries::bodyWidth()
 
     m_series->setBodyWidth(bodyWidth);
     QCOMPARE(m_series->bodyWidth(), expectedBodyWidth);
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.size(), 1);
 
     // Try set same body width
     m_series->setBodyWidth(bodyWidth);
     QCOMPARE(m_series->bodyWidth(), expectedBodyWidth);
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.size(), 1);
 }
 
 void tst_QCandlestickSeries::bodyOutlineVisible()
@@ -413,12 +413,12 @@ void tst_QCandlestickSeries::bodyOutlineVisible()
     bool visible = !m_series->bodyOutlineVisible();
     m_series->setBodyOutlineVisible(visible);
     QCOMPARE(m_series->bodyOutlineVisible(), visible);
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.size(), 1);
 
     // Try set same body outline visibility
     m_series->setBodyOutlineVisible(visible);
     QCOMPARE(m_series->bodyOutlineVisible(), visible);
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.size(), 1);
 }
 
 void tst_QCandlestickSeries::capsWidth_data()
@@ -442,12 +442,12 @@ void tst_QCandlestickSeries::capsWidth()
 
     m_series->setCapsWidth(capsWidth);
     QCOMPARE(m_series->capsWidth(), expectedCapsWidth);
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.size(), 1);
 
     // Try set same caps width
     m_series->setCapsWidth(capsWidth);
     QCOMPARE(m_series->capsWidth(), expectedCapsWidth);
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.size(), 1);
 }
 
 void tst_QCandlestickSeries::capsVisible()
@@ -457,12 +457,12 @@ void tst_QCandlestickSeries::capsVisible()
     bool visible = !m_series->capsVisible();
     m_series->setCapsVisible(visible);
     QCOMPARE(m_series->capsVisible(), visible);
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.size(), 1);
 
     // Try set same caps visibility
     m_series->setCapsVisible(visible);
     QCOMPARE(m_series->capsVisible(), visible);
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.size(), 1);
 }
 
 void tst_QCandlestickSeries::increasingColor()
@@ -473,19 +473,19 @@ void tst_QCandlestickSeries::increasingColor()
     QColor newColor(200, 200, 200, 200);
     m_series->setIncreasingColor(newColor);
     QCOMPARE(m_series->increasingColor(), newColor);
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.size(), 1);
 
     // Try set same increasing color again
     m_series->setIncreasingColor(newColor);
     QCOMPARE(m_series->increasingColor(), newColor);
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.size(), 1);
 
     // Try set invalid increasing color (should change to default color)
     QColor defaultColor = m_series->brush().color();
     defaultColor.setAlpha(128);
     m_series->setIncreasingColor(QColor());
     QCOMPARE(m_series->increasingColor(), defaultColor);
-    QCOMPARE(spy.count(), 2);
+    QCOMPARE(spy.size(), 2);
 
     // Set new brush, increasing color should change accordingly
     QBrush brush(newColor);
@@ -493,7 +493,7 @@ void tst_QCandlestickSeries::increasingColor()
     defaultColor.setAlpha(128);
     m_series->setBrush(brush);
     QCOMPARE(m_series->increasingColor(), defaultColor);
-    QCOMPARE(spy.count(), 3);
+    QCOMPARE(spy.size(), 3);
 }
 
 void tst_QCandlestickSeries::decreasingColor()
@@ -504,22 +504,22 @@ void tst_QCandlestickSeries::decreasingColor()
     QColor newColor(200, 200, 200, 200);
     m_series->setDecreasingColor(newColor);
     QCOMPARE(m_series->decreasingColor(), newColor);
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.size(), 1);
 
     // Try set same decreasing color again
     m_series->setDecreasingColor(newColor);
     QCOMPARE(m_series->decreasingColor(), newColor);
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.size(), 1);
 
     // Try set invalid decreasing color (should change to default color)
     m_series->setDecreasingColor(QColor());
     QCOMPARE(m_series->decreasingColor(), m_series->brush().color());
-    QCOMPARE(spy.count(), 2);
+    QCOMPARE(spy.size(), 2);
 
     // Set new brush, decreasing color should change accordingly
     m_series->setBrush(QBrush(newColor));
     QCOMPARE(m_series->decreasingColor(), m_series->brush().color());
-    QCOMPARE(spy.count(), 3);
+    QCOMPARE(spy.size(), 3);
 }
 
 void tst_QCandlestickSeries::brush()
@@ -534,14 +534,14 @@ void tst_QCandlestickSeries::brush()
     QCOMPARE(m_series->brush(), brush);
     QCOMPARE(m_series->increasingColor(), increasingColor);
     QCOMPARE(m_series->decreasingColor(), decreasingColor);
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.size(), 1);
 
     // Try set same brush
     m_series->setBrush(brush);
     QCOMPARE(m_series->brush(), brush);
     QCOMPARE(m_series->increasingColor(), increasingColor);
     QCOMPARE(m_series->decreasingColor(), decreasingColor);
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.size(), 1);
 }
 
 void tst_QCandlestickSeries::pen()
@@ -551,12 +551,12 @@ void tst_QCandlestickSeries::pen()
     QPen pen(QColor(128, 128, 128, 128));
     m_series->setPen(pen);
     QCOMPARE(m_series->pen(), pen);
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.size(), 1);
 
     // Try set same pen
     m_series->setPen(pen);
     QCOMPARE(m_series->pen(), pen);
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.size(), 1);
 }
 
 void tst_QCandlestickSeries::mouseClicked()
@@ -564,7 +564,7 @@ void tst_QCandlestickSeries::mouseClicked()
     SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
 
     QVERIFY(m_series->append(m_sets));
-    QCOMPARE(m_series->count(), m_sets.count());
+    QCOMPARE(m_series->count(), m_sets.size());
 
     QCandlestickSet *set1 = m_series->sets().at(1);
     QCandlestickSet *set2 = m_series->sets().at(2);
@@ -595,12 +595,12 @@ void tst_QCandlestickSeries::mouseClicked()
     QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.value(set1).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
-    QCOMPARE(seriesSpy.count(), 1);
-    QCOMPARE(setSpy1.count(), 1);
-    QCOMPARE(setSpy2.count(), 0);
+    QCOMPARE(seriesSpy.size(), 1);
+    QCOMPARE(setSpy1.size(), 1);
+    QCOMPARE(setSpy2.size(), 0);
 
     QList<QVariant> seriesSpyArgs = seriesSpy.takeFirst();
-    QCOMPARE(seriesSpyArgs.count(), 1);
+    QCOMPARE(seriesSpyArgs.size(), 1);
     QCOMPARE(qvariant_cast<QCandlestickSet *>(seriesSpyArgs.at(0)), set1);
     seriesSpyArgs.clear();
 
@@ -610,12 +610,12 @@ void tst_QCandlestickSeries::mouseClicked()
     QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.value(set2).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
-    QCOMPARE(seriesSpy.count(), 1);
-    QCOMPARE(setSpy1.count(), 0);
-    QCOMPARE(setSpy2.count(), 1);
+    QCOMPARE(seriesSpy.size(), 1);
+    QCOMPARE(setSpy1.size(), 0);
+    QCOMPARE(setSpy2.size(), 1);
 
     seriesSpyArgs = seriesSpy.takeFirst();
-    QCOMPARE(seriesSpyArgs.count(), 1);
+    QCOMPARE(seriesSpyArgs.size(), 1);
     QCOMPARE(qvariant_cast<QCandlestickSet *>(seriesSpyArgs.at(0)), set2);
     seriesSpyArgs.clear();
 
@@ -628,7 +628,7 @@ void tst_QCandlestickSeries::mouseHovered()
     SKIP_IF_FLAKY_MOUSE_MOVE();
 
     QVERIFY(m_series->append(m_sets));
-    QCOMPARE(m_series->count(), m_sets.count());
+    QCOMPARE(m_series->count(), m_sets.size());
 
     QCandlestickSet *set1 = m_series->sets().at(1);
     QCandlestickSet *set2 = m_series->sets().at(2);
@@ -662,17 +662,17 @@ void tst_QCandlestickSeries::mouseHovered()
     QTest::mouseMove(view.viewport(), QPoint(0, layout.value(set1).center().y()));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
-    QCOMPARE(seriesSpy.count(), 0);
-    QCOMPARE(setSpy1.count(), 0);
-    QCOMPARE(setSpy2.count(), 0);
+    QCOMPARE(seriesSpy.size(), 0);
+    QCOMPARE(setSpy1.size(), 0);
+    QCOMPARE(setSpy2.size(), 0);
 
     // Move mouse on top of set 1
     QTest::mouseMove(view.viewport(), layout.value(set1).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
-    QCOMPARE(seriesSpy.count(), 1);
-    QCOMPARE(setSpy1.count(), 1);
-    QCOMPARE(setSpy2.count(), 0);
+    QCOMPARE(seriesSpy.size(), 1);
+    QCOMPARE(setSpy1.size(), 1);
+    QCOMPARE(setSpy2.size(), 0);
 
     QList<QVariant> seriesSpyArgs = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QCandlestickSet *>(seriesSpyArgs.at(1)), set1);
@@ -689,9 +689,9 @@ void tst_QCandlestickSeries::mouseHovered()
     QTest::mouseMove(view.viewport(), layout.value(set2).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
-    QCOMPARE(seriesSpy.count(), 2);
-    QCOMPARE(setSpy1.count(), 1);
-    QCOMPARE(setSpy2.count(), 1);
+    QCOMPARE(seriesSpy.size(), 2);
+    QCOMPARE(setSpy1.size(), 1);
+    QCOMPARE(setSpy2.size(), 1);
 
     // Should leave set 1
     seriesSpyArgs = seriesSpy.takeFirst();
@@ -721,9 +721,9 @@ void tst_QCandlestickSeries::mouseHovered()
     QTest::mouseMove(view.viewport(), QPoint(layout.value(set2).center().x(), 0));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
-    QCOMPARE(seriesSpy.count(), 1);
-    QCOMPARE(setSpy1.count(), 0);
-    QCOMPARE(setSpy2.count(), 1);
+    QCOMPARE(seriesSpy.size(), 1);
+    QCOMPARE(setSpy1.size(), 0);
+    QCOMPARE(setSpy2.size(), 1);
 
     // Should leave set 2
     seriesSpyArgs = seriesSpy.takeFirst();
@@ -743,7 +743,7 @@ void tst_QCandlestickSeries::mousePressed()
     SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
 
     QVERIFY(m_series->append(m_sets));
-    QCOMPARE(m_series->count(), m_sets.count());
+    QCOMPARE(m_series->count(), m_sets.size());
 
     QCandlestickSet *set1 = m_series->sets().at(1);
     QCandlestickSet *set2 = m_series->sets().at(2);
@@ -774,12 +774,12 @@ void tst_QCandlestickSeries::mousePressed()
     QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.value(set1).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
-    QCOMPARE(seriesSpy.count(), 1);
-    QCOMPARE(setSpy1.count(), 1);
-    QCOMPARE(setSpy2.count(), 0);
+    QCOMPARE(seriesSpy.size(), 1);
+    QCOMPARE(setSpy1.size(), 1);
+    QCOMPARE(setSpy2.size(), 0);
 
     QList<QVariant> seriesSpyArgs = seriesSpy.takeFirst();
-    QCOMPARE(seriesSpyArgs.count(), 1);
+    QCOMPARE(seriesSpyArgs.size(), 1);
     QCOMPARE(qvariant_cast<QCandlestickSet *>(seriesSpyArgs.at(0)), set1);
     seriesSpyArgs.clear();
 
@@ -789,12 +789,12 @@ void tst_QCandlestickSeries::mousePressed()
     QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.value(set2).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
-    QCOMPARE(seriesSpy.count(), 1);
-    QCOMPARE(setSpy1.count(), 0);
-    QCOMPARE(setSpy2.count(), 1);
+    QCOMPARE(seriesSpy.size(), 1);
+    QCOMPARE(setSpy1.size(), 0);
+    QCOMPARE(setSpy2.size(), 1);
 
     seriesSpyArgs = seriesSpy.takeFirst();
-    QCOMPARE(seriesSpyArgs.count(), 1);
+    QCOMPARE(seriesSpyArgs.size(), 1);
     QCOMPARE(qvariant_cast<QCandlestickSet *>(seriesSpyArgs.at(0)), set2);
     seriesSpyArgs.clear();
 
@@ -806,7 +806,7 @@ void tst_QCandlestickSeries::mouseReleased()
     SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
 
     QVERIFY(m_series->append(m_sets));
-    QCOMPARE(m_series->count(), m_sets.count());
+    QCOMPARE(m_series->count(), m_sets.size());
 
     QCandlestickSet *set1 = m_series->sets().at(1);
     QCandlestickSet *set2 = m_series->sets().at(2);
@@ -837,12 +837,12 @@ void tst_QCandlestickSeries::mouseReleased()
     QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.value(set1).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
-    QCOMPARE(seriesSpy.count(), 1);
-    QCOMPARE(setSpy1.count(), 1);
-    QCOMPARE(setSpy2.count(), 0);
+    QCOMPARE(seriesSpy.size(), 1);
+    QCOMPARE(setSpy1.size(), 1);
+    QCOMPARE(setSpy2.size(), 0);
 
     QList<QVariant> seriesSpyArgs = seriesSpy.takeFirst();
-    QCOMPARE(seriesSpyArgs.count(), 1);
+    QCOMPARE(seriesSpyArgs.size(), 1);
     QCOMPARE(qvariant_cast<QCandlestickSet *>(seriesSpyArgs.at(0)), set1);
     seriesSpyArgs.clear();
 
@@ -852,12 +852,12 @@ void tst_QCandlestickSeries::mouseReleased()
     QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.value(set2).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
-    QCOMPARE(seriesSpy.count(), 1);
-    QCOMPARE(setSpy1.count(), 0);
-    QCOMPARE(setSpy2.count(), 1);
+    QCOMPARE(seriesSpy.size(), 1);
+    QCOMPARE(setSpy1.size(), 0);
+    QCOMPARE(setSpy2.size(), 1);
 
     seriesSpyArgs = seriesSpy.takeFirst();
-    QCOMPARE(seriesSpyArgs.count(), 1);
+    QCOMPARE(seriesSpyArgs.size(), 1);
     QCOMPARE(qvariant_cast<QCandlestickSet *>(seriesSpyArgs.at(0)), set2);
     seriesSpyArgs.clear();
 
@@ -869,7 +869,7 @@ void tst_QCandlestickSeries::mouseDoubleClicked()
     SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
 
     QVERIFY(m_series->append(m_sets));
-    QCOMPARE(m_series->count(), m_sets.count());
+    QCOMPARE(m_series->count(), m_sets.size());
 
     QCandlestickSet *set1 = m_series->sets().at(1);
     QCandlestickSet *set2 = m_series->sets().at(2);
@@ -900,12 +900,12 @@ void tst_QCandlestickSeries::mouseDoubleClicked()
     QTest::mouseDClick(view.viewport(), Qt::LeftButton, {}, layout.value(set1).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
-    QCOMPARE(seriesSpy.count(), 1);
-    QCOMPARE(setSpy1.count(), 1);
-    QCOMPARE(setSpy2.count(), 0);
+    QCOMPARE(seriesSpy.size(), 1);
+    QCOMPARE(setSpy1.size(), 1);
+    QCOMPARE(setSpy2.size(), 0);
 
     QList<QVariant> seriesSpyArgs = seriesSpy.takeFirst();
-    QCOMPARE(seriesSpyArgs.count(), 1);
+    QCOMPARE(seriesSpyArgs.size(), 1);
     QCOMPARE(qvariant_cast<QCandlestickSet *>(seriesSpyArgs.at(0)), set1);
     seriesSpyArgs.clear();
 

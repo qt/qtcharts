@@ -23,7 +23,7 @@ DeclarativeSplineSeries::DeclarativeSplineSeries(QObject *parent) :
 void DeclarativeSplineSeries::handleCountChanged(int index)
 {
     Q_UNUSED(index);
-    emit countChanged(points().count());
+    emit countChanged(points().size());
 }
 
 qreal DeclarativeSplineSeries::width() const

@@ -451,7 +451,7 @@ bool QChart::isZoomed()
 QAbstractAxis *QChart::axisX(QAbstractSeries *series) const
 {
     QList<QAbstractAxis *> axisList = axes(Qt::Horizontal, series);
-    if (axisList.count())
+    if (axisList.size())
         return axisList[0];
     return 0;
 }
@@ -468,7 +468,7 @@ QAbstractAxis *QChart::axisX(QAbstractSeries *series) const
 QAbstractAxis *QChart::axisY(QAbstractSeries *series) const
 {
     QList<QAbstractAxis *> axisList = axes(Qt::Vertical, series);
-    if (axisList.count())
+    if (axisList.size())
         return axisList[0];
     return 0;
 }

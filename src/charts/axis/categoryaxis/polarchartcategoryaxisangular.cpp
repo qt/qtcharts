@@ -22,7 +22,7 @@ PolarChartCategoryAxisAngular::~PolarChartCategoryAxisAngular()
 QList<qreal> PolarChartCategoryAxisAngular::calculateLayout() const
 {
     QCategoryAxis *catAxis = static_cast<QCategoryAxis *>(axis());
-    int tickCount = catAxis->categoriesLabels().count() + 1;
+    int tickCount = catAxis->categoriesLabels().size() + 1;
     QList<qreal> points;
 
     if (tickCount < 2)

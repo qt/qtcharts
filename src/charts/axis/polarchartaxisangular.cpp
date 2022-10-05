@@ -244,7 +244,7 @@ Qt::Orientation PolarChartAxisAngular::orientation() const
 
 void PolarChartAxisAngular::createItems(int count)
 {
-    if (arrowItems().count() == 0) {
+    if (arrowItems().size() == 0) {
         // angular axis line
         QGraphicsEllipseItem *arrow = new QGraphicsEllipseItem(presenter()->rootItem());
         arrow->setPen(axis()->linePen());
@@ -532,7 +532,7 @@ void PolarChartAxisAngular::updateMinorTickGeometry()
         break;
     }
 
-    if (minorTickCount < 1 || tickAngle == 0.0 || minorTickAngles.count() != minorTickCount)
+    if (minorTickCount < 1 || tickAngle == 0.0 || minorTickAngles.size() != minorTickCount)
         return;
 
     const QPointF axisCenter = axisGeometry().center();

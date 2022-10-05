@@ -360,7 +360,7 @@ void CartesianChartAxis::updateLabelsValues(QValueAxis *axis)
         const qreal ticksFromAnchor = (anchor - min()) / interval;
         const qreal firstMajorTick = anchor - std::floor(ticksFromAnchor) * interval;
 
-        int i = axis->isReverse() ? labelItems().count()-1 : 0;
+        int i = axis->isReverse() ? labelItems().size()-1 : 0;
         qreal value = firstMajorTick;
         while (value <= max()) {
             static_cast<ValueAxisLabel *>(labelItems().at(i))->setValue(value);

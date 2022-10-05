@@ -186,7 +186,7 @@ QColor ChartThemeManager::colorAt(const QGradient &gradient, qreal pos)
     Q_ASSERT(pos >= 0 && pos <= 1.0);
 
     QGradientStops stops = gradient.stops();
-    int count = stops.count();
+    int count = stops.size();
 
     // find previous stop relative to position
     QGradientStop prev = stops.first();

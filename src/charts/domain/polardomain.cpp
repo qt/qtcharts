@@ -41,12 +41,12 @@ QPointF PolarDomain::calculateGeometryPoint(const QPointF &point, bool &ok) cons
 QList<QPointF> PolarDomain::calculateGeometryPoints(const QList<QPointF> &list) const
 {
     QList<QPointF> result;
-    result.resize(list.count());
+    result.resize(list.size());
     bool ok;
     qreal r = 0.0;
     qreal a = 0.0;
 
-    for (int i = 0; i < list.count(); ++i) {
+    for (int i = 0; i < list.size(); ++i) {
         a = toAngularCoordinate(list[i].x(), ok);
         if (ok)
             r = toRadialCoordinate(list[i].y(), ok);

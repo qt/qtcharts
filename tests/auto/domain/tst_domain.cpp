@@ -163,9 +163,9 @@ void tst_Domain::handleHorizontalAxisRangeChanged()
     QVERIFY(qFuzzyCompare(arg1.at(0).toReal(), min));
     QVERIFY(qFuzzyCompare(arg1.at(1).toReal(), max));
 
-    TRY_COMPARE(spy0.count(), 1);
-    TRY_COMPARE(spy1.count(), 1);
-    TRY_COMPARE(spy2.count(), 0);
+    TRY_COMPARE(spy0.size(), 1);
+    TRY_COMPARE(spy1.size(), 1);
+    TRY_COMPARE(spy2.size(), 0);
 
 }
 
@@ -200,9 +200,9 @@ void tst_Domain::handleVerticalAxisRangeChanged()
     QVERIFY(qFuzzyCompare(arg1.at(0).toReal(), min));
     QVERIFY(qFuzzyCompare(arg1.at(1).toReal(), max));
 
-    TRY_COMPARE(spy0.count(), 1);
-    TRY_COMPARE(spy1.count(), 0);
-    TRY_COMPARE(spy2.count(), 1);
+    TRY_COMPARE(spy0.size(), 1);
+    TRY_COMPARE(spy1.size(), 0);
+    TRY_COMPARE(spy2.size(), 1);
 }
 
 void tst_Domain::isEmpty_data()
@@ -262,9 +262,9 @@ void tst_Domain::maxX()
     domain.setMaxX(maxX2);
     QCOMPARE(domain.maxX(), maxX2);
 
-    TRY_COMPARE(spy0.count(), count);
-    TRY_COMPARE(spy1.count(), count);
-    TRY_COMPARE(spy2.count(), 0);
+    TRY_COMPARE(spy0.size(), count);
+    TRY_COMPARE(spy1.size(), count);
+    TRY_COMPARE(spy2.size(), 0);
 
 }
 
@@ -295,9 +295,9 @@ void tst_Domain::maxY()
     domain.setMaxY(maxY2);
     QCOMPARE(domain.maxY(), maxY2);
 
-    TRY_COMPARE(spy0.count(), count);
-    TRY_COMPARE(spy1.count(), 0);
-    TRY_COMPARE(spy2.count(), count);
+    TRY_COMPARE(spy0.size(), count);
+    TRY_COMPARE(spy1.size(), 0);
+    TRY_COMPARE(spy2.size(), count);
 }
 
 void tst_Domain::minX_data()
@@ -327,9 +327,9 @@ void tst_Domain::minX()
     domain.setMinX(minX2);
     QCOMPARE(domain.minX(), minX2);
 
-    TRY_COMPARE(spy0.count(), count);
-    TRY_COMPARE(spy1.count(), count);
-    TRY_COMPARE(spy2.count(), 0);
+    TRY_COMPARE(spy0.size(), count);
+    TRY_COMPARE(spy1.size(), count);
+    TRY_COMPARE(spy2.size(), 0);
 }
 
 void tst_Domain::minY_data()
@@ -359,9 +359,9 @@ void tst_Domain::minY()
     domain.setMinY(minY2);
     QCOMPARE(domain.minY(), minY2);
 
-    TRY_COMPARE(spy0.count(), count);
-    TRY_COMPARE(spy1.count(), 0);
-    TRY_COMPARE(spy2.count(), count);
+    TRY_COMPARE(spy0.size(), count);
+    TRY_COMPARE(spy1.size(), 0);
+    TRY_COMPARE(spy2.size(), count);
 }
 
 void tst_Domain::operatorEquals_data()
@@ -407,9 +407,9 @@ void tst_Domain::operatorEquals()
     QCOMPARE(*domain1==*domain2, equals);
     QCOMPARE(*domain1!=*domain2, notEquals);
 
-    TRY_COMPARE(spy0.count(), 0);
-    TRY_COMPARE(spy1.count(), 0);
-    TRY_COMPARE(spy2.count(), 0);
+    TRY_COMPARE(spy0.size(), 0);
+    TRY_COMPARE(spy1.size(), 0);
+    TRY_COMPARE(spy2.size(), 0);
 
     delete domain1;
     delete domain2;
@@ -446,9 +446,9 @@ void tst_Domain::setRange()
     QCOMPARE(domain.minY(), minY);
     QCOMPARE(domain.maxY(), maxY);
 
-    TRY_COMPARE(spy0.count(), 1);
-    TRY_COMPARE(spy1.count(), 1);
-    TRY_COMPARE(spy2.count(), 1);
+    TRY_COMPARE(spy0.size(), 1);
+    TRY_COMPARE(spy1.size(), 1);
+    TRY_COMPARE(spy2.size(), 1);
 
 }
 
@@ -481,9 +481,9 @@ void tst_Domain::setRangeX()
     QVERIFY(qFuzzyCompare(arg1.at(0).toReal(), min));
     QVERIFY(qFuzzyCompare(arg1.at(1).toReal(), max));
 
-    TRY_COMPARE(spy0.count(), 1);
-    TRY_COMPARE(spy1.count(), 1);
-    TRY_COMPARE(spy2.count(), 0);
+    TRY_COMPARE(spy0.size(), 1);
+    TRY_COMPARE(spy1.size(), 1);
+    TRY_COMPARE(spy2.size(), 0);
 }
 
 void tst_Domain::setRangeY_data()
@@ -515,9 +515,9 @@ void tst_Domain::setRangeY()
     QVERIFY(qFuzzyCompare(arg1.at(0).toReal(), min));
     QVERIFY(qFuzzyCompare(arg1.at(1).toReal(), max));
 
-    TRY_COMPARE(spy0.count(), 1);
-    TRY_COMPARE(spy1.count(), 0);
-    TRY_COMPARE(spy2.count(), 1);
+    TRY_COMPARE(spy0.size(), 1);
+    TRY_COMPARE(spy1.size(), 0);
+    TRY_COMPARE(spy2.size(), 1);
 }
 
 void tst_Domain::spanX_data()
@@ -545,9 +545,9 @@ void tst_Domain::spanX()
 
     QCOMPARE(domain.spanX(), spanX);
 
-    TRY_COMPARE(spy0.count(), 0);
-    TRY_COMPARE(spy1.count(), 0);
-    TRY_COMPARE(spy2.count(), 0);
+    TRY_COMPARE(spy0.size(), 0);
+    TRY_COMPARE(spy1.size(), 0);
+    TRY_COMPARE(spy2.size(), 0);
 }
 
 void tst_Domain::spanY_data()
@@ -575,9 +575,9 @@ void tst_Domain::spanY()
 
     QCOMPARE(domain.spanY(), spanY);
 
-    TRY_COMPARE(spy0.count(), 0);
-    TRY_COMPARE(spy1.count(), 0);
-    TRY_COMPARE(spy2.count(), 0);
+    TRY_COMPARE(spy0.size(), 0);
+    TRY_COMPARE(spy1.size(), 0);
+    TRY_COMPARE(spy2.size(), 0);
 }
 
 void tst_Domain::zoomIn_data()
@@ -615,9 +615,9 @@ void tst_Domain::zoomIn()
     QCOMPARE(domain.minY(),qreal(result.top()));
     QCOMPARE(domain.maxY(),qreal(result.bottom()));
 
-    TRY_COMPARE(spy0.count(), 1);
-    TRY_COMPARE(spy1.count(), 1);
-    TRY_COMPARE(spy2.count(), 1);
+    TRY_COMPARE(spy0.size(), 1);
+    TRY_COMPARE(spy1.size(), 1);
+    TRY_COMPARE(spy2.size(), 1);
 }
 
 void tst_Domain::zoomOut_data()
@@ -655,9 +655,9 @@ void tst_Domain::zoomOut()
     QCOMPARE(domain.minY(),qreal(result.top()));
     QCOMPARE(domain.maxY(),qreal(result.bottom()));
 
-    TRY_COMPARE(spy0.count(), 1);
-    TRY_COMPARE(spy1.count(), 1);
-    TRY_COMPARE(spy2.count(), 1);
+    TRY_COMPARE(spy0.size(), 1);
+    TRY_COMPARE(spy1.size(), 1);
+    TRY_COMPARE(spy2.size(), 1);
 }
 
 void tst_Domain::move_data()
@@ -697,9 +697,9 @@ void tst_Domain::move()
     QCOMPARE(domain.minY(),qreal(result.top()));
     QCOMPARE(domain.maxY(),qreal(result.bottom()));
 
-    TRY_COMPARE(spy0.count(), 1);
-    TRY_COMPARE(spy1.count(), (dx != 0 ? 1 : 0));
-    TRY_COMPARE(spy2.count(), (dy != 0 ? 1 : 0));
+    TRY_COMPARE(spy0.size(), 1);
+    TRY_COMPARE(spy1.size(), (dx != 0 ? 1 : 0));
+    TRY_COMPARE(spy2.size(), (dy != 0 ? 1 : 0));
 }
 
 QTEST_MAIN(tst_Domain)

@@ -84,7 +84,7 @@ void DeclarativePieSeries::appendSeriesChildren(QQmlListProperty<QObject> * list
 QPieSlice *DeclarativePieSeries::at(int index)
 {
     QList<QPieSlice *> sliceList = slices();
-    if (index >= 0 && index < sliceList.count())
+    if (index >= 0 && index < sliceList.size())
         return sliceList[index];
 
     return 0;

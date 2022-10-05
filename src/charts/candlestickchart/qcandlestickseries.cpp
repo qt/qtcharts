@@ -624,7 +624,7 @@ QList<QCandlestickSet *> QCandlestickSeries::sets() const
 */
 int QCandlestickSeries::count() const
 {
-    return sets().count();
+    return sets().size();
 }
 
 /*!
@@ -915,20 +915,20 @@ void QCandlestickSeriesPrivate::initializeDomain()
     qreal minY(domain()->minY());
     qreal maxY(domain()->maxY());
 
-    if (m_sets.count()) {
+    if (m_sets.size()) {
         QCandlestickSet *set = m_sets.first();
         minX = set->timestamp();
         maxX = set->timestamp();
         minY = set->low();
         maxY = set->high();
-        for (int i = 1; i < m_sets.count(); ++i) {
+        for (int i = 1; i < m_sets.size(); ++i) {
             set = m_sets.at(i);
             minX = qMin(minX, qreal(set->timestamp()));
             maxX = qMax(maxX, qreal(set->timestamp()));
             minY = qMin(minY, set->low());
             maxY = qMax(maxY, set->high());
         }
-        qreal extra = (maxX - minX) / m_sets.count() / 2;
+        qreal extra = (maxX - minX) / m_sets.size() / 2;
         minX = minX - extra;
         maxX = maxX + extra;
     }
@@ -1054,7 +1054,7 @@ bool QCandlestickSeriesPrivate::append(const QList<QCandlestickSet *> &sets)
 
 bool QCandlestickSeriesPrivate::remove(const QList<QCandlestickSet *> &sets)
 {
-    if (sets.count() == 0)
+    if (sets.size() == 0)
         return false;
 
     foreach (QCandlestickSet *set, sets) {
@@ -1120,7 +1120,7 @@ void QCandlestickSeriesPrivate::populateBarCategories(QBarCategoryAxis *axis)
 {
     if (axis->categories().isEmpty()) {
         QStringList categories;
-        for (int i = 0; i < m_sets.count(); ++i) {
+        for (int i = 0; i < m_sets.size(); ++i) {
             const qint64 timestamp = qRound64(m_sets.at(i)->timestamp());
             const QString timestampFormat = m_chart->locale().dateTimeFormat(QLocale::ShortFormat);
             categories << QDateTime::fromMSecsSinceEpoch(timestamp).toString(timestampFormat);

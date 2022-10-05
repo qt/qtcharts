@@ -466,7 +466,7 @@ bool QPieSeries::append(const QList<QPieSlice *> &slices)
 {
     Q_D(QPieSeries);
 
-    if (slices.count() == 0)
+    if (slices.size() == 0)
         return false;
 
     for (auto *s : slices) {
@@ -540,7 +540,7 @@ bool QPieSeries::insert(int index, QPieSlice *slice)
 {
     Q_D(QPieSeries);
 
-    if (index < 0 || index > d->m_slices.count())
+    if (index < 0 || index > d->m_slices.size())
         return false;
 
     if (!slice || d->m_slices.contains(slice))
@@ -630,7 +630,7 @@ bool QPieSeries::take(QPieSlice *slice)
 void QPieSeries::clear()
 {
     Q_D(QPieSeries);
-    if (d->m_slices.count() == 0)
+    if (d->m_slices.size() == 0)
         return;
 
     QList<QPieSlice *> slices = d->m_slices;
@@ -661,7 +661,7 @@ QList<QPieSlice *> QPieSeries::slices() const
 int QPieSeries::count() const
 {
     Q_D(const QPieSeries);
-    return d->m_slices.count();
+    return d->m_slices.size();
 }
 
 /*!
@@ -1016,12 +1016,12 @@ void QPieSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bool force
     //const QList<QColor>& colors = theme->seriesColors();
     const QList<QGradient>& gradients = theme->seriesGradients();
 
-    for (int i(0); i < m_slices.count(); i++) {
+    for (int i(0); i < m_slices.size(); i++) {
 
         QColor penColor = ChartThemeManager::colorAt(gradients.at(index % gradients.size()), 0.0);
 
         // Get color for a slice from a gradient linearly, beginning from the start of the gradient
-        qreal pos = (qreal)(i + 1) / (qreal) m_slices.count();
+        qreal pos = (qreal)(i + 1) / (qreal) m_slices.size();
         QColor brushColor = ChartThemeManager::colorAt(gradients.at(index % gradients.size()), pos);
 
         QPieSlice *s = m_slices.at(i);

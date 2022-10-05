@@ -284,7 +284,7 @@ void CandlestickChartItem::updateCandlestickAppearance(Candlestick *item, QCandl
 void CandlestickChartItem::addTimestamp(qreal timestamp)
 {
     int index = 0;
-    for (int i = m_timestamps.count() - 1; i >= 0; --i) {
+    for (int i = m_timestamps.size() - 1; i >= 0; --i) {
         if (timestamp > m_timestamps.at(i)) {
             index = i + 1;
             break;
@@ -300,18 +300,18 @@ void CandlestickChartItem::removeTimestamp(qreal timestamp)
 
 void CandlestickChartItem::updateTimePeriod()
 {
-    if (m_timestamps.count() == 0) {
+    if (m_timestamps.size() == 0) {
         m_timePeriod = 0;
         return;
     }
 
-    if (m_timestamps.count() == 1) {
+    if (m_timestamps.size() == 1) {
         m_timePeriod = qAbs(domain()->maxX() - domain()->minX());
         return;
     }
 
     qreal timePeriod = qAbs(m_timestamps.at(1) - m_timestamps.at(0));
-    for (int i = 1; i < m_timestamps.count(); ++i) {
+    for (int i = 1; i < m_timestamps.size(); ++i) {
         timePeriod = qMin(timePeriod, qAbs(m_timestamps.at(i) - m_timestamps.at(i - 1)));
     }
     m_timePeriod = timePeriod;

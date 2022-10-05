@@ -154,9 +154,9 @@ QList<QPointF> XLogYDomain::calculateGeometryPoints(const QList<QPointF> &list) 
     const qreal deltaY = m_size.height() / qAbs(m_logRightY - m_logLeftY);
 
     QList<QPointF> result;
-    result.resize(list.count());
+    result.resize(list.size());
 
-    for (int i = 0; i < list.count(); ++i) {
+    for (int i = 0; i < list.size(); ++i) {
         if (list[i].y() > 0) {
             qreal x = (list[i].x() - m_minX) * deltaX;
             if (m_reverseX)

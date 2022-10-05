@@ -96,7 +96,7 @@ void tst_QBarSet::label()
     QSignalSpy labelSpy(m_barset,SIGNAL(labelChanged()));
     m_barset->setLabel(label);
     QCOMPARE(m_barset->label(), result);
-    QVERIFY(labelSpy.count() == 1);
+    QVERIFY(labelSpy.size() == 1);
 }
 
 void tst_QBarSet::append_data()
@@ -130,7 +130,7 @@ void tst_QBarSet::append()
     QCOMPARE(m_barset->count(), count);
     QVERIFY(qFuzzyCompare(m_barset->sum(), sum));
 
-    QCOMPARE(valueSpy.count(), count);
+    QCOMPARE(valueSpy.size(), count);
 }
 
 void tst_QBarSet::appendOperator_data()
@@ -159,7 +159,7 @@ void tst_QBarSet::appendOperator()
 
     QCOMPARE(m_barset->count(), count);
     QVERIFY(qFuzzyCompare(m_barset->sum(), sum));
-    QCOMPARE(valueSpy.count(), count);
+    QCOMPARE(valueSpy.size(), count);
 }
 
 void tst_QBarSet::insert_data()
@@ -189,7 +189,7 @@ void tst_QBarSet::insert()
     QCOMPARE(m_barset->at(2), 1.0);
     QCOMPARE(m_barset->count(), 3);
     QVERIFY(qFuzzyCompare(m_barset->sum(), (qreal)6.0));
-    QCOMPARE(valueSpy.count(), 3);
+    QCOMPARE(valueSpy.size(), 3);
 }
 
 void tst_QBarSet::remove_data()
@@ -218,7 +218,7 @@ void tst_QBarSet::remove()
     QCOMPARE(m_barset->at(2), 4.0);
     QCOMPARE(m_barset->count(), 3);
     QCOMPARE(m_barset->sum(), 7.0);
-    QCOMPARE(valueSpy.count(), 1);
+    QCOMPARE(valueSpy.size(), 1);
 
     QList<QVariant> valueSpyArg = valueSpy.takeFirst();
     // Verify index of removed signal
@@ -235,7 +235,7 @@ void tst_QBarSet::remove()
     QCOMPARE(m_barset->count(), 2);
     QCOMPARE(m_barset->sum(), 6.0);
 
-    QCOMPARE(valueSpy.count(), 1);
+    QCOMPARE(valueSpy.size(), 1);
     valueSpyArg = valueSpy.takeFirst();
     // Verify index of removed signal
     QVERIFY(valueSpyArg.at(0).metaType().id() == QMetaType::Int);
@@ -254,14 +254,14 @@ void tst_QBarSet::remove()
     QCOMPARE(m_barset->sum(), 6.0);
 
     // nothing removed, no signals should be emitted
-    QCOMPARE(valueSpy.count(), 0);
+    QCOMPARE(valueSpy.size(), 0);
 
     // Remove more items than list has
     m_barset->remove(0,312);
     QCOMPARE(m_barset->count(), 0);
     QVERIFY(qFuzzyCompare(m_barset->sum(), 0));
 
-    QCOMPARE(valueSpy.count(), 1);
+    QCOMPARE(valueSpy.size(), 1);
     valueSpyArg = valueSpy.takeFirst();
 
     // Verify index of removed signal
@@ -320,7 +320,7 @@ void tst_QBarSet::replace()
     QCOMPARE(m_barset->count(), 4);     // 5.0 2.0 3.0 6.0
     QCOMPARE(m_barset->sum(), 16.0);
 
-    QVERIFY(valueSpy.count() == 2);
+    QVERIFY(valueSpy.size() == 2);
 }
 
 void tst_QBarSet::at_data()

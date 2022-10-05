@@ -377,7 +377,7 @@ void AbstractBarChartItem::handleBarValueRemove(int index, int count, QBarSet *b
 
     // make sure labels are not visible for removed bars
     const auto bars = m_barMap.value(barset);
-    for (int c = barset->count(); c < bars.count(); ++c) {
+    for (int c = barset->count(); c < bars.size(); ++c) {
         auto label = bars.at(c)->labelItem();
         if (label)
             label->setVisible(false);

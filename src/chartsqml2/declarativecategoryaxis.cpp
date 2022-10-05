@@ -68,7 +68,7 @@ void DeclarativeCategoryAxis::componentComplete()
 
     // Sort and append the range objects according to end value
     std::sort(ranges.begin(), ranges.end(), endValueLessThan);
-    for (int i(0); i < ranges.count(); i++)
+    for (int i(0); i < ranges.size(); i++)
         append(ranges.at(i).first, ranges.at(i).second);
 }
 

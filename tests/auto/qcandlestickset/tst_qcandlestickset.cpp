@@ -103,12 +103,12 @@ void tst_QCandlestickSet::timestamp()
 
     m_candlestickSet->setTimestamp(timestamp);
     QCOMPARE(m_candlestickSet->timestamp(), expectedTimestamp);
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.size(), 1);
 
     // Try set same timestamp value
     m_candlestickSet->setTimestamp(expectedTimestamp);
     QCOMPARE(m_candlestickSet->timestamp(), expectedTimestamp);
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.size(), 1);
 }
 
 void tst_QCandlestickSet::open_data()
@@ -128,12 +128,12 @@ void tst_QCandlestickSet::open()
 
     m_candlestickSet->setOpen(open);
     QCOMPARE(m_candlestickSet->open(), open);
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.size(), 1);
 
     // Try set same open value
     m_candlestickSet->setOpen(open);
     QCOMPARE(m_candlestickSet->open(), open);
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.size(), 1);
 }
 
 void tst_QCandlestickSet::high_data()
@@ -153,12 +153,12 @@ void tst_QCandlestickSet::high()
 
     m_candlestickSet->setHigh(high);
     QCOMPARE(m_candlestickSet->high(), high);
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.size(), 1);
 
     // Try set same high value
     m_candlestickSet->setHigh(high);
     QCOMPARE(m_candlestickSet->high(), high);
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.size(), 1);
 }
 
 void tst_QCandlestickSet::low_data()
@@ -178,12 +178,12 @@ void tst_QCandlestickSet::low()
 
     m_candlestickSet->setLow(low);
     QCOMPARE(m_candlestickSet->low(), low);
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.size(), 1);
 
     // Try set same low value
     m_candlestickSet->setLow(low);
     QCOMPARE(m_candlestickSet->low(), low);
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.size(), 1);
 }
 
 void tst_QCandlestickSet::close_data()
@@ -203,12 +203,12 @@ void tst_QCandlestickSet::close()
 
     m_candlestickSet->setClose(close);
     QCOMPARE(m_candlestickSet->close(), close);
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.size(), 1);
 
     // Try set same close value
     m_candlestickSet->setClose(close);
     QCOMPARE(m_candlestickSet->close(), close);
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.size(), 1);
 }
 
 void tst_QCandlestickSet::brush()
@@ -219,17 +219,17 @@ void tst_QCandlestickSet::brush()
 
     m_candlestickSet->setBrush(QBrush(Qt::NoBrush));
     QCOMPARE(m_candlestickSet->brush(), QBrush(Qt::NoBrush));
-    QCOMPARE(spy.count(), 0);
+    QCOMPARE(spy.size(), 0);
 
     QBrush brush(QColor(128, 128, 128, 128));
     m_candlestickSet->setBrush(brush);
     QCOMPARE(m_candlestickSet->brush(), brush);
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.size(), 1);
 
     // Try set same brush
     m_candlestickSet->setBrush(brush);
     QCOMPARE(m_candlestickSet->brush(), brush);
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.size(), 1);
 }
 
 void tst_QCandlestickSet::pen()
@@ -240,17 +240,17 @@ void tst_QCandlestickSet::pen()
 
     m_candlestickSet->setPen(QPen(Qt::NoPen));
     QCOMPARE(m_candlestickSet->pen(), QPen(Qt::NoPen));
-    QCOMPARE(spy.count(), 0);
+    QCOMPARE(spy.size(), 0);
 
     QPen pen(QColor(128, 128, 128, 128));
     m_candlestickSet->setPen(pen);
     QCOMPARE(m_candlestickSet->pen(), pen);
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.size(), 1);
 
     // Try set same pen
     m_candlestickSet->setPen(pen);
     QCOMPARE(m_candlestickSet->pen(), pen);
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.size(), 1);
 }
 
 QTEST_GUILESS_MAIN(tst_QCandlestickSet)

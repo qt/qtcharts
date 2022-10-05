@@ -131,14 +131,14 @@ void tst_QDateTimeAxis::max_raw()
 
     if (valid) {
         QVERIFY2(m_dateTimeAxisX->max() == max, "Not equal");
-        QCOMPARE(spy0.count(), 1);
-        QCOMPARE(spy1.count(), 0);
-        QCOMPARE(spy2.count(), 1);
+        QCOMPARE(spy0.size(), 1);
+        QCOMPARE(spy1.size(), 0);
+        QCOMPARE(spy2.size(), 1);
     } else {
         QVERIFY2(m_dateTimeAxisX->max() != max, "Date is invalid and should not be set");
-        QCOMPARE(spy0.count(), 0);
-        QCOMPARE(spy1.count(), 0);
-        QCOMPARE(spy2.count(), 0);
+        QCOMPARE(spy0.size(), 0);
+        QCOMPARE(spy1.size(), 0);
+        QCOMPARE(spy2.size(), 0);
     }
 }
 
@@ -190,14 +190,14 @@ void tst_QDateTimeAxis::min_raw()
 
     if (valid) {
         QVERIFY2(m_dateTimeAxisX->min() == min, "Not equal");
-        QCOMPARE(spy0.count(), 0);
-        QCOMPARE(spy1.count(), 1);
-        QCOMPARE(spy2.count(), 1);
+        QCOMPARE(spy0.size(), 0);
+        QCOMPARE(spy1.size(), 1);
+        QCOMPARE(spy2.size(), 1);
     } else {
         QVERIFY2(m_dateTimeAxisX->min() != min, "Date is invalid and should not be set");
-        QCOMPARE(spy0.count(), 0);
-        QCOMPARE(spy1.count(), 0);
-        QCOMPARE(spy2.count(), 0);
+        QCOMPARE(spy0.size(), 0);
+        QCOMPARE(spy1.size(), 0);
+        QCOMPARE(spy2.size(), 0);
     }
 }
 
@@ -265,13 +265,13 @@ void tst_QDateTimeAxis::range_raw()
     m_dateTimeAxisX->setRange(min, max);
 
     if (minValid && maxValid && min < max) {
-        QCOMPARE(spy0.count(), 1);
-        QCOMPARE(spy1.count(), 1);
-        QCOMPARE(spy2.count(), 1);
+        QCOMPARE(spy0.size(), 1);
+        QCOMPARE(spy1.size(), 1);
+        QCOMPARE(spy2.size(), 1);
     } else {
-        QCOMPARE(spy0.count(), 0);
-        QCOMPARE(spy1.count(), 0);
-        QCOMPARE(spy2.count(), 0);
+        QCOMPARE(spy0.size(), 0);
+        QCOMPARE(spy1.size(), 0);
+        QCOMPARE(spy2.size(), 0);
     }
 }
 
@@ -306,7 +306,7 @@ void tst_QDateTimeAxis::reverse()
 
     m_dateTimeAxisX->setReverse();
     QCOMPARE(m_dateTimeAxisX->isReverse(), true);
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.size(), 1);
 
     m_view->show();
     QVERIFY(QTest::qWaitForWindowExposed(m_view));

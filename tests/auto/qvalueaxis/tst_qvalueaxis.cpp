@@ -124,9 +124,9 @@ void tst_QValueAxis::max_raw()
     m_valuesaxis->setMax(max);
     QVERIFY2(qFuzzyCompare(m_valuesaxis->max(), max), "Not equal");
 
-    QCOMPARE(spy0.count(), 1);
-    QCOMPARE(spy1.count(), 0);
-    QCOMPARE(spy2.count(), 1);
+    QCOMPARE(spy0.size(), 1);
+    QCOMPARE(spy1.size(), 0);
+    QCOMPARE(spy2.size(), 1);
 
 }
 
@@ -174,9 +174,9 @@ void tst_QValueAxis::min_raw()
     m_valuesaxis->setMin(min);
     QVERIFY2(qFuzzyCompare(m_valuesaxis->min(), min), "Not equal");
 
-    QCOMPARE(spy0.count(), 0);
-    QCOMPARE(spy1.count(), 1);
-    QCOMPARE(spy2.count(), 1);
+    QCOMPARE(spy0.size(), 0);
+    QCOMPARE(spy1.size(), 1);
+    QCOMPARE(spy2.size(), 1);
 }
 
 void tst_QValueAxis::min_data()
@@ -244,11 +244,11 @@ void tst_QValueAxis::applyNiceNumbers()
     if(niceNumbersEnabled) m_valuesaxis->applyNiceNumbers();
 
     if(!qFuzzyCompare(expectedMin, min))
-        QCOMPARE(spy1.count(), 1);
+        QCOMPARE(spy1.size(), 1);
     if(!qFuzzyCompare(expectedMax, max))
-        QCOMPARE(spy0.count(), 1);
+        QCOMPARE(spy0.size(), 1);
     if((!qFuzzyCompare(expectedMin, min)) || (!qFuzzyCompare(expectedMax, max)))
-        QCOMPARE(spy2.count(), 1);
+        QCOMPARE(spy2.size(), 1);
 
     QVERIFY2(qFuzzyCompare(m_valuesaxis->min(), expectedMin), "Min not equal");
     QVERIFY2(qFuzzyCompare(m_valuesaxis->max(), expectedMax), "Max not equal");
@@ -279,9 +279,9 @@ void tst_QValueAxis::range_raw()
     QVERIFY2(qFuzzyCompare(m_valuesaxis->min(), min), "Min not equal");
     QVERIFY2(qFuzzyCompare(m_valuesaxis->max(), max), "Max not equal");
 
-    QCOMPARE(spy0.count(), 1);
-    QCOMPARE(spy1.count(), 1);
-    QCOMPARE(spy2.count(), 1);
+    QCOMPARE(spy0.size(), 1);
+    QCOMPARE(spy1.size(), 1);
+    QCOMPARE(spy2.size(), 1);
 }
 
 void tst_QValueAxis::range_data()
@@ -331,9 +331,9 @@ void tst_QValueAxis::ticksCount()
     m_valuesaxis->setTickCount(ticksCount);
     QCOMPARE(m_valuesaxis->tickCount(), ticksCount);
 
-    QCOMPARE(spy0.count(), 0);
-    QCOMPARE(spy1.count(), 0);
-    QCOMPARE(spy2.count(), 0);
+    QCOMPARE(spy0.size(), 0);
+    QCOMPARE(spy1.size(), 0);
+    QCOMPARE(spy2.size(), 0);
 
     m_chart->addAxis(m_valuesaxis, Qt::AlignBottom);
     m_series->attachAxis(m_valuesaxis);
@@ -365,9 +365,9 @@ void tst_QValueAxis::noautoscale()
     QVERIFY2(qFuzzyCompare(m_valuesaxis->min(), min), "Min not equal");
     QVERIFY2(qFuzzyCompare(m_valuesaxis->max(), max), "Max not equal");
 
-    QCOMPARE(spy0.count(), 1);
-    QCOMPARE(spy1.count(), 1);
-    QCOMPARE(spy2.count(), 1);
+    QCOMPARE(spy0.size(), 1);
+    QCOMPARE(spy1.size(), 1);
+    QCOMPARE(spy2.size(), 1);
 
     m_chart->addAxis(m_valuesaxis, Qt::AlignBottom);
     m_series->attachAxis(m_valuesaxis);
@@ -393,9 +393,9 @@ void tst_QValueAxis::autoscale()
     m_chart->addAxis(m_valuesaxis, Qt::AlignBottom);
     m_series->attachAxis(m_valuesaxis);
 
-    QCOMPARE(spy0.count(), 1);
-    QCOMPARE(spy1.count(), 1);
-    QCOMPARE(spy2.count(), 1);
+    QCOMPARE(spy0.size(), 1);
+    QCOMPARE(spy1.size(), 1);
+    QCOMPARE(spy2.size(), 1);
 
     m_view->show();
     QVERIFY(QTest::qWaitForWindowExposed(m_view));
@@ -413,7 +413,7 @@ void tst_QValueAxis::reverse()
 
     m_chart->addAxis(m_valuesaxis, Qt::AlignBottom);
     m_series->attachAxis(m_valuesaxis);
-    QCOMPARE(spy.count(), 1);
+    QCOMPARE(spy.size(), 1);
 
     m_view->show();
     QVERIFY(QTest::qWaitForWindowExposed(m_view));
