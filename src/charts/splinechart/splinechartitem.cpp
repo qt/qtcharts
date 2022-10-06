@@ -302,7 +302,7 @@ void SplineChartItem::updateGeometry()
         qreal markerHalfSize = (m_series->markerSize() / 2.0) + 1;
         qreal markerSize = m_series->markerSize() + 2;
 
-        for (const auto &point : qAsConst(points)) {
+        for (const auto &point : std::as_const(points)) {
             checkShapePath.addRect(point.x() - markerHalfSize,
                                    point.y() - markerHalfSize,
                                    markerSize, markerSize);

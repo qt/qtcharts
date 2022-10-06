@@ -386,7 +386,7 @@ void QBarSet::insert(const int index, const qreal value)
     if (!d_ptr->m_selectedBars.isEmpty()) {
         // if value was inserted we need to move already selected bars by 1
         QSet<int> selectedAfterInsert;
-        for (const auto &value : qAsConst(d_ptr->m_selectedBars)) {
+        for (const auto &value : std::as_const(d_ptr->m_selectedBars)) {
             if (value >= index) {
                 selectedAfterInsert << value + 1;
                 callSignal = true;
@@ -895,7 +895,7 @@ int QBarSetPrivate::remove(const int index, const int count)
     if (!m_selectedBars.empty()) {
         QSet<int> selectedAfterRemoving;
 
-        for (const int &selectedBarIndex : qAsConst(m_selectedBars)) {
+        for (const int &selectedBarIndex : std::as_const(m_selectedBars)) {
             if (selectedBarIndex < index) {
                 selectedAfterRemoving << selectedBarIndex;
             } else if (selectedBarIndex >= index + removeCount) {

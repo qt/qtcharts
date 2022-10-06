@@ -1218,7 +1218,7 @@ void QXYSeries::removePoints(int index, int count)
         if (!d->m_selectedPoints.empty()) {
             QSet<int> selectedAfterRemoving;
 
-            for (const int &selectedPointIndex : qAsConst(d->m_selectedPoints)) {
+            for (const int &selectedPointIndex : std::as_const(d->m_selectedPoints)) {
                 if (selectedPointIndex < index) {
                     selectedAfterRemoving << selectedPointIndex;
                 } else if (selectedPointIndex >= index + count) {
@@ -1255,7 +1255,7 @@ void QXYSeries::insert(int index, const QPointF &point)
         if (!d->m_selectedPoints.isEmpty()) {
             // if point was inserted we need to move already selected points by 1
             QSet<int> selectedAfterInsert;
-            for (const auto &value : qAsConst(d->m_selectedPoints)) {
+            for (const auto &value : std::as_const(d->m_selectedPoints)) {
                 if (value >= index) {
                     selectedAfterInsert << value + 1;
                     callSignal = true;
