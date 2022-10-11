@@ -173,7 +173,7 @@ private:
 
 QT_END_NAMESPACE
 
-#ifndef Q_CLANG_QDOC
+#ifndef Q_QDOC
 Q_DECLARE_OPERATORS_FOR_FLAGS(QChart::AnimationOptions)
 #endif
 
