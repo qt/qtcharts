@@ -1,4 +1,4 @@
-// Copyright (C) 2021 The Qt Company Ltd.
+// Copyright (C) 2022 The Qt Company Ltd.
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
 
 #include <QtCharts/QXYSeries>
@@ -58,8 +58,15 @@ QT_BEGIN_NAMESPACE
            This enum value can be used to hide or show the label of the point. If used
            together with QXYSeries::setPointConfiguration, the configuration's value
            should be boolean.
+    \value [since 6.5] LabelFormat
+           This enum value can be used to set custom label text per-point. If used together with
+           QXYSeries::setPointConfiguration, the configuration's value should be a string.
+           \note If an empty string is set as the LabelFormat, it will be ignored, and the series
+           pointLabelsFormat will be used.
+           \sa pointLabelsFormat
 
     \sa setPointConfiguration()
+    \since 6.2
 */
 
 /*!
@@ -147,6 +154,8 @@ QT_BEGIN_NAMESPACE
     QXYSeries supports the following format tags:
     \table
       \row
+        \li @index       \li The index in the series of the data point. [since 6.5]
+      \row
         \li @xPoint      \li The x-coordinate of the data point.
       \row
         \li @yPoint      \li The y-coordinate of the data point.
@@ -157,7 +166,7 @@ QT_BEGIN_NAMESPACE
     (x, y):
 
     \code
-    series->setPointLabelsFormat("(@xPoint, @yPoint)");
+    series->setPointLabelsFormat("@index: (@xPoint, @yPoint)");
     \endcode
 
     By default, the labels' format is set to \c {@xPoint, @yPoint}. The labels
@@ -509,6 +518,11 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QXYSeries::selectedPointsChanged()
+    This signal is emitted when the points selection changes.
+*/
+
+/*!
     \fn void QXYSeries::lightMarkerChanged(const QImage &lightMarker)
     This signal is emitted when the light marker image changes to \a lightMarker.
     \sa QXYSeries::setLightMarker()
@@ -775,7 +789,7 @@ void QXYSeries::clearPointsConfiguration(const QXYSeries::PointConfiguration key
     keys and QVariant values. For example:
     \code
     QLineSeries *series = new QLineSeries();
-    series->setName("Customized serie");
+    series->setName("Customized series");
     series->setPointsVisible(true);
 
     *series << QPointF(0, 6) << QPointF(2, 4) << QPointF(3, 6) << QPointF(7, 4) << QPointF(10, 5)
@@ -793,16 +807,19 @@ void QXYSeries::clearPointsConfiguration(const QXYSeries::PointConfiguration key
 
     series->setPointConfiguration(4, conf);
 
-    conf.remove(QXYSeries::PointConfiguration::LabelVisibility);
+    conf.remove(QXYSeries::PointConfiguration::Color);
+    conf[QXYSeries::PointConfiguration::LabelFormat] = "This Point";
     series->setPointConfiguration(6, conf);
     \endcode
 
-    In this example, you can see a default QLineSeries with 10 points
-    and with changed configuration of two points. Both changed points are
-    red and visibly bigger than the others with a look derived from series.
-    By default, points don't have labels, but the point at index 4 has
-    the label thanks to the QXYSeries::PointConfiguration::LabelVisibility
-    configuration value.
+    In this example, you can see a default QLineSeries with 10 points and with changed configuration
+    of two points. Both changed points are visibly bigger than the others with a look derived from
+    the series configuration.
+    By default, points don't have labels, but the point at index 4 has a label thanks to the
+    QXYSeries::PointConfiguration::LabelVisibility and QXYSeries::PointConfiguration::LabelFormat
+    configuration values.
+    The point at index 6 has a custom label \e {This Point} thanks to the
+    QXYSeries::PointConfiguration::LabelFormat configuration value.
     Below is an example of a chart created in this way:
     \image xyseries_point_configuration.png
 
@@ -1805,6 +1822,7 @@ void QXYSeriesPrivate::drawPointLabels(QPainter *painter, const QList<QPointF> &
             painter->setClipping(false);
 
         QList<int> pointsToSkip;
+        QHash<int, QString> labelFormats;
         QHash<int, int> offsets;
 
         if (!m_pointsConfiguration.isEmpty()) {
@@ -1812,14 +1830,16 @@ void QXYSeriesPrivate::drawPointLabels(QPainter *painter, const QList<QPointF> &
                 bool drawLabel = m_pointLabelsVisible;
                 if (m_pointsConfiguration.contains(i)) {
                     const auto &conf = m_pointsConfiguration[i];
-                    if (conf.contains(QXYSeries::PointConfiguration::LabelVisibility)) {
-                        drawLabel = m_pointsConfiguration
-                                            [i][QXYSeries::PointConfiguration::LabelVisibility]
-                                                    .toBool();
-
-                        if (drawLabel && conf.contains(QXYSeries::PointConfiguration::Size))
-                            offsets[i] = conf[QXYSeries::PointConfiguration::Size].toReal();
+                    auto key = QXYSeries::PointConfiguration::LabelVisibility;
+                    if (conf.contains(key)) {
+                        drawLabel = m_pointsConfiguration[i][key].toBool();
+                        key = QXYSeries::PointConfiguration::Size;
+                        if (drawLabel && conf.contains(key))
+                            offsets[i] = conf[key].toReal();
                     }
+                    key = QXYSeries::PointConfiguration::LabelFormat;
+                    if (conf.contains(key) && !conf[key].toString().isEmpty())
+                        labelFormats[i] = conf[key].toString();
                 }
 
                 if (!drawLabel)
@@ -1827,19 +1847,21 @@ void QXYSeriesPrivate::drawPointLabels(QPainter *painter, const QList<QPointF> &
             }
         }
 
-        drawSeriesPointLabels(painter, allPoints, offset, offsets, pointsToSkip);
+        drawSeriesPointLabels(painter, allPoints, offset, offsets, pointsToSkip, labelFormats);
     }
 }
 
 void QXYSeriesPrivate::drawSeriesPointLabels(QPainter *painter, const QList<QPointF> &points,
                                              const int offset, const QHash<int, int> &offsets,
-                                             const QList<int> &indexesToSkip)
+                                             const QList<int> &indexesToSkip,
+                                             const QHash<int, QString> &labelFormats)
 {
     if (points.size() == 0)
         return;
 
     static const QString xPointTag(QLatin1String("@xPoint"));
     static const QString yPointTag(QLatin1String("@yPoint"));
+    static const QString indexTag(QLatin1String("@index"));
 
     QFont f(m_pointLabelsFont);
     f.setPixelSize(QFontInfo(m_pointLabelsFont).pixelSize());
@@ -1853,9 +1875,10 @@ void QXYSeriesPrivate::drawSeriesPointLabels(QPainter *painter, const QList<QPoi
         if (indexesToSkip.contains(i))
             continue;
 
-        QString pointLabel = m_pointLabelsFormat;
+        QString pointLabel = labelFormats.contains(i) ? labelFormats[i] : m_pointLabelsFormat;
         pointLabel.replace(xPointTag, presenter()->numberToString(m_points.at(i).x()));
         pointLabel.replace(yPointTag, presenter()->numberToString(m_points.at(i).y()));
+        pointLabel.replace(indexTag, presenter()->numberToString(i));
 
         int currOffset = offset;
         if (offsets.contains(i))

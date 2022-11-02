@@ -1,4 +1,4 @@
-// Copyright (C) 2021 The Qt Company Ltd.
+// Copyright (C) 2022 The Qt Company Ltd.
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
 
 #ifndef QXYSERIES_H
@@ -41,7 +41,8 @@ public:
         Color = 0,
         Size,
         Visibility,
-        LabelVisibility
+        LabelVisibility,
+        LabelFormat
     };
     Q_ENUM(PointConfiguration)
 

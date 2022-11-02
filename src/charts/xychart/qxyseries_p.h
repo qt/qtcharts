@@ -1,4 +1,4 @@
-// Copyright (C) 2021 The Qt Company Ltd.
+// Copyright (C) 2022 The Qt Company Ltd.
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
 
 //  W A R N I N G
@@ -47,7 +47,8 @@ public:
     void drawPointLabels(QPainter *painter, const QList<QPointF> &allPoints, const int offset = 0);
     void drawSeriesPointLabels(QPainter *painter, const QList<QPointF> &points,
                                const int offset = 0, const QHash<int, int> &offsets = {},
-                               const QList<int> &indexesToSkip = {});
+                               const QList<int> &indexesToSkip = {},
+                               const QHash<int, QString> &customLabels = {});
 
     void drawBestFitLine(QPainter *painter, const QRectF &clipRect);
     QPair<qreal, qreal> bestFitLineEquation(bool &ok) const;
