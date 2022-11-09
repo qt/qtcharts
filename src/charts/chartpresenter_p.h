@@ -16,7 +16,9 @@
 #include <QtCharts/QChartGlobal>
 #include <QtCharts/QChart> //because of QChart::ChartThemeId
 #include <QtCharts/private/qchartglobal_p.h>
-#include <private/glwidget_p.h>
+#if !defined(QT_NO_OPENGL)
+#  include <private/glwidget_p.h>
+#endif
 #include <QtCore/QRectF>
 #include <QtCore/QMargins>
 #include <QtCore/QLocale>
