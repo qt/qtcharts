@@ -61,6 +61,7 @@
 #include <QtCore/QTimer>
 #include <QtCore/QThread>
 #include <QtQuick/QQuickWindow>
+#include <QtWidgets/QGraphicsLayout>
 
 QT_CHARTS_BEGIN_NAMESPACE
 
@@ -632,9 +633,12 @@ void DeclarativeChart::seriesAxisAttachHelper(QAbstractSeries *series, QAbstract
 {
     if (!series->attachedAxes().contains(axis)) {
         // Remove & delete old axes that are not attached to any other series
+        // Detach old axis from series so that if it is shared with other series
+        // It can be deleted.
         foreach (QAbstractAxis* oldAxis, m_chart->axes(orientation, series)) {
             bool otherAttachments = false;
             if (oldAxis != axis) {
+                series->detachAxis(oldAxis);
                 foreach (QAbstractSeries *oldSeries, m_chart->series()) {
                     if (oldSeries != series && oldSeries->attachedAxes().contains(oldAxis)) {
                         otherAttachments = true;
@@ -1496,6 +1500,10 @@ QPointF DeclarativeChart::mapToPosition(const QPointF &value, QAbstractSeries *s
 void DeclarativeChart::setPlotArea(const QRectF &rect)
 {
     m_chart->setPlotArea(rect);
+
+    // If plotArea is set inside ChartView, contentGeometry is updated too early and we end up
+    // with incorrect plotArea. Invalidate the layout to correct the geometry.
+    m_chart->layout()->invalidate();
 }
 
 QT_CHARTS_END_NAMESPACE

@@ -108,11 +108,13 @@ QT_CHARTS_BEGIN_NAMESPACE
 /*!
     \property QPieSlice::label
     \brief The label of the slice.
+    \note The string can be HTML formatted.
     \sa labelVisible, labelBrush, labelFont, labelArmLengthFactor
 */
 /*!
     \qmlproperty string PieSlice::label
     The label of the slice.
+    \note The string can be HTML formatted.
 */
 
 /*!
