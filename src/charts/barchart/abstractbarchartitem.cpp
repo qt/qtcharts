@@ -181,7 +181,7 @@ void AbstractBarChartItem::handleLayoutChanged()
 void AbstractBarChartItem::handleLabelsVisibleChanged(bool visible)
 {
     bool newVisible = visible && m_series->isVisible();
-    for (const QList<Bar *> &bars : qAsConst(m_barMap)) {
+    for (const QList<Bar *> &bars : std::as_const(m_barMap)) {
         for (Bar *bar :  bars) {
             QGraphicsTextItem *label = bar->labelItem();
             if (label)
@@ -483,7 +483,7 @@ void AbstractBarChartItem::createLabelItems()
 
     m_labelItemsMissing = false;
 
-    for (const QList<Bar *> &bars : qAsConst(m_barMap)) {
+    for (const QList<Bar *> &bars : std::as_const(m_barMap)) {
         for (Bar *bar :  bars) {
             QGraphicsTextItem *label = bar->labelItem();
             if (!label) {

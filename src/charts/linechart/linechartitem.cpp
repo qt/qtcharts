@@ -304,7 +304,7 @@ void LineChartItem::updateGeometry()
         qreal markerHalfSize = (m_markerSize / 2.0) + 1;
         qreal markerSize = m_markerSize + 2;
 
-        for (const auto &point : qAsConst(m_linePoints)) {
+        for (const auto &point : std::as_const(m_linePoints)) {
             checkShapePath.addRect(point.x() - markerHalfSize,
                                    point.y() - markerHalfSize,
                                    markerSize, markerSize);
