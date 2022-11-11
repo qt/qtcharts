@@ -329,7 +329,7 @@ void GLWidget::render(bool selection)
             }
             vbo->bind();
             if (dirty) {
-                vbo->allocate(data->array.constData(), int(data->array.count() * sizeof(GLfloat)));
+                vbo->allocate(data->array.constData(), int(data->array.size() * sizeof(GLfloat)));
                 dirty = false;
                 m_selectionRenderNeeded = true;
             }

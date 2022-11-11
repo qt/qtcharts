@@ -24,7 +24,7 @@ ChartCategoryAxisX::~ChartCategoryAxisX()
 
 QList<qreal> ChartCategoryAxisX::calculateLayout() const
 {
-    int tickCount = m_axis->categoriesLabels().count() + 1;
+    int tickCount = m_axis->categoriesLabels().size() + 1;
     QList<qreal> points;
 
     if (tickCount < 2)

@@ -529,16 +529,16 @@ QString ChartPresenter::truncatedText(const QFont &font, const QString &text, qr
         // to try.
         static QRegularExpression truncateMatcher(QStringLiteral("&#?[0-9a-zA-Z]*;$"));
 
-        QList<QString> testStrings(text.length());
+        QList<QString> testStrings(text.size());
         int count(0);
         static QLatin1Char closeTag('>');
         static QLatin1Char openTag('<');
         static QLatin1Char semiColon(';');
         static QLatin1String ellipsis("...");
-        while (truncatedString.length() > 1) {
+        while (truncatedString.size() > 1) {
             int chopIndex(-1);
             int chopCount(1);
-            QChar lastChar(truncatedString.at(truncatedString.length() - 1));
+            QChar lastChar(truncatedString.at(truncatedString.size() - 1));
 
             if (lastChar == closeTag)
                 chopIndex = truncatedString.lastIndexOf(openTag);
@@ -546,7 +546,7 @@ QString ChartPresenter::truncatedText(const QFont &font, const QString &text, qr
                 chopIndex = truncatedString.indexOf(truncateMatcher);
 
             if (chopIndex != -1)
-                chopCount = truncatedString.length() - chopIndex;
+                chopCount = truncatedString.size() - chopIndex;
             truncatedString.chop(chopCount);
             testStrings[count] = truncatedString + ellipsis;
             count++;

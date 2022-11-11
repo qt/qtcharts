@@ -270,7 +270,7 @@ void QPieModelMapperPrivate::slicesAdded(const QList<QPieSlice *> &slices)
     if (m_seriesSignalsBlock)
         return;
 
-    if (slices.count() == 0)
+    if (slices.size() == 0)
         return;
 
     int firstIndex = m_series->slices().indexOf(slices.at(0));
@@ -278,9 +278,9 @@ void QPieModelMapperPrivate::slicesAdded(const QList<QPieSlice *> &slices)
         return;
 
     if (m_count != -1)
-        m_count += slices.count();
+        m_count += slices.size();
 
-    for (int i = firstIndex; i < firstIndex + slices.count(); i++) {
+    for (int i = firstIndex; i < firstIndex + slices.size(); i++) {
         m_slices.insert(i, slices.at(i - firstIndex));
         connect(slices.at(i - firstIndex), SIGNAL(labelChanged()), this, SLOT(sliceLabelChanged()));
         connect(slices.at(i - firstIndex), SIGNAL(valueChanged()), this, SLOT(sliceValueChanged()));
@@ -288,11 +288,11 @@ void QPieModelMapperPrivate::slicesAdded(const QList<QPieSlice *> &slices)
 
     blockModelSignals();
     if (m_orientation == Qt::Vertical)
-        m_model->insertRows(firstIndex + m_first, slices.count());
+        m_model->insertRows(firstIndex + m_first, slices.size());
     else
-        m_model->insertColumns(firstIndex + m_first, slices.count());
+        m_model->insertColumns(firstIndex + m_first, slices.size());
 
-    for (int i = firstIndex; i < firstIndex + slices.count(); i++) {
+    for (int i = firstIndex; i < firstIndex + slices.size(); i++) {
         m_model->setData(valueModelIndex(i), slices.at(i - firstIndex)->value());
         m_model->setData(labelModelIndex(i), slices.at(i - firstIndex)->label());
     }
@@ -304,7 +304,7 @@ void QPieModelMapperPrivate::slicesRemoved(const QList<QPieSlice *> &slices)
     if (m_seriesSignalsBlock)
         return;
 
-    if (slices.count() == 0)
+    if (slices.size() == 0)
         return;
 
     int firstIndex = m_slices.indexOf(slices.at(0));
@@ -312,16 +312,16 @@ void QPieModelMapperPrivate::slicesRemoved(const QList<QPieSlice *> &slices)
         return;
 
     if (m_count != -1)
-        m_count -= slices.count();
+        m_count -= slices.size();
 
-    for (int i = firstIndex + slices.count() - 1; i >= firstIndex; i--)
+    for (int i = firstIndex + slices.size() - 1; i >= firstIndex; i--)
         m_slices.removeAt(i);
 
     blockModelSignals();
     if (m_orientation == Qt::Vertical)
-        m_model->removeRows(firstIndex + m_first, slices.count());
+        m_model->removeRows(firstIndex + m_first, slices.size());
     else
-        m_model->removeColumns(firstIndex + m_first, slices.count());
+        m_model->removeColumns(firstIndex + m_first, slices.size());
     blockModelSignals(false);
 }
 

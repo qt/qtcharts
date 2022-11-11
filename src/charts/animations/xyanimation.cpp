@@ -40,10 +40,10 @@ void XYAnimation::setup(const QList<QPointF> &oldPoints, const QList<QPointF> &n
 
     m_newPoints = newPoints;
 
-    int x = m_oldPoints.count();
-    int y = m_newPoints.count();
+    int x = m_oldPoints.size();
+    int y = m_newPoints.size();
     int diff = x - y;
-    int requestedDiff = oldPoints.count() - y;
+    int requestedDiff = oldPoints.size() - y;
 
     // m_oldPoints can be whatever between 0 and actual points count if new animation setup
     // interrupts a previous animation, so only do remove and add animations if both
@@ -63,8 +63,8 @@ void XYAnimation::setup(const QList<QPointF> &oldPoints, const QList<QPointF> &n
         m_type = AddPointAnimation;
     }
 
-    x = m_oldPoints.count();
-    y = m_newPoints.count();
+    x = m_oldPoints.size();
+    y = m_newPoints.size();
 
     if (x != y)
         m_type = NewAnimation;
@@ -86,10 +86,10 @@ QVariant XYAnimation::interpolated(const QVariant &start, const QVariant &end, q
     case ReplacePointAnimation:
     case AddPointAnimation:
     case RemovePointAnimation: {
-        if (startList.count() != endList.count())
+        if (startList.size() != endList.size())
             break;
 
-        for (int i = 0; i < startList.count(); i++) {
+        for (int i = 0; i < startList.size(); i++) {
             qreal x = startList[i].x() + ((endList[i].x() - startList[i].x()) * progress);
             qreal y = startList[i].y() + ((endList[i].y() - startList[i].y()) * progress);
             result << QPointF(x, y);
@@ -98,7 +98,7 @@ QVariant XYAnimation::interpolated(const QVariant &start, const QVariant &end, q
     }
     break;
     case NewAnimation: {
-        for (int i = 0; i < endList.count() * qBound(qreal(0), progress, qreal(1)); i++)
+        for (int i = 0; i < endList.size() * qBound(qreal(0), progress, qreal(1)); i++)
             result << endList[i];
     }
     break;

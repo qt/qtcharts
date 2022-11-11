@@ -93,23 +93,23 @@ void tst_QScatterSeries::scatterChangedSignals()
 
     // Color
     series->setColor(QColor("blueviolet"));
-    TRY_COMPARE(colorSpy.count(), 1);
+    TRY_COMPARE(colorSpy.size(), 1);
 
     // Border color
     series->setBorderColor(QColor("burlywood"));
-    TRY_COMPARE(borderColorSpy.count(), 1);
+    TRY_COMPARE(borderColorSpy.size(), 1);
 
     // Pen
     QPen p = series->pen();
     p.setColor("lightpink");
     series->setPen(p);
-    TRY_COMPARE(borderColorSpy.count(), 2);
+    TRY_COMPARE(borderColorSpy.size(), 2);
 
     // Brush
     QBrush b = series->brush();
     b.setColor("lime");
     series->setBrush(b);
-    TRY_COMPARE(colorSpy.count(), 2);
+    TRY_COMPARE(colorSpy.size(), 2);
 }
 
 void tst_QScatterSeries::pressedSignal()
@@ -135,7 +135,7 @@ void tst_QScatterSeries::pressedSignal()
     QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, checkPoint.toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
-    QCOMPARE(seriesSpy.count(), 1);
+    QCOMPARE(seriesSpy.size(), 1);
     QList<QVariant> seriesSpyArg = seriesSpy.takeFirst();
     // checkPoint is QPointF and for the mouseClick it it's changed to QPoint
     // this causes small distinction in decimals so we round it before comparing
@@ -167,7 +167,7 @@ void tst_QScatterSeries::releasedSignal()
     QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, checkPoint.toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
-    QCOMPARE(seriesSpy.count(), 1);
+    QCOMPARE(seriesSpy.size(), 1);
     QList<QVariant> seriesSpyArg = seriesSpy.takeFirst();
     // checkPoint is QPointF and for the mouseClick it it's changed to QPoint
     // this causes small distinction in decimals so we round it before comparing
@@ -199,7 +199,7 @@ void tst_QScatterSeries::doubleClickedSignal()
     QTest::mouseDClick(view.viewport(), Qt::LeftButton, {}, checkPoint.toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
-    QCOMPARE(seriesSpy.count(), 1);
+    QCOMPARE(seriesSpy.size(), 1);
     QList<QVariant> seriesSpyArg = seriesSpy.takeFirst();
     // checkPoint is QPointF and for the mouseClick it it's changed to QPoint
     // this causes small distinction in decimals so we round it before comparing

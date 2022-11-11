@@ -542,7 +542,7 @@ void QAbstractBarSeries::clear()
 int QAbstractBarSeries::count() const
 {
     Q_D(const QAbstractBarSeries);
-    return d->m_barSets.count();
+    return d->m_barSets.size();
 }
 
 /*!
@@ -659,7 +659,7 @@ int QAbstractBarSeriesPrivate::categoryCount() const
 {
     // No categories defined. return count of longest set.
     int count = 0;
-    for (int i = 0; i < m_barSets.count(); i++) {
+    for (int i = 0; i < m_barSets.size(); i++) {
         if (m_barSets.at(i)->count() > count)
             count = m_barSets.at(i)->count();
     }
@@ -699,12 +699,12 @@ void QAbstractBarSeriesPrivate::setLabelsVisible(bool visible)
 
 qreal QAbstractBarSeriesPrivate::min()
 {
-    if (m_barSets.count() <= 0)
+    if (m_barSets.size() <= 0)
         return 0;
 
     qreal min = INT_MAX;
 
-    for (int i = 0; i < m_barSets.count(); i++) {
+    for (int i = 0; i < m_barSets.size(); i++) {
         int categoryCount = m_barSets.at(i)->count();
         for (int j = 0; j < categoryCount; j++) {
             qreal temp = m_barSets.at(i)->at(j);
@@ -717,12 +717,12 @@ qreal QAbstractBarSeriesPrivate::min()
 
 qreal QAbstractBarSeriesPrivate::max()
 {
-    if (m_barSets.count() <= 0)
+    if (m_barSets.size() <= 0)
         return 0;
 
     qreal max = INT_MIN;
 
-    for (int i = 0; i < m_barSets.count(); i++) {
+    for (int i = 0; i < m_barSets.size(); i++) {
         int categoryCount = m_barSets.at(i)->count();
         for (int j = 0; j < categoryCount; j++) {
             qreal temp = m_barSets.at(i)->at(j);
@@ -736,7 +736,7 @@ qreal QAbstractBarSeriesPrivate::max()
 
 qreal QAbstractBarSeriesPrivate::valueAt(int set, int category)
 {
-    if ((set < 0) || (set >= m_barSets.count()))
+    if ((set < 0) || (set >= m_barSets.size()))
         return 0; // No set, no value.
     else if ((category < 0) || (category >= m_barSets.at(set)->count()))
         return 0; // No category, no value.
@@ -746,7 +746,7 @@ qreal QAbstractBarSeriesPrivate::valueAt(int set, int category)
 
 qreal QAbstractBarSeriesPrivate::percentageAt(int set, int category)
 {
-    if ((set < 0) || (set >= m_barSets.count()))
+    if ((set < 0) || (set >= m_barSets.size()))
         return 0; // No set, no value.
     else if ((category < 0) || (category >= m_barSets.at(set)->count()))
         return 0; // No category, no value.
@@ -762,7 +762,7 @@ qreal QAbstractBarSeriesPrivate::percentageAt(int set, int category)
 qreal QAbstractBarSeriesPrivate::categorySum(int category)
 {
     qreal sum(0);
-    int count = m_barSets.count(); // Count sets
+    int count = m_barSets.size(); // Count sets
     for (int set = 0; set < count; set++) {
         if (category < m_barSets.at(set)->count())
             sum += m_barSets.at(set)->at(category);
@@ -773,7 +773,7 @@ qreal QAbstractBarSeriesPrivate::categorySum(int category)
 qreal QAbstractBarSeriesPrivate::absoluteCategorySum(int category)
 {
     qreal sum(0);
-    int count = m_barSets.count(); // Count sets
+    int count = m_barSets.size(); // Count sets
     for (int set = 0; set < count; set++) {
         if (category < m_barSets.at(set)->count())
             sum += qAbs(m_barSets.at(set)->at(category));
@@ -795,12 +795,12 @@ qreal QAbstractBarSeriesPrivate::maxCategorySum()
 
 qreal QAbstractBarSeriesPrivate::minX()
 {
-    if (m_barSets.count() <= 0)
+    if (m_barSets.size() <= 0)
         return 0;
 
     qreal min = INT_MAX;
 
-    for (int i = 0; i < m_barSets.count(); i++) {
+    for (int i = 0; i < m_barSets.size(); i++) {
         int categoryCount = m_barSets.at(i)->count();
         for (int j = 0; j < categoryCount; j++) {
             qreal temp = m_barSets.at(i)->d_ptr.data()->m_values.at(j).x();
@@ -813,12 +813,12 @@ qreal QAbstractBarSeriesPrivate::minX()
 
 qreal QAbstractBarSeriesPrivate::maxX()
 {
-    if (m_barSets.count() <= 0)
+    if (m_barSets.size() <= 0)
         return 0;
 
     qreal max = INT_MIN;
 
-    for (int i = 0; i < m_barSets.count(); i++) {
+    for (int i = 0; i < m_barSets.size(); i++) {
         int categoryCount = m_barSets.at(i)->count();
         for (int j = 0; j < categoryCount; j++) {
             qreal temp = m_barSets.at(i)->d_ptr.data()->m_values.at(j).x();
@@ -835,7 +835,7 @@ qreal QAbstractBarSeriesPrivate::categoryTop(int category)
     // Returns top (sum of all positive values) of category.
     // Returns 0, if all values are negative
     qreal top(0);
-    int count = m_barSets.count();
+    int count = m_barSets.size();
     for (int set = 0; set < count; set++) {
         if (category < m_barSets.at(set)->count()) {
             qreal temp = m_barSets.at(set)->at(category);
@@ -852,7 +852,7 @@ qreal QAbstractBarSeriesPrivate::categoryBottom(int category)
     // Returns bottom (sum of all negative values) of category
     // Returns 0, if all values are positive
     qreal bottom(0);
-    int count = m_barSets.count();
+    int count = m_barSets.size();
     for (int set = 0; set < count; set++) {
         if (category < m_barSets.at(set)->count()) {
             qreal temp = m_barSets.at(set)->at(category);
@@ -1002,7 +1002,7 @@ bool QAbstractBarSeriesPrivate::append(const QList<QBarSet *> &sets)
 
 bool QAbstractBarSeriesPrivate::remove(const QList<QBarSet *> &sets)
 {
-    if (sets.count() == 0)
+    if (sets.size() == 0)
         return false;
 
     foreach (QBarSet *set, sets) {
@@ -1163,7 +1163,7 @@ void QAbstractBarSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bo
     // First series count is used to determine the color stepping to keep old applications
     // with single bar series with a lot of sets colored as they always have been.
     int actualIndex = 0;
-    int firstSeriesSetCount = m_barSets.count();
+    int firstSeriesSetCount = m_barSets.size();
     if (m_item) {
         auto seriesMap = m_item->themeManager()->seriesMap();
         int lowestSeries = index;
@@ -1173,7 +1173,7 @@ void QAbstractBarSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bo
                 if (barSeries) {
                     actualIndex += barSeries->count();
                     if (it.value() < lowestSeries) {
-                        firstSeriesSetCount = qMax(barSeries->count(), gradients.count());
+                        firstSeriesSetCount = qMax(barSeries->count(), gradients.size());
                         lowestSeries = it.value();
                     }
                 }
@@ -1185,15 +1185,15 @@ void QAbstractBarSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bo
     qreal step = 0.2;
     if (firstSeriesSetCount > 1) {
         step = 1.0 / qreal(firstSeriesSetCount);
-        if (firstSeriesSetCount % gradients.count())
-            step *= gradients.count();
+        if (firstSeriesSetCount % gradients.size())
+            step *= gradients.size();
         else
-            step *= (gradients.count() - 1);
+            step *= (gradients.size() - 1);
         if (index > 0) {
             // Take necessary amount of initial steps
             int initialStepper = actualIndex;
-            while (initialStepper > gradients.count()) {
-                initialStepper -= gradients.count();
+            while (initialStepper > gradients.size()) {
+                initialStepper -= gradients.size();
                 takeAtPos += step;
                 if (takeAtPos == 1.0)
                     takeAtPos += step;
@@ -1202,9 +1202,9 @@ void QAbstractBarSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bo
         }
     }
 
-    for (int i(0); i < m_barSets.count(); i++) {
-        int colorIndex = (actualIndex + i) % gradients.count();
-        if ((actualIndex + i) > 0 && (actualIndex + i) % gradients.count() == 0) {
+    for (int i(0); i < m_barSets.size(); i++) {
+        int colorIndex = (actualIndex + i) % gradients.size();
+        if ((actualIndex + i) > 0 && (actualIndex + i) % gradients.size() == 0) {
             // There is no dedicated base color for each sets, generate more colors
             takeAtPos += step;
             if (takeAtPos == 1.0)

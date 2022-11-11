@@ -350,7 +350,7 @@ void tst_qbarmodelmapper::seriesUpdated()
     QList<qreal> newValues;
     newValues << 15 << 27 << 35 << 49;
     m_series->barSets().first()->append(newValues);
-    QCOMPARE(m_model->rowCount(), 1 + newValues.count());
+    QCOMPARE(m_model->rowCount(), 1 + newValues.size());
 
     QList<QBarSet* > newBarSets;
     QBarSet* newBarSet_1 = new QBarSet("New_1");
@@ -366,7 +366,7 @@ void tst_qbarmodelmapper::seriesUpdated()
     newBarSets.append(newBarSet_2);
 
     m_series->append(newBarSets);
-    QCOMPARE(m_model->columnCount(), m_modelColumnCount + newBarSets.count());
+    QCOMPARE(m_model->columnCount(), m_modelColumnCount + newBarSets.size());
 }
 
 void tst_qbarmodelmapper::verticalModelInsertRows()
@@ -621,12 +621,12 @@ void tst_qbarmodelmapper::verticalMapperSignals()
     mapper->setFirstRow(1);
     mapper->setRowCount(5);
 
-    QCOMPARE(spy0.count(), 1);
-    QCOMPARE(spy1.count(), 1);
-    QCOMPARE(spy2.count(), 1);
-    QCOMPARE(spy3.count(), 1);
-    QCOMPARE(spy4.count(), 1);
-    QCOMPARE(spy5.count(), 1);
+    QCOMPARE(spy0.size(), 1);
+    QCOMPARE(spy1.size(), 1);
+    QCOMPARE(spy2.size(), 1);
+    QCOMPARE(spy3.size(), 1);
+    QCOMPARE(spy4.size(), 1);
+    QCOMPARE(spy5.size(), 1);
 
     delete mapper;
 }
@@ -649,12 +649,12 @@ void tst_qbarmodelmapper::horizontalMapperSignals()
     mapper->setFirstColumn(1);
     mapper->setColumnCount(5);
 
-    QCOMPARE(spy0.count(), 1);
-    QCOMPARE(spy1.count(), 1);
-    QCOMPARE(spy2.count(), 1);
-    QCOMPARE(spy3.count(), 1);
-    QCOMPARE(spy4.count(), 1);
-    QCOMPARE(spy5.count(), 1);
+    QCOMPARE(spy0.size(), 1);
+    QCOMPARE(spy1.size(), 1);
+    QCOMPARE(spy2.size(), 1);
+    QCOMPARE(spy3.size(), 1);
+    QCOMPARE(spy4.size(), 1);
+    QCOMPARE(spy5.size(), 1);
 
     delete mapper;
 }

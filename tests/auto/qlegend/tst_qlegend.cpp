@@ -76,7 +76,7 @@ void tst_QLegend::qlegend()
     QVERIFY(legend);
 
     QList<QLegendMarker*> markers = legend->markers();
-    QVERIFY(markers.count() == 0);
+    QVERIFY(markers.size() == 0);
 }
 
 void tst_QLegend::qpieLegendMarker()
@@ -93,7 +93,7 @@ void tst_QLegend::qpieLegendMarker()
 
     // Should have one marker
     QList<QLegendMarker*> markers = legend->markers();
-    QVERIFY(markers.count() == 1);
+    QVERIFY(markers.size() == 1);
     QLegendMarker *m = markers.at(0);
 
     // Should be piemarker
@@ -110,7 +110,7 @@ void tst_QLegend::qpieLegendMarker()
     series->append(s2);
 
     markers = legend->markers();
-    QVERIFY(markers.count() == 2);
+    QVERIFY(markers.size() == 2);
     m = markers.at(1);
 
     QVERIFY(m->type() == QLegendMarker::LegendMarkerTypePie);
@@ -141,7 +141,7 @@ void tst_QLegend::qareaLegendMarker()
 
     // Should have one marker
     QList<QLegendMarker *> markers = legend->markers();
-    QVERIFY(markers.count() == 1);
+    QVERIFY(markers.size() == 1);
     QLegendMarker *m = markers.at(0);
 
     QVERIFY(m->series() == series);
@@ -162,7 +162,7 @@ void tst_QLegend::qxyLegendMarker()
 
     // Should have one marker
     QList<QLegendMarker *> markers = legend->markers();
-    QVERIFY(markers.count() == 1);
+    QVERIFY(markers.size() == 1);
     QLegendMarker *m = markers.at(0);
 
     QVERIFY(m->series() == series);
@@ -187,7 +187,7 @@ void tst_QLegend::qbarLegendMarker()
 
     // Should have one marker
     QList<QLegendMarker *> markers = legend->markers();
-    QVERIFY(markers.count() == 1);
+    QVERIFY(markers.size() == 1);
     QLegendMarker *m = markers.at(0);
 
     QVERIFY(m->series() == series);
@@ -203,7 +203,7 @@ void tst_QLegend::qbarLegendMarker()
     series->append(set1);
 
     markers = legend->markers();
-    QVERIFY(markers.count() == 2);
+    QVERIFY(markers.size() == 2);
     m = markers.at(1);
 
     QVERIFY(m->series() == series);
@@ -250,11 +250,11 @@ void tst_QLegend::markers()
 
     m_chart->addSeries(area);
 
-    QVERIFY(legend->markers(pie).count() == 3);
-    QVERIFY(legend->markers(bar).count() == 2);
-    QVERIFY(legend->markers(line).count() == 1);
-    QVERIFY(legend->markers(area).count() == 1);
-    QVERIFY(legend->markers().count() == 3+2+1+1);
+    QVERIFY(legend->markers(pie).size() == 3);
+    QVERIFY(legend->markers(bar).size() == 2);
+    QVERIFY(legend->markers(line).size() == 1);
+    QVERIFY(legend->markers(area).size() == 1);
+    QVERIFY(legend->markers().size() == 3+2+1+1);
 }
 
 void tst_QLegend::addAndRemoveSeries()
@@ -272,12 +272,12 @@ void tst_QLegend::addAndRemoveSeries()
     m_chart->addSeries(pie);
 
     QList<QLegendMarker *> markers = legend->markers();
-    QVERIFY(markers.count() == 3);
+    QVERIFY(markers.size() == 3);
 
     m_chart->removeSeries(pie);
 
     markers = legend->markers();
-    QVERIFY(markers.count() == 0);
+    QVERIFY(markers.size() == 0);
 
     delete pie;
 }
@@ -538,7 +538,7 @@ void tst_QLegend::markerSignals()
         QTest::mouseMove(view.viewport(), QPoint(333, i));
 
     foreach (QSignalSpy *spy, spies)
-        TRY_COMPARE(spy->count(), 2);
+        TRY_COMPARE(spy->size(), 2);
 
     qDeleteAll(spies);
 }

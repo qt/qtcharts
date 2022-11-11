@@ -683,7 +683,7 @@ void QAreaSeriesPrivate::initializeDomain()
             maxX = minX;
             maxY = minY;
 
-            for (int i = 0; i < points.count(); i++) {
+            for (int i = 0; i < points.size(); i++) {
                 qreal x = points[i].x();
                 qreal y = points[i].y();
                 minX = qMin(minX, x);
@@ -704,7 +704,7 @@ void QAreaSeriesPrivate::initializeDomain()
                 maxY = minY;
             }
 
-            for (int i = 0; i < points.count(); i++) {
+            for (int i = 0; i < points.size(); i++) {
                 qreal x = points[i].x();
                 qreal y = points[i].y();
                 minX = qMin(minX, x);

@@ -89,7 +89,7 @@ void SplineChartItem::updateChart(const QList<QPointF> &oldPoints, const QList<Q
                                   int index)
 {
     QList<QPointF> controlPoints;
-    if (newPoints.count() >= 2)
+    if (newPoints.size() >= 2)
         controlPoints = calculateControlPoints(newPoints);
 
     if (m_animation)
@@ -117,7 +117,7 @@ void SplineChartItem::updateGeometry()
         return;
     }
 
-    Q_ASSERT(points.count() * 2 - 2 == controlPoints.count());
+    Q_ASSERT(points.size() * 2 - 2 == controlPoints.size());
 
     QPainterPath splinePath;
     QPainterPath fullPath;
@@ -328,9 +328,9 @@ void SplineChartItem::updateGeometry()
 QList<QPointF> SplineChartItem::calculateControlPoints(const QList<QPointF> &points)
 {
     QList<QPointF> controlPoints;
-    controlPoints.resize(points.count() * 2 - 2);
+    controlPoints.resize(points.size() * 2 - 2);
 
-    int n = points.count() - 1;
+    int n = points.size() - 1;
 
     if (n == 1) {
         //for n==1
@@ -396,7 +396,7 @@ QList<qreal> SplineChartItem::firstControlPoints(const QList<qreal> &list)
 {
     QList<qreal> result;
 
-    int count = list.count();
+    int count = list.size();
     result.resize(count);
     result[0] = list[0] / 2.0;
 

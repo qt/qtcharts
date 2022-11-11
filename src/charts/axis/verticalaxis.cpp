@@ -147,7 +147,7 @@ void VerticalAxis::updateGeometry()
         //label text wrapping
         QString text;
         if (axis()->isReverse() && axis()->type() != QAbstractAxis::AxisTypeCategory)
-            text = labelList.at(labelList.count() - i - 1);
+            text = labelList.at(labelList.size() - i - 1);
         else
             text = labelList.at(i);
 
@@ -158,7 +158,7 @@ void VerticalAxis::updateGeometry()
         } else {
             QString displayText = text;
             if (axis()->truncateLabels()) {
-                qreal labelHeight = (axisRect.height() / layout.count()) - (2 * labelPadding());
+                qreal labelHeight = (axisRect.height() / layout.size()) - (2 * labelPadding());
                 // Replace digits with ellipsis "..." if number does not fit
                 displayText =
                         ChartPresenter::truncatedText(axis()->labelsFont(), text, axis()->labelsAngle(),
@@ -507,7 +507,7 @@ void VerticalAxis::updateMinorTickGeometry()
             minorArrowLineItem->setVisible(minorGridLineVisible);
         }
     } else {
-        if (minorTickCount < 1 || tickSpacing == 0.0 || minorTickSpacings.count() != minorTickCount)
+        if (minorTickCount < 1 || tickSpacing == 0.0 || minorTickSpacings.size() != minorTickCount)
             return;
 
         for (int i = 0; i < layout.size() - 1; ++i) {

@@ -101,7 +101,7 @@ QString DeclarativeCandlestickSeries::brushFilename() const
 DeclarativeCandlestickSet *DeclarativeCandlestickSeries::at(int index)
 {
     QList<QCandlestickSet *> sets = this->sets();
-    if (index >= 0 && index < sets.count())
+    if (index >= 0 && index < sets.size())
         return qobject_cast<DeclarativeCandlestickSet *>(sets[index]);
 
     return 0;

@@ -176,7 +176,7 @@ void QBarCategoryAxis::append(const QStringList &categories)
 
     Q_D(QBarCategoryAxis);
 
-    int count = d->m_categories.count();
+    int count = d->m_categories.size();
 
     foreach(QString category, categories) {
         if (!d->m_categories.contains(category) && !category.isNull()) {
@@ -184,7 +184,7 @@ void QBarCategoryAxis::append(const QStringList &categories)
         }
     }
 
-    if (d->m_categories.count() == count)
+    if (d->m_categories.size() == count)
         return;
 
     if (count == 0)
@@ -208,12 +208,12 @@ void QBarCategoryAxis::append(const QString &category)
 {
     Q_D(QBarCategoryAxis);
 
-    int count = d->m_categories.count();
+    int count = d->m_categories.size();
 
     if (!d->m_categories.contains(category) && !category.isNull())
         d->m_categories.append(category);
 
-    if (d->m_categories.count() == count)
+    if (d->m_categories.size() == count)
         return;
 
     if (count == 0)
@@ -260,12 +260,12 @@ void QBarCategoryAxis::insert(int index, const QString &category)
 {
     Q_D(QBarCategoryAxis);
 
-    int count = d->m_categories.count();
+    int count = d->m_categories.size();
 
     if (!d->m_categories.contains(category) && !category.isNull())
         d->m_categories.insert(index, category);
 
-    if (d->m_categories.count() == count)
+    if (d->m_categories.size() == count)
         return;
 
     if (count == 0) {
@@ -351,7 +351,7 @@ QStringList QBarCategoryAxis::categories()
 int QBarCategoryAxis::count() const
 {
     Q_D(const QBarCategoryAxis);
-    return d->m_categories.count();
+    return d->m_categories.size();
 }
 
 /*!
@@ -464,7 +464,7 @@ void QBarCategoryAxisPrivate::setRange(qreal min, qreal max)
         changed = true;
 
         int imin = m_min + 0.5;
-        if (imin >= 0 && imin < m_categories.count()) {
+        if (imin >= 0 && imin < m_categories.size()) {
             QString minCategory = m_categories.at(imin);
             if (m_minCategory != minCategory && !minCategory.isEmpty()) {
                 m_minCategory = minCategory;
@@ -480,7 +480,7 @@ void QBarCategoryAxisPrivate::setRange(qreal min, qreal max)
         changed = true;
 
         int imax = m_max - 0.5;
-        if (imax >= 0 && imax < m_categories.count()) {
+        if (imax >= 0 && imax < m_categories.size()) {
             QString maxCategory = m_categories.at(imax);
             if (m_maxCategory != maxCategory && !maxCategory.isEmpty()) {
                 m_maxCategory = maxCategory;
@@ -592,7 +592,7 @@ void QBarCategoryAxisPrivate::initializeDomain(AbstractDomain *domain)
             max = domain->maxX() - 0.5;
         }
 
-        if (min > 0 && min < m_categories.count() && max > 0 && max < m_categories.count())
+        if (min > 0 && min < m_categories.size() && max > 0 && max < m_categories.size())
             q->setRange(m_categories.at(min), m_categories.at(max));
     } else {
         if (orientation() == Qt::Vertical)

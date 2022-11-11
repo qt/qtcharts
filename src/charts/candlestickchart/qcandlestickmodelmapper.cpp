@@ -536,15 +536,15 @@ void QCandlestickModelMapperPrivate::candlestickSetsAdded(const QList<QCandlesti
     if (firstIndex == -1)
         return;
 
-    m_lastSetSection += sets.count();
+    m_lastSetSection += sets.size();
 
     blockModelSignals();
     if (q->orientation() == Qt::Vertical)
-        m_model->insertColumns(firstIndex + m_firstSetSection, sets.count());
+        m_model->insertColumns(firstIndex + m_firstSetSection, sets.size());
     else
-        m_model->insertRows(firstIndex + m_firstSetSection, sets.count());
+        m_model->insertRows(firstIndex + m_firstSetSection, sets.size());
 
-    for (int i = 0; i < sets.count(); ++i) {
+    for (int i = 0; i < sets.size(); ++i) {
         int section = i + firstIndex + m_firstSetSection;
         m_model->setData(candlestickModelIndex(section, m_timestamp), sets.at(i)->timestamp());
         m_model->setData(candlestickModelIndex(section, m_open), sets.at(i)->open());

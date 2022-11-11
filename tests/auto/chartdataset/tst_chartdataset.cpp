@@ -146,11 +146,11 @@ void tst_ChartDataSet::addSeries()
 
     m_dataset->addSeries(series);
 
-    QCOMPARE(m_dataset->series().count(),1);
-    TRY_COMPARE(spy0.count(), 0);
-    TRY_COMPARE(spy1.count(), 0);
-    TRY_COMPARE(spy2.count(), 1);
-    TRY_COMPARE(spy3.count(), 0);
+    QCOMPARE(m_dataset->series().size(),1);
+    TRY_COMPARE(spy0.size(), 0);
+    TRY_COMPARE(spy1.size(), 0);
+    TRY_COMPARE(spy2.size(), 1);
+    TRY_COMPARE(spy3.size(), 0);
 }
 
 void tst_ChartDataSet::removeSeries_data()
@@ -171,11 +171,11 @@ void tst_ChartDataSet::removeSeries()
 
     m_dataset->removeSeries(series);
 
-    QCOMPARE(m_dataset->series().count(),0);
-    TRY_COMPARE(spy0.count(), 0);
-    TRY_COMPARE(spy1.count(), 0);
-    TRY_COMPARE(spy2.count(), 0);
-    TRY_COMPARE(spy3.count(), 1);
+    QCOMPARE(m_dataset->series().size(),0);
+    TRY_COMPARE(spy0.size(), 0);
+    TRY_COMPARE(spy1.size(), 0);
+    TRY_COMPARE(spy2.size(), 0);
+    TRY_COMPARE(spy3.size(), 1);
 
     delete series;
 }
@@ -212,11 +212,11 @@ void tst_ChartDataSet::addAxis()
 
     m_dataset->addAxis(axis,Qt::AlignBottom);
 
-    QCOMPARE(m_dataset->axes().count(),1);
-    TRY_COMPARE(spy0.count(), 1);
-    TRY_COMPARE(spy1.count(), 0);
-    TRY_COMPARE(spy2.count(), 0);
-    TRY_COMPARE(spy3.count(), 0);
+    QCOMPARE(m_dataset->axes().size(),1);
+    TRY_COMPARE(spy0.size(), 1);
+    TRY_COMPARE(spy1.size(), 0);
+    TRY_COMPARE(spy2.size(), 0);
+    TRY_COMPARE(spy3.size(), 0);
 }
 
 void tst_ChartDataSet::removeAxis_data()
@@ -237,12 +237,12 @@ void tst_ChartDataSet::removeAxis()
 
     m_dataset->removeAxis(axis);
 
-    QCOMPARE(m_dataset->axes().count(),0);
-    QCOMPARE(m_dataset->series().count(),0);
-    TRY_COMPARE(spy0.count(), 0);
-    TRY_COMPARE(spy1.count(), 1);
-    TRY_COMPARE(spy2.count(), 0);
-    TRY_COMPARE(spy3.count(), 0);
+    QCOMPARE(m_dataset->axes().size(),0);
+    QCOMPARE(m_dataset->series().size(),0);
+    TRY_COMPARE(spy0.size(), 0);
+    TRY_COMPARE(spy1.size(), 1);
+    TRY_COMPARE(spy2.size(), 0);
+    TRY_COMPARE(spy3.size(), 0);
 
     delete axis;
 }
@@ -294,13 +294,13 @@ void tst_ChartDataSet::attachAxis()
     QFETCH(QAbstractAxis*, attachAxis);
     QFETCH(bool, success);
 
-    Q_ASSERT(series.count() == axis.count());
-    Q_ASSERT(series.count() == alignment.count());
+    Q_ASSERT(series.size() == axis.size());
+    Q_ASSERT(series.size() == alignment.size());
 
     QVERIFY(m_dataset->series().isEmpty());
     QVERIFY(m_dataset->axes().isEmpty());
 
-    for(int i = 0 ; i < series.count() ; i++){
+    for(int i = 0 ; i < series.size() ; i++){
         if(series[i]) m_dataset->addSeries(series[i]);
         if(axis[i]) m_dataset->addAxis(axis[i],alignment[i]);
         if(series[i] && axis[i]) m_dataset->attachAxis(series[i],axis[i]);
@@ -342,12 +342,12 @@ void tst_ChartDataSet::detachAxis()
     QFETCH(QAbstractAxis*, detachAxis);
     QFETCH(bool, success);
 
-    Q_ASSERT(series.count() == axis.count());
+    Q_ASSERT(series.size() == axis.size());
 
     QVERIFY(m_dataset->series().isEmpty());
     QVERIFY(m_dataset->axes().isEmpty());
 
-    for(int i = 0; i < series.count(); i++) {
+    for(int i = 0; i < series.size(); i++) {
         if(series[i]) m_dataset->addSeries(series[i]);
         if(axis[i]) m_dataset->addAxis(axis[i],Qt::AlignBottom);
         if(series[i] && axis[i]) m_dataset->attachAxis(series[i],axis[i]);

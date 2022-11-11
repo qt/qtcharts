@@ -261,7 +261,7 @@ void QBoxPlotSeries::clear()
 int QBoxPlotSeries::count() const
 {
     Q_D(const QBoxPlotSeries);
-    return d->m_boxSets.count();
+    return d->m_boxSets.size();
 }
 
 /*!
@@ -380,7 +380,7 @@ void QBoxPlotSeriesPrivate::initializeDomain()
     qreal maxX(domain()->maxX());
     qreal maxY(domain()->maxY());
 
-    qreal x = m_boxSets.count();
+    qreal x = m_boxSets.size();
     minX = qMin(minX, qreal(-0.5));
     minY = qMin(minY, min());
     maxX = qMax(maxX, x - qreal(0.5));
@@ -419,7 +419,7 @@ void QBoxPlotSeriesPrivate::populateCategories(QBarCategoryAxis *axis)
 {
     QStringList categories;
     if (axis->categories().isEmpty()) {
-        for (int i(1); i < m_boxSets.count() + 1; i++) {
+        for (int i(1); i < m_boxSets.size() + 1; i++) {
             QBoxSet *set = m_boxSets.at(i - 1);
             if (set->label().isEmpty())
                 categories << presenter()->numberToString(i);
@@ -615,7 +615,7 @@ bool QBoxPlotSeriesPrivate::append(const QList<QBoxSet *> &sets)
 
 bool QBoxPlotSeriesPrivate::remove(const QList<QBoxSet *> &sets)
 {
-    if (sets.count() == 0)
+    if (sets.size() == 0)
         return false;
 
     for (auto *set : sets) {
@@ -660,7 +660,7 @@ QBoxSet *QBoxPlotSeriesPrivate::boxSetAt(int index)
 
 qreal QBoxPlotSeriesPrivate::min()
 {
-    if (m_boxSets.count() <= 0)
+    if (m_boxSets.size() <= 0)
         return 0;
 
     qreal min = m_boxSets.at(0)->at(0);
@@ -677,7 +677,7 @@ qreal QBoxPlotSeriesPrivate::min()
 
 qreal QBoxPlotSeriesPrivate::max()
 {
-    if (m_boxSets.count() <= 0)
+    if (m_boxSets.size() <= 0)
         return 0;
 
     qreal max = m_boxSets.at(0)->at(0);

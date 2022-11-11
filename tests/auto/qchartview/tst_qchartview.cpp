@@ -170,8 +170,8 @@ void tst_QChartView::rubberBand()
     QTest::mouseRelease(m_view->viewport(), Qt::LeftButton, {}, plotArea.bottomRight().toPoint() - max, 100);
     QApplication::processEvents();
 
-    TRY_COMPARE(spy0.count(), Xcount);
-    TRY_COMPARE(spy1.count(), Ycount);
+    TRY_COMPARE(spy0.size(), Xcount);
+    TRY_COMPARE(spy1.size(), Ycount);
 
     //this is hack since view does not get events otherwise
     m_view->setMouseTracking(false);

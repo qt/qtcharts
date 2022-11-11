@@ -25,7 +25,7 @@ void SplineAnimation::setup(const QList<QPointF> &oldPoints, const QList<QPointF
                             const QList<QPointF> &oldControlPoints,
                             const QList<QPointF> &newControlPoints, int index)
 {
-    if (newPoints.count() * 2 - 2 != newControlPoints.count() || newControlPoints.count() < 2) {
+    if (newPoints.size() * 2 - 2 != newControlPoints.size() || newControlPoints.size() < 2) {
         m_valid = false;
         m_dirty = false;
         m_item->setGeometryPoints(newPoints);
@@ -52,8 +52,8 @@ void SplineAnimation::setup(const QList<QPointF> &oldPoints, const QList<QPointF
     m_newSpline.second = newControlPoints;
 
 
-    int x = m_oldSpline.first.count();
-    int y = m_newSpline.first.count();
+    int x = m_oldSpline.first.size();
+    int y = m_newSpline.first.size();
 
     if (x - y == 1 && index >= 0 && y > 0) {
         //remove point
@@ -85,8 +85,8 @@ void SplineAnimation::setup(const QList<QPointF> &oldPoints, const QList<QPointF
         m_type = AddPointAnimation;
     }
 
-    x = m_oldSpline.first.count();
-    y = m_newSpline.first.count();
+    x = m_oldSpline.first.size();
+    y = m_newSpline.first.size();
 
     if (x != y) {
         m_type = NewAnimation;
@@ -113,15 +113,15 @@ QVariant SplineAnimation::interpolated(const QVariant &start, const QVariant &en
     case RemovePointAnimation:
     case AddPointAnimation:
     case ReplacePointAnimation: {
-        if (startPair.first.count() != endPair.first.count())
+        if (startPair.first.size() != endPair.first.size())
             break;
-        Q_ASSERT(startPair.first.count() * 2 - 2 == startPair.second.count());
-        Q_ASSERT(endPair.first.count() * 2 - 2 == endPair.second.count());
-        for (int i = 0; i < endPair.first.count(); i++) {
+        Q_ASSERT(startPair.first.size() * 2 - 2 == startPair.second.size());
+        Q_ASSERT(endPair.first.size() * 2 - 2 == endPair.second.size());
+        for (int i = 0; i < endPair.first.size(); i++) {
             qreal x = startPair.first[i].x() + ((endPair.first[i].x() - startPair.first[i].x()) * progress);
             qreal y = startPair.first[i].y() + ((endPair.first[i].y() - startPair.first[i].y()) * progress);
             result.first << QPointF(x, y);
-            if (i + 1 >= endPair.first.count())
+            if (i + 1 >= endPair.first.size())
                 continue;
             x = startPair.second[i * 2].x() + ((endPair.second[i * 2].x() - startPair.second[i * 2].x()) * progress);
             y = startPair.second[i * 2].y() + ((endPair.second[i * 2].y() - startPair.second[i * 2].y()) * progress);
@@ -133,8 +133,8 @@ QVariant SplineAnimation::interpolated(const QVariant &start, const QVariant &en
     }
     break;
     case NewAnimation: {
-        Q_ASSERT(endPair.first.count() * 2 - 2 == endPair.second.count());
-        int count = endPair.first.count() * qBound(qreal(0), progress, qreal(1));
+        Q_ASSERT(endPair.first.size() * 2 - 2 == endPair.second.size());
+        int count = endPair.first.size() * qBound(qreal(0), progress, qreal(1));
         for (int i = 0; i < count; i++) {
             result.first << endPair.first[i];
             if (i + 1 == count)

@@ -154,9 +154,9 @@ QList<QPointF> XYDomain::calculateGeometryPoints(const QList<QPointF> &list) con
     const qreal deltaY = m_size.height() / yd;
 
     QList<QPointF> result;
-    result.resize(list.count());
+    result.resize(list.size());
 
-    for (int i = 0; i < list.count(); ++i) {
+    for (int i = 0; i < list.size(); ++i) {
         qreal x = (list[i].x() - m_minX) * deltaX;
         if (m_reverseX)
             x = m_size.width() - x;

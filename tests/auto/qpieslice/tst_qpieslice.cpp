@@ -135,16 +135,16 @@ void tst_qpieslice::changedSignals()
     slice.setExplodeDistanceFactor(0.1);
     slice.setExplodeDistanceFactor(0.1);
 
-    TRY_COMPARE(valueSpy.count(), 1);
-    TRY_COMPARE(labelSpy.count(), 1);
-    TRY_COMPARE(penSpy.count(), 2);
-    TRY_COMPARE(brushSpy.count(), 1);
-    TRY_COMPARE(labelBrushSpy.count(), 1);
-    TRY_COMPARE(labelFontSpy.count(), 1);
-    TRY_COMPARE(colorSpy.count(), 1);
-    TRY_COMPARE(borderColorSpy.count(), 1);
-    TRY_COMPARE(borderWidthSpy.count(), 1);
-    TRY_COMPARE(labelColorSpy.count(), 1);
+    TRY_COMPARE(valueSpy.size(), 1);
+    TRY_COMPARE(labelSpy.size(), 1);
+    TRY_COMPARE(penSpy.size(), 2);
+    TRY_COMPARE(brushSpy.size(), 1);
+    TRY_COMPARE(labelBrushSpy.size(), 1);
+    TRY_COMPARE(labelFontSpy.size(), 1);
+    TRY_COMPARE(colorSpy.size(), 1);
+    TRY_COMPARE(borderColorSpy.size(), 1);
+    TRY_COMPARE(borderWidthSpy.size(), 1);
+    TRY_COMPARE(labelColorSpy.size(), 1);
 }
 
 void tst_qpieslice::customize()
@@ -251,10 +251,10 @@ void tst_qpieslice::clickedSignal()
     QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, points.at(1));
     QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, points.at(2));
     QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, points.at(3));
-    QCOMPARE(clickSpy1.count(), 1);
-    QCOMPARE(clickSpy2.count(), 1);
-    QCOMPARE(clickSpy3.count(), 1);
-    QCOMPARE(clickSpy4.count(), 1);
+    QCOMPARE(clickSpy1.size(), 1);
+    QCOMPARE(clickSpy2.size(), 1);
+    QCOMPARE(clickSpy3.size(), 1);
+    QCOMPARE(clickSpy4.size(), 1);
 }
 
 void tst_qpieslice::hoverSignal()
@@ -307,16 +307,16 @@ void tst_qpieslice::hoverSignal()
     QTest::qWait(100);
 
     // check
-    QCOMPARE(hoverSpy1.count(), 2);
+    QCOMPARE(hoverSpy1.size(), 2);
     QCOMPARE(qvariant_cast<bool>(hoverSpy1.at(0).at(0)), true);
     QCOMPARE(qvariant_cast<bool>(hoverSpy1.at(1).at(0)), false);
-    QCOMPARE(hoverSpy2.count(), 2);
+    QCOMPARE(hoverSpy2.size(), 2);
     QCOMPARE(qvariant_cast<bool>(hoverSpy2.at(0).at(0)), true);
     QCOMPARE(qvariant_cast<bool>(hoverSpy2.at(1).at(0)), false);
-    QCOMPARE(hoverSpy3.count(), 2);
+    QCOMPARE(hoverSpy3.size(), 2);
     QCOMPARE(qvariant_cast<bool>(hoverSpy3.at(0).at(0)), true);
     QCOMPARE(qvariant_cast<bool>(hoverSpy3.at(1).at(0)), false);
-    QCOMPARE(hoverSpy4.count(), 2);
+    QCOMPARE(hoverSpy4.size(), 2);
     QCOMPARE(qvariant_cast<bool>(hoverSpy4.at(0).at(0)), true);
     QCOMPARE(qvariant_cast<bool>(hoverSpy4.at(1).at(0)), false);
 }
@@ -370,10 +370,10 @@ void tst_qpieslice::pressedSignal()
     QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, points.at(1));
     QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, points.at(2));
     QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, points.at(3));
-    QCOMPARE(clickSpy1.count(), 1);
-    QCOMPARE(clickSpy2.count(), 1);
-    QCOMPARE(clickSpy3.count(), 1);
-    QCOMPARE(clickSpy4.count(), 1);
+    QCOMPARE(clickSpy1.size(), 1);
+    QCOMPARE(clickSpy2.size(), 1);
+    QCOMPARE(clickSpy3.size(), 1);
+    QCOMPARE(clickSpy4.size(), 1);
 }
 
 void tst_qpieslice::releasedSignal()
@@ -411,10 +411,10 @@ void tst_qpieslice::releasedSignal()
     QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, points.at(1));
     QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, points.at(2));
     QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, points.at(3));
-    QCOMPARE(clickSpy1.count(), 1);
-    QCOMPARE(clickSpy2.count(), 1);
-    QCOMPARE(clickSpy3.count(), 1);
-    QCOMPARE(clickSpy4.count(), 1);
+    QCOMPARE(clickSpy1.size(), 1);
+    QCOMPARE(clickSpy2.size(), 1);
+    QCOMPARE(clickSpy3.size(), 1);
+    QCOMPARE(clickSpy4.size(), 1);
 }
 
 void tst_qpieslice::doubleClickedSignal()
@@ -443,7 +443,7 @@ void tst_qpieslice::doubleClickedSignal()
     QRectF pieRect = view.chart()->plotArea();
     QList<QPoint> points = slicePoints(pieRect);
     QTest::mouseDClick(view.viewport(), Qt::LeftButton, {}, points.at(0));
-    QCOMPARE(clickSpy1.count(), 1);
+    QCOMPARE(clickSpy1.size(), 1);
 }
 
 QTEST_MAIN(tst_qpieslice)

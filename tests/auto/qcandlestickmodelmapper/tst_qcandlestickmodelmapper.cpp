@@ -401,7 +401,7 @@ void tst_qcandlestickmodelmapper::seriesUpdated()
     newCandlestickSets << new QCandlestickSet(5.0, 7.0, 4.0, 6.0, 5678);
     newCandlestickSets << new QCandlestickSet(3.0, 8.0, 4.0, 6.0, 6789);
     m_series->append(newCandlestickSets);
-    QCOMPARE(m_model->columnCount(), m_modelColumnCount + newCandlestickSets.count());
+    QCOMPARE(m_model->columnCount(), m_modelColumnCount + newCandlestickSets.size());
 
     // remove sets
     newCandlestickSets.clear();
@@ -561,15 +561,15 @@ void tst_qcandlestickmodelmapper::verticalMapperSignals()
     mapper->setFirstSetColumn(0);
     mapper->setLastSetColumn(1);
 
-    QCOMPARE(spy0.count(), 1);
-    QCOMPARE(spy1.count(), 1);
-    QCOMPARE(spy2.count(), 1);
-    QCOMPARE(spy3.count(), 1);
-    QCOMPARE(spy4.count(), 1);
-    QCOMPARE(spy5.count(), 1);
-    QCOMPARE(spy6.count(), 1);
-    QCOMPARE(spy7.count(), 1);
-    QCOMPARE(spy8.count(), 1);
+    QCOMPARE(spy0.size(), 1);
+    QCOMPARE(spy1.size(), 1);
+    QCOMPARE(spy2.size(), 1);
+    QCOMPARE(spy3.size(), 1);
+    QCOMPARE(spy4.size(), 1);
+    QCOMPARE(spy5.size(), 1);
+    QCOMPARE(spy6.size(), 1);
+    QCOMPARE(spy7.size(), 1);
+    QCOMPARE(spy8.size(), 1);
 
     delete mapper;
 }
@@ -598,15 +598,15 @@ void tst_qcandlestickmodelmapper::horizontalMapperSignals()
     mapper->setFirstSetRow(0);
     mapper->setLastSetRow(1);
 
-    QCOMPARE(spy0.count(), 1);
-    QCOMPARE(spy1.count(), 1);
-    QCOMPARE(spy2.count(), 1);
-    QCOMPARE(spy3.count(), 1);
-    QCOMPARE(spy4.count(), 1);
-    QCOMPARE(spy5.count(), 1);
-    QCOMPARE(spy6.count(), 1);
-    QCOMPARE(spy7.count(), 1);
-    QCOMPARE(spy8.count(), 1);
+    QCOMPARE(spy0.size(), 1);
+    QCOMPARE(spy1.size(), 1);
+    QCOMPARE(spy2.size(), 1);
+    QCOMPARE(spy3.size(), 1);
+    QCOMPARE(spy4.size(), 1);
+    QCOMPARE(spy5.size(), 1);
+    QCOMPARE(spy6.size(), 1);
+    QCOMPARE(spy7.size(), 1);
+    QCOMPARE(spy8.size(), 1);
 
     delete mapper;
 }

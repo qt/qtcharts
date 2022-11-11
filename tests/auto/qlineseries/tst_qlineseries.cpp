@@ -112,7 +112,7 @@ void tst_QLineSeries::pressedSignal()
     QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, checkPoint.toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
-    QCOMPARE(seriesSpy.count(), 1);
+    QCOMPARE(seriesSpy.size(), 1);
     QList<QVariant> seriesSpyArg = seriesSpy.takeFirst();
     // checkPoint is QPointF and for the mouseClick it it's changed to QPoint
     // this causes small distinction in decimals so we round it before comparing
@@ -144,7 +144,7 @@ void tst_QLineSeries::releasedSignal()
     QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, checkPoint.toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
-    QCOMPARE(seriesSpy.count(), 1);
+    QCOMPARE(seriesSpy.size(), 1);
     QList<QVariant> seriesSpyArg = seriesSpy.takeFirst();
     // checkPoint is QPointF and for the mouseClick it it's changed to QPoint
     // this causes small distinction in decimals so we round it before comparing
@@ -158,7 +158,7 @@ void tst_QLineSeries::insert()
     QLineSeries lineSeries;
     QSignalSpy insertSpy(&lineSeries, &QXYSeries::pointAdded);
     lineSeries.insert(0, QPoint(3, 3));
-    QCOMPARE(insertSpy.count(), 1);
+    QCOMPARE(insertSpy.size(), 1);
     QVariantList arguments = insertSpy.takeFirst();
     QCOMPARE(arguments.first().toInt(), 0);
     lineSeries.insert(0, QPoint(1, 1));
@@ -200,7 +200,7 @@ void tst_QLineSeries::doubleClickedSignal()
     QTest::mouseDClick(view.viewport(), Qt::LeftButton, {}, checkPoint.toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
-    QCOMPARE(seriesSpy.count(), 1);
+    QCOMPARE(seriesSpy.size(), 1);
     QList<QVariant> seriesSpyArg = seriesSpy.takeFirst();
     // checkPoint is QPointF and for the mouseClick it it's changed to QPoint
     // this causes small distinction in decimals so we round it before comparing

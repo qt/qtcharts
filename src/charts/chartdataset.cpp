@@ -402,7 +402,7 @@ void ChartDataSet::deleteAllSeries()
         removeSeries(s);
         delete s;
     }
-    Q_ASSERT(m_seriesList.count() == 0);
+    Q_ASSERT(m_seriesList.size() == 0);
 }
 
 void ChartDataSet::deleteAllAxes()
@@ -411,7 +411,7 @@ void ChartDataSet::deleteAllAxes()
         removeAxis(a);
         delete a;
     }
-    Q_ASSERT(m_axisList.count() == 0);
+    Q_ASSERT(m_axisList.size() == 0);
 }
 
 void ChartDataSet::zoomInDomain(const QRectF &rect)

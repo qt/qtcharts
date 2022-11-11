@@ -231,7 +231,7 @@ Qt::Orientation PolarChartAxisRadial::orientation() const
 
 void PolarChartAxisRadial::createItems(int count)
 {
-     if (arrowItems().count() == 0) {
+     if (arrowItems().size() == 0) {
         // radial axis center line
         QGraphicsLineItem *arrow = new LineArrowItem(this, presenter()->rootItem());
         arrow->setPen(axis()->linePen());
@@ -398,7 +398,7 @@ void PolarChartAxisRadial::updateMinorTickGeometry()
         break;
     }
 
-    if (minorTickCount < 1 || tickRadius == 0.0 || minorTickRadiuses.count() != minorTickCount)
+    if (minorTickCount < 1 || tickRadius == 0.0 || minorTickRadiuses.size() != minorTickCount)
         return;
 
     const QPointF axisCenter = axisGeometry().center();

@@ -26,9 +26,9 @@ QVariant BarAnimation::interpolated(const QVariant &from, const QVariant &to, qr
     const QList<QRectF> endList = qvariant_cast<QList<QRectF>>(to);
     QList<QRectF> result;
 
-    Q_ASSERT(startList.count() == endList.count());
+    Q_ASSERT(startList.size() == endList.size());
 
-    for (int i = 0; i < startList.count(); i++) {
+    for (int i = 0; i < startList.size(); i++) {
         const QRectF start = startList[i].normalized();
         const QRectF end = endList[i].normalized();
         const qreal x1 = start.left() + progress * (end.left() - start.left());

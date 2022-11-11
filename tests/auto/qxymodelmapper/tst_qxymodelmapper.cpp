@@ -536,12 +536,12 @@ void tst_qxymodelmapper::verticalMapperSignals()
     mapper->setFirstRow(1);
     mapper->setRowCount(5);
 
-    QCOMPARE(spy0.count(), 1);
-    QCOMPARE(spy1.count(), 1);
-    QCOMPARE(spy2.count(), 1);
-    QCOMPARE(spy3.count(), 1);
-    QCOMPARE(spy4.count(), 1);
-    QCOMPARE(spy5.count(), 1);
+    QCOMPARE(spy0.size(), 1);
+    QCOMPARE(spy1.size(), 1);
+    QCOMPARE(spy2.size(), 1);
+    QCOMPARE(spy3.size(), 1);
+    QCOMPARE(spy4.size(), 1);
+    QCOMPARE(spy5.size(), 1);
 
     delete mapper;
 }
@@ -564,12 +564,12 @@ void tst_qxymodelmapper::horizontalMapperSignals()
     mapper->setFirstColumn(1);
     mapper->setColumnCount(5);
 
-    QCOMPARE(spy0.count(), 1);
-    QCOMPARE(spy1.count(), 1);
-    QCOMPARE(spy2.count(), 1);
-    QCOMPARE(spy3.count(), 1);
-    QCOMPARE(spy4.count(), 1);
-    QCOMPARE(spy5.count(), 1);
+    QCOMPARE(spy0.size(), 1);
+    QCOMPARE(spy1.size(), 1);
+    QCOMPARE(spy2.size(), 1);
+    QCOMPARE(spy3.size(), 1);
+    QCOMPARE(spy4.size(), 1);
+    QCOMPARE(spy5.size(), 1);
 
     delete mapper;
 }

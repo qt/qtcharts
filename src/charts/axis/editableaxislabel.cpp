@@ -76,7 +76,7 @@ QRectF EditableAxisLabel::boundingRect() const
 
 bool EditableAxisLabel::isEditEndingKeyPress(QKeyEvent *event)
 {
-    if (event->text().length() >= 1) {
+    if (event->text().size() >= 1) {
         // finish editing with enter or ESC
         if (event->key() == Qt::Key_Enter ||
                 event->key() == Qt::Key_Return) {

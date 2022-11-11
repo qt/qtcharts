@@ -601,7 +601,7 @@ void QXYSeries::append(const QPointF &point)
 
     if (isValidValue(point)) {
         d->m_points << point;
-        emit pointAdded(d->m_points.count() - 1);
+        emit pointAdded(d->m_points.size() - 1);
     }
 }
 
@@ -1071,7 +1071,7 @@ void QXYSeries::selectAllPoints()
     Q_D(QXYSeries);
 
     bool callSignal = false;
-    for (int i = 0; i < d->m_points.count(); ++i)
+    for (int i = 0; i < d->m_points.size(); ++i)
         d->setPointSelected(i, true, callSignal);
 
     if (callSignal)
@@ -1089,7 +1089,7 @@ void QXYSeries::deselectAllPoints()
     Q_D(QXYSeries);
 
     bool callSignal = false;
-    for (int i = 0; i < d->m_points.count(); ++i)
+    for (int i = 0; i < d->m_points.size(); ++i)
         d->setPointSelected(i, false, callSignal);
 
     if (callSignal)
@@ -1322,7 +1322,7 @@ const QPointF &QXYSeries::at(int index) const
 int QXYSeries::count() const
 {
     Q_D(const QXYSeries);
-    return d->m_points.count();
+    return d->m_points.size();
 }
 
 
@@ -1743,7 +1743,7 @@ void QXYSeriesPrivate::initializeDomain()
         maxX = minX;
         maxY = minY;
 
-        for (int i = 0; i < points.count(); i++) {
+        for (int i = 0; i < points.size(); i++) {
             qreal x = points[i].x();
             qreal y = points[i].y();
             minX = qMin(minX, x);
@@ -1918,7 +1918,7 @@ QColor QXYSeries::bestFitLineColor() const
 
 QPair<qreal, qreal> QXYSeriesPrivate::bestFitLineEquation(bool &ok) const
 {
-    if (m_points.count() <= 1) {
+    if (m_points.size() <= 1) {
         ok = false;
         return { 0, 0 };
     }
@@ -1932,14 +1932,14 @@ QPair<qreal, qreal> QXYSeriesPrivate::bestFitLineEquation(bool &ok) const
         xySum += point.x() * point.y();
     }
 
-    const qreal divisor = m_points.count() * x2Sum - xSum * xSum;
+    const qreal divisor = m_points.size() * x2Sum - xSum * xSum;
     // To prevent crashes in unusual cases
     if (divisor == 0.0) {
         ok = false;
         return { 0, 0 };
     }
 
-    qreal a = (m_points.count() * xySum - xSum * ySum) / divisor;
+    qreal a = (m_points.size() * xySum - xSum * ySum) / divisor;
     qreal b = (x2Sum * ySum - xSum * xySum) / divisor;
 
     return { a, b };
@@ -1947,7 +1947,7 @@ QPair<qreal, qreal> QXYSeriesPrivate::bestFitLineEquation(bool &ok) const
 
 void QXYSeriesPrivate::setPointSelected(int index, bool selected, bool &callSignal)
 {
-    if (index < 0 || index > m_points.count() - 1)
+    if (index < 0 || index > m_points.size() - 1)
         return;
 
     if (selected) {

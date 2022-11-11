@@ -50,10 +50,10 @@ void DeclarativeBarSet::setValues(QVariantList values)
     while (count())
         remove(count() - 1);
 
-    if (values.count() > 0 && values.at(0).canConvert<QPoint>()) {
+    if (values.size() > 0 && values.at(0).canConvert<QPoint>()) {
         // Create list of values for appending if the first item is Qt.point
         int maxValue = 0;
-        for (int i = 0; i < values.count(); i++) {
+        for (int i = 0; i < values.size(); i++) {
             if (values.at(i).canConvert<QPoint>() &&
                     values.at(i).toPoint().x() > maxValue) {
                 maxValue = values.at(i).toPoint().x();
@@ -63,17 +63,17 @@ void DeclarativeBarSet::setValues(QVariantList values)
         QList<qreal> indexValueList;
         indexValueList.resize(maxValue + 1);
 
-        for (int i = 0; i < values.count(); i++) {
+        for (int i = 0; i < values.size(); i++) {
             if (values.at(i).canConvert<QPoint>()) {
                 indexValueList.replace(values.at(i).toPoint().x(), values.at(i).toPointF().y());
             }
         }
 
-        for (int i = 0; i < indexValueList.count(); i++)
+        for (int i = 0; i < indexValueList.size(); i++)
             QBarSet::append(indexValueList.at(i));
 
     } else {
-        for (int i(0); i < values.count(); i++) {
+        for (int i(0); i < values.size(); i++) {
             if (values.at(i).canConvert<double>())
                 QBarSet::append(values[i].toDouble());
         }
@@ -153,7 +153,7 @@ void DeclarativeBarSeries::appendSeriesChildren(QQmlListProperty<QObject> *list,
 DeclarativeBarSet *DeclarativeBarSeries::at(int index)
 {
     QList<QBarSet *> setList = barSets();
-    if (index >= 0 && index < setList.count())
+    if (index >= 0 && index < setList.size())
         return qobject_cast<DeclarativeBarSet *>(setList[index]);
 
     return 0;
@@ -217,7 +217,7 @@ void DeclarativeStackedBarSeries::appendSeriesChildren(QQmlListProperty<QObject>
 DeclarativeBarSet *DeclarativeStackedBarSeries::at(int index)
 {
     QList<QBarSet *> setList = barSets();
-    if (index >= 0 && index < setList.count())
+    if (index >= 0 && index < setList.size())
         return qobject_cast<DeclarativeBarSet *>(setList[index]);
 
     return 0;
@@ -280,7 +280,7 @@ void DeclarativePercentBarSeries::appendSeriesChildren(QQmlListProperty<QObject>
 DeclarativeBarSet *DeclarativePercentBarSeries::at(int index)
 {
     QList<QBarSet *> setList = barSets();
-    if (index >= 0 && index < setList.count())
+    if (index >= 0 && index < setList.size())
         return qobject_cast<DeclarativeBarSet *>(setList[index]);
 
     return 0;
@@ -343,7 +343,7 @@ void DeclarativeHorizontalBarSeries::appendSeriesChildren(QQmlListProperty<QObje
 DeclarativeBarSet *DeclarativeHorizontalBarSeries::at(int index)
 {
     QList<QBarSet *> setList = barSets();
-    if (index >= 0 && index < setList.count())
+    if (index >= 0 && index < setList.size())
         return qobject_cast<DeclarativeBarSet *>(setList[index]);
 
     return 0;
@@ -406,7 +406,7 @@ void DeclarativeHorizontalStackedBarSeries::appendSeriesChildren(QQmlListPropert
 DeclarativeBarSet *DeclarativeHorizontalStackedBarSeries::at(int index)
 {
     QList<QBarSet *> setList = barSets();
-    if (index >= 0 && index < setList.count())
+    if (index >= 0 && index < setList.size())
         return qobject_cast<DeclarativeBarSet *>(setList[index]);
 
     return 0;
@@ -469,7 +469,7 @@ void DeclarativeHorizontalPercentBarSeries::appendSeriesChildren(QQmlListPropert
 DeclarativeBarSet *DeclarativeHorizontalPercentBarSeries::at(int index)
 {
     QList<QBarSet *> setList = barSets();
-    if (index >= 0 && index < setList.count())
+    if (index >= 0 && index < setList.size())
         return qobject_cast<DeclarativeBarSet *>(setList[index]);
 
     return 0;

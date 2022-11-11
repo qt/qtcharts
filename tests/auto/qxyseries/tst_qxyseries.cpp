@@ -35,7 +35,7 @@ void tst_QXYSeries::seriesName()
     QCOMPARE(m_series->name(), QString());
     m_series->setName("seriesname");
     QCOMPARE(m_series->name(), QString("seriesname"));
-    TRY_COMPARE(nameSpy.count(), 1);
+    TRY_COMPARE(nameSpy.size(), 1);
 }
 
 void tst_QXYSeries::seriesVisible()
@@ -45,7 +45,7 @@ void tst_QXYSeries::seriesVisible()
     m_series->setVisible(false);
     QCOMPARE(m_series->isVisible(), false);
     m_series->setVisible(true);
-    TRY_COMPARE(visibleSpy.count(), 2);
+    TRY_COMPARE(visibleSpy.size(), 2);
 }
 
 void tst_QXYSeries::seriesOpacity()
@@ -55,15 +55,15 @@ void tst_QXYSeries::seriesOpacity()
 
     m_series->setOpacity(0.5);
     QCOMPARE(m_series->opacity(), 0.5);
-    QCOMPARE(opacitySpy.count(), 1);
+    QCOMPARE(opacitySpy.size(), 1);
 
     m_series->setOpacity(0.0);
     QCOMPARE(m_series->opacity(), 0.0);
-    QCOMPARE(opacitySpy.count(), 2);
+    QCOMPARE(opacitySpy.size(), 2);
 
     m_series->setOpacity(1.0);
     QCOMPARE(m_series->opacity(), 1.0);
-    QCOMPARE(opacitySpy.count(), 3);
+    QCOMPARE(opacitySpy.size(), 3);
 }
 
 void tst_QXYSeries::pointLabelsFormat()
@@ -73,12 +73,12 @@ void tst_QXYSeries::pointLabelsFormat()
 
     QString format("@yPoint");
     m_series->setPointLabelsFormat(format);
-    TRY_COMPARE(labelsFormatSpy.count(), 1);
+    TRY_COMPARE(labelsFormatSpy.size(), 1);
     QList<QVariant> arguments = labelsFormatSpy.takeFirst();
     QVERIFY(arguments.at(0).toString() == format);
 
     m_series->setPointLabelsFormat(QString());
-    TRY_COMPARE(labelsFormatSpy.count(), 1);
+    TRY_COMPARE(labelsFormatSpy.size(), 1);
     arguments = labelsFormatSpy.takeFirst();
     QVERIFY(arguments.at(0).toString() == QString());
 
@@ -91,13 +91,13 @@ void tst_QXYSeries::pointLabelsVisible()
 
     m_series->setPointLabelsVisible();
     QCOMPARE(m_series->pointLabelsVisible(), true);
-    TRY_COMPARE(labelsVisibleSpy.count(), 1);
+    TRY_COMPARE(labelsVisibleSpy.size(), 1);
     QList<QVariant> arguments = labelsVisibleSpy.takeFirst();
     QVERIFY(arguments.at(0).toBool() == true);
 
     m_series->setPointLabelsVisible(false);
     QCOMPARE(m_series->pointLabelsVisible(), false);
-    TRY_COMPARE(labelsVisibleSpy.count(), 1);
+    TRY_COMPARE(labelsVisibleSpy.size(), 1);
     arguments = labelsVisibleSpy.takeFirst();
     QVERIFY(arguments.at(0).toBool() == false);
 }
@@ -109,12 +109,12 @@ void tst_QXYSeries::pointLabelsFont()
 
     QFont font("Times", 10);
     m_series->setPointLabelsFont(font);
-    TRY_COMPARE(labelsFontSpy.count(), 1);
+    TRY_COMPARE(labelsFontSpy.size(), 1);
     QList<QVariant> arguments = labelsFontSpy.takeFirst();
     QVERIFY(arguments.at(0).value<QFont>() == font);
 
     m_series->setPointLabelsFont(defaultFont);
-    TRY_COMPARE(labelsFontSpy.count(), 1);
+    TRY_COMPARE(labelsFontSpy.size(), 1);
     arguments = labelsFontSpy.takeFirst();
     QVERIFY(arguments.at(0).value<QFont>() == defaultFont);
 
@@ -128,12 +128,12 @@ void tst_QXYSeries::pointLabelsColor()
 
     QColor color(Qt::blue);
     m_series->setPointLabelsColor(color);
-    TRY_COMPARE(labelsColorSpy.count(), 1);
+    TRY_COMPARE(labelsColorSpy.size(), 1);
     QList<QVariant> arguments = labelsColorSpy.takeFirst();
     QVERIFY(arguments.at(0).value<QColor>() == color);
 
     m_series->setPointLabelsColor(defaultColor);
-    TRY_COMPARE(labelsColorSpy.count(), 1);
+    TRY_COMPARE(labelsColorSpy.size(), 1);
     arguments = labelsColorSpy.takeFirst();
     QVERIFY(arguments.at(0).value<QColor>() == defaultColor);
 }
@@ -145,13 +145,13 @@ void tst_QXYSeries::pointLabelsClipping()
 
     m_series->setPointLabelsClipping(false);
     QCOMPARE(m_series->pointLabelsClipping(), false);
-    TRY_COMPARE(labelsClippingSpy.count(), 1);
+    TRY_COMPARE(labelsClippingSpy.size(), 1);
     QList<QVariant> arguments = labelsClippingSpy.takeFirst();
     QVERIFY(arguments.at(0).toBool() == false);
 
     m_series->setPointLabelsClipping();
     QCOMPARE(m_series->pointLabelsClipping(), true);
-    TRY_COMPARE(labelsClippingSpy.count(), 1);
+    TRY_COMPARE(labelsClippingSpy.size(), 1);
     arguments = labelsClippingSpy.takeFirst();
     QVERIFY(arguments.at(0).toBool() == true);
 }
@@ -181,8 +181,8 @@ void tst_QXYSeries::append_raw()
     QSignalSpy spy0(m_series, SIGNAL(clicked(QPointF)));
     QSignalSpy addedSpy(m_series, SIGNAL(pointAdded(int)));
     m_series->append(points);
-    TRY_COMPARE(spy0.count(), 0);
-    TRY_COMPARE(addedSpy.count(), points.count());
+    TRY_COMPARE(spy0.size(), 0);
+    TRY_COMPARE(addedSpy.size(), points.size());
     QCOMPARE(m_series->points(), points);
 
     // Process events between appends
@@ -252,7 +252,7 @@ void tst_QXYSeries::count_raw()
     for(int i=0 ; i< count; ++i)
         m_series->append(i,i);
 
-    TRY_COMPARE(spy0.count(), 0);
+    TRY_COMPARE(spy0.size(), 0);
     QCOMPARE(m_series->count(), count);
 }
 
@@ -266,23 +266,23 @@ void tst_QXYSeries::remove_raw()
     QFETCH(QList<QPointF>, points);
     QSignalSpy spy0(m_series, SIGNAL(clicked(QPointF)));
     m_series->append(points);
-    TRY_COMPARE(spy0.count(), 0);
+    TRY_COMPARE(spy0.size(), 0);
     QCOMPARE(m_series->points(), points);
 
     foreach (const QPointF& point,points)
         m_series->remove(point);
 
-    QCOMPARE(m_series->points().count(), 0);
-    TRY_COMPARE(spy0.count(), 0);
+    QCOMPARE(m_series->points().size(), 0);
+    TRY_COMPARE(spy0.size(), 0);
 
     m_series->append(points);
     QCOMPARE(m_series->points(), points);
 
     //reverse order
-    for(int i = points.count()-1 ; i>=0; i--){
+    for(int i = points.size()-1 ; i>=0; i--){
         m_series->remove(points[i]);
     }
-    QCOMPARE(m_series->points().count(), 0);
+    QCOMPARE(m_series->points().size(), 0);
 
     QApplication::processEvents();
 
@@ -302,11 +302,11 @@ void tst_QXYSeries::remove_raw()
     m_series->replace(bunchOfPoints);
     QCOMPARE(m_series->points(), bunchOfPoints);
     QTest::qWait(1500); // Wait for append animations to be over
-    for (int i = bunchOfPoints.count() - 1; i >= 0; i--) {
+    for (int i = bunchOfPoints.size() - 1; i >= 0; i--) {
         m_series->remove(bunchOfPoints.at(i));
         QTest::qWait(50);
     }
-    QCOMPARE(m_series->points().count(), 0);
+    QCOMPARE(m_series->points().size(), 0);
 
     // Removal using index
     for (int i = 0; i < 10; i++)
@@ -314,12 +314,12 @@ void tst_QXYSeries::remove_raw()
     m_series->replace(bunchOfPoints);
     m_series->remove(5);
     m_series->remove(0);
-    QCOMPARE(m_series->points().count(), (bunchOfPoints.count() - 2));
-    for (int i = bunchOfPoints.count() - 3; i >= 0; i--) {
+    QCOMPARE(m_series->points().size(), (bunchOfPoints.size() - 2));
+    for (int i = bunchOfPoints.size() - 3; i >= 0; i--) {
         m_series->remove(i);
-        QCOMPARE(m_series->points().count(), i);
+        QCOMPARE(m_series->points().size(), i);
     }
-    QCOMPARE(m_series->points().count(), 0);
+    QCOMPARE(m_series->points().size(), 0);
 
     // Multiple removal using index
     for (int i = 0; i < 10; i++)
@@ -327,9 +327,9 @@ void tst_QXYSeries::remove_raw()
     m_series->replace(bunchOfPoints);
     m_series->removePoints(5, 2);
     m_series->removePoints(0, 3);
-    QCOMPARE(m_series->points().count(), (bunchOfPoints.count() - 5));
-    m_series->removePoints(0, (bunchOfPoints.count() - 5));
-    QCOMPARE(m_series->points().count(), 0);
+    QCOMPARE(m_series->points().size(), (bunchOfPoints.size() - 5));
+    m_series->removePoints(0, (bunchOfPoints.size() - 5));
+    QCOMPARE(m_series->points().size(), 0);
 }
 
 void tst_QXYSeries::remove_chart_data()
@@ -367,11 +367,11 @@ void tst_QXYSeries::clear_raw()
     QFETCH(QList<QPointF>, points);
     QSignalSpy spy0(m_series, SIGNAL(clicked(QPointF)));
     m_series->append(points);
-    TRY_COMPARE(spy0.count(), 0);
+    TRY_COMPARE(spy0.size(), 0);
     QCOMPARE(m_series->points(), points);
     m_series->clear();
-    TRY_COMPARE(spy0.count(), 0);
-    QCOMPARE(m_series->points().count(), 0);
+    TRY_COMPARE(spy0.size(), 0);
+    QCOMPARE(m_series->points().size(), 0);
 
     QApplication::processEvents();
 }
@@ -412,23 +412,23 @@ void tst_QXYSeries::replace_raw()
     QSignalSpy pointReplacedSpy(m_series, SIGNAL(pointReplaced(int)));
     QSignalSpy pointsReplacedSpy(m_series, SIGNAL(pointsReplaced()));
     m_series->append(points);
-    TRY_COMPARE(pointReplacedSpy.count(), 0);
-    TRY_COMPARE(pointsReplacedSpy.count(), 0);
+    TRY_COMPARE(pointReplacedSpy.size(), 0);
+    TRY_COMPARE(pointsReplacedSpy.size(), 0);
     QCOMPARE(m_series->points(), points);
 
     foreach (const QPointF& point, points)
        m_series->replace(point.x(),point.y(),point.x(),0);
-    TRY_COMPARE(pointReplacedSpy.count(), points.count());
-    TRY_COMPARE(pointsReplacedSpy.count(), 0);
+    TRY_COMPARE(pointReplacedSpy.size(), points.size());
+    TRY_COMPARE(pointsReplacedSpy.size(), 0);
 
     // Replace a point that does not exist
     m_series->replace(-123, 999, 0, 0);
-    TRY_COMPARE(pointReplacedSpy.count(), points.count());
-    TRY_COMPARE(pointsReplacedSpy.count(), 0);
+    TRY_COMPARE(pointReplacedSpy.size(), points.size());
+    TRY_COMPARE(pointsReplacedSpy.size(), 0);
 
     QList<QPointF> newPoints = m_series->points();
-    QCOMPARE(newPoints.count(), points.count());
-    for(int i =0 ; i<points.count() ; ++i) {
+    QCOMPARE(newPoints.size(), points.size());
+    for(int i =0 ; i<points.size() ; ++i) {
         QCOMPARE(points[i].x(), newPoints[i].x());
         QCOMPARE(newPoints[i].y(), 0.0);
     }
@@ -438,21 +438,21 @@ void tst_QXYSeries::replace_raw()
     for (int i = 0; i < 10; i++)
         allPoints.append(QPointF(i, QRandomGenerator::global()->generateDouble()));
     m_series->replace(allPoints);
-    TRY_COMPARE(pointReplacedSpy.count(), points.count());
-    TRY_COMPARE(pointsReplacedSpy.count(), 1);
+    TRY_COMPARE(pointReplacedSpy.size(), points.size());
+    TRY_COMPARE(pointsReplacedSpy.size(), 1);
 
     m_series->replace(points);
     QApplication::processEvents();
 
     // Process events between replaces
-    for (int i = 0; i < points.count(); ++i) {
+    for (int i = 0; i < points.size(); ++i) {
         m_series->replace(points.at(i), otherPoints.at(i));
         QApplication::processEvents();
     }
 
     newPoints = m_series->points();
-    QCOMPARE(newPoints.count(), points.count());
-    for (int i = 0; i < points.count(); ++i) {
+    QCOMPARE(newPoints.size(), points.size());
+    for (int i = 0; i < points.size(); ++i) {
         QCOMPARE(otherPoints.at(i).x(), newPoints.at(i).x());
         QCOMPARE(otherPoints.at(i).y(), newPoints.at(i).y());
     }
@@ -514,12 +514,12 @@ void tst_QXYSeries::insert()
     QSignalSpy addedSpy(m_series, SIGNAL(pointAdded(int)));
 
     m_series->insert(0, QPointF(5, 5));
-    TRY_COMPARE(addedSpy.count(), 1);
-    QCOMPARE(m_series->points().count(), points.count() + 1);
+    TRY_COMPARE(addedSpy.size(), 1);
+    QCOMPARE(m_series->points().size(), points.size() + 1);
 
     m_series->insert(m_series->count(), QPointF(6, 6));
-    TRY_COMPARE(addedSpy.count(), 2);
-    QCOMPARE(m_series->points().count(), points.count() + 2);
+    TRY_COMPARE(addedSpy.size(), 2);
+    QCOMPARE(m_series->points().size(), points.size() + 2);
 }
 
 void tst_QXYSeries::oper_data()
@@ -539,7 +539,7 @@ void tst_QXYSeries::oper()
     }
 
     QCOMPARE(m_series->points(), points);
-    TRY_COMPARE(spy0.count(), 0);
+    TRY_COMPARE(spy0.size(), 0);
 }
 
 
@@ -559,7 +559,7 @@ void tst_QXYSeries::pen()
     QSignalSpy spy0(m_series, SIGNAL(clicked(QPointF)));
     m_series->setPen(pen);
 
-    TRY_COMPARE(spy0.count(), 0);
+    TRY_COMPARE(spy0.size(), 0);
     QCOMPARE(m_series->pen(), pen);
 
     m_chart->addSeries(m_series);
@@ -591,7 +591,7 @@ void tst_QXYSeries::pointsVisible_raw()
     QFETCH(bool, pointsVisible);
     QSignalSpy spy0(m_series, SIGNAL(clicked(QPointF)));
     m_series->setPointsVisible(pointsVisible);
-    TRY_COMPARE(spy0.count(), 0);
+    TRY_COMPARE(spy0.size(), 0);
     QCOMPARE(m_series->pointsVisible(), pointsVisible);
 }
 
@@ -604,13 +604,13 @@ void tst_QXYSeries::changedSignals()
     // Visibility
     m_series->setVisible(false);
     m_series->setVisible(false);
-    TRY_COMPARE(visibleSpy.count(), 1);
+    TRY_COMPARE(visibleSpy.size(), 1);
     m_series->setVisible(true);
-    TRY_COMPARE(visibleSpy.count(), 2);
+    TRY_COMPARE(visibleSpy.size(), 2);
 
     // Color
     m_series->setColor(QColor("aliceblue"));
-    TRY_COMPARE(colorSpy.count(), 1);
+    TRY_COMPARE(colorSpy.size(), 1);
 
     // Pen and Brush
     QPen p = m_series->pen();
@@ -619,10 +619,10 @@ void tst_QXYSeries::changedSignals()
     QBrush b = m_series->brush();
     b.setColor("beige");
     m_series->setBrush(b);
-    TRY_COMPARE(colorSpy.count(), 2);
+    TRY_COMPARE(colorSpy.size(), 2);
 
     // Verify all the signals again, to make sure no extra signals were emitted
-    TRY_COMPARE(visibleSpy.count(), 2);
-    TRY_COMPARE(nameSpy.count(), 0);
-    TRY_COMPARE(colorSpy.count(), 2);
+    TRY_COMPARE(visibleSpy.size(), 2);
+    TRY_COMPARE(nameSpy.size(), 0);
+    TRY_COMPARE(colorSpy.size(), 2);
 }

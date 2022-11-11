@@ -379,7 +379,7 @@ void QBarModelMapperPrivate::barSetsAdded(const QList<QBarSet *> &sets)
     if (m_seriesSignalsBlock)
         return;
 
-    if (sets.count() == 0)
+    if (sets.size() == 0)
         return;
 
     int firstIndex = m_series->barSets().indexOf(sets.at(0));
@@ -387,7 +387,7 @@ void QBarModelMapperPrivate::barSetsAdded(const QList<QBarSet *> &sets)
         return;
 
     int maxCount = 0;
-    for (int i = 0; i < sets.count(); i++) {
+    for (int i = 0; i < sets.size(); i++) {
         if (sets.at(i)->count() > m_count)
             maxCount = sets.at(i)->count();
     }
@@ -395,7 +395,7 @@ void QBarModelMapperPrivate::barSetsAdded(const QList<QBarSet *> &sets)
     if (m_count != -1 && m_count < maxCount)
         m_count = maxCount;
 
-    m_lastBarSetSection += sets.count();
+    m_lastBarSetSection += sets.size();
 
     blockModelSignals();
     int modelCapacity = m_orientation == Qt::Vertical ? m_model->rowCount() - m_first : m_model->columnCount() - m_first;
@@ -407,12 +407,12 @@ void QBarModelMapperPrivate::barSetsAdded(const QList<QBarSet *> &sets)
     }
 
     if (m_orientation == Qt::Vertical)
-        m_model->insertColumns(firstIndex + m_firstBarSetSection, sets.count());
+        m_model->insertColumns(firstIndex + m_firstBarSetSection, sets.size());
     else
-        m_model->insertRows(firstIndex + m_firstBarSetSection, sets.count());
+        m_model->insertRows(firstIndex + m_firstBarSetSection, sets.size());
 
 
-    for (int i = firstIndex + m_firstBarSetSection; i < firstIndex + m_firstBarSetSection + sets.count(); i++) {
+    for (int i = firstIndex + m_firstBarSetSection; i < firstIndex + m_firstBarSetSection + sets.size(); i++) {
         m_model->setHeaderData(i, m_orientation == Qt::Vertical ? Qt::Horizontal : Qt::Vertical, sets.at(i - firstIndex - m_firstBarSetSection)->label());
         for (int j = 0; j < sets.at(i - firstIndex - m_firstBarSetSection)->count(); j++)
             m_model->setData(barModelIndex(i, j), sets.at(i - firstIndex - m_firstBarSetSection)->at(j));
@@ -426,23 +426,23 @@ void QBarModelMapperPrivate::barSetsRemoved(const QList<QBarSet *> &sets)
     if (m_seriesSignalsBlock)
         return;
 
-    if (sets.count() == 0)
+    if (sets.size() == 0)
         return;
 
     int firstIndex = m_barSets.indexOf(sets.at(0));
     if (firstIndex == -1)
         return;
 
-    m_lastBarSetSection -= sets.count();
+    m_lastBarSetSection -= sets.size();
 
-    for (int i = firstIndex + sets.count() - 1; i >= firstIndex; i--)
+    for (int i = firstIndex + sets.size() - 1; i >= firstIndex; i--)
         m_barSets.removeAt(i);
 
     blockModelSignals();
     if (m_orientation == Qt::Vertical)
-        m_model->removeColumns(firstIndex + m_firstBarSetSection, sets.count());
+        m_model->removeColumns(firstIndex + m_firstBarSetSection, sets.size());
     else
-        m_model->removeRows(firstIndex + m_firstBarSetSection, sets.count());
+        m_model->removeRows(firstIndex + m_firstBarSetSection, sets.size());
     blockModelSignals(false);
     initializeBarFromModel();
 }

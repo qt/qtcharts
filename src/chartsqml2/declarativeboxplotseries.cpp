@@ -316,7 +316,7 @@ QVariantList DeclarativeBoxSet::values()
 
 void DeclarativeBoxSet::setValues(QVariantList values)
 {
-    for (int i(0); i < values.count(); i++) {
+    for (int i(0); i < values.size(); i++) {
         if (values.at(i).canConvert<double>())
             QBoxSet::append(values[i].toDouble());
     }
@@ -401,7 +401,7 @@ void DeclarativeBoxPlotSeries::appendSeriesChildren(QQmlListProperty<QObject> *l
 DeclarativeBoxSet *DeclarativeBoxPlotSeries::at(int index)
 {
     QList<QBoxSet *> setList = boxSets();
-    if (index >= 0 && index < setList.count())
+    if (index >= 0 && index < setList.size())
         return qobject_cast<DeclarativeBoxSet *>(setList[index]);
 
     return 0;

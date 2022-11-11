@@ -58,7 +58,7 @@ void ValueAxisLabel::keyPressEvent(QKeyEvent *event)
         return;
     }
 
-    if (event->text().length() >= 1) {
+    if (event->text().size() >= 1) {
         QLocale locale;
         if (!event->text().at(0).isDigit()
                 && event->text().at(0) != locale.decimalPoint()

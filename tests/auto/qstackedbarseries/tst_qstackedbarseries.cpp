@@ -93,13 +93,13 @@ void tst_QStackedBarSeries::setLabelsFormat()
 
     QString format("(@value)");
     m_barseries->setLabelsFormat(format);
-    TRY_COMPARE(labelsFormatSpy.count(), 1);
+    TRY_COMPARE(labelsFormatSpy.size(), 1);
     QList<QVariant> arguments = labelsFormatSpy.takeFirst();
     QVERIFY(arguments.at(0).toString() == format);
     QCOMPARE(m_barseries->labelsFormat(), format);
 
     m_barseries->setLabelsFormat(QString());
-    TRY_COMPARE(labelsFormatSpy.count(), 1);
+    TRY_COMPARE(labelsFormatSpy.size(), 1);
     arguments = labelsFormatSpy.takeFirst();
     QVERIFY(arguments.at(0).toString() == QString());
     QCOMPARE(m_barseries->labelsFormat(), QString());
@@ -112,28 +112,28 @@ void tst_QStackedBarSeries::setLabelsPosition()
     QCOMPARE(m_barseries->labelsPosition(), QStackedBarSeries::LabelsCenter);
 
     m_barseries->setLabelsPosition(QStackedBarSeries::LabelsInsideEnd);
-    TRY_COMPARE(labelsPositionSpy.count(), 1);
+    TRY_COMPARE(labelsPositionSpy.size(), 1);
     QList<QVariant> arguments = labelsPositionSpy.takeFirst();
     QVERIFY(arguments.at(0).value<QAbstractBarSeries::LabelsPosition>()
             == QStackedBarSeries::LabelsInsideEnd);
     QCOMPARE(m_barseries->labelsPosition(), QStackedBarSeries::LabelsInsideEnd);
 
     m_barseries->setLabelsPosition(QStackedBarSeries::LabelsInsideBase);
-    TRY_COMPARE(labelsPositionSpy.count(), 1);
+    TRY_COMPARE(labelsPositionSpy.size(), 1);
     arguments = labelsPositionSpy.takeFirst();
     QVERIFY(arguments.at(0).value<QAbstractBarSeries::LabelsPosition>()
             == QStackedBarSeries::LabelsInsideBase);
     QCOMPARE(m_barseries->labelsPosition(), QStackedBarSeries::LabelsInsideBase);
 
     m_barseries->setLabelsPosition(QStackedBarSeries::LabelsOutsideEnd);
-    TRY_COMPARE(labelsPositionSpy.count(), 1);
+    TRY_COMPARE(labelsPositionSpy.size(), 1);
     arguments = labelsPositionSpy.takeFirst();
     QVERIFY(arguments.at(0).value<QAbstractBarSeries::LabelsPosition>()
             == QStackedBarSeries::LabelsOutsideEnd);
     QCOMPARE(m_barseries->labelsPosition(), QStackedBarSeries::LabelsOutsideEnd);
 
     m_barseries->setLabelsPosition(QStackedBarSeries::LabelsCenter);
-    TRY_COMPARE(labelsPositionSpy.count(), 1);
+    TRY_COMPARE(labelsPositionSpy.size(), 1);
     arguments = labelsPositionSpy.takeFirst();
     QVERIFY(arguments.at(0).value<QAbstractBarSeries::LabelsPosition>()
             == QStackedBarSeries::LabelsCenter);
@@ -147,7 +147,7 @@ void tst_QStackedBarSeries::setLabelsAngle()
     QCOMPARE(m_barseries->labelsAngle(), 0.0);
 
     m_barseries->setLabelsAngle(55.0);
-    TRY_COMPARE(labelsAngleSpy.count(), 1);
+    TRY_COMPARE(labelsAngleSpy.size(), 1);
     QList<QVariant> arguments = labelsAngleSpy.takeFirst();
     QVERIFY(arguments.at(0).value<qreal>() == 55.0);
     QCOMPARE(m_barseries->labelsAngle(), 55.0);
@@ -223,7 +223,7 @@ void tst_QStackedBarSeries::mouseclicked()
     QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.at(0).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
-    QCOMPARE(seriesSpy.count(), 1);
+    QCOMPARE(seriesSpy.size(), 1);
 
     QList<QVariant> seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set1);
@@ -235,7 +235,7 @@ void tst_QStackedBarSeries::mouseclicked()
     QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.at(2).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
-    QCOMPARE(seriesSpy.count(), 1);
+    QCOMPARE(seriesSpy.size(), 1);
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set1);
@@ -247,7 +247,7 @@ void tst_QStackedBarSeries::mouseclicked()
     QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.at(4).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
-    QCOMPARE(seriesSpy.count(), 1);
+    QCOMPARE(seriesSpy.size(), 1);
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set1);
@@ -259,7 +259,7 @@ void tst_QStackedBarSeries::mouseclicked()
     QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.at(1).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
-    QCOMPARE(seriesSpy.count(), 1);
+    QCOMPARE(seriesSpy.size(), 1);
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set2);
@@ -271,7 +271,7 @@ void tst_QStackedBarSeries::mouseclicked()
     QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.at(3).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
-    QCOMPARE(seriesSpy.count(), 1);
+    QCOMPARE(seriesSpy.size(), 1);
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set2);
@@ -283,7 +283,7 @@ void tst_QStackedBarSeries::mouseclicked()
     QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.at(5).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
-    QCOMPARE(seriesSpy.count(), 1);
+    QCOMPARE(seriesSpy.size(), 1);
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set2);
@@ -367,14 +367,14 @@ void tst_QStackedBarSeries::mousehovered()
 // move mouse to left border
     QTest::mouseMove(view.viewport(), QPoint(0, layout.at(0).center().y()));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 10000);
-    TRY_COMPARE(seriesIndexSpy.count(), 0);
+    TRY_COMPARE(seriesIndexSpy.size(), 0);
 
 //=======================================================================
 // move mouse on top of set1
     QTest::mouseMove(view.viewport(), layout.at(0).center().toPoint());
-    TRY_COMPARE(seriesIndexSpy.count(), 1);
-    TRY_COMPARE(setIndexSpy1.count(), 1);
-    TRY_COMPARE(setIndexSpy2.count(), 0);
+    TRY_COMPARE(seriesIndexSpy.size(), 1);
+    TRY_COMPARE(setIndexSpy1.size(), 1);
+    TRY_COMPARE(setIndexSpy2.size(), 0);
 
     QList<QVariant> seriesIndexSpyArg = seriesIndexSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesIndexSpyArg.at(2)), set1);
@@ -388,9 +388,9 @@ void tst_QStackedBarSeries::mousehovered()
 //=======================================================================
 // move mouse from top of set1 to top of set2
     QTest::mouseMove(view.viewport(), layout.at(1).center().toPoint());
-    TRY_COMPARE(seriesIndexSpy.count(), 2);
-    TRY_COMPARE(setIndexSpy1.count(), 1);
-    TRY_COMPARE(setIndexSpy2.count(), 1);
+    TRY_COMPARE(seriesIndexSpy.size(), 2);
+    TRY_COMPARE(setIndexSpy1.size(), 1);
+    TRY_COMPARE(setIndexSpy2.size(), 1);
 
     // should leave set1
     seriesIndexSpyArg = seriesIndexSpy.takeFirst();
@@ -415,9 +415,9 @@ void tst_QStackedBarSeries::mousehovered()
 //=======================================================================
 // move mouse from top of set2 to background
     QTest::mouseMove(view.viewport(), QPoint(layout.at(1).center().x(), 0));
-    TRY_COMPARE(seriesIndexSpy.count(), 1);
-    TRY_COMPARE(setIndexSpy1.count(), 0);
-    TRY_COMPARE(setIndexSpy2.count(), 1);
+    TRY_COMPARE(seriesIndexSpy.size(), 1);
+    TRY_COMPARE(setIndexSpy1.size(), 0);
+    TRY_COMPARE(setIndexSpy2.size(), 1);
 
     // should leave set2
     seriesIndexSpyArg = seriesIndexSpy.takeFirst();
@@ -433,9 +433,9 @@ void tst_QStackedBarSeries::mousehovered()
 // move mouse on top of set1, bar0 to check the index (hover into set1)
     QTest::mouseMove(view.viewport(), layout.at(0).center().toPoint());
 
-    TRY_COMPARE(seriesIndexSpy.count(), 1);
-    TRY_COMPARE(setIndexSpy1.count(), 1);
-    TRY_COMPARE(setIndexSpy2.count(), 0);
+    TRY_COMPARE(seriesIndexSpy.size(), 1);
+    TRY_COMPARE(setIndexSpy1.size(), 1);
+    TRY_COMPARE(setIndexSpy2.size(), 0);
 
     //should enter set1, bar0
     seriesIndexSpyArg = seriesIndexSpy.takeFirst();
@@ -456,9 +456,9 @@ void tst_QStackedBarSeries::mousehovered()
 // hover in set2)
     QTest::mouseMove(view.viewport(), layout.at(1).center().toPoint());
 
-    TRY_COMPARE(seriesIndexSpy.count(), 2);
-    TRY_COMPARE(setIndexSpy1.count(), 1);
-    TRY_COMPARE(setIndexSpy2.count(), 1);
+    TRY_COMPARE(seriesIndexSpy.size(), 2);
+    TRY_COMPARE(setIndexSpy1.size(), 1);
+    TRY_COMPARE(setIndexSpy2.size(), 1);
 
     //should leave set1, bar0
     seriesIndexSpyArg = seriesIndexSpy.takeFirst();
@@ -493,9 +493,9 @@ void tst_QStackedBarSeries::mousehovered()
 // hover in set1)
     QTest::mouseMove(view.viewport(), layout.at(2).center().toPoint());
 
-    TRY_COMPARE(seriesIndexSpy.count(), 2);
-    TRY_COMPARE(setIndexSpy1.count(), 1);
-    TRY_COMPARE(setIndexSpy2.count(), 1);
+    TRY_COMPARE(seriesIndexSpy.size(), 2);
+    TRY_COMPARE(setIndexSpy1.size(), 1);
+    TRY_COMPARE(setIndexSpy2.size(), 1);
 
     //should leave set2, bar0
     seriesIndexSpyArg = seriesIndexSpy.takeFirst();
@@ -531,9 +531,9 @@ void tst_QStackedBarSeries::mousehovered()
                                              layout.at(2).top()));
 
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
-    TRY_COMPARE(seriesIndexSpy.count(), 1);
-    TRY_COMPARE(setIndexSpy1.count(), 1);
-    TRY_COMPARE(setIndexSpy2.count(), 0);
+    TRY_COMPARE(seriesIndexSpy.size(), 1);
+    TRY_COMPARE(setIndexSpy1.size(), 1);
+    TRY_COMPARE(setIndexSpy2.size(), 0);
 
     //should leave set1, bar1
     seriesIndexSpyArg = seriesIndexSpy.takeFirst();
@@ -553,9 +553,9 @@ void tst_QStackedBarSeries::mousehovered()
 // move mouse on top of set2, bar1 to check the index (hover in set2)
     QTest::mouseMove(view.viewport(), layout.at(3).center().toPoint());
 
-    TRY_COMPARE(seriesIndexSpy.count(), 1);
-    TRY_COMPARE(setIndexSpy1.count(), 0);
-    TRY_COMPARE(setIndexSpy2.count(), 1);
+    TRY_COMPARE(seriesIndexSpy.size(), 1);
+    TRY_COMPARE(setIndexSpy1.size(), 0);
+    TRY_COMPARE(setIndexSpy2.size(), 1);
 
     //should enter set2, bar1
     seriesIndexSpyArg = seriesIndexSpy.takeFirst();
@@ -577,9 +577,9 @@ void tst_QStackedBarSeries::mousehovered()
                                              layout.at(2).top()));
 
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
-    TRY_COMPARE(seriesIndexSpy.count(), 1);
-    TRY_COMPARE(setIndexSpy1.count(), 0);
-    TRY_COMPARE(setIndexSpy2.count(), 1);
+    TRY_COMPARE(seriesIndexSpy.size(), 1);
+    TRY_COMPARE(setIndexSpy1.size(), 0);
+    TRY_COMPARE(setIndexSpy2.size(), 1);
 
     //should leave set1, bar1
     seriesIndexSpyArg = seriesIndexSpy.takeFirst();
@@ -662,9 +662,9 @@ void tst_QStackedBarSeries::mousePressed()
     QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.at(0).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
-    QCOMPARE(seriesSpy.count(), 1);
-    QCOMPARE(setSpy1.count(), 1);
-    QCOMPARE(setSpy2.count(), 0);
+    QCOMPARE(seriesSpy.size(), 1);
+    QCOMPARE(setSpy1.size(), 1);
+    QCOMPARE(setSpy2.size(), 0);
 
     QList<QVariant> seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set1);
@@ -680,9 +680,9 @@ void tst_QStackedBarSeries::mousePressed()
     QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.at(2).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
-    QCOMPARE(seriesSpy.count(), 1);
-    QCOMPARE(setSpy1.count(), 1);
-    QCOMPARE(setSpy2.count(), 0);
+    QCOMPARE(seriesSpy.size(), 1);
+    QCOMPARE(setSpy1.size(), 1);
+    QCOMPARE(setSpy2.size(), 0);
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set1);
@@ -698,9 +698,9 @@ void tst_QStackedBarSeries::mousePressed()
     QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.at(4).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
-    QCOMPARE(seriesSpy.count(), 1);
-    QCOMPARE(setSpy1.count(), 1);
-    QCOMPARE(setSpy2.count(), 0);
+    QCOMPARE(seriesSpy.size(), 1);
+    QCOMPARE(setSpy1.size(), 1);
+    QCOMPARE(setSpy2.size(), 0);
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set1);
@@ -716,9 +716,9 @@ void tst_QStackedBarSeries::mousePressed()
     QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.at(1).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
-    QCOMPARE(seriesSpy.count(), 1);
-    QCOMPARE(setSpy1.count(), 0);
-    QCOMPARE(setSpy2.count(), 1);
+    QCOMPARE(seriesSpy.size(), 1);
+    QCOMPARE(setSpy1.size(), 0);
+    QCOMPARE(setSpy2.size(), 1);
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set2);
@@ -734,9 +734,9 @@ void tst_QStackedBarSeries::mousePressed()
     QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.at(3).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
-    QCOMPARE(seriesSpy.count(), 1);
-    QCOMPARE(setSpy1.count(), 0);
-    QCOMPARE(setSpy2.count(), 1);
+    QCOMPARE(seriesSpy.size(), 1);
+    QCOMPARE(setSpy1.size(), 0);
+    QCOMPARE(setSpy2.size(), 1);
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set2);
@@ -752,9 +752,9 @@ void tst_QStackedBarSeries::mousePressed()
     QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.at(5).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
-    QCOMPARE(seriesSpy.count(), 1);
-    QCOMPARE(setSpy1.count(), 0);
-    QCOMPARE(setSpy2.count(), 1);
+    QCOMPARE(seriesSpy.size(), 1);
+    QCOMPARE(setSpy1.size(), 0);
+    QCOMPARE(setSpy2.size(), 1);
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set2);
@@ -832,9 +832,9 @@ void tst_QStackedBarSeries::mouseReleased()
     QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.at(0).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
-    QCOMPARE(seriesSpy.count(), 1);
-    QCOMPARE(setSpy1.count(), 1);
-    QCOMPARE(setSpy2.count(), 0);
+    QCOMPARE(seriesSpy.size(), 1);
+    QCOMPARE(setSpy1.size(), 1);
+    QCOMPARE(setSpy2.size(), 0);
 
     QList<QVariant> seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set1);
@@ -850,9 +850,9 @@ void tst_QStackedBarSeries::mouseReleased()
     QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.at(2).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
-    QCOMPARE(seriesSpy.count(), 1);
-    QCOMPARE(setSpy1.count(), 1);
-    QCOMPARE(setSpy2.count(), 0);
+    QCOMPARE(seriesSpy.size(), 1);
+    QCOMPARE(setSpy1.size(), 1);
+    QCOMPARE(setSpy2.size(), 0);
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set1);
@@ -868,9 +868,9 @@ void tst_QStackedBarSeries::mouseReleased()
     QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.at(4).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
-    QCOMPARE(seriesSpy.count(), 1);
-    QCOMPARE(setSpy1.count(), 1);
-    QCOMPARE(setSpy2.count(), 0);
+    QCOMPARE(seriesSpy.size(), 1);
+    QCOMPARE(setSpy1.size(), 1);
+    QCOMPARE(setSpy2.size(), 0);
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set1);
@@ -886,9 +886,9 @@ void tst_QStackedBarSeries::mouseReleased()
     QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.at(1).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
-    QCOMPARE(seriesSpy.count(), 1);
-    QCOMPARE(setSpy1.count(), 0);
-    QCOMPARE(setSpy2.count(), 1);
+    QCOMPARE(seriesSpy.size(), 1);
+    QCOMPARE(setSpy1.size(), 0);
+    QCOMPARE(setSpy2.size(), 1);
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set2);
@@ -904,9 +904,9 @@ void tst_QStackedBarSeries::mouseReleased()
     QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.at(3).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
-    QCOMPARE(seriesSpy.count(), 1);
-    QCOMPARE(setSpy1.count(), 0);
-    QCOMPARE(setSpy2.count(), 1);
+    QCOMPARE(seriesSpy.size(), 1);
+    QCOMPARE(setSpy1.size(), 0);
+    QCOMPARE(setSpy2.size(), 1);
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set2);
@@ -922,9 +922,9 @@ void tst_QStackedBarSeries::mouseReleased()
     QTest::mouseClick(view.viewport(), Qt::LeftButton, {}, layout.at(5).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
-    QCOMPARE(seriesSpy.count(), 1);
-    QCOMPARE(setSpy1.count(), 0);
-    QCOMPARE(setSpy2.count(), 1);
+    QCOMPARE(seriesSpy.size(), 1);
+    QCOMPARE(setSpy1.size(), 0);
+    QCOMPARE(setSpy2.size(), 1);
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set2);
@@ -1001,9 +1001,9 @@ void tst_QStackedBarSeries::mouseDoubleClicked()
     QTest::mouseDClick(view.viewport(), Qt::LeftButton, {}, layout.at(0).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
-    QCOMPARE(seriesSpy.count(), 1);
-    QCOMPARE(setSpy1.count(), 1);
-    QCOMPARE(setSpy2.count(), 0);
+    QCOMPARE(seriesSpy.size(), 1);
+    QCOMPARE(setSpy1.size(), 1);
+    QCOMPARE(setSpy2.size(), 0);
 
     QList<QVariant> seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(1)), set1);

@@ -53,9 +53,9 @@ QStringList ChartBarCategoryAxisX::createCategoryLabels(const QList<qreal> &layo
     const QRectF &gridRect = gridGeometry();
     const qreal d = (max() - min()) / gridRect.width();
 
-    for (int i = 0; i < layout.count() - 1; ++i) {
+    for (int i = 0; i < layout.size() - 1; ++i) {
         int x = qFloor((((layout[i] + layout[i + 1]) / 2 - gridRect.left()) * d + min() + 0.5));
-        if (x < max() && (x >= 0) && x < m_categoriesAxis->categories().count()) {
+        if (x < max() && (x >= 0) && x < m_categoriesAxis->categories().size()) {
             result << m_categoriesAxis->categories().at(x);
         } else {
             // No label for x coordinate
