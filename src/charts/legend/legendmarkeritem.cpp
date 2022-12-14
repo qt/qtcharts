@@ -147,7 +147,7 @@ QFont LegendMarkerItem::font() const
 void LegendMarkerItem::setLabel(const QString label)
 {
     m_label = label;
-    updateGeometry();
+    m_marker->invalidateLegend();
 }
 
 QString LegendMarkerItem::label() const
