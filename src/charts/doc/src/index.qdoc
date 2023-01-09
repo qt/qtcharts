@@ -17,6 +17,13 @@
 
     \include {module-use.qdocinc} {using the qml api} {QtCharts}
 
+    \note An instance of QApplication is required for the QML types as the module
+    depends on Qt's \l{Graphics View Framework} for rendering. QGuiApplication
+    is not sufficient. However, projects created with Qt Creator's
+    Qt Quick Application wizard are based on the Qt Quick template that
+    uses QGuiApplication by default. All the QGuiApplication instances
+    in such projects must be replaced with QApplication.
+
     \section2 C++ API
 
     \include {module-use.qdocinc} {using the c++ api}
@@ -28,12 +35,6 @@
     \section3 Building with qmake
 
     \include {module-use.qdocinc} {building_with_qmake} {charts}
-
-    \note Projects created with Qt Creator's Qt Quick Application
-    wizard are based on the Qt Quick 2 template that uses QGuiApplication by default.
-    All such QGuiApplication instances in the project must be replaced with
-    QApplication as the module depends on Qt's \l{Graphics View Framework}
-    for rendering.
 
     \section1 Module Evolution
     \l{Changes to Qt Charts} lists important changes in the module API
