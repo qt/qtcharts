@@ -434,7 +434,7 @@ void ChartAxisElement::prepareColorScale(const qreal width, const qreal height)
             } else {
                 gradient = QLinearGradient(QPointF(0, 0), QPointF(0, height));
                 for (int i = colorAxis->gradient().stops().size() - 1; i >= 0; --i) {
-                    const auto &stop = colorAxis->gradient().stops()[i];
+                    auto stop = colorAxis->gradient().stops()[i];
                     gradient.setColorAt(1 - stop.first, stop.second);
                 }
             }
