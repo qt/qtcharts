@@ -17,7 +17,7 @@ qt_internal_add_test(tst_qml-qtquicktest
         ../inc/tst_definitions.h
         main.cpp
     DEFINES
-        QUICK_TEST_SOURCE_DIR=\"\\\"${CMAKE_CURRENT_SOURCE_DIR}/data\\\"\"
+        QUICK_TEST_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}/data"
     INCLUDE_DIRECTORIES
         ../inc
     LIBRARIES
