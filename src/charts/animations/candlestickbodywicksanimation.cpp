@@ -5,9 +5,6 @@
 #include <private/candlestickanimation_p.h>
 #include <private/candlestickbodywicksanimation_p.h>
 
-Q_DECLARE_METATYPE(QList<QRectF>)
-Q_DECLARE_METATYPE(CandlestickData)
-Q_DECLARE_METATYPE(qreal)
 
 QT_BEGIN_NAMESPACE
 
