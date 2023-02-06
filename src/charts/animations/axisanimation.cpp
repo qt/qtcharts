@@ -5,7 +5,6 @@
 #include <private/chartaxiselement_p.h>
 #include <private/qabstractaxis_p.h>
 
-Q_DECLARE_METATYPE(QList<qreal>)
 
 QT_BEGIN_NAMESPACE
 

@@ -4,7 +4,6 @@
 #include <private/piesliceanimation_p.h>
 #include <private/piechartitem_p.h>
 
-Q_DECLARE_METATYPE(PieSliceData)
 
 QT_BEGIN_NAMESPACE
 

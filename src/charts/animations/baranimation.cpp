@@ -4,7 +4,6 @@
 #include <private/baranimation_p.h>
 #include <private/abstractbarchartitem_p.h>
 
-Q_DECLARE_METATYPE(QList<QRectF>)
 
 QT_BEGIN_NAMESPACE
 

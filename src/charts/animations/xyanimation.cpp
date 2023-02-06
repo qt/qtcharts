@@ -5,7 +5,6 @@
 #include <private/xychart_p.h>
 #include <QtCore/QDebug>
 
-Q_DECLARE_METATYPE(QList<QPointF>)
 
 QT_BEGIN_NAMESPACE
 

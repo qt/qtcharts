@@ -5,8 +5,6 @@
 #include <private/splinechartitem_p.h>
 #include <QtCore/QDebug>
 
-Q_DECLARE_METATYPE(QList<QPointF>)
-Q_DECLARE_METATYPE(SplineVector)
 
 QT_BEGIN_NAMESPACE
 

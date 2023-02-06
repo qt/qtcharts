@@ -6,9 +6,6 @@
 #include <private/boxplotchartitem_p.h>
 #include <private/boxwhiskersdata_p.h>
 
-Q_DECLARE_METATYPE(QList<QRectF>)
-Q_DECLARE_METATYPE(BoxWhiskersData)
-Q_DECLARE_METATYPE(qreal)
 
 QT_BEGIN_NAMESPACE
 
