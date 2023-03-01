@@ -4,7 +4,7 @@
 ## qcandlestickseries Test:
 #####################################################################
 
-qt_internal_add_test(qcandlestickseries
+qt_internal_add_test(tst_qcandlestickseries
     SOURCES
         ../inc/tst_definitions.h
         tst_qcandlestickseries.cpp

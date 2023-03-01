@@ -4,7 +4,7 @@
 ## qml Test:
 #####################################################################
 
-qt_internal_add_test(charts_qml
+qt_internal_add_test(tst_charts_qml
     SOURCES
         ../inc/tst_definitions.h
         tst_qml.cpp

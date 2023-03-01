@@ -4,7 +4,7 @@
 ## chartdataset Test:
 #####################################################################
 
-qt_internal_add_test(chartdataset
+qt_internal_add_test(tst_chartdataset
     SOURCES
         ../inc/tst_definitions.h
         tst_chartdataset.cpp

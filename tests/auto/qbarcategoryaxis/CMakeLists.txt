@@ -4,7 +4,7 @@
 ## qbarcategoryaxis Test:
 #####################################################################
 
-qt_internal_add_test(qbarcategoryaxis
+qt_internal_add_test(tst_qbarcategoryaxis
     SOURCES
         ../inc/tst_definitions.h
         ../qabstractaxis/tst_qabstractaxis.cpp ../qabstractaxis/tst_qabstractaxis.h
