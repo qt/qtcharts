@@ -11,7 +11,6 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-
     const QAudioDevice inputDevice = QMediaDevices::defaultAudioInput();
     if (inputDevice.isNull()) {
         QMessageBox::warning(nullptr, "audio",
@@ -20,6 +19,7 @@ int main(int argc, char *argv[])
     }
 
     Widget w(inputDevice);
+    w.resize(800, 600);
     w.show();
     
     return a.exec();

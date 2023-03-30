@@ -23,7 +23,6 @@ Widget::Widget(const QAudioDevice &deviceInfo, QWidget *parent) :
     m_series(new QLineSeries)
 {
     QChartView *chartView = new QChartView(m_chart);
-    chartView->setMinimumSize(800, 600);
     m_chart->addSeries(m_series);
     QValueAxis *axisX = new QValueAxis;
     axisX->setRange(0, XYSeriesIODevice::sampleCount);
