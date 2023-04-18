@@ -2,12 +2,116 @@
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GFDL-1.3-no-invariants-only
 
 /*!
-     \example audio
-     \title Audio Example
-     \ingroup qtcharts_examples
+    \example audio
+    \title Audio Samples vs Sound Level
+    \ingroup qtcharts_examples
 
-     \brief This example shows the drawing of dynamic data (microphone input).
-     \image examples_audio.png
+    \brief This example shows the drawing of microphone samples vs audio level.
+    \image examples_audio.png
+
+    \image dynamicwavform.gif
+
+    This example's implementation is based on Widgets. See
+    \l{Getting Started Programming with Qt Widgets} for information specific to
+    that.
+    The following sections cover how to use the Qt Charts API to display
+    dynamic data on a samples vs sound level graph. For more information on
+    sampling, see
+    \l{https://en.wikipedia.org/wiki/Sampling_(signal_processing)}{Sampling_(signal_processing)}.
 
     \include examples-run.qdocinc
+
+    \section1 Retrieving the audio data
+
+    Thanks to the inclusion of the Qt Multimedia module in \c main.cpp, we create
+     a new QAudioDevice that represents the default audio device of the target
+    platform. We also check that we have an audio input device and let the user
+    know if there is no input audio device available.
+
+    \quotefromfile audio/main.cpp
+    \skipuntil const QAudioDevice
+    \printto Widget w(inputDevice);
+
+    The audio device is then passed to Widget \c w using its constructor argument
+    \c w. Then \c w.show() is called to display the widget.
+
+    \printto return a.exec();
+
+    \section1 Setting up the chart
+    This section covers setting up the chart and axes.
+
+    In \c widget.cpp, the re-implemented Widget constructor does the heavy lifting
+    when it comes to the application's logic. The QChart, QLineSeries, and
+    QChartView objects are declared as follows:
+
+    \quotefromfile audio/widget.cpp
+    \skipuntil Widget::
+    \printuntil m_chart->addSeries(m_series);
+
+    m_series is for \l{Using the audio input data}.
+
+    \section2 The x-axis "Samples"
+
+    We set the min to max range on the x-axis from 0 to the XYSeriesIODevice::sampleCount.
+    (Declared in xyseriesiodevice.h as 2000). We then set its title text.
+
+    \printto QValueAxis *axisY = new QValueAxis;
+
+    \section2 The y-axis "Audio Level"
+
+    We create the QValueAxis \c axisY, set its range and title text.
+
+    \printto m_chart->addAxis(axisX, Qt::AlignBottom);
+
+    \section2 Attaching the axes and setting the chart title
+
+    We attach the axes, hide the legend, and set the chart title to include the
+    name of the microphone being used as an audio input.
+    \printto  m_chart->setTitle
+
+    \section2 Laying out the chart
+
+    Here we use a QVBoxLayout \c mainLayout and add a our QChartview \c chartView
+    to the vertical layout.
+
+    \printto mainLayout->addWidget(chartView);
+
+    \section1 Using the audio input data
+
+    This section shows how the microphone data is passed to the QLineSeries
+    \c m_series. As before this relies on the Qt Multimedia module.
+
+    First we pass deviceInfo to a QAudioInput constructor.
+
+    \printuntil QAudioFormat formatAudio;
+
+    We then setup our QAudioFormat \c formatAudio, its channel count, sample rate,
+    and sample format.
+
+    \printto formatAudio.setSampleFormat(QAudioFormat::UInt8);
+
+    We can now create a QAudioSource and set its buffer size.
+
+    \printto    m_audioSource->setBufferSize(200);
+
+    Now its time to attach our data to the chart. To do this we have created
+    a class XYSeriesIODevice. See \l XYSeriesIODevice for how it is implemented.
+
+    \printto m_audioSource->start(m_device);
+
+    \section2 XYSeriesIODevice
+
+    Implemented in \c xyseriesiodevice.cpp, XYSeriesIODevice takes care of the
+    signal sampling. The \c writeData function, with a fixed resolution of 4,
+    sets the QList \c m_buffer size based on the sample count, and fills it with
+    QPointFs with an incremental x value and the y value set to 0.
+
+    \quotefromfile audio/xyseriesiodevice.cpp
+    \skipuntil qint64 XYSeriesIODevice::writeData(
+    \printuntil int start = 0;
+
+    We then do some sampling.
+
+    \printuntil return (sampleCount - start) * resolution;
+
 */
