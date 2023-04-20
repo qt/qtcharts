@@ -108,7 +108,6 @@ protected:
     bool m_dirty;
 
     QHash<int, QHash<QXYSeries::PointConfiguration, QVariant>> m_pointsConfiguration;
-    bool m_pointsConfigurationDirty;
 
     friend class AreaChartItem;
 };

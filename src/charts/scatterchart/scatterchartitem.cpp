@@ -259,7 +259,7 @@ void ScatterChartItem::updateGeometry()
                     static_cast<QAbstractGraphicsShapeItem *>(items.at(i));
             const QPointF &point = points.at(i);
 
-            if (m_pointsConfiguration.contains(i) && m_pointsConfigurationDirty) {
+            if (m_pointsConfiguration.contains(i)) {
                 const auto &conf = m_pointsConfiguration[i];
                 if (conf.contains(QXYSeries::PointConfiguration::Size))
                     resizeMarker(
@@ -484,7 +484,8 @@ void ScatterChartItem::handleSeriesUpdated()
     if (count == 0)
         return;
 
-    m_pointsConfigurationDirty = m_series->pointsConfiguration() != m_pointsConfiguration;
+    const bool pointsConfigurationDirty =
+            m_series->pointsConfiguration() != m_pointsConfiguration;
 
     bool recreate = m_visible != m_series->isVisible()
                     || m_pointsVisible != m_series->pointsVisible()
@@ -492,7 +493,7 @@ void ScatterChartItem::handleSeriesUpdated()
                     || m_markerShape != m_series->markerShape()
                     || m_selectedColor != m_series->selectedColor()
                     || m_selectedPoints != m_series->selectedPoints()
-                    || m_pointsConfigurationDirty;
+                    || pointsConfigurationDirty;
     m_visible = m_series->isVisible();
     m_markerSize = m_series->markerSize();
     m_markerShape = m_series->markerShape();
