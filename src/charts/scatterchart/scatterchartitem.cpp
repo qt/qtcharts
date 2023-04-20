@@ -153,32 +153,32 @@ void ScatterChartItem::resizeMarker(QGraphicsItem *marker, const int size)
     switch (m_markerShape) {
     case QScatterSeries::MarkerShapeCircle: {
         QGraphicsEllipseItem *item = static_cast<QGraphicsEllipseItem *>(marker);
-        item->setRect(item->x(), item->y(), size, size);
+        item->setRect(0, 0, size, size);
         break;
     }
     case QScatterSeries::MarkerShapeRectangle: {
         QGraphicsRectItem *item = static_cast<QGraphicsRectItem *>(marker);
-        item->setRect(item->x(), item->y(), size, size);
+        item->setRect(0, 0, size, size);
         break;
     }
     case QScatterSeries::MarkerShapeRotatedRectangle: {
         QGraphicsPolygonItem *item = static_cast<QGraphicsPolygonItem *>(marker);
-        item->setPolygon(RotatedRectangleMarker::polygon(item->x(), item->y(), size, size));
+        item->setPolygon(RotatedRectangleMarker::polygon(0, 0, size, size));
         break;
     }
     case QScatterSeries::MarkerShapeTriangle: {
         QGraphicsPolygonItem *item = static_cast<QGraphicsPolygonItem *>(marker);
-        item->setPolygon(TriangleMarker::polygon(item->x(), item->y(), size, size));
+        item->setPolygon(TriangleMarker::polygon(0, 0, size, size));
         break;
     }
     case QScatterSeries::MarkerShapeStar: {
         QGraphicsPolygonItem *item = static_cast<QGraphicsPolygonItem *>(marker);
-        item->setPolygon(StarMarker::polygon(item->x(), item->y(), size, size));
+        item->setPolygon(StarMarker::polygon(0, 0, size, size));
         break;
     }
     case QScatterSeries::MarkerShapePentagon: {
         QGraphicsPolygonItem *item = static_cast<QGraphicsPolygonItem *>(marker);
-        item->setPolygon(PentagonMarker::polygon(item->x(), item->y(), size, size));
+        item->setPolygon(PentagonMarker::polygon(0, 0, size, size));
         break;
     }
     default:
