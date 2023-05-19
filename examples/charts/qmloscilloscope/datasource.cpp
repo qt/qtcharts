@@ -1,24 +1,21 @@
-// Copyright (C) 2016 The Qt Company Ltd.
+// Copyright (C) 2023 The Qt Company Ltd.
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
 
 #include "datasource.h"
-#include <QtCharts/QXYSeries>
-#include <QtCharts/QAreaSeries>
-#include <QtQuick/QQuickView>
-#include <QtQuick/QQuickItem>
-#include <QtCore/QDebug>
-#include <QtCore/QRandomGenerator>
-#include <QtCore/QtMath>
 
-QT_USE_NAMESPACE
+#include <QAreaSeries>
+#include <QQuickItem>
+#include <QQuickView>
+#include <QRandomGenerator>
+#include <QtMath>
+#include <QXYSeries>
 
 Q_DECLARE_METATYPE(QAbstractSeries *)
 Q_DECLARE_METATYPE(QAbstractAxis *)
 
-DataSource::DataSource(QQuickView *appViewer, QObject *parent) :
-    QObject(parent),
-    m_appViewer(appViewer),
-    m_index(-1)
+DataSource::DataSource(QQuickView *appViewer, QObject *parent)
+    : QObject(parent)
+    , m_appViewer(appViewer)
 {
     qRegisterMetaType<QAbstractSeries*>();
     qRegisterMetaType<QAbstractAxis*>();
@@ -29,7 +26,7 @@ DataSource::DataSource(QQuickView *appViewer, QObject *parent) :
 void DataSource::update(QAbstractSeries *series)
 {
     if (series) {
-        QXYSeries *xySeries = static_cast<QXYSeries *>(series);
+        auto xySeries = static_cast<QXYSeries *>(series);
         m_index++;
         if (m_index > m_data.count() - 1)
             m_index = 0;

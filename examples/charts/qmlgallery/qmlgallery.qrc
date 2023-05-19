@@ -1,0 +1,34 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/AreaSeries.qml</file>
+        <file>qml/BarSeries.qml</file>
+        <file>qml/BarSeriesHorizontal.qml</file>
+        <file>qml/BarSeriesPercentHorizontal.qml</file>
+        <file>qml/BarSeriesStackedHorizontal.qml</file>
+        <file>qml/BarSeriesPercent.qml</file>
+        <file>qml/BarSeriesStacked.qml</file>
+        <file>qml/BoxPlotSeries.qml</file>
+        <file>qml/CandlestickSeries.qml</file>
+        <file>qml/CategoryAxis.qml</file>
+        <file>qml/CategoryAxisPolar.qml</file>
+        <file>qml/DateTimeAxis.qml</file>
+        <file>qml/DateTimeAxisPolar.qml</file>
+        <file>qml/Donut.qml</file>
+        <file>qml/LineSeries.qml</file>
+        <file>qml/Main.qml</file>
+        <file>qml/PieChart.qml</file>
+        <file>qml/SplineSeries.qml</file>
+        <file>qml/ScatterSeries.qml</file>
+        <file>qml/TwoSeries.qml</file>
+        <file>qml/TwoSeriesPolar.qml</file>
+        <file>qml/WheelOfFortune.qml</file>
+        <file>qml/customlegend/AnimatedAreaSeries.qml</file>
+        <file>qml/customlegend/ChartViewHighlighted.qml</file>
+        <file>qml/customlegend/ChartViewSelector.qml</file>
+        <file>qml/customlegend/ChartViewStacked.qml</file>
+        <file>qml/customlegend/CustomLegend.qml</file>
+        <file>qml/customlegend/Main.qml</file>
+        <file>qml/f1legends/F1Legends.qml</file>
+        <file>qml/f1legends/SpeedsList.qml</file>
+    </qresource>
+</RCC>

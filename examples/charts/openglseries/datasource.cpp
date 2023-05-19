@@ -1,15 +1,15 @@
-// Copyright (C) 2016 The Qt Company Ltd.
+// Copyright (C) 2023 The Qt Company Ltd.
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
 
 #include "datasource.h"
-#include <QtCore/QtMath>
-#include <QtCore/QRandomGenerator>
 
-QT_USE_NAMESPACE
+#include <QLabel>
+#include <QRandomGenerator>
+#include <QtMath>
+#include <QXYSeries>
 
-DataSource::DataSource(QObject *parent) :
-    QObject(parent),
-    m_index(-1)
+DataSource::DataSource(QObject *parent)
+     : QObject(parent)
 {
     generateData(0, 0, 0);
 }
@@ -17,7 +17,7 @@ DataSource::DataSource(QObject *parent) :
 void DataSource::update(QAbstractSeries *series, int seriesIndex)
 {
     if (series) {
-        QXYSeries *xySeries = static_cast<QXYSeries *>(series);
+        auto xySeries = static_cast<QXYSeries *>(series);
         const QList<QList<QPointF>> &seriesData = m_data.at(seriesIndex);
         if (seriesIndex == 0)
             m_index++;

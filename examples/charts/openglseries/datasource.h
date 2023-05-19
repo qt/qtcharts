@@ -1,22 +1,23 @@
-// Copyright (C) 2016 The Qt Company Ltd.
+// Copyright (C) 2023 The Qt Company Ltd.
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
 
 #ifndef DATASOURCE_H
 #define DATASOURCE_H
 
-#include <QtCore/QObject>
-#include <QtCharts/QXYSeries>
-#include <QtWidgets/QLabel>
-#include <QtCore/QElapsedTimer>
-#include <QtCore/QTimer>
+#include <QElapsedTimer>
+#include <QObject>
+#include <QPointF>
+#include <QTimer>
 
-QT_USE_NAMESPACE
+QT_FORWARD_DECLARE_CLASS(QAbstractSeries)
+QT_FORWARD_DECLARE_CLASS(QLabel)
+QT_FORWARD_DECLARE_CLASS(QXYSeries)
 
 class DataSource : public QObject
 {
     Q_OBJECT
 public:
-    explicit DataSource(QObject *parent = 0);
+    explicit DataSource(QObject *parent = nullptr);
 
     void startUpdates(const QList<QXYSeries *> &seriesList, QLabel *fpsLabel);
 
@@ -28,11 +29,11 @@ public slots:
 
 private:
     QList<QList<QList<QPointF>>> m_data;
-    int m_index;
+    int m_index = -1;
     QList<QXYSeries *> m_seriesList;
-    QLabel *m_fpsLabel;
+    QLabel *m_fpsLabel = nullptr;
     QElapsedTimer m_fpsTimer;
     QTimer m_dataUpdater;
 };
 
-#endif // DATASOURCE_H
+#endif
