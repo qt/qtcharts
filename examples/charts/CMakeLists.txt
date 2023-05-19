@@ -1,90 +1,48 @@
 # Copyright (C) 2022 The Qt Company Ltd.
 # SPDX-License-Identifier: BSD-3-Clause
 
-if(QT_FEATURE_charts_area_chart)
-    qt_internal_add_example(areachart)
+if(QT_FEATURE_charts_area_chart
+        AND QT_FEATURE_charts_line_chart
+        AND QT_FEATURE_charts_spline_chart
+        AND QT_FEATURE_charts_bar_chart
+        AND QT_FEATURE_charts_pie_chart
+        AND QT_FEATURE_charts_boxplot_chart
+        AND QT_FEATURE_charts_candlestick_chart
+        AND QT_FEATURE_charts_scatter_chart
+        AND QT_FEATURE_charts_datetime_axis)
+    qt_internal_add_example(gallery)
 endif()
-if(QT_FEATURE_charts_line_chart)
-    qt_internal_add_example(callout)
-    qt_internal_add_example(chartinteractions)
-    qt_internal_add_example(customchart)
-    qt_internal_add_example(linechart)
-    qt_internal_add_example(lineandbar)
-    qt_internal_add_example(legendmarkers)
-    qt_internal_add_example(logvalueaxis)
-    qt_internal_add_example(modeldata)
-    qt_internal_add_example(zoomlinechart)
-    qt_internal_add_example(pointconfiguration)
+
+if(QT_FEATURE_charts_area_chart
+        AND QT_FEATURE_charts_line_chart
+        AND QT_FEATURE_charts_spline_chart
+        AND QT_FEATURE_charts_bar_chart
+        AND QT_FEATURE_charts_pie_chart
+        AND QT_FEATURE_charts_boxplot_chart
+        AND QT_FEATURE_charts_candlestick_chart
+        AND QT_FEATURE_charts_scatter_chart
+        AND QT_FEATURE_charts_datetime_axis
+        AND TARGET Qt::Quick)
+    qt_internal_add_example(qmlgallery)
 endif()
-if(QT_FEATURE_charts_spline_chart)
-    qt_internal_add_example(dynamicspline)
-    qt_internal_add_example(multiaxis)
-    qt_internal_add_example(splinechart)
-    qt_internal_add_example(pointsselectionandmarkers)
+
+if(QT_FEATURE_charts_line_chart AND TARGET Qt::Multimedia)
+    qt_internal_add_example(audio)
 endif()
-if(QT_FEATURE_charts_area_chart AND QT_FEATURE_charts_spline_chart)
-    qt_internal_add_example(chartthemes)
-    qt_internal_add_example(polarchart)
-endif()
-if(QT_FEATURE_charts_bar_chart)
-    qt_internal_add_example(barchart)
-    qt_internal_add_example(barmodelmapper)
-    qt_internal_add_example(horizontalbarchart)
-    qt_internal_add_example(horizontalpercentbarchart)
-    qt_internal_add_example(horizontalstackedbarchart)
-    qt_internal_add_example(stackedbarchart)
-    qt_internal_add_example(stackedbarchartdrilldown)
-    qt_internal_add_example(percentbarchart)
-    qt_internal_add_example(legend)
-    qt_internal_add_example(temperaturerecords)
-    qt_internal_add_example(selectedbar)
-endif()
-if(QT_FEATURE_charts_pie_chart)
-    qt_internal_add_example(donutchart)
-    qt_internal_add_example(donutbreakdown)
-    qt_internal_add_example(nesteddonuts)
-    qt_internal_add_example(piechart)
-    qt_internal_add_example(piechartcustomization)
-    qt_internal_add_example(piechartdrilldown)
-endif()
-if(QT_FEATURE_charts_pie_chart AND TARGET Qt::Quick)
-    qt_internal_add_example(qmlpiechart)
-endif()
-if(QT_FEATURE_charts_boxplot_chart)
-    qt_internal_add_example(boxplotchart)
-endif()
-if(QT_FEATURE_charts_boxplot_chart AND TARGET Qt::Quick)
-    qt_internal_add_example(qmlboxplot)
-endif()
-if(QT_FEATURE_charts_candlestick_chart)
-    qt_internal_add_example(candlestickchart)
-endif()
-if(QT_FEATURE_charts_candlestick_chart AND TARGET Qt::Quick)
-    qt_internal_add_example(qmlcandlestick)
-endif()
-if(QT_FEATURE_charts_scatter_chart)
-    qt_internal_add_example(scatterchart)
-    qt_internal_add_example(scatterinteractions)
-endif()
-if(TARGET Qt::Quick)
-    qt_internal_add_example(qmlchart)
-    qt_internal_add_example(qmlcustomizations)
-    qt_internal_add_example(qmlcustomlegend)
-    qt_internal_add_example(qmlf1legends)
-    qt_internal_add_example(qmloscilloscope)
-    qt_internal_add_example(qmlweather)
-endif()
-if(TARGET Qt::Multimedia)
-    # TODO: this never gets compiled : missing find_pacakge
-    # qt_internal_add_example(audio) // QTBUG-94181
-endif()
+
 if(QT_FEATURE_opengl)
     qt_internal_add_example(openglseries)
 endif()
-if(QT_FEATURE_charts_datetime_axis)
-    qt_internal_add_example(datetimeaxis)
+
+if(QT_FEATURE_charts_line_chart)
+    qt_internal_add_example(zoomlinechart)
 endif()
-if(QT_FEATURE_charts_datetime_axis AND TARGET Qt::Quick)
-    qt_internal_add_example(qmlaxes)
-    qt_internal_add_example(qmlpolarchart)
+
+if(QT_FEATURE_charts_line_chart AND QT_FEATURE_charts_scatter_chart AND TARGET Qt::Quick)
+    qt_internal_add_example(qmloscilloscope)
 endif()
+
+if(QT_FEATURE_charts_line_chart AND QT_FEATURE_charts_bar_chart AND TARGET Qt::Quick)
+    qt_internal_add_example(qmlweather)
+endif()
+

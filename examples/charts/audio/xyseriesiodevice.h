@@ -1,19 +1,14 @@
-// Copyright (C) 2016 The Qt Company Ltd.
+// Copyright (C) 2023 The Qt Company Ltd.
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
 
 #ifndef XYSERIESIODEVICE_H
 #define XYSERIESIODEVICE_H
 
-#include <QtCore/QIODevice>
-#include <QtCore/QPointF>
-#include <QtCore/QList>
-#include <QtCharts/QChartGlobal>
+#include <QIODevice>
+#include <QList>
+#include <QPointF>
 
-QT_BEGIN_NAMESPACE
-class QXYSeries;
-QT_END_NAMESPACE
-
-QT_USE_NAMESPACE
+QT_FORWARD_DECLARE_CLASS(QXYSeries)
 
 class XYSeriesIODevice : public QIODevice
 {
@@ -28,7 +23,7 @@ protected:
     qint64 writeData(const char *data, qint64 maxSize) override;
 
 private:
-    QXYSeries *m_series;
+    QXYSeries *m_series = nullptr;
     QList<QPointF> m_buffer;
 };
 

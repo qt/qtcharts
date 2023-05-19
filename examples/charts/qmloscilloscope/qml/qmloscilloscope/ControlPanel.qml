@@ -1,4 +1,4 @@
-// Copyright (C) 2016 The Qt Company Ltd.
+// Copyright (C) 2023 The Qt Company Ltd.
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
 
 import QtQuick
@@ -7,14 +7,16 @@ import QtQuick.Layouts
 ColumnLayout {
     property alias openGLButton: openGLButton
     property alias antialiasButton: antialiasButton
-    spacing: 8
-    Layout.fillHeight: true
+
     signal animationsEnabled(bool enabled)
     signal seriesTypeChanged(string type)
     signal refreshRateChanged(variant rate);
     signal signalSourceChanged(string source, int signalCount, int sampleCount);
     signal antialiasingEnabled(bool enabled)
     signal openGlChanged(bool enabled)
+
+    spacing: 8
+    Layout.fillHeight: true
 
     Text {
         text: "Scope"

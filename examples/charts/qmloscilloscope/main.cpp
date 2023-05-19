@@ -1,12 +1,13 @@
-// Copyright (C) 2016 The Qt Company Ltd.
+// Copyright (C) 2023 The Qt Company Ltd.
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
 
-#include <QtWidgets/QApplication>
-#include <QtQml/QQmlContext>
-#include <QtQuick/QQuickView>
-#include <QtQml/QQmlEngine>
-#include <QtCore/QDir>
 #include "datasource.h"
+
+#include <QApplication>
+#include <QDir>
+#include <QQmlContext>
+#include <QQmlEngine>
+#include <QQuickView>
 
 int main(int argc, char *argv[])
 {

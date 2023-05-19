@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="boxplot_a">data/boxplot_a.txt</file>
+        <file alias="boxplot_b">data/boxplot_b.txt</file>
+        <file alias="candlestick">data/candlestick.txt</file>
+        <file alias="sun_spots">data/sun_spots.txt</file>
+        <file alias="blue_triangle">data/blue_triangle.png</file>
+        <file alias="green_triangle">data/green_triangle.png</file>
+    </qresource>
+</RCC>
