@@ -24,13 +24,4 @@
 */
 #define QT_CHARTS_VERSION_CHECK(major, minor, patch) ((major<<16)|(minor<<8)|(patch))
 
-/*
-    On Windows min and max conflict with standard macros
-*/
-#ifdef Q_OS_WIN
-#ifndef NOMINMAX
-#define NOMINMAX
-#endif
-#endif
-
 #endif // QCHARTGLOBAL_H
