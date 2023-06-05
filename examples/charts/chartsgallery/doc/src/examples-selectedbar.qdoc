@@ -1,0 +1,41 @@
+// Copyright (C) 2021 The Qt Company Ltd.
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GFDL-1.3-no-invariants-only
+
+/*!
+    \page qtcharts-selectedbar-example.html
+    \title Changing the Color and State of Bars
+    \brief Shows how to use a selection feature for the bar chart.
+    \include gallery.qdocinc
+
+    The example shows how to change the color and state of bars using
+    setBarSelected().
+
+    \image examples_selectedbar.png
+
+    We create the sets and fill them with the data. Then we create a series and append data to it.
+    \snippet chartsgallery/selectedbarwidget.cpp 1
+
+    We create the chart and add series to it.
+    Also, we add a title to the chart, set animation for the chart, and align the legend.
+    \snippet chartsgallery/selectedbarwidget.cpp 2
+
+    Here we set the color for the selected bars.
+    \snippet chartsgallery/selectedbarwidget.cpp 3
+
+    Next step is adding axes:
+    QBarCategoryAxis for years of measurements and QValueAxis for values range.
+    \snippet chartsgallery/selectedbarwidget.cpp 4
+
+    Then we add the chart view to put the chart in.
+    \snippet chartsgallery/selectedbarwidget.cpp 5
+
+    Here we create a widget for labels of values of selected and unselected bars.
+    \snippet chartsgallery/selectedbarwidget.cpp 6
+
+    We connect selecting of a specific bar with labels of values using a lambda.
+    \c {set->toggleSelection({index})} sets the bar selected.
+    \snippet chartsgallery/selectedbarwidget.cpp 7
+
+    Finally, we create the main layout.
+    \snippet chartsgallery/selectedbarwidget.cpp 8
+*/

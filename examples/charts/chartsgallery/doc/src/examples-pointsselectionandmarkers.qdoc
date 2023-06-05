@@ -1,0 +1,50 @@
+// Copyright (C) 2021 The Qt Company Ltd.
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GFDL-1.3-no-invariants-only
+
+/*!
+    \page qtcharts-pointsselectionandmarkers-example.html
+    \title Using Light Markers and Points Selection
+    \brief Shows how to use light markers and points selection for a series.
+    \include gallery.qdocinc
+
+    \image examples_pointsselectionandmarkers1.png
+    \image examples_pointsselectionandmarkers2.png
+
+    We start with creating a series, filling it with the data, and setting up selection functionality.
+    It's important not to set points visibility to \c true, because light markers functionality is
+    an independent feature and setting both would result in undesired behavior.
+    \snippet chartsgallery/lightmarkerswidget.cpp 1
+
+    Then we create the \c {QChart}, the \c {QChartview} and the control widget with its layout to arrange customization elements.
+    \snippet chartsgallery/lightmarkerswidget.cpp 2
+
+    The next step is creating elements of customization.
+    \snippet chartsgallery/lightmarkerswidget.cpp 3
+
+    We create the label for the marker selection combobox and add fill the combobox with the items.
+    Also, we provide functionality to the combobox. Considering the implementation of the light markers
+    functionality, we need to make sure if displaying of unselected points is checked.
+    Switching the visibility of the light marker off is achieved by setting it to \c "empty" \c {QImage}.
+    If the user unchecks the displaying of unselected points and changes the light marker image, unselected points
+    have to remain invisible.
+    If checking isn't performed, new \c {QImage} will be set for light marker
+    and unselected points will be visible even though it has been switched off.
+
+    \snippet chartsgallery/lightmarkerswidget.cpp 4
+
+    Almost the same procedure applies to the selected point light marker and line color. The only difference is
+    that there's no need to check visibility of unselected points as it doesn't affect the functionality.
+
+    \snippet chartsgallery/lightmarkerswidget.cpp 5
+
+    A small difference comes with changing visibility of unselected points. As it was mentioned before,
+    making light markers invisible is achieved by setting them to "empty" \c {QImage}.
+    That is why, depending on checkbox state, selected point light marker is set to "empty" \c {QImage} or
+    to the light marker extracted from the current index of the corresponding combobox.
+
+    \snippet chartsgallery/lightmarkerswidget.cpp 6
+
+    The final part is to arrange the elements, add all the widgets to the main widget, and set the main window size.
+
+    \snippet chartsgallery/lightmarkerswidget.cpp 7
+*/

@@ -1,0 +1,18 @@
+// Copyright (C) 2016 The Qt Company Ltd.
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GFDL-1.3-no-invariants-only
+
+/*!
+     \page qtcharts-callout-example.html
+     \title Drawing a Callout on Top of a Chart
+     \brief Shows how to draw an additional element (a callout) on top of a chart.
+     \include gallery.qdocinc
+     \image examples_callout.png
+
+     The QChart class provides two methods that map between the scene coordinates and the series domain
+    (defined by the axes ranges).
+
+     QPointF QChart::mapToPosition(const QPointF &value, QAbstractSeries *series)
+
+     QPointF QChart::mapToValue(const QPointF &position, QAbstractSeries *series)
+
+*/
