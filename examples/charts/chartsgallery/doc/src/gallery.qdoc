@@ -1,0 +1,22 @@
+// Copyright (C) 2023 The Qt Company Ltd.
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GFDL-1.3-no-invariants-only
+
+/*!
+\example chartsgallery
+\title Charts with Widgets Gallery
+\ingroup qtcharts_examples
+
+\brief An application that demonstrates the Qt Charts Widgets API.
+
+\image ChartWidgetGallery.png
+
+This example demonstrates the Qt Charts API for widgets by using included sample
+data to populate a number of chart types and interactions for a user.
+
+\annotatedlist charts_widget_gallery_example
+
+\include examples-run.qdocinc
+
+If you want to implement charts with QML see the \l{QML Charts Example}.
+
+*/

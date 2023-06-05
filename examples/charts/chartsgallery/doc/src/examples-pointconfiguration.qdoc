@@ -1,0 +1,96 @@
+// Copyright (C) 2022 The Qt Company Ltd.
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GFDL-1.3-no-invariants-only
+
+/*!
+    \page qtcharts-pointconfiguration-example.html
+    \title Selected Point Configuration
+    \brief Shows how to modify the configuration of individual points.
+    \include gallery.qdocinc
+
+    \image examples_pointconfiguration.png
+
+    \section1 Features Demonstrated
+    Here you will learn how to:
+    \list
+    \li Provide click-selection of points in a series.
+    \li Override the individual configuration of specific points, configuring:
+        \list
+        \li Color
+        \li Size
+        \li Visibility of the label
+        \li Text format of the label
+        \endlist
+    \endlist
+
+    \include examples-run.qdocinc
+
+    \section1 Subclass QMainWindow
+
+    We start by creating a subclass of QMainWindow that will contain the chart and controls.
+    And we provide the boilerplate for the constructor implementation:
+    \snippet chartsgallery/pointconfigurationwidget.cpp 1
+
+    \section1 Create a Line Series
+
+    Then we create a QLineSeries, giving it a name, making the points visible, and giving it some
+    points to plot.
+    \snippet chartsgallery/pointconfigurationwidget.cpp 2
+
+    \section1 Create the Point Configuration Controls
+
+    Now we create some controls to configure the color, size, label visibility, and the label
+    itself. We create an associated label for each control so the user knows what the control does.
+
+    For the color and size, we use a QComboBox, populating it with a variety of color and size
+    choices.
+
+    Next we create the final two controls. A Checkbox controls the visibility of the selected
+    point. The other control is a QLineEdit allowing the user to provide a custom label for the
+    point.
+
+    Note that we do not set initial values for any of the controls, as a point will always be
+    selected showing its current settings.
+    \snippet chartsgallery/pointconfigurationwidget.cpp 3
+
+    \section1 Populate the Controls upon Selecting a Point
+
+    Now that we have the controls, we need to provide the logic that sets the current control values
+    for the selected point. Note that the whole series value is used if there is no customization
+    for a selected point. In this case, if the series is set to show blue points, a blue color value
+    will be shown in the color combobox.
+
+    Upon clicking on the lineseries, we look up the point clicked on, remove the prior point
+    selection, and then select the point that was clicked on. This visually indicates the selected
+    point on the chart - making the point larger to indicate its selection. The index of the
+    current selected point and its \c PointConfigurations are saved to a member variable for later
+    use.
+
+    The \c PointConfigurations are queried and matching values in the comboboxes are looked up.
+    Then the current indices of the comboboxes are set accordingly. Similarly for the checkbox and
+    line edit, the values are looked up from the \c PointConfigurations, and the controls are set
+    to match them.
+    \snippet chartsgallery/pointconfigurationwidget.cpp 4
+
+    \section1 Provide the Logic to Configure the Selected Point
+
+    Now that the controls are populated with the current configuration, we need to make them do
+    something. We connect up their signals to logic that will do the work of configuring the
+    selected point with the setting chosen. It is a simple matter of setting the
+    QXYSeries::PointConfiguration value associated with the control to the \c m_selectedPointConfig
+    \c PointConfigurations member variable, and calling QXYSeries::setPointConfiguration.
+    \snippet chartsgallery/pointconfigurationwidget.cpp 5
+
+    \section1 Create the Chart and Lay out the Controls
+
+    Finally we create the chart and its view, add the series to the chart, and create the layout
+    of the window.
+    As part of this, we connect to the \c geometryChanged signal to catch a signal when the
+    chart is
+    first painted. This is so that we can get correct values for the initially selected point. If
+    we do this earlier, the point values are incorrect. This connection is disconnected after the
+    first time that it is fired.
+    \snippet chartsgallery/pointconfigurationwidget.cpp 6
+
+    Now we have a fully functioning application that demonstrates how to customize individual chart
+    points.
+*/
