@@ -1,0 +1,58 @@
+// Copyright (C) 2021 The Qt Company Ltd.
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GFDL-1.3-no-invariants-only
+
+/*!
+    \page qtcharts-legend-example.html
+    \title Detaching and Attaching Legends
+    \brief Shows how to detach the legend from the chart and attach it back.
+    \include gallery.qdocinc
+
+    By default, the chart draws the legend inside the same graphics view the chart is contained
+    within. In some cases, the user may want to draw the legend somewhere else. To make this
+    possible, the legend can be detached from the chart. Detaching means that the legend is no
+    longer fixed to an edge of the chart, and the chart no longer controls the legend's layout.
+    Instead, the legend geometry is controlled by the user, allowing free control of the location
+    and size of the legend. This can be floating atop the content of the chart, or even drawn in a
+    different graphics scene. The behavior of the legend can be tested by running this example.
+
+    In this example we show a bar series, allowing bar sets to be added or removed interactively.
+    The legend reflects the changes in series as bar sets are added and/or removed. The attachment
+    of the legend, its alignment, and its ability to be moved and resized can be controlled using
+    methods in \c QLegend.
+
+    When the legend is detached, it can be resized and positioned freely. If the interactive
+    feature of the legend is enabled, the legend can be freely dragged and resized by the user.
+    If the user drags the legend off of any side of the chart, it will automatically re-attach to
+    that side of the chart.
+
+    \image examples_legend_detach.png
+    \image examples_legend_detach2.png
+
+    Here we turn the legend visible and set its alignment to the bottom of the chart.
+
+    \snippet chartsgallery/legendwidget.cpp 1
+
+    This snippet shows how to detach the legend from the chart.
+
+    \snippet chartsgallery/legendwidget.cpp 2
+
+    Here we reattach the legend to the chart. The background is turned invisible.
+
+    \snippet chartsgallery/legendwidget.cpp 3
+
+    Here we connect to the signal emitted when the legend is detached or attached, turning its
+    background on when detached and off when attached. This makes it easier to see how the
+    items inside the legend are arranged when it is detached.
+
+    \snippet chartsgallery/legendwidget.cpp 4
+
+    This shows how to make the legend interactive to the user using a pointing device such as a
+    mouse.
+
+    \snippet chartsgallery/legendwidget.cpp 5
+
+    This shows how we set the detached legend dimensions if the legend is not interactive. After
+    setting the new values, we call update to show changes on screen.
+
+    \snippet chartsgallery/legendwidget.cpp 6
+*/

@@ -1,0 +1,38 @@
+// Copyright (C) 2016 The Qt Company Ltd.
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GFDL-1.3-no-invariants-only
+
+/*!
+    \page qtcharts-scatterchart-example.html
+    \title Creating Scatter Charts
+    \brief The example shows how to create a simple scatter chart.
+    \include gallery.qdocinc
+
+    \image examples_scatterchart.png
+
+    To create scatter charts, a QScatterSeries instance is needed. Here we create a scatter series
+    instance, and set the type and width of outline for the scatter points.
+
+    \snippet chartsgallery/scatterwidget.cpp 1
+
+    We add the data to be shown. We can use the append() member function or use the stream operator.
+
+    \snippet chartsgallery/scatterwidget.cpp 2
+
+    We can define the brush of the scatter series to be an image. Here the image is a star created
+    using QPainterPath.
+
+    \snippet chartsgallery/scatterwidget.cpp 3
+
+    In the end we enable anti-aliasing, set the chart title, and add the scatter series onto the
+    chart. We also disable drop shadow, because it would not look good on an application with only
+    chart view shown.
+
+    \snippet chartsgallery/scatterwidget.cpp 4
+
+    We can also use the scatter points as legend markers.
+
+    \snippet chartsgallery/scatterwidget.cpp 5
+
+    The chart is ready to be shown.
+
+*/
