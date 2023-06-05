@@ -1,0 +1,34 @@
+// Copyright (C) 2016 The Qt Company Ltd.
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GFDL-1.3-no-invariants-only
+
+/*!
+    \page qtcharts-multiaxis-example.html
+    \title Using Multiple Axes
+    \brief Shows how to create a chart with a vertical axis for each series.
+    \include gallery.qdocinc
+
+    \image examples_multiaxis.png
+
+    Create the QChart instance, hide the legend of the chart, and set its title.
+
+    \snippet chartsgallery/multiaxiswidget.cpp 1
+
+    Create a QValueAxis instance that will be used as a horizontal axis by both series and add it the bottom of the chart.
+    The axis can be shared between many series, but each series can have only one vertical and horizontal axis.
+
+    \snippet chartsgallery/multiaxiswidget.cpp 2
+
+    Create the first series, and add the data to it. Finally, add the series to the chart. Instantiate its own Y-axis, add it to the chart. Then attach both the common X-axis and the series specific Y-axis.
+    In this example the color of the axis line is set to be the same as the color of the series to make it possible to distinguish which axis is attached to which series.
+
+    \snippet chartsgallery/multiaxiswidget.cpp 3
+
+    Similarly prepare another series. This time a different axis type is used. Additionally grid lines color is also set to be the same as the color of the series.
+
+    \snippet chartsgallery/multiaxiswidget.cpp 4
+
+    Create a QChartView object with QChart as a parameter.
+
+    \snippet chartsgallery/multiaxiswidget.cpp 5
+
+*/

@@ -1,0 +1,55 @@
+// Copyright (C) 2016 The Qt Company Ltd.
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GFDL-1.3-no-invariants-only
+
+/*!
+    \page qtcharts-percentbarchart-example.html
+    \title Creating Percent Bar Charts
+    \brief Shows how to create a simple percent bar chart.
+    \include gallery.qdocinc
+
+    A percent bar chart shows the data in sets as a percentage of
+    all sets per category.
+
+    Creating percent bar charts is just like creating a regular \l {Creating Bar Charts} {bar chart}, except that for a
+    percent bar charts, we use the QPercentBarSeries API instead of QBarSeries. Also, in the
+    \l {Creating Bar Charts} {bar chart} we used the nice numbers algorithm to make the y-axis numbering look better. With
+    the percent bar chart there is no need for that, because the maximum y-axis value is always 100.
+
+    \image examples_percentbarchart.png
+
+    The barsets are used in same way in all barcharts.
+    To illustrate the difference between various barcharts, we use the same data in all examples.
+    The data visualized by the bar chart is defined by QBarSet instances. Here we create the sets and append data
+    to them. The data is appended here with the << operator. Alternatively the append method could be used.
+
+    \snippet chartsgallery/barpercentwidget.cpp 1
+
+    We create the series and append the barsets to it. The series takes ownership of the barsets. The series groups the data from sets to categories.
+    The first values of each set are grouped together in the first category, the second values in the second category etc.
+
+    \snippet chartsgallery/barpercentwidget.cpp 2
+
+    Here we create the chart object and add the series to it. We set the title of the chart with setTitle, and then turn on animations of the series by calling
+    setAnimationOptions(QChart::SeriesAnimations)
+
+    \snippet chartsgallery/barpercentwidget.cpp 3
+
+    To have the categories displayed on an axis, we need to create a
+    QBarCategoryAxis first. Here we create a category axis with a list of
+    categories and add it to the chart aligned to the bottom, acting as the
+    x-axis. The chart takes ownership of the axis. For y-axis we use a value
+    axis, aligned to the left-hand side.
+
+    \snippet chartsgallery/barpercentwidget.cpp 4
+
+    We also want to show the legend. To do so, we get the legend pointer from the chart and set it to visible. We also place the legend to bottom of
+    the chart by setting its alignment to Qt::AlignBottom.
+
+    \snippet chartsgallery/barpercentwidget.cpp 5
+
+    Finally we add the chart onto a view.
+
+    \snippet chartsgallery/barpercentwidget.cpp 6
+
+    The chart is ready to be shown.
+*/

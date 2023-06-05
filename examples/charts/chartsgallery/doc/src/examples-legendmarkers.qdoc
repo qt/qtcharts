@@ -1,0 +1,45 @@
+// Copyright (C) 2016 The Qt Company Ltd.
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GFDL-1.3-no-invariants-only
+
+/*!
+    \page qtcharts-legendmarkers-example.html
+    \title Using Legend Markers
+    \brief Shows how to make use of legend markers.
+    \include gallery.qdocinc
+
+    In this example we create an application which uses the QLegendMarker clicked signal to show/hide the corresponding series
+    in a chart. The connect marker button connects a clicked signal from all markers in a legend to the handleMarkerClicked slot.
+
+    \image examples_legendmarkers.png
+
+    Our application has buttons for adding or removing a series in a chart and a button to connect or disconnect the legend markers clicked signal to our handler.
+    In the image above we have connected the markers and clicked on one of them.
+
+    \snippet chartsgallery/legendmarkerswidget.cpp 1
+
+    Here we connect the markers in the legend to our handler. To avoid connecting the same marker more than once, we first disconnect it.
+
+    \snippet chartsgallery/legendmarkerswidget.cpp 2
+
+    Here we disconnect all markers from our handler.
+
+    \snippet chartsgallery/legendmarkerswidget.cpp 3
+
+    In our handler we first cast the sender of the event to the QLegendMarker.
+
+    \snippet chartsgallery/legendmarkerswidget.cpp 4
+
+    Then we check the type of the marker. This is required if we want to access the detailed methods of the marker and cast it to the correct type.
+    If all we need is the pointer to QAbstractSeries, the casting isn't necessary. In case of a pie or bar series, we may need the pointer to a related QPieSlice or QBarSet.
+
+    \snippet chartsgallery/legendmarkerswidget.cpp 5
+
+    We want to toggle the visibility of the series, when the marker is clicked. To do so, we get the pointer to a related series from the marker and toggle its visibility.
+    Since the legend marker follows the visibility of the series by default, we also set the marked back to visible. If we don't do so, the marker will be
+    invisible in the legend and we can't click on it anymore.
+
+    \snippet chartsgallery/legendmarkerswidget.cpp 6
+
+    Instead of making the marker invisible when the series is hidden, we dim the color of the marker. Here we do it by modifying the color of the laberBrush.
+
+*/

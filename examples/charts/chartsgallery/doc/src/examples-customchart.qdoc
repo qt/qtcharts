@@ -1,0 +1,28 @@
+// Copyright (C) 2016 The Qt Company Ltd.
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GFDL-1.3-no-invariants-only
+
+/*!
+    \page qtcharts-customchart-example.html
+    \title Customizing Charts
+    \brief Shows how to customize the appearance of chart elements.
+
+    \include gallery.qdocinc
+    \image examples_customchart.png
+
+    We begin by creating a simple line series and a chart object.
+    \snippet chartsgallery/customchartwidget.cpp 1
+
+    First we customize the series and the chart's title and background.
+    \snippet chartsgallery/customchartwidget.cpp 2
+
+    Then we customize the axes.
+    \snippet chartsgallery/customchartwidget.cpp 3
+
+    Then the axis label values and ranges. Once the axes are ready, we set them to be used by the chart.
+    \snippet chartsgallery/customchartwidget.cpp 4
+
+    Finally, we create a view containing the chart.
+    \snippet chartsgallery/customchartwidget.cpp 5
+
+    Now we are ready to show the chart on a main window.
+*/

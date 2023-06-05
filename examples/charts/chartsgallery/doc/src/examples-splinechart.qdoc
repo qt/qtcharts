@@ -1,0 +1,31 @@
+// Copyright (C) 2016 The Qt Company Ltd.
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GFDL-1.3-no-invariants-only
+
+/*!
+    \page qtcharts-splinechart-example.html
+    \title Creating Spline Charts
+    \brief Shows how to create a simple spline chart.
+
+    \image examples_splinechart.png
+
+    To create spline charts we need to put our data into QSplineSeries. QSplineSeries automatically
+    calculates spline segment control points that are needed to properly draw the spline.
+
+    \snippet chartsgallery/splinewidget.cpp 1
+
+    Now let's add some data points to the series.
+
+    \snippet chartsgallery/splinewidget.cpp 2
+
+    The data series has been populated. To display it on a chart we create a QChart object and add
+    the data series to it. We also set the title and the values range on the y-axis, so that our
+    chart's visibility is better.
+
+    \snippet chartsgallery/splinewidget.cpp 3
+
+    Then we create a QChartView object with QChart as a parameter. This way we don't need to create
+    a QGraphicsView scene ourselves.
+
+    \snippet chartsgallery/splinewidget.cpp 4
+
+*/

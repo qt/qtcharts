@@ -1,0 +1,30 @@
+// Copyright (C) 2016 The Qt Company Ltd.
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GFDL-1.3-no-invariants-only
+
+/*!
+    \page qtcharts-logvalueaxis-example.html
+    \title Using Logarithmic Value Axes
+    \brief Shows how to use QLogValueAxis.
+    \include gallery.qdocinc
+
+    \image examples_logvalueaxis.png
+
+    Create a QLineSeries instance and add some data to it.
+
+    \snippet chartsgallery/logaxiswidget.cpp 1
+
+    To present the data on the chart we need a QChart instance. Add the series to it, hide the legend and set the title of the chart.
+
+    \snippet chartsgallery/logaxiswidget.cpp 2
+
+    Create the axes. Add them to the chart and attach to the series.
+
+    \snippet chartsgallery/logaxiswidget.cpp 3
+
+    Then create a QChartView object with QChart as a parameter.
+
+    \snippet chartsgallery/logaxiswidget.cpp 4
+
+    The chart is ready to be shown.
+
+*/

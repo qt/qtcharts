@@ -84,10 +84,9 @@
     A spline chart is implemented by using the QSplineSeries class
     that inherits QLineSeries or the SplineSeries type that inherits LineSeries.
 
-    For more information, see \l{LineChart Example}, \l{SplineChart Example},
-    and \l{Dynamic Spline Example}.
+    For more information, see \l{Creating Line Charts} and \l{Creating Spline Charts}.
     For an example of combining a line chart with a bar chart and using a common
-    axis for both, see \l{Line and BarChart Example}.
+    axis for both, see \l{Combining Line and BarChart}.
 
     \section2 Area and Scatter Charts
 
@@ -106,8 +105,9 @@
     A scatter chart is implemented by using the QScatterSeries class or the
     ScatterSeries QML type.
 
-    For more information, see \l{AreaChart Example}, \l{ScatterChart Example},
-    and \l{Scatter Interactions Example}.
+    For more information, see \l{Creating Area Charts} and
+    \l{Creating Scatter Charts}.
+
 
     \section2 Bar Charts
 
@@ -144,10 +144,9 @@
     \inlineimage examples_horizontalpercentbarchart.png
 
 
-    For more information, see \l{BarChart Example},
-    \l{HorizontalBarChart Example}, \l{StackedBarChart Example},
-    \l{HorizontalStackedBarChart Example}, \l{PercentBarChart Example}, and
-    \l{HorizontalPercentBarChart Example}.
+    For more information, see \l{Creating Bar Charts},
+    \l{Creating Horizontal Stacked Bar Charts}, \l{Creating Horizontal Bar Charts},
+    and \l{Creating Horizontal Percent Bar Charts}.
 
     \section2 Pie Charts
 
@@ -162,9 +161,8 @@
     \inlineimage examples_donutchart.png
 
 
-    For more information, see \l{PieChart Example},
-    \l{Pie Chart Customization Example}, \l{DonutChart Example},
-    \l{Donut Chart Breakdown Example}, and \l{Nested Donuts Example}.
+    For more information, see \l{Charts with Widgets Gallery},
+    \l{Creating a Donut Breakdown Chart}, and \l{Creating Nested Donut Charts}.
 
     \section2 Box-and-Whiskers Charts
 
@@ -179,7 +177,7 @@
 
     \image examples_boxplotchart.png
 
-    For more information, see \l{Box and Whiskers Example}.
+    For more information, see \l{Creating Box-and-Whiskers Charts}.
 
     \section2 Candlestick Charts
 
@@ -204,7 +202,7 @@
     supported by them. The axis can be used either as a radial or an angular
     axis. In QML, the corresponding type is PolarChartView.
 
-    For more information, see \l{Polar Chart Example} and \l{Qml Polar Chart}.
+    For more information, see \l{Creating Polar Charts} and \l{Qml Polar Chart}.
 
     \section1 Axes
 
@@ -248,8 +246,8 @@
     supported, such as specifying QValueAxis and QLogValueAxis on the same
     orientation.
 
-    For more information, see \l{DateTimeAxis Example},
-    \l{Logarithmic Axis Example}, \l{Multiple Axes Example}, and \l{Qml Axes}.
+    For more information, see \l{Line Charts with Date and Time Axes},
+    \l{Using Logarithmic Value Axes}, \l{Using Multiple Axes}, and \l{Qml Axes}.
 
     \section1 Legend
 
@@ -283,7 +281,7 @@
     It is possible to add data to charts dynamically and to make the chart view
     scroll automatically to display the new data.
 
-    For more information, see \l{Dynamic Spline Example}.
+    For more information, see \l{Creating Spline Charts}.
 
     \section2 Drilling Down into Data
 
@@ -292,8 +290,7 @@
     item is displayed. This is implemented by deleting the first series and
     adding another one.
 
-    For more information, see \l{StackedBarChart Drilldown Example} and
-    \l{PieChart Drilldown Example}.
+    For more information, see \l{Implementing Drilldown}.
 
     \section2 Zooming and Scrolling
 
@@ -312,7 +309,7 @@
     charts or hover the mouse over them. This enables you to add elements, such
     as callouts, to the charts.
 
-    For more information, see \l{Callout Example}.
+    For more information, see \l{Drawing a Callout on Top of a Chart}.
 
     \section1 Themes
 
@@ -341,5 +338,5 @@
     \note Changing the theme will overwrite all customization previously applied
     to the series.
 
-    For more information, see the \l {Chart themes example}.
+    For more information, see the \l {Creating Charts With Themes}.
 */

@@ -1,0 +1,50 @@
+// Copyright (C) 2016 The Qt Company Ltd.
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GFDL-1.3-no-invariants-only
+
+/*!
+    \page qtcharts-horizontalbarchart-example.html
+    \title Creating Horizontal Bar Charts
+    \brief Shows how to create a horizontal bar chart.
+    \include gallery.qdocinc
+
+    QHorizontalBarChart shows the data in sets as separate bars, which are grouped in categories. QHorizontalBarChart works just like
+    QBarChart, except that the bars are drawn horizontally on the chart.
+
+    \image examples_horizontalbarchart.png
+
+    The bar sets are used in the same way in all bar charts.
+    To illustrate the difference between various bar charts, we use the same data in all examples.
+    Data that bar chart visualizes, is defined by QBarSet instances. Here we create the sets and append data
+    to them. The data is appended here with << operator. Alternatively, the append method could also be used.
+
+    \snippet chartsgallery/horizontalbarwidget.cpp 1
+
+    We create the series and append the bar sets to it. The series takes ownership of the barsets. The series groups the data from sets to categories.
+    The first values of each set are grouped together in the first category; the second values in the second category, and so on.
+
+    \snippet chartsgallery/horizontalbarwidget.cpp 2
+
+    Here we create the chart object and add the series to it. We set the title for chart with setTitle and then turn on animations of the series by calling
+    setAnimationOptions(QChart::SeriesAnimations).
+
+    \snippet chartsgallery/horizontalbarwidget.cpp 3
+
+    To have categories displayed on axis, we need to create a QBarCategoryAxis
+    for that. Here we create a category axis with a list of categories and
+    set it to be aligned to the left-hand side, acting as the y-axis, and
+    attach it to the series. The chart takes ownership of the axis. For x-axis
+    we use a value axis, aligned to the bottom.
+
+    \snippet chartsgallery/horizontalbarwidget.cpp 4
+
+    We also want to show the legend. To do so, we get the legend pointer from chart and set it to visible. We also place the legend to the bottom of the chart by setting its alignment
+    to Qt::AlignBottom.
+
+    \snippet chartsgallery/horizontalbarwidget.cpp 5
+
+    Finally we add the chart onto a view. We also turn on the antialiasing for the chartView.
+
+    \snippet chartsgallery/horizontalbarwidget.cpp 6
+
+    The chart is ready to be shown.
+*/
