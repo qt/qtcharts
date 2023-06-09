@@ -339,7 +339,7 @@ bool ChartAxisElement::isEmpty()
 {
     return axisGeometry().isEmpty()
            || gridGeometry().isEmpty()
-           || qFuzzyCompare(min(), max());
+           || qFuzzyIsNull(max() - min());
 }
 
 qreal ChartAxisElement::min() const
@@ -430,13 +430,11 @@ QStringList ChartAxisElement::createValueLabels(qreal min, qreal max, int ticks,
                 labels << presenter()->numberToString(value, 'f', n);
             }
         } else {
-            qreal value = tickAnchor;
-            if (value > min)
-                value = value - int((value - min) / tickInterval) * tickInterval;
-            else
-                value = value + qCeil((min - value) / tickInterval) * tickInterval;
+            const qreal ticksFromAnchor = (tickAnchor - min) / tickInterval;
+            const qreal firstMajorTick = tickAnchor - std::floor(ticksFromAnchor) * tickInterval;
 
-            while (value <= max || qFuzzyCompare(value, max)) {
+            qreal value = firstMajorTick;
+            while (value <= max) {
                 labels << presenter()->numberToString(value, 'f', n);
                 value += tickInterval;
             }
@@ -472,13 +470,11 @@ QStringList ChartAxisElement::createValueLabels(qreal min, qreal max, int ticks,
                 labels << formatLabel(formatSpec, array, value, precision, preStr, postStr);
             }
         } else {
-            qreal value = tickAnchor;
-            if (value > min)
-                value = value - int((value - min) / tickInterval) * tickInterval;
-            else
-                value = value + qCeil((min - value) / tickInterval) * tickInterval;
+            const qreal ticksFromAnchor = (tickAnchor - min) / tickInterval;
+            const qreal firstMajorTick = tickAnchor - std::floor(ticksFromAnchor) * tickInterval;
 
-            while (value <= max || qFuzzyCompare(value, max)) {
+            qreal value = firstMajorTick;
+            while (value <= max) {
                 labels << formatLabel(formatSpec, array, value, precision, preStr, postStr);
                 value += tickInterval;
             }

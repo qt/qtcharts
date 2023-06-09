@@ -367,31 +367,32 @@ void QXYModelMapperPrivate::modelUpdated(QModelIndex topLeft, QModelIndex bottom
 
     blockSeriesSignals();
     QModelIndex index;
-    QPointF oldPoint;
     QPointF newPoint;
+    int indexColumn = 0;
+    int indexRow = 0;
     for (int row = topLeft.row(); row <= bottomRight.row(); row++) {
         for (int column = topLeft.column(); column <= bottomRight.column(); column++) {
             index = topLeft.sibling(row, column);
-            if (m_orientation == Qt::Vertical && (index.column() == m_xSection || index.column() == m_ySection)) {
-                if (index.row() >= m_first && (m_count == - 1 || index.row() < m_first + m_count)) {
-                    QModelIndex xIndex = xModelIndex(index.row() - m_first);
-                    QModelIndex yIndex = yModelIndex(index.row() - m_first);
+            indexColumn = index.column();
+            indexRow = index.row();
+            if (m_orientation == Qt::Vertical && (indexColumn == m_xSection || indexColumn == m_ySection)) {
+                if (indexRow >= m_first && (m_count == - 1 || indexRow < m_first + m_count)) {
+                    QModelIndex xIndex = xModelIndex(indexRow - m_first);
+                    QModelIndex yIndex = yModelIndex(indexRow - m_first);
                     if (xIndex.isValid() && yIndex.isValid()) {
-                        oldPoint = m_series->points().at(index.row() - m_first);
                         newPoint.setX(valueFromModel(xIndex));
                         newPoint.setY(valueFromModel(yIndex));
-                        m_series->replace(index.row() - m_first, newPoint);
+                        m_series->replace(indexRow - m_first, newPoint);
                     }
                 }
-            } else if (m_orientation == Qt::Horizontal && (index.row() == m_xSection || index.row() == m_ySection)) {
-                if (index.column() >= m_first && (m_count == - 1 || index.column() < m_first + m_count)) {
-                    QModelIndex xIndex = xModelIndex(index.column() - m_first);
-                    QModelIndex yIndex = yModelIndex(index.column() - m_first);
+            } else if (m_orientation == Qt::Horizontal && (indexRow == m_xSection || indexRow == m_ySection)) {
+                if (indexColumn >= m_first && (m_count == - 1 || indexColumn < m_first + m_count)) {
+                    QModelIndex xIndex = xModelIndex(indexColumn - m_first);
+                    QModelIndex yIndex = yModelIndex(indexColumn - m_first);
                     if (xIndex.isValid() && yIndex.isValid()) {
-                        oldPoint = m_series->points().at(index.column() - m_first);
                         newPoint.setX(valueFromModel(xIndex));
                         newPoint.setY(valueFromModel(yIndex));
-                        m_series->replace(index.column() - m_first, newPoint);
+                        m_series->replace(indexColumn - m_first, newPoint);
                     }
                 }
             }
