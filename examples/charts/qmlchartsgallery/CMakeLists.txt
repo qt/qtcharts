@@ -2,28 +2,28 @@
 # SPDX-License-Identifier: BSD-3-Clause
 
 cmake_minimum_required(VERSION 3.16)
-project(qmlgallery LANGUAGES CXX)
+project(qmlchartsgallery LANGUAGES CXX)
 
 if(NOT DEFINED INSTALL_EXAMPLESDIR)
     set(INSTALL_EXAMPLESDIR "examples")
 endif()
 
-set(INSTALL_EXAMPLEDIR "${INSTALL_EXAMPLESDIR}/charts/qmlgallery")
+set(INSTALL_EXAMPLEDIR "${INSTALL_EXAMPLESDIR}/charts/qmlchartsgallery")
 
 find_package(Qt6 REQUIRED COMPONENTS Charts Core Gui Qml Quick)
 
 qt_standard_project_setup()
 
-qt_add_executable(qmlgallery
+qt_add_executable(qmlchartsgallery
     main.cpp
 )
 
-set_target_properties(qmlgallery PROPERTIES
+set_target_properties(qmlchartsgallery PROPERTIES
     WIN32_EXECUTABLE TRUE
     MACOSX_BUNDLE TRUE
 )
 
-target_link_libraries(qmlgallery PUBLIC
+target_link_libraries(qmlchartsgallery PUBLIC
     Qt::Charts
     Qt::Core
     Qt::Gui
@@ -65,14 +65,14 @@ set(resources_resource_files
     "qml/f1legends/SpeedsList.qml"
 )
 
-qt6_add_resources(qmlgallery "qmlgallery"
+qt6_add_resources(qmlchartsgallery "qmlchartsgallery"
     PREFIX
         "/"
     FILES
         ${resources_resource_files}
 )
 
-install(TARGETS qmlgallery
+install(TARGETS qmlchartsgallery
     RUNTIME DESTINATION "${INSTALL_EXAMPLEDIR}"
     BUNDLE DESTINATION "${INSTALL_EXAMPLEDIR}"
     LIBRARY DESTINATION "${INSTALL_EXAMPLEDIR}"

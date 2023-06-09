@@ -25,7 +25,7 @@ qtConfig(opengl) {
 qtConfig(charts-line-chart):qtConfig(charts-spline-chart):qtConfig(charts-bar-chart):
     qtConfig(charts-pie-chart):qtConfig(charts-boxplot-chart):qtConfig(charts-candlestick-chart):
     qtConfig(charts-scatter-chart):qtConfig(charts-datetime-axis) {
-    SUBDIRS += gallery
-    qtHaveModule(quick): SUBDIRS += qmlgallery
+    SUBDIRS += chartsgallery
+    qtHaveModule(quick): SUBDIRS += qmlchartsgallery
 }
 
