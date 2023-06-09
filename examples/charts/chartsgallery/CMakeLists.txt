@@ -2,19 +2,19 @@
 # SPDX-License-Identifier: BSD-3-Clause
 
 cmake_minimum_required(VERSION 3.16)
-project(gallery LANGUAGES CXX)
+project(chartsgallery LANGUAGES CXX)
 
 if(NOT DEFINED INSTALL_EXAMPLESDIR)
     set(INSTALL_EXAMPLESDIR "examples")
 endif()
 
-set(INSTALL_EXAMPLEDIR "${INSTALL_EXAMPLESDIR}/charts/gallery")
+set(INSTALL_EXAMPLEDIR "${INSTALL_EXAMPLESDIR}/charts/chartsgallery")
 
 find_package(Qt6 REQUIRED COMPONENTS Charts Core Gui Widgets)
 
 qt_standard_project_setup()
 
-qt_add_executable(gallery
+qt_add_executable(chartsgallery
     areawidget.cpp areawidget.h
     barmodelmappermodel.cpp barmodelmappermodel.h
     barmodelmapperwidget.cpp barmodelmapperwidget.h
@@ -76,12 +76,12 @@ qt_add_executable(gallery
     themewidget.cpp themewidget.h themewidget.ui
 )
 
-set_target_properties(gallery PROPERTIES
+set_target_properties(chartsgallery PROPERTIES
     WIN32_EXECUTABLE TRUE
     MACOSX_BUNDLE TRUE
 )
 
-target_link_libraries(gallery PRIVATE
+target_link_libraries(chartsgallery PRIVATE
     Qt::Charts
     Qt::Core
     Qt::Gui
@@ -112,7 +112,7 @@ set_source_files_properties("data/green_triangle.png"
     PROPERTIES QT_RESOURCE_ALIAS "green_triangle"
 )
 
-set(gallery_resource_files
+set(chartsgallery_resource_files
     "data/boxplot_a.txt"
     "data/boxplot_b.txt"
     "data/candlestick.txt"
@@ -121,14 +121,14 @@ set(gallery_resource_files
     "data/green_triangle.png"
 )
 
-qt6_add_resources(gallery "gallery"
+qt6_add_resources(chartsgallery "chartsgallery"
     PREFIX
         "/"
     FILES
-        ${gallery_resource_files}
+        ${chartsgallery_resource_files}
 )
 
-install(TARGETS gallery
+install(TARGETS chartsgallery
     RUNTIME DESTINATION "${INSTALL_EXAMPLEDIR}"
     BUNDLE DESTINATION "${INSTALL_EXAMPLEDIR}"
     LIBRARY DESTINATION "${INSTALL_EXAMPLEDIR}"

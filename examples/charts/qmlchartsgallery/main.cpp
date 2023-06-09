@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
                                                        QString::fromLatin1("qml")));
     QObject::connect(viewer.engine(), &QQmlEngine::quit, &viewer, &QWindow::close);
 
-    viewer.setTitle(QStringLiteral("QML Gallery"));
+    viewer.setTitle(QStringLiteral("Qt Charts QML Example Gallery"));
     viewer.setSource(QUrl("qrc:/qml/Main.qml"));
     viewer.setResizeMode(QQuickView::SizeRootObjectToView);
     viewer.show();

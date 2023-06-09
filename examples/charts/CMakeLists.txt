@@ -10,7 +10,7 @@ if(QT_FEATURE_charts_area_chart
         AND QT_FEATURE_charts_candlestick_chart
         AND QT_FEATURE_charts_scatter_chart
         AND QT_FEATURE_charts_datetime_axis)
-    qt_internal_add_example(gallery)
+    qt_internal_add_example(chartsgallery)
 endif()
 
 if(QT_FEATURE_charts_area_chart
@@ -23,7 +23,7 @@ if(QT_FEATURE_charts_area_chart
         AND QT_FEATURE_charts_scatter_chart
         AND QT_FEATURE_charts_datetime_axis
         AND TARGET Qt::Quick)
-    qt_internal_add_example(qmlgallery)
+    qt_internal_add_example(qmlchartsgallery)
 endif()
 
 if(QT_FEATURE_charts_line_chart AND TARGET Qt::Multimedia)
