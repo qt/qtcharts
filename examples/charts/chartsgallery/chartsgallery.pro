@@ -121,9 +121,9 @@ SOURCES += \
     temperaturerecordswidget.cpp \
     themewidget.cpp
 
-RESOURCES += gallery.qrc
+RESOURCES += chartsgallery.qrc
 
 FORMS += themewidget.ui
 
-target.path = $$[QT_INSTALL_EXAMPLES]/charts/gallery
+target.path = $$[QT_INSTALL_EXAMPLES]/charts/chartsgallery
 INSTALLS += target
