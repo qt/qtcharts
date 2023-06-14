@@ -2,13 +2,12 @@
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GFDL-1.3-no-invariants-only
 
 /*!
-    \example qmlcustomlegend
-    \title Qml Custom Legend
-    \ingroup qtcharts_examples
+    \page qtcharts-qmlcustomlegend-example.html
+    \title Customizing Legends
+    \brief Shows you how to create your own custom legend.
+    \include qmlchartsgallery.qdocinc
 
-    \brief This example shows you how to create your own custom legend.
-
-    This application shows you how to create your own custom legend instead of using the
+    Here we show you how to create your own custom legend instead of using the
     built-in legend of ChartView API.
 
     The main view of the application shows a stacked area chart. This is how one of
@@ -16,24 +15,20 @@
 
     \image examples_qmlcustomlegend1.png
 
-    \include examples-run.qdocinc
-
-    \section1 Customizing Legends
-
-    \snippet qmlcustomlegend/qml/qmlcustomlegend/ChartViewStacked.qml 1
+    \snippet qmlchartsgallery/qml/customlegend/ChartViewStacked.qml 1
 
     Hovering with mouse on top of the legend will highlight the hovered series.
     (see CustomLegend.qml).
 
     \image examples_qmlcustomlegend2.png
-    \snippet qmlcustomlegend/qml/qmlcustomlegend/CustomLegend.qml 1
-    \snippet qmlcustomlegend/qml/qmlcustomlegend/CustomLegend.qml 2
+    \snippet qmlchartsgallery/qml/customlegend/CustomLegend.qml 1
+    \snippet qmlchartsgallery/qml/customlegend/CustomLegend.qml 2
     \dots
-    \snippet qmlcustomlegend/qml/qmlcustomlegend/CustomLegend.qml 3
+    \snippet qmlchartsgallery/qml/customlegend/CustomLegend.qml 3
 
     You can also select one of the stacked areas for a closer look as a line series by
     a mouse click (see ChartViewHighlighted.qml).
 
     \image examples_qmlcustomlegend3.png
-    \snippet qmlcustomlegend/qml/qmlcustomlegend/ChartViewHighlighted.qml 1
+    \snippet qmlchartsgallery/qml/customlegend/ChartViewHighlighted.qml 1
 */

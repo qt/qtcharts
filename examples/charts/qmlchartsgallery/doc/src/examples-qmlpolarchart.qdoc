@@ -1,0 +1,29 @@
+// Copyright (C) 2016 The Qt Company Ltd.
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GFDL-1.3-no-invariants-only
+
+/*!
+    \page qtcharts-qmlpolarchart-example.html
+    \title Using Polar Charts with QML
+    \brief Shows how to make a few different polar chart in your QML application.
+    \include qmlchartsgallery.qdocinc
+
+    We begin with a chart that has a spline series and a scatter series with random
+    data. Both series use the same axes.
+
+    \image examples_qmlpolarchart1.png
+
+    \snippet qmlchartsgallery/qml/TwoSeriesPolar.qml 1
+
+    The next chart shows some accurate historical data for which we need
+    to use a DateTimeAxis and a AreaSeries.
+
+    \image examples_qmlpolarchart2.png
+
+    \snippet qmlchartsgallery/qml/DateTimeAxisPolar.qml 1
+
+    The next chart uses a CategoryAxis to make the data easier to understand.
+
+    \image examples_qmlpolarchart3.png
+
+    \snippet qmlchartsgallery/qml/CategoryAxisPolar.qml 1
+*/
