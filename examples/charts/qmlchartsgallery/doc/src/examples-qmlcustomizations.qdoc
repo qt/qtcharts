@@ -1,0 +1,35 @@
+// Copyright (C) 2016 The Qt Company Ltd.
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GFDL-1.3-no-invariants-only
+
+/*!
+    \page qtcharts-qmlcustomizations-example.html
+    \title Customizing Chart Views with QML
+    \image examples_qmlcustomizations.png
+    \brief Shows you how to customize different visual properties of a ChartView
+    and a series.
+    \include qmlchartsgallery.qdocinc
+
+    Here we show you how to create a wheel of fortune by customizing a pie series.
+
+    First we create the ChartView and a couple of series.
+
+    \snippet qmlchartsgallery/qml/WheelOfFortune.qml 1
+
+    The application data is generated in Component.onCompleted of the main rectangle:
+
+    \snippet qmlchartsgallery/qml/WheelOfFortune.qml 2
+
+    The following customizations are done repeatedly with a timer. To highlight
+    one of the pie slices at time we modify its exploded property:
+
+    \snippet qmlchartsgallery/qml/WheelOfFortune.qml 3
+
+    Then an animation using a scatter series with one data point:
+
+    \snippet qmlchartsgallery/qml/WheelOfFortune.qml 4
+
+    When the wheel of fortune has stopped, we make the active slice blink by
+    modifying its colors.
+
+    \snippet qmlchartsgallery/qml/WheelOfFortune.qml 5
+*/

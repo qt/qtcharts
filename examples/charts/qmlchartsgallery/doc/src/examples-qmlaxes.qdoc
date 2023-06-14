@@ -1,0 +1,30 @@
+// Copyright (C) 2016 The Qt Company Ltd.
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GFDL-1.3-no-invariants-only
+
+/*!
+    \page qtcharts-qmlaxes-example.html
+    \title Using Axes with QML
+    \brief Demonstrates how to use axes in your QML application.
+    \include qmlchartsgallery.qdocinc
+
+    We begin with a chart that has a line series and a scatter series with random
+    data. We then have a graph with two series that share a common axis.
+
+    \image examples_qmlaxes1.png
+
+    \snippet qmlchartsgallery/qml/TwoSeries.qml 1
+
+    This chart shows some accurate historical data. It is created by the following
+    snippet that makes use of a DateTimeAxis.
+
+    \image examples_qmlaxes2.png
+
+    \snippet qmlchartsgallery/qml/DateTimeAxis.qml 1
+
+    This following chart is created using a CategoryAxis to make the data
+    easier to understand.
+
+    \image examples_qmlaxes3.png
+
+    \snippet qmlchartsgallery/qml/CategoryAxis.qml 1
+*/

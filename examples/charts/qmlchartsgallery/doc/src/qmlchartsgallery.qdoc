@@ -1,0 +1,95 @@
+// Copyright (C) 2023 The Qt Company Ltd.
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GFDL-1.3-no-invariants-only
+
+/*!
+    \example qmlchartsgallery
+    \title Charts with QML Gallery
+    \ingroup qtcharts_examples
+
+    \brief Demonstrates how to use the different chart types by using qml.
+
+    \image QMLChartsGallery.png
+
+    \include examples-run.qdocinc
+
+    This is a Qt Quick application, the files for each chart type are located in
+    the qml directory of the example folder and are loaded arranged into a
+    ListView by main.qml, located in this examples directory.
+
+    This documentation won't focus on the top level layout or loading, but
+    rather on the use of the Qt Charts QML API.
+
+    \section1 Including dependencies
+
+    All .qml files start with:
+    \qml
+        import QtQuick
+        import QtCharts
+    \endqml
+
+    \section1 Creating charts with QML
+
+    Creating each chart type begins with the creation of a ChartView.
+
+    To create a pie chart, we use the PieSeries API together with a few PieSlices:
+
+    \image examples_qmlchart1.png
+    \snippet qmlchartsgallery/qml/PieChart.qml 1
+
+    You can create a chart with a line series:
+
+    \image examples_qmlchart2.png
+    \snippet qmlchartsgallery/qml/LineSeries.qml 1
+
+    And a spline series:
+
+    \image examples_qmlchart3.png
+    \snippet qmlchartsgallery/qml/SplineSeries.qml 1
+
+    You can create a chart that illustrates the NHL All-Star player selections
+    by using three area series:
+
+    \image examples_qmlchart4.png
+    \snippet qmlchartsgallery/qml/AreaSeries.qml 1
+    \dots
+
+    Then a couple of scatter series:
+
+    \image examples_qmlchart5.png
+    \snippet qmlchartsgallery/qml/ScatterSeries.qml 1
+    \dots
+
+    And a few different bar series:
+
+    \image examples_qmlchart6.png
+    \snippet qmlchartsgallery/qml/BarSeries.qml 1
+
+    \image examples_qmlchart7.png
+    \snippet qmlchartsgallery/qml/BarSeriesStacked.qml 1
+
+    \image examples_qmlchart8.png
+    \snippet qmlchartsgallery/qml/BarSeriesPercent.qml 1
+
+    \image examples_qmlchart9.png
+    \snippet qmlchartsgallery/qml/BarSeriesHorizontal.qml 1
+
+    \image examples_qmlchart10.png
+    \snippet qmlchartsgallery/qml/BarSeriesStackedHorizontal.qml 1
+
+    \image examples_qmlchart11.png
+    \snippet qmlchartsgallery/qml/BarSeriesPercentHorizontal.qml 1
+
+    This demonstrates how to create a donut chart with two pie series:
+
+    \image examples_qmlchart12.png
+    \snippet qmlchartsgallery/qml/Donut.qml 1
+
+    Additionally, anti-aliasing is set with the qml property in Qt Quick 2.
+
+    \section1 More charts
+
+    See the following links for walk-through of the remaining charts in this
+    example app.
+
+    \annotatedlist charts_qml_gallery_example
+*/

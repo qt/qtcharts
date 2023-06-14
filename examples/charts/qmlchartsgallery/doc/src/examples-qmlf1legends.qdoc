@@ -1,0 +1,27 @@
+// Copyright (C) 2016 The Qt Company Ltd.
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GFDL-1.3-no-invariants-only
+
+/*!
+    \page qtcharts-qmlf1legends-example.html
+    \title Using List Models as Data Sources in QML
+    \brief Implements an F1 Legends Chart to demonstrate List Models as Data Sources.
+    \include qmlchartsgallery.qdocinc
+
+    \image examples_qmlf1legends.png
+
+    Let's define an empty ChartView first:
+
+    \snippet  qmlchartsgallery/qml/f1legends/F1Legends.qml 1
+
+    Our ListModel uses hard-coded test data. In a real application the data
+    source would be a timing system.
+
+    \snippet qmlchartsgallery/qml/f1legends/SpeedsList.qml 1
+    \dots
+    \snippet qmlchartsgallery/qml/f1legends/F1Legends.qml 2
+
+    The data is parsed with a timer. The line series representing each driver
+    are created on the fly.
+
+    \snippet qmlchartsgallery/qml/f1legends/F1Legends.qml 3
+*/
