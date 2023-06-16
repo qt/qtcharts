@@ -47,7 +47,7 @@
     \image examples_qmlchart3.png
 
     The following QML code shows how to create a simple spline chart:
-    \snippet qmlchart/qml/qmlchart/View3.qml 1
+    \snippet qmlchartsgallery/qml/SplineSeries.qml 1
 */
 
 /*!

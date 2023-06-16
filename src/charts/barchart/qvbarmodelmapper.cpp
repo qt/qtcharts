@@ -22,7 +22,7 @@ QT_BEGIN_NAMESPACE
     Therefore, adding or removing a value from a bar set causes the same change to be
     made in all the bar sets in the bar series.
 
-    For more information, see \l{BarModelMapper Example}.
+    For more information, see \l{Charts with Widgets Gallery}.
 
     \sa QHBarModelMapper
 */

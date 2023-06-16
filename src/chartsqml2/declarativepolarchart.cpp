@@ -40,7 +40,7 @@ QT_BEGIN_NAMESPACE
 
     The following QML code shows how to create a polar chart with a spline and
     scatter series and two value axes:
-    \snippet qmlpolarchart/qml/qmlpolarchart/View1.qml 1
+    \snippet qmlchartsgallery/qml/TwoSeriesPolar.qml 1
 */
 
 DeclarativePolarChart::DeclarativePolarChart(QQuickItem *parent)

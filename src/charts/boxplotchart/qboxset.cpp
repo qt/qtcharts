@@ -21,7 +21,7 @@ QT_BEGIN_NAMESPACE
     The second way is to create an empty QBoxSet instance and specify the values using the
     setValue() method.
 
-    See the \l{Box and Whiskers Example}{box-and-whiskers chart example} to learn how to
+    See the \l{Charts with Widgets Gallery} to learn how to
     create a box-and-whiskers chart.
 
     \sa QBoxPlotSeries

@@ -23,7 +23,7 @@ QT_BEGIN_NAMESPACE
 
  A theme is a built-in collection of UI style related settings applied to all
  the visual elements of a chart, such as colors, pens, brushes, and fonts of
- series, as well as axes, title, and legend. The \l {Chart themes example}
+ series, as well as axes, title, and legend. The \l {Charts with Widgets Gallery}
  illustrates how to use themes.
 
  \note Changing the theme will overwrite all customizations previously applied

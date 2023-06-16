@@ -21,7 +21,7 @@ QT_BEGIN_NAMESPACE
     This class draws data as a series of horizontal bars grouped by category, with one bar per
     category from each bar set added to the series.
 
-    See the \l {HorizontalBarChart Example} {horizontal bar chart example} to learn how to create a horizontal bar chart.
+    See the \l {Charts with Widgets Gallery} to learn how to create a horizontal bar chart.
     \image examples_horizontalbarchart.png
 
     \sa QBarSet, QBarSeries, QPercentBarSeries, QAbstractBarSeries, QStackedBarSeries, QHorizontalStackedBarSeries, QHorizontalPercentBarSeries
@@ -39,7 +39,7 @@ QT_BEGIN_NAMESPACE
     category from each bar set added to the series.
 
     The following QML code snippet shows how to create a simple horizontal bar chart:
-    \snippet qmlchart/qml/qmlchart/View9.qml 1
+    \snippet qmlchartsgallery/qml/BarSeriesHorizontal.qml 1
     \beginfloatleft
     \image examples_qmlchart9.png
     \endfloat

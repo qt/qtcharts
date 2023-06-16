@@ -21,7 +21,7 @@ QT_BEGIN_NAMESPACE
     with the total value of all segments in the stack.
     Bars with zero value are not drawn.
 
-    See the \l {HorizontalPercentBarChart Example} {horizontal percent bar chart example} to learn
+    See the \l {Charts with Widgets Gallery} to learn
     how to create a horizontal percent bar chart.
     \image examples_horizontalpercentbarchart.png
 
@@ -44,7 +44,7 @@ QT_BEGIN_NAMESPACE
     Bars with zero value are not drawn.
 
     The following QML code snippet shows how to create a simple horizontal percent bar chart:
-    \snippet qmlchart/qml/qmlchart/View11.qml 1
+    \snippet qmlchartsgallery/qml/BarSeriesPercentHorizontal.qml 1
     \beginfloatleft
     \image examples_qmlchart11.png
     \endfloat
