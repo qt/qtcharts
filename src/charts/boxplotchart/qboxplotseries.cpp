@@ -29,7 +29,7 @@ QT_BEGIN_NAMESPACE
     have to be unique. If the same category label is defined for several box-and-whiskers items,
     only the first one is drawn.
 
-    See the \l {Box and Whiskers Example} {box-and-whiskers chart example} to learn how to create a
+    See the \l {Charts with Widgets Gallery} to learn how to create a
     box-and-whiskers chart.
     \image examples_boxplotchart.png
 

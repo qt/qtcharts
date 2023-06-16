@@ -18,7 +18,7 @@ QT_BEGIN_NAMESPACE
 
     Each bar set added to the series contributes a single segment to each stacked bar.
 
-    See the \l {StackedbarChart Example} {stacked bar chart example} to learn how to create a stacked bar chart.
+    See the \l {Charts with Widgets Gallery} to learn how to create a stacked bar chart.
     \image examples_stackedbarchart.png
 
     \sa QBarSet, QPercentBarSeries, QAbstractBarSeries
@@ -36,7 +36,7 @@ QT_BEGIN_NAMESPACE
     Each bar set added to the series contributes a single segment to each stacked bar.
 
     The following QML shows how to create a simple stacked bar chart:
-    \snippet qmlchart/qml/qmlchart/View7.qml 1
+    \snippet qmlchartsgallery/qml/BarSeriesStacked.qml 1
     \beginfloatleft
     \image examples_qmlchart7.png
     \endfloat

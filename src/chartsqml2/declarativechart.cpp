@@ -67,7 +67,6 @@ QT_BEGIN_NAMESPACE
     series:
     \snippet qmlpiechart/qml/qmlpiechart/main.qml 1
     \snippet qmlpiechart/qml/qmlpiechart/main.qml 2
-    \snippet qmlpiechart/qml/qmlpiechart/main.qml 3
 */
 
 /*!

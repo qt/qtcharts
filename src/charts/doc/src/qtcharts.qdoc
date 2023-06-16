@@ -48,7 +48,6 @@
     \image examples_qmlpiechart.png
     \snippet qmlpiechart/qml/qmlpiechart/main.qml 1
     \snippet qmlpiechart/qml/qmlpiechart/main.qml 2
-    \snippet qmlpiechart/qml/qmlpiechart/main.qml 3
 
     \note Since Qt Creator 3.0 the project created with Qt Quick Application wizard based on
     Qt Quick 2 template uses QGuiApplication by default. As Qt Charts utilizes Qt Graphics View

@@ -17,7 +17,7 @@ QT_BEGIN_NAMESPACE
 
     QBarCategoryAxis can be set up to show an axis line with tick marks, grid lines, and shades.
     Categories are drawn between the ticks. It can be used also with a line series, as demonstrated
-    by the \l {Line and BarChart Example} {Line and BarChart Example}.
+    by the \l {Charts with Widgets Gallery}.
 
     The following code illustrates how to use QBarCategoryAxis:
     \code
@@ -501,7 +501,7 @@ void QBarCategoryAxisPrivate::setRange(qreal min, qreal max)
 
 void  QBarCategoryAxisPrivate::setRange(const QString &minCategory, const QString &maxCategory)
 {
-	Q_Q(QBarCategoryAxis);
+    Q_Q(QBarCategoryAxis);
     bool changed = false;
 
     //special case in case or clearing all categories

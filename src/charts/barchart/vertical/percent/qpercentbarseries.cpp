@@ -22,7 +22,7 @@ QT_BEGIN_NAMESPACE
     with the total value of all segments in the stack.
     Bars with zero value are not drawn.
 
-    See the \l {PercentbarChart Example} {percent bar chart example} to learn how to create a
+    See the \l {Charts with Widgets Gallery} to learn how to create a
     percent bar chart.
     \image examples_percentbarchart.png
 
@@ -44,7 +44,7 @@ QT_BEGIN_NAMESPACE
     Bars with zero value are not drawn.
 
     The following QML code snippet shows how to create a simple percent bar chart:
-    \snippet qmlchart/qml/qmlchart/View8.qml 1
+    \snippet qmlchartsgallery/qml/BarSeriesPercent.qml 1
     \beginfloatleft
     \image examples_qmlchart8.png
     \endfloat

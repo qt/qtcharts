@@ -29,7 +29,7 @@
     chart->addSeries(series);
     \endcode
 
-    For more information, see \l{ScatterChart Example} and
+    For more information, see \l{Charts with Widgets Gallery} and
     \l {Scatter Interactions Example}.
 */
 /*!
@@ -49,9 +49,9 @@
 
     The following QML code shows how to create a chart with two simple scatter
     series:
-    \snippet qmlchart/qml/qmlchart/View5.qml 1
+    \snippet qmlchartsgallery/qml/ScatterSeries.qml 1
 
-    For more information, see \l{Qml Charts Example}.
+    For more information, see \l{Charts with QML Gallery}.
 */
 
 /*!

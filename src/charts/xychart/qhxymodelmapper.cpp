@@ -21,7 +21,7 @@ QT_BEGIN_NAMESPACE
     Both model and series properties can be used to manipulate the data. The
     model mapper keeps the series and the data model in sync.
 
-    \sa QVXYModelMapper, QXYSeries, {Model Data Example}
+    \sa QVXYModelMapper, QXYSeries, {Charts with Widgets Gallery}
 */
 /*!
     \qmltype HXYModelMapper
@@ -40,7 +40,7 @@ QT_BEGIN_NAMESPACE
     Both model and series properties can be used to manipulate the data. The
     model mapper keeps the series and the data model in sync.
 
-    \sa VXYModelMapper, XYSeries, {Model Data Example}
+    \sa VXYModelMapper, XYSeries, {Charts with Widgets Gallery}
 */
 
 /*!
