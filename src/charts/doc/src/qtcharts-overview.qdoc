@@ -61,9 +61,8 @@
 
     Or, in QML:
 
-    \snippet qmlpiechart/qml/qmlpiechart/main.qml 1
-    \snippet qmlpiechart/qml/qmlpiechart/main.qml 2
-    \snippet qmlpiechart/qml/qmlpiechart/main.qml 3
+    \snippet qmlchartsgallery/qml/PieChart.qml 1
+    \snippet qmlchartsgallery/qml/PieChart.qml 2
 
     You can combine different types of series in one chart.
 
@@ -202,7 +201,7 @@
     supported by them. The axis can be used either as a radial or an angular
     axis. In QML, the corresponding type is PolarChartView.
 
-    For more information, see \l{Creating Polar Charts} and \l{Qml Polar Chart}.
+    For more information, see \l{Creating Polar Charts} and \l{Using Polar Charts with QML}.
 
     \section1 Axes
 
@@ -247,7 +246,7 @@
     orientation.
 
     For more information, see \l{Line Charts with Date and Time Axes},
-    \l{Using Logarithmic Value Axes}, \l{Using Multiple Axes}, and \l{Qml Axes}.
+    \l{Using Logarithmic Value Axes}, \l{Using Multiple Axes}, and \l{Using Axes with QML}.
 
     \section1 Legend
 
@@ -268,7 +267,7 @@
     QBoxPlotLegendMarker, QCandlestickLegendMarker, and QXYLegendMarker.
 
     In QML, legend markers can be modified by creating custom legends, as
-    illustrated by the \l{Qml Custom Legend} example.
+    illustrated by the \l{Customizing Legends} example.
 
     \section1 Interacting with Charts
 

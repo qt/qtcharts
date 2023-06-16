@@ -55,7 +55,7 @@
     We set the min to max range on the x-axis from 0 to the XYSeriesIODevice::sampleCount.
     (Declared in xyseriesiodevice.h as 2000). We then set its title text.
 
-    \printto QValueAxis *axisY = new QValueAxis;
+    \printto auto axisY = new QValueAxis;
 
     \section2 The y-axis "Audio Level"
 

@@ -49,15 +49,12 @@ QT_BEGIN_NAMESPACE
     slices are customized, all customization will be lost.
 
     The PieSlice type should be used as a child of a PieSeries type. For example:
-    \snippet qmlpiechart/qml/qmlpiechart/main.qml 2
 
     Alternatively, slices can be added to a pie series by using the \l{PieSeries::append()}
     {PieSeries.append()} method.
-    \snippet qmlpiechart/qml/qmlpiechart/main.qml 4
 
     In that case, \l{PieSeries::at()}{PieSeries.at()} or \l {PieSeries::find}
     {PieSeries.find} can be used to access the properties of an individual PieSlice instance.
-    \snippet qmlpiechart/qml/qmlpiechart/main.qml 5
     \sa PieSeries
 */
 

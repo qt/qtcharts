@@ -17,6 +17,6 @@ data to populate a number of chart types and interactions for a user.
 
 \include examples-run.qdocinc
 
-If you want to implement charts with QML see the \l{QML Charts Example}.
+If you want to implement charts with QML see the \l{Charts with QML Gallery}.
 
 */
