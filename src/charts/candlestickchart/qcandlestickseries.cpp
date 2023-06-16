@@ -33,7 +33,7 @@ QT_BEGIN_NAMESPACE
     drawn to the same category. When using QValueAxis or QDateTimeAxis, candlestick items sharing a
     timestamp will overlap each other.
 
-    See the \l {Candlestick Chart Example} {candlestick chart example} to learn how to create
+    See the \l {Charts with Widgets Gallery} to learn how to create
     a candlestick chart.
     \image examples_candlestickchart.png
 

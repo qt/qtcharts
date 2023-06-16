@@ -31,8 +31,7 @@ QT_BEGIN_NAMESPACE
     If a QValueAxis is used instead of QBarCategoryAxis for the main bar axis, the bars are
     grouped around the index value of the category.
 
-    See the \l {BarChart Example} {bar chart example} to learn how to use the QBarSeries class
-    to create a simple bar chart.
+    See the \l {Charts with Widgets Gallery} to learn how to use the QBarSeries class to create a simple bar chart.
     \image examples_barchart.png
 
     \sa QBarSet, QBarSeries, QStackedBarSeries, QPercentBarSeries
@@ -59,7 +58,7 @@ QT_BEGIN_NAMESPACE
 
     The following QML code snippet shows how to use the BarSeries and BarCategoryAxis type
     to create a simple bar chart:
-    \snippet qmlchart/qml/qmlchart/View6.qml 1
+    \snippet qmlchartsgallery/qml/BarSeries.qml 1
 
     \beginfloatleft
     \image examples_qmlchart6.png

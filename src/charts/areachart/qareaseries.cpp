@@ -31,7 +31,7 @@ QT_BEGIN_NAMESPACE
     lower boundary is greater than that of the upper boundary. The main point is that the
     area between these two boundary lines will be filled.
 
-    See the \l {AreaChart Example} {area chart example} to learn how to create a simple area chart.
+    See the \l {Charts with Widgets Gallery} to learn how to create a simple area chart.
     \image examples_areachart.png
 */
 
@@ -60,7 +60,7 @@ QT_BEGIN_NAMESPACE
     \image examples_qmlchart4.png
 
     The following QML shows how to create a simple area chart:
-    \snippet qmlchart/qml/qmlchart/View4.qml 1
+    \snippet qmlchartsgallery/qml/AreaSeries.qml 1
 
     \note Adding the same line series to a chart and area series is not supported. The series used as
     boundary lines should be defined only for the area series.

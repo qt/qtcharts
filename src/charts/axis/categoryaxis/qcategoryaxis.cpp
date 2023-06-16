@@ -52,7 +52,7 @@ QT_BEGIN_NAMESPACE
 
     For example:
     \image examples_qmlaxes3.png
-    \snippet qmlaxes/qml/qmlaxes/View3.qml 1
+    \snippet qmlchartsgallery/qml/CategoryAxis.qml 1
 */
 
 /*!
