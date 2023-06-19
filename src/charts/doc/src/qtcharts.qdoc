@@ -41,17 +41,8 @@
 
     \brief QML types for the Qt Charts API.
 
-    The Qt Charts QML API is an intuitive and simple way to show charts in your QML
-    applications.
-
-    Use the following QML to create a simple pie chart:
-    \image examples_qmlpiechart.png
-    \snippet qmlpiechart/qml/qmlpiechart/main.qml 1
-    \snippet qmlpiechart/qml/qmlpiechart/main.qml 2
-
-    \note Since Qt Creator 3.0 the project created with Qt Quick Application wizard based on
-    Qt Quick 2 template uses QGuiApplication by default. As Qt Charts utilizes Qt Graphics View
-    Framework for drawing, QApplication must be used. The project created with the wizard is usable with Qt Charts after the QGuiApplication is replaced with QApplication.
+    The Qt Charts QML API is an intuitive and simple way to show charts in your
+    QML applications.
 
     \section1 QML Types
 */
