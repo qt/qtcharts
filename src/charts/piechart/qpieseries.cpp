@@ -64,7 +64,7 @@ QT_BEGIN_NAMESPACE
 
     The following QML example shows how to create a simple pie chart.
 
-    \snippet qmlchart/qml/qmlchart/View1.qml 1
+    \snippet qmlchartsgallery/qml/PieChart.qml 1
 
     \beginfloatleft
     \image examples_qmlchart1.png

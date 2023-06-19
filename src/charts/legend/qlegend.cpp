@@ -55,8 +55,9 @@ QT_BEGIN_NAMESPACE
 
     \image examples_percentbarchart_legend.png
 
-    \note There is no QML API available for modifying legend markers. Markers can be modified by
-    creating a custom legend, as illustrated by \l {qmlcustomlegend}{Qml Custom Example}.
+    \note There is no QML API available for modifying legend markers. Markers
+    can be modified by creating a custom legend. For more information, see
+    \l {Using Legend Markers}.
 */
 
 /*!
