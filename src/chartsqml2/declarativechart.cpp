@@ -61,12 +61,10 @@ QT_BEGIN_NAMESPACE
 
     The ChartView type displays different series types as charts.
 
-    \image examples_qmlpiechart.png
+    This example shows how to create a simple line chart:
 
-    The following QML code shows how to create a simple chart with one pie
-    series:
-    \snippet qmlpiechart/qml/qmlpiechart/main.qml 1
-    \snippet qmlpiechart/qml/qmlpiechart/main.qml 2
+    \image examples_qmlchart2.png
+    \snippet qmlchartsgallery/qml/LineSeries.qml 1
 */
 
 /*!

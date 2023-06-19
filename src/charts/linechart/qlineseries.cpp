@@ -41,7 +41,7 @@ QT_BEGIN_NAMESPACE
     connected by straight lines.
 
     The following QML example shows how to create a simple line chart:
-    \snippet qmlchartsgallery/qml/PieChart.qml
+    \snippet qmlchartsgallery/qml/LineSeries.qml 1
     \beginfloatleft
     \image examples_qmlchart2.png
     \endfloat
