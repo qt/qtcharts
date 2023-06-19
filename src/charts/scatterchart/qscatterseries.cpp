@@ -30,7 +30,7 @@
     \endcode
 
     For more information, see \l{Charts with Widgets Gallery} and
-    \l {Scatter Interactions Example}.
+    \l {Creating Scatter Charts}.
 */
 /*!
     \qmltype ScatterSeries

@@ -19,7 +19,8 @@ QT_BEGIN_NAMESPACE
     This class draws data as a series of vertical bars grouped by category, with one bar per
     category from each bar set added to the series.
 
-    See the \l {BarChart Example} {bar chart example} to learn how to create a grouped bar chart.
+    See the \l {Creating Bar Charts} {bar chart example} to learn how to create
+    a grouped bar chart.
     \image examples_barchart.png
 
     \sa QBarSet, QPercentBarSeries, QAbstractBarSeries, QStackedBarSeries
