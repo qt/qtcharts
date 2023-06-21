@@ -39,7 +39,7 @@ QList<qreal> ChartColorAxisY::calculateLayout() const
 
 void ChartColorAxisY::updateGeometry()
 {
-    setLabels(createColorLabels(min(), max(), m_axis->tickCount()) << QString());
+    setLabels(createColorLabels(min(), max(), m_axis->tickCount()));
 
     VerticalAxis::updateGeometry();
 }
