@@ -275,8 +275,11 @@ void ScatterChartItem::updateGeometry()
                     }
                 }
 
-                if (m_series->isPointSelected(i))
+                if (m_series->isPointSelected(i)) {
                     drawPoint = m_series->selectedLightMarker().isNull();
+                    if (drawPoint && m_selectedColor.isValid())
+                        item->setBrush(m_selectedColor);
+                }
 
                 item->setVisible(drawPoint);
             }
