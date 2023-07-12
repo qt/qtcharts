@@ -12,6 +12,8 @@ qt_internal_add_cmake_library(qtchartsdesigner
     INSTALL_DIRECTORY "$$[QT_INSTALL_PLUGINS]/designer"
     SOURCES
         qchartsplugin.cpp qchartsplugin.h
+    DEFINES
+        QT_NO_CONTEXTLESS_CONNECT
     INCLUDE_DIRECTORIES
         ${CMAKE_CURRENT_SOURCE_DIR}
         ../../../include

@@ -25,6 +25,7 @@ qt_internal_add_qml_module(ChartsQml
         declarativexyseries.cpp declarativexyseries_p.h
     DEFINES
         QT_BUILD_QMLCHARTS_LIB
+        QT_NO_CONTEXTLESS_CONNECT
     INCLUDE_DIRECTORIES
         ${CMAKE_CURRENT_SOURCE_DIR}
     LIBRARIES
