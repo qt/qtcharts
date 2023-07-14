@@ -1,11 +1,11 @@
-// Copyright (C) 2023 The Qt Company Ltd.
+ // Copyright (C) 2023 The Qt Company Ltd.
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GFDL-1.3-no-invariants-only
 
 /*!
 \example chartsgallery
 \title Charts with Widgets Gallery
 \ingroup qtcharts_examples
-
+\examplecategory {Data Visualization & 3D}
 \brief An application that demonstrates the Qt Charts Widgets API.
 
 \image ChartWidgetGallery.png
