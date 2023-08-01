@@ -70,6 +70,7 @@ public:
     void markerPressed(QGraphicsItem *item);
     void markerReleased(QGraphicsItem *item);
     void markerDoubleClicked(QGraphicsItem *item);
+    void handleMarkerMouseReleaseEvent(QGraphicsItem *item);
 
     void setMousePressed(bool pressed = true) {m_mousePressed = pressed;}
     bool mousePressed() {return m_mousePressed;}
