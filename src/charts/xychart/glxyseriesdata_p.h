@@ -70,7 +70,7 @@ public:
     bool mapDirty() const { return m_mapDirty; }
     void clearAllDirty() {
         m_mapDirty = false;
-        foreach (GLXYSeriesData *data, m_seriesDataMap.values())
+        for (GLXYSeriesData *data : m_seriesDataMap)
             data->dirty = false;
     }
     void handleAxisReverseChanged(const QList<QAbstractSeries *> &seriesList);
