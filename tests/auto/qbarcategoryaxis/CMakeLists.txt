@@ -18,6 +18,8 @@ qt_internal_add_test(tst_qbarcategoryaxis
         ../inc/tst_definitions.h
         ../qabstractaxis/tst_qabstractaxis.cpp ../qabstractaxis/tst_qabstractaxis.h
         tst_qbarcategoryaxis.cpp
+    NO_PCH_SOURCES
+        tst_qbarcategoryaxis.cpp # undef QT_NO_FOREACH
     INCLUDE_DIRECTORIES
         ../inc
     LIBRARIES

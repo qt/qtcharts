@@ -13,6 +13,9 @@ qt_internal_add_manual_test(candlesticktester
         customtablemodel.cpp customtablemodel.h
         main.cpp
         mainwidget.cpp mainwidget.h
+    NO_PCH_SOURCES
+        customtablemodel.cpp # undef QT_NO_FOREACH
+        mainwidget.cpp # undef QT_NO_FOREACH
     LIBRARIES
         Qt::Charts
         Qt::Gui

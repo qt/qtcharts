@@ -30,7 +30,6 @@ qt_internal_add_qml_module(ChartsQml
     DEFINES
         QT_BUILD_QMLCHARTS_LIB
         QT_NO_CONTEXTLESS_CONNECT
-        QT_NO_FOREACH
     INCLUDE_DIRECTORIES
         ${CMAKE_CURRENT_SOURCE_DIR}
     LIBRARIES

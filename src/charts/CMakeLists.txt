@@ -146,7 +146,6 @@ qt_internal_add_module(Charts
     GENERATE_PRIVATE_CPP_EXPORTS
     DEFINES
         QT_NO_CONTEXTLESS_CONNECT
-        QT_NO_FOREACH
 )
 
 qt_internal_extend_target(Charts CONDITION QT_FEATURE_opengl

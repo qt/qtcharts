@@ -14,6 +14,8 @@ qt_internal_add_manual_test(openglseriestest
         datasource.cpp datasource.h
         main.cpp
         mainwindow.cpp mainwindow.h mainwindow.ui
+    NO_PCH_SOURCES
+        mainwindow.cpp # undef QT_NO_FOREACH
     LIBRARIES
         Qt::Charts
         Qt::Gui

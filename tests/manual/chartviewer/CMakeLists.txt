@@ -104,8 +104,6 @@ qt_internal_add_manual_test(chartviewer
         grid.cpp
         window.cpp
         # end undef QT_NO_FOREACH
-    DEFINES
-        QT_NO_FOREACH
     INCLUDE_DIRECTORIES
         .
         charts

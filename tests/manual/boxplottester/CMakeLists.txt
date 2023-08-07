@@ -14,6 +14,8 @@ qt_internal_add_manual_test(boxplottester
         main.cpp
         mainwidget.cpp mainwidget.h
         pentool.cpp pentool.h
+    NO_PCH_SOURCES
+        customtablemodel.cpp # undef QT_NO_FOREACH
     LIBRARIES
         Qt::Charts
         Qt::Gui
