@@ -271,25 +271,22 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
     } else if (seriesName == "Bar"
                || seriesName == "Stacked bar"
                || seriesName == "Percent bar") {
-        QStringList category;
         QStringList labels = generateLabels(rowCount);
-        foreach (QString label, labels)
-            category << label;
         QAbstractBarSeries* series = 0;
         if (seriesName == "Bar") {
             series = new QBarSeries(this);
             QBarCategoryAxis* axis = new QBarCategoryAxis();
-            axis->append(category);
+            axis->append(labels);
             m_chart->setAxisX(axis,series);
         } else if (seriesName == "Stacked bar") {
             series = new QStackedBarSeries(this);
             QBarCategoryAxis* axis = new QBarCategoryAxis();
-            axis->append(category);
+            axis->append(labels);
             m_chart->setAxisX(axis,series);
         } else {
             series = new QPercentBarSeries(this);
             QBarCategoryAxis* axis = new QBarCategoryAxis();
-            axis->append(category);
+            axis->append(labels);
             m_chart->setAxisX(axis,series);
         }
 
