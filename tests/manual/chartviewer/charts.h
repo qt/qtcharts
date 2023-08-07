@@ -40,11 +40,11 @@ namespace Charts
 
     inline bool findChart(Chart *chart)
     {
-        ChartList &list = chartList();
+        const ChartList &list = chartList();
         if (list.contains(chart))
             return true;
 
-        foreach (Chart *item, list) {
+        for (Chart *item : list) {
             if (item->name() == chart->name() && item->category() == chart->category() && item->subCategory() == chart->subCategory())
                 return true;
         }
