@@ -97,6 +97,32 @@ qt_internal_add_module(Charts
         xychart/qxymodelmapper.cpp xychart/qxymodelmapper.h xychart/qxymodelmapper_p.h
         xychart/qxyseries.cpp xychart/qxyseries.h xychart/qxyseries_p.h
         xychart/xychart.cpp xychart/xychart_p.h
+    NO_PCH_SOURCES
+        # these all contain Q_FOREACH, so need to undef QT_NO_FOREACH
+        axis/barcategoryaxis/chartbarcategoryaxisx.cpp
+        axis/barcategoryaxis/chartbarcategoryaxisy.cpp
+        axis/barcategoryaxis/qbarcategoryaxis.cpp
+        axis/cartesianchartaxis.cpp
+        axis/categoryaxis/chartcategoryaxisx.cpp
+        axis/categoryaxis/chartcategoryaxisy.cpp
+        axis/chartaxiselement.cpp
+        axis/logvalueaxis/chartlogvalueaxisx.cpp
+        axis/logvalueaxis/chartlogvalueaxisy.cpp
+        axis/polarchartaxis.cpp
+        axis/polarchartaxisangular.cpp
+        axis/polarchartaxisradial.cpp
+        axis/valueaxis/chartvalueaxisx.cpp
+        axis/valueaxis/chartvalueaxisy.cpp
+        chartdataset.cpp
+        chartpresenter.cpp
+        chartthememanager.cpp
+        layout/polarchartlayout.cpp
+        legend/legendlayout.cpp
+        legend/qlegend.cpp
+        qchart.cpp
+        xychart/glxyseriesdata.cpp
+        xychart/qxyseries.cpp
+        # end undef QT_NO_FOREACH
     INCLUDE_DIRECTORIES
         animations
         axis
@@ -120,11 +146,14 @@ qt_internal_add_module(Charts
     GENERATE_PRIVATE_CPP_EXPORTS
     DEFINES
         QT_NO_CONTEXTLESS_CONNECT
+        QT_NO_FOREACH
 )
 
 qt_internal_extend_target(Charts CONDITION QT_FEATURE_opengl
     SOURCES
         glwidget.cpp glwidget_p.h
+    NO_PCH_SOURCES
+        glwidget.cpp # undef QT_NO_FOREACH
     PUBLIC_LIBRARIES
         Qt::OpenGL
         Qt::OpenGLWidgets
@@ -162,6 +191,9 @@ qt_internal_extend_target(Charts CONDITION QT_FEATURE_charts_bar_chart
         barchart/vertical/stacked/qstackedbarseries.cpp barchart/vertical/stacked/qstackedbarseries.h barchart/vertical/stacked/qstackedbarseries_p.h
         barchart/vertical/stacked/stackedbarchartitem.cpp barchart/vertical/stacked/stackedbarchartitem_p.h
         legend/qbarlegendmarker.cpp legend/qbarlegendmarker.h legend/qbarlegendmarker_p.h
+    NO_PCH_SOURCES
+        barchart/abstractbarchartitem.cpp # undef QT_NO_FOREACH
+        barchart/qabstractbarseries.cpp # undef QT_NO_FOREACH
     INCLUDE_DIRECTORIES
         barchart
         barchart/horizontal/bar
@@ -193,6 +225,9 @@ qt_internal_extend_target(Charts CONDITION QT_FEATURE_charts_pie_chart
         piechart/qpieseries.cpp piechart/qpieseries.h piechart/qpieseries_p.h
         piechart/qpieslice.cpp piechart/qpieslice.h piechart/qpieslice_p.h
         piechart/qvpiemodelmapper.cpp piechart/qvpiemodelmapper.h
+    NO_PCH_SOURCES
+        piechart/piechartitem.cpp # undef QT_NO_FOREACH
+        piechart/qpieseries.cpp # undef QT_NO_FOREACH
     INCLUDE_DIRECTORIES
         piechart
 )
@@ -228,6 +263,10 @@ qt_internal_extend_target(Charts CONDITION QT_FEATURE_charts_boxplot_chart
         boxplotchart/qhboxplotmodelmapper.cpp boxplotchart/qhboxplotmodelmapper.h
         boxplotchart/qvboxplotmodelmapper.cpp boxplotchart/qvboxplotmodelmapper.h
         legend/qboxplotlegendmarker.cpp legend/qboxplotlegendmarker.h legend/qboxplotlegendmarker_p.h
+    NO_PCH_SOURCES
+        animations/boxplotanimation.cpp # undef QT_NO_FOREACH
+        boxplotchart/boxplotchartitem.cpp # undef QT_NO_FOREACH
+        boxplotchart/qboxplotseries.cpp # undef QT_NO_FOREACH
     INCLUDE_DIRECTORIES
         boxplotchart
 )
@@ -245,6 +284,10 @@ qt_internal_extend_target(Charts CONDITION QT_FEATURE_charts_candlestick_chart
         candlestickchart/qhcandlestickmodelmapper.cpp candlestickchart/qhcandlestickmodelmapper.h
         candlestickchart/qvcandlestickmodelmapper.cpp candlestickchart/qvcandlestickmodelmapper.h
         legend/qcandlesticklegendmarker.cpp legend/qcandlesticklegendmarker.h legend/qcandlesticklegendmarker_p.h
+    NO_PCH_SOURCES
+        animations/candlestickanimation.cpp # undef QT_NO_FOREACH
+        candlestickchart/candlestickchartitem.cpp # undef QT_NO_FOREACH
+        candlestickchart/qcandlestickseries.cpp # undef QT_NO_FOREACH
     INCLUDE_DIRECTORIES
         candlestickchart
 )
@@ -265,6 +308,9 @@ qt_internal_extend_target(Charts CONDITION QT_FEATURE_charts_datetime_axis
         axis/datetimeaxis/polarchartdatetimeaxisangular.cpp axis/datetimeaxis/polarchartdatetimeaxisangular_p.h
         axis/datetimeaxis/polarchartdatetimeaxisradial.cpp axis/datetimeaxis/polarchartdatetimeaxisradial_p.h
         axis/datetimeaxis/qdatetimeaxis.cpp axis/datetimeaxis/qdatetimeaxis.h axis/datetimeaxis/qdatetimeaxis_p.h
+    NO_PCH_SOURCES
+        axis/datetimeaxis/chartdatetimeaxisx.cpp # undef QT_NO_FOREACH
+        axis/datetimeaxis/chartdatetimeaxisy.cpp # undef QT_NO_FOREACH
     INCLUDE_DIRECTORIES
         axis/datetimeaxis
 )
