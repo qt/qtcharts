@@ -48,6 +48,7 @@
 #include <QListView>
 #include <QModelIndex>
 #include <QStringListModel>
+#include <QVBoxLayout>
 
 #include <algorithm>
 
@@ -100,18 +101,14 @@ MainWidget::MainWidget(QWidget *parent)
     std::sort(examples.begin(), examples.end());
     m_listModel->setStringList(examples);
 
-    m_listView->setMaximumWidth(220);
     m_listView->setModel(m_listModel);
     m_listView->setCurrentIndex(m_listModel->index(0));
     m_listView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
+    m_contentArea->installEventFilter(this);
+
     setMinimumSize(800, 400);
     resize(1200, 600);
-
-    auto layout = new QHBoxLayout(this);
-    layout->addWidget(m_listView);
-    layout->addWidget(m_contentArea);
-    setLayout(layout);
 
     connect(m_listView->selectionModel(), &QItemSelectionModel::currentChanged, this,
             [this](const QModelIndex &index) {
@@ -127,7 +124,21 @@ MainWidget::MainWidget(QWidget *parent)
 
 void MainWidget::resizeEvent(QResizeEvent *)
 {
-    m_activeWidget->resize(m_contentArea->size());
+    bool isHorizontal = width() >= height();
+    if (!layout() || isHorizontal != m_isHorizontal)
+        relayout(isHorizontal);
+
+    if (m_isHorizontal)
+        m_listView->setMaximumHeight(QWIDGETSIZE_MAX);
+    else
+        m_listView->setMaximumHeight(height() / 3);
+}
+
+bool MainWidget::eventFilter(QObject *object, QEvent *event)
+{
+    if (event->type() == QEvent::Resize && object == m_contentArea && m_activeWidget)
+        m_activeWidget->resize(m_contentArea->size());
+    return QObject::eventFilter(object, event);
 }
 
 void MainWidget::setActiveExample(Example example)
@@ -259,4 +270,25 @@ void MainWidget::setActiveExample(Example example)
     m_activeWidget->load();
     m_activeWidget->resize(m_contentArea->size());
     m_activeWidget->setVisible(true);
+}
+
+void MainWidget::relayout(bool horizontal)
+{
+    m_isHorizontal = horizontal;
+
+    delete layout();
+
+    QBoxLayout *layout;
+    if (horizontal) {
+        layout = new QHBoxLayout(this);
+        layout->addWidget(m_listView);
+        layout->addWidget(m_contentArea);
+        m_listView->setMaximumWidth(220);
+    } else {
+        layout = new QVBoxLayout(this);
+        layout->addWidget(m_contentArea);
+        layout->addWidget(m_listView);
+        m_listView->setMaximumWidth(QWIDGETSIZE_MAX);
+    }
+    setLayout(layout);
 }
