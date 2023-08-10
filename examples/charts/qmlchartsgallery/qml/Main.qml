@@ -10,14 +10,18 @@ Rectangle {
 
     color: "#f0f0f0"
 
-    Row {
-        id: row
-        padding: 8
-        spacing: 8
+    property bool isHorizontalView: root.width >= root.height
+
+    Item {
+        anchors.fill: parent
+        anchors.margins: 8
 
         Rectangle {
-            width: 200
-            height: root.height - row.padding * 2
+            id: listRect
+            width: isHorizontalView ? 200 : parent.width
+            height: isHorizontalView ? parent.height : parent.height / 3
+            x: 0
+            y: isHorizontalView ? 0 : parent.height - height
             border.width: 1
 
             ListView {
@@ -26,6 +30,7 @@ Rectangle {
                 anchors.fill: parent
                 anchors.margins: 1
                 highlightMoveDuration: 250
+                highlightResizeDuration: 0
                 orientation: ListView.Vertical
                 boundsBehavior: Flickable.StopAtBounds
                 currentIndex: 0
@@ -147,16 +152,15 @@ Rectangle {
         }
 
         Rectangle {
-            height: root.height - row.padding * 2
-            width: root.width - listView.width - row.spacing - row.padding * 2
+            width: isHorizontalView ? parent.width - listView.width - 8 : parent.width
+            height: isHorizontalView ? parent.height : parent.height - listView.height - 8
             radius: 5
+            x: isHorizontalView ? 208 : 0
+            y: 0
             clip: true
 
             Loader {
-                id: loader
                 anchors.fill: parent
-                anchors.margins: 4
-
                 asynchronous: true
                 source: listView.currentItem.source
             }
