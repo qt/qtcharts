@@ -20,6 +20,7 @@ public:
 
 protected:
     void resizeEvent(QResizeEvent *) override;
+    bool eventFilter(QObject *object, QEvent *event) override;
 
 private:
     enum Example {
@@ -64,12 +65,14 @@ private:
     };
 
     void setActiveExample(Example example);
+    void relayout(bool horizontal);
 
     QListView *m_listView = nullptr;
     QStringListModel *m_listModel = nullptr;
     QWidget *m_contentArea = nullptr;
     ContentWidget *m_activeWidget = nullptr;
     QHash<QString, Example> m_exampleMap;
+    bool m_isHorizontal = false;
 };
 
 #endif
