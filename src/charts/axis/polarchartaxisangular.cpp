@@ -1,8 +1,6 @@
 // Copyright (C) 2016 The Qt Company Ltd.
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
 
-#undef QT_NO_FOREACH // this file contains unported legacy Q_FOREACH uses
-
 #include <QtCharts/qcategoryaxis.h>
 #include <QtCharts/qlogvalueaxis.h>
 #include <QtCore/qmath.h>
@@ -283,7 +281,8 @@ void PolarChartAxisAngular::createItems(int count)
 void PolarChartAxisAngular::handleArrowPenChanged(const QPen &pen)
 {
     bool first = true;
-    foreach (QGraphicsItem *item, arrowItems()) {
+    const auto items = arrowItems();
+    for (QGraphicsItem *item : items) {
         if (first) {
             first = false;
             // First arrow item is the outer circle of axis
@@ -296,26 +295,29 @@ void PolarChartAxisAngular::handleArrowPenChanged(const QPen &pen)
 
 void PolarChartAxisAngular::handleGridPenChanged(const QPen &pen)
 {
-    foreach (QGraphicsItem *item, gridItems())
+    const auto items = gridItems();
+    for (QGraphicsItem *item : items)
         static_cast<QGraphicsLineItem *>(item)->setPen(pen);
 }
 
 void PolarChartAxisAngular::handleMinorArrowPenChanged(const QPen &pen)
 {
-    foreach (QGraphicsItem *item, minorArrowItems()) {
+    const auto items = minorArrowItems();
+    for (QGraphicsItem *item : items)
         static_cast<QGraphicsLineItem *>(item)->setPen(pen);
-    }
 }
 
 void PolarChartAxisAngular::handleMinorGridPenChanged(const QPen &pen)
 {
-    foreach (QGraphicsItem *item, minorGridItems())
+    const auto items = minorGridItems();
+    for (QGraphicsItem *item : items)
         static_cast<QGraphicsLineItem *>(item)->setPen(pen);
 }
 
 void PolarChartAxisAngular::handleGridLineColorChanged(const QColor &color)
 {
-    foreach (QGraphicsItem *item, gridItems()) {
+    const auto items = gridItems();
+    for (QGraphicsItem *item : items) {
         QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem *>(item);
         QPen pen = lineItem->pen();
         pen.setColor(color);
@@ -325,7 +327,8 @@ void PolarChartAxisAngular::handleGridLineColorChanged(const QColor &color)
 
 void PolarChartAxisAngular::handleMinorGridLineColorChanged(const QColor &color)
 {
-    foreach (QGraphicsItem *item, minorGridItems()) {
+    const auto items = minorGridItems();
+    for (QGraphicsItem *item : items) {
         QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem *>(item);
         QPen pen = lineItem->pen();
         pen.setColor(color);

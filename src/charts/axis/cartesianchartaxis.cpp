@@ -1,8 +1,6 @@
 // Copyright (C) 2016 The Qt Company Ltd.
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
 
-#undef QT_NO_FOREACH // this file contains unported legacy Q_FOREACH uses
-
 #include <QtCharts/qabstractaxis.h>
 #include <QtCharts/qlogvalueaxis.h>
 #include <QtCharts/qvalueaxis.h>
@@ -289,31 +287,36 @@ void CartesianChartAxis::setDateTimeLabelsFormat(const QString &format)
 
 void CartesianChartAxis::handleArrowPenChanged(const QPen &pen)
 {
-    foreach (QGraphicsItem *item, arrowItems())
+    const auto arrows = arrowItems();
+    for (QGraphicsItem *item : arrows)
         static_cast<QGraphicsLineItem *>(item)->setPen(pen);
 }
 
 void CartesianChartAxis::handleGridPenChanged(const QPen &pen)
 {
-    foreach (QGraphicsItem *item, gridItems())
+    const auto items = gridItems();
+    for (QGraphicsItem *item : items)
         static_cast<QGraphicsLineItem *>(item)->setPen(pen);
 }
 
 void CartesianChartAxis::handleMinorArrowPenChanged(const QPen &pen)
 {
-    foreach (QGraphicsItem *item, minorArrowItems())
+    const auto items = minorArrowItems();
+    for (QGraphicsItem *item : items)
         static_cast<QGraphicsLineItem *>(item)->setPen(pen);
 }
 
 void CartesianChartAxis::handleMinorGridPenChanged(const QPen &pen)
 {
-    foreach (QGraphicsItem *item, minorGridItems())
+    const auto items = minorGridItems();
+    for (QGraphicsItem *item : items)
         static_cast<QGraphicsLineItem *>(item)->setPen(pen);
 }
 
 void CartesianChartAxis::handleGridLineColorChanged(const QColor &color)
 {
-    foreach (QGraphicsItem *item, gridItems()) {
+    const auto items = gridItems();
+    for (QGraphicsItem *item : items) {
         QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem *>(item);
         QPen pen = lineItem->pen();
         pen.setColor(color);
@@ -323,7 +326,8 @@ void CartesianChartAxis::handleGridLineColorChanged(const QColor &color)
 
 void CartesianChartAxis::handleMinorGridLineColorChanged(const QColor &color)
 {
-    foreach (QGraphicsItem *item, minorGridItems()) {
+    const auto items = minorGridItems();
+    for (QGraphicsItem *item : items) {
         QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem *>(item);
         QPen pen = lineItem->pen();
         pen.setColor(color);
@@ -333,13 +337,15 @@ void CartesianChartAxis::handleMinorGridLineColorChanged(const QColor &color)
 
 void CartesianChartAxis::handleShadesBrushChanged(const QBrush &brush)
 {
-    foreach (QGraphicsItem *item, shadeItems())
+    const auto items = shadeItems();
+    for (QGraphicsItem *item : items)
         static_cast<QGraphicsRectItem *>(item)->setBrush(brush);
 }
 
 void CartesianChartAxis::handleShadesPenChanged(const QPen &pen)
 {
-    foreach (QGraphicsItem *item, shadeItems())
+    const auto items = shadeItems();
+    for (QGraphicsItem *item : items)
         static_cast<QGraphicsRectItem *>(item)->setPen(pen);
 }
 

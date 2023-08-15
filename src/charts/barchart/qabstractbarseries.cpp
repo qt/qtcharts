@@ -924,7 +924,8 @@ QList<QLegendMarker*> QAbstractBarSeriesPrivate::createLegendMarkers(QLegend* le
     Q_Q(QAbstractBarSeries);
     QList<QLegendMarker*> markers;
 
-    foreach(QBarSet* set, q->barSets()) {
+    const auto barSets = q->barSets();
+    for (QBarSet *set : barSets) {
         QBarLegendMarker* marker = new QBarLegendMarker(q,set,legend);
         markers << marker;
     }

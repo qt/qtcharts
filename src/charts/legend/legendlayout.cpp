@@ -1,8 +1,6 @@
 // Copyright (C) 2016 The Qt Company Ltd.
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
 
-#undef QT_NO_FOREACH // this file contains unported legacy Q_FOREACH uses
-
 #include <private/legendlayout_p.h>
 #include <private/chartpresenter_p.h>
 #include <private/qlegend_p.h>
@@ -125,7 +123,8 @@ void LegendLayout::setAttachedGeometry(const QRectF &rect)
             qreal markerItemsWidth = 0;
             qreal itemMargins = 0;
             QList<LegendWidthStruct *> legendWidthList;
-            foreach (QLegendMarker *marker, m_legend->d_ptr->markers()) {
+            const auto markers = m_legend->d_ptr->markers();
+            for (QLegendMarker *marker : markers) {
                 LegendMarkerItem *item = marker->d_ptr->item();
                 if (item->isVisible()) {
                     QSizeF dummySize;
@@ -393,7 +392,8 @@ QSizeF LegendLayout::sizeHint(Qt::SizeHint which, const QSizeF &constraint) cons
     getContentsMargins(&left, &top, &right, &bottom);
 
     if(constraint.isValid()) {
-        foreach(QLegendMarker *marker, m_legend->d_ptr->markers()) {
+        const auto markers = m_legend->d_ptr->markers();
+        for (QLegendMarker *marker : markers) {
             LegendMarkerItem *item = marker->d_ptr->item();
             size = size.expandedTo(item->effectiveSizeHint(which));
         }
@@ -402,7 +402,8 @@ QSizeF LegendLayout::sizeHint(Qt::SizeHint which, const QSizeF &constraint) cons
     else if (constraint.width() >= 0) {
         qreal width = 0;
         qreal height = 0;
-        foreach(QLegendMarker *marker, m_legend->d_ptr->markers()) {
+        const auto markers = m_legend->d_ptr->markers();
+        for (QLegendMarker *marker : markers) {
             LegendMarkerItem *item = marker->d_ptr->item();
             width+=item->effectiveSizeHint(which).width();
             height=qMax(height,item->effectiveSizeHint(which).height());
@@ -413,7 +414,8 @@ QSizeF LegendLayout::sizeHint(Qt::SizeHint which, const QSizeF &constraint) cons
     else if (constraint.height() >= 0) {
         qreal width = 0;
         qreal height = 0;
-        foreach(QLegendMarker *marker, m_legend->d_ptr->markers()) {
+        const auto markers = m_legend->d_ptr->markers();
+        for (QLegendMarker *marker : markers) {
             LegendMarkerItem *item = marker->d_ptr->item();
             width=qMax(width,item->effectiveSizeHint(which).width());
             height+=height,item->effectiveSizeHint(which).height();
@@ -421,7 +423,8 @@ QSizeF LegendLayout::sizeHint(Qt::SizeHint which, const QSizeF &constraint) cons
         size = QSizeF(width,qMin(constraint.height(),height));
     }
     else {
-        foreach(QLegendMarker *marker, m_legend->d_ptr->markers()) {
+        const auto markers = m_legend->d_ptr->markers();
+        for (QLegendMarker *marker : markers) {
             LegendMarkerItem *item = marker->d_ptr->item();
             size = size.expandedTo(item->effectiveSizeHint(which));
         }

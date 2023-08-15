@@ -128,7 +128,8 @@ void CandlestickChartItem::handleCandlestickSeriesChange()
     int seriesCount = 0;
 
     int index = 0;
-    foreach (QAbstractSeries *series, m_series->chart()->series()) {
+    const auto allSeries = m_series->chart()->series();
+    for (QAbstractSeries *series : allSeries) {
         if (series->type() == QAbstractSeries::SeriesTypeCandlestick) {
             if (m_series == static_cast<QCandlestickSeries *>(series))
                 seriesIndex = index;

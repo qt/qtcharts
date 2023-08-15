@@ -1,8 +1,6 @@
 // Copyright (C) 2021 The Qt Company Ltd.
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
 
-#undef QT_NO_FOREACH // this file contains unported legacy Q_FOREACH uses
-
 #include <private/chartaxiselement_p.h>
 #include <private/qabstractaxis_p.h>
 #include <private/chartpresenter_p.h>
@@ -240,7 +238,8 @@ void ChartAxisElement::handleTitleVisibleChanged(bool visible)
 
 void ChartAxisElement::handleLabelsAngleChanged(int angle)
 {
-    foreach (QGraphicsItem *item, m_labels->childItems())
+    const auto items = m_labels->childItems();
+    for (QGraphicsItem *item : items)
         item->setRotation(angle);
 
     QGraphicsLayoutItem::updateGeometry();
@@ -249,13 +248,15 @@ void ChartAxisElement::handleLabelsAngleChanged(int angle)
 
 void ChartAxisElement::handleLabelsBrushChanged(const QBrush &brush)
 {
-    foreach (QGraphicsItem *item, m_labels->childItems())
+    const auto items = m_labels->childItems();
+    for (QGraphicsItem *item : items)
         static_cast<QGraphicsTextItem *>(item)->setDefaultTextColor(brush.color());
 }
 
 void ChartAxisElement::handleLabelsFontChanged(const QFont &font)
 {
-    foreach (QGraphicsItem *item, m_labels->childItems())
+    const auto items = m_labels->childItems();
+    for (QGraphicsItem *item : items)
         static_cast<QGraphicsTextItem *>(item)->setFont(font);
     QGraphicsLayoutItem::updateGeometry();
     presenter()->layout()->invalidate();

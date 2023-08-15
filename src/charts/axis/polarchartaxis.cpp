@@ -1,8 +1,6 @@
 // Copyright (C) 2016 The Qt Company Ltd.
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
 
-#undef QT_NO_FOREACH // this file contains unported legacy Q_FOREACH uses
-
 #include <private/polarchartaxis_p.h>
 #include <private/qabstractaxis_p.h>
 #include <private/chartpresenter_p.h>
@@ -102,13 +100,15 @@ void PolarChartAxis::deleteItems(int count)
 
 void PolarChartAxis::handleShadesBrushChanged(const QBrush &brush)
 {
-    foreach (QGraphicsItem *item, shadeItems())
+    const auto items = shadeItems();
+    for (QGraphicsItem *item : items)
         static_cast<QGraphicsPathItem *>(item)->setBrush(brush);
 }
 
 void PolarChartAxis::handleShadesPenChanged(const QPen &pen)
 {
-    foreach (QGraphicsItem *item, shadeItems())
+    const auto items = shadeItems();
+    for (QGraphicsItem *item : items)
         static_cast<QGraphicsPathItem *>(item)->setPen(pen);
 }
 

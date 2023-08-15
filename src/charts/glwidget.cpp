@@ -369,7 +369,8 @@ QXYSeries *GLWidget::chartSeries(const QXYSeries *cSeries)
 {
     QXYSeries *series = nullptr;
     if (cSeries) {
-        Q_FOREACH (QAbstractSeries *chartSeries, m_chart->series()) {
+        const auto allSeries = m_chart->series();
+        for (QAbstractSeries *chartSeries : allSeries) {
             if (cSeries == chartSeries) {
                 series = qobject_cast<QXYSeries *>(chartSeries);
                 break;

@@ -276,7 +276,8 @@ void QChart::removeSeries(QAbstractSeries *series)
  */
 void QChart::removeAllSeries()
 {
-    foreach (QAbstractSeries *s ,  d_ptr->m_dataset->series()){
+    const auto series = d_ptr->m_dataset->series();
+    for (QAbstractSeries *s : series) {
         removeSeries(s);
         delete s;
     }
@@ -487,12 +488,14 @@ QList<QAbstractAxis *> QChart::axes(Qt::Orientations orientation, QAbstractSerie
     QList<QAbstractAxis *> result ;
 
     if (series) {
-        foreach (QAbstractAxis *axis, series->attachedAxes()){
+        const auto axes = series->attachedAxes();
+        for (QAbstractAxis *axis : axes) {
             if (orientation.testFlag(axis->orientation()))
                 result << axis;
         }
     } else {
-        foreach (QAbstractAxis *axis, d_ptr->m_dataset->axes()){
+        const auto axes = d_ptr->m_dataset->axes();
+        for (QAbstractAxis *axis : axes) {
             if (orientation.testFlag(axis->orientation()) && !result.contains(axis))
                 result << axis;
         }

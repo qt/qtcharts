@@ -627,11 +627,13 @@ void DeclarativeChart::seriesAxisAttachHelper(QAbstractSeries *series, QAbstract
         // Remove & delete old axes that are not attached to any other series
         // Detach old axis from series so that if it is shared with other series
         // It can be deleted.
-        foreach (QAbstractAxis* oldAxis, m_chart->axes(orientation, series)) {
+        const auto axes = m_chart->axes(orientation, series);
+        for (QAbstractAxis *oldAxis : axes) {
             bool otherAttachments = false;
             if (oldAxis != axis) {
                 series->detachAxis(oldAxis);
-                foreach (QAbstractSeries *oldSeries, m_chart->series()) {
+                const auto allSeries = m_chart->series();
+                for (QAbstractSeries *oldSeries : allSeries) {
                     if (oldSeries != series && oldSeries->attachedAxes().contains(oldAxis)) {
                         otherAttachments = true;
                         break;
@@ -1256,7 +1258,8 @@ QAbstractSeries *DeclarativeChart::series(int index)
 
 QAbstractSeries *DeclarativeChart::series(QString seriesName)
 {
-    foreach (QAbstractSeries *series, m_chart->series()) {
+    const auto allSeries = m_chart->series();
+    for (QAbstractSeries *series : allSeries) {
         if (series->name() == seriesName)
             return series;
     }
@@ -1386,7 +1389,8 @@ QAbstractAxis *DeclarativeChart::defaultAxis(Qt::Orientation orientation, QAbstr
         return 0;
     }
 
-    foreach (QAbstractAxis *existingAxis, m_chart->axes(orientation)) {
+    const auto axes = m_chart->axes(orientation);
+    for (QAbstractAxis *existingAxis : axes) {
         if (existingAxis->type() == series->d_ptr->defaultAxisType(orientation))
             return existingAxis;
     }

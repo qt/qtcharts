@@ -60,7 +60,8 @@ void GLXYSeriesDataManager::setPoints(QXYSeries *series, const AbstractDomain *d
     bool logAxis = false;
     bool reverseX = false;
     bool reverseY = false;
-    foreach (QAbstractAxis* axis, series->attachedAxes()) {
+    const auto attached = series->attachedAxes();
+    for (QAbstractAxis *axis : attached) {
         if (axis->type() == QAbstractAxis::AxisTypeLogValue) {
             logAxis = true;
             break;

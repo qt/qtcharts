@@ -988,7 +988,8 @@ QList<QLegendMarker*> QPieSeriesPrivate::createLegendMarkers(QLegend* legend)
 {
     Q_Q(QPieSeries);
     QList<QLegendMarker*> markers;
-    foreach(QPieSlice* slice, q->slices()) {
+    const auto slices = q->slices();
+    for (QPieSlice *slice : slices) {
         QPieLegendMarker* marker = new QPieLegendMarker(q,slice,legend);
         markers << marker;
     }

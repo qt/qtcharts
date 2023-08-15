@@ -129,7 +129,8 @@ void PieChartItem::updateLayout()
     m_holeSize *= m_series->holeSize();
 
     // set layouts for existing slice items
-    foreach (QPieSlice *slice, m_series->slices()) {
+    const auto slices = m_series->slices();
+    for (QPieSlice *slice : slices) {
         PieSliceItem *sliceItem = m_sliceItems.value(slice);
         if (sliceItem) {
             const PieSliceData sliceData = updateSliceGeometry(slice);
