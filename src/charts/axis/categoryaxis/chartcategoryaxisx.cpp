@@ -1,8 +1,6 @@
 // Copyright (C) 2016 The Qt Company Ltd.
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
 
-#undef QT_NO_FOREACH // this file contains unported legacy Q_FOREACH uses
-
 #include <private/chartcategoryaxisx_p.h>
 #include <QtCharts/QCategoryAxis>
 #include <QtCharts/QAbstractAxis>
@@ -63,7 +61,7 @@ QSizeF ChartCategoryAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint
 
     QSizeF sh;
     QSizeF base = HorizontalAxis::sizeHint(which, constraint);
-    QStringList ticksList = m_axis->categoriesLabels();
+    const QStringList ticksList = m_axis->categoriesLabels();
     qreal width = 0; // Width is irrelevant for X axes with interval labels
     qreal height = 0;
 
@@ -83,7 +81,7 @@ QSizeF ChartCategoryAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint
     case Qt::PreferredSize: {
         if (labelsVisible()) {
             qreal labelHeight = 0.0;
-            foreach (const QString& s, ticksList) {
+            for (const QString &s : ticksList) {
                 QRectF rect = ChartPresenter::textBoundingRect(axis()->labelsFont(), s, axis()->labelsAngle());
                 labelHeight = qMax(rect.height(), labelHeight);
             }

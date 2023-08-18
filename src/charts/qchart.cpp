@@ -1,8 +1,6 @@
 // Copyright (C) 2017 The Qt Company Ltd.
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
 
-#undef QT_NO_FOREACH // this file contains unported legacy Q_FOREACH uses
-
 #include <QtCharts/QChart>
 #include <private/qchart_p.h>
 #include <private/legendscroller_p.h>
@@ -742,9 +740,9 @@ QList<QAbstractSeries *> QChart::series() const
 */
 void QChart::setAxisX(QAbstractAxis *axis ,QAbstractSeries *series)
 {
-    QList<QAbstractAxis*> list = axes(Qt::Horizontal, series);
+    const QList<QAbstractAxis*> list = axes(Qt::Horizontal, series);
 
-    foreach (QAbstractAxis* a, list) {
+    for (QAbstractAxis *a : list) {
         d_ptr->m_dataset->removeAxis(a);
         delete a;
     }
@@ -767,9 +765,9 @@ void QChart::setAxisX(QAbstractAxis *axis ,QAbstractSeries *series)
 */
 void QChart::setAxisY(QAbstractAxis *axis ,QAbstractSeries *series)
 {
-    QList<QAbstractAxis*> list = axes(Qt::Vertical, series);
+    const QList<QAbstractAxis*> list = axes(Qt::Vertical, series);
 
-    foreach (QAbstractAxis* a, list) {
+    for (QAbstractAxis *a : list) {
         d_ptr->m_dataset->removeAxis(a);
         delete a;
     }
