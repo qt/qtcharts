@@ -143,8 +143,6 @@ qt_internal_add_module(Charts
         Qt::Gui
         Qt::Widgets
     GENERATE_CPP_EXPORTS
-    DEFINES
-        QT_NO_CONTEXTLESS_CONNECT
 )
 
 qt_internal_extend_target(Charts CONDITION QT_FEATURE_opengl
