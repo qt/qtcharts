@@ -70,10 +70,8 @@ private:
     AbstractDomain *m_domain;
     QPainterPath    m_boxPath;
     QRectF m_boundingRect;
-    QT_WARNING_PUSH
-    QT_WARNING_DISABLE_GCC("-Wattributes")
-    [[maybe_unused]] bool m_hovering;
-    QT_WARNING_POP
+    Q_DECL_UNUSED_MEMBER
+    bool m_hovering;
     bool m_validData;
     QBrush  m_brush;
     QPen m_pen;
