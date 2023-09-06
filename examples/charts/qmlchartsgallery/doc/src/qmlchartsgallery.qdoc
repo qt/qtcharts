@@ -6,6 +6,7 @@
     \title Charts with QML Gallery
     \ingroup qtcharts_examples
     \examplecategory {Data Visualization & 3D}
+    \examplecategory {Mobile}
     \brief Demonstrates how to use the different chart types by using qml.
 
     \image QMLChartsGallery.png
