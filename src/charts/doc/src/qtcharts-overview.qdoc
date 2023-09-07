@@ -5,7 +5,7 @@
     \page qtcharts-overview.html
     \title Qt Charts Overview
     \brief Visualizing data as 2D charts.
-    \ingroup explanation
+    \ingroup explanations-graphicsandmultimedia
 
     Qt Charts enables creating stylish, interactive, data centric user
     interfaces. Qt Charts uses the \l {Graphics View Framework} for ease of
