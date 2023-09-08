@@ -14,6 +14,7 @@
 #define QXYSERIES_P_H
 
 #include <private/qabstractseries_p.h>
+#include <private/qxyseries_p.h>
 #include <QtCharts/private/qchartglobal_p.h>
 #include <QtCore/qvariant.h>
 #include <QtCore/qhash.h>
@@ -24,7 +25,6 @@
 
 QT_BEGIN_NAMESPACE
 
-class QXYSeries;
 class QAbstractAxis;
 
 class Q_CHARTS_PRIVATE_EXPORT QXYSeriesPrivate: public QAbstractSeriesPrivate
@@ -60,6 +60,10 @@ public:
     void setMarkerSize(qreal markerSize);
 
     QList<qreal> colorByData() const;
+
+    bool setPointConfiguration(const int index, const QXYSeries::PointConfiguration key,
+                               const QVariant &value);
+
 
 Q_SIGNALS:
     void seriesUpdated();

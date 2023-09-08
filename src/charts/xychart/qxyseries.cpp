@@ -852,24 +852,8 @@ void QXYSeries::setPointConfiguration(const int index, const QXYSeries::PointCon
                                       const QVariant &value)
 {
     Q_D(QXYSeries);
-    QHash<QXYSeries::PointConfiguration, QVariant> conf;
-    if (d->m_pointsConfiguration.contains(index))
-        conf = d->m_pointsConfiguration[index];
-
-    bool callSignal = false;
-    if (conf.contains(key)) {
-        if (conf[key] != value)
-            callSignal = true;
-    } else {
-        callSignal = true;
-    }
-
-    conf[key] = value;
-    d->m_pointsConfiguration[index] = conf;
-
-    if (callSignal) {
+    if (d->setPointConfiguration(index, key, value))
         emit pointsConfigurationChanged(d->m_pointsConfiguration);
-    }
 }
 
 /*!
@@ -941,6 +925,7 @@ void QXYSeries::sizeBy(const QList<qreal> &sourceData, const qreal minSize, cons
 
     const qreal range = max - min;
     const qreal sizeRange = maxSize - minSize;
+    bool changed = false;
 
     for (int i = 0; i < sourceData.size() && i < d->m_points.size(); ++i) {
         qreal pointSize = minSize;
@@ -949,8 +934,12 @@ void QXYSeries::sizeBy(const QList<qreal> &sourceData, const qreal minSize, cons
             const qreal percentage = startValue / range;
             pointSize = minSize + (percentage * sizeRange);
         }
-        setPointConfiguration(i, QXYSeries::PointConfiguration::Size, pointSize);
+        if (d->setPointConfiguration(i, QXYSeries::PointConfiguration::Size, pointSize))
+            changed = true;
     }
+
+    if (changed)
+        emit pointsConfigurationChanged(d->m_pointsConfiguration);
 }
 
 /*!
@@ -1021,12 +1010,18 @@ void QXYSeries::colorBy(const QList<qreal> &sourceData, const QLinearGradient &g
     const qreal diff = min < 0 ? qAbs(min) : 0;
     min += diff;
 
+    bool changed = false;
+
     for (int i = 0; i < sourceData.size() && i < d->m_points.size(); ++i) {
         const qreal startValue = qMax(0.0, sourceData.at(i) + diff - min);
         const qreal percentage = startValue / range;
         QColor color = image.pixelColor(0, qMin(percentage * imgSize, imgSize - 1));
-        setPointConfiguration(i, QXYSeries::PointConfiguration::Color, color);
+        if (d->setPointConfiguration(i, QXYSeries::PointConfiguration::Color, color))
+            changed = true;
     }
+
+    if (changed)
+        emit pointsConfigurationChanged(d->m_pointsConfiguration);
 }
 
 /*!
@@ -2012,6 +2007,28 @@ void QXYSeriesPrivate::setMarkerSize(qreal markerSize)
 QList<qreal> QXYSeriesPrivate::colorByData() const
 {
     return m_colorByData;
+}
+
+bool QXYSeriesPrivate::setPointConfiguration(const int index,
+                                             const QXYSeries::PointConfiguration key,
+                                             const QVariant &value)
+{
+    QHash<QXYSeries::PointConfiguration, QVariant> conf;
+    if (m_pointsConfiguration.contains(index))
+        conf = m_pointsConfiguration[index];
+
+    bool changed = false;
+    if (conf.contains(key)) {
+        if (conf[key] != value)
+            changed = true;
+    } else {
+        changed = true;
+    }
+
+    conf[key] = value;
+    m_pointsConfiguration[index] = conf;
+
+    return changed;
 }
 
 QT_END_NAMESPACE
