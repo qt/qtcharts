@@ -333,7 +333,7 @@ QT_BEGIN_NAMESPACE
     \since 6.2
 */
 /*!
-    \qmlproperty bool XYSeries::bestFitLineColor
+    \qmlproperty color XYSeries::bestFitLineColor
     The color of best fit line.
     \sa bestFitLineVisible
 */
