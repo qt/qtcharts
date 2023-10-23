@@ -163,12 +163,13 @@ Rectangle {
             // synchronized with the rainfall bars.
             maxTempSeries.append(Number(i) + 0.5, weatherObj.tempMaxC);
             minTempSeries.append(Number(i) + 0.5, weatherObj.tempMinC);
-            rainfallSet.append(i, weatherObj.precipMM);
+            rainfallSet.append(weatherObj.precipMM);
             weatherImageModel.append({"imageSource":weatherObj.weatherIconUrl[0].value});
             //![5]
 
             // Update scale of the chart
-            valueAxisY.max = Math.max(chartView.axisY().max,weatherObj.tempMaxC);
+            valueAxisY.max = Math.max(chartView.axisY().max, weatherObj.tempMaxC);
+            valueAxisY2.max = Math.max(valueAxisY2.max, weatherObj.precipMM);
             valueAxisX.min = 0;
             valueAxisX.max = Number(i) + 1;
 
