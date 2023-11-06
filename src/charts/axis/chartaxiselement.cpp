@@ -295,6 +295,8 @@ void ChartAxisElement::handleVisibleChanged(bool visible)
         m_shades->setVisible(visible);
         m_labels->setVisible(visible);
         m_title->setVisible(visible);
+        if (m_colorScale)
+            m_colorScale->setVisible(visible);
     } else {
         m_grid->setVisible(axis()->isGridLineVisible());
         m_arrow->setVisible(axis()->isLineVisible());
