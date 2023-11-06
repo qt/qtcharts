@@ -144,7 +144,7 @@ void QChartView::mousePressEvent(QMouseEvent *event)
 {
 #ifndef QT_NO_RUBBERBAND
     QGraphicsItem *itemUnderCursor = itemAt(event->pos());
-    bool itemUnderCursorAcceptsLMB = (itemUnderCursor->acceptedMouseButtons() & Qt::LeftButton);
+    bool itemUnderCursorAcceptsLMB = itemUnderCursor && (itemUnderCursor->acceptedMouseButtons() & Qt::LeftButton);
     bool clickThrough = d_ptr->m_rubberBandFlags.testFlag(ClickThroughRubberBand);
     QRectF plotArea = d_ptr->m_chart->plotArea();
     if (d_ptr->m_rubberBand && d_ptr->m_rubberBand->isEnabled()
