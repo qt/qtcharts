@@ -143,7 +143,6 @@ qt_internal_add_module(Charts
         Qt::Gui
         Qt::Widgets
     GENERATE_CPP_EXPORTS
-    GENERATE_PRIVATE_CPP_EXPORTS
     DEFINES
         QT_NO_CONTEXTLESS_CONNECT
 )
