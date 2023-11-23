@@ -21,7 +21,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Q_CHARTSQML_PRIVATE_EXPORT DeclarativePolarChart : public DeclarativeChart
+class Q_CHARTSQML_EXPORT DeclarativePolarChart : public DeclarativeChart
 {
     Q_OBJECT
     QML_NAMED_ELEMENT(PolarChartView)

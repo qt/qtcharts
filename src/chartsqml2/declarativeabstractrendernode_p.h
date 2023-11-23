@@ -21,7 +21,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Q_CHARTSQML_PRIVATE_EXPORT MouseEventResponse {
+class Q_CHARTSQML_EXPORT MouseEventResponse {
 public:
     enum MouseEventType {
         None,
@@ -45,7 +45,7 @@ public:
     const QXYSeries *series;
 };
 
-class Q_CHARTSQML_PRIVATE_EXPORT DeclarativeAbstractRenderNode : public QSGRootNode
+class Q_CHARTSQML_EXPORT DeclarativeAbstractRenderNode : public QSGRootNode
 {
 public:
     DeclarativeAbstractRenderNode() {}

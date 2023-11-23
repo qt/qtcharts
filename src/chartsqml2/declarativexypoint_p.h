@@ -21,7 +21,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Q_CHARTSQML_PRIVATE_EXPORT DeclarativeXYPoint : public QObject, public QPointF
+class Q_CHARTSQML_EXPORT DeclarativeXYPoint : public QObject, public QPointF
 {
     Q_OBJECT
     Q_PROPERTY(qreal x READ x WRITE setX)

@@ -22,7 +22,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Q_CHARTSQML_PRIVATE_EXPORT DeclarativeCategoryRange : public QObject
+class Q_CHARTSQML_EXPORT DeclarativeCategoryRange : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(qreal endValue READ endValue WRITE setEndValue)

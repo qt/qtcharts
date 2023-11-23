@@ -21,7 +21,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Q_CHARTSQML_PRIVATE_EXPORT DeclarativeAreaSeries : public QAreaSeries
+class Q_CHARTSQML_EXPORT DeclarativeAreaSeries : public QAreaSeries
 {
     Q_OBJECT
     Q_PROPERTY(DeclarativeLineSeries *upperSeries READ upperSeries WRITE setUpperSeries)

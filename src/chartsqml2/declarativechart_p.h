@@ -35,7 +35,7 @@ class DeclarativeMargins;
 class Domain;
 class DeclarativeAxes;
 
-class Q_CHARTSQML_PRIVATE_EXPORT DeclarativeChart : public QQuickItem
+class Q_CHARTSQML_EXPORT DeclarativeChart : public QQuickItem
 {
     Q_OBJECT
     Q_PROPERTY(Theme theme READ theme WRITE setTheme)

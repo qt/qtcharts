@@ -15,8 +15,8 @@
 
 #include <QtCore/QtGlobal>
 #include <qtcharts-config.h>
-#include <QtChartsQml/private/qtchartsqmlexports_p.h>
+#include <QtChartsQml/qtchartsqmlexports.h>
 
-void Q_CHARTSQML_PRIVATE_EXPORT qml_register_types_QtCharts();
+void Q_CHARTSQML_EXPORT qml_register_types_QtCharts();
 
 #endif // DECLARATIVECHARTGLOBAL_H
