@@ -20,7 +20,7 @@ QT_BEGIN_NAMESPACE
 
 class QDateTimeAxis;
 
-class Q_CHARTS_PRIVATE_EXPORT ChartDateTimeAxisX : public HorizontalAxis
+class Q_CHARTS_EXPORT ChartDateTimeAxisX : public HorizontalAxis
 {
     Q_OBJECT
 public:

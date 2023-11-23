@@ -24,7 +24,7 @@ QT_BEGIN_NAMESPACE
 
 class BoxPlotChartItem;
 
-class Q_CHARTS_PRIVATE_EXPORT BoxPlotAnimation : public QObject
+class Q_CHARTS_EXPORT BoxPlotAnimation : public QObject
 {
     Q_OBJECT
 public:

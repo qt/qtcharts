@@ -21,7 +21,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Q_CHARTS_PRIVATE_EXPORT StackedBarChartItem : public AbstractBarChartItem
+class Q_CHARTS_EXPORT StackedBarChartItem : public AbstractBarChartItem
 {
     Q_OBJECT
 public:

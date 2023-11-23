@@ -19,7 +19,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Q_CHARTS_PRIVATE_EXPORT ChartTitle : public QGraphicsTextItem
+class Q_CHARTS_EXPORT ChartTitle : public QGraphicsTextItem
 {
 public:
     ChartTitle(QGraphicsItem *parent = 0);

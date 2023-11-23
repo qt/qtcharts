@@ -19,7 +19,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Q_CHARTS_PRIVATE_EXPORT QValueAxisPrivate : public QAbstractAxisPrivate
+class Q_CHARTS_EXPORT QValueAxisPrivate : public QAbstractAxisPrivate
 {
     Q_OBJECT
 public:

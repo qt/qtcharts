@@ -20,7 +20,7 @@ QT_BEGIN_NAMESPACE
 
 class QValueAxis;
 
-class Q_CHARTS_PRIVATE_EXPORT PolarChartValueAxisRadial : public PolarChartAxisRadial
+class Q_CHARTS_EXPORT PolarChartValueAxisRadial : public PolarChartAxisRadial
 {
     Q_OBJECT
 public:

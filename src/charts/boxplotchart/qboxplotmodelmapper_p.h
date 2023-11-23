@@ -25,7 +25,7 @@ QT_BEGIN_NAMESPACE
 
 class QBoxSet;
 
-class Q_CHARTS_PRIVATE_EXPORT QBoxPlotModelMapperPrivate : public QObject
+class Q_CHARTS_EXPORT QBoxPlotModelMapperPrivate : public QObject
 {
     Q_OBJECT
 public:

@@ -38,7 +38,7 @@ class ChartAnimation;
 class ChartItem;
 class BoxPlotChartItem;
 
-class Q_CHARTS_PRIVATE_EXPORT QAbstractSeriesPrivate : public QObject
+class Q_CHARTS_EXPORT QAbstractSeriesPrivate : public QObject
 {
     Q_OBJECT
 public:

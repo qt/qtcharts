@@ -23,7 +23,7 @@ QT_BEGIN_NAMESPACE
 
 class SplineChartItem;
 
-class Q_CHARTS_PRIVATE_EXPORT SplineAnimation : public XYAnimation
+class Q_CHARTS_EXPORT SplineAnimation : public XYAnimation
 {
 public:
     SplineAnimation(SplineChartItem *item, int duration, QEasingCurve &curve);

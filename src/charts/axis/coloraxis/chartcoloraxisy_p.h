@@ -20,7 +20,7 @@ QT_BEGIN_NAMESPACE
 
 class QColorAxis;
 
-class Q_CHARTS_PRIVATE_EXPORT ChartColorAxisY : public VerticalAxis
+class Q_CHARTS_EXPORT ChartColorAxisY : public VerticalAxis
 {
     Q_OBJECT
 public:

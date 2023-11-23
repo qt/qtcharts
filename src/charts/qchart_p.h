@@ -24,7 +24,7 @@ class ChartPresenter;
 class QLegend;
 class ChartDataSet;
 
-class Q_CHARTS_PRIVATE_EXPORT QChartPrivate
+class Q_CHARTS_EXPORT QChartPrivate
 {
 
 public:

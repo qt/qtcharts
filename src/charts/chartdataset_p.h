@@ -25,7 +25,7 @@ class QAbstractAxis;
 class ChartPresenter;
 class GLXYSeriesDataManager;
 
-class Q_CHARTS_PRIVATE_EXPORT ChartDataSet : public QObject
+class Q_CHARTS_EXPORT ChartDataSet : public QObject
 {
     Q_OBJECT
 public:

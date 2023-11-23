@@ -29,7 +29,7 @@ QT_BEGIN_NAMESPACE
 class Scroller;
 class QLegend;
 
-class Q_CHARTS_PRIVATE_EXPORT ScrollTicker : public QObject
+class Q_CHARTS_EXPORT ScrollTicker : public QObject
 {
     Q_OBJECT
 public:
@@ -44,7 +44,7 @@ private:
     Scroller *m_scroller;
 };
 
-class Q_CHARTS_PRIVATE_EXPORT Scroller
+class Q_CHARTS_EXPORT Scroller
 {
 public:
     enum State {

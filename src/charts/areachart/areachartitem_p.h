@@ -23,7 +23,7 @@ QT_BEGIN_NAMESPACE
 
 class AreaChartItem;
 
-class Q_CHARTS_PRIVATE_EXPORT AreaChartItem : public ChartItem
+class Q_CHARTS_EXPORT AreaChartItem : public ChartItem
 {
     Q_OBJECT
 public:
@@ -88,7 +88,7 @@ private:
 
 };
 
-class Q_CHARTS_PRIVATE_EXPORT AreaBoundItem : public LineChartItem
+class Q_CHARTS_EXPORT AreaBoundItem : public LineChartItem
 {
 public:
     AreaBoundItem(AreaChartItem *area, QLineSeries *lineSeries,QGraphicsItem* item = 0)

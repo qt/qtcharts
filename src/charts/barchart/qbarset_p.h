@@ -23,7 +23,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Q_CHARTS_PRIVATE_EXPORT QBarSetPrivate : public QObject
+class Q_CHARTS_EXPORT QBarSetPrivate : public QObject
 {
     Q_OBJECT
 

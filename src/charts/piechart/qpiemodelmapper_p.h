@@ -25,7 +25,7 @@ QT_BEGIN_NAMESPACE
 
 class QPieSlice;
 
-class Q_CHARTS_PRIVATE_EXPORT QPieModelMapperPrivate : public QObject
+class Q_CHARTS_EXPORT QPieModelMapperPrivate : public QObject
 {
     Q_OBJECT
 

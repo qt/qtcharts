@@ -27,7 +27,7 @@ QT_BEGIN_NAMESPACE
 
 class QLegendMarkerPrivate;
 
-class Q_CHARTS_PRIVATE_EXPORT LegendMarkerItem : public QGraphicsObject, public QGraphicsLayoutItem
+class Q_CHARTS_EXPORT LegendMarkerItem : public QGraphicsObject, public QGraphicsLayoutItem
 {
     Q_OBJECT
     Q_INTERFACES(QGraphicsLayoutItem)

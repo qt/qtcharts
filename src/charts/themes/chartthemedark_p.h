@@ -18,7 +18,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Q_CHARTS_PRIVATE_EXPORT ChartThemeDark : public ChartTheme
+class Q_CHARTS_EXPORT ChartThemeDark : public ChartTheme
 {
 public:
     ChartThemeDark() : ChartTheme(QChart::ChartThemeDark)

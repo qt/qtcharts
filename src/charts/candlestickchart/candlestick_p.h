@@ -25,7 +25,7 @@ QT_BEGIN_NAMESPACE
 class AbstractDomain;
 class QCandlestickSet;
 
-class Q_CHARTS_PRIVATE_EXPORT Candlestick : public QGraphicsObject
+class Q_CHARTS_EXPORT Candlestick : public QGraphicsObject
 {
     Q_OBJECT
 

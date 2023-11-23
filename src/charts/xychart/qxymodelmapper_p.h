@@ -28,7 +28,7 @@ QT_BEGIN_NAMESPACE
 class QXYModelMapper;
 class QXYSeries;
 
-class Q_CHARTS_PRIVATE_EXPORT QXYModelMapperPrivate : public QObject
+class Q_CHARTS_EXPORT QXYModelMapperPrivate : public QObject
 {
     Q_OBJECT
 

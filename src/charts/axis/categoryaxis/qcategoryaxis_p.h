@@ -24,7 +24,7 @@ QT_BEGIN_NAMESPACE
 
 typedef QPair<qreal, qreal> Range;
 
-class Q_CHARTS_PRIVATE_EXPORT QCategoryAxisPrivate : public QValueAxisPrivate
+class Q_CHARTS_EXPORT QCategoryAxisPrivate : public QValueAxisPrivate
 {
     Q_OBJECT
 

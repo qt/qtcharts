@@ -20,7 +20,7 @@
 QT_BEGIN_NAMESPACE
 
 
-class Q_CHARTS_PRIVATE_EXPORT QBarSeriesPrivate: public QAbstractBarSeriesPrivate
+class Q_CHARTS_EXPORT QBarSeriesPrivate: public QAbstractBarSeriesPrivate
 {
 public:
     QBarSeriesPrivate(QBarSeries *q);

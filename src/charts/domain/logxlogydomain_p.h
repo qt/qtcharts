@@ -19,7 +19,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Q_CHARTS_PRIVATE_EXPORT LogXLogYDomain: public AbstractDomain
+class Q_CHARTS_EXPORT LogXLogYDomain: public AbstractDomain
 {
     Q_OBJECT
 public:

@@ -28,7 +28,7 @@ class ChartThemeManager;
 class AbstractDomain;
 class ChartDataSet;
 
-class Q_CHARTS_PRIVATE_EXPORT ChartElement: public QGraphicsObject
+class Q_CHARTS_EXPORT ChartElement: public QGraphicsObject
 {
 
 public:

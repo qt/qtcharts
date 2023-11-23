@@ -20,7 +20,7 @@ QT_BEGIN_NAMESPACE
 
 class ScatterChartItem;
 
-class Q_CHARTS_PRIVATE_EXPORT ScatterAnimation : public XYAnimation
+class Q_CHARTS_EXPORT ScatterAnimation : public XYAnimation
 {
 public:
     ScatterAnimation(ScatterChartItem *item, int duration, QEasingCurve &curve);

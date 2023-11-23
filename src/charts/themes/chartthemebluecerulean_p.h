@@ -18,7 +18,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Q_CHARTS_PRIVATE_EXPORT ChartThemeBlueCerulean: public ChartTheme
+class Q_CHARTS_EXPORT ChartThemeBlueCerulean: public ChartTheme
 {
 public:
     ChartThemeBlueCerulean() : ChartTheme(QChart::ChartThemeBlueCerulean) {

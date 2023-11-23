@@ -23,7 +23,7 @@ class CandlestickAnimation;
 class QCandlestickSeries;
 class QCandlestickSet;
 
-class Q_CHARTS_PRIVATE_EXPORT CandlestickChartItem : public ChartItem
+class Q_CHARTS_EXPORT CandlestickChartItem : public ChartItem
 {
     Q_OBJECT
 

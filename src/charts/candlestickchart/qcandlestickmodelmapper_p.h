@@ -25,7 +25,7 @@ QT_BEGIN_NAMESPACE
 
 class QCandlestickSet;
 
-class Q_CHARTS_PRIVATE_EXPORT QCandlestickModelMapperPrivate : public QObject
+class Q_CHARTS_EXPORT QCandlestickModelMapperPrivate : public QObject
 {
     Q_OBJECT
 

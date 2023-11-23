@@ -18,7 +18,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Q_CHARTS_PRIVATE_EXPORT CartesianChartLayout : public AbstractChartLayout
+class Q_CHARTS_EXPORT CartesianChartLayout : public AbstractChartLayout
 {
 public:
     CartesianChartLayout(ChartPresenter *presenter);

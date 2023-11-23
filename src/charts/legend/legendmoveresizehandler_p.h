@@ -24,7 +24,7 @@ QT_BEGIN_NAMESPACE
 class QGraphicsSceneMouseEvent;
 class QGraphicsSceneHoverEvent;
 
-class Q_CHARTS_PRIVATE_EXPORT LegendMoveResizeHandler
+class Q_CHARTS_EXPORT LegendMoveResizeHandler
 {
 public:
     LegendMoveResizeHandler(QLegend *legend);

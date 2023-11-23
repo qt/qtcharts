@@ -25,7 +25,7 @@ QT_BEGIN_NAMESPACE
 
 class QScatterSeries;
 
-class Q_CHARTS_PRIVATE_EXPORT ScatterChartItem : public XYChart
+class Q_CHARTS_EXPORT ScatterChartItem : public XYChart
 {
     Q_OBJECT
     Q_INTERFACES(QGraphicsItem)
@@ -88,7 +88,7 @@ private:
 };
 
 template <class T>
-class Q_CHARTS_PRIVATE_EXPORT ChartMarker : public T
+class Q_CHARTS_EXPORT ChartMarker : public T
 {
 public:
     explicit ChartMarker(qreal x, qreal y, qreal w, qreal h, ScatterChartItem *parent);
@@ -105,7 +105,7 @@ private:
     ScatterChartItem *m_parent;
 };
 
-class Q_CHARTS_PRIVATE_EXPORT RotatedRectangleMarker : public ChartMarker<QGraphicsPolygonItem>
+class Q_CHARTS_EXPORT RotatedRectangleMarker : public ChartMarker<QGraphicsPolygonItem>
 {
 public:
     explicit RotatedRectangleMarker(qreal x, qreal y, qreal w, qreal h, ScatterChartItem *parent);
@@ -113,7 +113,7 @@ public:
     static QPolygonF polygon(qreal x = 0.0, qreal y = 0.0, qreal w = 10.0, qreal h = 10.0);
 };
 
-class Q_CHARTS_PRIVATE_EXPORT TriangleMarker : public ChartMarker<QGraphicsPolygonItem>
+class Q_CHARTS_EXPORT TriangleMarker : public ChartMarker<QGraphicsPolygonItem>
 {
 public:
     explicit TriangleMarker(qreal x, qreal y, qreal w, qreal h, ScatterChartItem *parent);
@@ -121,7 +121,7 @@ public:
     static QPolygonF polygon(qreal x = 0.0, qreal y = 0.0, qreal w = 10.0, qreal h = 10.0);
 };
 
-class Q_CHARTS_PRIVATE_EXPORT StarMarker : public ChartMarker<QGraphicsPolygonItem>
+class Q_CHARTS_EXPORT StarMarker : public ChartMarker<QGraphicsPolygonItem>
 {
 public:
     explicit StarMarker(qreal x, qreal y, qreal w, qreal h, ScatterChartItem *parent);
@@ -129,7 +129,7 @@ public:
     static QPolygonF polygon(qreal x = 0.0, qreal y = 0.0, qreal w = 10.0, qreal h = 10.0);
 };
 
-class Q_CHARTS_PRIVATE_EXPORT PentagonMarker : public ChartMarker<QGraphicsPolygonItem>
+class Q_CHARTS_EXPORT PentagonMarker : public ChartMarker<QGraphicsPolygonItem>
 {
 public:
     explicit PentagonMarker(qreal x, qreal y, qreal w, qreal h, ScatterChartItem *parent);

@@ -22,7 +22,7 @@ QT_BEGIN_NAMESPACE
 
 class QAbstractBarSeries;
 
-class Q_CHARTS_PRIVATE_EXPORT PercentBarChartItem : public AbstractBarChartItem
+class Q_CHARTS_EXPORT PercentBarChartItem : public AbstractBarChartItem
 {
     Q_OBJECT
 public:

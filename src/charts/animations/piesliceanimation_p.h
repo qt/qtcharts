@@ -21,7 +21,7 @@ QT_BEGIN_NAMESPACE
 
 class PieChartItem;
 
-class Q_CHARTS_PRIVATE_EXPORT PieSliceAnimation : public ChartAnimation
+class Q_CHARTS_EXPORT PieSliceAnimation : public ChartAnimation
 {
 public:
     PieSliceAnimation(PieSliceItem *sliceItem);

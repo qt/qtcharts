@@ -21,7 +21,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Q_CHARTS_PRIVATE_EXPORT LegendScroller: public QLegend, public Scroller
+class Q_CHARTS_EXPORT LegendScroller: public QLegend, public Scroller
 {
     Q_OBJECT
 

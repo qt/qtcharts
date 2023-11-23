@@ -18,6 +18,6 @@
 #include <QtCharts/qchartglobal.h>
 #include <QtCore/private/qglobal_p.h>
 #include <QtCharts/private/qtcharts-config_p.h>
-#include <QtCharts/private/qtchartsexports_p.h>
+#include <QtCharts/qtchartsexports.h>
 
 #endif // QCHARTGLOBAL_P_H

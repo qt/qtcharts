@@ -18,7 +18,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Q_CHARTS_PRIVATE_EXPORT HorizontalAxis : public CartesianChartAxis
+class Q_CHARTS_EXPORT HorizontalAxis : public CartesianChartAxis
 {
 public:
     HorizontalAxis(QAbstractAxis *axis, QGraphicsItem *item = nullptr, bool intervalAxis = false);

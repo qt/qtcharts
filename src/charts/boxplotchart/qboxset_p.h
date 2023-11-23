@@ -24,7 +24,7 @@ QT_BEGIN_NAMESPACE
 
 class QBoxPlotSeriesPrivate;
 
-class Q_CHARTS_PRIVATE_EXPORT QBoxSetPrivate : public QObject
+class Q_CHARTS_EXPORT QBoxSetPrivate : public QObject
 {
     Q_OBJECT
 

@@ -27,7 +27,7 @@ QT_BEGIN_NAMESPACE
 
 class QBarSet;
 
-class Q_CHARTS_PRIVATE_EXPORT BoxWhiskers : public QGraphicsObject
+class Q_CHARTS_EXPORT BoxWhiskers : public QGraphicsObject
 {
     Q_OBJECT
 

@@ -20,7 +20,7 @@ QT_BEGIN_NAMESPACE
 
 class AbstractBarChartItem;
 
-class Q_CHARTS_PRIVATE_EXPORT BarAnimation : public ChartAnimation
+class Q_CHARTS_EXPORT BarAnimation : public ChartAnimation
 {
     Q_OBJECT
 

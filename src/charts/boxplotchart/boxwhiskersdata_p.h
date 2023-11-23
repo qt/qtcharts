@@ -19,7 +19,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Q_CHARTS_PRIVATE_EXPORT BoxWhiskersData
+class Q_CHARTS_EXPORT BoxWhiskersData
 {
 public:
     BoxWhiskersData() :

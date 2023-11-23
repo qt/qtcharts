@@ -20,7 +20,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Q_CHARTS_PRIVATE_EXPORT ChartTheme
+class Q_CHARTS_EXPORT ChartTheme
 {
 
 public:

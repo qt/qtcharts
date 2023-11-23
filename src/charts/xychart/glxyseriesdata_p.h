@@ -52,7 +52,7 @@ public:
 
 typedef QMap<const QXYSeries *, GLXYSeriesData *> GLXYDataMap;
 
-class Q_CHARTS_PRIVATE_EXPORT GLXYSeriesDataManager : public QObject
+class Q_CHARTS_EXPORT GLXYSeriesDataManager : public QObject
 {
     Q_OBJECT
 

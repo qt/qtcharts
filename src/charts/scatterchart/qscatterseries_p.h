@@ -18,7 +18,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Q_CHARTS_PRIVATE_EXPORT QScatterSeriesPrivate: public QXYSeriesPrivate
+class Q_CHARTS_EXPORT QScatterSeriesPrivate: public QXYSeriesPrivate
 {
 public:
     QScatterSeriesPrivate(QScatterSeries *q);

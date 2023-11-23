@@ -24,7 +24,7 @@ class QCandlestickSeries;
 class QCandlestickSet;
 class QDateTimeAxis;
 
-class Q_CHARTS_PRIVATE_EXPORT QCandlestickSeriesPrivate : public QAbstractSeriesPrivate
+class Q_CHARTS_EXPORT QCandlestickSeriesPrivate : public QAbstractSeriesPrivate
 {
     Q_OBJECT
 

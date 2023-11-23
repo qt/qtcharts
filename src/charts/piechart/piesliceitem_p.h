@@ -30,7 +30,7 @@ class PieChartItem;
 class PieSliceLabel;
 class QPieSlice;
 
-class Q_CHARTS_PRIVATE_EXPORT PieSliceItem : public QGraphicsObject
+class Q_CHARTS_EXPORT PieSliceItem : public QGraphicsObject
 {
     Q_OBJECT
 

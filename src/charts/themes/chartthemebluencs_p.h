@@ -18,7 +18,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Q_CHARTS_PRIVATE_EXPORT ChartThemeBlueNcs: public ChartTheme
+class Q_CHARTS_EXPORT ChartThemeBlueNcs: public ChartTheme
 {
 public:
     ChartThemeBlueNcs() : ChartTheme(QChart::ChartThemeBlueNcs)

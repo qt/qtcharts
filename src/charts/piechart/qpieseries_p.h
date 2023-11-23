@@ -20,7 +20,7 @@
 QT_BEGIN_NAMESPACE
 class QLegendPrivate;
 
-class Q_CHARTS_PRIVATE_EXPORT QPieSeriesPrivate : public QAbstractSeriesPrivate
+class Q_CHARTS_EXPORT QPieSeriesPrivate : public QAbstractSeriesPrivate
 {
     Q_OBJECT
 

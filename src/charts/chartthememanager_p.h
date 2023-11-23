@@ -23,7 +23,7 @@
 QT_BEGIN_NAMESPACE
 class ChartTheme;
 
-class Q_CHARTS_PRIVATE_EXPORT ChartThemeManager: public QObject
+class Q_CHARTS_EXPORT ChartThemeManager: public QObject
 {
     Q_OBJECT
 public:

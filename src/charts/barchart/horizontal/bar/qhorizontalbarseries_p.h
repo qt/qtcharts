@@ -19,7 +19,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Q_CHARTS_PRIVATE_EXPORT QHorizontalBarSeriesPrivate: public QAbstractBarSeriesPrivate
+class Q_CHARTS_EXPORT QHorizontalBarSeriesPrivate: public QAbstractBarSeriesPrivate
 {
 public:
     QHorizontalBarSeriesPrivate(QHorizontalBarSeries *q);

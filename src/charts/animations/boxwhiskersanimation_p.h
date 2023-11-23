@@ -23,7 +23,7 @@ QT_BEGIN_NAMESPACE
 class BoxPlotChartItem;
 class BoxPlotAnimation;
 
-class Q_CHARTS_PRIVATE_EXPORT BoxWhiskersAnimation : public ChartAnimation
+class Q_CHARTS_EXPORT BoxWhiskersAnimation : public ChartAnimation
 {
     Q_OBJECT
 

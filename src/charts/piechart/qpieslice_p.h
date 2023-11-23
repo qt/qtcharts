@@ -21,7 +21,7 @@
 QT_BEGIN_NAMESPACE
 class QPieSeries;
 
-class Q_CHARTS_PRIVATE_EXPORT QPieSlicePrivate : public QObject
+class Q_CHARTS_EXPORT QPieSlicePrivate : public QObject
 {
     Q_OBJECT
 

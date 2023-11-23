@@ -23,7 +23,7 @@ QT_BEGIN_NAMESPACE
 class QBarSet;
 
 // Single visual bar item of chart
-class Q_CHARTS_PRIVATE_EXPORT Bar : public QObject, public QGraphicsRectItem
+class Q_CHARTS_EXPORT Bar : public QObject, public QGraphicsRectItem
 {
     Q_OBJECT
 public:

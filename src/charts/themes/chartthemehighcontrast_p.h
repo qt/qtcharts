@@ -18,7 +18,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Q_CHARTS_PRIVATE_EXPORT ChartThemeHighContrast : public ChartTheme
+class Q_CHARTS_EXPORT ChartThemeHighContrast : public ChartTheme
 {
 public:
     ChartThemeHighContrast() : ChartTheme(QChart::ChartThemeHighContrast)

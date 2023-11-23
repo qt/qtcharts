@@ -19,7 +19,7 @@
 QT_BEGIN_NAMESPACE
 
 
-class Q_CHARTS_PRIVATE_EXPORT QSplineSeriesPrivate: public QLineSeriesPrivate
+class Q_CHARTS_EXPORT QSplineSeriesPrivate: public QLineSeriesPrivate
 {
     Q_OBJECT
 public:

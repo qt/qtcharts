@@ -27,7 +27,7 @@ class LegendLayout;
 class LegendMoveResizeHandler;
 class QLegendMarker;
 
-class Q_CHARTS_PRIVATE_EXPORT QLegendPrivate : public QObject
+class Q_CHARTS_EXPORT QLegendPrivate : public QObject
 {
     Q_OBJECT
 public:

@@ -23,7 +23,7 @@ QT_BEGIN_NAMESPACE
 
 class QBoxPlotLegendMarker;
 
-class Q_CHARTS_PRIVATE_EXPORT QBoxPlotLegendMarkerPrivate : public QLegendMarkerPrivate
+class Q_CHARTS_EXPORT QBoxPlotLegendMarkerPrivate : public QLegendMarkerPrivate
 {
     Q_OBJECT
 public:

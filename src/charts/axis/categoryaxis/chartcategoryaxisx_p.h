@@ -20,7 +20,7 @@ QT_BEGIN_NAMESPACE
 
 class QCategoryAxis;
 
-class Q_CHARTS_PRIVATE_EXPORT ChartCategoryAxisX : public HorizontalAxis
+class Q_CHARTS_EXPORT ChartCategoryAxisX : public HorizontalAxis
 {
     Q_OBJECT
 public:

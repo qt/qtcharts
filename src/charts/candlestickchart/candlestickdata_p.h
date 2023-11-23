@@ -18,7 +18,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Q_CHARTS_PRIVATE_EXPORT CandlestickData
+class Q_CHARTS_EXPORT CandlestickData
 {
 public:
     CandlestickData() :
