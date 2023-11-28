@@ -39,7 +39,6 @@ qt_internal_add_qml_module(ChartsQml
         Qt::Gui
         Qt::Qml
         Qt::Quick
-    GENERATE_CPP_EXPORTS
 )
 
 qt_internal_extend_target(ChartsQml CONDITION QT_FEATURE_opengl
