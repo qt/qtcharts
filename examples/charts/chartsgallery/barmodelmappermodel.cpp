@@ -65,9 +65,6 @@ QVariant BarModelMapperModel::data(const QModelIndex &index, int role) const
             if (rect.contains(index.column(), index.row()))
                 return QColor(m_mapping.key(rect));
         }
-
-        // cell not mapped return white color
-        return QColor(Qt::white);
     }
     return QVariant();
 }
