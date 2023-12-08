@@ -250,9 +250,7 @@ void QChartView::mouseReleaseEvent(QMouseEvent *event)
 #if QT_CONFIG(wheelevent)
 void QChartView::wheelEvent(QWheelEvent *event)
 {
-    Q_UNUSED(event);
-    // We just need to override wheelEvent, or scrolling won't work correctly on macOS trackpad
-    // (QTBUG-77403)
+    QGraphicsView::wheelEvent(event);
 }
 #endif
 #endif
