@@ -77,6 +77,8 @@ void GLWidget::cleanup()
     m_seriesBufferMap.clear();
 
     doneCurrent();
+
+    context()->disconnect(this);
 }
 
 void GLWidget::cleanXYSeriesResources(const QXYSeries *series)
