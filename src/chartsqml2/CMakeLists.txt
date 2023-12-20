@@ -10,7 +10,6 @@ qt_internal_add_qml_module(ChartsQml
     DESIGNER_SUPPORTED
     DEPENDENCIES
         QtQuick
-        QtCharts
     SOURCES
         declarativeabstractrendernode_p.h
         declarativeaxes.cpp declarativeaxes_p.h
