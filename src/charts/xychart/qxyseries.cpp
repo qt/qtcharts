@@ -1907,13 +1907,18 @@ void QXYSeriesPrivate::drawBestFitLine(QPainter *painter, const QRectF &clipRect
     if (!ok)
         return;
 
-    const qreal x1 = clipRect.x();
-    const qreal y1 = bestFitLineParams.first * x1 + bestFitLineParams.second;
-    QPointF p1 = domain()->calculateGeometryPoint(QPointF(x1, y1), ok);
+    auto *domain = this->domain();
+    const auto clipOriginX = domain->isReverseX() ? clipRect.right() : clipRect.left();
+    const auto clipOriginY = domain->isReverseY() ? clipRect.top() : clipRect.bottom();
+    const auto domainOrigin = domain->calculateDomainPoint({clipOriginX, clipOriginY});
 
-    const qreal x2 = clipRect.x() + 1;
+    const qreal x1 = domainOrigin.x();
+    const qreal y1 = bestFitLineParams.first * x1 + bestFitLineParams.second;
+    QPointF p1 = domain->calculateGeometryPoint(QPointF(x1, y1), ok);
+
+    const qreal x2 = domainOrigin.x() + 1;
     const qreal y2 = bestFitLineParams.first * x2 + bestFitLineParams.second;
-    QPointF p2 = domain()->calculateGeometryPoint(QPointF(x2, y2), ok);
+    QPointF p2 = domain->calculateGeometryPoint(QPointF(x2, y2), ok);
 
     if (ok) {
         QLineF bestFitLine { p1, p2 };
