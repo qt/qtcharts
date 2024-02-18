@@ -76,6 +76,7 @@ void CartesianChartAxis::createItems(int count)
             if (labelsEditable())
                 dateTimeLabel->setEditable(true);
             dateTimeLabel->setFormat(static_cast<QDateTimeAxis*>(axis())->format());
+            dateTimeLabel->setCalendar(static_cast<QDateTimeAxis *>(axis())->calendar());
 #endif
         } else {
             label = new QGraphicsTextItem(this);
@@ -282,6 +283,17 @@ void CartesianChartAxis::setDateTimeLabelsFormat(const QString &format)
 #if QT_CONFIG(charts_datetime_axis)
     for (int i = 0; i < layout().size(); i++)
         static_cast<DateTimeAxisLabel *>(labelItems().at(i))->setFormat(format);
+#endif
+}
+
+void CartesianChartAxis::setDateTimeLabelsCalendar(const QCalendar &calendar) {
+  if (max() <= min() || layout().size() < 1 ||
+      axis()->type() != QAbstractAxis::AxisTypeDateTime) {
+    return;
+  }
+#if QT_CONFIG(charts_datetime_axis)
+  for (int i = 0; i < layout().size(); i++)
+    static_cast<DateTimeAxisLabel *>(labelItems().at(i))->setCalendar(calendar);
 #endif
 }
 

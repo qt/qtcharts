@@ -37,6 +37,8 @@ public:
     QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const override;
 
     void setDateTimeLabelsFormat(const QString &format);
+    
+    void setDateTimeLabelsCalendar(const QCalendar &calendar);
 
 protected:
     void setGeometry(const QRectF &size) override { Q_UNUSED(size);}

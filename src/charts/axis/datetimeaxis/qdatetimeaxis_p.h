@@ -49,6 +49,7 @@ protected:
     qreal m_max;
     int m_tickCount;
     QString m_format;
+    QCalendar m_calendar;
     Q_DECLARE_PUBLIC(QDateTimeAxis)
 };
 

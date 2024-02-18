@@ -8,6 +8,7 @@
 
 QT_BEGIN_NAMESPACE
 class QDateTime;
+class QCalendar;
 QT_END_NAMESPACE
 
 QT_BEGIN_NAMESPACE
@@ -41,6 +42,9 @@ public:
 
     void setFormat(QString format);
     QString format() const;
+
+    void setCalendar(QCalendar calendar);
+    QCalendar calendar() const;
 
     //ticks handling
     void setTickCount(int count);

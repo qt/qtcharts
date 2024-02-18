@@ -15,6 +15,7 @@
 
 #include <private/editableaxislabel_p.h>
 
+#include <QtCore/qcalendar.h>
 #include <QtCore/qdatetime.h>
 
 QT_BEGIN_NAMESPACE
@@ -30,11 +31,13 @@ public:
     QDateTime value() const;
     void setValue(const QDateTime &value);
     void setFormat(const QString &format);
+    void setCalendar(const QCalendar &calendar);
 
 private:
     QDateTime m_dateTime;
     QDateTime m_dateTimeBeforeEdit;
     QString m_format;
+    Calendar m_calendar;
 
     void setInitialEditValue() override;
     void finishEditing() override;
