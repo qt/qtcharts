@@ -15,7 +15,7 @@ DateTimeAxisLabel::DateTimeAxisLabel(QGraphicsItem *parent) :
 void DateTimeAxisLabel::finishEditing()
 {
     QDateTime oldDateTime = m_dateTime;
-    QDateTime newDateTime = QDateTime::fromString(document()->toPlainText(), m_format);
+    QDateTime newDateTime = QDateTime::fromString(document()->toPlainText(), m_format, m_calendar);
     if (newDateTime.isValid() && newDateTime != m_dateTime) {
         m_dateTime = newDateTime;
         emit dateTimeChanged(oldDateTime, newDateTime);
@@ -49,10 +49,14 @@ void DateTimeAxisLabel::setFormat(const QString &format)
     m_format.replace(QChar::fromLatin1('\n'), QChar::fromLatin1(' '));
 }
 
+void DateTimeAxisLabel::setCalendar(const QCalendar &calendar) {
+  m_calendar = calendar;
+}
+
 void DateTimeAxisLabel::setInitialEditValue()
 {
     m_dateTimeBeforeEdit = m_dateTime;
-    setHtml(m_dateTime.toString(m_format));
+    setHtml(m_dateTime.toString(m_format, m_calendar));
 }
 
 void DateTimeAxisLabel::keyPressEvent(QKeyEvent *event)

@@ -245,6 +245,19 @@ QString QDateTimeAxis::format() const
     return d->m_format;
 }
 
+void QDateTimeAxis::setCalendar(QCalendar calendar) {
+  Q_D(QDateTimeAxis);
+  if (d->axisItem())
+    static_cast<CartesianChartAxis *>(d->axisItem())
+        ->setDateTimeLabelsCalendar(calendar);
+  // emit formatChanged(format); TODO
+}
+
+QCalendar QDateTimeAxis::calendar() const {
+  Q_D(const QDateTimeAxis);
+  return d->m_calendar;
+}
+
 /*!
   Sets the number of tick marks on the axis to \a count.
 */
@@ -284,6 +297,7 @@ QDateTimeAxisPrivate::QDateTimeAxisPrivate(QDateTimeAxis *q)
       m_tickCount(5)
 {
     m_format = QStringLiteral("dd-MM-yyyy\nh:mm");
+    m_calendar = QCalendar(QCalendar::System::Gregorian);
 }
 
 QDateTimeAxisPrivate::~QDateTimeAxisPrivate()
