@@ -5,7 +5,7 @@
     \example qmloscilloscope
     \title Qml Oscilloscope
     \ingroup qtcharts_examples
-    \examplecategory {Data Visualization & 3D}
+    \examplecategory {Data Visualization}
     \image examples_qmloscilloscope.png
 
     \brief The example shows how to implement application with strict performance requirements

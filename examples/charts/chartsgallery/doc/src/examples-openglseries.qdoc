@@ -4,7 +4,7 @@
 /*!
     \example openglseries
     \title OpenGL Accelerated Series Example
-    \examplecategory {Data Visualization & 3D}
+    \examplecategory {Data Visualization}
     \ingroup qtcharts_examples
 
     \brief The example shows how to enable OpenGL acceleration for QLineSeries and QScatterSeries.

@@ -5,7 +5,7 @@
     \example zoomlinechart
     \title Zoom Line Example
     \ingroup qtcharts_examples
-    \examplecategory {Data Visualization & 3D}
+    \examplecategory {Data Visualization}
     \brief The example shows how to create your own custom zooming effect.
 
     The example shows how to create your own custom zooming effect with QRubberBand by using a mouse

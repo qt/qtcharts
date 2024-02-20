@@ -5,7 +5,7 @@
     \example qmlweather
     \title Qml Weather
     \ingroup qtcharts_examples
-    \examplecategory {Data Visualization & 3D}
+    \examplecategory {Data Visualization}
     \image examples_qmlweather.png
 
     \brief This is a basic demonstration showing how to use the different chart types by using qml.

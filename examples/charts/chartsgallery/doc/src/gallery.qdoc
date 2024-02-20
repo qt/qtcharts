@@ -5,7 +5,7 @@
 \example chartsgallery
 \title Charts with Widgets Gallery
 \ingroup qtcharts_examples
-\examplecategory {Data Visualization & 3D}
+\examplecategory {Data Visualization}
 \brief An application that demonstrates the Qt Charts Widgets API.
 
 \image ChartWidgetGallery.png

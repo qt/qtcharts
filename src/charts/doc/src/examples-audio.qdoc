@@ -5,7 +5,7 @@
     \example audio
     \title Audio Samples vs Sound Level
     \ingroup qtcharts_examples
-    \examplecategory {Data Visualization & 3D}
+    \examplecategory {Data Visualization}
     \brief This example shows the drawing of microphone samples vs audio level.
     \image examples_audio.png
 
