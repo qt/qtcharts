@@ -339,7 +339,7 @@ void QAbstractSeries::hide()
 }
 
 /*!
-    Attaches the axis specified by \a axis to the series.
+    Attaches the axis specified by \a axis to the series. attachAxis() should be called after addSeries().
 
     Returns \c true if the axis was attached successfully, \c false otherwise.
 
@@ -353,12 +353,12 @@ bool QAbstractSeries::attachAxis(QAbstractAxis* axis)
     if (d_ptr->m_chart)
         return d_ptr->m_chart->d_ptr->m_dataset->attachAxis(this, axis);
 
-    qWarning("Series not in the chart. Please addSeries to chart first.");
+    qWarning("Series not in the chart. attachAxis() should be called after addSeries().");
     return false;
 }
 
 /*!
-    Detaches the axis specified by \a axis from the series.
+    Detaches the axis specified by \a axis from the series. 
 
     Returns \c true if the axis was detached successfully, \c false otherwise.
 
