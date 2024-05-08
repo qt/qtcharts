@@ -54,8 +54,11 @@ void AbstractChartLayout::setGeometry(const QRectF &rect)
     if (!rect.isValid())
         return;
 
-    // If the chart has a fixed geometry then don't update visually
-    const bool updateLayout = (!m_presenter->isFixedGeometry() || m_presenter->geometry() == rect);
+    // If the chart has a fixed geometry then don't update visually, unless plotbackground is
+    // visible.
+    const bool updateLayout = (!m_presenter->isFixedGeometry()
+                               || m_presenter->isPlotAreaBackgroundVisible()
+                               || m_presenter->geometry() == rect);
     if (m_presenter->chart()->isVisible()) {
         QList<ChartAxisElement *> axes = m_presenter->axisItems();
         ChartTitle *title = m_presenter->titleElement();
