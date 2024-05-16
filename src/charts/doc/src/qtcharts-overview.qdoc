@@ -14,6 +14,8 @@
 
     \image examples_chartthemes_light.png
 
+    \include maintenance-phase.qdocinc
+
     The QChart class manages the graphical representation of different types of
     series and other chart related objects, such as legend and axes. QChart is a
     QGraphicsWidget that can be shown in a QGraphicsScene.

@@ -1,0 +1,5 @@
+\note The Qt Charts module is in the maintenance phase. For new projects,
+consider using the \l{Qt Graphs} module. To render 2D charts, QtGraphs
+uses \l {Qt Quick Shapes QML Types} {Qt Quick Shapes}, which is a more
+modern GUI technology compared to the outdated Qt Graphics View Framework
+used by the Qt Charts module.

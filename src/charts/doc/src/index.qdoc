@@ -11,6 +11,8 @@
     types. Users can easily create impressive charts by selecting one of the
     themes.
 
+    \include maintenance-phase.qdocinc
+
     The Qt Charts QML API is an intuitive and simple way to show charts in your
     QML applications.
 

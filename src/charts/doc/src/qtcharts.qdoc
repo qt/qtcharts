@@ -11,6 +11,8 @@
     Charts API is built on top of Qt Graphics View Framework. Charts can be displayed as QGraphicsWidget using the QChart class. However
     there is also the convenience class QChartView, which is QWidget based. These enable us to quickly use Qt Charts as a normal Qt widget.
 
+    \include maintenance-phase.qdocinc
+
     If you intend to use Qt Charts C++ classes in your application, use the
     following include and using directives:
 
