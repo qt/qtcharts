@@ -18,6 +18,11 @@ examplesinstallpath = charts
 
 sources.fileextensions  = "*.cpp *.qdoc"
 
+# Define a custom file name suffix for C++ types as Qt Graphs
+# module declares identically-named, documented types.
+outputsuffixes      = CPP
+outputsuffixes.CPP  = -qtcharts
+
 depends = qtcore qtgraphs qtgui qtwidgets qtqml qtquick qtmultimedia qtdoc qtcmake
 
 qhp.projects                  = QtCharts
