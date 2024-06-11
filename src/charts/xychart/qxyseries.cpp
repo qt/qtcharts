@@ -947,13 +947,14 @@ void QXYSeries::sizeBy(const QList<qreal> &sourceData, const qreal minSize, cons
     }
 
     const qreal range = max - min;
+    const qreal sizeRange = maxSize - minSize;
 
     for (int i = 0; i < sourceData.size() && i < d->m_points.size(); ++i) {
         qreal pointSize = minSize;
         if (range != 0) {
             const qreal startValue = sourceData.at(i) - min;
             const qreal percentage = startValue / range;
-            pointSize = qMax(minSize, percentage * maxSize);
+            pointSize = minSize + (percentage * sizeRange);
         }
         setPointConfiguration(i, QXYSeries::PointConfiguration::Size, pointSize);
     }

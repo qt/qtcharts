@@ -153,32 +153,32 @@ void ScatterChartItem::resizeMarker(QGraphicsItem *marker, const int size)
     switch (m_markerShape) {
     case QScatterSeries::MarkerShapeCircle: {
         QGraphicsEllipseItem *item = static_cast<QGraphicsEllipseItem *>(marker);
-        item->setRect(item->x(), item->y(), size, size);
+        item->setRect(0, 0, size, size);
         break;
     }
     case QScatterSeries::MarkerShapeRectangle: {
         QGraphicsRectItem *item = static_cast<QGraphicsRectItem *>(marker);
-        item->setRect(item->x(), item->y(), size, size);
+        item->setRect(0, 0, size, size);
         break;
     }
     case QScatterSeries::MarkerShapeRotatedRectangle: {
         QGraphicsPolygonItem *item = static_cast<QGraphicsPolygonItem *>(marker);
-        item->setPolygon(RotatedRectangleMarker::polygon(item->x(), item->y(), size, size));
+        item->setPolygon(RotatedRectangleMarker::polygon(0, 0, size, size));
         break;
     }
     case QScatterSeries::MarkerShapeTriangle: {
         QGraphicsPolygonItem *item = static_cast<QGraphicsPolygonItem *>(marker);
-        item->setPolygon(TriangleMarker::polygon(item->x(), item->y(), size, size));
+        item->setPolygon(TriangleMarker::polygon(0, 0, size, size));
         break;
     }
     case QScatterSeries::MarkerShapeStar: {
         QGraphicsPolygonItem *item = static_cast<QGraphicsPolygonItem *>(marker);
-        item->setPolygon(StarMarker::polygon(item->x(), item->y(), size, size));
+        item->setPolygon(StarMarker::polygon(0, 0, size, size));
         break;
     }
     case QScatterSeries::MarkerShapePentagon: {
         QGraphicsPolygonItem *item = static_cast<QGraphicsPolygonItem *>(marker);
-        item->setPolygon(PentagonMarker::polygon(item->x(), item->y(), size, size));
+        item->setPolygon(PentagonMarker::polygon(0, 0, size, size));
         break;
     }
     default:
@@ -259,7 +259,7 @@ void ScatterChartItem::updateGeometry()
                     static_cast<QAbstractGraphicsShapeItem *>(items.at(i));
             const QPointF &point = points.at(i);
 
-            if (m_pointsConfiguration.contains(i) && m_pointsConfigurationDirty) {
+            if (m_pointsConfiguration.contains(i)) {
                 const auto &conf = m_pointsConfiguration[i];
                 if (conf.contains(QXYSeries::PointConfiguration::Size))
                     resizeMarker(
@@ -484,7 +484,8 @@ void ScatterChartItem::handleSeriesUpdated()
     if (count == 0)
         return;
 
-    m_pointsConfigurationDirty = m_series->pointsConfiguration() != m_pointsConfiguration;
+    const bool pointsConfigurationDirty =
+            m_series->pointsConfiguration() != m_pointsConfiguration;
 
     bool recreate = m_visible != m_series->isVisible()
                     || m_pointsVisible != m_series->pointsVisible()
@@ -492,7 +493,7 @@ void ScatterChartItem::handleSeriesUpdated()
                     || m_markerShape != m_series->markerShape()
                     || m_selectedColor != m_series->selectedColor()
                     || m_selectedPoints != m_series->selectedPoints()
-                    || m_pointsConfigurationDirty;
+                    || pointsConfigurationDirty;
     m_visible = m_series->isVisible();
     m_markerSize = m_series->markerSize();
     m_markerShape = m_series->markerShape();
