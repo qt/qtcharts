@@ -46,6 +46,8 @@ public:
     };
     Q_ENUM(PointConfiguration)
 
+    using PointsConfigurationHash = QHash<int, QHash<PointConfiguration, QVariant>>;
+
 public:
     ~QXYSeries();
     void append(qreal x, qreal y);
@@ -145,7 +147,7 @@ public:
     void setPointsConfiguration(
             const QHash<int, QHash<QXYSeries::PointConfiguration, QVariant>> &pointsConfiguration);
     QHash<PointConfiguration, QVariant> pointConfiguration(const int index) const;
-    QHash<int, QHash<PointConfiguration, QVariant>> pointsConfiguration() const;
+    PointsConfigurationHash pointsConfiguration() const;
 
     void sizeBy(const QList<qreal> &sourceData, const qreal minSize, const qreal maxSize);
     void colorBy(const QList<qreal> &sourceData, const QLinearGradient &gradient = QLinearGradient());
@@ -176,7 +178,7 @@ Q_SIGNALS:
     Q_REVISION(6, 2) void bestFitLinePenChanged(const QPen &pen);
     Q_REVISION(6, 2) void bestFitLineColorChanged(const QColor &color);
     Q_REVISION(6, 2) void pointsConfigurationChanged(
-            const QHash<int, QHash<PointConfiguration, QVariant>> &configuration);
+            const QXYSeries::PointsConfigurationHash &configuration);
     void markerSizeChanged(qreal size);
 
 private:
