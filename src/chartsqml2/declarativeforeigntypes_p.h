@@ -17,6 +17,7 @@
 #include <QtQml/qqml.h>
 
 #if QT_CONFIG(charts_bar_chart)
+#include <QtCharts/qbarset.h>
 #include <QtCharts/qbarmodelmapper.h>
 #include <QtCharts/qhbarmodelmapper.h>
 #include <QtCharts/qvbarmodelmapper.h>
@@ -28,18 +29,21 @@
 #include <QtCharts/qpiemodelmapper.h>
 #include <QtCharts/qhpiemodelmapper.h>
 #include <QtCharts/qvpiemodelmapper.h>
+#include <QtCharts/qpieslice.h>
 #endif
 
 #if QT_CONFIG(charts_boxplot_chart)
 #include <QtCharts/qboxplotmodelmapper.h>
 #include <QtCharts/qhboxplotmodelmapper.h>
 #include <QtCharts/qvboxplotmodelmapper.h>
+#include <QtCharts/qboxset.h>
 #endif
 
 #if QT_CONFIG(charts_candlestick_chart)
 #include <QtCharts/qcandlestickmodelmapper.h>
 #include <QtCharts/qhcandlestickmodelmapper.h>
 #include <QtCharts/qvcandlestickmodelmapper.h>
+#include <QtCharts/qcandlestickset.h>
 #endif
 
 #if QT_CONFIG(charts_datetime_axis)
@@ -119,6 +123,14 @@ struct CppQAbstractBarSeries
     QML_EXTRA_VERSION(2, 0)
     QML_UNCREATABLE("Uncreatable base type")
 };
+
+struct CppQListBarSet
+{
+    Q_GADGET
+    QML_ANONYMOUS
+    QML_FOREIGN(QList<QBarSet *>)
+    QML_SEQUENTIAL_CONTAINER(QBarSet *)
+};
 #endif
 
 #if QT_CONFIG(charts_pie_chart)
@@ -149,6 +161,14 @@ struct CppQVPieModelMapper
     QML_ADDED_IN_VERSION(1, 0)
     QML_EXTRA_VERSION(2, 0)
 };
+
+struct CppQListPieSlice
+{
+    Q_GADGET
+    QML_ANONYMOUS
+    QML_FOREIGN(QList<QPieSlice *>)
+    QML_SEQUENTIAL_CONTAINER(QPieSlice *)
+};
 #endif
 
 #if QT_CONFIG(charts_boxplot_chart)
@@ -176,6 +196,14 @@ struct CppQVBoxPlotModelMapper
     QML_NAMED_ELEMENT(VBoxPlotModelMapper)
     QML_ADDED_IN_VERSION(2, 0)
 };
+
+struct CppQListBoxSet
+{
+    Q_GADGET
+    QML_ANONYMOUS
+    QML_FOREIGN(QList<QBoxSet *>)
+    QML_SEQUENTIAL_CONTAINER(QBoxSet *)
+};
 #endif
 
 #if QT_CONFIG(charts_candlestick_chart)
@@ -202,6 +230,14 @@ struct CppQVCandlestickModelMapper
     QML_FOREIGN(QVCandlestickModelMapper)
     QML_NAMED_ELEMENT(VCandlestickModelMapper)
     QML_ADDED_IN_VERSION(2, 2)
+};
+
+struct CppQListCandlestickSet
+{
+    Q_GADGET
+    QML_ANONYMOUS
+    QML_FOREIGN(QList<QCandlestickSet *>)
+    QML_SEQUENTIAL_CONTAINER(QCandlestickSet *)
 };
 #endif
 
@@ -299,6 +335,14 @@ struct CppQXYSeries
     QML_ADDED_IN_VERSION(1, 0)
     QML_EXTRA_VERSION(2, 0)
     QML_UNCREATABLE("Uncreatable base type")
+};
+
+struct CppQHashPointConfiguration
+{
+    Q_GADGET
+    QML_ANONYMOUS
+    QML_FOREIGN(QXYSeries::PointsConfigurationHash)
+    QML_EXTENDED(CppQHashPointConfiguration)
 };
 
 struct CppQLegend
