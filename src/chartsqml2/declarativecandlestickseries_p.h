@@ -102,7 +102,6 @@ Q_SIGNALS:
     void brushFilenameChanged(const QString &brushFilename);
 
 public Q_SLOTS:
-    static void appendSeriesChildren(QQmlListProperty<QObject> *list, QObject *element);
     void onClicked(QCandlestickSet *set);
     void onHovered(bool status, QCandlestickSet *set);
     void onPressed(QCandlestickSet *set);
@@ -116,6 +115,8 @@ public:
     DeclarativeAxes *m_axes;
 
 private:
+    static void appendSeriesChildren(QQmlListProperty<QObject> *list, QObject *element);
+
     QString m_brushFilename;
     QImage m_brushImage;
 };

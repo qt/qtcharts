@@ -95,7 +95,6 @@ Q_SIGNALS:
     Q_REVISION(1, 4) void brushChanged();
 
 public Q_SLOTS:
-    static void appendDeclarativeChildren(QQmlListProperty<QObject> *list, QObject *element);
     void handleCountChanged(int index);
 
 private Q_SLOTS:
@@ -105,6 +104,8 @@ public:
     DeclarativeAxes *m_axes;
 
 private:
+    static void appendDeclarativeChildren(QQmlListProperty<QObject> *list, QObject *element);
+
     QString m_brushFilename;
     QImage m_brushImage;
 };
