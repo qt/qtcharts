@@ -95,10 +95,11 @@ Q_SIGNALS:
     Q_REVISION(1, 1) void capStyleChanged(Qt::PenCapStyle capStyle);
 
 public Q_SLOTS:
-    static void appendDeclarativeChildren(QQmlListProperty<QObject> *list, QObject *element);
     void handleCountChanged(int index);
 
 public:
+    static void appendDeclarativeChildren(QQmlListProperty<QObject> *list, QObject *element);
+
     DeclarativeAxes *m_axes;
 };
 

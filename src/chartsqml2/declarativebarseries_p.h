@@ -114,10 +114,11 @@ Q_SIGNALS:
     Q_REVISION(1, 2) void axisXTopChanged(QAbstractAxis *axis);
     Q_REVISION(1, 2) void axisYRightChanged(QAbstractAxis *axis);
 
-public Q_SLOTS:
+public:
+    // TODO: This method is used from classes that don't inherit DeclarativeBarSeries
+    //       Its implementation is empty. None of this makes any sense.
     static void appendSeriesChildren(QQmlListProperty<QObject> *list, QObject *element);
 
-public:
     DeclarativeAxes *m_axes;
 };
 
@@ -164,7 +165,7 @@ Q_SIGNALS:
     Q_REVISION(1, 2) void axisXTopChanged(QAbstractAxis *axis);
     Q_REVISION(1, 2) void axisYRightChanged(QAbstractAxis *axis);
 
-public Q_SLOTS:
+private:
     static void appendSeriesChildren(QQmlListProperty<QObject> *list, QObject *element);
 
 public:
@@ -214,7 +215,7 @@ Q_SIGNALS:
     Q_REVISION(1, 2) void axisXTopChanged(QAbstractAxis *axis);
     Q_REVISION(1, 2) void axisYRightChanged(QAbstractAxis *axis);
 
-public Q_SLOTS:
+private:
     static void appendSeriesChildren(QQmlListProperty<QObject> *list, QObject *element);
 
 public:
@@ -264,7 +265,7 @@ Q_SIGNALS:
     Q_REVISION(1, 2) void axisXTopChanged(QAbstractAxis *axis);
     Q_REVISION(1, 2) void axisYRightChanged(QAbstractAxis *axis);
 
-public Q_SLOTS:
+private:
     static void appendSeriesChildren(QQmlListProperty<QObject> *list, QObject *element);
 
 public:
@@ -314,7 +315,7 @@ Q_SIGNALS:
     Q_REVISION(1, 2) void axisXTopChanged(QAbstractAxis *axis);
     Q_REVISION(1, 2) void axisYRightChanged(QAbstractAxis *axis);
 
-public Q_SLOTS:
+private:
     static void appendSeriesChildren(QQmlListProperty<QObject> *list, QObject *element);
 
 public:
@@ -364,7 +365,7 @@ Q_SIGNALS:
     Q_REVISION(1, 2) void axisXTopChanged(QAbstractAxis *axis);
     Q_REVISION(1, 2) void axisYRightChanged(QAbstractAxis *axis);
 
-public Q_SLOTS:
+private:
     static void appendSeriesChildren(QQmlListProperty<QObject> *list, QObject *element);
 
 public:

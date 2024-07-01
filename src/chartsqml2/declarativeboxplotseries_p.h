@@ -125,7 +125,6 @@ Q_SIGNALS:
     Q_REVISION(1, 4) void brushFilenameChanged(const QString &brushFilename);
 
 public Q_SLOTS:
-    static void appendSeriesChildren(QQmlListProperty<QObject> *list, QObject *element);
     void onHovered(bool status, QBoxSet *boxset);
     void onClicked(QBoxSet *boxset);
     void onPressed(QBoxSet *boxset);
@@ -139,6 +138,8 @@ public:
     DeclarativeAxes *m_axes;
 
 private:
+    static void appendSeriesChildren(QQmlListProperty<QObject> *list, QObject *element);
+
     QString m_brushFilename;
     QImage m_brushImage;
 };

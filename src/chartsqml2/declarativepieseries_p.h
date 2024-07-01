@@ -75,9 +75,11 @@ Q_SIGNALS:
     void sliceRemoved(QPieSlice *slice);
 
 public Q_SLOTS:
-    static void appendSeriesChildren(QQmlListProperty<QObject> *list, QObject *element);
     void handleAdded(const QList<QPieSlice *> &slices);
     void handleRemoved(const QList<QPieSlice *> &slices);
+
+private:
+    static void appendSeriesChildren(QQmlListProperty<QObject> *list, QObject *element);
 };
 
 QT_END_NAMESPACE
