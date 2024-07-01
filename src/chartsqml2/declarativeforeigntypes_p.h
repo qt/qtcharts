@@ -364,6 +364,22 @@ struct CppQGraphicsLayout
     QML_USING(void)
 };
 
+struct CppQPen
+{
+    Q_GADGET
+    QML_FOREIGN(QPen)
+    QML_EXTENDED(CppQPen)
+    QML_ANONYMOUS
+};
+
+struct CppQBrush
+{
+    Q_GADGET
+    QML_FOREIGN(QBrush)
+    QML_EXTENDED(CppQBrush)
+    QML_ANONYMOUS
+};
+
 QT_END_NAMESPACE
 
 #endif // DECLARATIVEFOREIGNTYPES_H
