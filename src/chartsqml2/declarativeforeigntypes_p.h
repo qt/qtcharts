@@ -355,6 +355,15 @@ struct CppQLegend
     QML_UNCREATABLE("Uncreatable base type")
 };
 
+// You cannot do anything useful with a graphics layout here.
+// Make it impossible to pass it around in QML.
+struct CppQGraphicsLayout
+{
+    Q_GADGET
+    QML_FOREIGN(QGraphicsLayout)
+    QML_USING(void)
+};
+
 QT_END_NAMESPACE
 
 #endif // DECLARATIVEFOREIGNTYPES_H
