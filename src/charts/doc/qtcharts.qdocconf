@@ -32,7 +32,11 @@ qhp.QtCharts.virtualFolder    = qtcharts
 qhp.QtCharts.indexTitle       = Qt Charts
 qhp.QtCharts.indexRoot        =
 
-qhp.QtCharts.subprojects = classes types examples
+qhp.QtCharts.subprojects = manual examples classes types
+
+qhp.QtCharts.subprojects.manual.title = Qt Charts
+qhp.QtCharts.subprojects.manual.indexTitle = Qt Charts module topics
+qhp.QtCharts.subprojects.manual.type = manual
 
 qhp.QtCharts.subprojects.classes.title      = C++ Classes
 qhp.QtCharts.subprojects.classes.indexTitle = Qt Charts C++ Classes
@@ -52,3 +56,6 @@ qhp.QtCharts.subprojects.examples.sortPages  = true
 navigation.landingpage = Qt Charts
 navigation.cppclassespage = Qt Charts C++ Classes
 navigation.qmltypespage = Qt Charts QML Types
+# Auto-generate navigation linking based on "Qt Charts module topics":
+navigation.toctitles = "Qt Charts module topics"
+navigation.toctitles.inclusive = false
