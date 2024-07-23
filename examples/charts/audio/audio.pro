@@ -10,7 +10,7 @@ SOURCES += \
     xyseriesiodevice.cpp
 
 darwin{
-    QMAKE_INFO_PLIST = apple/Info.plist.in
+    QMAKE_INFO_PLIST = apple/Info.qmake.plist
 }
 
 target.path = $$[QT_INSTALL_EXAMPLES]/charts/audio
