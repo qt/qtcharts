@@ -18,19 +18,17 @@ Item {
         anchors.leftMargin: 10
 //![1]
 
-        onSignalSourceChanged: {
+        onSignalSourceChanged: (source, signalCount, sampleCount) => {
             if (source == "sin")
                 dataSource.generateData(0, signalCount, sampleCount);
             else
                 dataSource.generateData(1, signalCount, sampleCount);
             scopeView.axisX().max = sampleCount;
         }
-        onSeriesTypeChanged: scopeView.changeSeriesType(type);
-        onRefreshRateChanged: scopeView.changeRefreshRate(rate);
-        onAntialiasingEnabled: scopeView.antialiasing = enabled;
-        onOpenGlChanged: {
-            scopeView.openGL = enabled;
-        }
+        onSeriesTypeChanged: type => scopeView.changeSeriesType(type);
+        onRefreshRateChanged: rate => scopeView.changeRefreshRate(rate);
+        onAntialiasingEnabled: enabled => scopeView.antialiasing = enabled;
+        onOpenGlChanged: enabled => scopeView.openGL = enabled;
     }
 
 //![2]
