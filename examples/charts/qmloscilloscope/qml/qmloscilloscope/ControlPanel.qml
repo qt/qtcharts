@@ -8,7 +8,6 @@ ColumnLayout {
     property alias openGLButton: openGLButton
     property alias antialiasButton: antialiasButton
 
-    signal animationsEnabled(bool enabled)
     signal seriesTypeChanged(string type)
     signal refreshRateChanged(variant rate);
     signal signalSourceChanged(string source, int signalCount, int sampleCount);
@@ -45,7 +44,7 @@ ColumnLayout {
         text: "Source: "
         items: ["sin", "linear"]
         currentSelection: 0
-        onSelectionChanged: signalSourceChanged(
+        onSelectionChanged: selection => signalSourceChanged(
                                 selection,
                                 5,
                                 sampleCountButton.items[sampleCountButton.currentSelection]);
@@ -56,7 +55,7 @@ ColumnLayout {
         text: "Samples: "
         items: ["6", "128", "1024", "10000"]
         currentSelection: 2
-        onSelectionChanged: signalSourceChanged(
+        onSelectionChanged: selection => signalSourceChanged(
                                 signalSourceButton.items[signalSourceButton.currentSelection],
                                 5,
                                 selection);
