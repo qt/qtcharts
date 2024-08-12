@@ -24,6 +24,10 @@ QSizeF VerticalAxis::sizeHint(Qt::SizeHint which, const QSizeF &constraint) cons
 {
     Q_UNUSED(constraint);
     QSizeF sh(0, 0);
+    // Size hint from here is used as the base for label size hints; if labels are not
+    // visible, we need to increase the size or we end up showing "..." when
+    // the title should be visible
+    qreal labelPaddingFactor = labelsVisible() ? 1 : 2;
 
     if (axis()->titleText().isEmpty() || !titleItem()->isVisible())
         return sh;
@@ -32,13 +36,16 @@ QSizeF VerticalAxis::sizeHint(Qt::SizeHint which, const QSizeF &constraint) cons
     case Qt::MinimumSize: {
         QRectF titleRect = ChartPresenter::textBoundingRect(axis()->titleFont(),
                                                             QStringLiteral("..."));
-        sh = QSizeF(titleRect.height() + (titlePadding() * 2.0), titleRect.width());
+        sh = QSizeF(labelPaddingFactor * (titleRect.height() + (titlePadding() * 2.0)),
+                    titleRect.width());
         break;
     }
     case Qt::MaximumSize:
     case Qt::PreferredSize: {
-        QRectF titleRect = ChartPresenter::textBoundingRect(axis()->titleFont(), axis()->titleText());
-        sh = QSizeF(titleRect.height() + (titlePadding() * 2.0), titleRect.width());
+        QRectF titleRect = ChartPresenter::textBoundingRect(axis()->titleFont(),
+                                                            axis()->titleText());
+        sh = QSizeF(labelPaddingFactor * (titleRect.height() + (titlePadding() * 2.0)),
+                    titleRect.width());
         break;
     }
     default:
