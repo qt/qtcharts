@@ -22,6 +22,7 @@ SplineChartItem::SplineChartItem(QSplineSeries *series, QGraphicsItem *item)
       m_pointLabelsFont(series->pointLabelsFont()),
       m_pointLabelsColor(series->pointLabelsColor()),
       m_pointLabelsClipping(true),
+      m_lastHoveredMatchedPos{qQNaN(), qQNaN()},
       m_mousePressed(false)
 {
     setAcceptHoverEvents(true);
@@ -603,22 +604,30 @@ void SplineChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void SplineChartItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
-    QPointF matchedP = matchForLightMarker(event->pos());
-    if (!qIsNaN(matchedP.x()))
-        emit XYChart::hovered(matchedP, true);
-    else
-        emit XYChart::hovered(domain()->calculateDomainPoint(event->pos()), true);
+    // Identical code in LineChartItem
+    const QPointF matchedP = hoverPoint(event->pos());
+    m_lastHoveredMatchedPos = matchedP;
+    emit XYChart::hovered(matchedP, true);
 
     QGraphicsItem::hoverEnterEvent(event);
 }
 
+void SplineChartItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
+{
+    const QPointF matchedP = hoverPoint(event->pos());
+    if (!fuzzyComparePointF(matchedP, m_lastHoveredMatchedPos)) {
+        emit XYChart::hovered(matchedP, true);
+        m_lastHoveredMatchedPos = matchedP;
+    }
+
+    QGraphicsItem::hoverMoveEvent(event);
+}
+
 void SplineChartItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
-    QPointF matchedP = matchForLightMarker(event->pos());
-    if (!qIsNaN(matchedP.x()))
-        emit XYChart::hovered(matchedP, false);
-    else
-        emit XYChart::hovered(domain()->calculateDomainPoint(event->pos()), false);
+    const QPointF matchedP = hoverPoint(event->pos());
+    emit XYChart::hovered(matchedP, false);
+    m_lastHoveredMatchedPos = {qQNaN(), qQNaN()};
 
     QGraphicsItem::hoverLeaveEvent(event);
 }

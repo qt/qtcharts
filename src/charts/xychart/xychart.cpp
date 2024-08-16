@@ -230,7 +230,7 @@ bool XYChart::isEmpty()
     return domain()->isEmpty() || m_series->points().isEmpty();
 }
 
-QPointF XYChart::matchForLightMarker(const QPointF &eventPos)
+QPointF XYChart::matchForLightMarker(const QPointF &eventPos) const
 {
     if (m_series->lightMarker().isNull()
             && (m_series->selectedLightMarker().isNull()
@@ -267,6 +267,21 @@ QPointF XYChart::matchForLightMarker(const QPointF &eventPos)
         }
     }
     return QPointF(qQNaN(), qQNaN()); // 0,0 could actually be in points()
+}
+
+QPointF XYChart::hoverPoint(const QPointF &eventPos) const
+{
+    const QPointF result = matchForLightMarker(eventPos);
+    return qIsNaN(result.x())
+        ? domain()->calculateDomainPoint(eventPos)
+        : result;
+}
+
+bool XYChart::fuzzyComparePointF(const QPointF &p1, const QPointF &p2)
+{
+    // Should normally not be NaN, fail on safe side
+    return !qIsNaN(p1.x()) && !qIsNaN(p2.x())
+           && qFuzzyCompare(p1.x(), p2.x()) && qFuzzyCompare(p1.y(), p2.y());
 }
 
 QT_END_NAMESPACE
