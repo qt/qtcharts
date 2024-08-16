@@ -68,12 +68,15 @@ protected:
     virtual void updateGlChart();
     virtual void refreshGlChart();
 
-    QPointF matchForLightMarker(const QPointF &eventPos);
+    QPointF matchForLightMarker(const QPointF &eventPos) const;
 
 private:
     inline bool isEmpty();
 
 protected:
+    QPointF hoverPoint(const QPointF &eventPos) const;
+    static bool fuzzyComparePointF(const QPointF &p1, const QPointF &p2);
+
     QXYSeries *m_series;
     QList<QPointF> m_points;
     QList<int> m_selectedPoints;

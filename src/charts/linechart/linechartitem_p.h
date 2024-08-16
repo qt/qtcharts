@@ -46,6 +46,7 @@ protected:
     void updateGeometry() override;
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event) override;
+    void hoverMoveEvent(QGraphicsSceneHoverEvent *event) override;
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) override;
@@ -74,6 +75,7 @@ private:
     bool m_pointLabelsClipping;
 
     QPointF m_lastMousePos;
+    QPointF m_lastHoveredMatchedPos;
     bool m_mousePressed;
 };
 
