@@ -24,7 +24,7 @@ QT_BEGIN_NAMESPACE
 /*!
     \qmltype CandlestickSet
     \since QtCharts 2.2
-    \instantiates QCandlestickSet
+    \nativetype QCandlestickSet
     \inqmlmodule QtCharts
     \brief Represents a single candlestick item in a candlestick chart.
 

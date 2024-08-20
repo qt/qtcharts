@@ -44,7 +44,7 @@ QT_BEGIN_NAMESPACE
 */
 /*!
     \qmltype PieSeries
-    \instantiates QPieSeries
+    \nativetype QPieSeries
     \inqmlmodule QtCharts
 
     \inherits AbstractSeries

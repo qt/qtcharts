@@ -39,7 +39,7 @@ QT_BEGIN_NAMESPACE
 */
 /*!
     \qmltype Legend
-    \instantiates QLegend
+    \nativetype QLegend
     \inqmlmodule QtCharts
 
     \brief Displays the legend of a chart.

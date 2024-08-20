@@ -28,7 +28,7 @@ QT_BEGIN_NAMESPACE
 */
 /*!
     \qmltype VBarModelMapper
-    \instantiates QVBarModelMapper
+    \nativetype QVBarModelMapper
     \inqmlmodule QtCharts
 
     \inherits BarModelMapper

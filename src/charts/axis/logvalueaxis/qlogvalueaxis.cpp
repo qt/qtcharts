@@ -27,7 +27,7 @@ QT_BEGIN_NAMESPACE
 
 /*!
     \qmltype LogValueAxis
-    \instantiates QLogValueAxis
+    \nativetype QLogValueAxis
     \inqmlmodule QtCharts
 
     \brief Adds a logarithmic scale to a chart's axis.

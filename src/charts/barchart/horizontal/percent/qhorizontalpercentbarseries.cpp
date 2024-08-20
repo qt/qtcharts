@@ -30,7 +30,7 @@ QT_BEGIN_NAMESPACE
 */
 /*!
     \qmltype HorizontalPercentBarSeries
-    \instantiates QHorizontalPercentBarSeries
+    \nativetype QHorizontalPercentBarSeries
     \inqmlmodule QtCharts
 
     \inherits AbstractBarSeries

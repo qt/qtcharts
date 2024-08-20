@@ -29,7 +29,7 @@ QT_BEGIN_NAMESPACE
 */
 /*!
     \qmltype VBoxPlotModelMapper
-    \instantiates QVBoxPlotModelMapper
+    \nativetype QVBoxPlotModelMapper
     \inqmlmodule QtCharts
 
     \brief Vertical model mapper for box plot series.

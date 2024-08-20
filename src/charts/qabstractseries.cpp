@@ -27,7 +27,7 @@ QT_BEGIN_NAMESPACE
 */
 /*!
     \qmltype AbstractSeries
-    \instantiates QAbstractSeries
+    \nativetype QAbstractSeries
     \inqmlmodule QtCharts
 
     \brief Base type for all Qt Chart series types.

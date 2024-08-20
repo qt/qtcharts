@@ -26,7 +26,7 @@ QT_BEGIN_NAMESPACE
 */
 /*!
     \qmltype HBarModelMapper
-    \instantiates QHBarModelMapper
+    \nativetype QHBarModelMapper
     \inqmlmodule QtCharts
 
     \brief Horizontal model mapper for bar series.

@@ -32,7 +32,7 @@
 */
 /*!
     \qmltype SplineSeries
-    \instantiates QSplineSeries
+    \nativetype QSplineSeries
     \inqmlmodule QtCharts
 
     \inherits XYSeries

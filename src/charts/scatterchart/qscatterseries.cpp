@@ -34,7 +34,7 @@
 */
 /*!
     \qmltype ScatterSeries
-    \instantiates QScatterSeries
+    \nativetype QScatterSeries
     \inqmlmodule QtCharts
 
     \inherits XYSeries

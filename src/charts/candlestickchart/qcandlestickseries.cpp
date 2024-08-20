@@ -45,7 +45,7 @@ QT_BEGIN_NAMESPACE
 /*!
     \qmltype CandlestickSeries
     \since QtCharts 2.2
-    \instantiates QCandlestickSeries
+    \nativetype QCandlestickSeries
     \inqmlmodule QtCharts
     \inherits AbstractSeries
     \brief Represents a series of data as candlesticks.

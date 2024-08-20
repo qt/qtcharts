@@ -31,7 +31,7 @@ QT_BEGIN_NAMESPACE
 
 /*!
     \qmltype PieSlice
-    \instantiates QPieSlice
+    \nativetype QPieSlice
     \inqmlmodule QtCharts
 
     \brief Represents a single slice in a pie series.
