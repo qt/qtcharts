@@ -13,7 +13,7 @@ QT_BEGIN_NAMESPACE
 
 /*!
     \qmltype BoxSet
-    \instantiates QBoxSet
+    \nativetype QBoxSet
     \inqmlmodule QtCharts
 
     \brief Represents one item in a box-and-whiskers chart.
@@ -128,7 +128,7 @@ QT_BEGIN_NAMESPACE
 
 /*!
     \qmltype BoxPlotSeries
-    \instantiates QBoxPlotSeries
+    \nativetype QBoxPlotSeries
     \inqmlmodule QtCharts
 
     \inherits AbstractSeries

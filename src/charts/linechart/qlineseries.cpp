@@ -30,7 +30,7 @@ QT_BEGIN_NAMESPACE
 */
 /*!
     \qmltype LineSeries
-    \instantiates QLineSeries
+    \nativetype QLineSeries
     \inqmlmodule QtCharts
 
     \inherits XYSeries

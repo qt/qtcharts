@@ -20,7 +20,7 @@ QT_BEGIN_NAMESPACE
 */
 /*!
     \qmltype HPieModelMapper
-    \instantiates QHPieModelMapper
+    \nativetype QHPieModelMapper
     \inqmlmodule QtCharts
 
     \brief Horizontal model mapper for pie series.

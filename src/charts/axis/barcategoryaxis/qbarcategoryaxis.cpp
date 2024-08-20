@@ -40,7 +40,7 @@ QT_BEGIN_NAMESPACE
 
 /*!
     \qmltype BarCategoryAxis
-    \instantiates QBarCategoryAxis
+    \nativetype QBarCategoryAxis
     \inqmlmodule QtCharts
 
     \inherits AbstractAxis

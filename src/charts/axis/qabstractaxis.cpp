@@ -23,7 +23,7 @@ QT_BEGIN_NAMESPACE
 */
 /*!
     \qmltype AbstractAxis
-    \instantiates QAbstractAxis
+    \nativetype QAbstractAxis
     \inqmlmodule QtCharts
 
     \brief A base type used for specialized axis types.

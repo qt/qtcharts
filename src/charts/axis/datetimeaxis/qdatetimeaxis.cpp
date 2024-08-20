@@ -59,7 +59,7 @@ QT_BEGIN_NAMESPACE
 
 /*!
     \qmltype DateTimeAxis
-    \instantiates QDateTimeAxis
+    \nativetype QDateTimeAxis
     \inqmlmodule QtCharts
 
     \brief Adds dates and times to a chart's axis.

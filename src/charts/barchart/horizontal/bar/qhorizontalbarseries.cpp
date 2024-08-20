@@ -28,7 +28,7 @@ QT_BEGIN_NAMESPACE
 */
 /*!
     \qmltype HorizontalBarSeries
-    \instantiates QHorizontalBarSeries
+    \nativetype QHorizontalBarSeries
     \inqmlmodule QtCharts
 
     \inherits AbstractBarSeries

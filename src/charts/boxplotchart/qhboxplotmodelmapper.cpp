@@ -30,7 +30,7 @@ QT_BEGIN_NAMESPACE
 */
 /*!
     \qmltype HBoxPlotModelMapper
-    \instantiates QHBoxPlotModelMapper
+    \nativetype QHBoxPlotModelMapper
     \inqmlmodule QtCharts
 
     \brief Horizontal model mapper for box plot series.

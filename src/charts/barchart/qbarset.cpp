@@ -24,7 +24,7 @@ QT_BEGIN_NAMESPACE
 */
 /*!
     \qmltype BarSet
-    \instantiates QBarSet
+    \nativetype QBarSet
     \inqmlmodule QtCharts
 
     \brief Represents one set of bars in a bar chart.

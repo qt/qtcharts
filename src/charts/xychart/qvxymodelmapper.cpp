@@ -25,7 +25,7 @@ QT_BEGIN_NAMESPACE
 */
 /*!
     \qmltype VXYModelMapper
-    \instantiates QVXYModelMapper
+    \nativetype QVXYModelMapper
     \inqmlmodule QtCharts
 
     \brief A vertical model mapper for XYSeries.

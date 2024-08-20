@@ -38,7 +38,7 @@ QT_BEGIN_NAMESPACE
 */
 /*!
     \qmltype ValueAxis
-    \instantiates QValueAxis
+    \nativetype QValueAxis
     \inqmlmodule QtCharts
 
     \inherits AbstractAxis

@@ -37,7 +37,7 @@ QT_BEGIN_NAMESPACE
 
 /*!
     \qmltype AreaSeries
-    \instantiates QAreaSeries
+    \nativetype QAreaSeries
     \inqmlmodule QtCharts
 
     \inherits AbstractSeries

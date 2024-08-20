@@ -20,7 +20,7 @@ QT_BEGIN_NAMESPACE
 */
 /*!
     \qmltype VPieModelMapper
-    \instantiates QVPieModelMapper
+    \nativetype QVPieModelMapper
     \inqmlmodule QtCharts
 
     \brief Vertical model mapper for pie series.
