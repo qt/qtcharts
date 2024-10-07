@@ -534,6 +534,14 @@ void ScatterChartItem::handleSeriesUpdated()
         update();
 }
 
+void ScatterChartItem::handleMarkerMouseReleaseEvent(QGraphicsItem *item)
+{
+    markerReleased(item);
+    if (mousePressed())
+        markerSelected(item);
+    setMousePressed(false);
+}
+
 template<class T>
 ChartMarker<T>::ChartMarker(qreal x, qreal y, qreal w, qreal h, ScatterChartItem *parent)
     : T(x, y, w, h, parent)
@@ -578,10 +586,7 @@ template<class T>
 void ChartMarker<T>::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     T::mouseReleaseEvent(event);
-    m_parent->markerReleased(this);
-    if (m_parent->mousePressed())
-        m_parent->markerSelected(this);
-    m_parent->setMousePressed(false);
+    m_parent->handleMarkerMouseReleaseEvent(this);
 }
 
 template<class T>
