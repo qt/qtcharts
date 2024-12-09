@@ -175,7 +175,7 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
-    \qmlproperty QString AreaSeries::brushFilename
+    \qmlproperty string AreaSeries::brushFilename
     The name of the file used as a brush image for the series.
 */
 
