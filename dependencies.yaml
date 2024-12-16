@@ -3,8 +3,8 @@ dependencies:
     ref: dee139fa5ef483113e69fa67fd61a1d752a8ff45
     required: true
   ../tqtc-qtdeclarative:
-    ref: 6b64e58767c6dd32a29a261e3327fa88b5613621
+    ref: 3d6ea255dba81dd08532d56d4af6a56cb71940aa
     required: false
   ../tqtc-qtmultimedia:
-    ref: 1cfbe3db20fa9ed604ad8c84572082325cb90754
+    ref: 60a6ab3efbc8d3908c56a74b781af03b70606c6a
     required: false
