@@ -5,13 +5,14 @@
     \module QtCharts
     \title Qt Charts C++ Classes
     \ingroup modules
+    \deprecated [6.10] Use QtGraphs instead.
 
     \brief C++ classes for the Qt Charts API.
 
     Charts API is built on top of Qt Graphics View Framework. Charts can be displayed as QGraphicsWidget using the QChart class. However
     there is also the convenience class QChartView, which is QWidget based. These enable us to quickly use Qt Charts as a normal Qt widget.
 
-    \include maintenance-phase.qdocinc
+    \include deprecation-phase.qdocinc
 
     If you intend to use Qt Charts C++ classes in your application, use the
     following include and using directives:
@@ -40,6 +41,7 @@
     \qmlmodule QtCharts 2.\QtMinorVersion
     \title Qt Charts QML Types
     \ingroup qmlmodules
+    \deprecated [6.10] Use QtGraphs instead.
 
     \brief QML types for the Qt Charts API.
 

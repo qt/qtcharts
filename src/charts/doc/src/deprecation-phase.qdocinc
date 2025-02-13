@@ -1,0 +1,10 @@
+\note The Qt Charts module has been deprecated since Qt 6.10.
+For new projects, use the \l{Qt Graphs} module instead.
+Qt Graphs uses each platform's native rendering backend (Metal on
+macOS, DirectX on Windows, OpenGL or Vulkan on Linux) to achieve
+hardware-accelerated rendering for both 2D and 3D graphs. Qt Graphs
+uses \l {Qt Quick Shapes QML Types} {Qt Quick Shapes} for 2D graph
+rendering, instead of the outdated Qt Graphics View Framework
+used by the Qt Charts module.
+To migrate from Qt Charts to Qt Graphs module, refer to
+\l{Qt Graphs Migration from Qt Charts}.
