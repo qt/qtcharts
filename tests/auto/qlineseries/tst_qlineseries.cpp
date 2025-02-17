@@ -50,12 +50,17 @@ void tst_QLineSeries::cleanup()
 
 void tst_QLineSeries::qlineseries_data()
 {
+    QTest::addColumn<bool>("useOpenGL");
 
+    QTest::addRow("Without OpenGL") << false;
+    QTest::addRow("With OpenGL") << true;
 }
 
 void tst_QLineSeries::qlineseries()
 {
+    QFETCH(const bool, useOpenGL);
     QLineSeries series;
+    series.setUseOpenGL(useOpenGL);
 
     QCOMPARE(series.count(),0);
     QCOMPARE(series.brush(), QBrush());
