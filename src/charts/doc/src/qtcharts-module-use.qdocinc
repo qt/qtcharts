@@ -1,0 +1,15 @@
+// Copyright (C) 2025 Samuel Gaist <samuel.gaist@idiap.ch>
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GFDL-1.3-no-invariants-only
+
+//! [cmakebuild]
+    \code
+    find_package(Qt6 COMPONENTS Charts REQUIRED)
+    target_link_libraries(mytarget PRIVATE Qt6::Charts)
+    \endcode
+//! [cmakebuild]
+
+//! [qmakebuild]
+    \code
+    QT += charts
+    \endcode
+//! [qmakebuild]
