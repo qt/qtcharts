@@ -13,10 +13,8 @@
 
     \include maintenance-phase.qdocinc
 
-    If you intend to use Qt Charts C++ classes in your application, use the
-    following include and using directives:
-
-    \snippet doc_src_qtcharts.cpp 0
+    Using a Qt module's C++ API requires linking against the module library, either directly or through other dependencies.
+    Several build tools have dedicated support for this, including CMake and qmake.
 
     \if !defined(qtforpython)
     \note Projects created with Qt Creator's Qt Quick Application
@@ -25,9 +23,13 @@
     QApplication as the module depends on Qt's \l{Graphics View Framework}
     for rendering.
 
-    To link against the Qt Charts module, add this line to your \c qmake project file:
+    To use the module with CMake, use the \c{find_package()} command to locate
+    the needed module components in the \c{Qt6} package:
+    \include qtcharts-module-use.qdocinc cmakebuild
 
-    \snippet doc_src_qtcharts.pro 0
+    To use the module for building with qmake, add the module as a value of the
+    \c QT variable in the project's .pro file:
+    \include qtcharts-module-use.qdocinc qmakebuild
     \endif
 
     Each chart type is represented by the QAbstractSeries derived class. To create charts, the users have to use an instance of the related
