@@ -96,21 +96,13 @@ struct CppQVBarModelMapper
     QML_EXTRA_VERSION(2, 0)
 };
 
-struct BarCategoriesAxis
-{
-    Q_GADGET
-    QML_FOREIGN(QBarCategoryAxis)
-    QML_ELEMENT
-    QML_ADDED_IN_VERSION(1, 0)
-    QML_EXTRA_VERSION(2, 0)
-};
-
 struct CppQBarCategoryAxis
 {
     Q_GADGET
     QML_FOREIGN(QBarCategoryAxis)
     QML_NAMED_ELEMENT(BarCategoryAxis)
-    QML_ADDED_IN_VERSION(1, 1)
+    QML_NAMED_ELEMENT(BarCategoriesAxis)
+    QML_ADDED_IN_VERSION(1, 0)
     QML_EXTRA_VERSION(2, 0)
 };
 
@@ -290,21 +282,13 @@ struct CppQAbstractAxis
     QML_UNCREATABLE("Uncreatable base type")
 };
 
-struct ValuesAxis
+struct CppQValueAxis
 {
     Q_GADGET
     QML_FOREIGN(QValueAxis)
-    QML_ELEMENT
+    QML_NAMED_ELEMENT(ValueAxis)
+    QML_NAMED_ELEMENT(ValuesAxis)
     QML_ADDED_IN_VERSION(1, 0)
-    QML_EXTRA_VERSION(2, 0)
-};
-
-struct ValueAxis
-{
-    Q_GADGET
-    QML_FOREIGN(QValueAxis)
-    QML_ELEMENT
-    QML_ADDED_IN_VERSION(1, 1)
     QML_EXTRA_VERSION(2, 0)
 };
 
