@@ -26,11 +26,11 @@ void Scroller::move(const QPointF &delta)
 {
     switch (m_state) {
     case Pressed:
-        m_timeStamp.restart();
+        m_timeStamp.start();
         break;
     case Scroll:
         stopTicker();
-        m_timeStamp.restart();
+        m_timeStamp.start();
         break;
     default:
         break;
