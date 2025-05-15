@@ -5,7 +5,7 @@ path = ["src/chartsqml2/designer/images/**.png",
         "plugins/designer/qcharts.png"]
 precedence = "closest"
 SPDX-FileCopyrightText = "Copyright (C) 2024 The Qt Company Ltd."
-SPDX-License-Identifier = "LicenseRef-Qt-Commercial OR GPL-3.0-only"
+SPDX-License-Identifier = "LicenseRef-Qt-Commercial"
 
 [[annotations]]
 path = ["tests/**.ui"]
