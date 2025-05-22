@@ -24,4 +24,11 @@
 */
 #define QT_CHARTS_VERSION_CHECK(major, minor, patch) ((major<<16)|(minor<<8)|(patch))
 
+#ifdef QTGRAPHS_HEADERS
+#error Mixing QtCharts and QtGraphs in the same TU is unsupported since they use\
+ the same class names.
+#endif
+
+#define QTCHARTS_HEADERS
+
 #endif // QCHARTGLOBAL_H
