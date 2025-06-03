@@ -135,6 +135,14 @@ Row {
             onClicked: series.at(sliceIndex).color = main.nextColor();
         }
         Button {
+            text: "color opacity +"
+            onClicked: series.at(sliceIndex).color.a += 0.1
+        }
+        Button {
+            text: "color opacity -"
+            onClicked: series.at(sliceIndex).color.a -= 0.1
+        }
+        Button {
             text: "slice border color"
             onClicked: series.at(sliceIndex).borderColor = main.nextColor();
         }

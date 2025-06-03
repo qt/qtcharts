@@ -25,6 +25,7 @@ QPen linearPos(QPen start, QPen end, qreal pos)
     c.setRedF(linearPos(start.color().redF(), end.color().redF(), pos));
     c.setGreenF(linearPos(start.color().greenF(), end.color().greenF(), pos));
     c.setBlueF(linearPos(start.color().blueF(), end.color().blueF(), pos));
+    c.setAlphaF(linearPos(start.color().alphaF(), end.color().alphaF(), pos));
     end.setColor(c);
     return end;
 }
@@ -35,6 +36,7 @@ QBrush linearPos(QBrush start, QBrush end, qreal pos)
     c.setRedF(linearPos(start.color().redF(), end.color().redF(), pos));
     c.setGreenF(linearPos(start.color().greenF(), end.color().greenF(), pos));
     c.setBlueF(linearPos(start.color().blueF(), end.color().blueF(), pos));
+    c.setAlphaF(linearPos(start.color().alphaF(), end.color().alphaF(), pos));
     end.setColor(c);
     return end;
 }
