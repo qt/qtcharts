@@ -79,30 +79,40 @@ void ChartAxisElement::connectSlots()
     QObject::connect(axis(), SIGNAL(labelsVisibleChanged(bool)), this, SLOT(handleLabelsVisibleChanged(bool)));
     QObject::connect(axis(), SIGNAL(shadesVisibleChanged(bool)), this, SLOT(handleShadesVisibleChanged(bool)));
     QObject::connect(axis(), SIGNAL(labelsAngleChanged(int)), this, SLOT(handleLabelsAngleChanged(int)));
-    QObject::connect(axis(), SIGNAL(linePenChanged(const QPen&)), this, SLOT(handleArrowPenChanged(const QPen&)));
-    QObject::connect(axis(), SIGNAL(labelsBrushChanged(const QBrush&)), this, SLOT(handleLabelsBrushChanged(const QBrush&)));
-    QObject::connect(axis(), SIGNAL(labelsFontChanged(const QFont&)), this, SLOT(handleLabelsFontChanged(const QFont&)));
-    QObject::connect(axis(), SIGNAL(gridLinePenChanged(const QPen&)), this, SLOT(handleGridPenChanged(const QPen&)));
-    QObject::connect(axis(), SIGNAL(shadesPenChanged(const QPen&)), this, SLOT(handleShadesPenChanged(const QPen&)));
-    QObject::connect(axis(), SIGNAL(shadesBrushChanged(const QBrush&)), this, SLOT(handleShadesBrushChanged(const QBrush&)));
-    QObject::connect(axis(), SIGNAL(titleTextChanged(const QString&)), this, SLOT(handleTitleTextChanged(const QString&)));
-    QObject::connect(axis(), SIGNAL(titleFontChanged(const QFont&)), this, SLOT(handleTitleFontChanged(const QFont&)));
-    QObject::connect(axis(), SIGNAL(titleBrushChanged(const QBrush&)), this, SLOT(handleTitleBrushChanged(const QBrush&)));
+    QObject::connect(axis(), SIGNAL(linePenChanged(QPen)),
+                     this, SLOT(handleArrowPenChanged(QPen)));
+    QObject::connect(axis(), SIGNAL(labelsBrushChanged(QBrush)),
+                     this, SLOT(handleLabelsBrushChanged(QBrush)));
+    QObject::connect(axis(), SIGNAL(labelsFontChanged(QFont)),
+                     this, SLOT(handleLabelsFontChanged(QFont)));
+    QObject::connect(axis(), SIGNAL(gridLinePenChanged(QPen)),
+                     this, SLOT(handleGridPenChanged(QPen)));
+    QObject::connect(axis(), SIGNAL(shadesPenChanged(QPen)),
+                     this, SLOT(handleShadesPenChanged(QPen)));
+    QObject::connect(axis(), SIGNAL(shadesBrushChanged(QBrush)),
+                     this, SLOT(handleShadesBrushChanged(QBrush)));
+    QObject::connect(axis(), SIGNAL(titleTextChanged(QString)),
+                     this, SLOT(handleTitleTextChanged(QString)));
+    QObject::connect(axis(), SIGNAL(titleFontChanged(QFont)),
+                     this, SLOT(handleTitleFontChanged(QFont)));
+    QObject::connect(axis(), SIGNAL(titleBrushChanged(QBrush)),
+                     this, SLOT(handleTitleBrushChanged(QBrush)));
     QObject::connect(axis(), SIGNAL(titleVisibleChanged(bool)), this, SLOT(handleTitleVisibleChanged(bool)));
-    QObject::connect(axis()->d_ptr.data(), SIGNAL(rangeChanged(qreal, qreal)), this, SLOT(handleRangeChanged(qreal, qreal)));
+    QObject::connect(axis()->d_ptr.get(), SIGNAL(rangeChanged(qreal,qreal)),
+                     this, SLOT(handleRangeChanged(qreal,qreal)));
     QObject::connect(axis(), SIGNAL(reverseChanged(bool)), this, SLOT(handleReverseChanged(bool)));
     QObject::connect(axis(), SIGNAL(lineVisibleChanged(bool)),
                      this, SLOT(handleMinorArrowVisibleChanged(bool)));
-    QObject::connect(axis(), SIGNAL(linePenChanged(const QPen&)), this,
-                     SLOT(handleMinorArrowPenChanged(const QPen&)));
+    QObject::connect(axis(), SIGNAL(linePenChanged(QPen)),
+                     this, SLOT(handleMinorArrowPenChanged(QPen)));
     QObject::connect(axis(), SIGNAL(minorGridVisibleChanged(bool)),
                      this, SLOT(handleMinorGridVisibleChanged(bool)));
-    QObject::connect(axis(), SIGNAL(minorGridLinePenChanged(const QPen&)),
-                     this, SLOT(handleMinorGridPenChanged(const QPen&)));
-    QObject::connect(axis(), SIGNAL(gridLineColorChanged(const QColor&)),
-                     this, SLOT(handleGridLineColorChanged(const QColor&)));
-    QObject::connect(axis(), SIGNAL(minorGridLineColorChanged(const QColor&)),
-                     this, SLOT(handleMinorGridLineColorChanged(const QColor&)));
+    QObject::connect(axis(), SIGNAL(minorGridLinePenChanged(QPen)),
+                     this, SLOT(handleMinorGridPenChanged(QPen)));
+    QObject::connect(axis(), SIGNAL(gridLineColorChanged(QColor)),
+                     this, SLOT(handleGridLineColorChanged(QColor)));
+    QObject::connect(axis(), SIGNAL(minorGridLineColorChanged(QColor)),
+                     this, SLOT(handleMinorGridLineColorChanged(QColor)));
     QObject::connect(axis(), &QAbstractAxis::truncateLabelsChanged,
                      this, &ChartAxisElement::handleTruncateLabelsChanged);
 

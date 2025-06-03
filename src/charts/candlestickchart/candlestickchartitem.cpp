@@ -22,10 +22,10 @@ CandlestickChartItem::CandlestickChartItem(QCandlestickSeries *series, QGraphics
       m_animation(nullptr)
 {
     setAcceptedMouseButtons({});
-    connect(series, SIGNAL(candlestickSetsAdded(QList<QCandlestickSet *>)),
-            this, SLOT(handleCandlestickSetsAdd(QList<QCandlestickSet *>)));
-    connect(series, SIGNAL(candlestickSetsRemoved(QList<QCandlestickSet *>)),
-            this, SLOT(handleCandlestickSetsRemove(QList<QCandlestickSet *>)));
+    connect(series, SIGNAL(candlestickSetsAdded(QList<QCandlestickSet*>)),
+            this, SLOT(handleCandlestickSetsAdd(QList<QCandlestickSet*>)));
+    connect(series, SIGNAL(candlestickSetsRemoved(QList<QCandlestickSet*>)),
+            this, SLOT(handleCandlestickSetsRemove(QList<QCandlestickSet*>)));
 
     connect(series->d_func(), SIGNAL(updated()), this, SLOT(handleCandlesticksUpdated()));
     connect(series->d_func(), SIGNAL(updatedLayout()), this, SLOT(handleLayoutUpdated()));
@@ -164,21 +164,21 @@ void CandlestickChartItem::handleCandlestickSetsAdd(const QList<QCandlestickSet 
         m_candlesticks.insert(set, item);
         addTimestamp(set->timestamp());
 
-        connect(item, SIGNAL(clicked(QCandlestickSet *)),
-                m_series, SIGNAL(clicked(QCandlestickSet *)));
-        connect(item, SIGNAL(hovered(bool, QCandlestickSet *)),
-                m_series, SIGNAL(hovered(bool, QCandlestickSet *)));
-        connect(item, SIGNAL(pressed(QCandlestickSet *)),
-                m_series, SIGNAL(pressed(QCandlestickSet *)));
-        connect(item, SIGNAL(released(QCandlestickSet *)),
-                m_series, SIGNAL(released(QCandlestickSet *)));
-        connect(item, SIGNAL(doubleClicked(QCandlestickSet *)),
-                m_series, SIGNAL(doubleClicked(QCandlestickSet *)));
-        connect(item, SIGNAL(clicked(QCandlestickSet *)), set, SIGNAL(clicked()));
-        connect(item, SIGNAL(hovered(bool, QCandlestickSet *)), set, SIGNAL(hovered(bool)));
-        connect(item, SIGNAL(pressed(QCandlestickSet *)), set, SIGNAL(pressed()));
-        connect(item, SIGNAL(released(QCandlestickSet *)), set, SIGNAL(released()));
-        connect(item, SIGNAL(doubleClicked(QCandlestickSet *)), set, SIGNAL(doubleClicked()));
+        connect(item, SIGNAL(clicked(QCandlestickSet*)),
+                m_series, SIGNAL(clicked(QCandlestickSet*)));
+        connect(item, SIGNAL(hovered(bool,QCandlestickSet*)),
+                m_series, SIGNAL(hovered(bool,QCandlestickSet*)));
+        connect(item, SIGNAL(pressed(QCandlestickSet*)),
+                m_series, SIGNAL(pressed(QCandlestickSet*)));
+        connect(item, SIGNAL(released(QCandlestickSet*)),
+                m_series, SIGNAL(released(QCandlestickSet*)));
+        connect(item, SIGNAL(doubleClicked(QCandlestickSet*)),
+                m_series, SIGNAL(doubleClicked(QCandlestickSet*)));
+        connect(item, SIGNAL(clicked(QCandlestickSet*)), set, SIGNAL(clicked()));
+        connect(item, SIGNAL(hovered(bool,QCandlestickSet*)), set, SIGNAL(hovered(bool)));
+        connect(item, SIGNAL(pressed(QCandlestickSet*)), set, SIGNAL(pressed()));
+        connect(item, SIGNAL(released(QCandlestickSet*)), set, SIGNAL(released()));
+        connect(item, SIGNAL(doubleClicked(QCandlestickSet*)), set, SIGNAL(doubleClicked()));
     }
 
     handleDataStructureChanged();
