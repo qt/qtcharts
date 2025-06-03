@@ -73,8 +73,10 @@ void QBoxPlotModelMapper::setSeries(QBoxPlotSeries *series)
     d->m_series = series;
     d->initializeBoxFromModel();
     // connect the signals from the series
-    connect(d->m_series, SIGNAL(boxsetsAdded(QList<QBoxSet *>)), d, SLOT(boxSetsAdded(QList<QBoxSet *>)));
-    connect(d->m_series, SIGNAL(boxsetsRemoved(QList<QBoxSet *>)), d, SLOT(boxSetsRemoved(QList<QBoxSet *>)));
+    connect(d->m_series, SIGNAL(boxsetsAdded(QList<QBoxSet*>)),
+            d, SLOT(boxSetsAdded(QList<QBoxSet*>)));
+    connect(d->m_series, SIGNAL(boxsetsRemoved(QList<QBoxSet*>)),
+            d, SLOT(boxSetsRemoved(QList<QBoxSet*>)));
     connect(d->m_series, SIGNAL(destroyed()), d, SLOT(handleSeriesDestroyed()));
 }
 

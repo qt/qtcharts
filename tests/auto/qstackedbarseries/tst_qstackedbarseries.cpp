@@ -313,9 +313,9 @@ void tst_QStackedBarSeries::mousehovered()
 
     QList<QBarSet*> barSets = series->barSets();
 
-    QSignalSpy seriesIndexSpy(series, SIGNAL(hovered(bool, int, QBarSet*)));
-    QSignalSpy setIndexSpy1(set1, SIGNAL(hovered(bool, int)));
-    QSignalSpy setIndexSpy2(set2, SIGNAL(hovered(bool, int)));
+    QSignalSpy seriesIndexSpy(series, SIGNAL(hovered(bool,int,QBarSet*)));
+    QSignalSpy setIndexSpy1(set1, SIGNAL(hovered(bool,int)));
+    QSignalSpy setIndexSpy2(set2, SIGNAL(hovered(bool,int)));
 
     QChartView view(new QChart());
     view.resize(400,300);
