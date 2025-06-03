@@ -20,7 +20,8 @@ BoxPlotChartItem::BoxPlotChartItem(QBoxPlotSeries *series, QGraphicsItem *item) 
     m_animation(0)
 {
     setAcceptedMouseButtons({});
-    connect(series, SIGNAL(boxsetsRemoved(QList<QBoxSet *>)), this, SLOT(handleBoxsetRemove(QList<QBoxSet *>)));
+    connect(series, SIGNAL(boxsetsRemoved(QList<QBoxSet*>)),
+            this, SLOT(handleBoxsetRemove(QList<QBoxSet*>)));
     connect(series, SIGNAL(visibleChanged()), this, SLOT(handleSeriesVisibleChanged()));
     connect(series, SIGNAL(opacityChanged()), this, SLOT(handleOpacityChanged()));
     connect(series->d_func(), SIGNAL(restructuredBoxes()), this, SLOT(handleDataStructureChanged()));
@@ -74,17 +75,18 @@ void BoxPlotChartItem::handleDataStructureChanged()
             // Item is not yet created, make a box and add it to hash table
             box = new BoxWhiskers(set, domain(), this);
             m_boxTable.insert(set, box);
-            connect(box, SIGNAL(clicked(QBoxSet *)), m_series, SIGNAL(clicked(QBoxSet *)));
-            connect(box, SIGNAL(hovered(bool, QBoxSet *)), m_series, SIGNAL(hovered(bool, QBoxSet *)));
-            connect(box, SIGNAL(pressed(QBoxSet *)), m_series, SIGNAL(pressed(QBoxSet *)));
-            connect(box, SIGNAL(released(QBoxSet *)), m_series, SIGNAL(released(QBoxSet *)));
-            connect(box, SIGNAL(doubleClicked(QBoxSet *)),
-                    m_series, SIGNAL(doubleClicked(QBoxSet *)));
-            connect(box, SIGNAL(clicked(QBoxSet *)), set, SIGNAL(clicked()));
-            connect(box, SIGNAL(hovered(bool, QBoxSet *)), set, SIGNAL(hovered(bool)));
-            connect(box, SIGNAL(pressed(QBoxSet *)), set, SIGNAL(pressed()));
-            connect(box, SIGNAL(released(QBoxSet *)), set, SIGNAL(released()));
-            connect(box, SIGNAL(doubleClicked(QBoxSet *)), set, SIGNAL(doubleClicked()));
+            connect(box, SIGNAL(clicked(QBoxSet*)), m_series, SIGNAL(clicked(QBoxSet*)));
+            connect(box, SIGNAL(hovered(bool,QBoxSet*)),
+                    m_series, SIGNAL(hovered(bool,QBoxSet*)));
+            connect(box, SIGNAL(pressed(QBoxSet*)), m_series, SIGNAL(pressed(QBoxSet*)));
+            connect(box, SIGNAL(released(QBoxSet*)), m_series, SIGNAL(released(QBoxSet*)));
+            connect(box, SIGNAL(doubleClicked(QBoxSet*)),
+                    m_series, SIGNAL(doubleClicked(QBoxSet*)));
+            connect(box, SIGNAL(clicked(QBoxSet*)), set, SIGNAL(clicked()));
+            connect(box, SIGNAL(hovered(bool,QBoxSet*)), set, SIGNAL(hovered(bool)));
+            connect(box, SIGNAL(pressed(QBoxSet*)), set, SIGNAL(pressed()));
+            connect(box, SIGNAL(released(QBoxSet*)), set, SIGNAL(released()));
+            connect(box, SIGNAL(doubleClicked(QBoxSet*)), set, SIGNAL(doubleClicked()));
 
             // Set the decorative issues for the newly created box
             // so that the brush and pen already defined for the set are kept.

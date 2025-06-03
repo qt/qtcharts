@@ -237,7 +237,8 @@ void MainWidget::addSeries()
     connect(m_series[m_seriesCount], SIGNAL(released(QBoxSet*)), this, SLOT(boxReleased(QBoxSet*)));
     connect(m_series[m_seriesCount], SIGNAL(doubleClicked(QBoxSet*)),
             this, SLOT(boxDoubleClicked(QBoxSet*)));
-    connect(m_series[m_seriesCount], SIGNAL(hovered(bool, QBoxSet*)), this, SLOT(boxHovered(bool, QBoxSet*)));
+    connect(m_series[m_seriesCount], SIGNAL(hovered(bool,QBoxSet*)),
+            this, SLOT(boxHovered(bool,QBoxSet*)));
     connect(set1, SIGNAL(clicked()), this, SLOT(singleBoxClicked()));
     connect(set1, SIGNAL(pressed()), this, SLOT(singleBoxPressed()));
     connect(set1, SIGNAL(released()), this, SLOT(singleBoxReleased()));
