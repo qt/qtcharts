@@ -402,13 +402,13 @@ void MainWindow::initXYValueChart()
     connect(m_series5, SIGNAL(clicked(QPointF)), this, SLOT(seriesClicked(QPointF)));
     connect(m_series6, SIGNAL(clicked(QPointF)), this, SLOT(seriesClicked(QPointF)));
     connect(m_series7, SIGNAL(clicked(QPointF)), this, SLOT(seriesClicked(QPointF)));
-    connect(m_series1, SIGNAL(hovered(QPointF, bool)), this, SLOT(seriesHovered(QPointF, bool)));
-    connect(m_series2, SIGNAL(hovered(QPointF, bool)), this, SLOT(seriesHovered(QPointF, bool)));
-    connect(m_series3, SIGNAL(hovered(QPointF, bool)), this, SLOT(seriesHovered(QPointF, bool)));
-    connect(m_series4, SIGNAL(hovered(QPointF, bool)), this, SLOT(seriesHovered(QPointF, bool)));
-    connect(m_series5, SIGNAL(hovered(QPointF, bool)), this, SLOT(seriesHovered(QPointF, bool)));
-    connect(m_series6, SIGNAL(hovered(QPointF, bool)), this, SLOT(seriesHovered(QPointF, bool)));
-    connect(m_series7, SIGNAL(hovered(QPointF, bool)), this, SLOT(seriesHovered(QPointF, bool)));
+    connect(m_series1, SIGNAL(hovered(QPointF,bool)), this, SLOT(seriesHovered(QPointF,bool)));
+    connect(m_series2, SIGNAL(hovered(QPointF,bool)), this, SLOT(seriesHovered(QPointF,bool)));
+    connect(m_series3, SIGNAL(hovered(QPointF,bool)), this, SLOT(seriesHovered(QPointF,bool)));
+    connect(m_series4, SIGNAL(hovered(QPointF,bool)), this, SLOT(seriesHovered(QPointF,bool)));
+    connect(m_series5, SIGNAL(hovered(QPointF,bool)), this, SLOT(seriesHovered(QPointF,bool)));
+    connect(m_series6, SIGNAL(hovered(QPointF,bool)), this, SLOT(seriesHovered(QPointF,bool)));
+    connect(m_series7, SIGNAL(hovered(QPointF,bool)), this, SLOT(seriesHovered(QPointF,bool)));
 
     m_chart->setTitle("Use arrow keys to scroll and +/- to zoom");
     m_chart->setAnimationOptions(m_animationOptions);
@@ -487,7 +487,8 @@ void MainWindow::setAngularAxis(MainWindow::AxisMode mode)
 
     applyRanges();
 
-    //connect(m_angularAxis, SIGNAL(rangeChanged(qreal, qreal)), this, SLOT(angularRangeChanged(qreal, qreal)));
+    //connect(m_angularAxis, SIGNAL(rangeChanged(qreal,qreal)),
+    //        this, SLOT(angularRangeChanged(qreal,qreal)));
 }
 
 void MainWindow::setRadialAxis(MainWindow::AxisMode mode)
@@ -565,7 +566,8 @@ void MainWindow::setRadialAxis(MainWindow::AxisMode mode)
     series6CheckBoxChecked();
     series7CheckBoxChecked();
 
-    //connect(m_radialAxis, SIGNAL(rangeChanged(qreal, qreal)), this, SLOT(radialRangeChanged(qreal, qreal)));
+    //connect(m_radialAxis, SIGNAL(rangeChanged(qreal,qreal)),
+    //        this, SLOT(radialRangeChanged(qreal,qreal)));
 }
 
 void MainWindow::applyRanges()

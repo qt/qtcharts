@@ -85,18 +85,18 @@ void QCandlestickModelMapper::setModel(QAbstractItemModel *model)
     d->initializeCandlestickFromModel();
     // connect signals from the model
     connect(d->m_model, SIGNAL(modelReset()), d, SLOT(initializeCandlestickFromModel()));
-    connect(d->m_model, SIGNAL(dataChanged(QModelIndex, QModelIndex)),
-            d, SLOT(modelDataUpdated(QModelIndex, QModelIndex)));
-    connect(d->m_model, SIGNAL(headerDataChanged(Qt::Orientation, int, int)),
-            d, SLOT(modelHeaderDataUpdated(Qt::Orientation, int, int)));
-    connect(d->m_model, SIGNAL(rowsInserted(QModelIndex, int, int)),
-            d, SLOT(modelRowsInserted(QModelIndex, int, int)));
-    connect(d->m_model, SIGNAL(rowsRemoved(QModelIndex, int, int)),
-            d, SLOT(modelRowsRemoved(QModelIndex, int, int)));
-    connect(d->m_model, SIGNAL(columnsInserted(QModelIndex, int, int)),
-            d, SLOT(modelColumnsInserted(QModelIndex, int, int)));
-    connect(d->m_model, SIGNAL(columnsRemoved(QModelIndex, int, int)),
-            d, SLOT(modelColumnsRemoved(QModelIndex, int, int)));
+    connect(d->m_model, SIGNAL(dataChanged(QModelIndex,QModelIndex)),
+            d, SLOT(modelDataUpdated(QModelIndex,QModelIndex)));
+    connect(d->m_model, SIGNAL(headerDataChanged(Qt::Orientation,int,int)),
+            d, SLOT(modelHeaderDataUpdated(Qt::Orientation,int,int)));
+    connect(d->m_model, SIGNAL(rowsInserted(QModelIndex,int,int)),
+            d, SLOT(modelRowsInserted(QModelIndex,int,int)));
+    connect(d->m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)),
+            d, SLOT(modelRowsRemoved(QModelIndex,int,int)));
+    connect(d->m_model, SIGNAL(columnsInserted(QModelIndex,int,int)),
+            d, SLOT(modelColumnsInserted(QModelIndex,int,int)));
+    connect(d->m_model, SIGNAL(columnsRemoved(QModelIndex,int,int)),
+            d, SLOT(modelColumnsRemoved(QModelIndex,int,int)));
     connect(d->m_model, SIGNAL(destroyed()), d, SLOT(modelDestroyed()));
 }
 
@@ -125,10 +125,10 @@ void QCandlestickModelMapper::setSeries(QCandlestickSeries *series)
 
     d->initializeCandlestickFromModel();
     // connect the signals from the series
-    connect(d->m_series, SIGNAL(candlestickSetsAdded(QList<QCandlestickSet *>)),
-            d, SLOT(candlestickSetsAdded(QList<QCandlestickSet *>)));
+    connect(d->m_series, SIGNAL(candlestickSetsAdded(QList<QCandlestickSet*>)),
+            d, SLOT(candlestickSetsAdded(QList<QCandlestickSet*>)));
     connect(d->m_series, SIGNAL(candlestickSetsRemoved(QList<QCandlestickSet*>)),
-            d, SLOT(candlestickSetsRemoved(QList<QCandlestickSet *>)));
+            d, SLOT(candlestickSetsRemoved(QList<QCandlestickSet*>)));
     connect(d->m_series, SIGNAL(destroyed()), d, SLOT(seriesDestroyed()));
 }
 
