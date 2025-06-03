@@ -362,7 +362,7 @@ DeclarativeBoxPlotSeries::DeclarativeBoxPlotSeries(QQuickItem *parent) :
     connect(m_axes, SIGNAL(axisYChanged(QAbstractAxis*)), this, SIGNAL(axisYChanged(QAbstractAxis*)));
     connect(m_axes, SIGNAL(axisXTopChanged(QAbstractAxis*)), this, SIGNAL(axisXTopChanged(QAbstractAxis*)));
     connect(m_axes, SIGNAL(axisYRightChanged(QAbstractAxis*)), this, SIGNAL(axisYRightChanged(QAbstractAxis*)));
-    connect(this, SIGNAL(hovered(bool, QBoxSet*)), this, SLOT(onHovered(bool, QBoxSet*)));
+    connect(this, SIGNAL(hovered(bool,QBoxSet*)), this, SLOT(onHovered(bool,QBoxSet*)));
     connect(this, SIGNAL(clicked(QBoxSet*)), this, SLOT(onClicked(QBoxSet*)));
     connect(this, SIGNAL(brushChanged()), this, SLOT(handleBrushChanged()));
     connect(this, SIGNAL(pressed(QBoxSet*)), this, SLOT(onPressed(QBoxSet*)));
