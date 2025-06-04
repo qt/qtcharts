@@ -68,6 +68,7 @@ private slots:
     void insert_data();
     void insert();
     void changedSignals();
+    void replaceWithSelectedPoints();
 protected:
     void append_data();
     void count_data();
