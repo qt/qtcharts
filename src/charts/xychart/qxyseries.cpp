@@ -691,8 +691,16 @@ void QXYSeries::replace(int index, const QPointF &newPoint)
 void QXYSeries::replace(const QList<QPointF> &points)
 {
     Q_D(QXYSeries);
+    const bool needUpdateSelection = d->m_points.size() > points.size();
     d->m_points = points;
+    if (needUpdateSelection) {
+        d->m_selectedPoints.removeIf([maxIdx = points.size() - 1](int idx) {
+            return idx > maxIdx;
+        });
+    }
     emit pointsReplaced();
+    if (needUpdateSelection)
+        emit selectedPointsChanged();
 }
 
 /*!
