@@ -628,3 +628,34 @@ void tst_QXYSeries::changedSignals()
     TRY_COMPARE(nameSpy.size(), 0);
     TRY_COMPARE(colorSpy.size(), 2);
 }
+
+void tst_QXYSeries::replaceWithSelectedPoints()
+{
+    const QList<QPointF> points = { QPointF{1, 1}, QPointF{2, 2},
+                                    QPointF{3, 3}, QPointF{4, 4},
+                                    QPointF{5, 5}, QPointF{6, 6} };
+    m_series->append(points);
+
+    QSignalSpy selectedSpy(m_series, &QXYSeries::selectedPointsChanged);
+
+    const QList<int> pointsToSelect = {4, 5};
+    m_series->selectPoints(pointsToSelect);
+    QList<int> actuallySelected = m_series->selectedPoints();
+    // Internally it's a QSet, so order may vary
+    std::sort(actuallySelected.begin(), actuallySelected.end());
+    QCOMPARE(actuallySelected, pointsToSelect);
+    QCOMPARE(selectedSpy.size(), 1);
+
+    const QList<QPointF> newPoints = { QPointF{1, -1}, QPointF{2, -2},
+                                       QPointF{3, -3}, QPointF{4, -4},
+                                       QPointF{5, -5} };
+    m_series->replace(newPoints);
+    actuallySelected = m_series->selectedPoints();
+    QCOMPARE(actuallySelected, QList<int>{4});
+    QCOMPARE(selectedSpy.size(), 2);
+
+    m_series->deselectAllPoints();
+    actuallySelected = m_series->selectedPoints();
+    QVERIFY(actuallySelected.isEmpty());
+    QCOMPARE(selectedSpy.size(), 3);
+}
