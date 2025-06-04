@@ -513,6 +513,7 @@ bool QAbstractBarSeries::insert(int index, QBarSet *set)
     if (success) {
         QList<QBarSet *> sets;
         sets.append(set);
+        set->setParent(this);
         emit barsetsAdded(sets);
         emit countChanged();
     }
