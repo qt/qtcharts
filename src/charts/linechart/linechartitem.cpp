@@ -85,6 +85,8 @@ void LineChartItem::updateGeometry()
 
     if (points.size() == 0) {
         prepareGeometryChange();
+        m_linePathPolarRight = QPainterPath();
+        m_linePathPolarLeft = QPainterPath();
         m_fullPath = QPainterPath();
         m_linePath = QPainterPath();
         m_rect = QRect();
