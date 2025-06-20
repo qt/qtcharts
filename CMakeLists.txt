@@ -16,9 +16,15 @@ project(QtCharts
 # Make sure we use the fixed BASE argument of qt_add_resource.
 set(QT_USE_FIXED_QT_ADD_RESOURCE_BASE TRUE)
 
-find_package(Qt6 ${PROJECT_VERSION} CONFIG REQUIRED COMPONENTS BuildInternals Core) # special case
-find_package(Qt6 ${PROJECT_VERSION} CONFIG OPTIONAL_COMPONENTS Gui Widgets OpenGL OpenGLWidgets Multimedia Quick Qml QuickTest Test) # special case
+find_package(Qt6 ${PROJECT_VERSION} CONFIG REQUIRED COMPONENTS BuildInternals)
+
+# This should be called as early as possible, just after find_package(BuildInternals) where it is
+# defined.
 qt_internal_project_setup()
+
+find_package(Qt6 ${PROJECT_VERSION} CONFIG REQUIRED COMPONENTS Core)
+find_package(Qt6 ${PROJECT_VERSION} CONFIG OPTIONAL_COMPONENTS Gui Widgets OpenGL OpenGLWidgets
+    Multimedia Quick Qml QuickTest Test)
 
 #special case begin
 macro(assertTargets)
