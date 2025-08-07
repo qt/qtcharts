@@ -4,6 +4,9 @@
 #include "../qxyseries/tst_qxyseries.h"
 #include <QtCharts/QLineSeries>
 
+#include <QtGui/private/qguiapplication_p.h>
+#include <QtGui/qpa/qplatformintegration.h>
+
 Q_DECLARE_METATYPE(QList<QPointF>)
 
 class tst_QLineSeries : public tst_QXYSeries
@@ -53,7 +56,9 @@ void tst_QLineSeries::qlineseries_data()
     QTest::addColumn<bool>("useOpenGL");
 
     QTest::addRow("Without OpenGL") << false;
-    QTest::addRow("With OpenGL") << true;
+
+    if (QGuiApplicationPrivate::platformIntegration()->hasCapability(QPlatformIntegration::OpenGL))
+        QTest::addRow("With OpenGL") << true;
 }
 
 void tst_QLineSeries::qlineseries()
