@@ -23,5 +23,6 @@ qt_internal_add_test(tst_qlineseries
     LIBRARIES
         Qt::Charts
         Qt::Gui
+        Qt::GuiPrivate
         Qt::Widgets
 )
