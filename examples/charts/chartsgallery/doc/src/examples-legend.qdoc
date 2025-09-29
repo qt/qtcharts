@@ -25,8 +25,10 @@
     If the user drags the legend off of any side of the chart, it will automatically re-attach to
     that side of the chart.
 
-    \image examples_legend_detach.png
-    \image examples_legend_detach2.png
+    \image examples_legend_detach.png {Screenshot showing a legend detach example with a bar chart
+           and different options to configure the chart}
+    \image examples_legend_detach2.png {Screenshot showing another legend detach example with a bar chart
+           and different options to configure the chart}
 
     Here we turn the legend visible and set its alignment to the bottom of the chart.
 

@@ -95,7 +95,7 @@
     Area charts present data as an area bound by two lines, whereas scatter
     charts present data as a collection of points.
 
-    \inlineimage examples_areachart.png
+    \inlineimage examples_areachart.png {Screenshot of an areachart example}
     \inlineimage examples_scatterchart.png
 
 
@@ -159,8 +159,10 @@
     The pie can be turned into a donut by specifying a hole size between 0.0
     and 1.0.
 
-    \inlineimage examples_piechart.png
-    \inlineimage examples_donutchart.png
+    \inlineimage examples_piechart.png {Screenshot showing a highlighted slice of
+                 a pie chart}
+    \inlineimage examples_donutchart.png {Screenshot showing a highlighted slice of
+                 a donut chart}
 
 
     For more information, see \l{Charts with Widgets Gallery},

@@ -10,7 +10,8 @@
     It also shows how to implement scrolling and zooming of the polar chart as well as
     visually demonstrate how polar charts and Cartesian charts relate to each other.
 
-    \image examples_polarchart.png
+    \image examples_polarchart.png {Screenshot showing a spline where blue points scatter through and a star divided by the star's
+           outer inner and area all in a polar chart}
 
     Creating a polar chart is done with a QPolarChart instance instead of a QChart instance.
 

@@ -15,7 +15,7 @@
     \l {Creating Bar Charts} {bar chart}, we used a nice numbers algorithm to make the y-axis numbering look better. With
     the percent bar chart there is no need for that, because the maximum y-axis value is always 100.
 
-    \image examples_horizontalpercentbarchart.png
+    \image examples_horizontalpercentbarchart.png {Screenshot showing a horizontal percent bar chart example}
 
     The barsets are used in same way in all barcharts.
     To illustrate the difference between various barcharts, we use same data in examples.

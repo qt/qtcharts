@@ -8,7 +8,11 @@
 \examplecategory {Data Visualization}
 \brief An application that demonstrates the Qt Charts Widgets API.
 
-\image ChartWidgetGallery.png
+\image ChartWidgetGallery.png {Screenshot showing a bar chart of temperature
+       records across twelve months from January to December between 52 and -52
+       degrees Celsius, the bars in the positive area are green, and the bars in
+       the negative area are blue. On the left side are different options to
+       change the chart to different chart types}
 
 This example demonstrates the Qt Charts API for widgets by using included sample
 data to populate a number of chart types and interactions for a user.

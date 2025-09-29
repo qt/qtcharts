@@ -86,7 +86,8 @@ QT_BEGIN_NAMESPACE
     \endcode
 
     \beginfloatleft
-    \image examples_qmlcandlestick.png
+    \image examples_qmlcandlestick.png {Screenshot showing a candlestick
+           series example with the x axis describing date times}
     \endfloat
     \clearfloat
 

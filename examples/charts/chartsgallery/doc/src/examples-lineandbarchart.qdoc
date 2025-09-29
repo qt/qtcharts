@@ -10,7 +10,7 @@
     In the example we combine a linechart with
     a barchart and use the category axis as a common axis for both.
 
-    \image examples_lineandbar.png
+    \image examples_lineandbar.png {Screenshot showing a line chart combined with a bar chart}
 
     Here we create data for our bar series.
 

@@ -13,10 +13,12 @@
     by week.
 
     The season view looks like this:
-    \image examples_stackedbarchartdrilldown1.png
+    \image examples_stackedbarchartdrilldown1.png {Screenshot showing a stacked bar chart of the harvest of Habanero, Lemon Drop, Starfish, and Aji
+           Amarillo across five months from May to September}
 
     Clicking on a month shows that month's harvest:
-    \image examples_stackedbarchartdrilldown2.png
+    \image examples_stackedbarchartdrilldown2.png {Screenshot showing a stacked bar chart of the harvest of Habanero, Lemon Drop, Starfish, and Aji
+           Amarillo in June}
 
     First we define a drilldown series class, which adds categories to the stacked bar series and mapping for categories to other drilldown series.
     The purpose of the drilldown series is to contain knowledge of the drilldown structure. The mapDrilldownSeries function maps the category to a given series. We can request the mapping for a category with the drilldownSeries(int category) function.

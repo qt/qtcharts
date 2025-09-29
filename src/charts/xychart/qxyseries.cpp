@@ -831,7 +831,8 @@ void QXYSeries::clearPointsConfiguration(const QXYSeries::PointConfiguration key
     The point at index 6 has a custom label \e {This Point} thanks to the
     QXYSeries::PointConfiguration::LabelFormat configuration value.
     Below is an example of a chart created in this way:
-    \image xyseries_point_configuration.png
+    \image xyseries_point_configuration.png {Screenshot showing a line chart with two dots on it,
+           one being red and the other being blue}
 
     \sa pointsConfiguration(), clearPointsConfiguration()
     \since 6.2

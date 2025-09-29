@@ -14,7 +14,8 @@
     {bar chart}, except that for a stacked bar chart, we use the QStackedBarSeries API instead of
     QBarSeries.
 
-    \image examples_stackedbarchart.png
+    \image examples_stackedbarchart.png {Screenshot of stacked bar chart showing contributions from Jane,
+           John, Axel, Mary, and Samantha across six months from January to June}
 
     The barsets are used in same way in all barcharts.
     To illustrate the difference between various barcharts, we use same data in all examples.

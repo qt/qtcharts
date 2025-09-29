@@ -8,7 +8,7 @@
 
     \include gallery.qdocinc
 
-    \image examples_areachart.png
+    \image examples_areachart.png {Image of a graph example}
 
     To create area charts, we need two QLineSeries instances. They are going to define the upper and lower boundary of the area.
 

@@ -10,21 +10,26 @@
     We begin with a chart that has a line series and a scatter series with random
     data. We then have a graph with two series that share a common axis.
 
-    \image examples_qmlaxes1.png
+    \image examples_qmlaxes1.png {Screenshot showing a chart that has two data
+           series, one being a blue line chart and the other being a scatter chart
+           with green dots}
 
     \snippet qmlchartsgallery/qml/TwoSeries.qml 1
 
     This chart shows some accurate historical data. It is created by the following
     snippet that makes use of a DateTimeAxis.
 
-    \image examples_qmlaxes2.png
+    \image examples_qmlaxes2.png {Screenshot showing the accurate historical data
+           course as a line chart using DateTimeAxis}
 
     \snippet qmlchartsgallery/qml/DateTimeAxis.qml 1
 
     This following chart is created using a CategoryAxis to make the data
     easier to understand.
 
-    \image examples_qmlaxes3.png
+    \image examples_qmlaxes3.png {Screenshot showing a line chart example with the
+           y-axis being categorised by critical, low, medium, high, and extremely
+           high}
 
     \snippet qmlchartsgallery/qml/CategoryAxis.qml 1
 */

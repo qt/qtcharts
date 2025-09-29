@@ -7,9 +7,10 @@
     \ingroup qtcharts_examples
     \examplecategory {Data Visualization}
     \brief This example shows the drawing of microphone samples vs audio level.
-    \image examples_audio.png
+    \image examples_audio.png {Screenshot of a chart displaying the sound level coming from
+           an audio input of a microphone}
 
-    \image dynamicwavform.gif
+    \image dynamicwavform.gif {Animation showing the sound waves coming from the audio input}
 
     This example's implementation is based on Widgets. See
     \l{Getting Started Programming with Qt Widgets} for information specific to

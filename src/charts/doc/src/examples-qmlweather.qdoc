@@ -6,7 +6,10 @@
     \title Qml Weather
     \ingroup qtcharts_examples
     \examplecategory {Data Visualization}
-    \image examples_qmlweather.png
+    \image examples_qmlweather.png {Screenshot showing three different charts with three axes
+           (Temperature, Date, and Rainfall) and the first describing the maximum temperature as a
+           line chart in blue, the second describing the minimum temperature, also as a line
+           chart in green and the third describing the rainfall as a bar chart in orange}
 
     \brief This is a basic demonstration showing how to use the different chart types by using qml.
 

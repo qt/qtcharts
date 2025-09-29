@@ -7,8 +7,10 @@
     \brief Shows how to use light markers and points selection for a series.
     \include gallery.qdocinc
 
-    \image examples_pointsselectionandmarkers1.png
-    \image examples_pointsselectionandmarkers2.png
+    \image examples_pointsselectionandmarkers1.png {Screenshot showing an example of a line chart with the option to change the
+           line color and the color for the points that are selected and display unselected points}
+    \image examples_pointsselectionandmarkers2.png {Screenshot showing another example of a line chart with the option to change
+           the line color and the color for the points that are selected and display unselected points}
 
     We start with creating a series, filling it with the data, and setting up selection functionality.
     It's important not to set points visibility to \c true, because light markers functionality is

@@ -6,7 +6,8 @@
     \title Line Charts with Date and Time Axes
     \brief Shows how to use QLineChart with QDateTimeAxis.
     \include gallery.qdocinc
-    \image examples_datetimeaxis.png
+    \image examples_datetimeaxis.png {Screenshot showing a line chart with a statistic across 21
+           years from January 1991 to July 2012}
 
     \include examples-run.qdocinc
 
