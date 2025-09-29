@@ -10,7 +10,7 @@
     In this example we create an application which uses the QLegendMarker clicked signal to show/hide the corresponding series
     in a chart. The connect marker button connects a clicked signal from all markers in a legend to the handleMarkerClicked slot.
 
-    \image examples_legendmarkers.png
+    \image examples_legendmarkers.png {Screenshot showing four different line charts where all are determined in a legend}
 
     Our application has buttons for adding or removing a series in a chart and a button to connect or disconnect the legend markers clicked signal to our handler.
     In the image above we have connected the markers and clicked on one of them.

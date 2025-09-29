@@ -9,7 +9,7 @@
 
     \brief The example shows how to enable OpenGL acceleration for QLineSeries and QScatterSeries.
 
-    \image examples_openglseries.png
+    \image examples_openglseries.png {Screenshot showing multiple OpenGL charts stacked}
 
     \include examples-run.qdocinc
 

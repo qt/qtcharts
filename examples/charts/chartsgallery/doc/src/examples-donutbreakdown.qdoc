@@ -6,7 +6,7 @@
      \title Creating a Donut Breakdown Chart
      \brief Shows how to create a donut breakdown chart.
      \include gallery.qdocinc
-     \image examples_donutbreakdown.png
+     \image examples_donutbreakdown.png {Screenshot showing a donut breakdown chart example}
 
 
      \section1 Creating Donut Breakdown Charts

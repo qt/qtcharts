@@ -7,7 +7,8 @@
     \brief Shows how to modify the configuration of individual points.
     \include gallery.qdocinc
 
-    \image examples_pointconfiguration.png
+    \image examples_pointconfiguration.png {Screenshot showing a line chart where a desired point
+           can be selected and set with a name, point size, and color}
 
     \section1 Features Demonstrated
     Here you will learn how to:

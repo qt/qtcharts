@@ -7,7 +7,7 @@
     \brief Shows how to use QLogValueAxis.
     \include gallery.qdocinc
 
-    \image examples_logvalueaxis.png
+    \image examples_logvalueaxis.png {Screenshot showing a line chart with the values of the y-axis being logarithmic}
 
     Create a QLineSeries instance and add some data to it.
 

@@ -4,7 +4,9 @@
 /*!
     \page qtcharts-qmlcustomizations-example.html
     \title Customizing Chart Views with QML
-    \image examples_qmlcustomizations.png
+    \image examples_qmlcustomizations.png {Screenshot showing a chart with two data
+           series, one is a pie chart with a blue gradient, and the other is a line
+           chart with an orange dot}
     \brief Shows you how to customize different visual properties of a ChartView
     and a series.
     \include qmlchartsgallery.qdocinc

@@ -7,7 +7,9 @@
     \brief Implements an F1 Legends Chart to demonstrate List Models as Data Sources.
     \include qmlchartsgallery.qdocinc
 
-    \image examples_qmlf1legends.png
+    \image examples_qmlf1legends.png {Screenshot showing driver speeds displayed as
+           three line charts from different people stacked on top of each other,
+           Fittipaldi is blue, Steward is green, and Hunt is orange}
 
     Let's define an empty ChartView first:
 

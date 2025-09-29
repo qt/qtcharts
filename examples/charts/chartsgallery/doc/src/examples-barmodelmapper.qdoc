@@ -7,7 +7,7 @@
      \brief Shows how to use QAbstractItemModel derived model as the data for a bar series.
      \include gallery.qdocinc
 
-     \image examples_barmodelmapper.png
+     \image examples_barmodelmapper.png {Screenshot showing how rows are transferred into a bar chart}
 
      Let's start by creating an instance of CustomTableModel class.
      The CustomTableModel class is derived from QAbstractTableModel, and it was created for the purpose of this example.

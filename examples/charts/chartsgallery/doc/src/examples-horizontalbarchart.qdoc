@@ -10,7 +10,7 @@
     QHorizontalBarChart shows the data in sets as separate bars, which are grouped in categories. QHorizontalBarChart works just like
     QBarChart, except that the bars are drawn horizontally on the chart.
 
-    \image examples_horizontalbarchart.png
+    \image examples_horizontalbarchart.png {Screenshot showing a horizontal barchart example}
 
     The bar sets are used in the same way in all bar charts.
     To illustrate the difference between various bar charts, we use the same data in all examples.

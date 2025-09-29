@@ -6,7 +6,7 @@
     \title Creating Spline Charts
     \brief Shows how to create a simple spline chart.
 
-    \image examples_splinechart.png
+    \image examples_splinechart.png {Screenshot showing a spline chart example}
 
     To create spline charts we need to put our data into QSplineSeries. QSplineSeries automatically
     calculates spline segment control points that are needed to properly draw the spline.

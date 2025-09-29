@@ -7,7 +7,7 @@
     \brief Shows how to create a chart with a vertical axis for each series.
     \include gallery.qdocinc
 
-    \image examples_multiaxis.png
+    \image examples_multiaxis.png {Screenshot showing two line charts having three axes}
 
     Create the QChart instance, hide the legend of the chart, and set its title.
 

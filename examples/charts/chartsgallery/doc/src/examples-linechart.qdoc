@@ -7,7 +7,7 @@
     \brief Shows how to create a simple line chart.
     \include gallery.qdocinc
 
-    \image examples_linechart.png
+    \image examples_linechart.png {Screenshot showing a line chart example}
 
     To create a line chart, a QLineSeries instance is needed. Let's create one.
 

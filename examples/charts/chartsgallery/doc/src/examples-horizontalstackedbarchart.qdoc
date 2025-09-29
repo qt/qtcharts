@@ -12,7 +12,7 @@
     Creating a stacked horizontal bar chart is just like creating a regular \l {Creating Bar Charts} {bar chart}, except that for a
     stacked horizontal bar chart, we use the QHorizontalStackedBarSeries api instead of QBarSeries.
 
-    \image examples_horizontalstackedbarchart.png
+    \image examples_horizontalstackedbarchart.png {Screenshot showing a horizontal stacked bar chart example}
 
     The bar sets are used in same way in all bar charts.
     To illustrate the difference between various barcharts, we use the same data in all examples.

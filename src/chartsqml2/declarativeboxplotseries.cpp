@@ -167,7 +167,8 @@ QT_BEGIN_NAMESPACE
     \endcode
 
     \beginfloatleft
-    \image examples_qmlboxplot.png
+    \image examples_qmlboxplot.png {Screenshot showing a box plot chart displaying an income
+           across five months from January to May}
     \endfloat
     \clearfloat
 

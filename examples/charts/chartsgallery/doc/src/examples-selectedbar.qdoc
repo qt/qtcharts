@@ -10,7 +10,9 @@
     The example shows how to change the color and state of bars using
     setBarSelected().
 
-    \image examples_selectedbar.png
+    \image examples_selectedbar.png {Bar chart showing meat consumption from 2017 to 2021 for
+           Chicken, Pork, Turkey, and Ham. Total, selected, and unselected sums are displayed
+           below the chart}
 
     We create the sets and fill them with the data. Then we create a series and append data to it.
     \snippet chartsgallery/selectedbarwidget.cpp 1

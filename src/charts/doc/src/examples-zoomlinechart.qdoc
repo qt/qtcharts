@@ -10,8 +10,8 @@
 
     The example shows how to create your own custom zooming effect with QRubberBand by using a mouse
     and how to use touch gestures for paning and zooming.
-    \image examples_zoomlinechart1.png
-    \image examples_zoomlinechart2.png
+    \image examples_zoomlinechart1.png {Screenshot showing a wave chart example}
+    \image examples_zoomlinechart2.png {Screenshot of the wave chart being zoomed in}
 
     \include examples-run.qdocinc
 

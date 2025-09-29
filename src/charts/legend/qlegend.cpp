@@ -33,7 +33,8 @@ QT_BEGIN_NAMESPACE
     detached to make it independent of chart layout. Legend objects cannot be created or deleted,
     but they can be referenced via the QChart class.
 
-    \image examples_percentbarchart_legend.png
+    \image examples_percentbarchart_legend.png {Screenshot only showing the legends of a bar chart
+           that is blurred}
 
     \sa QChart
 */
@@ -55,7 +56,8 @@ QT_BEGIN_NAMESPACE
         }
     \endcode
 
-    \image examples_percentbarchart_legend.png
+    \image examples_percentbarchart_legend.png {Screenshot only showing the legends of a bar chart
+           that is blurred}
 
     \note There is no QML API available for modifying legend markers. Markers
     can be modified by creating a custom legend. For more information, see

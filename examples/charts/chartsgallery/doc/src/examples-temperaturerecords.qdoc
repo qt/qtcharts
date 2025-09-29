@@ -8,7 +8,8 @@
     \include gallery.qdocinc
     For our example we use temperature data.
 
-    \image examples_temperaturerecords.png
+    \image examples_temperaturerecords.png {Screenshot of chart with negative bars showing temperature records from -52 to 52 Celsius
+           across twelve months from January to December, with minimum being the blue chart and the maximum being the green chart.}
 
     First we create two barsets and append the data to them. One set represents the minimum temperatures and another the maximum temperatures.
 

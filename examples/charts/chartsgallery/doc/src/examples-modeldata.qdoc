@@ -7,7 +7,7 @@
      \brief Shows how to use the QAbstractItemModel derived model as series data.
      \include gallery.qdocinc
 
-     \image examples_modeldata.png
+     \image examples_modeldata.png {Screenshot showing two different tables being displayed as line charts}
 
      Let's start by creating an instance of the CustomTableModel class.
      The CustomTableModel class is derived from QAbstractTableModel and it was created for the purpose of this example.

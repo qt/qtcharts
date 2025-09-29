@@ -9,7 +9,11 @@
     \examplecategory {Mobile}
     \brief Demonstrates how to use the different chart types by using qml.
 
-    \image QMLChartsGallery.png
+    \image QMLChartsGallery.png {Screenshot showing the number of NHL All-Star Team
+           Players from three different countries displayed as an area chart, the
+           green area being Swedish, the blue area being Russian, and the orange
+           area being Finnish. On the left side are different options to change the
+           chart to different chart types}
 
     \include examples-run.qdocinc
 
@@ -34,55 +38,69 @@
 
     To create a pie chart, we use the PieSeries API together with a few PieSlices:
 
-    \image examples_qmlchart1.png
+    \image examples_qmlchart1.png {Screenshot showing the top five car brand
+           shares in Finland displayed as a pie chart}
     \snippet qmlchartsgallery/qml/PieChart.qml 1
 
     You can create a chart with a line series:
 
-    \image examples_qmlchart2.png
+    \image examples_qmlchart2.png {Screenshot showing a line chart example}
     \snippet qmlchartsgallery/qml/LineSeries.qml 1
 
     And a spline series:
 
-    \image examples_qmlchart3.png
+    \image examples_qmlchart3.png {Screenshot showing a spline chart example}
     \snippet qmlchartsgallery/qml/SplineSeries.qml 1
 
     You can create a chart that illustrates the NHL All-Star player selections
     by using three area series:
 
-    \image examples_qmlchart4.png
+    \image examples_qmlchart4.png {Screenshot showing the number of NHL All-Star
+           Team Players from three different countries displayed as an area chart,
+           the green area being Swedish, the blue area being Russian, and the
+           orange area being Finnish}
     \snippet qmlchartsgallery/qml/AreaSeries.qml 1
     \dots
 
     Then a couple of scatter series:
 
-    \image examples_qmlchart5.png
+    \image examples_qmlchart5.png {Screenshot showing two scatter series stacked in
+           a chart and with scatter1 having blue dots and scatter2 having green
+           dots}
     \snippet qmlchartsgallery/qml/ScatterSeries.qml 1
     \dots
 
     And a few different bar series:
 
-    \image examples_qmlchart6.png
+    \image examples_qmlchart6.png {Screenshot showing contributions from three
+           different people as a bar series, with Bob being the blue bar, Susan being
+           green and James being orange}
     \snippet qmlchartsgallery/qml/BarSeries.qml 1
 
-    \image examples_qmlchart7.png
+    \image examples_qmlchart7.png {Screenshot showing the contributions from the
+           same people but as a stacked bar series}
     \snippet qmlchartsgallery/qml/BarSeriesStacked.qml 1
 
-    \image examples_qmlchart8.png
+    \image examples_qmlchart8.png {Screenshot showing the contributions from the
+           same people, but as a percent bar series}
     \snippet qmlchartsgallery/qml/BarSeriesPercent.qml 1
 
-    \image examples_qmlchart9.png
+    \image examples_qmlchart9.png {Screenshot showing the contributions from the
+           same people but as a horizontal bar series}
     \snippet qmlchartsgallery/qml/BarSeriesHorizontal.qml 1
 
-    \image examples_qmlchart10.png
+    \image examples_qmlchart10.png {Screenshot showing the contributions from the
+           same people, but as a horizontal stacked bar series}
     \snippet qmlchartsgallery/qml/BarSeriesStackedHorizontal.qml 1
 
-    \image examples_qmlchart11.png
+    \image examples_qmlchart11.png {Screenshot showing the contributions from the
+           same people, but as a horizontal percent bar series}
     \snippet qmlchartsgallery/qml/BarSeriesPercentHorizontal.qml 1
 
     This demonstrates how to create a donut chart with two pie series:
 
-    \image examples_qmlchart12.png
+    \image examples_qmlchart12.png {Screenshot showing production costs displayed
+           as a donut chart with the main tops having subtopics}
     \snippet qmlchartsgallery/qml/Donut.qml 1
 
     Additionally, anti-aliasing is set with the qml property in Qt Quick 2.

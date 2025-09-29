@@ -6,7 +6,10 @@
     \title Qml Oscilloscope
     \ingroup qtcharts_examples
     \examplecategory {Data Visualization}
-    \image examples_qmloscilloscope.png
+    \image examples_qmloscilloscope.png {Screenshot showing an oscilloscope application displaying
+           waves of two different signals, signal one is green and signal two is blue. On the left
+           side are options to change the graph and source, as well as choosing how many samples
+           and refresh rate, and also buttons to turn on and off antialiasing or animations}
 
     \brief The example shows how to implement application with strict performance requirements
     using the Qt Charts QML API.

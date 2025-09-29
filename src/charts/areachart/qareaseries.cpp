@@ -32,7 +32,7 @@ QT_BEGIN_NAMESPACE
     area between these two boundary lines will be filled.
 
     See the \l {Charts with Widgets Gallery} to learn how to create a simple area chart.
-    \image examples_areachart.png
+    \image examples_areachart.png {Screenshot of an areachart example}
 */
 
 /*!

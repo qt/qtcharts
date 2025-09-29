@@ -6,7 +6,7 @@
      \title Drawing a Callout on Top of a Chart
      \brief Shows how to draw an additional element (a callout) on top of a chart.
      \include gallery.qdocinc
-     \image examples_callout.png
+     \image examples_callout.png {Screenshot that shows a random point of two graphs being called out}
 
      The QChart class provides two methods that map between the scene coordinates and the series domain
     (defined by the axes ranges).

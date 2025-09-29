@@ -10,9 +10,9 @@
     Here change the look and feel of the different built-in themes for some of the supported
     chart types.
 
-    \image examples_chartthemes_light.png
-    \image examples_chartthemes_brown_sand.png
-    \image examples_chartthemes_blue_cerulean.png
+    \image examples_chartthemes_light.png {Screenshot showing light themed charts}
+    \image examples_chartthemes_brown_sand.png {Screenshot showing brown sand themed charts}
+    \image examples_chartthemes_blue_cerulean.png {Screenshot showing blue cerulean themed charts}
 
     \section1 Creating Charts
 

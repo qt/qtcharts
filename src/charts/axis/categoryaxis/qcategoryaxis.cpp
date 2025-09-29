@@ -22,7 +22,8 @@ QT_BEGIN_NAMESPACE
     be specified freely.
 
     Example code on how to use QCategoryAxis:
-    \image api_category_axis.png
+    \image api_category_axis.png {Screenshot cutout showing the y-axis being
+           categorised by first, second, and third}
     \code
     QChartView *chartView = new QChartView;
     QLineSeries *series = new QLineSeries;

@@ -10,7 +10,7 @@
     The example also shows how to read the non-continuous data from a file,
     arrange it and find medians needed for box-and-whiskers plotting.
 
-    \image examples_boxplotchart.png
+    \image examples_boxplotchart.png {Screenshot showing box and whisker plots in a chart}
 
     To show the share deviation of two companies we start by creating two QBoxPlotSeries to handle monthly data.
 

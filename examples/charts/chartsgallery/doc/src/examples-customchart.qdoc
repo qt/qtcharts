@@ -7,7 +7,7 @@
     \brief Shows how to customize the appearance of chart elements.
 
     \include gallery.qdocinc
-    \image examples_customchart.png
+    \image examples_customchart.png {Screenshot showing an example of a custom chart with a custom theme}
 
     We begin by creating a simple line series and a chart object.
     \snippet chartsgallery/customchartwidget.cpp 1
