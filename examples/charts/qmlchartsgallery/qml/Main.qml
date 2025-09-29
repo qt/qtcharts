@@ -14,7 +14,10 @@ Rectangle {
 
     Item {
         anchors.fill: parent
-        anchors.margins: 8
+        anchors.topMargin: Math.max(8, root.SafeArea.margins.top)
+        anchors.leftMargin: Math.max(8, root.SafeArea.margins.left)
+        anchors.rightMargin: Math.max(8, root.SafeArea.margins.right)
+        anchors.bottomMargin: Math.max(8, root.SafeArea.margins.bottom)
 
         Rectangle {
             id: listRect
