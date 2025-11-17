@@ -62,3 +62,7 @@ navigation.toctitles.inclusive = false
 
 # Allow zero warnings when testing documentation in CI
 warninglimit = 0
+
+# suppress qdoc warnings
+spurious += "Undocumented property .*" \
+            "No output generated .*"
