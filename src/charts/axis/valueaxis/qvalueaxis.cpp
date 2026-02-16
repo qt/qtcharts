@@ -386,7 +386,7 @@ QAbstractAxis::AxisType QValueAxis::type() const
 }
 
 /*!
-    \qmlmethod ValueAxis::applyNiceNumbers()
+    \qmlmethod void ValueAxis::applyNiceNumbers()
     Modifies the current range and number of tick marks on the axis to look
     \e nice. The algorithm considers numbers that can be expressed as a form of
     1*10^n, 2* 10^n, or 5*10^n to be nice numbers. These numbers are used for

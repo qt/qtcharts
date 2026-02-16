@@ -414,7 +414,7 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
-    \qmlmethod PieSeries::clear()
+    \qmlmethod void PieSeries::clear()
     Removes all slices from the pie.
 */
 

@@ -537,36 +537,36 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
-    \qmlmethod XYSeries::append(real x, real y)
+    \qmlmethod void XYSeries::append(real x, real y)
     Appends a point with the coordinates \a x and \a y to the series.
 */
 
 /*!
-    \qmlmethod XYSeries::replace(real oldX, real oldY, real newX, real newY)
+    \qmlmethod void XYSeries::replace(real oldX, real oldY, real newX, real newY)
     Replaces the point with the coordinates \a oldX and \a oldY with the point
     with the coordinates \a newX and \a newY. Does nothing if the old point does
     not exist.
 */
 
 /*!
-    \qmlmethod XYSeries::remove(real x, real y)
+    \qmlmethod void XYSeries::remove(real x, real y)
     Removes the point with the coordinates \a x and \a y from the series. Does
     nothing if the point does not exist.
 */
 
 /*!
-    \qmlmethod XYSeries::remove(int index)
+    \qmlmethod void XYSeries::remove(int index)
     Removes the point at the position specified by \a index from the series.
 */
 
 /*!
-    \qmlmethod XYSeries::removePoints(int index, int count)
+    \qmlmethod void XYSeries::removePoints(int index, int count)
     Removes the number of points specified by \a count from the series starting
     at the position specified by \a index.
 */
 
 /*!
-    \qmlmethod XYSeries::insert(int index, real x, real y)
+    \qmlmethod void XYSeries::insert(int index, real x, real y)
     Inserts a point with the coordinates \a x and \a y to the position specified
     by \a index in the series. If the index is 0 or less than 0, the point is
     prepended to the list of points. If the index is equal to or greater than
@@ -575,7 +575,7 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
-    \qmlmethod QPointF XYSeries::at(int index)
+    \qmlmethod point XYSeries::at(int index)
     Returns the point at the position specified by \a index. Returns (0, 0) if
     the index is not valid.
 */

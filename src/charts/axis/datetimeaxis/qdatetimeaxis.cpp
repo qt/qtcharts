@@ -119,7 +119,7 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
-  \qmlmethod DateTimeAxis::rangeChanged(datetime min, datetime max)
+  \qmlsignal DateTimeAxis::rangeChanged(datetime min, datetime max)
   This signal is emitted when the minimum or maximum value of the axis, specified by \a min
   and \a max, changes.
 
