@@ -120,7 +120,7 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
-    \qmlmethod BarSet::clicked(int index)
+    \qmlsignal BarSet::clicked(int index)
 
     This signal is emitted when the user clicks the bar specified by \a index
     in a bar set.
@@ -136,7 +136,7 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
-    \qmlmethod BarSet::pressed(int index)
+    \qmlsignal BarSet::pressed(int index)
 
     This signal is emitted when the user clicks the bar specified by \a index in
     a bar set and holds down the mouse button.
@@ -152,7 +152,7 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
-    \qmlmethod BarSet::released(int index)
+    \qmlsignal BarSet::released(int index)
 
     This signal is emitted when the user releases the mouse press on the bar
     specified by \a index in a bar set.
@@ -167,7 +167,7 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
-    \qmlmethod BarSet::doubleClicked(int index)
+    \qmlsignal BarSet::doubleClicked(int index)
 
     This signal is emitted when the user double-clicks the bar specified by
     \a index in a bar set.
@@ -333,7 +333,7 @@ QString QBarSet::label() const
 }
 
 /*!
-    \qmlmethod BarSet::append(real value)
+    \qmlmethod void BarSet::append(real value)
     Appends the new value specified by \a value to the end of the bar set.
 */
 
@@ -403,7 +403,7 @@ void QBarSet::insert(const int index, const qreal value)
 }
 
 /*!
-    \qmlmethod BarSet::remove(int index, int count)
+    \qmlmethod void BarSet::remove(int index, int count)
     Removes the number of values specified by \a count from the bar set starting
     with the value specified by \a index.
 
@@ -424,7 +424,7 @@ void QBarSet::remove(const int index, const int count)
 }
 
 /*!
-    \qmlmethod BarSet::replace(int index, real value)
+    \qmlmethod void BarSet::replace(int index, real value)
     Adds the value specified by \a value to the bar set at the position
     specified by \a index.
 */
@@ -441,7 +441,7 @@ void QBarSet::replace(const int index, const qreal value)
 }
 
 /*!
-    \qmlmethod BarSet::at(int index)
+    \qmlmethod real BarSet::at(int index)
     Returns the value specified by \a index from the bar set.
     If the index is out of bounds, 0.0 is returned.
 */

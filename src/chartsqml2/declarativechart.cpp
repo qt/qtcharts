@@ -298,13 +298,13 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
-  \qmlmethod ChartView::removeSeries(AbstractSeries series)
+  \qmlmethod void ChartView::removeSeries(AbstractSeries series)
   Removes the series \a series from the chart and permanently deletes the series
   object.
 */
 
 /*!
-  \qmlmethod ChartView::removeAllSeries()
+  \qmlmethod void ChartView::removeAllSeries()
   Removes all series from the chart and permanently deletes all the series
   objects.
 */
@@ -315,7 +315,7 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
-  \qmlmethod ChartView::setAxisX(AbstractAxis axis, AbstractSeries series)
+  \qmlmethod void ChartView::setAxisX(AbstractAxis axis, AbstractSeries series)
   Sets the x-axis of the \a series to \a axis.
 */
 
@@ -325,38 +325,38 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
-  \qmlmethod ChartView::setAxisY(AbstractAxis axis, AbstractSeries series)
+  \qmlmethod void ChartView::setAxisY(AbstractAxis axis, AbstractSeries series)
   Sets the y-axis of the \a series to \a axis.
 */
 
 /*!
-  \qmlmethod ChartView::zoom(real factor)
+  \qmlmethod void ChartView::zoom(real factor)
   Zooms into the chart by the custom factor \a factor.
 
-  A factor over 1.0 zooms into the view in and a factor between 0.0 and 1.0
+  A factor over 1.0 zooms into the view and a factor between 0.0 and 1.0
   zooms out of it.
 */
 
 /*!
-  \qmlmethod ChartView::zoomIn()
+  \qmlmethod void ChartView::zoomIn()
   Zooms into the view by a factor of two.
 */
 
 /*!
-  \qmlmethod ChartView::zoomIn(rect rectangle)
+  \qmlmethod void ChartView::zoomIn(rect rectangle)
   Zooms into the view to a maximum level at which the rectangle \a rectangle is
   still fully visible.
   \note This is not supported for polar charts.
 */
 
 /*!
-  \qmlmethod ChartView::zoomOut()
+  \qmlmethod void ChartView::zoomOut()
   Zooms out of the view by a factor of two.
   \note This will do nothing if the result would contain an invalid logarithmic axis range.
 */
 
 /*!
-  \qmlmethod ChartView::zoomReset()
+  \qmlmethod void ChartView::zoomReset()
   Resets the series domains to what they were before any zoom method was called.
 
   \note This will also reset scrolling and explicit axis range settings
@@ -365,30 +365,31 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
-  \qmlmethod ChartView::isZoomed()
+  \qmlmethod bool ChartView::isZoomed()
+
   Returns \c true if any series has a zoomed domain.
 */
 
 /*!
-  \qmlmethod ChartView::scrollLeft(real pixels)
+  \qmlmethod void ChartView::scrollLeft(real pixels)
   Scrolls to left by the number of pixels specified by \a pixels. This is a
   convenience method suitable for key navigation, for example.
 */
 
 /*!
-  \qmlmethod ChartView::scrollRight(real pixels)
+  \qmlmethod void ChartView::scrollRight(real pixels)
   Scrolls to right by by the number of pixels specified by \a pixels. This is a
   convenience method suitable for key navigation, for example.
 */
 
 /*!
-  \qmlmethod ChartView::scrollUp(real pixels)
+  \qmlmethod void ChartView::scrollUp(real pixels)
   Scrolls up by the number of pixels specified by \a pixels. This is a
   convenience method suitable for key navigation, for example.
 */
 
 /*!
-  \qmlmethod ChartView::scrollDown(real pixels)
+  \qmlmethod void ChartView::scrollDown(real pixels)
   Scrolls down by the number of pixels specified by \a pixels. This is a
   convenience method suitable for key navigation, for example.
 */

@@ -381,7 +381,7 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
-    \qmlmethod AbstractBarSeries::clear()
+    \qmlmethod void AbstractBarSeries::clear()
     Removes all bar sets from the series.
 */
 

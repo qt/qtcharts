@@ -431,7 +431,7 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
-    \qmlmethod CandlestickSeries::at(int index)
+    \qmlmethod CandlestickSet CandlestickSeries::at(int index)
     Returns the candlestick item at the position specified by \a index. Returns
     null if the index is not valid.
 */
@@ -455,7 +455,7 @@ QCandlestickSeries::~QCandlestickSeries()
 }
 
 /*!
-    \qmlmethod CandlestickSeries::append(CandlestickSet set)
+    \qmlmethod bool CandlestickSeries::append(CandlestickSet set)
     Adds a single candlestick item specified by \a set to the series and takes
     ownership of it. If the item is null or it is already in the series, it
     is not appended.
@@ -478,7 +478,7 @@ bool QCandlestickSeries::append(QCandlestickSet *set)
 }
 
 /*!
-    \qmlmethod CandlestickSeries::remove(CandlestickSet set)
+    \qmlmethod bool CandlestickSeries::remove(CandlestickSet set)
     Removes a single candlestick item, specified by \a set, from the series.
 
     Returns \c true if the item is successfully deleted, \c false otherwise.
@@ -537,7 +537,7 @@ bool QCandlestickSeries::remove(const QList<QCandlestickSet *> &sets)
 }
 
 /*!
-    \qmlmethod CandlestickSeries::insert(int index, CandlestickSet set)
+    \qmlmethod bool CandlestickSeries::insert(int index, CandlestickSet set)
     Inserts the candlestick item specified by \a set to the series at the
     position specified by \a index. Takes ownership of the item. If the
     item is null or already belongs to the series, it is not inserted.
@@ -589,7 +589,7 @@ bool QCandlestickSeries::take(QCandlestickSet *set)
 }
 
 /*!
-    \qmlmethod CandlestickSeries::clear()
+    \qmlmethod void CandlestickSeries::clear()
     Removes all candlestick items from the series and permanently deletes them.
 */
 
