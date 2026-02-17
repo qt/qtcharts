@@ -1,3 +1,4 @@
 [mousehovered]
 macos
 xcb ubuntu-24.04 # QTBUG-134519
+wayland
