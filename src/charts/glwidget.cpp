@@ -78,7 +78,8 @@ void GLWidget::cleanup()
 
     doneCurrent();
 
-    context()->disconnect(this);
+    if (context())
+        context()->disconnect(this);
 }
 
 void GLWidget::cleanXYSeriesResources(const QXYSeries *series)
