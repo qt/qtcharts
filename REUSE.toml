@@ -35,8 +35,9 @@ SPDX-FileCopyrightText = "Copyright (C) The Qt Company Ltd."
 SPDX-License-Identifier = "LicenseRef-Qt-Commercial OR BSD-3-Clause"
 
 [[annotations]]
-path = ["**/doc/images/**", "**/README*", "**.qdocconf", "**.qdocinc",
-        "src/charts/doc/style/offline.css", "**.metainfo"]
+path = ["**.qdocconf", "**.qdocinc", "**/doc/images/**", "src/charts/doc/style/offline.css",
+        "**/README*", "CONTRIBUTING.md",
+        "qt_attribution.json", "**.metainfo"]
 comment = "documentation"
 precedence = "closest"
 SPDX-FileCopyrightText = "Copyright (C) The Qt Company Ltd."
@@ -47,10 +48,3 @@ path = ["**.toml", "licenseRule.json"]
 precedence = "override"
 SPDX-FileCopyrightText = "Copyright (C) The Qt Company Ltd."
 SPDX-License-Identifier = "LicenseRef-Qt-Commercial OR BSD-3-Clause"
-
-[[annotations]]
-path = ["**/qt_attribution.json"]
-precedence = "override"
-SPDX-FileCopyrightText = "Copyright (C) The Qt Company Ltd."
-SPDX-License-Identifier = "LicenseRef-Qt-Commercial OR GFDL-1.3-no-invariants-only"
-
