@@ -60,9 +60,9 @@ void ChartThemeManager::setTheme(QChart::ChartTheme theme)
         if (!m_theme.isNull()) {
             decorateChart(m_chart,m_theme.data());
             decorateLegend(m_chart->legend(),m_theme.data());
-            foreach (QAbstractAxis* axis, m_axisList)
+            for (auto axis : std::as_const(m_axisList))
                 axis->d_ptr->initializeTheme(m_theme.data(), true);
-            foreach (QAbstractSeries* series, m_seriesMap.keys())
+            for (auto series : m_seriesMap.keys())
                 series->d_ptr->initializeTheme(m_seriesMap[series], m_theme.data(), true);
         }
     }
@@ -111,7 +111,7 @@ int ChartThemeManager::seriesCount(QAbstractSeries::SeriesType type) const
 {
     int count = 0;
     QList<QAbstractSeries *> series =   m_seriesMap.keys();
-    foreach(QAbstractSeries *s, series) {
+    for (auto s : std::as_const(series)) {
         if (s->type() == type)
             count++;
     }
@@ -151,7 +151,7 @@ QList<QGradient> ChartThemeManager::generateSeriesGradients(const QList<QColor>&
 {
     QList<QGradient> result;
     // Generate gradients in HSV color space
-    foreach (const QColor &color, colors) {
+    for (const auto &color : colors) {
         QLinearGradient g;
         qreal h = color.hsvHueF();
         qreal s = color.hsvSaturationF();

@@ -85,7 +85,7 @@ void ChartPresenter::setGeometry(const QRectF rect)
 
 void ChartPresenter::updateGeometry(const QRectF &rect)
 {
-    foreach (ChartItem *chart, m_chartItems) {
+    for (auto chart : std::as_const(m_chartItems)) {
         chart->domain()->setSize(rect.size());
         chart->setPos(rect.topLeft());
     }
@@ -164,12 +164,12 @@ void ChartPresenter::setAnimationOptions(QChart::AnimationOptions options)
         QChart::AnimationOptions oldOptions = m_options;
         m_options = options;
         if (options.testFlag(QChart::SeriesAnimations) != oldOptions.testFlag(QChart::SeriesAnimations)) {
-            foreach (QAbstractSeries *series, m_series)
+            for (auto series : std::as_const(m_series))
                 series->d_ptr->initializeAnimations(m_options, m_animationDuration,
                                                     m_animationCurve);
         }
         if (options.testFlag(QChart::GridAxisAnimations) != oldOptions.testFlag(QChart::GridAxisAnimations)) {
-            foreach (QAbstractAxis *axis, m_axes)
+            for (auto axis : std::as_const(m_axes))
                 axis->d_ptr->initializeAnimations(m_options, m_animationDuration, m_animationCurve);
         }
         m_layout->invalidate(); // So that existing animations don't just stop halfway
@@ -180,9 +180,9 @@ void ChartPresenter::setAnimationDuration(int msecs)
 {
     if (m_animationDuration != msecs) {
         m_animationDuration = msecs;
-        foreach (QAbstractSeries *series, m_series)
+        for (auto series : std::as_const(m_series))
             series->d_ptr->initializeAnimations(m_options, m_animationDuration, m_animationCurve);
-        foreach (QAbstractAxis *axis, m_axes)
+        for (auto axis : std::as_const(m_axes))
             axis->d_ptr->initializeAnimations(m_options, m_animationDuration, m_animationCurve);
         m_layout->invalidate(); // So that existing animations don't just stop halfway
     }
@@ -192,9 +192,9 @@ void ChartPresenter::setAnimationEasingCurve(const QEasingCurve &curve)
 {
     if (m_animationCurve != curve) {
         m_animationCurve = curve;
-        foreach (QAbstractSeries *series, m_series)
+        for (auto series : std::as_const(m_series))
             series->d_ptr->initializeAnimations(m_options, m_animationDuration, m_animationCurve);
-        foreach (QAbstractAxis *axis, m_axes)
+        for (auto axis : std::as_const(m_axes))
             axis->d_ptr->initializeAnimations(m_options, m_animationDuration, m_animationCurve);
         m_layout->invalidate(); // So that existing animations don't just stop halfway
     }
@@ -202,8 +202,8 @@ void ChartPresenter::setAnimationEasingCurve(const QEasingCurve &curve)
 
 void ChartPresenter::setState(State state,QPointF point)
 {
-	m_state=state;
-	m_statePoint=point;
+    m_state=state;
+    m_statePoint=point;
 }
 
 QChart::AnimationOptions ChartPresenter::animationOptions() const

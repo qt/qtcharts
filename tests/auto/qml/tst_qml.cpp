@@ -36,7 +36,7 @@ QString tst_qml::componentErrors(const QQmlComponent* component) const
 
     QStringList errors;
 
-    foreach (QQmlError const& error, component->errors()) {
+    for (QQmlError const &error : component->errors()) {
         errors  << error.toString();
     }
 

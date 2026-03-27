@@ -90,7 +90,7 @@ void tst_QBarCategoriesAxis::init()
     QStringList categories;
     categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun";
 
-    foreach(QString category, categories)
+    for (auto category : std::as_const(categories))
         m_baraxis->append(category);
 
     tst_QAbstractAxis::initAxes(m_baraxis, m_series);
@@ -191,7 +191,7 @@ void tst_QBarCategoriesAxis::append2()
     QSignalSpy spy3(&axis, SIGNAL(rangeChanged(QString,QString)));
     QSignalSpy spy4(&axis, SIGNAL(countChanged()));
 
-    foreach(QString category, categories)
+    for (auto category : std::as_const(categories))
         axis.append(category);
 
     QCOMPARE(spy0.size(), categories.size());

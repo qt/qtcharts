@@ -188,7 +188,7 @@ void tst_QXYSeries::append_raw()
     QCOMPARE(m_series->points(), points);
 
     // Process events between appends
-    foreach (const QPointF &point, otherPoints) {
+    for (const auto point : otherPoints) {
         m_series->append(point);
         QApplication::processEvents();
     }
@@ -271,7 +271,7 @@ void tst_QXYSeries::remove_raw()
     TRY_COMPARE(spy0.size(), 0);
     QCOMPARE(m_series->points(), points);
 
-    foreach (const QPointF& point,points)
+    for (const auto point : std::as_const(points))
         m_series->remove(point);
 
     QCOMPARE(m_series->points().size(), 0);
@@ -291,7 +291,7 @@ void tst_QXYSeries::remove_raw()
     // Process events between removes
     m_series->append(points);
     QCOMPARE(m_series->points(), points);
-    foreach (const QPointF &point, points) {
+    for (const auto point : std::as_const(points)) {
         m_series->remove(point);
         QApplication::processEvents();
     }
@@ -418,8 +418,8 @@ void tst_QXYSeries::replace_raw()
     TRY_COMPARE(pointsReplacedSpy.size(), 0);
     QCOMPARE(m_series->points(), points);
 
-    foreach (const QPointF& point, points)
-       m_series->replace(point.x(),point.y(),point.x(),0);
+    for (const auto point : std::as_const(points))
+        m_series->replace(point.x(), point.y(), point.x(), 0);
     TRY_COMPARE(pointReplacedSpy.size(), points.size());
     TRY_COMPARE(pointsReplacedSpy.size(), 0);
 
@@ -535,8 +535,7 @@ void tst_QXYSeries::oper()
 
     QSignalSpy spy0(m_series, SIGNAL(clicked(QPointF)));
 
-    foreach (const QPointF& point,points)
-    {
+    for (const auto point : std::as_const(points)) {
         *m_series<<point;
     }
 

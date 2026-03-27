@@ -396,7 +396,7 @@ void MainWidget::addSet()
         return;
     }
 
-    foreach (QAbstractSeries *s, m_chart->series()) {
+    for (auto s : m_chart->series()) {
         QCandlestickSeries *series = qobject_cast<QCandlestickSeries *>(s);
 
         QDateTime dateTime;
@@ -422,7 +422,7 @@ void MainWidget::insertSet()
         return;
     }
 
-    foreach (QAbstractSeries *s, m_chart->series()) {
+    for (auto s : m_chart->series()) {
         QCandlestickSeries *series = qobject_cast<QCandlestickSeries *>(s);
 
         QDateTime dateTime;
@@ -448,7 +448,7 @@ void MainWidget::removeSet()
         return;
     }
 
-    foreach (QAbstractSeries *s, m_chart->series()) {
+    for (auto s : m_chart->series()) {
         QCandlestickSeries *series = qobject_cast<QCandlestickSeries *>(s);
         if (series->sets().isEmpty())
             qDebug() << "Create a set first";
@@ -466,7 +466,7 @@ void MainWidget::removeAllSets()
         return;
     }
 
-    foreach (QAbstractSeries *s, m_chart->series()) {
+    for (auto s : m_chart->series()) {
         QCandlestickSeries *series = qobject_cast<QCandlestickSeries *>(s);
         if (series->sets().isEmpty())
             qDebug() << "Create a set first";
@@ -480,7 +480,7 @@ void MainWidget::removeAllSets()
 void MainWidget::changeMaximumColumnWidth(double width)
 {
     m_maximumColumnWidth = width;
-    foreach (QAbstractSeries *s, m_chart->series()) {
+    for (auto s : m_chart->series()) {
         QCandlestickSeries *series = qobject_cast<QCandlestickSeries *>(s);
         series->setMaximumColumnWidth(m_maximumColumnWidth);
     }
@@ -489,7 +489,7 @@ void MainWidget::changeMaximumColumnWidth(double width)
 void MainWidget::changeMinimumColumnWidth(double width)
 {
     m_minimumColumnWidth = width;
-    foreach (QAbstractSeries *s, m_chart->series()) {
+    for (auto s : m_chart->series()) {
         QCandlestickSeries *series = qobject_cast<QCandlestickSeries *>(s);
         series->setMinimumColumnWidth(m_minimumColumnWidth);
     }
@@ -498,7 +498,7 @@ void MainWidget::changeMinimumColumnWidth(double width)
 void MainWidget::bodyOutlineVisibleToggled(bool visible)
 {
     m_bodyOutlineVisible = visible;
-    foreach (QAbstractSeries *s, m_chart->series()) {
+    for (auto s : m_chart->series()) {
         QCandlestickSeries *series = qobject_cast<QCandlestickSeries *>(s);
         series->setBodyOutlineVisible(m_bodyOutlineVisible);
     }
@@ -507,7 +507,7 @@ void MainWidget::bodyOutlineVisibleToggled(bool visible)
 void MainWidget::capsVisibleToggled(bool visible)
 {
     m_capsVisible = visible;
-    foreach (QAbstractSeries *s, m_chart->series()) {
+    for (auto s : m_chart->series()) {
         QCandlestickSeries *series = qobject_cast<QCandlestickSeries *>(s);
         series->setCapsVisible(m_capsVisible);
     }
@@ -516,7 +516,7 @@ void MainWidget::capsVisibleToggled(bool visible)
 void MainWidget::changeBodyWidth(double width)
 {
     m_bodyWidth = width;
-    foreach (QAbstractSeries *s, m_chart->series()) {
+    for (auto s : m_chart->series()) {
         QCandlestickSeries *series = qobject_cast<QCandlestickSeries *>(s);
         series->setBodyWidth(m_bodyWidth);
     }
@@ -525,7 +525,7 @@ void MainWidget::changeBodyWidth(double width)
 void MainWidget::changeCapsWidth(double width)
 {
     m_capsWidth = width;
-    foreach (QAbstractSeries *s, m_chart->series()) {
+    for (auto s : m_chart->series()) {
         QCandlestickSeries *series = qobject_cast<QCandlestickSeries *>(s);
         series->setCapsWidth(m_capsWidth);
     }
@@ -623,7 +623,7 @@ void MainWidget::changeAxisX(int axisXIndex)
 
     updateAxes();
 
-    foreach (QAbstractSeries *series, m_chart->series())
+    for (auto series : m_chart->series())
         series->attachAxis(m_axisX);
 }
 
@@ -642,7 +642,7 @@ void MainWidget::attachModelMapper()
     series->setName(QStringLiteral("SWMM")); // Series With Model Mapper
 
     CustomTableModel *model = qobject_cast<CustomTableModel *>(m_hModelMapper->model());
-    foreach (QCandlestickSet *set, series->sets())
+    for (auto set : series->sets())
         model->addRow(set);
 
     m_hModelMapper->setFirstSetRow(0);

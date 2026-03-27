@@ -20,9 +20,9 @@ public:
         chart->setTitle("Line chart");
         QString name("Series ");
         int nameIndex = 0;
-        foreach (DataList list, table) {
+        for (auto list : table) {
             QLineSeries *series = new QLineSeries(chart);
-            foreach (Data data, list)
+            for (auto data : list)
                 series->append(data.first);
             series->setName(name + QString::number(nameIndex));
             nameIndex++;

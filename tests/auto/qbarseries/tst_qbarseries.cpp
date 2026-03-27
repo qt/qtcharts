@@ -93,7 +93,7 @@ void tst_QBarSeries::init()
 
 void tst_QBarSeries::cleanup()
 {
-    foreach (QBarSet* s, m_testSets) {
+    for (auto s : std::as_const(m_testSets)) {
         m_barseries_with_sets->remove(s);
     }
     m_testSets.clear();

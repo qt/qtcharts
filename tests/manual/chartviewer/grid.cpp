@@ -200,7 +200,7 @@ void Grid::mousePressEvent(QGraphicsSceneMouseEvent *event)
         m_origin = event->pos();
         m_currentState = NoState;
 
-        foreach (QChart *chart, charts()) {
+        for (auto chart : charts()) {
             QRectF geometryRect = chart->geometry();
             QRectF plotArea = chart->plotArea();
             plotArea.translate(geometryRect.topLeft());
@@ -227,8 +227,7 @@ void Grid::mousePressEvent(QGraphicsSceneMouseEvent *event)
 void Grid::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     if (m_currentState != NoState) {
-
-        foreach (QChart *chart, charts()) {
+        for (auto chart : charts()) {
             QRectF geometryRect = chart->geometry();
             QRectF plotArea = chart->plotArea();
             plotArea.translate(geometryRect.topLeft());
@@ -254,7 +253,7 @@ void Grid::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         if (m_currentState == ZoomState) {
             m_rubberBand->setVisible(false);
 
-            foreach (QChart *chart, charts()) {
+            for (auto chart : charts()) {
                 QRectF geometryRect = chart->geometry();
                 QRectF plotArea = chart->plotArea();
                 plotArea.translate(geometryRect.topLeft());
@@ -272,7 +271,7 @@ void Grid::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
     if (event->button() == Qt::RightButton) {
         if (m_currentState == ZoomState) {
-            foreach (QChart *chart, charts()) {
+            for (auto chart : charts()) {
                 QRectF geometryRect = chart->geometry();
                 QRectF plotArea = chart->plotArea();
                 plotArea.translate(geometryRect.topLeft());

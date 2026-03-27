@@ -459,13 +459,13 @@ void tst_qpieseries::verifyCalculatedData(const QPieSeries &series, bool *ok)
     *ok = false;
 
     qreal sum = 0;
-    foreach (const QPieSlice *slice, series.slices())
+    for (const auto slice : series.slices())
         sum += slice->value();
     QCOMPARE(series.sum(), sum);
 
     qreal startAngle = series.pieStartAngle();
     qreal pieAngleSpan = series.pieEndAngle() - series.pieStartAngle();
-    foreach (const QPieSlice *slice, series.slices()) {
+    for (const auto slice : series.slices()) {
         qreal ratio = slice->value() / sum;
         qreal sliceSpan = pieAngleSpan * ratio;
         QCOMPARE(slice->startAngle(), startAngle);
@@ -571,7 +571,7 @@ void tst_qpieseries::hoverSignal()
     // check
     QCOMPARE(hoverSpy.size(), 8);
     int i = 0;
-    foreach (QPieSlice *s, m_series->slices()) {
+    for (auto s : m_series->slices()) {
         QCOMPARE(qvariant_cast<QPieSlice*>(hoverSpy.at(i).at(0)), s);
         QCOMPARE(qvariant_cast<bool>(hoverSpy.at(i).at(1)), true);
         i++;

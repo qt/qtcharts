@@ -72,7 +72,8 @@ void ChartDataSet::addSeries(QAbstractSeries *series)
         series->d_ptr->setDomain(new XYPolarDomain());
         // Set the correct domain for upper and lower series too
         if (series->type() == QAbstractSeries::SeriesTypeArea) {
-            foreach (QObject *child, series->children()) {
+            const auto childlist = series->children();
+            for (QObject *child : childlist) {
                 if (qobject_cast<QAbstractSeries *>(child)) {
                     QAbstractSeries *childSeries = qobject_cast<QAbstractSeries *>(child);
                     childSeries->d_ptr->setDomain(new XYPolarDomain());
@@ -137,7 +138,7 @@ void ChartDataSet::removeSeries(QAbstractSeries *series)
 
     QList<QAbstractAxis *> axes = series->d_ptr->m_axes;
 
-    foreach (QAbstractAxis *axis, axes) {
+    for (auto axis : axes) {
         detachAxis(series, axis);
     }
 
@@ -166,8 +167,8 @@ void ChartDataSet::removeAxis(QAbstractAxis *axis)
 
     QList<QAbstractSeries*> series =  axis->d_ptr->m_series;
 
-    foreach(QAbstractSeries* s, series) {
-      detachAxis(s,axis);
+    for (auto s : series) {
+        detachAxis(s, axis);
     }
 
     emit axisRemoved(axis);
@@ -235,10 +236,10 @@ bool ChartDataSet::attachAxis(QAbstractSeries *series,QAbstractAxis *axis)
     QList<AbstractDomain *> blockedDomains { domain };
 
     if (domain != series->d_ptr->domain()) {
-        foreach (QAbstractAxis *axis, series->d_ptr->m_axes) {
+        for (auto axis : std::as_const(series->d_ptr->m_axes)) {
             series->d_ptr->domain()->detachAxis(axis);
             domain->attachAxis(axis);
-            foreach (QAbstractSeries *otherSeries, axis->d_ptr->m_series) {
+            for (auto otherSeries : std::as_const(axis->d_ptr->m_series)) {
                 if (otherSeries != series && otherSeries->d_ptr->domain()) {
                     if (!otherSeries->d_ptr->domain()->rangeSignalsBlocked()) {
                         otherSeries->d_ptr->domain()->blockRangeSignals(true);
@@ -252,7 +253,7 @@ bool ChartDataSet::attachAxis(QAbstractSeries *series,QAbstractAxis *axis)
 
         // Reinitialize domain based on old axes, as the series domain initialization above
         // has trashed the old ranges, if there were any.
-        for (QAbstractAxis *oldAxis : series->d_ptr->m_axes)
+        for (QAbstractAxis *oldAxis : std::as_const(series->d_ptr->m_axes))
             oldAxis->d_ptr->initializeDomain(domain);
     }
 
@@ -262,7 +263,7 @@ bool ChartDataSet::attachAxis(QAbstractSeries *series,QAbstractAxis *axis)
     series->d_ptr->initializeAxes();
     axis->d_ptr->initializeDomain(domain);
     connect(axis, &QAbstractAxis::reverseChanged, this, &ChartDataSet::reverseChanged);
-    foreach (AbstractDomain *blockedDomain, blockedDomains)
+    for (auto blockedDomain : std::as_const(blockedDomains))
         blockedDomain->blockRangeSignals(false);
 
     return true;
@@ -318,7 +319,7 @@ void ChartDataSet::createDefaultAxes()
     Q_ASSERT(m_axisList.isEmpty());
 
     // Select the required axis x and axis y types based on the types of the current series
-    foreach(QAbstractSeries* s, m_seriesList) {
+    for (auto s : std::as_const(m_seriesList)) {
         typeX |= s->d_ptr->defaultAxisType(Qt::Horizontal);
         typeY |= s->d_ptr->defaultAxisType(Qt::Vertical);
     }
@@ -362,13 +363,13 @@ void ChartDataSet::createAxes(QAbstractAxis::AxisTypes type, Qt::Orientation ori
         qreal min = 0;
         qreal max = 0;
         findMinMaxForSeries(m_seriesList,orientation,min,max);
-        foreach(QAbstractSeries *s, m_seriesList) {
+        for (auto s : std::as_const(m_seriesList)) {
             attachAxis(s,axis);
         }
         axis->setRange(min,max);
     } else {
         // Create separate axis for each series
-        foreach(QAbstractSeries *s, m_seriesList) {
+        for (auto s : std::as_const(m_seriesList)) {
             QAbstractAxis *axis = s->d_ptr->createDefaultAxis(orientation);
             if(axis) {
                 addAxis(axis,orientation==Qt::Horizontal?Qt::AlignBottom:Qt::AlignLeft);
@@ -400,18 +401,20 @@ void ChartDataSet::findMinMaxForSeries(const QList<QAbstractSeries *> &series,
 
 void ChartDataSet::deleteAllSeries()
 {
-    foreach (QAbstractSeries *s , m_seriesList){
-        removeSeries(s);
-        delete s;
+    while (!m_seriesList.isEmpty()) {
+        auto series = m_seriesList.last();
+        removeSeries(series);
+        delete series;
     }
     Q_ASSERT(m_seriesList.size() == 0);
 }
 
 void ChartDataSet::deleteAllAxes()
 {
-    foreach (QAbstractAxis *a , m_axisList){
-        removeAxis(a);
-        delete a;
+    while (!m_axisList.isEmpty()) {
+        auto axis = m_axisList.last();
+        removeAxis(axis);
+        delete axis;
     }
     Q_ASSERT(m_axisList.size() == 0);
 }
@@ -419,54 +422,54 @@ void ChartDataSet::deleteAllAxes()
 void ChartDataSet::zoomInDomain(const QRectF &rect)
 {
     QList<AbstractDomain*> domains;
-    foreach(QAbstractSeries *s, m_seriesList) {
+    for (auto s : std::as_const(m_seriesList)) {
         AbstractDomain* domain = s->d_ptr->domain();
         s->d_ptr->m_domain->blockRangeSignals(true);
         domains<<domain;
     }
 
-    foreach(AbstractDomain *domain, domains)
+    for (auto domain : std::as_const(domains))
         domain->zoomIn(rect);
 
-    foreach(AbstractDomain *domain, domains)
+    for (auto domain : std::as_const(domains))
         domain->blockRangeSignals(false);
 }
 
 void ChartDataSet::zoomOutDomain(const QRectF &rect)
 {
     QList<AbstractDomain*> domains;
-    foreach(QAbstractSeries *s, m_seriesList) {
+    for (auto s : std::as_const(m_seriesList)) {
         AbstractDomain* domain = s->d_ptr->domain();
         s->d_ptr->m_domain->blockRangeSignals(true);
         domains<<domain;
     }
 
-    foreach(AbstractDomain *domain, domains)
+    for (auto domain : std::as_const(domains))
         domain->zoomOut(rect);
 
-    foreach(AbstractDomain *domain, domains)
+    for (auto domain : std::as_const(domains))
         domain->blockRangeSignals(false);
 }
 
 void ChartDataSet::zoomResetDomain()
 {
     QList<AbstractDomain*> domains;
-    foreach (QAbstractSeries *s, m_seriesList) {
+    for (auto s : std::as_const(m_seriesList)) {
         AbstractDomain *domain = s->d_ptr->domain();
         s->d_ptr->m_domain->blockRangeSignals(true);
         domains << domain;
     }
 
-    foreach (AbstractDomain *domain, domains)
+    for (auto domain : std::as_const(domains))
         domain->zoomReset();
 
-    foreach (AbstractDomain *domain, domains)
+    for (auto domain : std::as_const(domains))
         domain->blockRangeSignals(false);
 }
 
 bool ChartDataSet::isZoomedDomain()
 {
-    foreach (QAbstractSeries *s, m_seriesList) {
+    for (auto s : std::as_const(m_seriesList)) {
         if (s->d_ptr->domain()->isZoomed())
             return true;
     }
@@ -476,16 +479,16 @@ bool ChartDataSet::isZoomedDomain()
 void ChartDataSet::scrollDomain(qreal dx, qreal dy)
 {
     QList<AbstractDomain*> domains;
-    foreach(QAbstractSeries *s, m_seriesList) {
+    for (auto s : std::as_const(m_seriesList)) {
         AbstractDomain* domain = s->d_ptr->domain();
         s->d_ptr->m_domain->blockRangeSignals(true);
         domains<<domain;
     }
 
-    foreach(AbstractDomain *domain, domains)
+    for (auto domain : std::as_const(domains))
         domain->move(dx, dy);
 
-    foreach(AbstractDomain *domain, domains)
+    for (auto domain : std::as_const(domains))
         domain->blockRangeSignals(false);
 }
 

@@ -27,7 +27,8 @@ void DeclarativeXySeries::componentComplete()
     QXYSeries *series = qobject_cast<QXYSeries *>(xySeries());
     Q_ASSERT(series);
 
-    foreach (QObject *child, series->children()) {
+    const auto childlist = series->children();
+    for (QObject *child : childlist) {
         if (qobject_cast<DeclarativeXYPoint *>(child)) {
             DeclarativeXYPoint *point = qobject_cast<DeclarativeXYPoint *>(child);
             series->append(point->x(), point->y());

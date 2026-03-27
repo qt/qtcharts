@@ -42,7 +42,7 @@ public:
         int nameIndex = 1;
         for (int i(0); i < 2; i++) {
             QLineSeries *series = new QLineSeries(chart);
-            foreach (Data data, table.at(i))
+            for (auto data : table.at(i))
                 series->append(data.first);
             series->setName(name + QString::number(nameIndex));
 
@@ -63,7 +63,7 @@ public:
         }
 
         QBarSet *set = new QBarSet("Bar set ");
-        foreach (Data data, table.at(2))
+        for (auto data : table.at(2))
             *set << data.first.y();
 
         int count = set->count();

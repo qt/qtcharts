@@ -29,9 +29,9 @@ public:
 
         QString name("Series ");
         int nameIndex = 0;
-        foreach (DataList list, table) {
+        for (auto list : table) {
             QLineSeries *series = new QLineSeries(chart);
-            foreach (Data data, list) {
+            for (auto data : list) {
                 QPointF point = data.first;
                 series->append(day * 365l * 30l + point.x() * day * 365l, point.y());
             }

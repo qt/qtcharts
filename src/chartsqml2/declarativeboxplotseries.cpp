@@ -377,7 +377,8 @@ void DeclarativeBoxPlotSeries::classBegin()
 
 void DeclarativeBoxPlotSeries::componentComplete()
 {
-    foreach (QObject *child, children()) {
+    const auto childlist = children();
+    for (QObject *child : childlist) {
         if (qobject_cast<DeclarativeBoxSet *>(child)) {
             QBoxPlotSeries::append(qobject_cast<DeclarativeBoxSet *>(child));
         } else if (qobject_cast<QVBoxPlotModelMapper *>(child)) {

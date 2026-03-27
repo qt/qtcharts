@@ -180,7 +180,7 @@ void QBarCategoryAxis::append(const QStringList &categories)
 
     int count = d->m_categories.size();
 
-    foreach(QString category, categories) {
+    for (auto category : categories) {
         if (!d->m_categories.contains(category) && !category.isNull()) {
             d->m_categories.append(category);
         }

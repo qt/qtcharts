@@ -20,9 +20,9 @@ public:
         chart->setTitle("Scatter chart");
         QString name("Series ");
         int nameIndex = 0;
-        foreach (DataList list, table) {
+        for (auto list : table) {
             QScatterSeries *series = new QScatterSeries(chart);
-            foreach (Data data, list)
+            for (auto data : list)
                 series->append(data.first);
             series->setName(name + QString::number(nameIndex));
             nameIndex++;

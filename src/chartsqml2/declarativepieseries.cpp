@@ -58,7 +58,8 @@ void DeclarativePieSeries::classBegin()
 
 void DeclarativePieSeries::componentComplete()
 {
-    foreach (QObject *child, children()) {
+    const auto childlist = children();
+    for (QObject *child : childlist) {
         if (qobject_cast<QPieSlice *>(child)) {
             QPieSeries::append(qobject_cast<QPieSlice *>(child));
         } else if (qobject_cast<QVPieModelMapper *>(child)) {
@@ -94,7 +95,7 @@ QPieSlice *DeclarativePieSeries::at(int index)
 
 QPieSlice *DeclarativePieSeries::find(QString label)
 {
-    foreach (QPieSlice *slice, slices()) {
+    for (auto slice : slices()) {
         if (slice->label() == label)
             return slice;
     }

@@ -21,7 +21,7 @@ public:
         qreal pieSize = 1.0 / table.count();
         for (int i = 0; i < table.count(); i++) {
             QPieSeries *series = new QPieSeries(chart);
-            foreach (Data data, table[i]) {
+            for (auto data : table[i]) {
                 QPieSlice *slice = series->append(data.second, data.first.y());
                 if (data == table[i].first()) {
                     slice->setLabelVisible();

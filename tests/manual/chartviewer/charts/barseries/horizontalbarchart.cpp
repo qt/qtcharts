@@ -22,7 +22,7 @@ public:
         QHorizontalBarSeries *series = new QHorizontalBarSeries(chart);
         for (int i(0); i < table.count(); i++) {
             QBarSet *set = new QBarSet("Bar set " + QString::number(i));
-            foreach (Data data, table[i])
+            for (auto data : table[i])
                 *set << data.first.y();
             series->append(set);
         }
