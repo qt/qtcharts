@@ -20,7 +20,7 @@ public:
         chart->setTitle("Donut chart");
         for (int i = 0, j = table.count(); i < table.count(); i++, j--) {
             QPieSeries *series = new QPieSeries(chart);
-            foreach (Data data, table[i]) {
+            for (auto data : table[i]) {
                 QPieSlice *slice = series->append(data.second, data.first.y());
                 if (data == table[i].first())
                     slice->setLabelVisible();

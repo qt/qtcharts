@@ -525,7 +525,7 @@ void tst_QLegend::markerSignals()
     chart->addSeries(scatter);
 
     QList<QSignalSpy *> spies;
-    foreach(QLegendMarker *m, legend->markers()) {
+    for (auto m : legend->markers()) {
         QSignalSpy *spy = new QSignalSpy(m, SIGNAL(hovered(bool)));
         spies.append(spy);
     }
@@ -539,7 +539,7 @@ void tst_QLegend::markerSignals()
     for (int i = 0; i < 400; i++)
         QTest::mouseMove(view.viewport(), QPoint(333, i));
 
-    foreach (QSignalSpy *spy, spies)
+    for (auto spy : spies)
         TRY_COMPARE(spy->size(), 2);
 
     qDeleteAll(spies);

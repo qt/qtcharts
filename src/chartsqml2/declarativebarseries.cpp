@@ -127,7 +127,8 @@ void DeclarativeBarSeries::classBegin()
 
 void DeclarativeBarSeries::componentComplete()
 {
-    foreach (QObject *child, children()) {
+    const auto childlist = children();
+    for (QObject *child : childlist) {
         if (qobject_cast<DeclarativeBarSet *>(child)) {
             QAbstractBarSeries::append(qobject_cast<DeclarativeBarSet *>(child));
         } else if (qobject_cast<QVBarModelMapper *>(child)) {
@@ -190,7 +191,8 @@ void DeclarativeStackedBarSeries::classBegin()
 
 void DeclarativeStackedBarSeries::componentComplete()
 {
-    foreach (QObject *child, children()) {
+    const auto childlist = children();
+    for (QObject *child : childlist) {
         if (qobject_cast<DeclarativeBarSet *>(child)) {
             QAbstractBarSeries::append(qobject_cast<DeclarativeBarSet *>(child));
         } else if (qobject_cast<QVBarModelMapper *>(child)) {
@@ -254,7 +256,8 @@ void DeclarativePercentBarSeries::classBegin()
 
 void DeclarativePercentBarSeries::componentComplete()
 {
-    foreach (QObject *child, children()) {
+    const auto childlist = children();
+    for (QObject *child : childlist) {
         if (qobject_cast<DeclarativeBarSet *>(child)) {
             QAbstractBarSeries::append(qobject_cast<DeclarativeBarSet *>(child));
         } else if (qobject_cast<QVBarModelMapper *>(child)) {
@@ -317,7 +320,8 @@ void DeclarativeHorizontalBarSeries::classBegin()
 
 void DeclarativeHorizontalBarSeries::componentComplete()
 {
-    foreach (QObject *child, children()) {
+    const auto childlist = children();
+    for (QObject *child : childlist) {
         if (qobject_cast<DeclarativeBarSet *>(child)) {
             QAbstractBarSeries::append(qobject_cast<DeclarativeBarSet *>(child));
         } else if (qobject_cast<QVBarModelMapper *>(child)) {
@@ -380,7 +384,8 @@ void DeclarativeHorizontalStackedBarSeries::classBegin()
 
 void DeclarativeHorizontalStackedBarSeries::componentComplete()
 {
-    foreach (QObject *child, children()) {
+    const auto childlist = children();
+    for (QObject *child : childlist) {
         if (qobject_cast<DeclarativeBarSet *>(child)) {
             QAbstractBarSeries::append(qobject_cast<DeclarativeBarSet *>(child));
         } else if (qobject_cast<QVBarModelMapper *>(child)) {
@@ -443,7 +448,8 @@ void DeclarativeHorizontalPercentBarSeries::classBegin()
 
 void DeclarativeHorizontalPercentBarSeries::componentComplete()
 {
-    foreach (QObject *child, children()) {
+    const auto childlist = children();
+    for (QObject *child : childlist) {
         if (qobject_cast<DeclarativeBarSet *>(child)) {
             QAbstractBarSeries::append(qobject_cast<DeclarativeBarSet *>(child));
         } else if (qobject_cast<QVBarModelMapper *>(child)) {

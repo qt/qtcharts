@@ -29,7 +29,7 @@ QRectF PolarChartLayout::calculateAxisGeometry(const QRectF &geometry,
         axisRadius = geometry.width() / 2.0;
 
     int titleHeight = 0;
-    foreach (ChartAxisElement *chartAxis, axes) {
+    for (auto chartAxis : axes) {
         if (!chartAxis->isVisible())
             continue;
 
@@ -53,7 +53,7 @@ QRectF PolarChartLayout::calculateAxisGeometry(const QRectF &geometry,
     axisRect.adjust(0, titleHeight, 0, titleHeight);
 
     if (update) {
-        foreach (ChartAxisElement *chartAxis, axes)
+        for (auto chartAxis : axes)
             chartAxis->setGeometry(axisRect, QRectF());
     }
 

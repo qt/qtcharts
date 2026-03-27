@@ -596,7 +596,8 @@ void DeclarativeChart::childEvent(QChildEvent *event)
 
 void DeclarativeChart::componentComplete()
 {
-    foreach (QObject *child, children()) {
+    const auto childlist = children();
+    for (QObject *child : childlist) {
         if (qobject_cast<QAbstractSeries *>(child)) {
             // Add series to the chart
             QAbstractSeries *series = qobject_cast<QAbstractSeries *>(child);

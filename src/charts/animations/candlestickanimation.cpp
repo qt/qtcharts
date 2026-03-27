@@ -74,7 +74,7 @@ void CandlestickAnimation::setAnimationStart(Candlestick *candlestick)
 
 void CandlestickAnimation::stopAll()
 {
-    foreach (Candlestick *candlestick, m_animations.keys()) {
+    for (auto candlestick : m_animations.keys()) {
         CandlestickBodyWicksAnimation *animation = m_animations.value(candlestick, 0);
         if (animation)
             animation->stopAndDestroyLater();

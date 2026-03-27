@@ -100,7 +100,7 @@ QSizeF ChartLogValueAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint
         if (labelsVisible()) {
             qreal labelHeight = 0.0;
             qreal firstWidth = -1.0;
-            foreach (const QString& s, ticksList) {
+            for (const QString &s : std::as_const(ticksList)) {
                 QRectF rect = ChartPresenter::textBoundingRect(axis()->labelsFont(), s, axis()->labelsAngle());
                 labelHeight = qMax(rect.height(), labelHeight);
                 width = rect.width();

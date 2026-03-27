@@ -230,10 +230,10 @@ QComboBox *Window::createTempleteBox()
     Charts::ChartList list = Charts::chartList();
     QMultiMap<QString, Chart *> categoryMap;
 
-    foreach (Chart *chart, list)
+    for (auto chart : list)
         categoryMap.insert(chart->category(), chart);
 
-    foreach (const QString &category, categoryMap.uniqueKeys())
+    for (const QString &category : categoryMap.uniqueKeys())
         templateComboBox->addItem(category, category);
 
     return templateComboBox;
@@ -332,7 +332,7 @@ void Window::checkView()
 
 void Window::checkXTick()
 {
-    foreach (QChart *chart, m_grid->charts()) {
+    for (auto chart : m_grid->charts()) {
         if (qobject_cast<QValueAxis *>(chart->axisX())) {
             QValueAxis *valueAxis = qobject_cast<QValueAxis *>(chart->axisX());
             valueAxis->setGridLineVisible(m_gridCheckBox->isChecked());
@@ -343,7 +343,7 @@ void Window::checkXTick()
 
 void Window::checkYTick()
 {
-    foreach (QChart *chart, m_grid->charts()) {
+    for (auto chart : m_grid->charts()) {
         if (qobject_cast<QValueAxis *>(chart->axisY())) {
             QValueAxis *valueAxis = qobject_cast<QValueAxis *>(chart->axisY());
             valueAxis->setGridLineVisible(m_gridCheckBox->isChecked());
@@ -354,7 +354,7 @@ void Window::checkYTick()
 
 void Window::checkMinorXTick()
 {
-    foreach (QChart *chart, m_grid->charts()) {
+    for (auto chart : m_grid->charts()) {
         if (qobject_cast<QValueAxis *>(chart->axisX())) {
             QValueAxis *valueAxis = qobject_cast<QValueAxis *>(chart->axisX());
             valueAxis->setMinorGridLineVisible(m_gridCheckBox->isChecked());
@@ -366,7 +366,7 @@ void Window::checkMinorXTick()
 
 void Window::checkMinorYTick()
 {
-    foreach (QChart *chart, m_grid->charts()) {
+    for (auto chart : m_grid->charts()) {
         if (qobject_cast<QValueAxis *>(chart->axisY())) {
             QValueAxis *valueAxis = qobject_cast<QValueAxis *>(chart->axisY());
             valueAxis->setMinorGridLineVisible(m_gridCheckBox->isChecked());
@@ -381,10 +381,10 @@ void Window::checkLegend()
     Qt::Alignment alignment(m_legendComboBox->itemData(m_legendComboBox->currentIndex()).toInt());
 
     if (!alignment) {
-        foreach (QChart *chart, m_grid->charts())
+        for (auto chart : m_grid->charts())
             chart->legend()->hide();
     } else {
-        foreach (QChart *chart, m_grid->charts()) {
+        for (auto chart : m_grid->charts()) {
             chart->legend()->setAlignment(alignment);
             chart->legend()->show();
         }
@@ -415,7 +415,7 @@ void Window::checkAnimationOptions()
     QList<QChart *> charts = m_grid->charts();
 
     if (!charts.isEmpty() && charts.at(0)->animationOptions() != options) {
-        foreach (QChart *chart, charts)
+        for (auto chart : std::as_const(charts))
             chart->setAnimationOptions(options);
     }
 }
@@ -458,7 +458,7 @@ void Window::checkTheme()
     QChart::ChartTheme theme = (QChart::ChartTheme) m_themeComboBox->itemData(
                                    m_themeComboBox->currentIndex()).toInt();
 
-    foreach (QChart *chart, m_grid->charts())
+    for (auto chart : m_grid->charts())
         chart->setTheme(theme);
 
     QPalette pal = window()->palette();
@@ -490,7 +490,7 @@ void Window::checkTheme()
         pal.setColor(QPalette::Window, QRgb(0xf0f0f0));
         pal.setColor(QPalette::WindowText, QRgb(0x404044));
     }
-    foreach (QGraphicsProxyWidget *widget, m_widgetHash)
+    for (auto widget : std::as_const(m_widgetHash))
         widget->setPalette(pal);
     m_view->setBackgroundBrush(pal.color((QPalette::Window)));
     m_grid->setRubberPen(pal.color((QPalette::WindowText)));
@@ -498,7 +498,7 @@ void Window::checkTheme()
 
 void Window::comboBoxFocused(QComboBox *combobox)
 {
-    foreach (QGraphicsProxyWidget *widget , m_widgetHash) {
+    for (auto widget : std::as_const(m_widgetHash)) {
         if (widget->widget() == combobox)
             widget->setZValue(2.0);
         else
@@ -527,10 +527,10 @@ QMenu *Window::createMenu()
 
     QMenu *result = new QMenu(this);
 
-    foreach (Chart *chart, list)
+    for (auto chart : list)
         categoryMap.insert(chart->category(), chart);
 
-    foreach (const QString &category, categoryMap.uniqueKeys()) {
+    for (const QString &category : categoryMap.uniqueKeys()) {
         QMenu *menu(0);
         QMultiMap<QString, Chart *> subCategoryMap;
         if (category.isEmpty()) {
@@ -540,10 +540,10 @@ QMenu *Window::createMenu()
             result->addMenu(menu);
         }
 
-        foreach (Chart *chart, categoryMap.values(category))
+        for (auto chart : categoryMap.values(category))
             subCategoryMap.insert(chart->subCategory(), chart);
 
-        foreach (const QString &subCategory, subCategoryMap.uniqueKeys()) {
+        for (const QString &subCategory : subCategoryMap.uniqueKeys()) {
             QMenu *subMenu(0);
             if (subCategory.isEmpty()) {
                 subMenu = menu;
@@ -552,7 +552,7 @@ QMenu *Window::createMenu()
                 menu->addMenu(subMenu);
             }
 
-            foreach (Chart *chart, subCategoryMap.values(subCategory)) {
+            for (auto chart : subCategoryMap.values(subCategory)) {
                 createMenuAction(subMenu, QIcon(), chart->name(),
                                  QVariant::fromValue(static_cast<void *>(chart)));
             }

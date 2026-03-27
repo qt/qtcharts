@@ -144,7 +144,7 @@ void MainWindow::setXAxis(MainWindow::AxisMode mode)
 
     m_chart->addAxis(m_xAxis, Qt::AlignBottom);
 
-    foreach (QAbstractSeries *series, m_seriesList)
+    for (auto series : std::as_const(m_seriesList))
         series->attachAxis(m_xAxis);
 
     applyRanges();
@@ -183,7 +183,7 @@ void MainWindow::setYAxis(MainWindow::AxisMode mode)
 
     m_chart->addAxis(m_yAxis, Qt::AlignLeft);
 
-    foreach (QAbstractSeries *series, m_seriesList)
+    for (auto series : std::as_const(m_seriesList))
         series->attachAxis(m_yAxis);
 
     applyRanges();
@@ -374,7 +374,7 @@ void MainWindow::countIndexChanged(int index)
 void MainWindow::colorIndexChanged(int index)
 {
     QColor color = QColor(ui->colorsComboBox->itemText(index).toLower());
-    foreach (QXYSeries *series, m_seriesList) {
+    for (auto series : std::as_const(m_seriesList)) {
         if (series->type() == QAbstractSeries::SeriesTypeScatter) {
             QScatterSeries *scatterSeries = static_cast<QScatterSeries *>(series);
             scatterSeries->setBorderColor(color);
@@ -388,7 +388,7 @@ void MainWindow::colorIndexChanged(int index)
 void MainWindow::widthIndexChanged(int index)
 {
     int width = ui->widthComboBox->itemText(index).toInt();
-    foreach (QXYSeries *series, m_seriesList) {
+    for (auto series : std::as_const(m_seriesList)) {
         if (series->type() == QAbstractSeries::SeriesTypeScatter) {
             QScatterSeries *scatterSeries = static_cast<QScatterSeries *>(series);
             scatterSeries->setMarkerSize(width);

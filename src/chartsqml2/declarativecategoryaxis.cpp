@@ -61,7 +61,8 @@ void DeclarativeCategoryAxis::classBegin()
 void DeclarativeCategoryAxis::componentComplete()
 {
     QList<QPair<QString, qreal> > ranges;
-    foreach (QObject *child, children()) {
+    const auto childlist = children();
+    for (QObject *child : childlist) {
         if (qobject_cast<DeclarativeCategoryRange *>(child)) {
             DeclarativeCategoryRange *range = qobject_cast<DeclarativeCategoryRange *>(child);
             ranges.append(QPair<QString, qreal>(range->label(), range->endValue()));

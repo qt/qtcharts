@@ -677,7 +677,7 @@ QList<QLegendMarker*> QLegendPrivate::markers(QAbstractSeries *series)
 
     // Create filtered list
     QList<QLegendMarker *> markers;
-    foreach (QLegendMarker *marker, m_markers) {
+    for (auto marker : std::as_const(m_markers)) {
         if (marker->series() == series) {
             markers.append(marker);
         }
@@ -722,7 +722,7 @@ void QLegendPrivate::handleSeriesRemoved(QAbstractSeries *series)
 
     // Find out, which markers to remove
     QList<QLegendMarker *> removed;
-    foreach (QLegendMarker *m, m_markers) {
+    for (auto m : std::as_const(m_markers)) {
         if (m->series() == series) {
             removed << m;
         }
@@ -740,7 +740,7 @@ void QLegendPrivate::handleSeriesVisibleChanged()
     QAbstractSeries *series = qobject_cast<QAbstractSeries *> (sender());
     Q_ASSERT(series);
 
-    foreach (QLegendMarker *marker, m_markers) {
+    for (auto marker : std::as_const(m_markers)) {
         if (marker->series() == series) {
             marker->setVisible(series->isVisible());
         }
@@ -872,7 +872,7 @@ void QLegendPrivate::decorateMarkers(const QList<QLegendMarker *> &markers)
 
 void QLegendPrivate::updateToolTips()
 {
-    foreach (QLegendMarker *m, m_markers) {
+    for (auto m : std::as_const(m_markers)) {
         if (m->d_ptr->m_item->displayedLabel() != m->label())
             m->d_ptr->m_item->setToolTip(m->label());
         else

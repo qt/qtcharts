@@ -23,9 +23,9 @@ public:
 
         QString name("Series ");
         int nameIndex = 0;
-        foreach (DataList list, table) {
+        for (auto list : table) {
             QLineSeries *series = new QLineSeries(chart);
-            foreach (Data data, list)
+            for (auto data : list)
                 series->append(data.first);
             series->setName(name + QString::number(nameIndex));
             nameIndex++;
@@ -35,7 +35,7 @@ public:
         QLogValueAxis *axisX= new QLogValueAxis();
         axisX->setBase(2);
         QValueAxis *axisY= new QValueAxis();
-        foreach (QAbstractSeries *series, chart->series()) {
+        for (auto series : chart->series()) {
             chart->setAxisX(axisX, series);
             chart->setAxisY(axisY, series);
         }

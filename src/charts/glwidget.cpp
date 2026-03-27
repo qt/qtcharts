@@ -72,7 +72,7 @@ void GLWidget::cleanup()
     delete m_program;
     m_program = 0;
 
-    foreach (QOpenGLBuffer *buffer, m_seriesBufferMap.values())
+    for (auto buffer : m_seriesBufferMap.values())
         delete buffer;
     m_seriesBufferMap.clear();
 
@@ -88,7 +88,7 @@ void GLWidget::cleanXYSeriesResources(const QXYSeries *series)
         delete m_seriesBufferMap.take(series);
     } else {
         // Null series means all series were removed
-        foreach (QOpenGLBuffer *buffer, m_seriesBufferMap.values())
+        for (auto buffer : m_seriesBufferMap.values())
             delete buffer;
         m_seriesBufferMap.clear();
     }

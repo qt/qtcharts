@@ -400,10 +400,10 @@ void DeclarativeOpenGLRenderNode::cleanXYSeriesResources(const QXYSeries *series
         delete m_seriesBufferMap.take(series);
         delete m_xyDataMap.take(series);
     } else {
-        foreach (QOpenGLBuffer *buffer, m_seriesBufferMap.values())
+        for (QOpenGLBuffer *buffer : m_seriesBufferMap.values())
             delete buffer;
         m_seriesBufferMap.clear();
-        foreach (GLXYSeriesData *data, m_xyDataMap.values())
+        for (GLXYSeriesData *data : m_xyDataMap.values())
             delete data;
         m_xyDataMap.clear();
     }
@@ -416,7 +416,7 @@ void DeclarativeOpenGLRenderNode::handleMouseEvents()
             if (m_selectionRenderNeeded)
                 renderSelection();
         }
-        Q_FOREACH (QMouseEvent *event, m_mouseEvents) {
+        for (QMouseEvent *event : m_mouseEvents) {
             const QXYSeries *series = findSeriesAtEvent(event);
             switch (event->type()) {
             case QEvent::MouseMove: {

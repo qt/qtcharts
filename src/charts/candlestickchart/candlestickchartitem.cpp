@@ -46,7 +46,7 @@ void CandlestickChartItem::setAnimation(CandlestickAnimation *animation)
     m_animation = animation;
 
     if (m_animation) {
-        foreach (Candlestick *item, m_candlesticks.values())
+        for (auto *item : m_candlesticks.values())
             m_animation->addCandlestick(item);
 
         handleDomainUpdated();
@@ -75,7 +75,7 @@ void CandlestickChartItem::handleDomainUpdated()
     // as 0.0 would snip a bit off from the wick at the grid line.
     m_boundingRect.setRect(0.0, -1.0, domain()->size().width(), domain()->size().height() + 1.0);
 
-    foreach (Candlestick *item, m_candlesticks.values()) {
+    for (auto item : m_candlesticks.values()) {
         item->updateGeometry(domain());
 
         if (m_animation)
@@ -86,7 +86,7 @@ void CandlestickChartItem::handleDomainUpdated()
 void CandlestickChartItem::handleLayoutUpdated()
 {
     bool timestampChanged = false;
-    foreach (QCandlestickSet *set, m_candlesticks.keys()) {
+    for (auto set : m_candlesticks.keys()) {
         qreal oldTimestamp = m_candlesticks.value(set)->m_data.m_timestamp;
         qreal newTimestamp = set->timestamp();
         if (Q_UNLIKELY(oldTimestamp != newTimestamp)) {
@@ -98,7 +98,7 @@ void CandlestickChartItem::handleLayoutUpdated()
     if (timestampChanged)
         updateTimePeriod();
 
-    foreach (Candlestick *item, m_candlesticks.values()) {
+    for (auto item : m_candlesticks.values()) {
         if (m_animation)
             m_animation->setAnimationStart(item);
 
@@ -118,7 +118,7 @@ void CandlestickChartItem::handleLayoutUpdated()
 
 void CandlestickChartItem::handleCandlesticksUpdated()
 {
-    foreach (QCandlestickSet *set, m_candlesticks.keys())
+    for (auto set : m_candlesticks.keys())
         updateCandlestickAppearance(m_candlesticks.value(set), set);
 }
 
@@ -153,7 +153,7 @@ void CandlestickChartItem::handleCandlestickSeriesChange()
 
 void CandlestickChartItem::handleCandlestickSetsAdd(const QList<QCandlestickSet *> &sets)
 {
-    foreach (QCandlestickSet *set, sets) {
+    for (auto set : sets) {
         Candlestick *item = m_candlesticks.value(set, 0);
         if (item) {
             qWarning() << "There is already a candlestick for this set in the hash";
@@ -186,7 +186,7 @@ void CandlestickChartItem::handleCandlestickSetsAdd(const QList<QCandlestickSet 
 
 void CandlestickChartItem::handleCandlestickSetsRemove(const QList<QCandlestickSet *> &sets)
 {
-    foreach (QCandlestickSet *set, sets) {
+    for (auto set : sets) {
         Candlestick *item = m_candlesticks.value(set);
 
         m_candlesticks.remove(set);

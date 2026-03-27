@@ -159,7 +159,8 @@ void DeclarativeCandlestickSeries::classBegin()
 
 void DeclarativeCandlestickSeries::componentComplete()
 {
-    foreach (QObject *child, children()) {
+    const auto childlist = children();
+    for (QObject *child : childlist) {
         if (qobject_cast<DeclarativeCandlestickSet *>(child)) {
             QCandlestickSeries::append(qobject_cast<DeclarativeCandlestickSet *>(child));
         } else if (qobject_cast<QHCandlestickModelMapper *>(child)) {

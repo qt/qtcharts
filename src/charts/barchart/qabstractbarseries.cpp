@@ -533,7 +533,7 @@ void QAbstractBarSeries::clear()
     if (success) {
         emit barsetsRemoved(sets);
         emit countChanged();
-        foreach (QBarSet *set, sets)
+        for (auto set : std::as_const(sets))
             delete set;
     }
 }
@@ -1008,14 +1008,14 @@ bool QAbstractBarSeriesPrivate::remove(const QList<QBarSet *> &sets)
     if (sets.size() == 0)
         return false;
 
-    foreach (QBarSet *set, sets) {
+    for (auto set : sets) {
         if ((set == 0) || (!m_barSets.contains(set)))
             return false; // Fail if any of the sets is null or is not in series
         if (sets.count(set) != 1)
             return false; // Also fail if same set is more than once in given list.
     }
 
-    foreach (QBarSet *set, sets) {
+    for (auto set : sets) {
         m_barSets.removeOne(set);
         QObject::disconnect(set->d_ptr.data(), &QBarSetPrivate::updatedBars,
                             this, &QAbstractBarSeriesPrivate::updatedBars);
@@ -1059,7 +1059,7 @@ void QAbstractBarSeriesPrivate::initializeAxes()
 {
     Q_Q(QAbstractBarSeries);
 
-    foreach(QAbstractAxis* axis, m_axes) {
+    for (auto axis : std::as_const(m_axes)) {
         if (axis->type() == QAbstractAxis::AxisTypeBarCategory) {
             switch (q->type()) {
             case QAbstractSeries::SeriesTypeHorizontalBar:

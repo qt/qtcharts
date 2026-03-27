@@ -68,7 +68,7 @@ void BoxPlotAnimation::setAnimationStart(BoxWhiskers *box)
 
 void BoxPlotAnimation::stopAll()
 {
-    foreach (BoxWhiskers *box, m_animations.keys()) {
+    for (auto box : m_animations.keys()) {
         BoxWhiskersAnimation *animation = m_animations.value(box);
         animation->stopAndDestroyLater();
         m_animations.remove(box);

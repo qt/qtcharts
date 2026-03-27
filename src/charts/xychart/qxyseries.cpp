@@ -627,7 +627,7 @@ void QXYSeries::append(const QPointF &point)
  */
 void QXYSeries::append(const QList<QPointF> &points)
 {
-    foreach (const QPointF &point , points)
+    for (const QPointF &point : points)
         append(point);
 }
 
