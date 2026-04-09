@@ -113,7 +113,7 @@ public:
         m_minorGridLinePen.setStyle(Qt::DashLine);
         m_backgroundShades = BackgroundShadesNone;
 
-#elif defined(Q_OS_MAC)
+#elif defined(Q_OS_MACOS)
         // Using a hard coded theme for OSX system theme; the colors match the OSX 10.7 colors
         m_seriesColors << QRgb(0x60a6e6);
         m_seriesColors << QRgb(0x92ca66);
