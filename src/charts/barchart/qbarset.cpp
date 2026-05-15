@@ -220,13 +220,18 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QBarSet::borderColorChanged(QColor)
+    \fn void QBarSet::borderColorChanged(QColor color)
     This signal is emitted when the line (pen) color of the bar set changes to \a color.
 */
 
 /*!
-    \fn void QBarSet::labelColorChanged(QColor)
+    \fn void QBarSet::labelColorChanged(QColor color)
     This signal is emitted when the text (label) color of the bar set changes to \a color.
+*/
+
+/*!
+    \fn void QBarSet::selectedColorChanged(const QColor &color)
+    \internal
 */
 
 /*!
@@ -271,6 +276,11 @@ QT_BEGIN_NAMESPACE
     This signal is emitted when the value at the position specified by \a index is modified.
 
     The corresponding signal handler is \c onValueChanged.
+*/
+
+/*!
+    \fn void QBarSet::selectedBarsChanged(const QList<int> &indexes)
+    \internal
 */
 
 /*!

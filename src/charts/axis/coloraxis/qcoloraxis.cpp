@@ -97,6 +97,11 @@ QT_BEGIN_NAMESPACE
   and \a max, changes.
 */
 
+/*!
+  \fn void QColorAxis::gradientChanged(const QLinearGradient &gradient)
+  \internal
+*/
+
 QColorAxis::QColorAxis(QObject *parent)
     : QAbstractAxis(*new QColorAxisPrivate(this), parent)
 {
