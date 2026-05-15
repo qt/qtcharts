@@ -257,6 +257,11 @@ QT_BEGIN_NAMESPACE
     This signal is emitted when the visibility of tooltips is changed to \a showToolTips.
 */
 
+/*!
+    \fn void QLegend::markerShapeChanged(MarkerShape shape)
+    This signal is emitted when the shape of the legend markers changes to \a shape.
+*/
+
 QLegend::QLegend(QChart *chart): QGraphicsWidget(chart),
     d_ptr(new QLegendPrivate(chart->d_ptr->m_presenter, chart, this))
 {
@@ -584,6 +589,11 @@ void QLegend::setInteractive(bool interactive)
         emit interactiveChanged(interactive);
     }
 }
+
+/*!
+    \fn void QLegend::interactiveChanged(bool interactive)
+    \internal
+*/
 
 QLegend::MarkerShape QLegend::markerShape() const
 {

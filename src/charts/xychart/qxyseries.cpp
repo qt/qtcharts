@@ -329,6 +329,17 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QXYSeries::selectedColorChanged(const QColor &color)
+    This signal is emitted when the color of the selected points changes to
+    \a color.
+*/
+
+/*!
+    \fn void QXYSeries::bestFitLinePenChanged(const QPen &pen)
+    \internal
+*/
+
+/*!
     \fn void QXYSeries::clicked(const QPointF& point)
     This signal is emitted when the user triggers a mouse event by
     clicking the point \a point in the chart.
@@ -529,6 +540,16 @@ QT_BEGIN_NAMESPACE
     This signal is emitted when the light marker image changes to \a lightMarker.
     \sa QXYSeries::setLightMarker()
     \since 6.2
+*/
+
+/*!
+    \fn void QXYSeries::selectedLightMarkerChanged(const QImage &selectedLightMarker)
+    \internal
+*/
+
+/*!
+    \fn void QXYSeries::pointsConfigurationChanged(const QXYSeries::PointsConfigurationHash &configuration)
+    \internal
 */
 
 /*!
