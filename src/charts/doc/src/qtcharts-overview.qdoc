@@ -12,7 +12,8 @@
     integration. The chart components can be used as QWidget or QGraphicsWidget
     objects or QML types.
 
-    \image examples_chartthemes_light.png
+    \image examples_chartthemes_light.png {Gallery of six chart types in the
+           light theme: area, pie, line, bar, spline, and scatter}
 
     \include deprecation-phase.qdocinc
 
@@ -76,8 +77,10 @@
     whereas in a spline chart they are connected by a spline. The spline is
     drawn by using QPainterPath.
 
-    \inlineimage examples_linechart.png
-    \inlineimage examples_splinechart.png
+    \inlineimage examples_linechart.png {Line chart with a single line
+                 connecting data points that rise and fall sharply}
+    \inlineimage examples_splinechart.png {Spline chart with a single
+                 smoothly curving line that peaks, dips, and rises again}
 
 
     A line chart is implemented by using the QLineSeries class or the LineSeries
@@ -96,7 +99,8 @@
     charts present data as a collection of points.
 
     \inlineimage examples_areachart.png {Screenshot of an areachart example}
-    \inlineimage examples_scatterchart.png
+    \inlineimage examples_scatterchart.png {Scatter chart plotting three
+                 series as circle, square, and star markers}
 
 
     An area chart is implemented by using the QAreaSeries class or the
@@ -124,8 +128,10 @@
     bars grouped by category. Similarly, the QHorizontalBarSeries class and the
     HorizontalBarSeries QML type present data as horizontal bars.
 
-    \inlineimage examples_barchart.png
-    \inlineimage examples_horizontalbarchart.png
+    \inlineimage examples_barchart.png {Vertical bar chart grouping monthly
+                 values for five people from January to June}
+    \inlineimage examples_horizontalbarchart.png {Horizontal bar chart
+                 grouping monthly values for five people}
 
 
     The QStackedBarSeries class and the StackedBarSeries type present a series
@@ -133,8 +139,10 @@
     corresponding horizontal class and type are QHorizontalStackedBarSeries and
     HorizontalStackedBarSeries, respectively.
 
-    \inlineimage examples_stackedbarchart.png
-    \inlineimage examples_horizontalstackedbarchart.png
+    \inlineimage examples_stackedbarchart.png {Vertical stacked bar chart
+                 stacking five sets per month from January to June}
+    \inlineimage examples_horizontalstackedbarchart.png {Horizontal stacked
+                 bar chart stacking five sets per month}
 
 
     The QPercentBarSeries class and PercentBarSeries QML type present a series
@@ -142,8 +150,10 @@
     horizontal class and type are QHorizontalPercentBarSeries and
     HorizontalPercentBarSeries, respectively.
 
-    \inlineimage examples_percentbarchart.png
-    \inlineimage examples_horizontalpercentbarchart.png
+    \inlineimage examples_percentbarchart.png {Vertical percent bar chart
+                 with each month's bar filling 100 percent across five sets}
+    \inlineimage examples_horizontalpercentbarchart.png {Horizontal percent
+                 bar chart with each month's bar filling 100 percent}
 
 
     For more information, see \l{Creating Bar Charts},
@@ -179,7 +189,8 @@
     A box-and-whiskers chart is implemented by using the QBoxPlotSeries and
     QBoxSet classes or the BoxPlotSeries and BoxSet QML types.
 
-    \image examples_boxplotchart.png
+    \image examples_boxplotchart.png {Box-and-whiskers chart comparing two
+           companies' monthly share deviation across 2012}
 
     For more information, see \l{Creating Box-and-Whiskers Charts}.
 
@@ -187,7 +198,8 @@
 
     Candlestick charts presents a series of data shown as candlesticks.
 
-    \image examples_candlestickchart.png
+    \image examples_candlestickchart.png {Candlestick chart of daily stock
+           data with green rising and red falling candles over a month}
 
     A candlestick chart is implemented by using the QCandlestickSeries and
     QCandlestickSet classes or the CandlestickSeries and CandlestickSet QML
@@ -199,7 +211,8 @@
     is based on the angle and distance from the center of the graph, the
     \e pole.
 
-    \image examples_polarchart.png
+    \image examples_polarchart.png {Polar chart with a scatter series and a
+           green spline tracing a star-shaped area on a circular grid}
 
     The QPolarChart class is a specialization of the QChart class. It supports
     line, spline, area, and scatter series, as well as all the axis types
@@ -321,7 +334,8 @@
     the visual elements of a chart, such as colors, pens, brushes, and fonts of
     series, as well as axes, title, and legend.
 
-    \image examples_chartthemes_blue_cerulean.png
+    \image examples_chartthemes_blue_cerulean.png {Gallery of six chart types
+           in the Blue Cerulean theme with a dark background}
 
     Qt Charts comes with the following predefined themes:
 

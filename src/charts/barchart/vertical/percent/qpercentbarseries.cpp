@@ -24,7 +24,8 @@ QT_BEGIN_NAMESPACE
 
     See the \l {Charts with Widgets Gallery} to learn how to create a
     percent bar chart.
-    \image examples_percentbarchart.png
+    \image examples_percentbarchart.png {Vertical percent bar chart with
+           each month's bar filling 100 percent across five sets}
 
     \sa QBarSet, QStackedBarSeries, QAbstractBarSeries
 */
@@ -46,7 +47,8 @@ QT_BEGIN_NAMESPACE
     The following QML code snippet shows how to create a simple percent bar chart:
     \snippet qmlchartsgallery/qml/BarSeriesPercent.qml 1
     \beginfloatleft
-    \image examples_qmlchart8.png
+    \image examples_qmlchart8.png {Vertical percent bar chart with each
+           year's bar filling 100 percent across Bob, Susan, and James}
     \endfloat
     \clearfloat
 */

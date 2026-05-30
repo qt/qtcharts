@@ -57,7 +57,8 @@ QT_BEGIN_NAMESPACE
     boundary. The main point is that the area between these two boundary lines
     will be filled.
 
-    \image examples_qmlchart4.png
+    \image examples_qmlchart4.png {Area chart with Russian, Swedish, and
+           Finnish player counts filled by year from 2000 to 2011}
 
     The following QML shows how to create a simple area chart:
     \snippet qmlchartsgallery/qml/AreaSeries.qml 1

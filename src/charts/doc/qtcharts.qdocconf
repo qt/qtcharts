@@ -63,6 +63,9 @@ navigation.toctitles.inclusive = false
 # Allow zero warnings when testing documentation in CI
 warninglimit = 0
 
+# Report warnings for images without alt text
+reportmissingalttextforimages = true
+
 # suppress qdoc warnings
 spurious += "Undocumented property .*" \
             "No output generated .*"

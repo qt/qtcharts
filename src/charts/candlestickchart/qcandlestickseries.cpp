@@ -37,7 +37,8 @@ QT_BEGIN_NAMESPACE
 
     See the \l {Charts with Widgets Gallery} to learn how to create
     a candlestick chart.
-    \image examples_candlestickchart.png
+    \image examples_candlestickchart.png {Candlestick chart of daily stock
+           data with green rising and red falling candles over a month}
 
     \sa QCandlestickSet, QBarCategoryAxis, QDateTimeAxis, QValueAxis
 */

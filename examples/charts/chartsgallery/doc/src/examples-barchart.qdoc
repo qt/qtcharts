@@ -8,7 +8,8 @@
 
     \include gallery.qdocinc
 
-    \image examples_barchart.png
+    \image examples_barchart.png {Vertical bar chart grouping monthly
+           values for five people from January to June}
 
     The \c barsets are used in the same way in all barcharts.
     To illustrate the difference between various barcharts, we use the same data in the examples.

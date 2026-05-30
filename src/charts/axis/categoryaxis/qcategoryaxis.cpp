@@ -52,7 +52,8 @@ QT_BEGIN_NAMESPACE
     The widths of the category ranges can be specified freely.
 
     For example:
-    \image examples_qmlaxes3.png
+    \image examples_qmlaxes3.png {Line chart with a category axis labeled
+           critical, low, normal, high, and extremely high}
     \snippet qmlchartsgallery/qml/CategoryAxis.qml 1
 */
 
