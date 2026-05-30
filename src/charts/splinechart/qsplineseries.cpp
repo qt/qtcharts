@@ -19,7 +19,8 @@
     calculated when the data changes. The algorithm computes the points so that
     the normal spline can be drawn.
 
-    \image examples_splinechart.png
+    \image examples_splinechart.png {Spline chart with a single smoothly
+           curving line that peaks, dips, and rises again}
 
     The following code snippet illustrates how to create a basic spline chart:
     \code
@@ -44,7 +45,8 @@
     calculated when the data changes. The algorithm computes the points so that
     the normal spline can be drawn.
 
-    \image examples_qmlchart3.png
+    \image examples_qmlchart3.png {Spline chart with a single curving line
+           that rises, dips, and rises again}
 
     The following QML code shows how to create a simple spline chart:
     \snippet qmlchartsgallery/qml/SplineSeries.qml 1

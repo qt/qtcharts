@@ -23,7 +23,8 @@ QT_BEGIN_NAMESPACE
 
     See the \l {Charts with Widgets Gallery} to learn
     how to create a horizontal percent bar chart.
-    \image examples_horizontalpercentbarchart.png
+    \image examples_horizontalpercentbarchart.png {Horizontal percent bar
+           chart with each month's bar filling 100 percent across five sets}
 
     \sa QBarSet, QBarSeries, QPercentBarSeries, QAbstractBarSeries, QStackedBarSeries,
     QHorizontalStackedBarSeries, QHorizontalBarSeries
@@ -46,7 +47,8 @@ QT_BEGIN_NAMESPACE
     The following QML code snippet shows how to create a simple horizontal percent bar chart:
     \snippet qmlchartsgallery/qml/BarSeriesPercentHorizontal.qml 1
     \beginfloatleft
-    \image examples_qmlchart11.png
+    \image examples_qmlchart11.png {Horizontal percent bar chart with each
+           year's bar filling 100 percent across Bob, Susan, and James}
     \endfloat
     \clearfloat
 */

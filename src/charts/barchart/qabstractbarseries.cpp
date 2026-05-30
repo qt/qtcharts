@@ -34,7 +34,8 @@ QT_BEGIN_NAMESPACE
     grouped around the index value of the category.
 
     See the \l {Charts with Widgets Gallery} to learn how to use the QBarSeries class to create a simple bar chart.
-    \image examples_barchart.png
+    \image examples_barchart.png {Vertical bar chart grouping monthly values
+           for five people from January to June}
 
     \sa QBarSet, QBarSeries, QStackedBarSeries, QPercentBarSeries
     \sa QHorizontalBarSeries, QHorizontalStackedBarSeries, QHorizontalPercentBarSeries
@@ -63,7 +64,8 @@ QT_BEGIN_NAMESPACE
     \snippet qmlchartsgallery/qml/BarSeries.qml 1
 
     \beginfloatleft
-    \image examples_qmlchart6.png
+    \image examples_qmlchart6.png {Vertical bar chart grouping yearly values
+           for Bob, Susan, and James from 2007 to 2012}
     \endfloat
     \clearfloat
 */

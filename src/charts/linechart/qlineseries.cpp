@@ -17,7 +17,8 @@ QT_BEGIN_NAMESPACE
     A line chart is used to show information as a series of data points
     connected by straight lines.
 
-    \image examples_linechart.png
+    \image examples_linechart.png {Line chart with a single line connecting
+           data points that rise and fall sharply}
 
     Creating a basic line chart is simple:
     \code
@@ -43,7 +44,8 @@ QT_BEGIN_NAMESPACE
     The following QML example shows how to create a simple line chart:
     \snippet qmlchartsgallery/qml/LineSeries.qml 1
     \beginfloatleft
-    \image examples_qmlchart2.png
+    \image examples_qmlchart2.png {Line chart with a single rising line that
+           peaks and then levels off}
     \endfloat
     \clearfloat
 */
