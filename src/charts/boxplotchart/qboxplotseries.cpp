@@ -33,7 +33,8 @@ QT_BEGIN_NAMESPACE
 
     See the \l {Charts with Widgets Gallery} to learn how to create a
     box-and-whiskers chart.
-    \image examples_boxplotchart.png
+    \image examples_boxplotchart.png {Box-and-whiskers chart comparing two
+           companies' monthly share deviation across 2012}
 
     \sa QBoxSet, QBarCategoryAxis
 */

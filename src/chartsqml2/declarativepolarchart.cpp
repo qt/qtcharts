@@ -17,7 +17,8 @@ QT_BEGIN_NAMESPACE
     is based on the angle and distance from the center of the graph, the
     \e pole.
 
-    \image examples_qmlpolarchart1.png
+    \image examples_qmlpolarchart1.png {Polar chart with a blue spline and
+           green scatter series sharing common axes on a circular grid}
 
     A polar chart is a specialization of the ChartView type. It supports line,
     spline, area, and scatter series, and all axis types supported by them. Each

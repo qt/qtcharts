@@ -17,7 +17,8 @@ QT_BEGIN_NAMESPACE
     Each bar set added to the series contributes a single segment to each stacked bar.
 
     See the \l {Charts with Widgets Gallery} to learn how to create a horizontal stacked bar chart.
-    \image examples_horizontalstackedbarchart.png
+    \image examples_horizontalstackedbarchart.png {Horizontal stacked bar
+           chart stacking five sets per month from January to June}
 
     \sa QBarSet, QBarSeries, QPercentBarSeries, QAbstractBarSeries, QStackedBarSeries, QHorizontalPercentBarSeries, QHorizontalBarSeries
 */
@@ -35,7 +36,8 @@ QT_BEGIN_NAMESPACE
     The following QML code snippet shows how to create a simple horizontal stacked bar chart:
     \snippet qmlchartsgallery/qml/BarSeriesStackedHorizontal.qml 1
     \beginfloatleft
-    \image examples_qmlchart10.png
+    \image examples_qmlchart10.png {Horizontal stacked bar chart stacking
+           Bob, Susan, and James per year from 2007 to 2012}
     \endfloat
     \clearfloat
 */

@@ -22,7 +22,8 @@ QT_BEGIN_NAMESPACE
     category from each bar set added to the series.
 
     See the \l {Charts with Widgets Gallery} to learn how to create a horizontal bar chart.
-    \image examples_horizontalbarchart.png
+    \image examples_horizontalbarchart.png {Horizontal bar chart grouping
+           monthly values for five people from January to June}
 
     \sa QBarSet, QBarSeries, QPercentBarSeries, QAbstractBarSeries, QStackedBarSeries, QHorizontalStackedBarSeries, QHorizontalPercentBarSeries
 */
@@ -41,7 +42,8 @@ QT_BEGIN_NAMESPACE
     The following QML code snippet shows how to create a simple horizontal bar chart:
     \snippet qmlchartsgallery/qml/BarSeriesHorizontal.qml 1
     \beginfloatleft
-    \image examples_qmlchart9.png
+    \image examples_qmlchart9.png {Horizontal bar chart grouping yearly
+           values for Bob, Susan, and James from 2007 to 2012}
     \endfloat
     \clearfloat
 */

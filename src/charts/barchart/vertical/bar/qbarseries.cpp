@@ -21,7 +21,8 @@ QT_BEGIN_NAMESPACE
 
     See the \l {Creating Bar Charts} {bar chart example} to learn how to create
     a grouped bar chart.
-    \image examples_barchart.png
+    \image examples_barchart.png {Vertical bar chart grouping monthly values
+           for five people from January to June}
 
     \sa QBarSet, QPercentBarSeries, QAbstractBarSeries, QStackedBarSeries
 */
@@ -40,7 +41,8 @@ QT_BEGIN_NAMESPACE
     The following QML code snippet shows how to create a simple grouped bar
     chart:
     \snippet qmlchartsgallery/qml/BarSeries.qml 1
-    \image examples_qmlchart6.png
+    \image examples_qmlchart6.png {Vertical bar chart grouping yearly values
+           for Bob, Susan, and James from 2007 to 2012}
 */
 
 /*!

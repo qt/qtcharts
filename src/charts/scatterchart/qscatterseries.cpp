@@ -18,7 +18,8 @@
     each point, two values are specified that determine its position on the
     horizontal axis and the vertical axis.
 
-    \image examples_scatterchart.png
+    \image examples_scatterchart.png {Scatter chart plotting three series as
+           circle, square, and star markers scattered across the plot}
 
     The following code snippet illustrates how to create a basic scatter chart:
     \code
@@ -45,7 +46,8 @@
     each point, two values are specified that determine its position on the
     horizontal axis and the vertical axis.
 
-    \image examples_qmlchart5.png
+    \image examples_qmlchart5.png {Scatter chart plotting two series of
+           points as blue and green markers}
 
     The following QML code shows how to create a chart with two simple scatter
     series:

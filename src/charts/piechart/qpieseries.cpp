@@ -37,8 +37,10 @@ QT_BEGIN_NAMESPACE
     A full pie is 360 degrees, where 0 is at 12 a'clock.
 
     See the \l {Charts with Widgets Gallery} to learn how to use QPieSeries.
-    \image examples_piechart.png
-    \image examples_donutchart.png
+    \image examples_piechart.png {Pie chart with one slice exploded out and
+           labeled Joe}
+    \image examples_donutchart.png {Donut chart of lemon glaze nutrition with
+           protein, fat, other, and carbs slices, fat exploded out}
 
     \sa QPieSlice, QChart
 */
@@ -69,7 +71,8 @@ QT_BEGIN_NAMESPACE
     \snippet qmlchartsgallery/qml/PieChart.qml 1
 
     \beginfloatleft
-    \image examples_qmlchart1.png
+    \image examples_qmlchart1.png {Pie chart of top five car brand shares in
+           Finland with an Others slice taking about half}
     \endfloat
     \clearfloat
 

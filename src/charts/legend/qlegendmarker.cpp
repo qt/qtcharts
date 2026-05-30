@@ -24,7 +24,8 @@ QT_BEGIN_NAMESPACE
     slice for a pie series or bar set for a bar series). A legend marker is always related to
     one series, slice, or bar set.
 
-    \image examples_percentbarchart_legend.png
+    \image examples_percentbarchart_legend.png {Percent bar chart with a
+           legend below naming the five bar sets by color}
 
     \sa QLegend
 */

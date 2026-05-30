@@ -26,7 +26,8 @@ QT_BEGIN_NAMESPACE
  Polar charts present data in a circular graph, where the placement of data
  is based on the angle and distance from the center of the graph, the \e pole.
 
- \image examples_polarchart.png
+ \image examples_polarchart.png {Polar chart with a scatter series and a
+        green spline tracing a star-shaped area on a circular grid}
 
  A polar chart is a specialization of QChart that supports line, spline, area,
  and scatter series, and all axis types supported by them. Each axis can be used
