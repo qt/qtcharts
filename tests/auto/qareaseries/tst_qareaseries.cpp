@@ -156,10 +156,14 @@ void tst_QAreaSeries::checkPixels(const QColor &upperColor,
                                   const QColor &centerColor,
                                   const QColor &lowerColor)
 {
-    QImage screenGrab = m_view->grab().toImage();
-    QCOMPARE(QColor(screenGrab.pixel(200, 50)), upperColor);
-    QCOMPARE(QColor(screenGrab.pixel(200, 200)), centerColor);
-    QCOMPARE(QColor(screenGrab.pixel(200, 350)), lowerColor);
+    const QImage screenGrab = m_view->grab().toImage();
+    const qreal dpr = screenGrab.devicePixelRatio();
+    const auto sampleColor = [&](int logicalX, int logicalY) {
+        return QColor(screenGrab.pixel(qRound(logicalX * dpr), qRound(logicalY * dpr)));
+    };
+    QCOMPARE(sampleColor(200, 50), upperColor);
+    QCOMPARE(sampleColor(200, 200), centerColor);
+    QCOMPARE(sampleColor(200, 350), lowerColor);
 }
 
 QTEST_MAIN(tst_QAreaSeries)
