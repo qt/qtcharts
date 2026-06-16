@@ -221,7 +221,7 @@ void PolarChartAxisRadial::updateGeometry()
         title->setRotation(270.0);
     }
 
-    QGraphicsLayoutItem::updateGeometry();
+    PolarChartAxis::updateGeometry();
 }
 
 Qt::Orientation PolarChartAxisRadial::orientation() const

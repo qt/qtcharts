@@ -22,7 +22,7 @@ PolarChartAxisAngular::~PolarChartAxisAngular()
 
 void PolarChartAxisAngular::updateGeometry()
 {
-    QGraphicsLayoutItem::updateGeometry();
+    PolarChartAxis::updateGeometry();
 
     const QList<qreal> &layout = this->layout();
     if (layout.isEmpty() && axis()->type() != QAbstractAxis::AxisTypeLogValue)
