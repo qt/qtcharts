@@ -53,6 +53,7 @@ void PolarChartLogValueAxisRadial::createAxisLabels(const QList<qreal> &layout)
 void PolarChartLogValueAxisRadial::handleBaseChanged(qreal base)
 {
     Q_UNUSED(base);
+    // AXIVION Next Line Qt-SkippedBaseMethod: not an override
     QGraphicsLayoutItem::updateGeometry();
     if (presenter())
         presenter()->layout()->invalidate();
@@ -61,6 +62,7 @@ void PolarChartLogValueAxisRadial::handleBaseChanged(qreal base)
 void PolarChartLogValueAxisRadial::handleLabelFormatChanged(const QString &format)
 {
     Q_UNUSED(format);
+    // AXIVION Next Line Qt-SkippedBaseMethod: not an override
     QGraphicsLayoutItem::updateGeometry();
     if (presenter())
         presenter()->layout()->invalidate();

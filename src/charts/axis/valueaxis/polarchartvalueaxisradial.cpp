@@ -48,6 +48,7 @@ void PolarChartValueAxisRadial::createAxisLabels(const QList<qreal> &layout)
 void PolarChartValueAxisRadial::handleTickCountChanged(int tick)
 {
     Q_UNUSED(tick);
+    // AXIVION Next Line Qt-SkippedBaseMethod: not an override
     QGraphicsLayoutItem::updateGeometry();
     if (presenter())
         presenter()->layout()->invalidate();
@@ -56,6 +57,7 @@ void PolarChartValueAxisRadial::handleTickCountChanged(int tick)
 void PolarChartValueAxisRadial::handleMinorTickCountChanged(int tick)
 {
     Q_UNUSED(tick);
+    // AXIVION Next Line Qt-SkippedBaseMethod: not an override
     QGraphicsLayoutItem::updateGeometry();
     if (presenter())
         presenter()->layout()->invalidate();
@@ -64,6 +66,7 @@ void PolarChartValueAxisRadial::handleMinorTickCountChanged(int tick)
 void PolarChartValueAxisRadial::handleLabelFormatChanged(const QString &format)
 {
     Q_UNUSED(format);
+    // AXIVION Next Line Qt-SkippedBaseMethod: not an override
     QGraphicsLayoutItem::updateGeometry();
     if (presenter())
         presenter()->layout()->invalidate();

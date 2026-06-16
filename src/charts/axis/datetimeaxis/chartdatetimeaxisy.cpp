@@ -52,6 +52,7 @@ void ChartDateTimeAxisY::updateGeometry()
 void ChartDateTimeAxisY::handleTickCountChanged(int tick)
 {
     Q_UNUSED(tick);
+    // AXIVION Next Line Qt-SkippedBaseMethod: not an override
     QGraphicsLayoutItem::updateGeometry();
     if (presenter())
         presenter()->layout()->invalidate();
@@ -60,6 +61,7 @@ void ChartDateTimeAxisY::handleTickCountChanged(int tick)
 void ChartDateTimeAxisY::handleFormatChanged(const QString &format)
 {
     Q_UNUSED(format);
+    // AXIVION Next Line Qt-SkippedBaseMethod: not an override
     QGraphicsLayoutItem::updateGeometry();
     if (presenter())
         presenter()->layout()->invalidate();

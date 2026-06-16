@@ -101,6 +101,7 @@ QSizeF ChartCategoryAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint
 
 void ChartCategoryAxisX::handleCategoriesChanged()
 {
+    // AXIVION Next Line Qt-SkippedBaseMethod: not an override
     QGraphicsLayoutItem::updateGeometry();
     presenter()->layout()->invalidate();
 }
