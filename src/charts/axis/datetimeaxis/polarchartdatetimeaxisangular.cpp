@@ -45,6 +45,7 @@ void PolarChartDateTimeAxisAngular::createAxisLabels(const QList<qreal> &layout)
 void PolarChartDateTimeAxisAngular::handleTickCountChanged(int tick)
 {
     Q_UNUSED(tick);
+    // AXIVION Next Line Qt-SkippedBaseMethod: not an override
     QGraphicsLayoutItem::updateGeometry();
     if (presenter())
         presenter()->layout()->invalidate();
@@ -53,6 +54,7 @@ void PolarChartDateTimeAxisAngular::handleTickCountChanged(int tick)
 void PolarChartDateTimeAxisAngular::handleFormatChanged(const QString &format)
 {
     Q_UNUSED(format);
+    // AXIVION Next Line Qt-SkippedBaseMethod: not an override
     QGraphicsLayoutItem::updateGeometry();
     if (presenter())
         presenter()->layout()->invalidate();

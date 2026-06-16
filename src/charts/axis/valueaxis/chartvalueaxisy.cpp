@@ -86,6 +86,7 @@ void ChartValueAxisY::updateGeometry()
 void ChartValueAxisY::handleTickCountChanged(int tick)
 {
     Q_UNUSED(tick);
+    // AXIVION Next Line Qt-SkippedBaseMethod: not an override
     QGraphicsLayoutItem::updateGeometry();
     if (presenter()) presenter()->layout()->invalidate();
 }
@@ -93,6 +94,7 @@ void ChartValueAxisY::handleTickCountChanged(int tick)
 void ChartValueAxisY::handleMinorTickCountChanged(int tick)
 {
     Q_UNUSED(tick);
+    // AXIVION Next Line Qt-SkippedBaseMethod: not an override
     QGraphicsLayoutItem::updateGeometry();
     if (presenter())
         presenter()->layout()->invalidate();
@@ -101,6 +103,7 @@ void ChartValueAxisY::handleMinorTickCountChanged(int tick)
 void ChartValueAxisY::handleLabelFormatChanged(const QString &format)
 {
     Q_UNUSED(format);
+    // AXIVION Next Line Qt-SkippedBaseMethod: not an override
     QGraphicsLayoutItem::updateGeometry();
     if (presenter()) presenter()->layout()->invalidate();
 }
@@ -108,6 +111,7 @@ void ChartValueAxisY::handleLabelFormatChanged(const QString &format)
 void ChartValueAxisY::handleTickIntervalChanged(qreal interval)
 {
     Q_UNUSED(interval);
+    // AXIVION Next Line Qt-SkippedBaseMethod: not an override
     QGraphicsLayoutItem::updateGeometry();
     if (presenter()) presenter()->layout()->invalidate();
 }
@@ -115,6 +119,7 @@ void ChartValueAxisY::handleTickIntervalChanged(qreal interval)
 void ChartValueAxisY::handleTickAnchorChanged(qreal anchor)
 {
     Q_UNUSED(anchor);
+    // AXIVION Next Line Qt-SkippedBaseMethod: not an override
     QGraphicsLayoutItem::updateGeometry();
     if (presenter()) presenter()->layout()->invalidate();
 }
@@ -122,6 +127,7 @@ void ChartValueAxisY::handleTickAnchorChanged(qreal anchor)
 void ChartValueAxisY::handleTickTypeChanged(QValueAxis::TickType type)
 {
     Q_UNUSED(type);
+    // AXIVION Next Line Qt-SkippedBaseMethod: not an override
     QGraphicsLayoutItem::updateGeometry();
     if (presenter()) presenter()->layout()->invalidate();
 }

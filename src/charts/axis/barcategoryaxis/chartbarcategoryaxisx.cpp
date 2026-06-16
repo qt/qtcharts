@@ -78,6 +78,7 @@ void ChartBarCategoryAxisX::updateGeometry()
 
 void ChartBarCategoryAxisX::handleCategoriesChanged()
 {
+    // AXIVION Next Line Qt-SkippedBaseMethod: not an override
     QGraphicsLayoutItem::updateGeometry();
     if(presenter()) presenter()->layout()->invalidate();
 }

@@ -53,6 +53,7 @@ void ChartLogValueAxisY::updateGeometry()
 void ChartLogValueAxisY::handleBaseChanged(qreal base)
 {
     Q_UNUSED(base);
+    // AXIVION Next Line Qt-SkippedBaseMethod: not an override
     QGraphicsLayoutItem::updateGeometry();
     if(presenter()) presenter()->layout()->invalidate();
 }
@@ -60,6 +61,7 @@ void ChartLogValueAxisY::handleBaseChanged(qreal base)
 void ChartLogValueAxisY::handleLabelFormatChanged(const QString &format)
 {
     Q_UNUSED(format);
+    // AXIVION Next Line Qt-SkippedBaseMethod: not an override
     QGraphicsLayoutItem::updateGeometry();
     if(presenter()) presenter()->layout()->invalidate();
 }

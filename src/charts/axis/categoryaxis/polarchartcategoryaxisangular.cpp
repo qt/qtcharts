@@ -53,6 +53,7 @@ void PolarChartCategoryAxisAngular::createAxisLabels(const QList<qreal> &layout)
 
 void PolarChartCategoryAxisAngular::handleCategoriesChanged()
 {
+    // AXIVION Next Line Qt-SkippedBaseMethod: not an override
     QGraphicsLayoutItem::updateGeometry();
     presenter()->layout()->invalidate();
 }
