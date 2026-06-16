@@ -123,6 +123,7 @@ void QSplineSeriesPrivate::initializeGraphics(QGraphicsItem* parent)
     Q_Q(QSplineSeries);
     SplineChartItem *spline = new SplineChartItem(q,parent);
     m_item.reset(spline);
+    // AXIVION Next Line Qt-SkippedBaseMethod: Intentionally skipping QLineSeriesPrivate
     QAbstractSeriesPrivate::initializeGraphics(parent);
 }
 
