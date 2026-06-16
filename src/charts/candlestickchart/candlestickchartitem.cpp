@@ -46,7 +46,7 @@ void CandlestickChartItem::setAnimation(CandlestickAnimation *animation)
     m_animation = animation;
 
     if (m_animation) {
-        for (auto *item : m_candlesticks.values())
+        for (auto *item : std::as_const(m_candlesticks))
             m_animation->addCandlestick(item);
 
         handleDomainUpdated();
@@ -75,7 +75,7 @@ void CandlestickChartItem::handleDomainUpdated()
     // as 0.0 would snip a bit off from the wick at the grid line.
     m_boundingRect.setRect(0.0, -1.0, domain()->size().width(), domain()->size().height() + 1.0);
 
-    for (auto item : m_candlesticks.values()) {
+    for (auto item : std::as_const(m_candlesticks)) {
         item->updateGeometry(domain());
 
         if (m_animation)
@@ -86,8 +86,8 @@ void CandlestickChartItem::handleDomainUpdated()
 void CandlestickChartItem::handleLayoutUpdated()
 {
     bool timestampChanged = false;
-    for (auto set : m_candlesticks.keys()) {
-        qreal oldTimestamp = m_candlesticks.value(set)->m_data.m_timestamp;
+    for (const auto &[set, item] : std::as_const(m_candlesticks).asKeyValueRange()) {
+        qreal oldTimestamp = item->m_data.m_timestamp;
         qreal newTimestamp = set->timestamp();
         if (Q_UNLIKELY(oldTimestamp != newTimestamp)) {
             removeTimestamp(oldTimestamp);
@@ -98,7 +98,7 @@ void CandlestickChartItem::handleLayoutUpdated()
     if (timestampChanged)
         updateTimePeriod();
 
-    for (auto item : m_candlesticks.values()) {
+    for (auto item : std::as_const(m_candlesticks)) {
         if (m_animation)
             m_animation->setAnimationStart(item);
 
@@ -118,8 +118,8 @@ void CandlestickChartItem::handleLayoutUpdated()
 
 void CandlestickChartItem::handleCandlesticksUpdated()
 {
-    for (auto set : m_candlesticks.keys())
-        updateCandlestickAppearance(m_candlesticks.value(set), set);
+    for (const auto &[set, item] : std::as_const(m_candlesticks).asKeyValueRange())
+        updateCandlestickAppearance(item, set);
 }
 
 void CandlestickChartItem::handleCandlestickSeriesChange()

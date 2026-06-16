@@ -248,7 +248,7 @@ QPointF XYChart::matchForLightMarker(const QPointF &eventPos) const
         points = m_series->points();
     }
 
-    for (const QPointF &dp : points) {
+    for (const QPointF &dp : std::as_const(points)) {
         bool ok;
         const QPointF gp = domain()->calculateGeometryPoint(dp, ok);
         if (ok) {

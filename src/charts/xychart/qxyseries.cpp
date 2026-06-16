@@ -797,11 +797,9 @@ void QXYSeries::clearPointsConfiguration(const QXYSeries::PointConfiguration key
 {
     Q_D(QXYSeries);
     bool needsUpdate = false;
-    for (const int &index : d->m_pointsConfiguration.keys()) {
-        auto &conf = d->m_pointsConfiguration[index];
+    for (auto &conf : d->m_pointsConfiguration) {
         if (conf.contains(key)) {
             conf.remove(key);
-            d->m_pointsConfiguration[index] = conf;
             needsUpdate = true;
         }
     }

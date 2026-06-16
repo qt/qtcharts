@@ -136,7 +136,7 @@ void ChartDataSet::removeSeries(QAbstractSeries *series)
         return;
     }
 
-    QList<QAbstractAxis *> axes = series->d_ptr->m_axes;
+    const QList<QAbstractAxis *> axes = series->d_ptr->m_axes;
 
     for (auto axis : axes) {
         detachAxis(series, axis);
@@ -165,7 +165,7 @@ void ChartDataSet::removeAxis(QAbstractAxis *axis)
         return;
     }
 
-    QList<QAbstractSeries*> series =  axis->d_ptr->m_series;
+    const QList<QAbstractSeries*> series = axis->d_ptr->m_series;
 
     for (auto s : series) {
         detachAxis(s, axis);

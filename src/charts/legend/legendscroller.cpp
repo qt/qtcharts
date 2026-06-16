@@ -208,7 +208,8 @@ void LegendScroller::handleDetached(bool attached)
     qreal width = 0;
     qreal height = 0;
 
-    for (auto marker : d_ptr->markers()) {
+    const auto &markers = d_ptr->markers();
+    for (auto marker : markers) {
         LegendMarkerItem *item = marker->d_ptr->item();
         QSizeF itemESizeHint = item->effectiveSizeHint(Qt::PreferredSize);
 
