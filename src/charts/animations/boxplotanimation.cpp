@@ -68,11 +68,9 @@ void BoxPlotAnimation::setAnimationStart(BoxWhiskers *box)
 
 void BoxPlotAnimation::stopAll()
 {
-    for (auto box : m_animations.keys()) {
-        BoxWhiskersAnimation *animation = m_animations.value(box);
+    for (const auto &animation : std::as_const(m_animations))
         animation->stopAndDestroyLater();
-        m_animations.remove(box);
-    }
+    m_animations.clear();
 }
 
 void BoxPlotAnimation::removeBoxAnimation(BoxWhiskers *box)

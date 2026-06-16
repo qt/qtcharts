@@ -400,10 +400,10 @@ void DeclarativeOpenGLRenderNode::cleanXYSeriesResources(const QXYSeries *series
         delete m_seriesBufferMap.take(series);
         delete m_xyDataMap.take(series);
     } else {
-        for (QOpenGLBuffer *buffer : m_seriesBufferMap.values())
+        for (QOpenGLBuffer *buffer : std::as_const(m_seriesBufferMap))
             delete buffer;
         m_seriesBufferMap.clear();
-        for (GLXYSeriesData *data : m_xyDataMap.values())
+        for (GLXYSeriesData *data : std::as_const(m_xyDataMap))
             delete data;
         m_xyDataMap.clear();
     }

@@ -47,7 +47,7 @@ void BoxPlotChartItem::setAnimation(BoxPlotAnimation *animation)
 {
     m_animation = animation;
     if (m_animation) {
-        for (auto item : m_boxTable.values())
+        for (auto item : std::as_const(m_boxTable))
             m_animation->addBox(item);
         handleDomainUpdated();
     }
@@ -114,18 +114,18 @@ void BoxPlotChartItem::handleDataStructureChanged()
 
 void BoxPlotChartItem::handleUpdatedBars()
 {
-    for (auto item : m_boxTable.values()) {
+    for (auto item : std::as_const(m_boxTable)) {
         item->setBrush(m_series->brush());
         item->setPen(m_series->pen());
         item->setBoxOutlined(m_series->boxOutlineVisible());
         item->setBoxWidth(m_series->boxWidth());
     }
     // Override with QBoxSet specific settings
-    for (auto set : m_boxTable.keys()) {
+    for (const auto &[set, item] : std::as_const(m_boxTable).asKeyValueRange()) {
         if (set->brush().style() != Qt::NoBrush)
-            m_boxTable.value(set)->setBrush(set->brush());
+            item->setBrush(set->brush());
         if (set->pen().style() != Qt::NoPen)
-            m_boxTable.value(set)->setPen(set->pen());
+            item->setPen(set->pen());
     }
 }
 
@@ -147,7 +147,7 @@ void BoxPlotChartItem::handleDomainUpdated()
     // snip a bit off from the whisker at the grid line
     m_boundingRect.setRect(0.0, -1.0, domain()->size().width(), domain()->size().height() + 1.0);
 
-    for (auto item : m_boxTable.values()) {
+    for (auto item : std::as_const(m_boxTable)) {
         item->updateGeometry(domain());
 
         // If the animation is set, start the animation for each BoxWhisker item
@@ -158,7 +158,7 @@ void BoxPlotChartItem::handleDomainUpdated()
 
 void BoxPlotChartItem::handleLayoutChanged()
 {
-    for (auto item : m_boxTable.values()) {
+    for (auto item : std::as_const(m_boxTable)) {
         if (m_animation)
             m_animation->setAnimationStart(item);
 

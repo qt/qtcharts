@@ -74,12 +74,11 @@ void CandlestickAnimation::setAnimationStart(Candlestick *candlestick)
 
 void CandlestickAnimation::stopAll()
 {
-    for (auto candlestick : m_animations.keys()) {
-        CandlestickBodyWicksAnimation *animation = m_animations.value(candlestick, 0);
+    for (const auto &animation : std::as_const(m_animations)) {
         if (animation)
             animation->stopAndDestroyLater();
-        m_animations.remove(candlestick);
     }
+    m_animations.clear();
 }
 
 void CandlestickAnimation::removeCandlestickAnimation(Candlestick *candlestick)

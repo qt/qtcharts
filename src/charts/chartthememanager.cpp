@@ -62,8 +62,8 @@ void ChartThemeManager::setTheme(QChart::ChartTheme theme)
             decorateLegend(m_chart->legend(),m_theme.data());
             for (auto axis : std::as_const(m_axisList))
                 axis->d_ptr->initializeTheme(m_theme.data(), true);
-            for (auto series : m_seriesMap.keys())
-                series->d_ptr->initializeTheme(m_seriesMap[series], m_theme.data(), true);
+            for (const auto &[series, index] : std::as_const(m_seriesMap).asKeyValueRange())
+                series->d_ptr->initializeTheme(index, m_theme.data(), true);
         }
     }
 }
@@ -99,7 +99,7 @@ int ChartThemeManager::createIndexKey(const QList<int> &keys) const
     std::sort(keysCopy.begin(), keysCopy.end());
 
     int i = 0;
-    for (const auto key : keysCopy) {
+    for (const auto key : std::as_const(keysCopy)) {
         if (i != key)
             break;
         ++i;

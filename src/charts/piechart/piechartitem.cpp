@@ -92,9 +92,9 @@ void PieChartItem::cleanup()
         QPieSeriesPrivate::fromSeries(m_series)->disconnect(this);
         m_series = 0;
     }
-    for (auto slice : m_sliceItems.keys()) {
-        slice->disconnect(this);
-        QPieSlicePrivate::fromSlice(slice)->disconnect(this);
+    for (auto it = m_sliceItems.keyBegin(), end = m_sliceItems.keyEnd(); it != end; ++it) {
+        (*it)->disconnect(this);
+        QPieSlicePrivate::fromSlice(*it)->disconnect(this);
     }
     m_sliceItems.clear();
 }

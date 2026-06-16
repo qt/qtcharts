@@ -72,7 +72,7 @@ void GLWidget::cleanup()
     delete m_program;
     m_program = 0;
 
-    for (auto buffer : m_seriesBufferMap.values())
+    for (auto buffer : std::as_const(m_seriesBufferMap))
         delete buffer;
     m_seriesBufferMap.clear();
 
@@ -89,7 +89,7 @@ void GLWidget::cleanXYSeriesResources(const QXYSeries *series)
         delete m_seriesBufferMap.take(series);
     } else {
         // Null series means all series were removed
-        for (auto buffer : m_seriesBufferMap.values())
+        for (auto buffer : std::as_const(m_seriesBufferMap))
             delete buffer;
         m_seriesBufferMap.clear();
     }
