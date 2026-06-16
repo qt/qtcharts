@@ -64,7 +64,7 @@ void DateTimeAxisLabel::keyPressEvent(QKeyEvent *event)
         return;
     }
 
-    QGraphicsTextItem::keyPressEvent(event);
+    EditableAxisLabel::keyPressEvent(event);
 }
 
 QT_END_NAMESPACE
