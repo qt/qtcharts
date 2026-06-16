@@ -156,6 +156,7 @@ void QSplineSeriesPrivate::initializeAnimations(QChart::AnimationOptions options
         item->setAnimation(new SplineAnimation(item, duration, curve));
     else
         item->setAnimation(0);
+    // AXIVION Next Line Qt-SkippedBaseMethod: Intentionally skipping QXYSeriesPrivate
     QAbstractSeriesPrivate::initializeAnimations(options, duration, curve);
 }
 

@@ -357,6 +357,7 @@ void QScatterSeriesPrivate::initializeAnimations(QChart::AnimationOptions option
     else
         item->setAnimation(0);
 
+    // AXIVION Next Line Qt-SkippedBaseMethod: Intentionally skipping QXYSeriesPrivate
     QAbstractSeriesPrivate::initializeAnimations(options, duration, curve);
 }
 
