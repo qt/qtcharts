@@ -23,7 +23,6 @@ class Q_CHARTS_EXPORT QAbstractBarSeries : public QAbstractSeries
     Q_PROPERTY(LabelsPosition labelsPosition READ labelsPosition WRITE setLabelsPosition NOTIFY labelsPositionChanged)
     Q_PROPERTY(qreal labelsAngle READ labelsAngle WRITE setLabelsAngle NOTIFY labelsAngleChanged)
     Q_PROPERTY(int labelsPrecision READ labelsPrecision WRITE setLabelsPrecision NOTIFY labelsPrecisionChanged)
-    Q_ENUMS(LabelsPosition)
 
 public:
     enum LabelsPosition {
@@ -32,6 +31,7 @@ public:
         LabelsInsideBase,
         LabelsOutsideEnd
     };
+    Q_ENUM(LabelsPosition)
 
 public:
     virtual ~QAbstractBarSeries();

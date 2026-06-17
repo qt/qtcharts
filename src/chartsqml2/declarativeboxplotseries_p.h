@@ -31,7 +31,6 @@ class Q_CHARTSQML_EXPORT DeclarativeBoxSet : public QBoxSet
     Q_PROPERTY(QString label READ label WRITE setLabel)
     Q_PROPERTY(int count READ count)
     Q_PROPERTY(QString brushFilename READ brushFilename WRITE setBrushFilename NOTIFY brushFilenameChanged REVISION(1, 4))
-    Q_ENUMS(ValuePositions)
     QML_NAMED_ELEMENT(BoxSet)
     QML_ADDED_IN_VERSION(1, 3)
     QML_EXTRA_VERSION(2, 0)
@@ -44,6 +43,7 @@ public: // duplicate from QBoxSet
         UpperQuartile,
         UpperExtreme
     };
+    Q_ENUM(ValuePositions)
 
 public:
     explicit DeclarativeBoxSet(const QString label = QString(), QObject *parent = 0);

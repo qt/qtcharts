@@ -17,7 +17,6 @@ class QPieSeries;
 class Q_CHARTS_EXPORT QPieSlice : public QObject
 {
     Q_OBJECT
-    Q_ENUMS(LabelPosition)
     Q_PROPERTY(QString label READ label WRITE setLabel NOTIFY labelChanged)
     Q_PROPERTY(qreal value READ value WRITE setValue NOTIFY valueChanged)
     Q_PROPERTY(bool labelVisible READ isLabelVisible WRITE setLabelVisible NOTIFY labelVisibleChanged)
@@ -44,6 +43,7 @@ public:
         LabelInsideTangential,
         LabelInsideNormal
     };
+    Q_ENUM(LabelPosition)
 
 public:
     explicit QPieSlice(QObject *parent = nullptr);

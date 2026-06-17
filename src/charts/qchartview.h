@@ -21,7 +21,6 @@ class QChartViewPrivate;
 class Q_CHARTS_EXPORT QChartView : public QGraphicsView
 {
     Q_OBJECT
-    Q_ENUMS(RubberBand)
 public:
 
     enum  RubberBand {
@@ -33,6 +32,7 @@ public:
     };
 
     Q_DECLARE_FLAGS(RubberBands, RubberBand)
+    Q_FLAG(RubberBands)
 
     explicit QChartView(QWidget *parent = nullptr);
     explicit QChartView(QChart *chart, QWidget *parent = nullptr);

@@ -43,7 +43,7 @@ public:
         MarkerShapeStar,
         MarkerShapePentagon
     };
-    Q_ENUMS(MarkerShape)
+    Q_ENUM(MarkerShape)
 
     ~QLegend();
 

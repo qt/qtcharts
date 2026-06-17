@@ -50,7 +50,6 @@ class DeclarativeCategoryAxis : public QCategoryAxis, public QQmlParserStatus
     Q_PROPERTY(QQmlListProperty<QObject> axisChildren READ axisChildren)
     Q_CLASSINFO("DefaultProperty", "axisChildren")
     Q_PROPERTY(AxisLabelsPosition labelsPosition READ labelsPosition WRITE setLabelsPosition NOTIFY labelsPositionChanged REVISION(2, 1))
-    Q_ENUMS(AxisLabelsPosition)
     QML_NAMED_ELEMENT(CategoryAxis)
     QML_ADDED_IN_VERSION(1, 1)
     QML_EXTRA_VERSION(2, 0)
@@ -61,6 +60,7 @@ public:
         AxisLabelsPositionCenter = 0x0,
         AxisLabelsPositionOnValue = 0x1
     };
+    Q_ENUM(AxisLabelsPosition)
 
     explicit DeclarativeCategoryAxis(QObject *parent = 0);
     QQmlListProperty<QObject> axisChildren();
