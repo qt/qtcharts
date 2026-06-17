@@ -19,7 +19,7 @@
 #include <QtCharts/private/qchartglobal_p.h>
 #include <QtGui/QPen>
 #include <QtGui/QBrush>
-#include <QtCore/QMap>
+#include <QtCore/qhash.h>
 #include <QtCore/QList>
 
 QT_BEGIN_NAMESPACE
@@ -83,8 +83,8 @@ protected:
     BarAnimation *m_animation;
 
     QAbstractBarSeries *m_series; // Not owned.
-    QMap<QBarSet *, QList<Bar *> > m_barMap;
-    QMap<QBarSet *, QHash<int, Bar *> > m_indexForBarMap;
+    QHash<QBarSet *, QList<Bar *> > m_barMap;
+    QHash<QBarSet *, QHash<int, Bar *> > m_indexForBarMap;
     int m_firstCategory;
     int m_lastCategory;
     int m_categoryCount;
