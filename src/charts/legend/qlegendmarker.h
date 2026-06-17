@@ -30,6 +30,7 @@ public:
         LegendMarkerTypeBoxPlot,
         LegendMarkerTypeCandlestick
     };
+    Q_ENUM(LegendMarkerType)
 
     Q_PROPERTY(QString label READ label WRITE setLabel NOTIFY labelChanged)
     Q_PROPERTY(QBrush labelBrush READ labelBrush WRITE setLabelBrush NOTIFY labelBrushChanged)
@@ -38,7 +39,6 @@ public:
     Q_PROPERTY(QBrush brush READ brush WRITE setBrush NOTIFY brushChanged)
     Q_PROPERTY(bool visible READ isVisible WRITE setVisible NOTIFY visibleChanged)
     Q_PROPERTY(QLegend::MarkerShape shape READ shape WRITE setShape NOTIFY shapeChanged)
-    Q_ENUMS(LegendMarkerType)
 
 public:
     virtual ~QLegendMarker();

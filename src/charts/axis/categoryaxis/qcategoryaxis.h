@@ -18,7 +18,6 @@ class Q_CHARTS_EXPORT QCategoryAxis : public QValueAxis
     Q_PROPERTY(int count READ count)
     Q_PROPERTY(QStringList categoriesLabels READ categoriesLabels)
     Q_PROPERTY(AxisLabelsPosition labelsPosition READ labelsPosition WRITE setLabelsPosition NOTIFY labelsPositionChanged)
-    Q_ENUMS(AxisLabelsPosition)
 
 public:
 
@@ -26,6 +25,7 @@ public:
         AxisLabelsPositionCenter = 0x0,
         AxisLabelsPositionOnValue = 0x1
     };
+    Q_ENUM(AxisLabelsPosition)
 
     explicit QCategoryAxis(QObject *parent = nullptr);
     ~QCategoryAxis();

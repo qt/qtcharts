@@ -56,9 +56,6 @@ class Q_CHARTSQML_EXPORT DeclarativeChart : public QQuickItem
     Q_PROPERTY(QQmlListProperty<QAbstractAxis> axes READ axes REVISION(1, 2))
     Q_PROPERTY(bool localizeNumbers READ localizeNumbers WRITE setLocalizeNumbers NOTIFY localizeNumbersChanged REVISION(2, 0))
     Q_PROPERTY(QLocale locale READ locale WRITE setLocale NOTIFY localeChanged REVISION(2, 0))
-    Q_ENUMS(Animation)
-    Q_ENUMS(Theme)
-    Q_ENUMS(SeriesType)
     QML_NAMED_ELEMENT(ChartView)
     QML_ADDED_IN_VERSION(1, 0)
     QML_EXTRA_VERSION(2, 0)
@@ -75,6 +72,7 @@ public:
         ChartThemeBlueIcy,
         ChartThemeQt
     };
+    Q_ENUM(Theme)
 
     enum Animation {
         NoAnimation = 0x0,
@@ -82,6 +80,7 @@ public:
         SeriesAnimations = 0x2,
         AllAnimations = 0x3
     };
+    Q_ENUM(Animation)
 
     enum SeriesType {
         SeriesTypeLine,
@@ -98,6 +97,7 @@ public:
         SeriesTypeBoxPlot,
         SeriesTypeCandlestick
     };
+    Q_ENUM(SeriesType)
 
 public:
     DeclarativeChart(QQuickItem *parent = 0);

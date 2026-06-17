@@ -14,8 +14,6 @@ class QAbstractAxis;
 class Q_CHARTS_EXPORT QPolarChart : public QChart
 {
     Q_OBJECT
-    Q_ENUMS(PolarOrientation)
-    Q_FLAGS(PolarOrientations)
 
 public:
     enum PolarOrientation {
@@ -23,6 +21,7 @@ public:
         PolarOrientationAngular = 0x2
     };
     Q_DECLARE_FLAGS(PolarOrientations, PolarOrientation)
+    Q_FLAG(PolarOrientations)
 
 public:
     explicit QPolarChart(QGraphicsItem *parent = nullptr, Qt::WindowFlags wFlags = Qt::WindowFlags());

@@ -22,7 +22,6 @@ class Q_CHARTS_EXPORT QAbstractSeries : public QObject
     Q_PROPERTY(qreal opacity READ opacity WRITE setOpacity NOTIFY opacityChanged)
     Q_PROPERTY(SeriesType type READ type)
     Q_PROPERTY(bool useOpenGL READ useOpenGL WRITE setUseOpenGL NOTIFY useOpenGLChanged)
-    Q_ENUMS(SeriesType)
 
 public:
     enum SeriesType {
@@ -40,6 +39,7 @@ public:
         SeriesTypeBoxPlot,
         SeriesTypeCandlestick
     };
+    Q_ENUM(SeriesType)
 
 protected:
     QAbstractSeries(QAbstractSeriesPrivate &d, QObject *parent = nullptr);

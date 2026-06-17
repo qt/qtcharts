@@ -19,7 +19,6 @@ class Q_CHARTS_EXPORT QScatterSeries : public QXYSeries
     Q_PROPERTY(MarkerShape markerShape READ markerShape WRITE setMarkerShape NOTIFY markerShapeChanged)
     Q_PROPERTY(qreal markerSize READ markerSize WRITE setMarkerSize NOTIFY markerSizeChanged)
     Q_PROPERTY(QBrush brush READ brush WRITE setBrush)
-    Q_ENUMS(MarkerShape)
 
 public:
     enum MarkerShape {
@@ -30,6 +29,7 @@ public:
         MarkerShapeStar,
         MarkerShapePentagon
     };
+    Q_ENUM(MarkerShape)
 
 public:
     explicit QScatterSeries(QObject *parent = nullptr);

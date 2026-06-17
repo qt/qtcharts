@@ -38,9 +38,6 @@ class Q_CHARTS_EXPORT QChart : public QGraphicsWidget
     Q_PROPERTY(bool localizeNumbers READ localizeNumbers WRITE setLocalizeNumbers)
     Q_PROPERTY(QLocale locale READ locale WRITE setLocale)
     Q_PROPERTY(QRectF plotArea READ plotArea WRITE setPlotArea NOTIFY plotAreaChanged)
-    Q_ENUMS(ChartTheme)
-    Q_ENUMS(AnimationOption)
-    Q_ENUMS(ChartType)
 
 public:
     enum ChartType {
@@ -48,6 +45,7 @@ public:
         ChartTypeCartesian,
         ChartTypePolar
     };
+    Q_ENUM(ChartType)
 
     enum ChartTheme {
         ChartThemeLight = 0,
@@ -59,6 +57,7 @@ public:
         ChartThemeBlueIcy,
         ChartThemeQt
     };
+    Q_ENUM(ChartTheme)
 
     enum AnimationOption {
         NoAnimation = 0x0,
@@ -68,6 +67,7 @@ public:
     };
 
     Q_DECLARE_FLAGS(AnimationOptions, AnimationOption)
+    Q_FLAG(AnimationOption)
 
 public:
     explicit QChart(QGraphicsItem *parent = nullptr, Qt::WindowFlags wFlags = Qt::WindowFlags());

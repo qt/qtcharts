@@ -24,13 +24,13 @@ class Q_CHARTS_EXPORT QValueAxis : public QAbstractAxis
                        REVISION(2, 3))
     Q_PROPERTY(TickType tickType READ tickType WRITE setTickType NOTIFY tickTypeChanged REVISION(2,
                                                                                                  3))
-    Q_ENUMS(TickType)
 
 public:
     enum TickType {
         TicksDynamic = 0,
         TicksFixed
     };
+    Q_ENUM(TickType)
 
 public:
     explicit QValueAxis(QObject *parent = nullptr);
