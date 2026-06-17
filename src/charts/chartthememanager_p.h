@@ -18,7 +18,7 @@
 #include <QtGui/QColor>
 #include <QtGui/QGradientStops>
 #include <QtCharts/private/qchartglobal_p.h>
-#include <QtCore/qmap.h>
+#include <QtCore/qhash.h>
 
 QT_BEGIN_NAMESPACE
 class ChartTheme;
@@ -41,7 +41,7 @@ public:
     void decorateChart(QChart *chart, ChartTheme* theme) const;
     void decorateLegend(QLegend *legend, ChartTheme* theme) const;
     void updateSeries(QAbstractSeries *series);
-    QMap<QAbstractSeries *, int> seriesMap() const { return m_seriesMap; }
+    QHash<QAbstractSeries *, int> seriesMap() const { return m_seriesMap; }
 
 public:
     static QList<QGradient> generateSeriesGradients(const QList<QColor>& colors);
@@ -60,7 +60,7 @@ public Q_SLOTS:
 
 protected:
     QScopedPointer<ChartTheme> m_theme;
-    QMap<QAbstractSeries *,int> m_seriesMap;
+    QHash<QAbstractSeries *,int> m_seriesMap;
     QList<QAbstractAxis *> m_axisList;
     QChart* m_chart;
 };

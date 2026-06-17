@@ -19,7 +19,7 @@
 #include <QtGui/QPen>
 #include <QtWidgets/QGraphicsSceneMouseEvent>
 #include <QtCharts/private/qchartglobal_p.h>
-#include <QtCore/qmap.h>
+#include <QtCore/qhash.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -72,7 +72,7 @@ private:
     bool m_visible;
     int m_markerShape;
     QRectF m_rect;
-    QMap<QGraphicsItem *, QPointF> m_markerMap;
+    QHash<QGraphicsItem *, QPointF> m_markerMap;
 
     bool m_pointsVisible;
     bool m_pointLabelsVisible;

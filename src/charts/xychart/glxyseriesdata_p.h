@@ -13,7 +13,7 @@
 #ifndef GLXYSERIESDATA_H
 #define GLXYSERIESDATA_H
 
-#include <QtCore/QMap>
+#include <QtCore/qhash.h>
 #include <QtCharts/QAbstractSeries>
 #include <QtCharts/QXYSeries>
 #include <QtCharts/private/qchartglobal_p.h>
@@ -50,7 +50,7 @@ public:
     }
 };
 
-typedef QMap<const QXYSeries *, GLXYSeriesData *> GLXYDataMap;
+typedef QHash<const QXYSeries *, GLXYSeriesData *> GLXYDataMap;
 
 class Q_CHARTS_EXPORT GLXYSeriesDataManager : public QObject
 {
