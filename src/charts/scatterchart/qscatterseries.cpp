@@ -87,14 +87,6 @@
 */
 
 /*!
-    \property QScatterSeries::color
-    \brief The color used to fill the series markers.
-
-    This is a convenience property for modifying the color of the brush.
-    \sa QScatterSeries::brush()
-*/
-
-/*!
     \property QScatterSeries::borderColor
     \brief The color used to draw the marker borders.
 
