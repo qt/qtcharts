@@ -104,7 +104,6 @@ public:
     ~DeclarativeChart();
 
 public: // From parent classes
-    void childEvent(QChildEvent *event) override;
     void componentComplete() override;
     void geometryChange(const QRectF &newGeometry, const QRectF &oldGeometry) override;
     QSGNode *updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *) override;

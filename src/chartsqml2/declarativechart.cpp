@@ -585,15 +585,6 @@ DeclarativeChart::~DeclarativeChart()
     delete m_sceneImage;
 }
 
-void DeclarativeChart::childEvent(QChildEvent *event)
-{
-    if (event->type() == QEvent::ChildAdded) {
-        if (qobject_cast<QAbstractSeries *>(event->child())) {
-            m_chart->addSeries(qobject_cast<QAbstractSeries *>(event->child()));
-        }
-    }
-}
-
 void DeclarativeChart::componentComplete()
 {
     const auto childlist = children();
