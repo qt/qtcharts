@@ -29,10 +29,10 @@ public:
     AbstractDomain*  domain() const;
     virtual void cleanup();
 
+    QAbstractSeriesPrivate* seriesPrivate() const {return m_series;}
+
 public Q_SLOTS:
     virtual void handleDomainUpdated();
-
-    QAbstractSeriesPrivate* seriesPrivate() const {return m_series;}
 
 protected:
     bool m_validData;

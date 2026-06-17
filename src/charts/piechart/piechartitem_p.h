@@ -40,6 +40,8 @@ public:
     QRectF boundingRect() const override { return m_rect; }
     void paint(QPainter *, const QStyleOptionGraphicsItem *, QWidget *) override {}
 
+    ChartAnimation *animation() const override;
+
 protected:
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event) override;
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override;
@@ -59,7 +61,6 @@ public Q_SLOTS:
     void handleOpacityChanged();
 
     void setAnimation(PieAnimation *animation);
-    ChartAnimation *animation() const override;
 
     // From ChartItem
     void cleanup() override;
