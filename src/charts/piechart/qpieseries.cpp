@@ -871,7 +871,6 @@ void QPieSeriesPrivate::updateDerivativeData()
     // update slice attributes
     qreal sliceAngle = m_pieStartAngle;
     qreal pieSpan = m_pieEndAngle - m_pieStartAngle;
-    QList<QPieSlice *> changed;
     for (auto s : std::as_const(m_slices)) {
         QPieSlicePrivate *d = QPieSlicePrivate::fromSlice(s);
         d->setPercentage(s->value() / m_sum);
