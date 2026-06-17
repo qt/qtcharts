@@ -277,7 +277,6 @@ bool ChartDataSet::detachAxis(QAbstractSeries* series,QAbstractAxis *axis)
     Q_ASSERT(series);
     Q_ASSERT(axis);
 
-    QList<QAbstractSeries* > attachedSeriesList = axis->d_ptr->m_series;
     QList<QAbstractAxis* > attachedAxisList = series->d_ptr->m_axes;
     AbstractDomain* domain =  series->d_ptr->domain();
 

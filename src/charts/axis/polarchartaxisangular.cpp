@@ -35,8 +35,6 @@ void PolarChartAxisAngular::updateGeometry()
     QList<QGraphicsItem *> gridItemList = gridItems();
     QList<QGraphicsItem *> labelItemList = labelItems();
     QList<QGraphicsItem *> shadeItemList = shadeItems();
-    QList<QGraphicsItem *> minorGridItemList = minorGridItems();
-    QList<QGraphicsItem *> minorArrowItemList = minorArrowItems();
     QGraphicsTextItem *title = titleItem();
 
     QGraphicsEllipseItem *axisLine = static_cast<QGraphicsEllipseItem *>(arrowItemList.at(0));
@@ -356,7 +354,6 @@ qreal PolarChartAxisAngular::preferredAxisRadius(const QSizeF &maxSize)
 
         createAxisLabels(layout);
         QStringList labelList = labels();
-        QFont font = axis()->labelsFont();
 
         QRectF maxRect;
         maxRect.setSize(maxSize);
