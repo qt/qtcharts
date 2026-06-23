@@ -354,6 +354,7 @@ void QCategoryAxisPrivate::initializeGraphics(QGraphicsItem *parent)
     }
 
     m_item.reset(axis);
+    // AXIVION Next Line Qt-SkippedBaseMethod: intentionally skipping QValueAxisPrivate
     QAbstractAxisPrivate::initializeGraphics(parent);
 }
 
