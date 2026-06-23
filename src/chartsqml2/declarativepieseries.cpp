@@ -86,16 +86,17 @@ void DeclarativePieSeries::appendSeriesChildren(QQmlListProperty<QObject> * list
 
 QPieSlice *DeclarativePieSeries::at(int index)
 {
-    QList<QPieSlice *> sliceList = slices();
+    const QList<QPieSlice *> sliceList = slices();
     if (index >= 0 && index < sliceList.size())
-        return sliceList[index];
+        return sliceList.at(index);
 
     return 0;
 }
 
 QPieSlice *DeclarativePieSeries::find(QString label)
 {
-    for (auto slice : slices()) {
+    const QList<QPieSlice *> sliceList = slices();
+    for (auto *slice : sliceList) {
         if (slice->label() == label)
             return slice;
     }

@@ -416,7 +416,7 @@ void DeclarativeOpenGLRenderNode::handleMouseEvents()
             if (m_selectionRenderNeeded)
                 renderSelection();
         }
-        for (QMouseEvent *event : m_mouseEvents) {
+        for (const QMouseEvent *event : std::as_const(m_mouseEvents)) {
             const QXYSeries *series = findSeriesAtEvent(event);
             switch (event->type()) {
             case QEvent::MouseMove: {
@@ -485,7 +485,7 @@ void DeclarativeOpenGLRenderNode::handleMouseEvents()
     }
 }
 
-const QXYSeries *DeclarativeOpenGLRenderNode::findSeriesAtEvent(QMouseEvent *event)
+const QXYSeries *DeclarativeOpenGLRenderNode::findSeriesAtEvent(const QMouseEvent *event)
 {
     const QXYSeries *series = nullptr;
     int index = -1;
