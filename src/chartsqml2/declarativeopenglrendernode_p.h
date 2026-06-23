@@ -54,7 +54,7 @@ private:
     void recreateFBO();
     void cleanXYSeriesResources(const QXYSeries *series);
     void handleMouseEvents();
-    const QXYSeries *findSeriesAtEvent(QMouseEvent *event);
+    const QXYSeries *findSeriesAtEvent(const QMouseEvent *event);
 
     QSGTexture *m_texture;
     QSGImageNode *m_imageNode;
