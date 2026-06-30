@@ -47,10 +47,10 @@ public:
     void setMarkerSize(qreal size);
 
 Q_SIGNALS:
-    void colorChanged(QColor color);
+    QT6_ONLY(void colorChanged(QColor color);) // AXIVION Line Qt-OverriddenSignal
     void borderColorChanged(QColor color);
     void markerShapeChanged(MarkerShape shape);
-    void markerSizeChanged(qreal size);
+    QT6_ONLY(void markerSizeChanged(qreal size);) // AXIVION Line Qt-OverriddenSignal
 
 private:
     Q_DECLARE_PRIVATE(QScatterSeries)
