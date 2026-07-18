@@ -78,7 +78,7 @@ void AxisAnimation::setValues(QList<qreal> &oldLayout, const QList<qreal> &newLa
     default: {
         oldLayout.resize(newLayout.size());
         QRectF rect = m_axis->gridGeometry();
-        for (int i = 0, j = oldLayout.size() - 1; i < oldLayout.size(); ++i, --j)
+        for (int i = 0; i < oldLayout.size(); ++i)
             oldLayout[i] = m_axis->axis()->orientation() == Qt::Horizontal ? rect.left() : rect.top();
     }
     break;
