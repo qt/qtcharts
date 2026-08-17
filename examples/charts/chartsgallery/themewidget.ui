@@ -77,24 +77,64 @@
    <signal>currentIndexChanged(int)</signal>
    <receiver>ThemeWidgetForm</receiver>
    <slot>updateUI()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>85</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>85</x>
+     <y>300</y>
+    </hint>
+   </hints>
   </connection>
   <connection>
    <sender>antialiasCheckBox</sender>
    <signal>toggled(bool)</signal>
    <receiver>ThemeWidgetForm</receiver>
    <slot>updateUI()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>445</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>445</x>
+     <y>300</y>
+    </hint>
+   </hints>
   </connection>
   <connection>
    <sender>legendComboBox</sender>
    <signal>currentIndexChanged(int)</signal>
    <receiver>ThemeWidgetForm</receiver>
    <slot>updateUI()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>360</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>360</x>
+     <y>300</y>
+    </hint>
+   </hints>
   </connection>
   <connection>
    <sender>animatedComboBox</sender>
    <signal>currentIndexChanged(int)</signal>
    <receiver>ThemeWidgetForm</receiver>
    <slot>updateUI()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>230</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>230</x>
+     <y>300</y>
+    </hint>
+   </hints>
   </connection>
  </connections>
  <slots>
