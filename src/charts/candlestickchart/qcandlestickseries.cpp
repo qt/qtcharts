@@ -973,10 +973,10 @@ void QCandlestickSeriesPrivate::initializeGraphics(QGraphicsItem *parent)
     QAbstractSeriesPrivate::initializeGraphics(parent);
 
     if (m_chart) {
-        connect(m_chart->d_ptr->m_dataset, SIGNAL(seriesAdded(QAbstractSeries *)),
-                this, SLOT(handleSeriesChange(QAbstractSeries *)));
-        connect(m_chart->d_ptr->m_dataset, SIGNAL(seriesRemoved(QAbstractSeries *)),
-                this, SLOT(handleSeriesRemove(QAbstractSeries *)));
+        connect(m_chart->d_ptr->m_dataset, SIGNAL(seriesAdded(QAbstractSeries*)),
+                this, SLOT(handleSeriesChange(QAbstractSeries*)));
+        connect(m_chart->d_ptr->m_dataset, SIGNAL(seriesRemoved(QAbstractSeries*)),
+                this, SLOT(handleSeriesRemove(QAbstractSeries*)));
 
         item->handleCandlestickSeriesChange();
     }
