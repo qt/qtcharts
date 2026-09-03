@@ -244,7 +244,7 @@ void tst_QCandlestickSeries::insert()
     QCOMPARE(m_series->count(), 0);
 
     QSignalSpy countSpy(m_series, SIGNAL(countChanged()));
-    QSignalSpy addedSpy(m_series, SIGNAL(candlestickSetsAdded(QList<QCandlestickSet *>)));
+    QSignalSpy addedSpy(m_series, SIGNAL(candlestickSetsAdded(QList<QCandlestickSet*>)));
 
     for (int i = 0; i < m_sets.size(); ++i) {
         QCandlestickSet *set = m_sets.at(i);
@@ -267,7 +267,7 @@ void tst_QCandlestickSeries::take()
     QCOMPARE(m_series->count(), m_sets.size());
 
     QSignalSpy countSpy(m_series, SIGNAL(countChanged()));
-    QSignalSpy removedSpy(m_series, SIGNAL(candlestickSetsRemoved(QList<QCandlestickSet *>)));
+    QSignalSpy removedSpy(m_series, SIGNAL(candlestickSetsRemoved(QList<QCandlestickSet*>)));
 
     for (int i = 0; i < m_sets.size(); ++i) {
         QCandlestickSet *set = m_sets.at(i);
@@ -569,7 +569,7 @@ void tst_QCandlestickSeries::mouseClicked()
     QCandlestickSet *set1 = m_series->sets().at(1);
     QCandlestickSet *set2 = m_series->sets().at(2);
 
-    QSignalSpy seriesSpy(m_series, SIGNAL(clicked(QCandlestickSet *)));
+    QSignalSpy seriesSpy(m_series, SIGNAL(clicked(QCandlestickSet*)));
     QSignalSpy setSpy1(set1, SIGNAL(clicked()));
     QSignalSpy setSpy2(set2, SIGNAL(clicked()));
 
@@ -633,7 +633,7 @@ void tst_QCandlestickSeries::mouseHovered()
     QCandlestickSet *set1 = m_series->sets().at(1);
     QCandlestickSet *set2 = m_series->sets().at(2);
 
-    QSignalSpy seriesSpy(m_series, SIGNAL(hovered(bool, QCandlestickSet *)));
+    QSignalSpy seriesSpy(m_series, SIGNAL(hovered(bool,QCandlestickSet*)));
     QSignalSpy setSpy1(set1, SIGNAL(hovered(bool)));
     QSignalSpy setSpy2(set2, SIGNAL(hovered(bool)));
 
@@ -748,7 +748,7 @@ void tst_QCandlestickSeries::mousePressed()
     QCandlestickSet *set1 = m_series->sets().at(1);
     QCandlestickSet *set2 = m_series->sets().at(2);
 
-    QSignalSpy seriesSpy(m_series, SIGNAL(pressed(QCandlestickSet *)));
+    QSignalSpy seriesSpy(m_series, SIGNAL(pressed(QCandlestickSet*)));
     QSignalSpy setSpy1(set1, SIGNAL(pressed()));
     QSignalSpy setSpy2(set2, SIGNAL(pressed()));
 
@@ -811,7 +811,7 @@ void tst_QCandlestickSeries::mouseReleased()
     QCandlestickSet *set1 = m_series->sets().at(1);
     QCandlestickSet *set2 = m_series->sets().at(2);
 
-    QSignalSpy seriesSpy(m_series, SIGNAL(released(QCandlestickSet *)));
+    QSignalSpy seriesSpy(m_series, SIGNAL(released(QCandlestickSet*)));
     QSignalSpy setSpy1(set1, SIGNAL(released()));
     QSignalSpy setSpy2(set2, SIGNAL(released()));
 
@@ -874,7 +874,7 @@ void tst_QCandlestickSeries::mouseDoubleClicked()
     QCandlestickSet *set1 = m_series->sets().at(1);
     QCandlestickSet *set2 = m_series->sets().at(2);
 
-    QSignalSpy seriesSpy(m_series, SIGNAL(doubleClicked(QCandlestickSet *)));
+    QSignalSpy seriesSpy(m_series, SIGNAL(doubleClicked(QCandlestickSet*)));
     QSignalSpy setSpy1(set1, SIGNAL(doubleClicked()));
     QSignalSpy setSpy2(set2, SIGNAL(doubleClicked()));
 
