@@ -1,4 +1,3 @@
-include($$OUT_PWD/../../src/charts/qtcharts-config.pri)
 QT_FOR_CONFIG += charts
 TEMPLATE = subdirs
 
